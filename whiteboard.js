@@ -49,6 +49,25 @@
     const container = document.getElementById('popup-canvas-wrap');
     const dragHandle = document.getElementById('popup-drag-handle');
 
+    // ── BUTTON INJECTION ──
+    function injectButton() {
+        const header = document.querySelector('.book-header');
+        if (header && !document.getElementById('draw-mode-btn')) {
+            header.insertAdjacentHTML('beforeend', `
+                <button class="draw-mode-toggle" id="draw-mode-btn">
+                    <i class="fas fa-chalkboard"></i> Open Whiteboard
+                </button>
+            `);
+        }
+    }
+    
+    // Run immediately and also on DOMContentLoaded just in case
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', injectButton);
+    } else {
+        injectButton();
+    }
+
     let isDrawing = false;
     let currentTool = 'pen';
     let currentColor = '#000000';
