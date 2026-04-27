@@ -177,6 +177,26 @@
     window.addEventListener('pointerup', endDraw);
     canvas.addEventListener('pointerleave', endDraw);
 
+    // ── RESIZE HANDLING ──
+    // Use ResizeObserver to detect when the popup container is resized
+    const resizeObserver = new ResizeObserver(() => {
+        if (popup.classList.contains('active')) {
+            // Save the current canvas content
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            tempCtx.drawImage(canvas, 0, 0);
+
+            // Resize the canvas
+            initCanvas();
+
+            // Restore the content
+            ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width / (window.devicePixelRatio || 1), tempCanvas.height / (window.devicePixelRatio || 1), 0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+        }
+    });
+    resizeObserver.observe(popup);
+
     // Toggle Button Logic
     document.addEventListener('click', (e) => {
         const btn = e.target.closest('#draw-mode-btn');
