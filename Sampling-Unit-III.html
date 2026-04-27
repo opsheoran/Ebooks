@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit III – Simple Random Sampling | Sampling Techniques</title>
 
-    <!-- MathJax -->
+    <!-- MathJax for formulas -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <!-- Font Awesome -->
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- Google Fonts for easy reading -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Shared Design System (Replicated from Stat 102) */
+        /* Easy-to-read textbook colors */
         :root {
             --navy:          #1B2A4A;
             --navy-mid:      #243555;
@@ -36,26 +36,24 @@
             --sidebar-w:     300px;
             --header-h:      72px;
             --radius:        10px;
-            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
-            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
         }
 
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
 
+        /* Clean, big font for reading on phones or laptops */
         body {
             font-family: 'Source Serif 4', Georgia, serif;
             background: var(--paper);
             color: var(--text-dark);
-            line-height: 1.78;
-            font-size: 16px;
+            line-height: 1.8;
+            font-size: 17px;
         }
 
-        /* ── TOP HEADER ───────────────────────────────────────────── */
+        /* ── HEADER ── */
         .book-header {
             position: fixed; top: 0; left: 0; right: 0;
             height: var(--header-h);
-            background: var(--navy);
             background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
             color: #fff;
             z-index: 1100;
@@ -68,33 +66,30 @@
 
         .header-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem; font-weight: 700;
+            font-size: 1.4rem; font-weight: 700;
             letter-spacing: .3px;
             color: #fff;
         }
 
         .header-text .subtitle {
             font-family: 'DM Sans', sans-serif;
-            font-size: .8rem;
-            color: rgba(255,255,255,.7);
-            letter-spacing: .5px;
+            font-size: .85rem;
+            color: rgba(255,255,255,.8);
         }
 
         .header-badge {
             margin-left: auto;
-            background: rgba(255,255,255,.12);
-            border: 1px solid rgba(255,255,255,.2);
-            color: rgba(255,255,255,.9);
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.3);
+            color: #fff;
             font-family: 'DM Sans', sans-serif;
-            font-size: .75rem;
-            font-weight: 500;
-            padding: 4px 12px;
+            font-size: .8rem;
+            padding: 5px 15px;
             border-radius: 20px;
-            letter-spacing: .4px;
             margin-right: 15px;
         }
 
-        /* ── SIDEBAR ──────────────────────────────────────────────── */
+        /* ── SIDEBAR ── */
         .sidebar {
             position: fixed;
             left: 0; top: var(--header-h);
@@ -103,7 +98,6 @@
             background: var(--navy);
             overflow-y: auto;
             z-index: 1000;
-            transition: transform .3s ease;
         }
 
         .sidebar-author {
@@ -111,25 +105,27 @@
             align-items: center;
             gap: 12px;
             padding: 20px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.25);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .sidebar-photo {
-            width: 44px; height: 44px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             object-fit: cover;
             object-position: top;
             border: 2px solid var(--gold);
         }
 
+        .sidebar-info div { color: #fff; }
+
         .nav-group-label {
             font-family: 'DM Sans', sans-serif;
-            font-size: .68rem;
-            font-weight: 600;
+            font-size: .7rem;
+            font-weight: 700;
             letter-spacing: 1.2px;
             text-transform: uppercase;
-            color: rgba(255,255,255,.35);
+            color: rgba(255,255,255,.4);
             padding: 16px 20px 6px;
         }
 
@@ -139,110 +135,140 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 9px 12px;
-            color: rgba(255,255,255,.75);
+            padding: 10px 14px;
+            color: rgba(255,255,255,.8);
             text-decoration: none;
             border-radius: 7px;
             font-family: 'DM Sans', sans-serif;
-            font-size: .875rem;
+            font-size: .9rem;
             transition: all .2s ease;
             cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
-            background: rgba(255,255,255,.08);
-            color: #fff;
+            background: rgba(255,255,255,.1);
+            color: var(--gold-light);
+            font-weight: 600;
         }
 
-        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        /* ── MAIN CONTENT ── */
         .main-content {
             margin-left: var(--sidebar-w);
             margin-top: var(--header-h);
-            padding: 36px 48px 60px;
-            max-width: calc(var(--sidebar-w) + 900px);
+            padding: 40px 50px;
+            max-width: calc(var(--sidebar-w) + 1100px);
         }
 
+        /* Only show active sections */
         .section-card {
             display: none;
-            background: var(--ivory);
-            border-radius: var(--radius);
-            padding: 36px 42px;
-            box-shadow: var(--shadow-sm);
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px 50px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
             border: 1px solid var(--border);
-            border-top: 4px solid var(--navy);
-            animation: fadeSlideIn .45s ease;
+            border-top: 6px solid var(--navy);
+            margin-bottom: 40px;
+            animation: fadeIn .4s ease;
         }
 
         .section-card.active { display: block; }
 
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(18px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
-        h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 32px 0 14px; }
-        p { margin-bottom: 12px; text-align: justify; }
+        /* Text Styles */
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy-light); margin: 35px 0 15px; border-left: 5px solid var(--gold); padding-left: 15px; }
+        h4 { font-family: 'DM Sans', sans-serif; font-size: 1.2rem; color: var(--text-dark); margin: 20px 0 10px; font-weight: 700; }
+        p { margin-bottom: 15px; text-align: justify; color: var(--text-mid); font-size: 1.05rem; }
+        ul, ol { margin-bottom: 15px; margin-left: 30px; font-size: 1.05rem; color: var(--text-mid); }
+        li { margin-bottom: 8px; }
 
-        /* ── CALLOUT BOXES ────────────────────────────────────────── */
-        .definition, .theorem, .example, .note {
+        /* ── SPECIAL BOXES ── */
+        .definition, .theorem, .example, .note, .warning, .proof {
             border-radius: 8px;
-            padding: 18px 22px;
-            margin: 20px 0;
+            padding: 20px 25px;
+            margin: 25px 0;
+            font-size: 1.05rem;
         }
-        .definition { background: #F3F0FB; border-left: 5px solid #6B4FC8; }
-        .example { background: #FFFBF0; border-left: 5px solid var(--gold); }
-        .note { background: var(--sky-light); border-left: 5px solid var(--sky); }
-        .theorem { background: #EAF4FB; border-left: 5px solid var(--sky); }
+        .definition { background: #f4f0fc; border-left: 6px solid #6B4FC8; }
+        .example { background: #fffcf0; border-left: 6px solid var(--gold); }
+        .note { background: #f0f7f4; border-left: 6px solid var(--sage); }
+        .warning { background: #fcf0f2; border-left: 6px solid var(--crimson); }
+        .theorem { background: #EAF4FB; border-left: 6px solid var(--sky); }
+        .proof { background: #fff; border: 1px solid var(--border); border-left: 6px solid var(--text-soft); font-style: italic; }
 
-        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
-        .example h4::before { content: "Example — "; color: var(--gold); }
-        .theorem h4::before { content: "Theorem — "; color: var(--sky); }
+        .formula-box { background: #f0f6fc; border: 2px dashed #1D6FA4; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; font-size: 1.2rem; }
 
-        /* ── DERIVATION BOX ── */
-        .derivation {
-            background: #f9f9f9;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            font-family: 'Source Serif 4', serif;
-            margin: 15px 0;
+        /* Add icons to boxes */
+        .definition h4::before { content: "📘 "; }
+        .example h4::before { content: "💡 "; }
+        .note h4::before { content: "📝 "; }
+        .warning h4::before { content: "⚠️ "; }
+        .theorem h4::before { content: "📜 "; }
+        .proof h4::before { content: "🖋️ "; }
+
+        /* ── PRACTICE QUESTIONS ── */
+        .question-block {
+            margin-bottom: 25px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            border-radius: 6px;
+            overflow: hidden;
         }
-
-        /* ── FORMULA BOX ── */
-        .formula-box {
-            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
-            border: 2px dashed var(--navy-light);
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin: 16px 0;
-            text-align: center;
-            font-size: 1.12rem;
+        .question-text {
+            padding: 15px 20px;
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 1.1rem;
+            background: #fafafa;
         }
+        .mcq-options {
+            padding: 10px 20px 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .toggle-btn { 
+            background: var(--navy); color: #fff; border: none; padding: 8px 20px; 
+            border-radius: 20px; cursor: pointer; font-family: 'DM Sans'; font-size: 0.9rem; 
+            margin: 0 0 15px 20px; transition: all 0.2s;
+        }
+        .toggle-btn:hover { background: var(--gold); }
+        .answer { 
+            display: none; background: #f0fdf4; border-top: 1px solid #c3e6cb; 
+            padding: 15px 20px; color: #155724; font-size: 1rem;
+        }
+        .answer.show { display: block; animation: slideDown 0.3s ease; }
 
-        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
-        .question { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light); padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0; }
-        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .82rem; margin: 4px 0 8px; }
-        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 2px 0 12px; border-radius: 0 8px 8px 0; }
-        .answer.show { display: block; }
+        @keyframes slideDown { from { opacity: 0; } to { opacity: 1; } }
 
+        /* Teacher's Canvas Button */
         .draw-mode-toggle {
-            background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;
+            background: #C8922A; color: #1B2A4A; border: none; padding: 10px 20px; 
+            border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
 
-        @media (max-width: 768px) {
+        /* Responsive */
+        @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .main-content { margin-left: 0; padding: 20px; }
+            .mcq-options { grid-template-columns: 1fr; }
         }
     </style>
+    <!-- Include Whiteboard files -->
     <link rel="stylesheet" href="whiteboard.css?v=1.2">
 </head>
 <body>
 
 <header class="book-header">
     <div class="header-text">
-        <h1>Sampling Techniques</h1>
-        <div class="subtitle">UNIT III · SIMPLE RANDOM SAMPLING (SRS)</div>
+        <h1>Sampling Techniques (STAT-M-201)</h1>
+        <div class="subtitle">UNIT III · DETAILED CLASS NOTES</div>
     </div>
     <div class="header-badge">Prof. O.P. Sheoran</div>
     <button class="draw-mode-toggle" id="draw-mode-btn">
@@ -254,166 +280,825 @@
     <div class="sidebar-author">
         <img src="opsheoran.png" alt="Author" class="sidebar-photo">
         <div class="sidebar-info">
-            <div style="font-weight:700; font-size: 0.9rem; color:#fff;">Prof. O.P. Sheoran</div>
-            <div style="font-size: 0.7rem; opacity: 0.6; color:#fff;">CCSHAU Hisar</div>
+            <div style="font-weight:700; font-size: 0.95rem;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.75rem; opacity: 0.7;">CCSHAU Hisar</div>
         </div>
     </div>
-    <div class="nav-group-label">Navigation</div>
-    <a href="sampling.html" class="nav-link"><i class="fas fa-home"></i> Course Home</a>
+    
+    <div class="nav-group-label">Course Navigation</div>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-arrow-left"></i> Back to Main Menu</a>
     
     <div class="nav-group-label">Unit III Topics</div>
-    <a onclick="showTopic('srs-intro')" class="nav-link active" id="link-srs-intro">3.1 SRS Concepts</a>
-    <a onclick="showTopic('selection')" class="nav-link" id="link-selection">3.2 Selection Methods</a>
-    <a onclick="showTopic('estimation')" class="nav-link" id="link-estimation">3.3 Estimation</a>
-    <a onclick="showTopic('variance')" class="nav-link" id="link-variance">3.4 Sampling Variance</a>
-    <a onclick="showTopic('size')" class="nav-link" id="link-size">3.5 Sample Size</a>
-    <a onclick="showTopic('practice')" class="nav-link" id="link-practice">3.6 Practice Exercises</a>
+    <a onclick="showTopic('sec1')" class="nav-link active" id="link-sec1">3.1 Introduction to SRS</a>
+    <a onclick="showTopic('sec2')" class="nav-link" id="link-sec2">3.2 Probabilities of Selection</a>
+    <a onclick="showTopic('sec3')" class="nav-link" id="link-sec3">3.3 Practical Procedures</a>
+    <a onclick="showTopic('sec4')" class="nav-link" id="link-sec4">3.4 Estimation Math & Theorems</a>
+    <a onclick="showTopic('sec5')" class="nav-link" id="link-sec5">3.5 SRS for Attributes</a>
+    <a onclick="showTopic('sec6')" class="nav-link" id="link-sec6">3.6 Sample Size Determination</a>
+    
+    <div class="nav-group-label">Practice Section (80 Qs)</div>
+    <a onclick="showTopic('practice-sub')" class="nav-link" id="link-practice-sub"><i class="fas fa-pen"></i> Subjective (20 Q)</a>
+    <a onclick="showTopic('practice-mcq')" class="nav-link" id="link-practice-mcq"><i class="fas fa-list-ul"></i> MCQs (20 Q)</a>
+    <a onclick="showTopic('practice-fib')" class="nav-link" id="link-practice-fib"><i class="fas fa-edit"></i> Fill Blanks (20 Q)</a>
+    <a onclick="showTopic('practice-tf')" class="nav-link" id="link-practice-tf"><i class="fas fa-check-square"></i> True/False (20 Q)</a>
 </nav>
 
 <main class="main-content">
-    <!-- SECTION 3.1 -->
-    <section class="section-card active" id="srs-intro">
-        <h2>3.1 Basic Concepts of SRS</h2>
-        <p>Simple Random Sampling (SRS) is the most fundamental and commonly used method of selecting a sample. In this method, every unit in the population has an <strong>equal chance</strong> of being selected.</p>
+
+    <!-- 3.1 INTRODUCTION TO SRS -->
+    <section class="section-card active" id="sec1">
+        <h2>3.1 Introduction: The "Fair Lottery" of Sampling</h2>
+        <p>Hello students! Now that we understand what populations, samples, and errors are, we need to learn exactly <em>how</em> to pick our sample. The most fundamental, pure, and simple method in all of statistics is called <strong>Simple Random Sampling (SRS)</strong>.</p>
         
-        <p>Think of it as a fair lottery. If you have 100 students and you want to pick 10, each student should have exactly a 10% chance of being chosen. No one is preferred over anyone else.</p>
+        <p>You can think of SRS as a perfectly fair lottery. In a fair lottery, every single ticket has the exact same chance of winning. Nobody gets special treatment. In statistics, this means every single unit in our population has an equal mathematical probability of being selected for the sample.</p>
 
         <div class="definition">
-            <h4>SRS with Replacement (SRSWR)</h4>
-            <p>Imagine you pick a numbered slip from a hat, write down the number, and then <strong>put the slip back</strong> into the hat before picking the next one. This means the same unit could be picked more than once!</p>
+            <h4>Simple Random Sampling (SRS)</h4>
+            <p>Simple random sampling is a method of selecting 'n' units out of a population of size 'N' by giving equal probability of selection to all units. It ensures that every possible combination of 'n' units that can be formed from the population has the exact same chance of being chosen.</p>
         </div>
 
-        <div class="definition">
-            <h4>SRS without Replacement (SRSWOR)</h4>
-            <p>Here, once a slip is picked, it is <strong>kept out</strong>. You only pick from the remaining slips. In this method, every unit in the sample is unique.</p>
-        </div>
+        <p>There are two slightly different ways to conduct this fair lottery. The difference depends on what you do with the slip of paper <em>after</em> you pick it.</p>
+
+        <h3>1. Simple Random Sampling With Replacement (SRSWR)</h3>
+        <p>Imagine you have a bowl with the names of all 100 students in your class. You close your eyes, pick a slip of paper, write down the name, and then—this is the important part—you <strong>put the slip back into the bowl</strong> before picking the next name. You mix it up again and pick the second name.</p>
+        <p>Because you put the slip back (replaced it), the bowl always has 100 names in it for every single draw. This means the exact same student could be picked twice, three times, or even ten times in the same sample!</p>
+
+        <h3>2. Simple Random Sampling Without Replacement (SRSWOR)</h3>
+        <p>Now, imagine the same bowl. You pick a name, write it down, but this time you <strong>keep the slip outside the bowl</strong> (do not replace it). Now the bowl only has 99 names left for the second draw. The third draw has 98 names, and so on.</p>
+        <p>In this method, a student can only be picked <em>once</em>. Every person in your final sample of 10 students will be uniquely different.</p>
 
         <div class="note">
-            <p>In practice, <strong>SRSWOR</strong> is almost always preferred because it provides more information for the same sample size (since you don't repeat units).</p>
+            <h4>Which one is better in real life?</h4>
+            <p>In practical field surveys (like interviewing farmers or checking blood samples), we almost always use <strong>SRSWOR (Without Replacement)</strong>. Why waste our limited budget asking the exact same farmer the exact same questions twice? We want fresh, new information with every draw.</p>
         </div>
     </section>
 
-    <!-- SECTION 3.2 -->
-    <section class="section-card" id="selection">
-        <h2>3.2 Practical Selection Methods</h2>
-        <p>How do we actually perform SRS in the field? There are two main ways:</p>
-
-        <h3>1. The Lottery Method</h3>
-        <p>This is the classic way. You assign a number to every unit in the population, write these numbers on identical slips of paper, mix them in a bowl, and blindly draw 'n' slips.</p>
-
-        <h3>2. Random Number Tables</h3>
-        <p>For large populations (like 10,000 people), slips of paper are impractical. Instead, we use standard tables of random digits (like Tippett’s or Fisher’s tables).</p>
-        <div class="example">
-            <h4>How to use a Random Table:</h4>
-            <ol>
-                <li>Assign numbers 001 to 500 to your population of 500 farmers.</li>
-                <li>Pick a starting point in the random table.</li>
-                <li>Read three-digit numbers (since 500 has 3 digits).</li>
-                <li>If the number is between 001 and 500, pick that farmer. If it's over 500, skip it and move to the next.</li>
-            </ol>
-        </div>
-    </section>
-
-    <!-- SECTION 3.3 -->
-    <section class="section-card" id="estimation">
-        <h2>3.3 Estimation of Population Mean</h2>
-        <p>Our main goal is to use the sample mean (\(\bar{y}\)) to guess the true population mean (\(\bar{Y}\)).</p>
+    <!-- 3.2 PROBABILITIES OF SELECTION -->
+    <section class="section-card" id="sec2">
+        <h2>3.2 Core Theorems: Probabilities of Selection</h2>
+        <p>We said SRS is a "fair lottery". But as students of statistics, we must prove it mathematically. Let's look at two beautiful theorems that form the heart of Simple Random Sampling Without Replacement (SRSWOR).</p>
 
         <div class="theorem">
-            <h4>Theorem: Unbiasedness of Sample Mean</h4>
-            <p>In SRSWOR, the sample mean \(\bar{y}\) is an <strong>unbiased estimator</strong> of the population mean \(\bar{Y}\).</p>
+            <h4>Theorem 3.1: Probability of Inclusion</h4>
+            <p>In SRSWOR, the probability of a specific unit being included in the sample of size $n$ is equal to $\frac{n}{N}$.</p>
+        </div>
+        
+        <div class="proof">
+            <h4>🖋️ Detailed Proof of Theorem 3.1</h4>
+            <p>Let the population size be $N$ and the sample size be $n$. Let's focus on one specific unit, say Mr. Sharma.</p>
+            <p>In SRSWOR, how many total possible samples of size $n$ can we make from $N$ people? Using combinations, the total number of possible samples is $\binom{N}{n}$.</p>
+            <p>Now, how many of those samples will actually contain Mr. Sharma? If we force Mr. Sharma to be in the sample, we have already picked 1 person. Now we only need to pick the remaining $(n-1)$ people from the remaining $(N-1)$ population.</p>
+            <p>So, the number of samples containing our specific unit is $\binom{N-1}{n-1}$.</p>
+            <p>Therefore, the Probability = (Favorable Outcomes) / (Total Outcomes):</p>
             <div class="formula-box">
-                \(E(\bar{y}) = \bar{Y}\)
+                $$P = \frac{\binom{N-1}{n-1}}{\binom{N}{n}}$$
+                $$P = \frac{\frac{(N-1)!}{(n-1)!(N-n)!}}{\frac{N!}{n!(N-n)!}}$$
+                $$P = \frac{(N-1)!}{(n-1)!} \times \frac{n(n-1)!}{N(N-1)!} = \frac{n}{N}$$
+            </div>
+            <p>This proves that the chance is completely fair and proportional to the sample size!</p>
+        </div>
+
+        <div class="theorem">
+            <h4>Theorem 3.2: Probability at Any Draw</h4>
+            <p>The probability that a specified unit of the population is selected at <em>any given draw</em> is equal to the probability of its being selected at the very first draw (which is $1/N$).</p>
+        </div>
+
+        <div class="proof">
+            <h4>🖋️ Detailed Proof of Theorem 3.2</h4>
+            <p>Let's say we want to find the probability that Mr. Sharma is selected exactly on the $r^{th}$ draw. For this to happen, he must <strong>not</strong> be selected in the first $(r-1)$ draws, and then he <strong>must</strong> be selected on the $r^{th}$ draw.</p>
+            <p>Let $E_r$ be the event that the specified unit is selected at the $r^{th}$ draw.</p>
+            <p>$$P(E_r) = P(\text{Not selected in 1st}) \times P(\text{Not selected in 2nd | not in 1st}) \times \dots \times P(\text{Selected in } r^{th} \text{ | not in previous})$$</p>
+            <div class="formula-box">
+                $$P(E_r) = \left( \frac{N-1}{N} \right) \times \left( \frac{N-2}{N-1} \right) \times \dots \times \left( \frac{N-(r-1)}{N-(r-2)} \right) \times \left( \frac{1}{N-(r-1)} \right)$$
+            </div>
+            <p>Notice the beautiful pattern here! The numerator of one fraction cancels out the denominator of the next fraction. $(N-1)$ cancels $(N-1)$, $(N-2)$ cancels $(N-2)$, and finally $(N-(r-1))$ cancels $(N-(r-1))$.</p>
+            <p>When everything cancels out, what is left on top? Just the number 1. What is left on the bottom? Just $N$.</p>
+            <p>$$P(E_r) = \frac{1}{N}$$</p>
+            <p>Thus, $P(E_r) = P(E_1)$. The chance of being picked on the 5th draw is exactly the same as being picked on the 1st draw. This proves the method is perfectly random and fair at every single step.</p>
+        </div>
+    </section>
+
+    <!-- 3.3 PRACTICAL PROCEDURES -->
+    <section class="section-card" id="sec3">
+        <h2>3.3 Practical Procedures: How to Actually Do It</h2>
+        <p>The math is beautiful, but how does a researcher sitting in a village actually pick a Simple Random Sample? Since the whole theory is based on "randomness," we cannot just pick numbers from our head (humans are terrible at being truly random). We use two main procedures.</p>
+
+        <h3>1. The Lottery Method</h3>
+        <p>This is the oldest and simplest method. You associate a ticket or chit with each unit of the population. If there are 50 students, you take 50 identical slips of paper, number them 1 to 50, fold them exactly the same way, and put them in a bowl or a rotating drum. You mix them thoroughly and blindly draw out 'n' slips.</p>
+        <p><strong>When it fails:</strong> The lottery method is great for small populations (like 50 students). But what if your population is 10,000 farmers? Writing 10,000 slips, folding them identically, and finding a bowl large enough to mix them is physically exhausting and practically impossible. Furthermore, human bias creeps in (we don't mix perfectly). For large populations, we use Random Number Tables.</p>
+
+        <h3>2. Random Number Tables Method</h3>
+        <p>Statisticians have created huge books filled with pages of digits (0-9) generated by computers or special machines to be completely, perfectly random. These are called Random Number Tables. The most famous ones are:</p>
+        <ul>
+            <li><strong>Tippett’s Random Number Tables</strong> (Very famous, used worldwide)</li>
+            <li><strong>Fisher and Yates Tables</strong></li>
+            <li><strong>Kendall and Smith Tables</strong></li>
+            <li><strong>A Million Random Digits</strong> (by the RAND Corporation)</li>
+        </ul>
+
+        <h4>How to use the tables (Three Approaches)</h4>
+        <p>Suppose you have $N = 123$ farmers and you want to pick a sample. Since 123 has three digits, you will look at three-digit numbers in the table.</p>
+
+        <div class="example">
+            <h4>A. The Remainder Approach</h4>
+            <p>Let $N = 123$. The highest 3-digit multiple of 123 is 984. You open the random number table and close your eyes, pointing your finger anywhere to start. Let's say you read the number <strong>287</strong>.</p>
+            <p>You divide the random number by $N$: $287 \div 123$. The quotient is 2, and the <strong>remainder is 41</strong>.</p>
+            <p>So, the farmer with serial number <strong>41</strong> is selected for your sample! If the remainder is exactly zero, you select the last unit (serial number 123). If you draw a number higher than 984 (like 985), you reject it and pick the next random number from the table.</p>
+        </div>
+
+        <div class="example">
+            <h4>B. The Quotient Approach</h4>
+            <p>Let $N = 16$. This is a 2-digit number. The highest 2-digit multiple of 16 is 96 (so $N' = 96$, and quotient $q = 96/16 = 6$). Let's say you pick a random 2-digit number: <strong>65</strong> (which is less than 96).</p>
+            <p>Divide 65 by $q$ (which is 6). $65 \div 6 = 10$, with a remainder of 5. In this approach, we look at the quotient (10). We add 1 to it: $10 + 1 = 11$.</p>
+            <p>So, the unit bearing serial number <strong>11</strong> is selected.</p>
+        </div>
+
+        <div class="example">
+            <h4>C. Independent Choice of Digits</h4>
+            <p>This is the most straightforward method. If $N = 112$ households, you just read 3-digit numbers straight from the table. If you read 086, you select house 86. If you read 345 (which is greater than 112), you simply reject it and read the next number. You keep rejecting until you get valid numbers below 112. The only problem here is you might reject a lot of numbers!</p>
+        </div>
+    </section>
+
+    <!-- 3.4 ESTIMATION MATH & THEOREMS -->
+    <section class="section-card" id="sec4">
+        <h2>3.4 Estimation Math & Important Theorems</h2>
+        <p>The ultimate goal of drawing a sample is to estimate the population's true parameters. Let's establish our notations first.</p>
+
+        <div class="note">
+            <h4>Notation Guide</h4>
+            <ul>
+                <li><strong>N:</strong> Total population size.</li>
+                <li><strong>n:</strong> Sample size.</li>
+                <li><strong>$Y_i$:</strong> The value of the characteristic for the $i^{th}$ unit in the <em>Population</em> (Capital letter).</li>
+                <li><strong>$y_i$:</strong> The value of the characteristic for the $i^{th}$ unit in the <em>Sample</em> (Small letter).</li>
+                <li><strong>$\bar{Y}$:</strong> Population Mean $= \frac{1}{N} \sum_{i=1}^{N} Y_i$</li>
+                <li><strong>$\bar{y}_n$ or $\bar{y}$:</strong> Sample Mean $= \frac{1}{n} \sum_{i=1}^{n} y_i$</li>
+                <li><strong>$S^2$:</strong> Population Mean Square $= \frac{1}{N-1} \sum_{i=1}^{N} (Y_i - \bar{Y})^2$</li>
+                <li><strong>$s^2$:</strong> Sample Mean Square (Sample Variance) $= \frac{1}{n-1} \sum_{i=1}^{n} (y_i - \bar{y})^2$</li>
+            </ul>
+        </div>
+
+        <p>Now, let us prove that our sample formulas are "good" (unbiased) estimators of the population parameters.</p>
+
+        <div class="theorem">
+            <h4>Theorem 3.3: Sample Mean is Unbiased</h4>
+            <p>In simple random sampling without replacement (SRSWOR), the sample mean is an unbiased estimator of the population mean. Mathematically: $E(\bar{y}) = \bar{Y}$.</p>
+        </div>
+
+        <div class="proof">
+            <h4>🖋️ Proof of Theorem 3.3</h4>
+            <p>We know the sample mean is $\bar{y} = \frac{1}{n} \sum_{i=1}^{n} y_i$. Let's take the expected value of both sides:</p>
+            <p>$$E(\bar{y}) = E \left( \frac{1}{n} \sum_{i=1}^{n} y_i \right) = \frac{1}{n} \sum_{i=1}^{n} E(y_i)$$</p>
+            <p>By definition, the expected value of any specific sample observation $y_i$ is just the sum of all population values multiplied by their probability of selection. Since each population unit has an equal probability $1/N$ of being drawn at the $i^{th}$ position:</p>
+            <p>$$E(y_i) = \sum_{i=1}^{N} Y_i \cdot P_i = \sum_{i=1}^{N} Y_i \left(\frac{1}{N}\right) = \frac{1}{N} \sum_{i=1}^{N} Y_i = \bar{Y}$$</p>
+            <p>Substitute this back into our first equation:</p>
+            <p>$$E(\bar{y}) = \frac{1}{n} \sum_{i=1}^{n} (\bar{Y})$$</p>
+            <p>Summing the constant $\bar{Y}$, exactly $n$ times gives $n \cdot \bar{Y}$.</p>
+            <div class="formula-box">
+                $$E(\bar{y}) = \frac{1}{n} (n \cdot \bar{Y}) = \bar{Y}$$
+            </div>
+            <p>Hence proved! The sample mean perfectly targets the population mean.</p>
+        </div>
+
+        <div class="theorem">
+            <h4>Theorem 3.4: Sample Variance is Unbiased</h4>
+            <p>In simple random sampling without replacement, the sample mean square ($s^2$) is an unbiased estimator of the population mean square ($S^2$). Mathematically: $E(s^2) = S^2$.</p>
+            <p><em>(Note: The detailed algebraic proof for this is extremely long involving cross-products of expectations, but the conclusion is vital: dividing the sample sum of squares by $(n-1)$ instead of $n$ is what makes it an unbiased estimator of the population variance $S^2$).</em></p>
+        </div>
+
+        <div class="theorem">
+            <h4>Theorem 3.5: Variance of the Sample Mean</h4>
+            <p>How much does the sample mean jump around from sample to sample? In SRSWOR, the variance of the sample mean is given by:</p>
+            <div class="formula-box">
+                $$V(\bar{y}_n) = \left( \frac{N-n}{Nn} \right) S^2 = \left( 1 - \frac{n}{N} \right) \frac{S^2}{n}$$
             </div>
         </div>
 
-        <div class="derivation">
-            <p><strong>Simplified Logic:</strong> Because every unit has an equal chance (\(n/N\)) of being in the sample, if we were to take every possible sample of size 'n' and average their means, the final answer would be exactly the population mean.</p>
-        </div>
+        <p><strong>Crucial Remarks on Theorem 3.5:</strong></p>
+        <ul>
+            <li><strong>Sampling Fraction ($f$):</strong> The ratio $n/N$ is called the sampling fraction. It tells you what percentage of the population you sampled.</li>
+            <li><strong>Finite Population Correction (FPC):</strong> The term $(1 - f)$ or $\frac{N-n}{N}$ is called the FPC. </li>
+            <li>If the population $N$ is very, very large (infinite) compared to the sample $n$, then $n/N \to 0$. The FPC becomes $(1 - 0) = 1$. The formula simplifies beautifully to just $\frac{S^2}{n}$. This is the standard formula taught in basic statistics! The FPC is only used when we sample a large chunk of a small, finite population.</li>
+        </ul>
     </section>
 
-    <!-- SECTION 3.4 -->
-    <section class="section-card" id="variance">
-        <h2>3.4 Sampling Variance</h2>
-        <p>How much does our sample mean vary from sample to sample? This is measured by the <strong>Sampling Variance</strong>.</p>
+    <!-- 3.5 SRS FOR ATTRIBUTES -->
+    <section class="section-card" id="sec5">
+        <h2>3.5 Simple Random Sampling for Attributes (Proportions)</h2>
+        <p>So far, we talked about measuring things with numbers (like crop yield in kg, or height in cm). These are called <strong>Variables</strong>. But what if we are counting qualities that don't have a numerical measurement? For example, whether an item is "Defective" or "Not Defective", or if a person is "Employed" or "Unemployed". These qualitative characteristics are called <strong>Attributes</strong>.</p>
 
-        <div class="formula-box">
-            \(V(\bar{y}) = \left(1 - f\right) \frac{S^2}{n}\)
-        </div>
-        <p>Where:</p>
-        <ul>
-            <li>\(f = n/N\) is called the <strong>Sampling Fraction</strong>.</li>
-            <li>\((1 - f)\) is called the <strong>Finite Population Correction (FPC)</strong>.</li>
-            <li>\(S^2\) is the population mean square.</li>
-        </ul>
+        <p>We cannot calculate an average height for attributes. Instead, we calculate a <strong>Proportion</strong> (a percentage).</p>
 
         <div class="note">
-            <p>If the population is very large (N is huge), the FPC \((1-f)\) becomes close to 1 and can be ignored. This simplifies our formula to \(V(\bar{y}) = S^2/n\).</p>
+            <h4>Notation for Proportions</h4>
+            <p>Let Population $N$ be divided into two classes: Class A (has the attribute, e.g., Defective) and Class A' (does not have it). Let the total number of items in Class A be $A$.</p>
+            <ul>
+                <li><strong>Population Proportion of Success ($P$):</strong> $P = A / N$</li>
+                <li><strong>Population Proportion of Failure ($Q$):</strong> $Q = 1 - P$</li>
+            </ul>
+            <p>We draw a sample of size $n$. Let $a$ be the number of items in the sample that belong to Class A.</p>
+            <ul>
+                <li><strong>Sample Proportion of Success ($p$):</strong> $p = a / n$</li>
+                <li><strong>Sample Proportion of Failure ($q$):</strong> $q = 1 - p$</li>
+            </ul>
+        </div>
+
+        <div class="theorem">
+            <h4>Theorem 3.6: Unbiasedness of Sample Proportion</h4>
+            <p>The sample proportion '$p$' is an unbiased estimate of the population proportion '$P$'. Mathematically: $E(p) = P$.</p>
+            <p><em>(Proof logic: We assign a value $y_i = 1$ if the unit has the attribute, and $y_i = 0$ if it doesn't. The sample mean of these 0s and 1s is exactly the sample proportion $p$. Since we proved in Thm 3.3 that sample mean is unbiased, it directly proves that sample proportion is unbiased!)</em></p>
+        </div>
+
+        <div class="theorem">
+            <h4>Theorem 3.7: Variance of Sample Proportion</h4>
+            <p>In simple random sampling without replacement (SRSWOR), the variance of the sample proportion $p$ is:</p>
+            <div class="formula-box">
+                $$Var(p) = \frac{N-n}{N-1} \cdot \frac{PQ}{n}$$
+            </div>
+            <p>If the population $N$ is very large, the FPC $\frac{N-n}{N-1}$ becomes almost 1, and the formula simplifies to the famous basic statistics formula: $Var(p) \approx \frac{PQ}{n}$.</p>
         </div>
     </section>
 
-    <!-- SECTION 3.5 -->
-    <section class="section-card" id="size">
-        <h2>3.5 Determining Sample Size</h2>
-        <p>The most common question from researchers is: "How many people do I need to study?"</p>
-        <p>To answer this, you must decide two things:</p>
+    <!-- 3.6 SAMPLE SIZE DETERMINATION -->
+    <section class="section-card" id="sec6">
+        <h2>3.6 Determination of Sample Size</h2>
+        <p>The most ticklish and frequently asked question in survey planning is: <strong>"How large should the sample 'n' be?"</strong></p>
+        
+        <p>If the sample is too small, your estimates will be wild and inaccurate. If it is too large, you are wasting huge amounts of money and resources. A researcher must calculate an <em>optimum</em> sample size using a logical, mathematical process.</p>
+
+        <h3>Factors Influencing Sample Size:</h3>
+        <ul>
+            <li><strong>Nature of universe:</strong> If the population is highly homogenous (all units are very similar), a very small sample is enough. If it is heterogeneous (widely varying), a large sample is required to capture the diversity.</li>
+            <li><strong>Number of classes proposed:</strong> If you want to break down your final report into many small subgroups (e.g., analyzing income not just by state, but by district and village), you need a much larger total sample to ensure each small subgroup has enough people in it.</li>
+            <li><strong>Standard of accuracy (Precision):</strong> How much error is acceptable? If you need pinpoint accuracy, you must pay for a massive sample.</li>
+            <li><strong>Availability of finance:</strong> Ultimately, the size is constrained by the budget. High accuracy costs high money.</li>
+        </ul>
+
+        <h3>The Mathematical Approach (Based on Precision & Confidence)</h3>
+        <p>A researcher must specify two things to the statistician:</p>
         <ol>
-            <li><strong>Precision (e):</strong> How much error can you tolerate? (e.g., \(\pm 5\) units).</li>
-            <li><strong>Confidence (z):</strong> How sure do you want to be? (Usually 95%, where \(z = 1.96\)).</li>
+            <li><strong>Acceptable Error ($e$):</strong> The maximum difference allowed between the sample mean and true mean (e.g., "I want my guess to be within $\pm 3$ rupees of the true mean").</li>
+            <li><strong>Confidence Level ($z$):</strong> How sure do you want to be? Usually, we use 95% confidence, which gives a standard normal variate value of $z = 1.96$ from the Z-tables.</li>
         </ol>
 
+        <p>The confidence interval formula is: $\bar{x} \pm z \frac{\sigma_p}{\sqrt{n}}$</p>
+        <p>The error '$e$' is the part added/subtracted: $e = z \frac{\sigma_p}{\sqrt{n}}$</p>
+        <p>By squaring both sides and rearranging to solve for $n$, we get the master formula for an <strong>infinite population</strong>:</p>
+
         <div class="formula-box">
-            \(n = \frac{z^2 \sigma^2}{e^2}\)
+            $$n = \frac{z^2 \sigma_p^2}{e^2}$$
+            <span style="font-size:0.9rem; color:var(--text-soft);">Where $\sigma_p$ is the population standard deviation (usually guessed from a small pilot survey).</span>
         </div>
-        <p>This formula gives the required size for an infinite population. For finite populations, we adjust this value downwards.</p>
+
+        <p>If the population is <strong>finite</strong> (size $N$), we must include the Finite Population Multiplier. The formula adjusts to:</p>
+        <div class="formula-box">
+            $$n = \frac{z^2 \cdot N \cdot \sigma_p^2}{(N-1)e^2 + z^2 \sigma_p^2}$$
+        </div>
+        <p>This ensures you don't accidentally calculate a sample size that is larger than the actual population itself!</p>
     </section>
 
-    <!-- SECTION 3.6 -->
-    <section class="section-card" id="practice">
-        <h2>3.6 Practice Exercises</h2>
+    <!-- MASSIVE PRACTICE SECTION -->
+    <section class="section-card" id="practice-sub">
+        <h2>3.7 Practice Section: Subjective Questions (20)</h2>
+        <p>Test your deep conceptual understanding. Formulate your answers before checking the detailed solutions.</p>
 
-        <h3>Part A: Subjective Questions</h3>
-        <div class="question">1. Compare SRSWR and SRSWOR. Which one is more efficient and why?</div>
-        <div class="question">2. Explain the step-by-step procedure of picking a sample using Random Number Tables.</div>
-        <div class="question">3. What is the role of the Finite Population Correction (FPC) in variance calculation?</div>
-
-        <h3 style="margin-top:40px;">Part B: Multiple Choice Questions</h3>
-        
-        <div class="question"><strong>Q1.</strong> In SRSWOR of size 'n' from 'N', the probability of a specific unit being in the sample is:
-            <div style="margin-top:10px;">(a) \(1/N\) &nbsp;&nbsp; (b) \(n/N\) &nbsp;&nbsp; (c) \(1/n\) &nbsp;&nbsp; (d) \((N-1)/N\)</div>
+        <div class="question-block">
+            <div class="question-text">Q1. Clearly explain the difference between Simple Random Sampling With Replacement (SRSWR) and Without Replacement (SRSWOR).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub1')">Show Solution ▼</button>
+            <div id="sub1" class="answer"><strong>Solution:</strong> In SRSWR, after a unit is selected and recorded, it is returned to the population before the next draw. This means the population size remains constant ($N$) at every draw, and a single unit can be selected multiple times in the same sample. In SRSWOR, a selected unit is kept out of the population for subsequent draws. The population shrinks by one at each step ($N$, $N-1$, $N-2$...), ensuring that all $n$ units in the final sample are unique and distinct. SRSWOR is practically preferred as it yields more information for the same sample size.</div>
         </div>
-        <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
-        <div id="mcq1" class="answer"><strong>Correct Answer: (b) \(n/N\)</strong></div>
 
-        <div class="question"><strong>Q2.</strong> The ratio \(n/N\) is known as the:
-            <div style="margin-top:10px;">(a) Sampling Correction &nbsp;&nbsp; (b) Sampling Interval &nbsp;&nbsp; (c) Sampling Fraction &nbsp;&nbsp; (d) Bias</div>
+        <div class="question-block">
+            <div class="question-text">Q2. Define Simple Random Sampling (SRS). Why is it compared to a 'fair lottery'?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub2')">Show Solution ▼</button>
+            <div id="sub2" class="answer"><strong>Solution:</strong> SRS is a sampling method where every possible sample of size 'n' drawn from a population of size 'N' has an identical, equal probability of being selected. It is compared to a fair lottery because, just like every lottery ticket has an equal mathematical chance of being pulled from a well-mixed drum, every individual unit in the population has an equal mathematical chance ($n/N$) of being included in an SRS, eliminating all human bias.</div>
         </div>
-        <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
-        <div id="mcq2" class="answer"><strong>Correct Answer: (c) Sampling Fraction</strong></div>
 
-        <h3 style="margin-top:40px;">Part C: Fill in the Blanks</h3>
-        
-        <div class="question">1. In SRS, the sample mean is an ___________ estimator of the population mean.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
-        <div id="fib1" class="answer"><strong>Answer: Unbiased</strong></div>
+        <div class="question-block">
+            <div class="question-text">Q3. State Theorem 3.1 regarding the probability of a specific unit being included in a sample.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub3')">Show Solution ▼</button>
+            <div id="sub3" class="answer"><strong>Solution:</strong> Theorem 3.1 states that in Simple Random Sampling Without Replacement (SRSWOR), the probability that any specific, specified unit from the population is included in a sample of size $n$ is equal to the sampling fraction, which is $n/N$.</div>
+        </div>
 
-        <div class="question">2. As the sample size 'n' increases, the sampling variance ___________.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
-        <div id="fib2" class="answer"><strong>Answer: Decreases</strong></div>
+        <div class="question-block">
+            <div class="question-text">Q4. Briefly prove Theorem 3.2: The probability of a unit being selected at the $r^{th}$ draw is $1/N$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub4')">Show Solution ▼</button>
+            <div id="sub4" class="answer"><strong>Solution:</strong> Let $E_r$ be the event of selection at the $r^{th}$ draw. The unit must NOT be selected in the first $(r-1)$ draws, and then selected on the $r^{th}$ draw. <br>$P(E_r) = (\frac{N-1}{N}) \times (\frac{N-2}{N-1}) \times \dots \times (\frac{N-(r-1)}{N-(r-2)}) \times (\frac{1}{N-(r-1)})$.<br>Through sequential algebraic cancellation, every numerator cancels with the subsequent denominator, leaving only $1$ in the numerator and $N$ in the denominator. Thus, $P(E_r) = 1/N$, exactly the same as the first draw.</div>
+        </div>
 
-        <h3 style="margin-top:40px;">Part D: True or False</h3>
-        
-        <div class="question">1. In SRSWR, a single population unit can appear multiple times in the sample. [True / False]</div>
-        <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
-        <div id="tf1" class="answer"><strong>Answer: True</strong></div>
+        <div class="question-block">
+            <div class="question-text">Q5. Describe the Lottery Method of selecting an SRS. What are its major practical limitations?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub5')">Show Solution ▼</button>
+            <div id="sub5" class="answer"><strong>Solution:</strong> The Lottery Method involves assigning a number to each of the $N$ population units, writing these numbers on identical slips of paper, folding them identically, placing them in a bowl, mixing thoroughly, and blindly drawing $n$ slips. <br><strong>Limitations:</strong> It is practically impossible and physically exhausting to use for very large populations (e.g., $N=10,000$). Furthermore, human bias easily creeps in because it is very difficult to thoroughly mix thousands of slips of paper, leading to non-random clustering.</div>
+        </div>
 
-        <div class="question">2. The lottery method is very convenient for very large populations. [True / False]</div>
-        <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
-        <div id="tf2" class="answer"><strong>Answer: False</strong><br>Explanation: For large populations, random number tables or computers are much better.</div>
+        <div class="question-block">
+            <div class="question-text">Q6. Name four standard Random Number Tables commonly used in statistics.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub6')">Show Solution ▼</button>
+            <div id="sub6" class="answer"><strong>Solution:</strong> 1. Tippett’s Random Number Tables. 2. Fisher and Yates Tables. 3. Kendall and Smith Tables. 4. A Million Random Digits (published by the RAND Corporation).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q7. Explain the 'Remainder Approach' for using random number tables with an example where $N=123$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub7')">Show Solution ▼</button>
+            <div id="sub7" class="answer"><strong>Solution:</strong> Since $N=123$ is a 3-digit number, we look at 3-digit numbers in the table. The highest multiple of 123 below 999 is $984$. We pick a random 3-digit number from the table. If we pick $287$, we divide it by $N$ (123). The quotient is 2, and the remainder is $41$. Therefore, we select the population unit with serial number 41. (If the remainder is 0, we select unit 123. If we pick a number above 984, like 985, we reject it).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q8. How does the 'Quotient Approach' differ from the Remainder Approach? Give an example for $N=16$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub8')">Show Solution ▼</button>
+            <div id="sub8" class="answer"><strong>Solution:</strong> In the Quotient Approach, we divide by the quotient $q$, not the population size $N$. For $N=16$ (2 digits), the highest multiple is 96. So $N' = 96$, and quotient $q = 96/16 = 6$. We pick a random 2-digit number, say 65. We divide 65 by the quotient $q=6$. $65 \div 6 = 10$ with remainder 5. We take the quotient of this division (10) and add 1. So, $10+1=11$. Unit number 11 is selected.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q9. What do the notations $\bar{Y}$, $\bar{y}$, $S^2$, and $s^2$ represent?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub9')">Show Solution ▼</button>
+            <div id="sub9" class="answer"><strong>Solution:</strong> <br>$\bar{Y}$ = Population Mean (Parameter). <br>$\bar{y}$ = Sample Mean (Statistic). <br>$S^2$ = Population Mean Square / Variance (Parameter). <br>$s^2$ = Sample Mean Square / Variance (Statistic). Capital letters denote the entire population, while lowercase letters denote the sample.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q10. State Theorem 3.3 regarding the Sample Mean. Why is this theorem foundational to inferential statistics?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub10')">Show Solution ▼</button>
+            <div id="sub10" class="answer"><strong>Solution:</strong> Theorem 3.3 states that in Simple Random Sampling Without Replacement (SRSWOR), the sample mean $\bar{y}$ is an unbiased estimator of the population mean $\bar{Y}$. Mathematically, $E(\bar{y}) = \bar{Y}$. This is foundational because it guarantees that our sample averages, over the long run, perfectly center on the true population average without systematic bias.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q11. Explain what the Finite Population Correction (FPC) is. When can it be safely ignored?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub11')">Show Solution ▼</button>
+            <div id="sub11" class="answer"><strong>Solution:</strong> The FPC is the term $(1 - f)$ or $\frac{N-n}{N}$ found in the variance formula $V(\bar{y}) = (1 - f) \frac{S^2}{n}$. It adjusts the variance downward because sampling without replacement from a finite population leaves less uncertainty. It can be safely ignored when the population $N$ is infinitely large or extremely large compared to sample $n$, making the sampling fraction $f = n/N$ approach zero, so the FPC becomes $(1-0) = 1$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q12. Write the formula for the Variance of the Sample Mean in SRSWOR and clearly identify all terms.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub12')">Show Solution ▼</button>
+            <div id="sub12" class="answer"><strong>Solution:</strong> $V(\bar{y}_n) = \frac{N-n}{Nn}S^2$ or $V(\bar{y}_n) = (1-f)\frac{S^2}{n}$. <br>Terms: $N$ is population size, $n$ is sample size. $S^2$ is the population variance. $\frac{N-n}{N}$ is the Finite Population Correction factor.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q13. Differentiate between a 'Variable' and an 'Attribute' in statistics with examples.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub13')">Show Solution ▼</button>
+            <div id="sub13" class="answer"><strong>Solution:</strong> A <strong>Variable</strong> is a characteristic that can be measured numerically and quantitatively (e.g., crop yield in kg, height in cm, income in rupees). An <strong>Attribute</strong> is a qualitative characteristic that cannot be measured numerically but only classified into categories (e.g., gender, literacy status (literate/illiterate), quality status (defective/non-defective)).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q14. In sampling for attributes, how do we define the sample proportion of success '$p$'? What is it an unbiased estimator of?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub14')">Show Solution ▼</button>
+            <div id="sub14" class="answer"><strong>Solution:</strong> If a sample of size $n$ contains $a$ items possessing the desired attribute (success), the sample proportion is $p = a/n$. According to Theorem 3.6, the sample proportion $p$ is an unbiased estimator of the true population proportion $P$ (where $P = A/N$). Thus, $E(p) = P$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q15. Write the formula for the variance of the sample proportion $V(p)$ under SRSWOR.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub15')">Show Solution ▼</button>
+            <div id="sub15" class="answer"><strong>Solution:</strong> Under SRSWOR, the variance of the proportion estimator is $Var(p) = \frac{N-n}{N-1} \cdot \frac{PQ}{n}$. Here, $\frac{N-n}{N-1}$ acts as the finite population correction, $P$ is population proportion of success, $Q$ is proportion of failure ($1-P$), and $n$ is sample size.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q16. What are the two primary mathematical inputs required from a researcher to determine the required sample size ($n$)?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub16')">Show Solution ▼</button>
+            <div id="sub16" class="answer"><strong>Solution:</strong> 1. <strong>Acceptable Error / Precision ($e$):</strong> The maximum tolerable deviation between the sample estimate and the true parameter (e.g., $\pm 5$ units). <br> 2. <strong>Confidence Level ($z$):</strong> The degree of certainty required that the estimate falls within that error margin, expressed as a standard normal variate (e.g., 95% confidence gives $z = 1.96$).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q17. Write the formula to determine the sample size $n$ for estimating a mean in an <strong>infinite population</strong>.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub17')">Show Solution ▼</button>
+            <div id="sub17" class="answer"><strong>Solution:</strong> For an infinite population, the required sample size is given by: $n = \frac{z^2 \sigma_p^2}{e^2}$. Where $z$ is the standard normal variate for the confidence level, $\sigma_p$ is the estimated population standard deviation, and $e$ is the acceptable margin of error.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q18. How does the nature of the universe (Homogeneous vs Heterogeneous) affect the required sample size?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub18')">Show Solution ▼</button>
+            <div id="sub18" class="answer"><strong>Solution:</strong> The nature of the universe is represented by its variance ($\sigma^2$). If the universe is highly homogeneous (all units are very similar), the variance is low, and a very small sample is sufficient to capture the characteristics accurately. If the universe is highly heterogeneous (widely varying), the variance is large, demanding a much larger sample size to ensure representation and desired precision.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q19. Why must the formula for sample size determination be adjusted when dealing with a finite population?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub19')">Show Solution ▼</button>
+            <div id="sub19" class="answer"><strong>Solution:</strong> For a finite population of size $N$, sampling without replacement significantly reduces the variance. If we use the infinite population formula, it might result in calculating a required sample size $n$ that is absurdly large—perhaps even larger than the entire population $N$ itself! We must apply the finite population multiplier to adjust the calculation downward to realistic bounds.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q20. Prove algebraically that the expected value of a sample observation $E(y_i)$ equals the population mean $\bar{Y}$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub20')">Show Solution ▼</button>
+            <div id="sub20" class="answer"><strong>Solution:</strong> By definition of expectation in probability, $E(y_i) = \sum (Value) \times Probability$. The possible values that the $i^{th}$ sample draw can take are the population values $Y_1, Y_2, \ldots, Y_N$. By Theorem 3.2, the probability of selecting any specific unit $Y_j$ at the $i^{th}$ draw is exactly $1/N$. Therefore, $E(y_i) = \sum_{j=1}^{N} Y_j \cdot (\frac{1}{N}) = \frac{1}{N} \sum_{j=1}^{N} Y_j$. By definition, this sum divided by $N$ is the population mean $\bar{Y}$. Thus, $E(y_i) = \bar{Y}$.</div>
+        </div>
     </section>
+
+    <section class="section-card" id="practice-mcq">
+        <h3 style="color:var(--navy); border-bottom: 2px solid var(--navy);">Part B: Multiple Choice Questions (20 Qs)</h3>
+        
+        <div class="question-block">
+            <div class="question-text">Q1. In Simple Random Sampling Without Replacement (SRSWOR), a selected unit is:</div>
+            <div class="mcq-options">
+                <label>(A) Returned to the population</label> <label>(B) Kept out of the population</label>
+                <label>(C) Selected twice</label> <label>(D) Destroyed immediately</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+            <div id="mcq1" class="answer"><strong>Correct Answer: (B) Kept out of the population</strong><br>Reason: "Without replacement" means it is not returned, ensuring all $n$ units are distinct.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q2. The probability of any specific unit from a population of size $N$ being included in a sample of size $n$ using SRSWOR is:</div>
+            <div class="mcq-options">
+                <label>(A) $1/N$</label> <label>(B) $1/n$</label>
+                <label>(C) $n/N$</label> <label>(D) $(N-n)/N$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+            <div id="mcq2" class="answer"><strong>Correct Answer: (C) $n/N$</strong><br>Reason: This is the result of Theorem 3.1, and $n/N$ is known as the sampling fraction.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q3. The probability of selecting a specified unit at the $10^{th}$ draw is exactly equal to the probability of selecting it at the:</div>
+            <div class="mcq-options">
+                <label>(A) $1^{st}$ draw</label> <label>(B) $100^{th}$ draw</label>
+                <label>(C) Any draw</label> <label>(D) All of the above</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show Answer ▼</button>
+            <div id="mcq3" class="answer"><strong>Correct Answer: (D) All of the above</strong><br>Reason: Theorem 3.2 proves that the probability of selection at ANY draw is equal to $1/N$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q4. Which method uses physical slips of paper to select a sample?</div>
+            <div class="mcq-options">
+                <label>(A) Quotient Method</label> <label>(B) Remainder Method</label>
+                <label>(C) Lottery Method</label> <label>(D) Stratification Method</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show Answer ▼</button>
+            <div id="mcq4" class="answer"><strong>Correct Answer: (C) Lottery Method</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q5. Tippett’s and Fisher & Yates are famous examples of:</div>
+            <div class="mcq-options">
+                <label>(A) Variance formulas</label> <label>(B) Random Number Tables</label>
+                <label>(C) Sampling Frames</label> <label>(D) Measurement devices</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show Answer ▼</button>
+            <div id="mcq5" class="answer"><strong>Correct Answer: (B) Random Number Tables</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q6. In the Remainder Approach, if the random number is divided by the population size $N$, the unit selected is indicated by the:</div>
+            <div class="mcq-options">
+                <label>(A) Divisor</label> <label>(B) Quotient</label>
+                <label>(C) Remainder</label> <label>(D) Multiplier</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show Answer ▼</button>
+            <div id="mcq6" class="answer"><strong>Correct Answer: (C) Remainder</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q7. The sample mean $\bar{y}$ is an unbiased estimator of the population mean $\bar{Y}$. Mathematically, this is written as:</div>
+            <div class="mcq-options">
+                <label>(A) $V(\bar{y}) = \bar{Y}$</label> <label>(B) $E(\bar{y}) = \bar{Y}$</label>
+                <label>(C) $MSE(\bar{y}) = \bar{Y}$</label> <label>(D) $E(\bar{Y}) = \bar{y}$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show Answer ▼</button>
+            <div id="mcq7" class="answer"><strong>Correct Answer: (B) $E(\bar{y}) = \bar{Y}$</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q8. In the formula $V(\bar{y}_n) = (1 - f) \frac{S^2}{n}$, the term $(1 - f)$ is known as the:</div>
+            <div class="mcq-options">
+                <label>(A) Sampling Fraction</label> <label>(B) Finite Population Correction</label>
+                <label>(C) Standard Error</label> <label>(D) Bias Correction</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show Answer ▼</button>
+            <div id="mcq8" class="answer"><strong>Correct Answer: (B) Finite Population Correction</strong><br>Reason: It adjusts the variance downward for finite populations.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q9. The Finite Population Correction (FPC) can be ignored and assumed to be equal to 1 when:</div>
+            <div class="mcq-options">
+                <label>(A) The sample size $n$ is very large</label> <label>(B) The population $N$ is very small</label>
+                <label>(C) The population $N$ is infinitely large</label> <label>(D) $n$ is exactly equal to $N$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show Answer ▼</button>
+            <div id="mcq9" class="answer"><strong>Correct Answer: (C) The population $N$ is infinitely large</strong><br>Reason: When $N \to \infty$, the fraction $f = n/N \to 0$, so $(1-f) \to 1$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q10. Characteristics like "Defective" or "Literate" that cannot be measured numerically are called:</div>
+            <div class="mcq-options">
+                <label>(A) Continuous Variables</label> <label>(B) Discrete Variables</label>
+                <label>(C) Parameters</label> <label>(D) Attributes</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show Answer ▼</button>
+            <div id="mcq10" class="answer"><strong>Correct Answer: (D) Attributes</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q11. The sample proportion $p$ is an unbiased estimator of:</div>
+            <div class="mcq-options">
+                <label>(A) Sample Size $n$</label> <label>(B) Population Variance $S^2$</label>
+                <label>(C) Population Proportion $P$</label> <label>(D) Failure Proportion $Q$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show Answer ▼</button>
+            <div id="mcq11" class="answer"><strong>Correct Answer: (C) Population Proportion $P$</strong><br>Reason: Theorem 3.6 states $E(p) = P$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q12. To determine the required sample size $n$, a researcher must specify the confidence level $z$ and the acceptable:</div>
+            <div class="mcq-options">
+                <label>(A) Margin of Error ($e$)</label> <label>(B) Population Size ($N$)</label>
+                <label>(C) Time Limit</label> <label>(D) Number of Classes</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show Answer ▼</button>
+            <div id="mcq12" class="answer"><strong>Correct Answer: (A) Margin of Error ($e$)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q13. A highly heterogeneous population (widely varying) requires a sample size that is:</div>
+            <div class="mcq-options">
+                <label>(A) Very small</label> <label>(B) Zero</label>
+                <label>(C) Much larger</label> <label>(D) Independent of variance</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show Answer ▼</button>
+            <div id="mcq13" class="answer"><strong>Correct Answer: (C) Much larger</strong><br>Reason: Greater variance $\sigma^2$ requires a larger $n$ to maintain precision.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q14. In SRSWR, the number of possible samples of size $n$ from a population of size $N$ is:</div>
+            <div class="mcq-options">
+                <label>(A) $N^n$</label> <label>(B) $\binom{N}{n}$</label>
+                <label>(C) $n^N$</label> <label>(D) $N \times n$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show Answer ▼</button>
+            <div id="mcq14" class="answer"><strong>Correct Answer: (A) $N^n$</strong><br>Reason: With replacement, each of the $n$ positions has $N$ choices.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q15. In SRSWOR, the number of possible samples of size $n$ from a population of size $N$ is:</div>
+            <div class="mcq-options">
+                <label>(A) $N^n$</label> <label>(B) $\binom{N}{n}$</label>
+                <label>(C) $n^N$</label> <label>(D) $N \times n$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show Answer ▼</button>
+            <div id="mcq15" class="answer"><strong>Correct Answer: (B) $\binom{N}{n}$</strong><br>Reason: Without replacement, it's a simple combination problem.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q16. If $N=10$ and $n=2$, the sampling fraction $f$ is:</div>
+            <div class="mcq-options">
+                <label>(A) 5</label> <label>(B) 20</label>
+                <label>(C) 0.2</label> <label>(D) 0.8</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show Answer ▼</button>
+            <div id="mcq16" class="answer"><strong>Correct Answer: (C) 0.2</strong><br>Reason: $f = n/N = 2/10 = 0.2$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q17. Using the Quotient Approach for random numbers, if the random number is 65 and quotient $q=6$, the selected unit is:</div>
+            <div class="mcq-options">
+                <label>(A) 10</label> <label>(B) 11</label>
+                <label>(C) 5</label> <label>(D) 6</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show Answer ▼</button>
+            <div id="mcq17" class="answer"><strong>Correct Answer: (B) 11</strong><br>Reason: $65 \div 6 = 10$ (quotient). We take quotient + 1 = 11.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q18. The expected value of sample observation $E(y_i)$ is proven to be exactly equal to:</div>
+            <div class="mcq-options">
+                <label>(A) 0</label> <label>(B) $\mu$</label>
+                <label>(C) $\bar{Y}$</label> <label>(D) $1/N$</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show Answer ▼</button>
+            <div id="mcq18" class="answer"><strong>Correct Answer: (C) $\bar{Y}$</strong><br>Reason: Used in the proof for Theorem 3.3.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q19. For determining sample size in a finite population, the formula is adjusted using the:</div>
+            <div class="mcq-options">
+                <label>(A) Standard Normal Variate</label> <label>(B) Variance factor</label>
+                <label>(C) Finite Population Multiplier</label> <label>(D) Infinite expansion</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show Answer ▼</button>
+            <div id="mcq19" class="answer"><strong>Correct Answer: (C) Finite Population Multiplier</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q20. In SRS, what eliminates personal human bias?</div>
+            <div class="mcq-options">
+                <label>(A) The investigator's expertise</label> <label>(B) Random number tables</label>
+                <label>(C) Subjective choice</label> <label>(D) Having a large budget</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show Answer ▼</button>
+            <div id="mcq20" class="answer"><strong>Correct Answer: (B) Random number tables</strong><br>Reason: They ensure strict mathematical randomness, stripping away human influence.</div>
+        </div>
+    </section>
+
+    <section class="section-card" id="practice-fib">
+        <h3 style="color:var(--navy); border-bottom: 2px solid var(--navy);">Part C: Fill in the Blanks (20 Qs)</h3>
+
+        <div class="question-block">
+            <div class="question-text">1. The method of selection where each unit has an equal probability of selection is called ____________ Random Sampling.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button><div id="fib1" class="answer"><strong>Answer: Simple</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">2. In SRS ____________ Replacement, a unit can be selected multiple times in the same sample.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button><div id="fib2" class="answer"><strong>Answer: With (SRSWR)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">3. In SRS Without Replacement, all $n$ units in the sample are strictly ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show Answer ▼</button><div id="fib3" class="answer"><strong>Answer: Unique (or Distinct)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">4. The probability of any specific unit being included in a sample of size $n$ from population $N$ is ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show Answer ▼</button><div id="fib4" class="answer"><strong>Answer: $n/N$</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">5. The probability of selecting a specified unit at any given draw is exactly equal to ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show Answer ▼</button><div id="fib5" class="answer"><strong>Answer: $1/N$</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">6. The ____________ Method involves writing numbers on identical slips of paper and drawing them blindly from a bowl.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show Answer ▼</button><div id="fib6" class="answer"><strong>Answer: Lottery</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">7. For large populations, the Lottery Method fails due to physical exhaustion and bias; instead, we use Random ____________ Tables.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show Answer ▼</button><div id="fib7" class="answer"><strong>Answer: Number</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">8. Tippett’s and Fisher & Yates are examples of tables filled with perfectly random ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show Answer ▼</button><div id="fib8" class="answer"><strong>Answer: Digits (or Numbers)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">9. In the ____________ approach, the random number is divided by the population size $N$ to find the selection.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show Answer ▼</button><div id="fib9" class="answer"><strong>Answer: Remainder</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">10. The sample mean $\bar{y}$ is an ____________ estimator of the population mean $\bar{Y}$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show Answer ▼</button><div id="fib10" class="answer"><strong>Answer: Unbiased</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">11. The mathematical equation for an unbiased sample mean is $E(\bar{y}) =$ ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show Answer ▼</button><div id="fib11" class="answer"><strong>Answer: $\bar{Y}$</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">12. The term $(1 - f)$ or $(1 - n/N)$ is called the ____________ Population Correction factor.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show Answer ▼</button><div id="fib12" class="answer"><strong>Answer: Finite</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">13. The ratio $n/N$ is known as the sampling ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show Answer ▼</button><div id="fib13" class="answer"><strong>Answer: Fraction</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">14. If the population is infinite, the Finite Population Correction becomes equal to ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show Answer ▼</button><div id="fib14" class="answer"><strong>Answer: One (1)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">15. A characteristic that cannot be measured numerically, like "Defective", is termed an ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show Answer ▼</button><div id="fib15" class="answer"><strong>Answer: Attribute</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">16. The sample proportion '$p$' is an unbiased estimate of the population proportion ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show Answer ▼</button><div id="fib16" class="answer"><strong>Answer: $P$</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">17. In the formula for sample size determination, $e$ represents the acceptable margin of ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show Answer ▼</button><div id="fib17" class="answer"><strong>Answer: Error</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">18. A highly heterogeneous universe requires a ____________ sample size than a homogeneous one.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show Answer ▼</button><div id="fib18" class="answer"><strong>Answer: Larger</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">19. In sample size formulas, the value '$z$' represents the ____________ level (e.g., 1.96 for 95%).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show Answer ▼</button><div id="fib19" class="answer"><strong>Answer: Confidence</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">20. In the quotient approach, if you divide by quotient $q$, the unit selected is given by the quotient of that division plus ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show Answer ▼</button><div id="fib20" class="answer"><strong>Answer: One (1)</strong></div>
+        </div>
+    </section>
+
+    <section class="section-card" id="practice-tf">
+        <h3 style="color:var(--navy); border-bottom: 2px solid var(--navy);">Part D: True or False (20 Qs)</h3>
+
+        <div class="question-block">
+            <div class="question-text">1. In Simple Random Sampling Without Replacement (SRSWOR), a unit can be selected twice.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button><div id="tf1" class="answer"><strong>False.</strong> Because the unit is kept out after the first draw, it can never be selected twice.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">2. SRSWOR is practically preferred over SRSWR because it provides more fresh information.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button><div id="tf2" class="answer"><strong>True.</strong> Interviewing the exact same person twice wastes time and adds no new data.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">3. The probability of selecting a specific unit at the 5th draw is exactly $1/N$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show Answer ▼</button><div id="tf3" class="answer"><strong>True.</strong> Theorem 3.2 proves that the probability at any draw $r$ is identical to the first draw, which is $1/N$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">4. The Lottery Method is the most efficient way to sample from a population of 10 million.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show Answer ▼</button><div id="tf4" class="answer"><strong>False.</strong> It is physically impossible and heavily biased for large numbers. Random Number Tables or computers must be used.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">5. Random Number Tables are designed to ensure every digit from 0 to 9 appears independently.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show Answer ▼</button><div id="tf5" class="answer"><strong>True.</strong> This strict independence is what makes them scientifically "random" and free from human patterns.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">6. In the Remainder Approach, if the remainder is exactly zero, we must reject the number and pick again.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show Answer ▼</button><div id="tf6" class="answer"><strong>False.</strong> If the remainder is zero, we select the very last unit in the list (the $N^{th}$ unit).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">7. The sample mean $\bar{y}$ is a biased estimator of the population mean $\bar{Y}$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show Answer ▼</button><div id="tf7" class="answer"><strong>False.</strong> Theorem 3.3 explicitly proves that $E(\bar{y}) = \bar{Y}$, meaning it is strictly Unbiased.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">8. The Finite Population Correction (FPC) is calculated as $(1 - n/N)$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show Answer ▼</button><div id="tf8" class="answer"><strong>True.</strong> This factor reduces the estimated variance when sampling from a finite universe.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">9. If the population is infinite, the FPC term becomes zero.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show Answer ▼</button><div id="tf9" class="answer"><strong>False.</strong> As $N \to \infty$, the fraction $n/N \to 0$. Therefore, the FPC $(1 - n/N)$ becomes $(1 - 0) = 1$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">10. Attributes like literacy or employment status can be averaged numerically just like height.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show Answer ▼</button><div id="tf10" class="answer"><strong>False.</strong> Attributes are qualitative. We cannot average them; we can only calculate their Proportion (percentage).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">11. The sample proportion $p$ is an unbiased estimator of the population proportion $P$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show Answer ▼</button><div id="tf11" class="answer"><strong>True.</strong> Theorem 3.6 proves this. $E(p) = P$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">12. The formula for the variance of the sample mean is $V(\bar{y}_n) = \frac{S^2}{n}$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show Answer ▼</button><div id="tf12" class="answer"><strong>False.</strong> This is only true for an <em>infinite</em> population. For a finite population (SRSWOR), the correct formula includes the FPC: $V(\bar{y}_n) = (1 - f)\frac{S^2}{n}$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">13. In the Independent Choice of Digits method, we never have to reject any numbers from the table.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show Answer ▼</button><div id="tf13" class="answer"><strong>False.</strong> If $N=112$, any 3-digit number drawn that is greater than 112 (like 345 or 999) must be rejected. This is why this method is slow.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">14. When determining sample size, accepting a smaller margin of error ($e$) will result in a larger required sample size ($n$).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show Answer ▼</button><div id="tf14" class="answer"><strong>True.</strong> Because $e$ is in the denominator of the formula $n = (z^2 \sigma^2) / e^2$. A smaller $e$ blows up the value of $n$. High precision is expensive.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">15. A highly homogeneous population requires a massive sample size to study accurately.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show Answer ▼</button><div id="tf15" class="answer"><strong>False.</strong> If everyone is identical (homogeneous), variance is near zero. A very small sample (even $n=1$) would be sufficient!</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">16. The expected value of a single sample observation $E(y_i)$ is equal to the population mean $\bar{Y}$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show Answer ▼</button><div id="tf16" class="answer"><strong>True.</strong> This is a crucial mathematical step used to prove that the sample mean is an unbiased estimator.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">17. In the Quotient Approach, the quotient $q$ is calculated as $N'/N$, where $N'$ is the highest multiple of $N$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show Answer ▼</button><div id="tf17" class="answer"><strong>True.</strong> This defines the blocks we use to map large random numbers back down to our small population list.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">18. The sample variance $s^2$ calculated using denominator $n-1$ is a biased estimator of $S^2$.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show Answer ▼</button><div id="tf18" class="answer"><strong>False.</strong> Theorem 3.4 proves that using $n-1$ makes $s^2$ an EXACTLY unbiased estimator. $E(s^2) = S^2$.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">19. If budget constraints are tight, a researcher should just reduce the sample size without worrying about the precision formulas.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show Answer ▼</button><div id="tf19" class="answer"><strong>False.</strong> Reducing $n$ arbitrarily will destroy the precision and confidence level of the study, rendering the entire survey mathematically useless.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">20. The primary advantage of SRS over Subjective Sampling is the complete elimination of investigator bias.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show Answer ▼</button><div id="tf20" class="answer"><strong>True.</strong> By letting mathematical random tables choose the units, human bias is removed, making the results scientifically valid.</div>
+        </div>
+    </section>
+
 </main>
 
 <script>
+    // Navigation logic
     function showTopic(id) {
         document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -421,11 +1106,23 @@
         document.getElementById('link-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    
+    // Toggle Answers logic
     function toggleAnswer(id) {
         const ans = document.getElementById(id);
         ans.classList.toggle('show');
+        const btn = event.currentTarget;
+        if(ans.classList.contains('show')) {
+            btn.innerHTML = "Hide Solution ▲";
+        } else {
+            btn.innerHTML = "Show Answer ▼";
+            if(id.startsWith('sub')) btn.innerHTML = "Show Solution ▼";
+        }
     }
 </script>
-<script src="whiteboard.js?v=1.2"></script>
+
+<!-- Pro Whiteboard Plugin -->
+<script src="whiteboard.js?v=1.3"></script>
+
 </body>
 </html>
