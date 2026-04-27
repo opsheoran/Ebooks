@@ -1,71 +1,89 @@
 /**
- * ── TEACHER'S TRANSPARENT OVERLAY WHITEBOARD (Professional Pen-Tablet Edition) ──
- * Optimized for Wacom/Writing Pads and Real-Time persistence.
+ * ── TEACHER'S FLOATING POPUP WHITEBOARD ──
+ * Optimized for simultaneous viewing of content and writing.
  */
 
 (function() {
-    // 1. Create Overlay HTML Structure
-    const overlayHTML = `
-        <div id="whiteboard-overlay" class="whiteboard-overlay">
-            <canvas id="overlay-canvas"></canvas>
-            
-            <div class="overlay-toolbar">
-                <button class="overlay-tool-btn active" id="overlay-pen" title="Pen (P)"><i class="fas fa-pen"></i></button>
-                <button class="overlay-tool-btn" id="overlay-eraser" title="Eraser (E)"><i class="fas fa-eraser"></i></button>
-                <button class="overlay-tool-btn" id="overlay-scroll" title="Scroll Mode (S)"><i class="fas fa-arrows-alt"></i></button>
-                <button class="overlay-tool-btn" id="overlay-clear" title="Clear All"><i class="fas fa-trash-alt"></i></button>
-                
-                <hr style="opacity:0.2">
-                
-                <div class="overlay-color-dot active" style="background: #000000;" data-color="#000000"></div>
-                <div class="overlay-color-dot" style="background: #9B2335;" data-color="#9B2335"></div>
-                <div class="overlay-color-dot" style="background: #3D6B5A;" data-color="#3D6B5A"></div>
-                <div class="overlay-color-dot" style="background: #1D6FA4;" data-color="#1D6FA4"></div>
-                <div class="overlay-color-dot" style="background: #ffffff;" data-color="#ffffff"></div>
-                
-                <hr style="opacity:0.2">
-                
-                <input type="range" min="1" max="40" value="4" class="overlay-size-slider" id="overlay-size">
-                
-                <button class="overlay-tool-btn" id="overlay-close" title="Exit Draw Mode" style="background:#9B2335; margin-top:10px;">
-                    <i class="fas fa-times"></i>
-                </button>
+    // 1. Create Popup HTML Structure
+    const popupHTML = `
+        <div id="whiteboard-popup" class="whiteboard-popup">
+            <div class="popup-header" id="popup-drag-handle">
+                <h3><i class="fas fa-chalkboard"></i> Teacher's Canvas</h3>
+                <button class="popup-close" id="popup-close-btn"><i class="fas fa-times"></i></button>
             </div>
             
-            <div id="scroll-hint" style="position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(27,42,74,0.9); color:white; padding:8px 16px; border-radius:20px; font-size:0.8rem; pointer-events:none; display:none; z-index:10000;">
-                <i class="fas fa-info-circle"></i> Scroll Mode Active: Use pen/mouse to drag the page.
+            <div class="popup-canvas-container" id="popup-canvas-wrap">
+                <canvas id="popup-canvas"></canvas>
+            </div>
+            
+            <div class="popup-toolbar">
+                <button class="popup-tool-btn active" id="pop-pen" title="Pen"><i class="fas fa-pen"></i></button>
+                <button class="popup-tool-btn" id="pop-eraser" title="Eraser"><i class="fas fa-eraser"></i></button>
+                <button class="popup-tool-btn" id="pop-clear" title="Clear All"><i class="fas fa-trash-alt"></i></button>
+                
+                <div style="width:1px; height:24px; background:#DDD8CF; margin:0 5px;"></div>
+                
+                <div class="popup-color-dot active" style="background: #000000;" data-color="#000000"></div>
+                <div class="popup-color-dot" style="background: #9B2335;" data-color="#9B2335"></div>
+                <div class="popup-color-dot" style="background: #3D6B5A;" data-color="#3D6B5A"></div>
+                <div class="popup-color-dot" style="background: #1D6FA4;" data-color="#1D6FA4"></div>
+                
+                <div style="width:1px; height:24px; background:#DDD8CF; margin:0 5px;"></div>
+                
+                <input type="range" min="1" max="30" value="3" class="popup-size-slider" id="pop-size">
+                
+                <button class="popup-tool-btn" id="pop-save" title="Save Image" style="margin-left:auto;">
+                    <i class="fas fa-download"></i>
+                </button>
             </div>
         </div>
     `;
 
-    document.body.insertAdjacentHTML('beforeend', overlayHTML);
+    document.body.insertAdjacentHTML('beforeend', popupHTML);
 
     // 2. Elements & State
-    const overlay = document.getElementById('whiteboard-overlay');
-    const canvas = document.getElementById('overlay-canvas');
-    const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
-    const scrollHint = document.getElementById('scroll-hint');
-    
+    const popup = document.getElementById('whiteboard-popup');
+    const canvas = document.getElementById('popup-canvas');
+    const ctx = canvas.getContext('2d', { desynchronized: true });
+    const container = document.getElementById('popup-canvas-wrap');
+    const dragHandle = document.getElementById('popup-drag-handle');
+
+    // Inject toggle button into header
+    function injectButton() {
+        const header = document.querySelector('.book-header');
+        if (header && !document.getElementById('draw-mode-btn')) {
+            header.insertAdjacentHTML('beforeend', `
+                <button class="draw-mode-toggle" id="draw-mode-btn">
+                    <i class="fas fa-chalkboard"></i> Open Whiteboard
+                </button>
+            `);
+        }
+    }
+    injectButton();
+
     let isDrawing = false;
-    let isScrolling = false;
-    let currentTool = 'pen'; // 'pen', 'eraser', 'scroll'
+    let currentTool = 'pen';
     let currentColor = '#000000';
-    let currentSize = 4;
+    let currentSize = 3;
     let lastX = 0, lastY = 0;
 
     // 3. Canvas Initialization
     function initCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        // Set internal resolution to match displayed size
+        canvas.width = container.clientWidth;
+        canvas.height = container.clientHeight;
+        
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-        applyBrushSettings();
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        applyBrush();
     }
 
-    function applyBrushSettings() {
+    function applyBrush() {
         if (currentTool === 'eraser') {
             ctx.globalCompositeOperation = 'destination-out';
-            ctx.lineWidth = currentSize * 5;
+            ctx.lineWidth = currentSize * 6;
         } else {
             ctx.globalCompositeOperation = 'source-over';
             ctx.strokeStyle = currentColor;
@@ -73,159 +91,137 @@
         }
     }
 
-    // 4. Input Handling (Optimized for Writing Pads)
+    // 4. Drawing Logic
     function getPos(e) {
         const rect = canvas.getBoundingClientRect();
         if (e.touches && e.touches.length > 0) {
-            return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+            return { 
+                x: e.touches[0].clientX - rect.left, 
+                y: e.touches[0].clientY - rect.top 
+            };
         }
-        return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        return { 
+            x: e.clientX - rect.left, 
+            y: e.clientY - rect.top 
+        };
     }
 
-    function startAction(e) {
-        if (!overlay.classList.contains('active')) return;
-        
+    function startDraw(e) {
+        isDrawing = true;
         const pos = getPos(e);
         lastX = pos.x;
         lastY = pos.y;
-
-        if (currentTool === 'scroll') {
-            isScrolling = true;
-        } else {
-            isDrawing = true;
-            // Draw a dot immediately for pen taps
-            ctx.beginPath();
-            ctx.arc(lastX, lastY, ctx.lineWidth / 2, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-        }
+        
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
     }
 
-    function handleMove(e) {
-        if (!isDrawing && !isScrolling) return;
+    function draw(e) {
+        if (!isDrawing) return;
         if (e.cancelable) e.preventDefault();
 
         const pos = getPos(e);
-
-        if (isScrolling) {
-            const dy = lastY - pos.y;
-            window.scrollBy(0, dy);
-            lastX = pos.x;
-            lastY = pos.y;
-        } else if (isDrawing) {
-            ctx.lineTo(pos.x, pos.y);
-            ctx.stroke();
-            lastX = pos.x;
-            lastY = pos.y;
-        }
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        [lastX, lastY] = [pos.x, pos.y];
     }
 
-    function stopAction() {
+    function stopDraw() {
         isDrawing = false;
-        isScrolling = false;
-        ctx.beginPath();
     }
 
-    // 5. Tool Switching
-    function setTool(tool) {
-        currentTool = tool;
-        isScrolling = false;
-        isDrawing = false;
-        
-        document.querySelectorAll('.overlay-tool-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById(`overlay-${tool}`).classList.add('active');
-        
-        if (tool === 'scroll') {
-            canvas.style.cursor = 'grab';
-            scrollHint.style.display = 'block';
-        } else {
-            canvas.style.cursor = 'crosshair';
-            scrollHint.style.display = 'none';
-        }
-        applyBrushSettings();
-    }
+    // 5. Dragging Logic
+    let isDragging = false;
+    let dragStartX, dragStartY;
 
-    // 6. Listeners
-    window.addEventListener('resize', initCanvas);
-    initCanvas();
+    dragHandle.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragStartX = e.clientX - popup.offsetLeft;
+        dragStartY = e.clientY - popup.offsetTop;
+    });
 
-    canvas.addEventListener('mousedown', startAction);
-    window.addEventListener('mousemove', handleMove);
-    window.addEventListener('mouseup', stopAction);
+    window.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        popup.style.left = (e.clientX - dragStartX) + 'px';
+        popup.style.top = (e.clientY - dragStartY) + 'px';
+        popup.style.right = 'auto'; // Break the initial "right: 40px"
+    });
 
-    canvas.addEventListener('touchstart', startAction, { passive: false });
-    canvas.addEventListener('touchmove', handleMove, { passive: false });
-    canvas.addEventListener('touchend', stopAction);
+    window.addEventListener('mouseup', () => isDragging = false);
 
-    // Inject toggle button into header
-    function injectButton() {
-        const header = document.querySelector('.book-header');
-        if (header && !document.getElementById('draw-mode-btn')) {
-            header.insertAdjacentHTML('beforeend', `
-                <button class="draw-mode-toggle" id="draw-mode-btn" style="z-index: 10001; position: relative;">
-                    <i class="fas fa-edit"></i> Draw Mode
-                </button>
-            `);
-        }
-    }
-    injectButton();
+    // 6. UI Event Listeners
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    window.addEventListener('mouseup', stopDraw);
 
-    // Header Button Logic
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stopDraw);
+
+    // Toggle Button
     document.addEventListener('click', (e) => {
-        if (e.target.id === 'draw-mode-btn' || e.target.closest('#draw-mode-btn')) {
-            const btn = document.getElementById('draw-mode-btn');
-            const isActive = overlay.classList.toggle('active');
+        const btn = e.target.closest('#draw-mode-btn');
+        if (btn) {
+            const isActive = popup.classList.toggle('active');
             btn.classList.toggle('active');
-            
             if (isActive) {
-                btn.innerHTML = '<i class="fas fa-times"></i> Exit Draw';
-                setTool('pen');
+                btn.innerHTML = '<i class="fas fa-times"></i> Close Whiteboard';
+                initCanvas();
             } else {
-                btn.innerHTML = '<i class="fas fa-edit"></i> Draw Mode';
-                setTool('scroll'); // Reset cursor
-                overlay.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-chalkboard"></i> Open Whiteboard';
             }
         }
     });
 
-    // Toolbar Listeners
-    document.getElementById('overlay-pen').addEventListener('click', () => setTool('pen'));
-    document.getElementById('overlay-eraser').addEventListener('click', () => setTool('eraser'));
-    document.getElementById('overlay-scroll').addEventListener('click', () => setTool('scroll'));
-    
-    document.getElementById('overlay-clear').addEventListener('click', () => {
-        if (confirm('Clear all drawings?')) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    });
-
-    document.getElementById('overlay-close').addEventListener('click', () => {
+    document.getElementById('popup-close-btn').addEventListener('click', () => {
         document.getElementById('draw-mode-btn').click();
     });
 
-    document.querySelectorAll('.overlay-color-dot').forEach(dot => {
+    document.getElementById('pop-pen').addEventListener('click', function() {
+        currentTool = 'pen';
+        setActiveTool(this);
+        applyBrush();
+    });
+
+    document.getElementById('pop-eraser').addEventListener('click', function() {
+        currentTool = 'eraser';
+        setActiveTool(this);
+        applyBrush();
+    });
+
+    function setActiveTool(btn) {
+        document.querySelectorAll('.popup-tool-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    document.querySelectorAll('.popup-color-dot').forEach(dot => {
         dot.addEventListener('click', function() {
             currentColor = this.getAttribute('data-color');
-            document.querySelectorAll('.overlay-color-dot').forEach(d => d.classList.remove('active'));
+            document.querySelectorAll('.popup-color-dot').forEach(d => d.classList.remove('active'));
             this.classList.add('active');
-            setTool('pen');
+            currentTool = 'pen';
+            setActiveTool(document.getElementById('pop-pen'));
+            applyBrush();
         });
     });
 
-    document.getElementById('overlay-size').addEventListener('input', function() {
+    document.getElementById('pop-size').addEventListener('input', function() {
         currentSize = this.value;
-        applyBrushSettings();
+        applyBrush();
     });
 
-    // Keyboard Shortcuts
-    window.addEventListener('keydown', (e) => {
-        if (!overlay.classList.contains('active')) return;
-        const key = e.key.toLowerCase();
-        if (key === 'p') setTool('pen');
-        if (key === 'e') setTool('scroll'); // Toggle scroll with S
-        if (key === 's') setTool('scroll');
-        if (key === 'escape') document.getElementById('draw-mode-btn').click();
+    document.getElementById('pop-clear').addEventListener('click', () => {
+        if (confirm('Clear the whiteboard?')) {
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+    });
+
+    document.getElementById('pop-save').addEventListener('click', () => {
+        const link = document.createElement('a');
+        link.download = 'whiteboard-notes.png';
+        link.href = canvas.toDataURL();
+        link.click();
     });
 
 })();
