@@ -1,0 +1,121 @@
+/* ── WHITEBOARD OVERLAY STYLES ── */
+
+.whiteboard-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998;
+    pointer-events: none; /* Allows interaction with page text when inactive */
+    display: none;
+}
+
+.whiteboard-overlay.active {
+    display: block;
+    pointer-events: auto; /* Captures mouse for drawing */
+}
+
+#overlay-canvas {
+    background: transparent;
+    display: block;
+}
+
+/* ── OVERLAY TOOLBAR ── */
+.overlay-toolbar {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #1B2A4A; /* var(--navy) */
+    padding: 12px;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    border: 2px solid #C8922A; /* var(--gold) */
+    z-index: 9999;
+}
+
+.overlay-tool-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+
+.overlay-tool-btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.1);
+}
+
+.overlay-tool-btn.active {
+    background: #C8922A;
+    color: #1B2A4A;
+}
+
+.overlay-color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    cursor: pointer;
+}
+
+.overlay-color-dot.active {
+    border-color: #fff;
+}
+
+.overlay-size-slider {
+    width: 80px;
+    appearance: none;
+    background: rgba(255,255,255,0.2);
+    height: 4px;
+    border-radius: 2px;
+    transform: rotate(-90deg);
+    margin: 30px 0;
+}
+
+.overlay-size-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #E8B84B;
+}
+
+/* ── HEADER BUTTON ── */
+.draw-mode-toggle {
+    background: #C8922A;
+    color: #1B2A4A;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+}
+
+.draw-mode-toggle:hover {
+    background: #E8B84B;
+    transform: translateY(-1px);
+}
+
+.draw-mode-toggle.active {
+    background: #9B2335;
+    color: #fff;
+}
