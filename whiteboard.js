@@ -158,6 +158,19 @@
     canvas.addEventListener('touchmove', handleMove, { passive: false });
     canvas.addEventListener('touchend', stopAction);
 
+    // Inject toggle button into header
+    function injectButton() {
+        const header = document.querySelector('.book-header');
+        if (header && !document.getElementById('draw-mode-btn')) {
+            header.insertAdjacentHTML('beforeend', `
+                <button class="draw-mode-toggle" id="draw-mode-btn" style="z-index: 10001; position: relative;">
+                    <i class="fas fa-edit"></i> Draw Mode
+                </button>
+            `);
+        }
+    }
+    injectButton();
+
     // Header Button Logic
     document.addEventListener('click', (e) => {
         if (e.target.id === 'draw-mode-btn' || e.target.closest('#draw-mode-btn')) {
