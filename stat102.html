@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAT-M-102 · Probability Theory | Statistics 102</title>
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Playfair Display + Source Serif + DM Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM — Professional Textbook
+           Palette: Deep Navy · Warm Ivory · Golden Amber · Sage Green
+        ============================================================ */
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
+        }
+
+        .book-header .menu-toggle {
+            display: none;
+            background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 42px; height: 42px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(200,146,42,.4); border-radius: 4px; }
+
+        .sidebar-brand {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 3px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            color: rgba(255,255,255,.55);
+            line-height: 1.4;
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+        .nav-item { margin: 1px 0; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            font-weight: 400;
+            transition: all .2s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-left-color: rgba(200,146,42,.6);
+        }
+
+        .nav-link.active {
+            background: rgba(200,146,42,.18);
+            color: var(--gold-light);
+            border-left-color: var(--gold);
+            font-weight: 500;
+        }
+
+        .nav-link .nav-icon {
+            font-size: .85rem;
+            width: 22px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link .nav-num {
+            font-size: .7rem;
+            background: rgba(255,255,255,.12);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-weight: 600;
+            min-width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link.active .nav-num {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .nav-divider {
+            height: 1px;
+            background: rgba(255,255,255,.08);
+            margin: 8px 12px;
+        }
+
+        /* Unit links with coloured left accent */
+        .nav-link.unit-link { font-weight: 500; }
+        .nav-link.unit-link:hover { background: rgba(255,255,255,.1); }
+        .u1 { border-left-color: transparent; }
+        .u1:hover, .u1.active { border-left-color: #4CA3DD; background: rgba(76,163,221,.12); color: #a8d8f8; }
+        .u2 { border-left-color: transparent; }
+        .u2:hover, .u2.active { border-left-color: #50C878; background: rgba(80,200,120,.12); color: #9ee8bc; }
+        .u3 { border-left-color: transparent; }
+        .u3:hover, .u3.active { border-left-color: #E8B84B; background: rgba(232,184,75,.12); color: #f5d98e; }
+        .u4 { border-left-color: transparent; }
+        .u4:hover, .u4.active { border-left-color: #E07B5A; background: rgba(224,123,90,.12); color: #f5bfab; }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 860px);
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        /* ── SECTIONS SHOW/HIDE ───────────────────────────────────── */
+        .page-section { display: none; animation: fadeSlideIn .45s ease; }
+        .page-section.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── HERO BANNER ──────────────────────────────────────────── */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 60%, #3a5a9a 100%);
+            border-radius: var(--radius);
+            padding: 48px 44px 40px;
+            color: #fff;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute; top: -60px; right: -60px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(200,146,42,.2) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute; bottom: -80px; left: 40%;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(76,163,221,.12) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(200,146,42,.25);
+            border: 1px solid rgba(200,146,42,.45);
+            color: var(--gold-light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 16px;
+        }
+
+        .hero-banner h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-banner h1 span { color: var(--gold-light); }
+
+        .hero-banner .hero-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            color: rgba(255,255,255,.7);
+            margin-bottom: 24px;
+            font-style: italic;
+            position: relative; z-index: 1;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative; z-index: 1;
+        }
+
+        .hero-chip {
+            background: rgba(255,255,255,.1);
+            border: 1px solid rgba(255,255,255,.18);
+            color: rgba(255,255,255,.88);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            padding: 5px 14px;
+            border-radius: 20px;
+            display: flex; align-items: center; gap: 6px;
+        }
+
+        /* ── CARD GRID ────────────────────────────────────────────── */
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+            gap: 22px;
+            margin-bottom: 36px;
+        }
+
+        .unit-card {
+            background: var(--ivory);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 26px 28px 24px;
+            box-shadow: var(--shadow-sm);
+            transition: transform .25s ease, box-shadow .25s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+        }
+
+        .unit-card.c1::before { background: linear-gradient(90deg, #4CA3DD, #1D6FA4); }
+        .unit-card.c2::before { background: linear-gradient(90deg, #50C878, #3D6B5A); }
+        .unit-card.c3::before { background: linear-gradient(90deg, #E8B84B, #C8922A); }
+        .unit-card.c4::before { background: linear-gradient(90deg, #E07B5A, #9B2335); }
+
+        .unit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .unit-card-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 14px;
+        }
+
+        .unit-icon {
+            width: 46px; height: 46px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .unit-card.c1 .unit-icon { background: #EAF4FB; }
+        .unit-card.c2 .unit-icon { background: var(--sage-light); }
+        .unit-card.c3 .unit-icon { background: var(--gold-pale); }
+        .unit-card.c4 .unit-icon { background: var(--crimson-light); }
+
+        .unit-card-meta { flex: 1; }
+
+        .unit-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+            margin-bottom: 2px;
+        }
+
+        .unit-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.3;
+        }
+
+        .unit-topics {
+            list-style: none;
+            margin: 0 0 18px;
+            padding: 0;
+        }
+
+        .unit-topics li {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .835rem;
+            color: var(--text-mid);
+            padding: 3px 0 3px 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .unit-topics li::before {
+            content: '›';
+            position: absolute; left: 4px;
+            color: var(--text-soft);
+            font-size: 1rem;
+            line-height: 1.3;
+        }
+
+        .unit-card-footer {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .unit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 16px;
+            border-radius: 6px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all .2s;
+            border: 2px solid;
+        }
+
+        .unit-card.c1 .unit-btn { color: #1D6FA4; border-color: #4CA3DD; }
+        .unit-card.c1 .unit-btn:hover { background: #EAF4FB; }
+        .unit-card.c2 .unit-btn { color: var(--sage); border-color: #50C878; }
+        .unit-card.c2 .unit-btn:hover { background: var(--sage-light); }
+        .unit-card.c3 .unit-btn { color: var(--gold); border-color: var(--gold-light); }
+        .unit-card.c3 .unit-btn:hover { background: var(--gold-pale); }
+        .unit-card.c4 .unit-btn { color: var(--crimson); border-color: #E07B5A; }
+        .unit-card.c4 .unit-btn:hover { background: var(--crimson-light); }
+
+        .unit-card-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1;
+            opacity: .06;
+            position: absolute;
+            bottom: 14px; right: 18px;
+            color: var(--navy);
+        }
+
+        /* ── SECTION CARD ─────────────────────────────────────────── */
+        .section-card {
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            margin-bottom: 28px;
+        }
+
+        .section-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: baseline; gap: 10px;
+        }
+
+        .section-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 28px 0 12px;
+        }
+
+        .section-card p {
+            margin-bottom: 14px;
+            color: var(--text-mid);
+            line-height: 1.85;
+        }
+
+        /* ── PREFACE SPECIFIC ─────────────────────────────────────── */
+        .preface-drop {
+            float: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 4.2rem;
+            font-weight: 900;
+            color: var(--navy);
+            line-height: .85;
+            margin: 4px 12px 0 0;
+            padding: 4px 6px;
+            background: var(--gold-pale);
+            border-radius: 4px;
+        }
+
+        .preface-quote {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin: 24px 0;
+            position: relative;
+        }
+
+        .preface-quote::before {
+            content: '\201C';
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            color: rgba(200,146,42,.35);
+            position: absolute;
+            top: -10px; left: 18px;
+            line-height: 1;
+        }
+
+        .preface-quote p {
+            color: rgba(255,255,255,.9);
+            font-style: italic;
+            font-size: 1.1rem;
+            padding-left: 18px;
+            margin: 0;
+        }
+
+        .preface-quote .quote-attr {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            color: var(--gold-light);
+            margin-top: 10px;
+            padding-left: 18px;
+            font-style: normal;
+        }
+
+        .highlight-box {
+            background: var(--sky-light);
+            border-left: 4px solid var(--sky);
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+
+        .highlight-box p { color: var(--text-dark); margin: 0; }
+
+        .author-sig {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .author-sig .sig-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .author-sig .sig-title {
+            font-size: .88rem;
+            color: var(--text-soft);
+            margin-top: 2px;
+        }
+
+        /* ── FROM AUTHOR ──────────────────────────────────────────── */
+        .author-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 28px;
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            border-radius: var(--radius);
+            padding: 32px 36px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-md);
+            color: #fff;
+        }
+
+        .author-avatar {
+            width: 90px; height: 90px;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--navy);
+            flex-shrink: 0;
+            border: 3px solid rgba(255,255,255,.2);
+        }
+
+        .author-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .author-info .a-title {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            color: var(--gold-light);
+            font-weight: 500;
+        }
+
+        .author-info .a-dept {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            color: rgba(255,255,255,.55);
+            margin-top: 2px;
+        }
+
+        /* ── SYLLABUS TABLE ───────────────────────────────────────── */
+        .syllabus-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            margin: 20px 0;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .syllabus-table thead th {
+            background: var(--navy);
+            color: #fff;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+
+        .syllabus-table tbody tr:nth-child(even) { background: var(--gold-pale); }
+        .syllabus-table tbody tr:nth-child(odd)  { background: var(--ivory); }
+        .syllabus-table tbody tr:hover { background: var(--sky-light); }
+
+        .syllabus-table td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            color: var(--text-mid);
+        }
+
+        .syllabus-table td:first-child {
+            font-weight: 700;
+            color: var(--navy);
+            white-space: nowrap;
+        }
+
+        /* ── REFERENCES LIST ──────────────────────────────────────── */
+        .ref-list { counter-reset: refs; list-style: none; padding: 0; }
+        .ref-list li {
+            counter-increment: refs;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--ivory);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            color: var(--text-mid);
+            line-height: 1.55;
+        }
+
+        .ref-list li::before {
+            content: counter(refs);
+            min-width: 24px; height: 24px;
+            background: var(--navy);
+            color: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .75rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        /* ── STAT PILLS (home page) ───────────────────────────────── */
+        .stats-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .stat-pill {
+            background: var(--ivory);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 14px 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-pill .snum {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--navy);
+            display: block;
+        }
+
+        .stat-pill .slbl {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: .6px;
+        }
+
+        /* ── FOOTER ───────────────────────────────────────────────── */
+        .book-footer {
+            background: var(--navy);
+            color: rgba(255,255,255,.75);
+            text-align: center;
+            padding: 24px;
+            margin-top: 48px;
+            border-radius: 12px 12px 0 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+        .book-footer strong { color: var(--gold-light); }
+
+        .book-footer .university {
+            margin-top: 6px;
+            font-size: .82rem;
+            opacity: .7;
+        }
+
+        /* ── SCROLLBAR ────────────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: var(--paper); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b0a89a; }
+
+        /* ── RESPONSIVE ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+            :root { --sidebar-w: 260px; }
+            .main-content { padding: 28px 30px 50px; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --sidebar-w: 280px; }
+            .book-header .menu-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 20px 18px 40px; max-width: 100%; }
+            .hero-banner h1 { font-size: 2rem; }
+            .unit-grid { grid-template-columns: 1fr; }
+            .author-card { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- TOP HEADER -->
+<header class="book-header">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+    <div class="header-icon">📐</div>
+    <div class="header-text">
+        <h1>Statistics 102</h1>
+        <div class="subtitle">STAT-M-102 · PROBABILITY THEORY</div>
+    </div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
+</header>
+
+<!-- SIDEBAR NAVIGATION -->
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>STAT-M-102</h2>
+        <p>Probability Theory<br>CCS Haryana Agricultural University</p>
+    </div>
+
+    <div class="nav-group-label">Book Sections</div>
+    <ul class="nav-list">
+        <li class="nav-item">
+            <a class="nav-link active" href="#" onclick="showSection('home'); return false;">
+                <span class="nav-icon"><i class="fas fa-home"></i></span> Home
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showSection('preface'); return false;">
+                <span class="nav-icon"><i class="fas fa-scroll"></i></span> Preface
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showSection('syllabus'); return false;">
+                <span class="nav-icon"><i class="fas fa-list-alt"></i></span> Syllabus
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showSection('author'); return false;">
+                <span class="nav-icon"><i class="fas fa-user-tie"></i></span> From the Author
+            </a>
+        </li>
+    </ul>
+
+    <div class="nav-divider"></div>
+    <div class="nav-group-label">Course Units</div>
+    <ul class="nav-list">
+        <li class="nav-item">
+            <a class="nav-link unit-link u1" href="Unit-I.html">
+                <span class="nav-num">I</span>
+                Concepts in Probability
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link unit-link u2" href="Unit-II.html">
+                <span class="nav-num">II</span>
+                Conditional Probability
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link unit-link u3" href="Unit-III.html">
+                <span class="nav-num">III</span>
+                Random Variables &amp; Distributions
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link unit-link u4" href="Unit-IV.html">
+                <span class="nav-num">IV</span>
+                Mathematical Expectation
+            </a>
+        </li>
+    </ul>
+
+    <div class="nav-divider"></div>
+    <div class="nav-group-label">Resources</div>
+    <ul class="nav-list">
+        <li class="nav-item">
+            <a class="nav-link" href="#" onclick="showSection('syllabus'); return false;">
+                <span class="nav-icon"><i class="fas fa-book-open"></i></span> Suggested Readings
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="main-content">
+
+    <!-- ═══════════════════════════════ HOME ══════════════════════════════════ -->
+    <section class="page-section active" id="home">
+
+        <div class="hero-banner">
+            <div class="hero-tag">STAT-M-102 · Semester II · 2 + 0 Credits</div>
+            <h1>Probability<br><span>Theory</span></h1>
+            <p class="hero-sub">A rigorous journey from classical chance to modern axiomatic frameworks</p>
+            <div class="hero-meta">
+                <span class="hero-chip"><i class="fas fa-university"></i> CCS Haryana Agricultural University</span>
+                <span class="hero-chip"><i class="fas fa-chalkboard-teacher"></i> Prof. O.P. Sheoran</span>
+                <span class="hero-chip"><i class="fas fa-layer-group"></i> 4 Units</span>
+                <span class="hero-chip"><i class="fas fa-clock"></i> Semester II</span>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-row">
+            <div class="stat-pill">
+                <span class="snum">4</span>
+                <span class="slbl">Units</span>
+            </div>
+            <div class="stat-pill">
+                <span class="snum">2</span>
+                <span class="slbl">Credits</span>
+            </div>
+            <div class="stat-pill">
+                <span class="snum">5</span>
+                <span class="slbl">References</span>
+            </div>
+            <div class="stat-pill">
+                <span class="snum">II</span>
+                <span class="slbl">Semester</span>
+            </div>
+            <div class="stat-pill">
+                <span class="snum">∞</span>
+                <span class="slbl">Possibilities</span>
+            </div>
+        </div>
+
+        <!-- Unit Cards -->
+        <div class="unit-grid">
+            <!-- Unit I -->
+            <a class="unit-card c1" href="Unit-I.html">
+                <div class="unit-card-header">
+                    <div class="unit-icon">🎲</div>
+                    <div class="unit-card-meta">
+                        <div class="unit-label">Unit I</div>
+                        <h3>Concepts in Probability</h3>
+                    </div>
+                </div>
+                <ul class="unit-topics">
+                    <li>Random experiment, trial, sample space</li>
+                    <li>Operations on events; exhaustive, exclusive &amp; independent events</li>
+                    <li>Classical, frequency, statistical &amp; axiomatic definitions</li>
+                </ul>
+                <div class="unit-card-footer">
+                    <span class="unit-btn">Open Unit I <i class="fas fa-arrow-right"></i></span>
+                </div>
+                <span class="unit-card-num">I</span>
+            </a>
+
+            <!-- Unit II -->
+            <a class="unit-card c2" href="Unit-II.html">
+                <div class="unit-card-header">
+                    <div class="unit-icon">🔗</div>
+                    <div class="unit-card-meta">
+                        <div class="unit-label">Unit II</div>
+                        <h3>Conditional Probability</h3>
+                    </div>
+                </div>
+                <ul class="unit-topics">
+                    <li>Addition &amp; multiplication laws extended to \(n\) events</li>
+                    <li>Boole's inequality</li>
+                    <li>Bayes' theorem and its applications</li>
+                </ul>
+                <div class="unit-card-footer">
+                    <span class="unit-btn">Open Unit II <i class="fas fa-arrow-right"></i></span>
+                </div>
+                <span class="unit-card-num">II</span>
+            </a>
+
+            <!-- Unit III -->
+            <a class="unit-card c3" href="Unit-III.html">
+                <div class="unit-card-header">
+                    <div class="unit-icon">📊</div>
+                    <div class="unit-card-meta">
+                        <div class="unit-label">Unit III</div>
+                        <h3>Random Variables &amp; Distributions</h3>
+                    </div>
+                </div>
+                <ul class="unit-topics">
+                    <li>Discrete &amp; continuous random variables; PMF, PDF</li>
+                    <li>Distribution function and its properties</li>
+                    <li>Joint, marginal &amp; conditional distributions</li>
+                </ul>
+                <div class="unit-card-footer">
+                    <span class="unit-btn">Open Unit III <i class="fas fa-arrow-right"></i></span>
+                </div>
+                <span class="unit-card-num">III</span>
+            </a>
+
+            <!-- Unit IV -->
+            <a class="unit-card c4" href="Unit-IV.html">
+                <div class="unit-card-header">
+                    <div class="unit-icon">📈</div>
+                    <div class="unit-card-meta">
+                        <div class="unit-label">Unit IV</div>
+                        <h3>Mathematical Expectation</h3>
+                    </div>
+                </div>
+                <ul class="unit-topics">
+                    <li>Moments; addition &amp; multiplication theorem of expectation</li>
+                    <li>Conditional expectation &amp; variance</li>
+                    <li>MGF, CGF, PGF &amp; Characteristic function</li>
+                </ul>
+                <div class="unit-card-footer">
+                    <span class="unit-btn">Open Unit IV <i class="fas fa-arrow-right"></i></span>
+                </div>
+                <span class="unit-card-num">IV</span>
+            </a>
+        </div>
+
+        <!-- Brief About -->
+        <div class="section-card">
+            <h2><i class="fas fa-info-circle" style="color:var(--sky);font-size:1.3rem;"></i> About This Course</h2>
+            <p>
+                <strong>STAT-M-102: Probability Theory</strong> is a core course offered in Semester II carrying 2 credit hours (theory). It lays the rigorous mathematical foundations of probability — an indispensable language of uncertainty — that underpins all subsequent courses in mathematical statistics, stochastic processes, and data science.
+            </p>
+            <p>
+                The course opens with the classical and axiomatic conceptions of probability (Unit I), advances through conditional probability and Bayes' theorem (Unit II), introduces the all-important notion of random variables and their distribution functions (Unit III), and culminates in the powerful machinery of mathematical expectation, generating functions, and characteristic functions (Unit IV).
+            </p>
+            <div class="highlight-box">
+                <p><i class="fas fa-lightbulb" style="color:var(--sky);margin-right:6px;"></i>
+                Each unit contains detailed theory, worked examples, practice problems, and multiple-choice questions to reinforce understanding and prepare students for examinations.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════ PREFACE ═══════════════════════════════ -->
+    <section class="page-section" id="preface">
+
+        <div class="section-card">
+            <h2><i class="fas fa-scroll" style="color:var(--gold);font-size:1.3rem;"></i> Preface</h2>
+
+            <p><span class="preface-drop">P</span>robability theory stands at the very heart of modern statistics, science, and rational thought. From the toss of a coin to the modelling of complex natural phenomena, the language of probability is inescapable for anyone who wishes to reason carefully about uncertainty. This web-based textbook on <em>Probability Theory</em> has been prepared to serve the students of <strong>STAT-M-102</strong> at CCS Haryana Agricultural University, Hisar, in accordance with the prescribed syllabus for Semester II.</p>
+
+            <p>The preparation of this material has been guided by a single overriding principle: <em>clarity without sacrifice of rigour</em>. Every definition is stated precisely, every theorem is accompanied by a proof or an indication of the method of proof, and every abstract concept is illustrated with concrete, accessible examples drawn from everyday experience and agricultural contexts familiar to the students of this university.</p>
+
+            <div class="preface-quote">
+                <p>Probability is the very guide of life.</p>
+                <div class="quote-attr">— Marcus Tullius Cicero, <em>De Natura Deorum</em></div>
+            </div>
+
+            <h3>Scope and Organisation</h3>
+
+            <p>The course is divided into four self-contained yet interconnected units. <strong>Unit I</strong> introduces the fundamental language of probability — sample spaces, events, and their operations — and systematically examines four conceptual approaches to defining probability: the classical, the relative-frequency, the statistical, and the modern axiomatic approach due to Kolmogorov. Students are encouraged to appreciate both the historical development and the logical necessity of each approach.</p>
+
+            <p><strong>Unit II</strong> deepens the study with conditional probability, the multiplication and addition laws, Boole's inequality, and the celebrated theorem of Thomas Bayes — whose applications range from medical diagnostics to spam filters and machine learning classifiers.</p>
+
+            <p><strong>Unit III</strong> introduces the random variable, arguably the single most important concept in the entire theory. Both discrete and continuous types are treated, with careful attention to probability mass functions, probability density functions, distribution functions, and their fundamental properties. Joint, marginal, and conditional distributions are also developed fully.</p>
+
+            <p><strong>Unit IV</strong> develops the analytical tools of mathematical expectation. Moments, conditional expectation and variance, and the three major generating functions — the moment generating function (MGF), cumulant generating function (CGF), and probability generating function (PGF) — are presented along with the characteristic function, whose role in proving limit theorems is briefly indicated.</p>
+
+            <h3>Pedagogical Features</h3>
+
+            <p>Each unit contains (i) a conceptual introduction accessible to first-time readers, (ii) formally stated definitions and theorems, (iii) fully worked solved problems, (iv) sets of practice problems graded in difficulty, and (v) multiple-choice questions for self-assessment. All mathematical notation follows established conventions in the statistical literature, and \(\LaTeX\)-rendered formulae are displayed throughout using MathJax.</p>
+
+            <div class="highlight-box">
+                <p><i class="fas fa-info-circle" style="color:var(--sky);margin-right:6px;"></i>
+                Students are advised to work through the solved examples carefully before attempting the exercises, and to consult the suggested references for alternative treatments of any topic found difficult.</p>
+            </div>
+
+            <h3>Acknowledgements</h3>
+
+            <p>The author wishes to place on record his deep gratitude to the Department of Mathematics &amp; Statistics, CCS Haryana Agricultural University, Hisar, for its continued encouragement, and to the generations of students whose probing questions have, over the years, refined both the content and the presentation of these notes. Thanks are also due to colleagues in the department for their invaluable suggestions during the preparation of this material.</p>
+
+            <p>Constructive feedback from students and readers is most welcome and will be incorporated in future revisions.</p>
+
+            <div class="author-sig">
+                <div class="sig-name">Prof. O.P. Sheoran</div>
+                <div class="sig-title">Department of Mathematics &amp; Statistics</div>
+                <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════ SYLLABUS ══════════════════════════════ -->
+    <section class="page-section" id="syllabus">
+
+        <div class="section-card">
+            <h2><i class="fas fa-list-alt" style="color:var(--sage);font-size:1.3rem;"></i> Course Syllabus</h2>
+
+            <p>The following table presents the detailed unit-wise syllabus for <strong>STAT-M-102: Probability Theory</strong> as prescribed for Semester II.</p>
+
+            <table class="syllabus-table">
+                <thead>
+                    <tr>
+                        <th style="width:90px;">Unit</th>
+                        <th>Title</th>
+                        <th>Topics Covered</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Unit I</td>
+                        <td><strong>Concepts in Probability</strong></td>
+                        <td>Random experiment, trial, sample point, sample space, operations on events. Exhaustive, equally likely, mutually exclusive, and independent events. Classical, relative frequency, statistical, and axiomatic definitions of probability.</td>
+                    </tr>
+                    <tr>
+                        <td>Unit II</td>
+                        <td><strong>Conditional Probability</strong></td>
+                        <td>Addition and multiplication laws of probability and their extension to \(n\) events. Boole's inequality. Bayes' theorem and its applications.</td>
+                    </tr>
+                    <tr>
+                        <td>Unit III</td>
+                        <td><strong>Random Variable &amp; Probability Functions</strong></td>
+                        <td>Definition of random variable: discrete and continuous types. Probability function, PMF and PDF. Distribution function and its properties. Functions of random variables. Joint, marginal, and conditional distribution functions.</td>
+                    </tr>
+                    <tr>
+                        <td>Unit IV</td>
+                        <td><strong>Mathematical Expectation</strong></td>
+                        <td>Definition and properties: moments, addition and multiplication theorem of expectation. Conditional expectation and variance. Moment generating function (MGF), cumulant generating function (CGF), probability generating function (PGF) and their properties. Characteristic function.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Course Details</h3>
+            <table class="syllabus-table">
+                <thead>
+                    <tr><th>Parameter</th><th>Details</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Course Code</td><td>STAT-M-102</td></tr>
+                    <tr><td>Course Title</td><td>Probability Theory</td></tr>
+                    <tr><td>Credit Hours</td><td>2 + 0 (Theory)</td></tr>
+                    <tr><td>Semester</td><td>II</td></tr>
+                    <tr><td>University</td><td>CCS Haryana Agricultural University, Hisar</td></tr>
+                    <tr><td>Instructor</td><td>Prof. O.P. Sheoran</td></tr>
+                </tbody>
+            </table>
+
+            <h3>Suggested Readings</h3>
+            <ol class="ref-list">
+                <li>
+                    <div><strong>Fundamentals of Mathematical Statistics</strong> — Gupta S.C. &amp; Kapoor V.K.<br>
+                    <em>Sultan Chand &amp; Sons, New Delhi (2014)</em></div>
+                </li>
+                <li>
+                    <div><strong>Elementary Probability</strong> — David S.<br>
+                    <em>Oxford University Press (2003)</em></div>
+                </li>
+                <li>
+                    <div><strong>Introduction to Mathematical Statistics</strong> — Hoel P.G.<br>
+                    <em>Asia Publishing House (2018)</em></div>
+                </li>
+                <li>
+                    <div><strong>New Mathematical Statistics</strong> — Bansi Lal &amp; Arora S.<br>
+                    <em>Satya Prakashan, New Delhi</em></div>
+                </li>
+                <li>
+                    <div><strong>Introduction to Mathematical Statistics</strong> — Kapoor &amp; Saxena<br>
+                    <em>S. Chand &amp; Co., New Delhi (1960)</em></div>
+                </li>
+            </ol>
+
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════ FROM AUTHOR ═══════════════════════════ -->
+    <section class="page-section" id="author">
+
+        <div class="author-card">
+            <div class="author-avatar">OS</div>
+            <div class="author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <div class="a-title">Professor, Department of Mathematics &amp; Statistics</div>
+                <div class="a-dept">CCS Haryana Agricultural University, Hisar, Haryana</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2><i class="fas fa-user-tie" style="color:var(--crimson);font-size:1.3rem;"></i> A Note from the Author</h2>
+
+            <p>Dear Students,</p>
+
+            <p>It is with great pleasure that I present these study materials for <strong>Probability Theory (STAT-M-102)</strong>. Over the many years that I have taught probability and statistics at this university, I have become deeply convinced of one thing: <em>a student who truly understands probability will find almost every subsequent course in statistics significantly more accessible.</em></p>
+
+            <p>Probability is not merely a collection of formulae to be memorised before an examination. It is a coherent way of thinking — a discipline for reasoning carefully under uncertainty — and its applications touch every field from agriculture and biology to engineering, economics, and artificial intelligence. The student who masters these four units will have acquired a set of intellectual tools that will serve them for life.</p>
+
+            <div class="preface-quote">
+                <p>The most important questions of life are indeed, for the most part, really only problems of probability.</p>
+                <div class="quote-attr">— Pierre-Simon Laplace, <em>Théorie Analytique des Probabilités</em> (1812)</div>
+            </div>
+
+            <h3>How to Use These Notes</h3>
+
+            <p>These notes have been designed to be read actively, not passively. For each unit, I recommend the following approach:</p>
+
+            <p><strong>1. Read the introduction first</strong> — get an intuitive feel for what the unit is about and why the concepts matter before tackling the formal definitions.</p>
+
+            <p><strong>2. Work through every definition carefully</strong> — do not rush. A blurry understanding of a definition will propagate confusion through every theorem that follows. If a definition uses a term you are unsure about, look it up immediately.</p>
+
+            <p><strong>3. Prove every theorem yourself before reading the proof</strong> — or at least attempt it. Even an unsuccessful attempt trains your mathematical intuition and makes the given proof far more meaningful when you do read it.</p>
+
+            <p><strong>4. Work every solved example independently first</strong> — cover the solution and attempt the problem on your own. Check your reasoning, not just your final answer.</p>
+
+            <p><strong>5. Consult the textbooks</strong> — especially Gupta &amp; Kapoor, which remains the definitive reference for this course. Different authors illuminate different aspects of the same concept, and reading multiple treatments deepens understanding enormously.</p>
+
+            <h3>A Word on Rigour and Intuition</h3>
+
+            <p>Mathematics lives at the intersection of rigour and intuition. In these notes I have tried to provide formal proofs wherever appropriate, but I have equally tried to explain the <em>why</em> behind each result — the intuition that makes the formula not just correct but inevitable. Please do not neglect either side of this coin.</p>
+
+            <p>For instance, Bayes' theorem (Unit II) is a simple algebraic consequence of the definition of conditional probability — but the conceptual leap it represents, the idea of updating beliefs in light of evidence, is one of the most profound ideas in all of intellectual history. The formula is easy; understanding it deeply takes sustained reflection.</p>
+
+            <div class="highlight-box">
+                <p><i class="fas fa-graduation-cap" style="color:var(--sky);margin-right:6px;"></i>
+                <strong>My doors are always open.</strong> If any topic is unclear, please do not hesitate to come to me during office hours, or to contact the department. Understanding, not marks, is the goal.</p>
+            </div>
+
+            <p>I wish you the very best in your studies.</p>
+
+            <div class="author-sig">
+                <div class="sig-name">Prof. O.P. Sheoran</div>
+                <div class="sig-title">Department of Mathematics &amp; Statistics</div>
+                <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="book-footer">
+        <div><strong>STAT-M-102 · Probability Theory</strong></div>
+        <div>Prepared by <strong>Prof. O.P. Sheoran</strong> · Department of Mathematics &amp; Statistics</div>
+        <div class="university">CCS Haryana Agricultural University, Hisar · Semester II</div>
+    </footer>
+
+</main>
+
+<script>
+    /* ── SECTION SWITCHER ─────────────────────────────────────────── */
+    function showSection(id) {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const clicked = document.querySelector(`[onclick*="'${id}'"]`);
+        if (clicked) clicked.classList.add('active');
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        // close mobile sidebar
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+    }
+
+    /* ── MOBILE MENU ──────────────────────────────────────────────── */
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('sidebar');
+        const toggle  = document.querySelector('.menu-toggle');
+        if (window.innerWidth <= 768 &&
+            !sidebar.contains(e.target) &&
+            !toggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+</script>
+
+</body>
+</html>

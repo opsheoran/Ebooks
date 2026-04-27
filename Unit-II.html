@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit II – Conditional Probability, Independence & Bayes' Theorem | Statistics 102</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy:#1B2A4A; --navy-mid:#243555; --navy-light:#2E4270;
+            --gold:#C8922A; --gold-light:#E8B84B; --gold-pale:#FDF3DC;
+            --sage:#3D6B5A; --sage-light:#EEF6F2; --crimson:#9B2335; --crimson-light:#FBF0F1;
+            --sky:#1D6FA4; --sky-light:#EAF4FB; --ivory:#FAFAF7; --paper:#F5F3EE;
+            --border:#DDD8CF; --text-dark:#1C1C1E; --text-mid:#3A3A3C; --text-soft:#6B6B70;
+            --sidebar-w:300px; --header-h:72px; --radius:10px;
+            --shadow-sm:0 2px 8px rgba(27,42,74,.08); --shadow-md:0 4px 20px rgba(27,42,74,.12); --shadow-lg:0 8px 40px rgba(27,42,74,.16);
+        }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:var(--text-dark);line-height:1.78;font-size:16px}
+        .book-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:linear-gradient(110deg,var(--navy) 0%,var(--navy-mid) 50%,var(--navy-light) 100%);color:#fff;z-index:1100;box-shadow:0 3px 20px rgba(0,0,0,.25);display:flex;align-items:center;padding:0 28px;gap:16px}
+        .book-header .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:4px 8px}
+        .header-icon{width:42px;height:42px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+        .header-text h1{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.3px}
+        .header-text .subtitle{font-family:'DM Sans',sans-serif;font-size:.8rem;color:rgba(255,255,255,.7);letter-spacing:.5px}
+        .header-badge{margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;padding:4px 12px;border-radius:20px;letter-spacing:.4px}
+        .sidebar{position:fixed;left:0;top:var(--header-h);width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--navy);overflow-y:auto;z-index:1000;transition:transform .3s ease;scrollbar-width:thin;scrollbar-color:rgba(200,146,42,.4) transparent}
+        .sidebar::-webkit-scrollbar{width:4px}
+        .sidebar::-webkit-scrollbar-thumb{background:rgba(200,146,42,.4);border-radius:4px}
+        .sidebar-brand{padding:20px 20px 14px;border-bottom:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(200,146,42,.15) 0%,transparent 100%)}
+        .sidebar-brand h2{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--gold-light);margin-bottom:3px}
+        .sidebar-brand p{font-family:'DM Sans',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.4}
+        .nav-group-label{font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.35);padding:16px 20px 6px}
+        .nav-list{list-style:none;padding:0 8px 12px}
+        .nav-item{margin:1px 0}
+        .nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;color:rgba(255,255,255,.75);text-decoration:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:400;transition:all .2s ease;border-left:3px solid transparent;cursor:pointer}
+        .nav-link:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:rgba(200,146,42,.6)}
+        .nav-link.active{background:rgba(200,146,42,.18);color:var(--gold-light);border-left-color:var(--gold);font-weight:500}
+        .nav-link .nav-num{font-size:.7rem;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 6px;font-weight:600;min-width:26px;text-align:center;flex-shrink:0}
+        .nav-link.active .nav-num{background:var(--gold);color:var(--navy)}
+        .nav-sub .nav-link{padding-left:28px;font-size:.835rem;color:rgba(255,255,255,.55)}
+        .nav-sub .nav-link:hover,.nav-sub .nav-link.active{color:var(--gold-light)}
+        .main-content{margin-left:var(--sidebar-w);margin-top:var(--header-h);padding:36px 48px 60px;max-width:calc(var(--sidebar-w) + 860px);min-height:calc(100vh - var(--header-h))}
+        .chapter-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);color:#fff;padding:32px 36px;border-radius:var(--radius);margin-bottom:32px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+        .chapter-header::before{content:'';position:absolute;top:-30px;right:-30px;width:180px;height:180px;background:rgba(200,146,42,.12);border-radius:50%}
+        .chapter-header::after{content:'';position:absolute;bottom:-50px;right:60px;width:120px;height:120px;background:rgba(200,146,42,.07);border-radius:50%}
+        .chapter-header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;margin-bottom:6px;line-height:1.2}
+        .chapter-header .author{font-family:'DM Sans',sans-serif;font-size:.95rem;color:rgba(255,255,255,.7);margin-bottom:14px;font-style:italic}
+        .chapter-header .syllabus-tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.6;color:rgba(255,255,255,.85);position:relative;z-index:1}
+        .topic-section{display:none;animation:fadeSlideIn .45s ease}
+        .topic-section.active{display:block}
+        @keyframes fadeSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+        .section-card{background:var(--ivory);border-radius:var(--radius);padding:36px 42px;box-shadow:var(--shadow-sm);border:1px solid var(--border);border-top:4px solid var(--navy)}
+        .section-card h2{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--navy);margin:0 0 20px;padding-bottom:14px;border-bottom:2px solid var(--border);display:flex;align-items:baseline;gap:10px}
+        .section-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--navy-light);margin:32px 0 14px}
+        .section-card h4{font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;color:var(--text-dark);margin:20px 0 8px}
+        .section-card h5{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;color:var(--sky);margin:14px 0 6px;font-style:italic}
+        .section-card p{margin-bottom:12px;text-align:justify;font-size:1.02rem;color:var(--text-mid);line-height:1.82}
+        .section-card ul,.section-card ol{margin:10px 0 14px 28px;line-height:1.75}
+        .section-card li{margin-bottom:5px;color:var(--text-mid);font-size:.99rem}
+        .section-num{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;background:var(--navy);color:var(--gold-light);padding:2px 10px;border-radius:5px;flex-shrink:0}
+        .definition,.theorem,.example,.note,.warning,.key-point,.proof-box{border-radius:8px;padding:18px 22px;margin:20px 0;position:relative}
+        .definition{background:#F3F0FB;border-left:5px solid #6B4FC8;box-shadow:0 2px 10px rgba(107,79,200,.1)}
+        .theorem{background:var(--sage-light);border-left:5px solid var(--sage);box-shadow:0 2px 10px rgba(61,107,90,.1)}
+        .example{background:#FFFBF0;border-left:5px solid var(--gold);box-shadow:0 2px 10px rgba(200,146,42,.1)}
+        .note{background:var(--sky-light);border-left:5px solid var(--sky);box-shadow:0 2px 10px rgba(29,111,164,.1)}
+        .proof-box{background:#F8F5FF;border-left:5px solid #7C3AED;box-shadow:0 2px 10px rgba(124,58,237,.1)}
+        .warning{background:var(--crimson-light);border-left:5px solid var(--crimson);color:#5a1020;box-shadow:0 2px 10px rgba(155,35,53,.1)}
+        .warning strong{color:var(--crimson)}
+        .key-point{background:linear-gradient(135deg,#EAF8F4 0%,#E0F3FF 100%);border-left:5px solid #0E9E6F;box-shadow:0 2px 10px rgba(14,158,111,.1)}
+        .key-point strong{color:#0E6650}
+        .definition h4,.theorem h4,.example h4,.note h4,.warning h4,.key-point h4,.proof-box h4{margin-top:0;margin-bottom:8px;color:var(--text-dark)}
+        .formula-box{background:linear-gradient(135deg,#EEF2FA 0%,#F7F5FF 100%);border:2px dashed var(--navy-light);border-radius:8px;padding:18px 22px;margin:16px 0;text-align:center;font-size:1.12rem}
+        .derivation{background:#F8FAFC;border-left:3px solid var(--sky);padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;font-family:'Source Serif 4',serif;line-height:1.85;color:var(--text-mid)}
+        .proof-step{margin:5px 0 5px 20px;padding-left:12px;border-left:2px solid var(--border);color:var(--text-mid);font-size:.97rem}
+        table{width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-sm)}
+        th{background:var(--navy);color:#fff;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:.3px}
+        td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--text-mid);background:#fff}
+        tr:last-child td{border-bottom:none}
+        tr:nth-child(even) td{background:#FAFAF8}
+        tr:hover td{background:var(--gold-pale);transition:background .15s}
+        .question{background:#fff;border:1px solid var(--border);border-left:4px solid var(--navy-light);padding:16px 20px;margin:14px 0 6px;border-radius:0 8px 8px 0;font-size:1rem;color:var(--text-dark);line-height:1.7}
+        .question strong{color:var(--navy)}
+        .mcq-options{margin:10px 0 8px 20px}
+        .mcq-options p{text-align:left;margin:4px 0;font-size:.95rem;color:var(--text-mid);line-height:1.6}
+        .toggle-btn{background:var(--navy);color:#fff;border:none;padding:7px 18px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;display:inline-flex;align-items:center;gap:5px;transition:all .25s;margin:4px 0 8px;letter-spacing:.3px}
+        .toggle-btn:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(27,42,74,.3)}
+        .answer{display:none;background:#F0FBF5;border-left:4px solid var(--sage);padding:16px 20px;margin:2px 0 12px;border-radius:0 8px 8px 0;animation:fadeSlideIn .3s ease;color:var(--text-dark)!important;font-size:.97rem;line-height:1.75}
+        .answer.show{display:block}
+        .answer p,.answer ul,.answer ol,.answer li,.answer strong,.answer em,.answer .derivation,.answer .proof-step{color:var(--text-dark)!important}
+        .answer .derivation{background:#EFF8F4;border-left-color:var(--sage);color:var(--text-dark)!important}
+        .answer strong{font-weight:700}
+        .answer-key-box{background:var(--navy);color:rgba(255,255,255,.85);padding:18px 22px;border-radius:8px;margin-top:20px;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.8}
+        .answer-key-box strong{color:var(--gold-light)}
+        .quick-ref-table th{background:var(--navy-light)}
+        .book-footer{background:var(--navy);color:rgba(255,255,255,.75);text-align:center;padding:24px;margin-top:48px;border-radius:12px 12px 0 0;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.7}
+        .book-footer strong{color:var(--gold-light)}
+        .book-footer .university{margin-top:6px;font-size:.82rem;opacity:.7}
+        .MathJax{font-size:1.06em!important}
+        mjx-container{display:inline-block!important}
+        ::-webkit-scrollbar{width:7px;height:7px}
+        ::-webkit-scrollbar-track{background:var(--paper)}
+        ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+        ::-webkit-scrollbar-thumb:hover{background:#b0a89a}
+        @media(max-width:1024px){:root{--sidebar-w:260px}.main-content{padding:28px 30px 50px}}
+        @media(max-width:768px){:root{--sidebar-w:280px}.book-header .menu-toggle{display:flex;align-items:center;justify-content:center}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0;padding:20px 18px 40px;max-width:100%}.chapter-header h1{font-size:1.6rem}.section-card{padding:22px 20px}}
+    </style>
+</head>
+<body>
+
+<header class="book-header">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <div class="header-icon">🎲</div>
+    <div class="header-text">
+        <h1>Statistics 102</h1>
+        <div class="subtitle">UNIT II · CONDITIONAL PROBABILITY, INDEPENDENCE & BAYES' THEOREM</div>
+    </div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
+</header>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>Unit II</h2>
+        <p>Conditional Probability & Bayes' Theorem<br>CCS Haryana Agricultural University</p>
+    </div>
+    <div class="nav-group-label">Main Concepts</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showTopic('intro');return false;"><span class="nav-num">📌</span> Introduction</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('conditional');return false;"><span class="nav-num">2.2</span> Conditional Probability</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('conditional');return false;"><span class="nav-num">2.2.3</span> Properties</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('conditional');return false;"><span class="nav-num">2.2.4</span> Worked Examples</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('multiplication');return false;"><span class="nav-num">2.3</span> Multiplication Law</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('multiplication');return false;"><span class="nav-num">2.3.3</span> Chain Rule</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('addition');return false;"><span class="nav-num">2.4</span> Addition Law</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('boole');return false;"><span class="nav-num">2.5</span> Boole's & Bonferroni</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('independence');return false;"><span class="nav-num">2.6</span> Independence</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('independence');return false;"><span class="nav-num">2.6.4</span> Three+ Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('partition');return false;"><span class="nav-num">2.7</span> Partition of S</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('total-prob');return false;"><span class="nav-num">2.8</span> Total Probability Theorem</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('bayes');return false;"><span class="nav-num">2.9</span> Bayes' Theorem</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('bayes');return false;"><span class="nav-num">2.9.4</span> Worked Examples</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('additional');return false;"><span class="nav-num">2.10</span> Additional Problems</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('formulas');return false;"><span class="nav-num">📐</span> Formula Reference</a></li>
+    </ul>
+    <div class="nav-group-label">Practice Exercises</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('exercises');return false;"><span class="nav-num">📝</span> Subjective (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> MCQs (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('tf');return false;"><span class="nav-num">✅</span> True / False (30 Q)</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+
+<div class="chapter-header">
+    <h1>Unit II: Conditional Probability, Independence & Bayes' Theorem</h1>
+    <div class="author">By Prof. O.P. Sheoran · Department of Mathematics & Statistics</div>
+    <div class="syllabus-tag">
+        <strong>Syllabus:</strong> Conditional probability · Multiplication law · Addition law · Boole's inequality · Bonferroni inequality · Independence of events · Partition of sample space · Total Probability Theorem · Bayes' Theorem · Prior and posterior probabilities
+    </div>
+</div>
+
+<!-- INTRODUCTION -->
+<div id="intro" class="topic-section active">
+<div class="section-card">
+<h2><span class="section-num">2.1</span> Introduction</h2>
+<p>In many practical situations, the probability of an event is influenced by additional information about what has already happened or what is known. If you know that a rolled die showed an even number, the probability that it showed a 4 changes from \(\frac{1}{6}\) to \(\frac{1}{3}\). This is the idea of <strong>conditional probability</strong> — probability that is revised in the light of new information.</p>
+<p>Conditional probability is arguably the most important concept in all of applied probability. Medical testing, legal reasoning, machine learning, weather forecasting, and Bayesian inference all rely fundamentally on conditional probability.</p>
+<p>In this unit we develop it rigorously, derive its properties, explore independence, prove the Total Probability Theorem, and culminate in <strong>Bayes' Theorem</strong> — one of the most celebrated results in statistics.</p>
+<div class="note"><h4>What You Will Learn</h4><ul>
+<li>Formal definition and properties of conditional probability</li>
+<li>Multiplication Law (two events, three events, and Chain Rule)</li>
+<li>Addition Law in conditional setting, Boole's and Bonferroni inequalities</li>
+<li>Statistical independence — definition, properties, pairwise vs. mutual</li>
+<li>Partition of sample space and the Total Probability Theorem</li>
+<li>Bayes' Theorem — statement, proof, and applications</li>
+</ul></div>
+<div class="key-point"><strong>Key Insight:</strong> Bayes' Theorem and the Total Probability Theorem are not separate results — Bayes' Theorem uses the Total Probability Theorem in its denominator. Understanding their relationship is essential.</div>
+</div></div>
+
+<!-- CONDITIONAL PROBABILITY -->
+<div id="conditional" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.2</span> Conditional Probability</h2>
+<h3>2.2.1 Motivating Example</h3>
+<p>Suppose a fair die is rolled and you are told that the result is even (i.e., from \(\{2,4,6\}\)). Given this information, what is the probability that the result is exactly 4?</p>
+<p>Without the information: \(P(\{4\}) = \frac{1}{6}\).</p>
+<p>With the information that the result is even, the effective sample space shrinks to \(\{2,4,6\}\). Of these three equally likely outcomes, exactly one is 4. So the revised probability should be \(\frac{1}{3}\).</p>
+<p>This ratio</p>
+<div class="formula-box">\[\frac{P(\{4\} \cap \{2,4,6\})}{P(\{2,4,6\})} = \frac{P(\{4\})}{P(\{2,4,6\})} = \frac{1/6}{3/6} = \frac{1}{3}\]</div>
+<p>captures the logic perfectly.</p>
+<h3>2.2.2 Formal Definition</h3>
+<div class="definition">
+<h4>Definition 2.2.1 — Conditional Probability</h4>
+<p>Let \((S, \mathcal{F}, P)\) be a probability space and let \(B \in \mathcal{F}\) be an event with \(P(B) > 0\). The <strong>conditional probability of \(A\) given \(B\)</strong>, denoted \(P(A \mid B)\), is defined as:</p>
+<div class="formula-box">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)}, \quad P(B) > 0\]</div>
+<p>The condition \(P(B) > 0\) is necessary because dividing by zero is undefined. If \(P(B) = 0\), then \(B\) is essentially impossible, and conditioning on an impossible event is not meaningful in the classical sense.</p>
+<p><strong>Interpretation:</strong> \(P(A \mid B)\) is the probability of \(A\) given that \(B\) has occurred. Knowledge of \(B\) restricts attention to the sub-universe \(B\), within which we measure the relative probability of \(A\).</p>
+</div>
+<h3>2.2.3 Properties of Conditional Probability</h3>
+<div class="theorem">
+<h4>Theorem 2.2.1 — Conditional Probability is a Valid Probability Measure</h4>
+<p>Fix an event \(B\) with \(P(B) > 0\). The function \(Q(\cdot) = P(\cdot \mid B)\) is itself a valid probability measure on \((S, \mathcal{F})\). That is, it satisfies all three Kolmogorov axioms.</p>
+<div class="proof-box" style="margin-top:14px;">
+<h4>Proof</h4>
+<p><strong>Axiom 1 (Non-negativity):</strong> For any \(A \in \mathcal{F}\):</p>
+<div class="derivation">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)} \geq 0\]</div>
+<p>since \(P(A \cap B) \geq 0\) (by Axiom 1 for \(P\)) and \(P(B) > 0\).</p>
+<p><strong>Axiom 2 (Normalization):</strong></p>
+<div class="derivation">\[P(S \mid B) = \frac{P(S \cap B)}{P(B)} = \frac{P(B)}{P(B)} = 1\]</div>
+<p><strong>Axiom 3 (Countable Additivity):</strong> Let \(A_1, A_2, \ldots\) be pairwise mutually exclusive events. Then \(A_1 \cap B, A_2 \cap B, \ldots\) are also pairwise mutually exclusive. So:</p>
+<div class="derivation">\[P\!\left(\bigcup_{i=1}^{\infty} A_i \;\middle|\; B\right) = \frac{P\!\left(\bigcup_{i=1}^{\infty}(A_i \cap B)\right)}{P(B)} = \frac{\sum_{i=1}^{\infty} P(A_i \cap B)}{P(B)} = \sum_{i=1}^{\infty} P(A_i \mid B)\]</div>
+<p>Hence \(Q(\cdot) = P(\cdot \mid B)\) satisfies all three Kolmogorov axioms. \(\square\)</p>
+</div>
+<div class="key-point" style="margin-top:14px;"><strong>Corollary:</strong> All theorems that hold for unconditional probability also hold for conditional probability \(P(\cdot \mid B)\):
+<ul style="margin-left:20px;margin-top:8px;">
+<li>\(P(A^c \mid B) = 1 - P(A \mid B)\)</li>
+<li>\(P(A_1 \cup A_2 \mid B) = P(A_1 \mid B) + P(A_2 \mid B) - P(A_1 \cap A_2 \mid B)\)</li>
+</ul></div>
+</div>
+<h3>2.2.4 Worked Examples</h3>
+<div class="example">
+<h4>Example 2.2.1 — Die rolled, prime number given</h4>
+<p>A fair die is thrown. Given that the result is a prime number, find the probability that it is 2.</p>
+<p><strong>Solution.</strong> Let \(B = \{2,3,5\}\) (prime numbers), \(A = \{2\}\).</p>
+<div class="derivation">\[P(B) = \frac{3}{6} = \frac{1}{2}, \quad P(A \cap B) = P(\{2\}) = \frac{1}{6}\]</div>
+<div class="derivation">\[P(A \mid B) = \frac{1/6}{1/2} = \frac{1}{3}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.2.2 — Two-children problem</h4>
+<p>A family has two children. Given that the older child is a girl, find the probability that both children are girls. (Assume boys and girls are equally likely.)</p>
+<p><strong>Solution.</strong> \(S = \{BB, BG, GB, GG\}\), each with probability \(\frac{1}{4}\).</p>
+<p>Let \(A = \{GG\}\), \(B = \{GB, GG\}\) (older is a girl).</p>
+<div class="derivation">\[P(B) = \frac{2}{4} = \frac{1}{2}, \quad P(A \cap B) = P(\{GG\}) = \frac{1}{4}\]</div>
+<div class="derivation">\[P(A \mid B) = \frac{1/4}{1/2} = \frac{1}{2}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.2.3 — Joint distribution table</h4>
+<p>The following table gives the joint distribution of gender and employment status for 200 people:</p>
+<table>
+<thead><tr><th></th><th>Employed</th><th>Unemployed</th><th>Total</th></tr></thead>
+<tbody>
+<tr><td><strong>Male</strong></td><td>80</td><td>30</td><td>110</td></tr>
+<tr><td><strong>Female</strong></td><td>60</td><td>30</td><td>90</td></tr>
+<tr><td><strong>Total</strong></td><td>140</td><td>60</td><td>200</td></tr>
+</tbody>
+</table>
+<p>Find: (a) \(P(\text{Employed} \mid \text{Male})\), (b) \(P(\text{Male} \mid \text{Employed})\), (c) \(P(\text{Female} \mid \text{Unemployed})\).</p>
+<p><strong>Solution.</strong></p>
+<div class="derivation">(a) \(\displaystyle P(\text{Employed} \mid \text{Male}) = \frac{80/200}{110/200} = \frac{80}{110} = \frac{8}{11}\)</div>
+<div class="derivation">(b) \(\displaystyle P(\text{Male} \mid \text{Employed}) = \frac{80/200}{140/200} = \frac{80}{140} = \frac{4}{7}\)</div>
+<div class="derivation">(c) \(\displaystyle P(\text{Female} \mid \text{Unemployed}) = \frac{30/200}{60/200} = \frac{30}{60} = \frac{1}{2}\) \(\checkmark\)</div>
+</div>
+<div class="example">
+<h4>Example 2.2.4 — Cards without replacement</h4>
+<p>From a well-shuffled deck of 52 cards, two cards are drawn without replacement. Given that the first card is an Ace, find the probability that the second card is also an Ace.</p>
+<p><strong>Solution.</strong> After drawing the first Ace, 51 cards remain, of which 3 are Aces.</p>
+<div class="derivation">\[P(A_2 \mid A_1) = \frac{3}{51} = \frac{1}{17}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.2.5 — Two dice, sum condition</h4>
+<p>Two fair dice are thrown. Given that the sum is at least 9, find the probability that the sum is exactly 11.</p>
+<p><strong>Solution.</strong> Let \(B = \{\text{sum} \geq 9\}\), \(A = \{\text{sum} = 11\}\).</p>
+<p>Sum \(\geq 9\): (3,6),(4,5),(4,6),(5,4),(5,5),(5,6),(6,3),(6,4),(6,5),(6,6) — 10 outcomes.</p>
+<p>Sum = 11: (5,6),(6,5) — 2 outcomes, both in \(B\).</p>
+<div class="derivation">\[P(B) = \frac{10}{36}, \quad P(A \cap B) = \frac{2}{36}\]</div>
+<div class="derivation">\[P(A \mid B) = \frac{2/36}{10/36} = \frac{2}{10} = \frac{1}{5}\]</div>
+</div>
+</div></div>
+
+<!-- MULTIPLICATION LAW -->
+<div id="multiplication" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.3</span> Multiplication Law of Probability</h2>
+<h3>2.3.1 Two Events</h3>
+<div class="theorem">
+<h4>Theorem 2.3.1 — Multiplication Rule (Two Events)</h4>
+<p>For any two events \(A\) and \(B\) with \(P(B) > 0\):</p>
+<div class="formula-box">\[P(A \cap B) = P(B) \cdot P(A \mid B)\]</div>
+<p>Similarly, if \(P(A) > 0\): \(\quad P(A \cap B) = P(A) \cdot P(B \mid A)\)</p>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<div class="derivation">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)} \implies P(A \cap B) = P(B) \cdot P(A \mid B) \quad \square\]</div>
+</div></div>
+<div class="example">
+<h4>Example 2.3.1 — Drawing red balls without replacement</h4>
+<p>A bag contains 8 red and 5 blue balls. Two balls are drawn without replacement. Find the probability that both are red.</p>
+<p><strong>Solution.</strong> Let \(R_1\) = first ball is red, \(R_2\) = second ball is red.</p>
+<div class="derivation">\[P(R_1) = \frac{8}{13}\]</div>
+<div class="derivation">\[P(R_2 \mid R_1) = \frac{7}{12} \quad \text{(7 red balls left from 12 remaining)}\]</div>
+<div class="derivation">\[P(R_1 \cap R_2) = \frac{8}{13} \times \frac{7}{12} = \frac{56}{156} = \frac{14}{39}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.3.2 — Drawing spades with replacement</h4>
+<p>A card is drawn from a 52-card deck, noted, then returned. A second card is drawn. Find the probability that both are Spades.</p>
+<p><strong>Solution.</strong> Since the card is returned, the draws are independent.</p>
+<div class="derivation">\[P(S_1) = \frac{13}{52} = \frac{1}{4}, \quad P(S_2 \mid S_1) = P(S_2) = \frac{1}{4}\]</div>
+<div class="derivation">\[P(S_1 \cap S_2) = \frac{1}{4} \times \frac{1}{4} = \frac{1}{16}\]</div>
+</div>
+<h3>2.3.2 Multiplication Rule for Three Events</h3>
+<div class="theorem">
+<h4>Theorem 2.3.2 — Multiplication Rule (Three Events)</h4>
+<p>For events \(A, B, C\) with \(P(A \cap B) > 0\):</p>
+<div class="formula-box">\[P(A \cap B \cap C) = P(A) \cdot P(B \mid A) \cdot P(C \mid A \cap B)\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<div class="derivation">\[P(A \cap B \cap C) = P(C \mid A \cap B) \cdot P(A \cap B) = P(C \mid A \cap B) \cdot P(B \mid A) \cdot P(A) \quad \square\]</div>
+</div></div>
+<div class="example">
+<h4>Example 2.3.3 — Urn with three colors</h4>
+<p>An urn has 3 red, 4 green, and 5 blue balls. Three balls are drawn without replacement. Find the probability that the first is red, the second is green, and the third is blue.</p>
+<div class="derivation">\[P(R_1) = \frac{3}{12} = \frac{1}{4}\]</div>
+<div class="derivation">\[P(G_2 \mid R_1) = \frac{4}{11} \quad \text{(4 green balls out of 11 remaining)}\]</div>
+<div class="derivation">\[P(B_3 \mid R_1 \cap G_2) = \frac{5}{10} = \frac{1}{2} \quad \text{(5 blue balls out of 10 remaining)}\]</div>
+<div class="derivation">\[P(R_1 \cap G_2 \cap B_3) = \frac{1}{4} \times \frac{4}{11} \times \frac{1}{2} = \frac{4}{88} = \frac{1}{22}\]</div>
+</div>
+<h3>2.3.3 Chain Rule (General Multiplication Rule)</h3>
+<div class="theorem">
+<h4>Theorem 2.3.3 — Chain Rule</h4>
+<p>For \(n\) events \(A_1, A_2, \ldots, A_n\) with \(P(A_1 \cap A_2 \cap \cdots \cap A_{n-1}) > 0\):</p>
+<div class="formula-box">\[P(A_1 \cap A_2 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdots P(A_n \mid A_1 \cap \cdots \cap A_{n-1})\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof by Induction</h4>
+<p>Base case \(n=2\): this is Theorem 2.3.1. Assume the result holds for \(n-1\) events. Write \(B = A_1 \cap \cdots \cap A_{n-1}\). Then:</p>
+<div class="derivation">\[P(A_1 \cap \cdots \cap A_n) = P(A_n \mid B) \cdot P(B)\]</div>
+<p>Applying the induction hypothesis to \(P(B)\) and substituting back completes the proof. \(\square\)</p>
+</div></div>
+<div class="example">
+<h4>Example 2.3.4 — Five cards in specific order</h4>
+<p>Five cards are drawn one at a time without replacement from a 52-card deck. Find the probability they are drawn in the order: Ace, King, Queen, Jack, Ten (any suit).</p>
+<div class="derivation">\[P = \frac{4}{52} \times \frac{4}{51} \times \frac{4}{50} \times \frac{4}{49} \times \frac{4}{48} = \frac{4^5}{52 \times 51 \times 50 \times 49 \times 48} = \frac{1024}{311{,}875{,}200} \approx 3.28 \times 10^{-6}\]</div>
+</div>
+</div></div>
+
+<!-- ADDITION LAW -->
+<div id="addition" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.4</span> Addition Law of Probability</h2>
+<p>We proved the general addition rule in Unit I. Here we revisit it in the context of conditional probability and prove its extensions.</p>
+<div class="theorem"><h4>Theorem 2.4.1 — Addition Rule (Two Events)</h4>
+<div class="formula-box">\[P(A \cup B) = P(A) + P(B) - P(A \cap B)\]</div></div>
+<div class="theorem"><h4>Theorem 2.4.2 — Addition Rule (Three Events)</h4>
+<div class="formula-box">\[P(A \cup B \cup C) = P(A)+P(B)+P(C) - P(A \cap B) - P(B \cap C) - P(A \cap C) + P(A \cap B \cap C)\]</div></div>
+<div class="theorem">
+<h4>Theorem 2.4.3 — Conditional Addition Rule</h4>
+<p>For events \(A, B, C\) with \(P(C) > 0\):</p>
+<div class="formula-box">\[P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C)\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<p>This follows because \(P(\cdot \mid C)\) is a valid probability measure (Theorem 2.2.1), so all addition rules apply to it. \(\square\)</p>
+</div></div>
+<div class="example">
+<h4>Example 2.4.1 — Blood types</h4>
+<p>Among all people: \(P(\text{type A}) = 0.45\), \(P(\text{type B}) = 0.20\). Since A and B are mutually exclusive blood types:</p>
+<div class="derivation">\[P(\text{type A} \cup \text{type B}) = 0.45 + 0.20 = 0.65\]</div>
+<p>The conditional probability of having type A given the person has type A or B:</p>
+<div class="derivation">\[P(\text{type A} \mid A \cup B) = \frac{0.45}{0.65} = \frac{9}{13}\]</div>
+</div>
+</div></div>
+
+<!-- BOOLE AND BONFERRONI -->
+<div id="boole" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.5</span> Boole's Inequality & Bonferroni's Inequality</h2>
+<div class="theorem">
+<h4>Theorem 2.5.1 — Boole's Inequality (Union Bound)</h4>
+<p>For any events \(A_1, A_2, \ldots, A_n\):</p>
+<div class="formula-box">\[P\!\left(\bigcup_{i=1}^{n} A_i\right) \leq \sum_{i=1}^{n} P(A_i)\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof by Induction</h4>
+<p>Base case \(n = 1\): trivially \(P(A_1) \leq P(A_1)\).</p>
+<p>For \(n = 2\): by the addition rule, \(P(A_1 \cup A_2) = P(A_1) + P(A_2) - P(A_1 \cap A_2) \leq P(A_1) + P(A_2)\) since \(P(A_1 \cap A_2) \geq 0\).</p>
+<p>Assume it holds for \(n-1\). Then:</p>
+<div class="derivation">\[P\!\left(\bigcup_{i=1}^{n} A_i\right) \leq P\!\left(\bigcup_{i=1}^{n-1} A_i\right) + P(A_n) \leq \sum_{i=1}^{n-1} P(A_i) + P(A_n) = \sum_{i=1}^{n} P(A_i) \quad \square\]</div>
+<p>For a countably infinite sequence: \(\displaystyle P\!\left(\bigcup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P(A_i)\) — known as <strong>sub-additivity</strong>.</p>
+</div></div>
+<h3>2.5.1 Bonferroni's Inequality (Lower Bound)</h3>
+<div class="theorem">
+<h4>Theorem 2.5.2 — Bonferroni Inequality</h4>
+<p>For any events \(A_1, A_2, \ldots, A_n\):</p>
+<div class="formula-box">\[P\!\left(\bigcap_{i=1}^{n} A_i\right) \geq \sum_{i=1}^{n} P(A_i) - (n-1)\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<p>By De Morgan: \(\displaystyle \left(\bigcap A_i\right)^c = \bigcup A_i^c\). By Boole's inequality:</p>
+<div class="derivation">\[P\!\left(\bigcup A_i^c\right) \leq \sum P(A_i^c) = \sum (1 - P(A_i)) = n - \sum P(A_i)\]</div>
+<div class="derivation">\[1 - P\!\left(\bigcap A_i\right) \leq n - \sum P(A_i)\]</div>
+<div class="derivation">\[P\!\left(\bigcap A_i\right) \geq \sum P(A_i) - (n-1) \quad \square\]</div>
+</div></div>
+<div class="example">
+<h4>Example 2.5.1 — Three high-probability events</h4>
+<p>Three events \(A, B, C\) each have probability 0.9. By Bonferroni:</p>
+<div class="derivation">\[P(A \cap B \cap C) \geq 0.9 + 0.9 + 0.9 - 2 = 2.7 - 2 = 0.7\]</div>
+<p>So the three events occur simultaneously with probability at least 0.7.</p>
+</div>
+<div class="example">
+<h4>Example 2.5.2 — Exam failure bound</h4>
+<p>A student has probability 0.8 of passing each of 4 exams. Use Boole's inequality to find an upper bound on the probability of failing at least one exam.</p>
+<p><strong>Solution.</strong> Let \(F_i =\) fail exam \(i\), \(P(F_i) = 0.2\).</p>
+<div class="derivation">\[P(\text{fail at least one}) = P(F_1 \cup F_2 \cup F_3 \cup F_4) \leq \sum P(F_i) = 4 \times 0.2 = 0.8\]</div>
+</div>
+</div></div>
+
+<!-- INDEPENDENCE -->
+<div id="independence" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.6</span> Independence of Events</h2>
+<h3>2.6.1 Definition</h3>
+<div class="definition">
+<h4>Definition 2.6.1 — Statistical Independence</h4>
+<p>Events \(A\) and \(B\) are <strong>statistically independent</strong> if:</p>
+<div class="formula-box">\[P(A \cap B) = P(A) \cdot P(B)\]</div>
+<p><strong>Equivalently</strong> (when \(P(B) > 0\)): \(P(A \mid B) = P(A)\). And when \(P(A) > 0\): \(P(B \mid A) = P(B)\).</p>
+<p><strong>Why use the multiplicative form?</strong> Because it works even when \(P(A) = 0\) or \(P(B) = 0\), whereas the conditional probability form is undefined in those cases.</p>
+</div>
+<h3>2.6.2 Properties of Independent Events</h3>
+<div class="theorem">
+<h4>Theorem 2.6.1 — Independence Preserved Under Complementation</h4>
+<p>If \(A\) and \(B\) are independent, then so are: (a) \(A\) and \(B^c\), (b) \(A^c\) and \(B\), (c) \(A^c\) and \(B^c\).</p>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof of (a)</h4>
+<div class="derivation">\[P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)(1-P(B)) = P(A) \cdot P(B^c)\]</div>
+<p>So \(A\) and \(B^c\) are independent. Parts (b) and (c) follow similarly. \(\square\)</p>
+</div></div>
+<h3>2.6.3 Independence vs. Mutual Exclusivity</h3>
+<div class="warning"><strong>⚠ Warning:</strong> These two concepts are frequently confused by students. They are almost <em>opposites</em> for events with positive probability.</div>
+<table>
+<thead><tr><th>Feature</th><th>Mutually Exclusive</th><th>Independent</th></tr></thead>
+<tbody>
+<tr><td>Condition</td><td>\(A \cap B = \emptyset\)</td><td>\(P(A \cap B) = P(A)P(B)\)</td></tr>
+<tr><td>Interpretation</td><td>Cannot happen together</td><td>Don't influence each other</td></tr>
+<tr><td>If \(A\) occurs…</td><td>\(B\) is impossible</td><td>\(P(B)\) is unchanged</td></tr>
+<tr><td>Example</td><td>H and T on one coin toss</td><td>Tosses on two separate coins</td></tr>
+<tr><td>Can coexist?</td><td>Only if \(P(A)=0\) or \(P(B)=0\)</td><td>Yes, in general</td></tr>
+</tbody>
+</table>
+<div class="theorem">
+<h4>Theorem 2.6.2 — ME Events with Positive Probability Are Not Independent</h4>
+<p>If \(A\) and \(B\) are mutually exclusive and both have positive probability, then \(A\) and \(B\) are <strong>not</strong> independent.</p>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<p>\(P(A \cap B) = P(\emptyset) = 0\). But \(P(A) \cdot P(B) > 0\). So \(P(A \cap B) \neq P(A) \cdot P(B)\). \(\square\)</p>
+</div></div>
+<h3>2.6.4 Independence of Three or More Events</h3>
+<div class="definition">
+<h4>Definition 2.6.2 — Mutual Independence</h4>
+<p>Events \(A_1, A_2, \ldots, A_n\) are <strong>mutually independent</strong> if for every subset \(\{i_1, i_2, \ldots, i_k\} \subseteq \{1,2,\ldots,n\}\) with \(k \geq 2\):</p>
+<div class="formula-box">\[P(A_{i_1} \cap A_{i_2} \cap \cdots \cap A_{i_k}) = P(A_{i_1}) \cdot P(A_{i_2}) \cdots P(A_{i_k})\]</div>
+<p>This requires \(2^n - n - 1\) conditions to be checked.</p>
+</div>
+<div class="warning"><strong>⚠ Critical Warning:</strong> Pairwise independence does <em>not</em> imply mutual independence.</div>
+<div class="example">
+<h4>Example 2.6.1 — Bernstein's Counter-example</h4>
+<p>Toss two fair coins. \(S = \{HH, HT, TH, TT\}\), each with probability \(\frac{1}{4}\).</p>
+<ul><li>\(A =\) first coin is Head</li><li>\(B =\) second coin is Head</li><li>\(C =\) both coins show the same face \(= \{HH, TT\}\)</li></ul>
+<p>\(P(A) = P(B) = P(C) = \frac{1}{2}\).</p>
+<p><strong>Pairwise independence:</strong></p>
+<div class="derivation">\[A \cap B = \{HH\} \Rightarrow P(A \cap B) = \frac{1}{4} = P(A)P(B) \checkmark\]</div>
+<div class="derivation">\[A \cap C = \{HH\} \Rightarrow P(A \cap C) = \frac{1}{4} = P(A)P(C) \checkmark\]</div>
+<div class="derivation">\[B \cap C = \{HH\} \Rightarrow P(B \cap C) = \frac{1}{4} = P(B)P(C) \checkmark\]</div>
+<p>So \(A, B, C\) are <strong>pairwise independent</strong>. But:</p>
+<div class="derivation">\[A \cap B \cap C = \{HH\} \Rightarrow P(A \cap B \cap C) = \frac{1}{4} \neq P(A)P(B)P(C) = \frac{1}{8}\]</div>
+<p>So \(A, B, C\) are <strong>NOT mutually independent</strong>. \(\square\)</p>
+</div>
+<h3>2.6.5 Worked Examples on Independence</h3>
+<div class="example">
+<h4>Example 2.6.2 — Independent events calculations</h4>
+<p>\(A\) and \(B\) are independent with \(P(A) = 0.3\) and \(P(B) = 0.5\). Find:</p>
+<div class="derivation">(a) \(P(A \cap B) = P(A) \cdot P(B) = 0.3 \times 0.5 = 0.15\)</div>
+<div class="derivation">(b) \(P(A \cup B) = 0.3 + 0.5 - 0.15 = 0.65\)</div>
+<div class="derivation">(c) \(P(A \mid B) = P(A) = 0.3\) (by independence)</div>
+<div class="derivation">(d) \(P(A^c \cap B^c) = P((A \cup B)^c) = 1 - 0.65 = 0.35\)</div>
+</div>
+<div class="example">
+<h4>Example 2.6.3 — Testing independence</h4>
+<p>Probability of passing Maths \(= \frac{2}{3}\), passing Statistics \(= \frac{4}{9}\), passing at least one \(= \frac{4}{5}\). Are the two events independent?</p>
+<div class="derivation">\[P(M \cap S) = P(M) + P(S) - P(M \cup S) = \frac{2}{3} + \frac{4}{9} - \frac{4}{5} = \frac{30+20-36}{45} = \frac{14}{45}\]</div>
+<div class="derivation">\[P(M) \cdot P(S) = \frac{2}{3} \times \frac{4}{9} = \frac{8}{27} \neq \frac{14}{45}\]</div>
+<p>Therefore, the events are <strong>not independent</strong>.</p>
+</div>
+<div class="example">
+<h4>Example 2.6.4 — Reliability system</h4>
+<p>A system has three independent components, each failing with probability \(p = 0.05\). The system works if all components work.</p>
+<div class="derivation">\[P(\text{system works}) = (1-0.05)^3 = 0.95^3 = 0.857375 \approx 85.7\%\]</div>
+</div>
+</div></div>
+
+<!-- PARTITION -->
+<div id="partition" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.7</span> Partition of the Sample Space</h2>
+<div class="definition">
+<h4>Definition 2.7.1 — Partition</h4>
+<p>Events \(B_1, B_2, \ldots, B_k\) form a <strong>partition</strong> of the sample space \(S\) if:</p>
+<ul>
+<li>\(B_i \cap B_j = \emptyset\) for \(i \neq j\) — pairwise mutually exclusive.</li>
+<li>\(B_1 \cup B_2 \cup \cdots \cup B_k = S\) — exhaustive.</li>
+<li>\(P(B_i) > 0\) for all \(i\) — each element is possible.</li>
+</ul>
+</div>
+<p>For any event \(A\), the events \(A \cap B_1, A \cap B_2, \ldots, A \cap B_k\) are pairwise mutually exclusive with union \(A\). Therefore:</p>
+<div class="formula-box">\[P(A) = \sum_{i=1}^{k} P(A \cap B_i)\]</div>
+<div class="key-point"><strong>Key Insight:</strong> This simple decomposition — breaking \(A\) into pieces \(A \cap B_i\) using a partition — is the foundation of both the Total Probability Theorem and Bayes' Theorem. Think of \(B_1, \ldots, B_k\) as a complete set of mutually exclusive "scenarios" or "causes".</div>
+<div class="note">
+<h4>Examples of Natural Partitions</h4>
+<ul>
+<li>Any event and its complement: \(\{A, A^c\}\)</li>
+<li>Production machines contributing different fractions of output: \(\{M_1, M_2, M_3\}\)</li>
+<li>Risk categories: \(\{\text{Low Risk}, \text{Medium Risk}, \text{High Risk}\}\)</li>
+<li>Disease status: \(\{D, D^c\}\)</li>
+</ul>
+</div>
+</div></div>
+
+<!-- TOTAL PROBABILITY -->
+<div id="total-prob" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.8</span> Total Probability Theorem</h2>
+<div class="theorem">
+<h4>Theorem 2.8.1 — Law of Total Probability</h4>
+<p>Let \(B_1, B_2, \ldots, B_k\) be a partition of \(S\) with \(P(B_i) > 0\) for all \(i\). Then for any event \(A\):</p>
+<div class="formula-box">\[P(A) = \sum_{i=1}^{k} P(B_i) \cdot P(A \mid B_i)\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<p>Since \(B_1, \ldots, B_k\) partition \(S\), the events \(A \cap B_1, \ldots, A \cap B_k\) are mutually exclusive with union \(A\):</p>
+<div class="derivation">\[P(A) = \sum_{i=1}^{k} P(A \cap B_i)\]</div>
+<p>By the multiplication rule: \(P(A \cap B_i) = P(B_i) \cdot P(A \mid B_i)\). Substituting:</p>
+<div class="derivation">\[P(A) = \sum_{i=1}^{k} P(B_i) \cdot P(A \mid B_i) \quad \square\]</div>
+</div>
+<div class="key-point" style="margin-top:12px;"><strong>Interpretation:</strong> \(P(A)\) is the weighted average of \(P(A \mid B_i)\), weighted by the prior probabilities \(P(B_i)\). Think of the \(B_i\) as mutually exclusive "causes" or "scenarios".</div>
+</div>
+<h3>2.8.2 Worked Examples</h3>
+<div class="example">
+<h4>Example 2.8.1 — Three manufacturing machines</h4>
+<p>A factory has three machines \(M_1, M_2, M_3\) producing 50%, 30%, 20% of total output. Defective rates: 1%, 2%, 3%. Find \(P(\text{defective})\).</p>
+<div class="derivation">\[P(D) = P(B_1)P(D|B_1) + P(B_2)P(D|B_2) + P(B_3)P(D|B_3)\]</div>
+<div class="derivation">\[= (0.50)(0.01) + (0.30)(0.02) + (0.20)(0.03) = 0.005 + 0.006 + 0.006 = 0.017 = 1.7\%\]</div>
+</div>
+<div class="example">
+<h4>Example 2.8.2 — Two bags, one selected at random</h4>
+<p>Bag I: 3 red, 4 blue; Bag II: 5 red, 2 blue. A bag is selected with equal probability, then a ball is drawn. Find \(P(\text{red})\).</p>
+<div class="derivation">\[P(R) = \frac{1}{2} \cdot \frac{3}{7} + \frac{1}{2} \cdot \frac{5}{7} = \frac{3}{14} + \frac{5}{14} = \frac{8}{14} = \frac{4}{7}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.8.3 — Boys and girls passing exam</h4>
+<p>60% boys, 40% girls. \(P(\text{pass} \mid \text{boy}) = 0.8\), \(P(\text{pass} \mid \text{girl}) = 0.9\). Find \(P(\text{pass})\).</p>
+<div class="derivation">\[P(P) = P(B) \cdot P(P \mid B) + P(G) \cdot P(P \mid G) = 0.6 \times 0.8 + 0.4 \times 0.9 = 0.48 + 0.36 = 0.84\]</div>
+</div>
+<div class="example">
+<h4>Example 2.8.4 — Insurance risk classification</h4>
+<p>Low Risk: prob 0.5, claim rate 0.05; Medium Risk: prob 0.3, claim rate 0.15; High Risk: prob 0.2, claim rate 0.30.</p>
+<div class="derivation">\[P(\text{claim}) = 0.5 \times 0.05 + 0.3 \times 0.15 + 0.2 \times 0.30 = 0.025 + 0.045 + 0.060 = 0.130 = 13\%\]</div>
+</div>
+</div></div>
+
+<!-- BAYES THEOREM -->
+<div id="bayes" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.9</span> Bayes' Theorem</h2>
+<h3>2.9.1 Historical Background</h3>
+<p>Bayes' Theorem is named after the Reverend <strong>Thomas Bayes (1702–1761)</strong>, an English statistician and philosopher. His essay <em>"An Essay towards Solving a Problem in the Doctrine of Chances"</em> was published posthumously in 1763 by his friend Richard Price. Pierre-Simon Laplace independently rediscovered and extensively developed the result in 1812.</p>
+<p>The theorem answers a fundamental question: <em>given that event \(A\) has occurred, what is the probability that it was caused by scenario \(B_j\)?</em></p>
+<h3>2.9.2 Statement and Proof</h3>
+<div class="theorem">
+<h4>Theorem 2.9.1 — Bayes' Theorem</h4>
+<p>Let \(B_1, B_2, \ldots, B_k\) be a partition of \(S\) with \(P(B_i) > 0\) for all \(i\). Let \(A\) be any event with \(P(A) > 0\). Then for each \(j = 1, 2, \ldots, k\):</p>
+<div class="formula-box">\[P(B_j \mid A) = \frac{P(B_j) \cdot P(A \mid B_j)}{\displaystyle\sum_{i=1}^{k} P(B_i) \cdot P(A \mid B_i)}\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<div class="derivation">\[P(B_j \mid A) = \frac{P(B_j \cap A)}{P(A)} = \frac{P(B_j) \cdot P(A \mid B_j)}{\displaystyle\sum_{i=1}^{k} P(B_i) \cdot P(A \mid B_i)} \quad \square\]</div>
+<p>where the numerator uses the multiplication rule and the denominator uses the Total Probability Theorem.</p>
+</div></div>
+<h3>2.9.3 Terminology</h3>
+<table>
+<thead><tr><th>Term</th><th>Symbol</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><strong>Prior probability</strong></td><td>\(P(B_j)\)</td><td>Probability of scenario \(B_j\) before observing \(A\)</td></tr>
+<tr><td><strong>Likelihood</strong></td><td>\(P(A \mid B_j)\)</td><td>Probability of observing \(A\) given scenario \(B_j\)</td></tr>
+<tr><td><strong>Marginal probability</strong></td><td>\(P(A)\)</td><td>Overall probability of observing \(A\) (normalizing constant)</td></tr>
+<tr><td><strong>Posterior probability</strong></td><td>\(P(B_j \mid A)\)</td><td>Updated probability of \(B_j\) after observing \(A\)</td></tr>
+</tbody>
+</table>
+<div class="key-point"><strong>Bayes' theorem</strong> is the mathematically precise rule for <em>updating beliefs in the light of evidence</em>. It is the foundation of Bayesian statistics.</div>
+<h3>2.9.4 Worked Examples</h3>
+<div class="example">
+<h4>Example 2.9.1 — Factory machines (Bayes' version)</h4>
+<p>Continuing Example 2.8.1. An item is found to be defective. Find the probability it came from machine \(M_2\).</p>
+<p>We already found \(P(D) = 0.017\).</p>
+<div class="derivation">\[P(M_2 \mid D) = \frac{P(M_2) \cdot P(D \mid M_2)}{P(D)} = \frac{0.30 \times 0.02}{0.017} = \frac{0.006}{0.017} = \frac{6}{17} \approx 0.353\]</div>
+<div class="derivation">\[P(M_1 \mid D) = \frac{0.50 \times 0.01}{0.017} = \frac{5}{17} \approx 0.294, \quad P(M_3 \mid D) = \frac{0.20 \times 0.03}{0.017} = \frac{6}{17} \approx 0.353\]</div>
+<p><strong>Verification:</strong> \(\frac{5+6+6}{17} = \frac{17}{17} = 1 \checkmark\)</p>
+</div>
+<div class="example">
+<h4>Example 2.9.2 — Medical Diagnosis (Base-rate fallacy)</h4>
+<p>A disease affects 1% of the population. A test has 95% sensitivity and 90% specificity. A person tests positive. What is the probability they actually have the disease?</p>
+<p>Prior: \(P(D) = 0.01\), \(P(D^c) = 0.99\). Likelihoods: \(P(T^+ \mid D) = 0.95\), \(P(T^+ \mid D^c) = 0.10\).</p>
+<div class="derivation">\[P(T^+) = 0.01 \times 0.95 + 0.99 \times 0.10 = 0.0095 + 0.099 = 0.1085\]</div>
+<div class="derivation">\[P(D \mid T^+) = \frac{0.01 \times 0.95}{0.1085} = \frac{0.0095}{0.1085} \approx \mathbf{8.76\%}\]</div>
+<div class="warning" style="margin-top:12px;">
+<strong>The Base-Rate Fallacy:</strong> Even with a 95% accurate test, a positive result indicates only ~8.76% chance of disease, because the disease is rare. This is why Bayes' Theorem is critical in medical screening of low-prevalence conditions.
+</div>
+</div>
+<div class="example">
+<h4>Example 2.9.3 — Three urns</h4>
+<p>Urn I: 3 white, 2 black; Urn II: 4 white, 3 black; Urn III: 2 white, 5 black. An urn is selected at random (each with probability \(\frac{1}{3}\)) and a ball is drawn. The ball is white. Find the probability it came from Urn II.</p>
+<div class="derivation">\[P(W) = \frac{1}{3}\cdot\frac{3}{5} + \frac{1}{3}\cdot\frac{4}{7} + \frac{1}{3}\cdot\frac{2}{7} = \frac{1}{3}\left(\frac{3}{5} + \frac{6}{7}\right) = \frac{1}{3} \cdot \frac{21+30}{35} = \frac{1}{3} \cdot \frac{51}{35} = \frac{17}{35}\]</div>
+<div class="derivation">\[P(U_2 \mid W) = \frac{\frac{1}{3} \cdot \frac{4}{7}}{\frac{17}{35}} = \frac{\frac{4}{21}}{\frac{17}{35}} = \frac{4}{21} \times \frac{35}{17} = \frac{140}{357} = \frac{20}{51}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.9.4 — Quality Control (Three Suppliers)</h4>
+<p>Supplier A: 50%, defect rate 2%; Supplier B: 30%, defect rate 3%; Supplier C: 20%, defect rate 5%. A defective spring is found. What is \(P(\text{from Supplier C})\)?</p>
+<div class="derivation">\[P(D) = 0.50 \times 0.02 + 0.30 \times 0.03 + 0.20 \times 0.05 = 0.010 + 0.009 + 0.010 = 0.029\]</div>
+<div class="derivation">\[P(C \mid D) = \frac{0.20 \times 0.05}{0.029} = \frac{0.010}{0.029} = \frac{10}{29} \approx 34.5\%\]</div>
+</div>
+<div class="example">
+<h4>Example 2.9.5 — Spam Filter</h4>
+<p>30% of emails are spam. Of spam, 80% contain "offer"; of non-spam, 10% contain "offer". An email with "offer" arrives. What is \(P(\text{spam})\)?</p>
+<div class="derivation">\[P(O) = 0.3 \times 0.8 + 0.7 \times 0.1 = 0.24 + 0.07 = 0.31\]</div>
+<div class="derivation">\[P(S \mid O) = \frac{0.3 \times 0.8}{0.31} = \frac{0.24}{0.31} \approx 77.4\%\]</div>
+</div>
+<div class="example">
+<h4>Example 2.9.6 — Two-stage bag problem</h4>
+<p>Bag A: 2 red, 3 blue. Bag B: 4 red, 1 blue. A ball is transferred from A to B without knowing its color. Then a ball is drawn from B and it is red. Find \(P(\text{transferred ball was red})\).</p>
+<p>\(P(TR) = \frac{2}{5}\), \(P(TB) = \frac{3}{5}\). Bag B now has 6 balls.</p>
+<div class="derivation">\[P(R \mid TR) = \frac{5}{6}, \quad P(R \mid TB) = \frac{4}{6} = \frac{2}{3}\]</div>
+<div class="derivation">\[P(R) = \frac{2}{5} \cdot \frac{5}{6} + \frac{3}{5} \cdot \frac{2}{3} = \frac{10}{30} + \frac{12}{30} = \frac{22}{30} = \frac{11}{15}\]</div>
+<div class="derivation">\[P(TR \mid R) = \frac{\frac{2}{5} \cdot \frac{5}{6}}{\frac{11}{15}} = \frac{\frac{10}{30}}{\frac{22}{30}} = \frac{10}{22} = \frac{5}{11}\]</div>
+</div>
+<div class="example">
+<h4>Example 2.9.7 — Sequential defective items</h4>
+<p>A box has 10 items, 3 defective. Two are drawn without replacement. Given the second is defective, find \(P(\text{first was also defective})\).</p>
+<div class="derivation">\[P(D_1)=\frac{3}{10}, \quad P(D_2 \mid D_1)=\frac{2}{9}, \quad P(D_2 \mid G_1)=\frac{3}{9}=\frac{1}{3}\]</div>
+<div class="derivation">\[P(D_2) = \frac{3}{10} \cdot \frac{2}{9} + \frac{7}{10} \cdot \frac{1}{3} = \frac{6}{90} + \frac{21}{90} = \frac{27}{90} = \frac{3}{10}\]</div>
+<div class="derivation">\[P(D_1 \mid D_2) = \frac{\frac{3}{10} \cdot \frac{2}{9}}{\frac{3}{10}} = \frac{2}{9}\]</div>
+</div>
+</div></div>
+
+<!-- ADDITIONAL PROBLEMS -->
+<div id="additional" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">2.10</span> Additional Worked Problems</h2>
+<div class="example">
+<h4>Example 2.10.1</h4>
+<p>\(P(A) = 0.4\), \(P(B \mid A) = 0.6\), \(P(B \mid A^c) = 0.3\). Find \(P(A \mid B)\).</p>
+<div class="derivation">\[P(B) = P(A)P(B \mid A) + P(A^c)P(B \mid A^c) = 0.4 \times 0.6 + 0.6 \times 0.3 = 0.24 + 0.18 = 0.42\]</div>
+<div class="derivation">\[P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)} = \frac{0.24}{0.42} = \frac{4}{7} \approx 0.571\]</div>
+</div>
+<div class="example">
+<h4>Example 2.10.2 — Conditional probability chain</h4>
+<p>Prove that for three events with \(P(A \cap B) > 0\):</p>
+<div class="formula-box">\[P(A \mid B \cap C) = \frac{P(C \mid A \cap B) \cdot P(A \mid B)}{P(C \mid B)}\]</div>
+<div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
+<div class="derivation">\[P(A \mid B \cap C) = \frac{P(A \cap B \cap C)}{P(B \cap C)} = \frac{P(C \mid A \cap B) \cdot P(A \cap B)}{P(C \mid B) \cdot P(B)} = \frac{P(C \mid A \cap B) \cdot P(A \mid B) \cdot P(B)}{P(C \mid B) \cdot P(B)}\]</div>
+<div class="derivation">\[= \frac{P(C \mid A \cap B) \cdot P(A \mid B)}{P(C \mid B)} \quad \square\]</div>
+</div></div>
+<div class="example">
+<h4>Example 2.10.3 — Four cards drawn successively</h4>
+<p>Four cards drawn without replacement. Find the probability that:</p>
+<p>(a) The first two are Aces and the last two are Kings.</p>
+<div class="derivation">\[P = \frac{4}{52} \times \frac{3}{51} \times \frac{4}{50} \times \frac{3}{49} = \frac{144}{6{,}497{,}400} = \frac{6}{270{,}725}\]</div>
+<p>(b) All four are of the same suit.</p>
+<div class="derivation">\[P = \frac{4 \binom{13}{4}}{\binom{52}{4}} = \frac{4 \times 715}{270{,}725} = \frac{2860}{270{,}725} = \frac{44}{4165}\]</div>
+</div>
+</div></div>
+
+<!-- FORMULA REFERENCE -->
+<div id="formulas" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">📐</span> Quick Formula Reference</h2>
+<table class="quick-ref-table">
+<thead><tr><th>Formula</th><th>Name / Rule</th></tr></thead>
+<tbody>
+<tr><td>\(\displaystyle P(A \mid B) = \frac{P(A \cap B)}{P(B)}\)</td><td>Conditional Probability</td></tr>
+<tr><td>\(P(A \cap B) = P(A) \cdot P(B \mid A)\)</td><td>Multiplication Rule</td></tr>
+<tr><td>\(P(A_1 \cap \cdots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdots P(A_n \mid A_1 \cap \cdots \cap A_{n-1})\)</td><td>Chain Rule</td></tr>
+<tr><td>\(P(A \cup B \cup C) = \sum P - \sum P(\text{pairs}) + P(\text{triple})\)</td><td>Inclusion-Exclusion</td></tr>
+<tr><td>\(P\!\left(\bigcup A_i\right) \leq \sum P(A_i)\)</td><td>Boole's Inequality</td></tr>
+<tr><td>\(P\!\left(\bigcap A_i\right) \geq \sum P(A_i) - (n-1)\)</td><td>Bonferroni Inequality</td></tr>
+<tr><td>\(P(A \cap B) = P(A) \cdot P(B)\) iff independent</td><td>Independence</td></tr>
+<tr><td>\(\displaystyle P(A) = \sum_{i} P(B_i) \cdot P(A \mid B_i)\)</td><td>Total Probability Theorem</td></tr>
+<tr><td>\(\displaystyle P(B_j \mid A) = \frac{P(B_j) \cdot P(A \mid B_j)}{\sum_i P(B_i) \cdot P(A \mid B_i)}\)</td><td>Bayes' Theorem</td></tr>
+<tr><td>\(P(A^c \mid B) = 1 - P(A \mid B)\)</td><td>Conditional Complement</td></tr>
+<tr><td>\(P(A \cup B \mid C) = P(A \mid C) + P(B \mid C) - P(A \cap B \mid C)\)</td><td>Conditional Addition Rule</td></tr>
+<tr><td>Series system (\(n\) components): \(r^n\)</td><td>Series Reliability</td></tr>
+<tr><td>Parallel system (\(n\) components): \(1-(1-r)^n\)</td><td>Parallel Reliability</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- EXERCISES -->
+<div id="exercises" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">📝</span> Subjective Exercises — 30 Questions</h2>
+<p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the detailed solution for each question.</p>
+
+<div class="question"><strong>Q1.</strong> Define conditional probability. Why is the condition \(P(B)>0\) necessary in the definition of \(P(A\mid B)\)?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub1')">Show Answer ▼</button>
+<div id="sub1" class="answer"><p><strong>Conditional Probability:</strong> \(P(A\mid B) = \frac{P(A\cap B)}{P(B)}\), provided \(P(B)>0\).</p><p>The condition \(P(B)>0\) is necessary because we cannot divide by zero. More fundamentally, conditioning on \(B\) means restricting the sample space to \(B\); if \(P(B)=0\), then \(B\) is essentially impossible and there is no meaningful sub-universe to restrict to.</p></div>
+
+<div class="question"><strong>Q2.</strong> Prove that \(P(\cdot\mid B)\) is a valid probability measure, verifying all three Kolmogorov axioms.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub2')">Show Answer ▼</button>
+<div id="sub2" class="answer"><p><strong>Axiom 1:</strong> \(P(A\mid B) = P(A\cap B)/P(B) \geq 0\) since \(P(A\cap B)\geq 0\) and \(P(B)>0\).</p><p><strong>Axiom 2:</strong> \(P(S\mid B) = P(S\cap B)/P(B) = P(B)/P(B) = 1\).</p><p><strong>Axiom 3:</strong> For pairwise disjoint \(A_1, A_2,\ldots\), the intersections \(A_i\cap B\) are also pairwise disjoint, so \(P(\bigcup A_i\mid B) = \sum P(A_i\cap B)/P(B) = \sum P(A_i\mid B)\). \(\square\)</p></div>
+
+<div class="question"><strong>Q3.</strong> State and prove the Multiplication Rule for two events. Extend it to three events.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub3')">Show Answer ▼</button>
+<div id="sub3" class="answer"><p><strong>Two events:</strong> \(P(A\cap B) = P(B)\cdot P(A\mid B) = P(A)\cdot P(B\mid A)\) — follows directly from the definition of conditional probability.</p><p><strong>Three events:</strong> \(P(A\cap B\cap C) = P(A)\cdot P(B\mid A)\cdot P(C\mid A\cap B)\). Apply the two-event rule twice: \(P(A\cap B\cap C) = P(C\mid A\cap B)\cdot P(A\cap B) = P(C\mid A\cap B)\cdot P(B\mid A)\cdot P(A)\).</p></div>
+
+<div class="question"><strong>Q4.</strong> State and prove the Chain Rule (General Multiplication Rule) for \(n\) events.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub4')">Show Answer ▼</button>
+<div id="sub4" class="answer"><p>For events \(A_1,\ldots,A_n\) with \(P(A_1\cap\cdots\cap A_{n-1})>0\):<br>\[P(A_1\cap\cdots\cap A_n) = P(A_1)\cdot P(A_2\mid A_1)\cdots P(A_n\mid A_1\cap\cdots\cap A_{n-1})\]</p><p><strong>Proof by induction:</strong> Base case \(n=2\) is the basic multiplication rule. Assume true for \(n-1\); let \(B=A_1\cap\cdots\cap A_{n-1}\). Then \(P(A_1\cap\cdots\cap A_n)=P(A_n\mid B)\cdot P(B)\). Apply the induction hypothesis to \(P(B)\). \(\square\)</p></div>
+
+<div class="question"><strong>Q5.</strong> State and prove Boole's inequality. Give an application in statistical inference.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub5')">Show Answer ▼</button>
+<div id="sub5" class="answer"><p>\(P(\bigcup_{i=1}^n A_i) \leq \sum_{i=1}^n P(A_i)\).</p><p><strong>Proof by induction:</strong> For \(n=2\): \(P(A_1\cup A_2)=P(A_1)+P(A_2)-P(A_1\cap A_2)\leq P(A_1)+P(A_2)\). Inductive step: \(P(\bigcup_{i=1}^n A_i) \leq P(\bigcup_{i=1}^{n-1}A_i) + P(A_n) \leq \sum_{i=1}^n P(A_i)\). \(\square\)</p><p><strong>Application:</strong> In multiple hypothesis testing at significance level \(\alpha\), the family-wise error rate is at most \(n\alpha\) — this is the Bonferroni correction.</p></div>
+
+<div class="question"><strong>Q6.</strong> State and prove the Bonferroni inequality. Give a numerical example.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub6')">Show Answer ▼</button>
+<div id="sub6" class="answer"><p>\(P(\bigcap_{i=1}^n A_i) \geq \sum_{i=1}^n P(A_i) - (n-1)\).</p><p><strong>Proof:</strong> By De Morgan and Boole: \(1 - P(\bigcap A_i) = P(\bigcup A_i^c) \leq \sum P(A_i^c) = n - \sum P(A_i)\). Rearranging gives the result. \(\square\)</p><p><strong>Example:</strong> \(P(A)=P(B)=P(C)=0.9\). Then \(P(A\cap B\cap C) \geq 0.9+0.9+0.9-2 = 0.7\).</p></div>
+
+<div class="question"><strong>Q7.</strong> Define independent events. How does independence differ from mutual exclusivity? Can two events with positive probability be both mutually exclusive and independent?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub7')">Show Answer ▼</button>
+<div id="sub7" class="answer"><p><strong>Independence:</strong> \(P(A\cap B) = P(A)\cdot P(B)\). Knowing one event gives no information about the other.</p><p><strong>Mutual exclusivity:</strong> \(A\cap B = \emptyset\). If one occurs, the other cannot.</p><p><strong>Key difference:</strong> For events with positive probability, mutual exclusivity means knowing \(B\) makes \(A\) impossible — maximum negative information. Independence means knowing \(B\) gives zero information. These are opposites.</p><p><strong>Can they coexist?</strong> Only if \(P(A)=0\) or \(P(B)=0\). If both have positive probability: \(P(A\cap B)=0\) but \(P(A)P(B)>0\), contradiction.</p></div>
+
+<div class="question"><strong>Q8.</strong> Prove that if \(A\) and \(B\) are independent, then \(A^c\) and \(B\) are also independent.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub8')">Show Answer ▼</button>
+<div id="sub8" class="answer"><div class='derivation'>\(P(A^c\cap B) = P(B) - P(A\cap B) = P(B) - P(A)P(B) = P(B)(1-P(A)) = P(B)\cdot P(A^c)\)</div><p>Hence \(A^c\) and \(B\) are independent. \(\square\)</p></div>
+
+<div class="question"><strong>Q9.</strong> Prove that if \(A\) and \(B\) are independent, then \(A^c\) and \(B^c\) are independent.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub9')">Show Answer ▼</button>
+<div id="sub9" class="answer"><div class='derivation'>\(P(A^c\cap B^c) = P((A\cup B)^c) = 1-P(A\cup B) = 1-P(A)-P(B)+P(A)P(B) = (1-P(A))(1-P(B)) = P(A^c)P(B^c)\). \(\square\)</div></div>
+
+<div class="question"><strong>Q10.</strong> Explain pairwise independence and mutual independence. Construct Bernstein's example showing pairwise does not imply mutual independence.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub10')">Show Answer ▼</button>
+<div id="sub10" class="answer"><p><strong>Pairwise independence:</strong> Every pair \((A_i, A_j)\) satisfies \(P(A_i\cap A_j)=P(A_i)P(A_j)\).</p><p><strong>Mutual independence:</strong> Every subset of size \(k\geq 2\) satisfies the product rule.</p><p><strong>Bernstein's example:</strong> Toss two coins. \(A=\)first H, \(B=\)second H, \(C=\)same face. Each has prob \(\frac{1}{2}\). All pairs are independent: \(P(A\cap B)=P(A\cap C)=P(B\cap C)=\frac{1}{4}\). But \(P(A\cap B\cap C)=\frac{1}{4}\neq\frac{1}{8}=P(A)P(B)P(C)\). So pairwise \(\not\Rightarrow\) mutual. \(\square\)</p></div>
+
+<div class="question"><strong>Q11.</strong> Define a partition of the sample space. State and prove the Total Probability Theorem.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub11')">Show Answer ▼</button>
+<div id="sub11" class="answer"><p><strong>Partition:</strong> \(B_1,\ldots,B_k\) partition \(S\) if they are pairwise disjoint, exhaustive, and each has positive probability.</p><p><strong>Total Probability Theorem:</strong> \(P(A) = \sum_{i=1}^k P(B_i)\cdot P(A\mid B_i)\).</p><p><strong>Proof:</strong> Since \(B_i\) partition \(S\), the sets \(A\cap B_i\) are pairwise disjoint with \(\bigcup(A\cap B_i)=A\). By finite additivity and multiplication rule: \(P(A)=\sum P(A\cap B_i)=\sum P(B_i)P(A\mid B_i)\). \(\square\)</p></div>
+
+<div class="question"><strong>Q12.</strong> State and prove Bayes' Theorem. Identify prior, likelihood, and posterior.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub12')">Show Answer ▼</button>
+<div id="sub12" class="answer"><p><strong>Statement:</strong> \(P(B_j\mid A) = \dfrac{P(B_j)\cdot P(A\mid B_j)}{\sum_i P(B_i)\cdot P(A\mid B_i)}\)</p><p><strong>Proof:</strong> \(P(B_j\mid A) = P(B_j\cap A)/P(A)\). Numerator: \(P(B_j\cap A)=P(B_j)P(A\mid B_j)\) (multiplication rule). Denominator: Total Probability Theorem. \(\square\)</p><ul><li><strong>Prior:</strong> \(P(B_j)\)</li><li><strong>Likelihood:</strong> \(P(A\mid B_j)\)</li><li><strong>Posterior:</strong> \(P(B_j\mid A)\)</li></ul></div>
+
+<div class="question"><strong>Q13.</strong> A bag contains 5 red and 4 blue balls. Two balls are drawn without replacement. Find the probability that both are red.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub13')">Show Answer ▼</button>
+<div id="sub13" class="answer"><div class='derivation'>\[P(R_1) = \frac{5}{9}, \quad P(R_2\mid R_1) = \frac{4}{8} = \frac{1}{2}\]</div><div class='derivation'>\[P(R_1\cap R_2) = \frac{5}{9}\times\frac{1}{2} = \frac{5}{18}\]</div></div>
+
+<div class="question"><strong>Q14.</strong> A die is rolled twice. Given that the sum of the two outcomes is 8, find the probability that both outcomes were the same.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub14')">Show Answer ▼</button>
+<div id="sub14" class="answer"><p>Sum = 8: (2,6),(3,5),(4,4),(5,3),(6,2) — 5 outcomes. Both same: (4,4) — 1 outcome.</p><div class='derivation'>\[P(\text{same}\mid\text{sum}=8) = \frac{1}{5}\]</div></div>
+
+<div class="question"><strong>Q15.</strong> A factory has four production lines contributing 40%, 30%, 20%, 10% of output. Defect rates: 1%, 2%, 3%, 4%. A defective item is found. Find the probability it came from line 3.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub15')">Show Answer ▼</button>
+<div id="sub15" class="answer"><div class='derivation'>\[P(D) = 0.40(0.01)+0.30(0.02)+0.20(0.03)+0.10(0.04) = 0.004+0.006+0.006+0.004 = 0.020\]</div><div class='derivation'>\[P(L_3\mid D) = \frac{0.20\times 0.03}{0.020} = \frac{0.006}{0.020} = 0.30 = 30\%\]</div></div>
+
+<div class="question"><strong>Q16.</strong> In a box of 20 items, 4 are defective. Two are selected without replacement. Given the second is defective, find the probability the first was also defective.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub16')">Show Answer ▼</button>
+<div id="sub16" class="answer"><div class='derivation'>\[P(D_1)=\frac{4}{20}=\frac{1}{5}, \quad P(D_2\mid D_1)=\frac{3}{19}, \quad P(D_2\mid G_1)=\frac{4}{19}\]</div><div class='derivation'>\[P(D_2)=\frac{1}{5}\cdot\frac{3}{19}+\frac{4}{5}\cdot\frac{4}{19}=\frac{3+16}{95}=\frac{19}{95}=\frac{1}{5}\]</div><div class='derivation'>\[P(D_1\mid D_2)=\frac{\frac{1}{5}\cdot\frac{3}{19}}{\frac{1}{5}}=\frac{3}{19}\]</div></div>
+
+<div class="question"><strong>Q17.</strong> A medical test has 99% sensitivity and 95% specificity. Disease prevalence is 0.5%. A positive test is obtained. Find the posterior probability of disease.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub17')">Show Answer ▼</button>
+<div id="sub17" class="answer"><div class='derivation'>\[P(D)=0.005, \quad P(T^+\mid D)=0.99, \quad P(T^+\mid D^c)=0.05\]</div><div class='derivation'>\[P(T^+)=0.005\times 0.99+0.995\times 0.05=0.00495+0.04975=0.0547\]</div><div class='derivation'>\[P(D\mid T^+)=\frac{0.005\times 0.99}{0.0547}=\frac{0.00495}{0.0547}\approx 9.05\%\]</div></div>
+
+<div class="question"><strong>Q18.</strong> Three machines A, B, C produce 30%, 40%, 30% of items with defect rates 2%, 3%, 5%. Given a defective item, find the probability it came from machine B.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub18')">Show Answer ▼</button>
+<div id="sub18" class="answer"><div class='derivation'>\[P(D)=0.30(0.02)+0.40(0.03)+0.30(0.05)=0.006+0.012+0.015=0.033\]</div><div class='derivation'>\[P(B\mid D)=\frac{0.40\times 0.03}{0.033}=\frac{0.012}{0.033}=\frac{4}{11}\approx 36.4\%\]</div></div>
+
+<div class="question"><strong>Q19.</strong> Two players A and B alternately draw from an urn with 3 red and 5 blue balls without replacement. A draws first. First to draw red wins. Find A's probability of winning.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub19')">Show Answer ▼</button>
+<div id="sub19" class="answer"><div class='derivation'>A wins on 1st draw: \(P=\frac{3}{8}\)</div><div class='derivation'>A wins on 3rd draw: \(P=\frac{5}{8}\cdot\frac{4}{7}\cdot\frac{3}{6}=\frac{60}{336}=\frac{5}{28}\)</div><div class='derivation'>\[P(A\text{ wins}) = \frac{3}{8}+\frac{5}{28} = \frac{21}{56}+\frac{10}{56} = \frac{31}{56}\approx 55.4\%\]</div></div>
+
+<div class="question"><strong>Q20.</strong> Events A and B are independent with \(P(A)=0.4\). \(P(A\cup B)=0.7\). Find \(P(B)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub20')">Show Answer ▼</button>
+<div id="sub20" class="answer"><div class='derivation'>\[0.7 = P(A)+P(B)-P(A)P(B) = 0.4+P(B)(1-0.4) = 0.4+0.6P(B)\]</div><div class='derivation'>\[P(B) = \frac{0.3}{0.6} = 0.5\]</div></div>
+
+<div class="question"><strong>Q21.</strong> If \(P(A\mid B)=0.4\), \(P(B)=0.5\), \(P(A)=0.3\), are \(A\) and \(B\) independent?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub21')">Show Answer ▼</button>
+<div id="sub21" class="answer"><p>Since \(P(A\mid B)=0.4 \neq P(A)=0.3\), the events are <strong>not independent</strong>.</p><p>Verification: \(P(A\cap B)=0.4\times 0.5=0.20 \neq P(A)P(B)=0.3\times 0.5=0.15\).</p></div>
+
+<div class="question"><strong>Q22.</strong> A problem is given to A, B, C with solving probabilities \(\frac{1}{3}, \frac{2}{5}, \frac{3}{4}\) independently. Find: (a) all three solve it, (b) none solve it, (c) at least one solves it.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub22')">Show Answer ▼</button>
+<div id="sub22" class="answer"><div class='derivation'>(a) \(P=\frac{1}{3}\times\frac{2}{5}\times\frac{3}{4}=\frac{1}{10}\)</div><div class='derivation'>(b) \(P=\frac{2}{3}\times\frac{3}{5}\times\frac{1}{4}=\frac{1}{10}\)</div><div class='derivation'>(c) \(P=1-\frac{1}{10}=\frac{9}{10}\)</div></div>
+
+<div class="question"><strong>Q23.</strong> \(A_1, A_2, A_3\) partition \(S\) with \(P(A_1)=0.3, P(A_2)=0.5, P(A_3)=0.2\). \(P(B\mid A_1)=0.6, P(B\mid A_2)=0.4, P(B\mid A_3)=0.7\). Find \(P(A_2\mid B)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub23')">Show Answer ▼</button>
+<div id="sub23" class="answer"><div class='derivation'>\[P(B)=0.3(0.6)+0.5(0.4)+0.2(0.7)=0.18+0.20+0.14=0.52\]</div><div class='derivation'>\[P(A_2\mid B)=\frac{0.5\times 0.4}{0.52}=\frac{0.20}{0.52}=\frac{5}{13}\approx 38.5\%\]</div></div>
+
+<div class="question"><strong>Q24.</strong> Prove: \(P(A\cap B) \geq P(A)+P(B)-1\) for any events \(A, B\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub24')">Show Answer ▼</button>
+<div id="sub24" class="answer"><div class='derivation'>\[P(A\cup B) = P(A)+P(B)-P(A\cap B) \leq 1\]</div><div class='derivation'>\[\Rightarrow P(A\cap B) \geq P(A)+P(B)-1 \quad \square\]</div></div>
+
+<div class="question"><strong>Q25.</strong> Three balls drawn without replacement from 4 red and 6 blue. Find: (a) all three red, (b) first red, second blue, third red.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub25')">Show Answer ▼</button>
+<div id="sub25" class="answer"><div class='derivation'>(a) \(P=\frac{4}{10}\cdot\frac{3}{9}\cdot\frac{2}{8}=\frac{24}{720}=\frac{1}{30}\)</div><div class='derivation'>(b) \(P=\frac{4}{10}\cdot\frac{6}{9}\cdot\frac{3}{8}=\frac{72}{720}=\frac{1}{10}\)</div></div>
+
+<div class="question"><strong>Q26.</strong> A relay system has 4 independent components in series, each with reliability 0.9. Find the probability the system functions.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub26')">Show Answer ▼</button>
+<div id="sub26" class="answer"><div class='derivation'>\[P(\text{system works}) = 0.9^4 = 0.6561\approx 65.6\%\]</div></div>
+
+<div class="question"><strong>Q27.</strong> Explain the 'base-rate fallacy' using the medical testing example. Why is Bayes' Theorem critical for doctors?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub27')">Show Answer ▼</button>
+<div id="sub27" class="answer"><p>The <strong>base-rate fallacy</strong> occurs when we ignore the prior probability (prevalence) when interpreting a test result.</p><p><strong>Example:</strong> A disease with 1% prevalence. Test: 95% sensitivity, 90% specificity. A positive result gives only ~8.76% chance of disease — because most positive tests come from the 99% healthy population (false positives) rather than the 1% diseased population.</p><p><strong>Why doctors must know Bayes:</strong> Without Bayesian reasoning, doctors may vastly overestimate the probability of disease from a positive test, leading to unnecessary procedures and harm.</p></div>
+
+<div class="question"><strong>Q28.</strong> From 8 men and 4 women, a committee of 3 is chosen. Given at least one woman, find the probability of exactly one woman.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub28')">Show Answer ▼</button>
+<div id="sub28" class="answer"><div class='derivation'>\[P(\geq 1 \text{ woman}) = 1 - \frac{\binom{8}{3}}{\binom{12}{3}} = 1-\frac{56}{220}=\frac{164}{220}=\frac{41}{55}\]</div><div class='derivation'>\[P(\text{exactly 1 woman}) = \frac{\binom{4}{1}\binom{8}{2}}{\binom{12}{3}}=\frac{112}{220}=\frac{28}{55}\]</div><div class='derivation'>\[P(\text{exactly 1}\mid\geq 1) = \frac{28/55}{41/55}=\frac{28}{41}\]</div></div>
+
+<div class="question"><strong>Q29.</strong> State the Theorem: \(P(A^c\mid B) = 1 - P(A\mid B)\). Prove it from the definition.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub29')">Show Answer ▼</button>
+<div id="sub29" class="answer"><div class='derivation'>\[P(A^c\mid B) = \frac{P(A^c\cap B)}{P(B)} = \frac{P(B)-P(A\cap B)}{P(B)} = 1 - \frac{P(A\cap B)}{P(B)} = 1-P(A\mid B) \quad \square\]</div></div>
+
+<div class="question"><strong>Q30.</strong> A biased coin with \(P(H)=\frac{2}{3}\) is tossed three times. Given at least two heads, find the probability all three were heads.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub30')">Show Answer ▼</button>
+<div id="sub30" class="answer"><div class='derivation'>\[P(HHH) = \left(\frac{2}{3}\right)^3 = \frac{8}{27}\]</div><div class='derivation'>\[P(\geq 2H) = 3\cdot\frac{4}{27}+\frac{8}{27}=\frac{20}{27}\]</div><div class='derivation'>\[P(HHH\mid\geq 2H) = \frac{8/27}{20/27}=\frac{8}{20}=\frac{2}{5}\]</div></div>
+
+</div></div>
+
+<!-- MCQs -->
+<div id="mcq" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
+<p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the correct option and explanation.</p>
+
+<div class="question"><strong>Q1.</strong> \(P(A\mid B) = P(A)\) implies that \(A\) and \(B\) are:<div class="mcq-options"><p>(a) Mutually exclusive &nbsp; (b) Exhaustive &nbsp; (c) Independent &nbsp; (d) Complementary</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+<div id="mcq1" class="answer"><strong>Answer:</strong> (c) Independent — because \(P(A\mid B)=P(A)\) is the equivalent definition of independence.</div>
+
+<div class="question"><strong>Q2.</strong> The Multiplication Rule states \(P(A\cap B)=\)<div class="mcq-options"><p>(a) \(P(A)+P(B)\) &nbsp; (b) \(P(A)\cdot P(B\mid A)\) &nbsp; (c) \(P(A)\cdot P(B)\) always &nbsp; (d) \(P(A\mid B)+P(B)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+<div id="mcq2" class="answer"><strong>Answer:</strong> (b) \(P(A)\cdot P(B\mid A)\) — this always holds when \(P(A)>0\). Option (c) is only true for independent events.</div>
+
+<div class="question"><strong>Q3.</strong> If \(P(B)=0.5\) and \(P(A\cap B)=0.3\), then \(P(A\mid B)=\)<div class="mcq-options"><p>(a) 0.3 &nbsp; (b) 0.5 &nbsp; (c) 0.6 &nbsp; (d) 0.15</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show Answer ▼</button>
+<div id="mcq3" class="answer"><strong>Answer:</strong> (c) 0.6 — \(P(A\mid B)=0.3/0.5=0.6\)</div>
+
+<div class="question"><strong>Q4.</strong> For any event \(A\) and \(B\) with \(P(B)>0\):<div class="mcq-options"><p>(a) \(P(A\mid B)\leq P(B)\) &nbsp; (b) \(P(A\mid B)\leq 1\) &nbsp; (c) \(P(A\mid B)=P(B\mid A)\) always &nbsp; (d) \(P(A\mid B)\geq P(A)\) always</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show Answer ▼</button>
+<div id="mcq4" class="answer"><strong>Answer:</strong> (b) \(P(A\mid B)\leq 1\) — since \(P(\cdot\mid B)\) is a valid probability measure.</div>
+
+<div class="question"><strong>Q5.</strong> Bayes' Theorem is used to find:<div class="mcq-options"><p>(a) \(P(A\cup B)\) &nbsp; (b) \(P(A\cap B)\) &nbsp; (c) \(P(B_j\mid A)\) given prior probabilities and likelihoods &nbsp; (d) \(P(A)\) from conditional probabilities</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show Answer ▼</button>
+<div id="mcq5" class="answer"><strong>Answer:</strong> (c) \(P(B_j\mid A)\) — Bayes' theorem gives the posterior probability from prior and likelihood.</div>
+
+<div class="question"><strong>Q6.</strong> Boole's inequality states:<div class="mcq-options"><p>(a) \(P(\bigcup A_i)\geq\sum P(A_i)\) &nbsp; (b) \(P(\bigcup A_i)\leq\sum P(A_i)\) &nbsp; (c) \(P(\bigcup A_i)=\sum P(A_i)\) &nbsp; (d) \(P(\bigcup A_i)=1\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show Answer ▼</button>
+<div id="mcq6" class="answer"><strong>Answer:</strong> (b) \(P(\bigcup A_i) \leq \sum P(A_i)\) — also known as the Union Bound.</div>
+
+<div class="question"><strong>Q7.</strong> If \(A\) and \(B\) are independent with \(P(A)=0.4\), \(P(B)=0.5\), then \(P(A^c\cap B^c)=\)<div class="mcq-options"><p>(a) 0.7 &nbsp; (b) 0.3 &nbsp; (c) 0.2 &nbsp; (d) 0.5</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show Answer ▼</button>
+<div id="mcq7" class="answer"><strong>Answer:</strong> (b) 0.3 — \(P(A^c\cap B^c)=P(A^c)P(B^c)=0.6\times 0.5=0.30\)</div>
+
+<div class="question"><strong>Q8.</strong> In the Total Probability Theorem, the events \(B_1,B_2,\ldots,B_k\) must form a:<div class="mcq-options"><p>(a) Union &nbsp; (b) Intersection &nbsp; (c) Partition of \(S\) &nbsp; (d) Complement</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show Answer ▼</button>
+<div id="mcq8" class="answer"><strong>Answer:</strong> (c) Partition of \(S\) — mutually exclusive, exhaustive, and each with positive probability.</div>
+
+<div class="question"><strong>Q9.</strong> A bag has 5 red and 5 blue balls. Two drawn without replacement. Probability second is red given first is red:<div class="mcq-options"><p>(a) 5/10 &nbsp; (b) 4/9 &nbsp; (c) 5/9 &nbsp; (d) 4/10</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show Answer ▼</button>
+<div id="mcq9" class="answer"><strong>Answer:</strong> (b) 4/9 — After removing one red, 9 balls remain (4 red). \(P(R_2\mid R_1)=4/9\).</div>
+
+<div class="question"><strong>Q10.</strong> Which is the correct form of Bayes' Theorem for partition \(\{B_1,B_2\}\)?<div class="mcq-options"><p>(a) \(P(B_1\mid A)=P(A\mid B_1)P(B_1)+P(B_2)\)<br>(b) \(P(B_1\mid A)=\frac{P(B_1)P(A\mid B_1)}{P(B_1)P(A\mid B_1)+P(B_2)P(A\mid B_2)}\)<br>(c) \(P(B_1\mid A)=P(B_1)P(A\mid B_1)\)<br>(d) \(P(B_1\mid A)=P(A\mid B_1)/P(A)\) only</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show Answer ▼</button>
+<div id="mcq10" class="answer"><strong>Answer:</strong> (b) — This is the complete Bayes' formula with denominator from Total Probability Theorem.</div>
+
+<div class="question"><strong>Q11.</strong> If \(A\) and \(B\) are mutually exclusive with \(P(A)>0\) and \(P(B)>0\), then:<div class="mcq-options"><p>(a) They are independent &nbsp; (b) They are not independent &nbsp; (c) \(P(A\mid B)=P(A)\) &nbsp; (d) \(P(A\cap B)=P(A)P(B)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show Answer ▼</button>
+<div id="mcq11" class="answer"><strong>Answer:</strong> (b) They are not independent — \(P(A\cap B)=0\) but \(P(A)P(B)>0\).</div>
+
+<div class="question"><strong>Q12.</strong> The 'posterior probability' in Bayesian inference refers to:<div class="mcq-options"><p>(a) \(P(B_j\mid A)\) — updated probability after evidence &nbsp; (b) \(P(B_j)\) — prior &nbsp; (c) \(P(A)\) — marginal &nbsp; (d) \(P(A\mid B_j)\cdot P(B_j)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show Answer ▼</button>
+<div id="mcq12" class="answer"><strong>Answer:</strong> (a) \(P(B_j\mid A)\) — the posterior is the updated probability after observing evidence.</div>
+
+<div class="question"><strong>Q13.</strong> If \(A\subset B\), then \(P(A\mid B)=\)<div class="mcq-options"><p>(a) \(P(A)/P(B)\) &nbsp; (b) \(P(B)/P(A)\) &nbsp; (c) \(P(A\cup B)/P(B)\) &nbsp; (d) 1</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show Answer ▼</button>
+<div id="mcq13" class="answer"><strong>Answer:</strong> (a) \(P(A)/P(B)\) — Since \(A\subset B\), \(A\cap B=A\), so \(P(A\mid B)=P(A)/P(B)\).</div>
+
+<div class="question"><strong>Q14.</strong> For three mutually independent events \(A, B, C\):<div class="mcq-options"><p>(a) \(P(A\cap B\cap C)=P(A)+P(B)+P(C)\)<br>(b) \(P(A\cap B\cap C)=P(A)\cdot P(B)\cdot P(C)\)<br>(c) \(P(A\cap B)=P(B)\cdot P(C)\)<br>(d) None</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show Answer ▼</button>
+<div id="mcq14" class="answer"><strong>Answer:</strong> (b) \(P(A\cap B\cap C)=P(A)\cdot P(B)\cdot P(C)\) — defining condition for mutual independence.</div>
+
+<div class="question"><strong>Q15.</strong> The number of conditions for \(n\) events to be mutually independent is:<div class="mcq-options"><p>(a) \(n\) &nbsp; (b) \(\binom{n}{2}\) &nbsp; (c) \(2^n-n-1\) &nbsp; (d) \(n!\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show Answer ▼</button>
+<div id="mcq15" class="answer"><strong>Answer:</strong> (c) \(2^n-n-1\) — for each subset of size \(k\geq 2\), one product condition is required.</div>
+
+<div class="question"><strong>Q16.</strong> If \(P(A\mid B)>P(A)\), then \(B\) is __________ for \(A\):<div class="mcq-options"><p>(a) Irrelevant &nbsp; (b) Positively correlated &nbsp; (c) Independent &nbsp; (d) Negatively correlated</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show Answer ▼</button>
+<div id="mcq16" class="answer"><strong>Answer:</strong> (b) Positively correlated — evidence of \(B\) increases the probability of \(A\).</div>
+
+<div class="question"><strong>Q17.</strong> The 'prior probability' in Bayes' Theorem is:<div class="mcq-options"><p>(a) \(P(A\mid B_j)\) &nbsp; (b) \(P(A)\) &nbsp; (c) \(P(B_j)\) &nbsp; (d) \(P(B_j\mid A)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show Answer ▼</button>
+<div id="mcq17" class="answer"><strong>Answer:</strong> (c) \(P(B_j)\) — the prior is the probability of scenario \(B_j\) before observing evidence.</div>
+
+<div class="question"><strong>Q18.</strong> An urn has 3 red and 2 white balls. Two balls drawn with replacement. Probability both are red:<div class="mcq-options"><p>(a) 6/25 &nbsp; (b) 9/25 &nbsp; (c) 3/5 &nbsp; (d) 6/20</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show Answer ▼</button>
+<div id="mcq18" class="answer"><strong>Answer:</strong> (b) 9/25 — \((3/5)^2 = 9/25\) since draws are independent with replacement.</div>
+
+<div class="question"><strong>Q19.</strong> The Bonferroni inequality gives:<div class="mcq-options"><p>(a) A lower bound on \(P(\bigcap A_i)\) &nbsp; (b) An upper bound on \(P(\bigcap A_i)\) &nbsp; (c) \(P(\bigcap A_i)=0\) always &nbsp; (d) None</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show Answer ▼</button>
+<div id="mcq19" class="answer"><strong>Answer:</strong> (a) A lower bound — \(P(\bigcap A_i) \geq \sum P(A_i)-(n-1)\).</div>
+
+<div class="question"><strong>Q20.</strong> In the Total Probability Theorem, \(P(A\mid B_i)\) is called the:<div class="mcq-options"><p>(a) Prior probability &nbsp; (b) Posterior probability &nbsp; (c) Likelihood &nbsp; (d) Marginal probability</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show Answer ▼</button>
+<div id="mcq20" class="answer"><strong>Answer:</strong> (c) Likelihood — it is the probability of evidence \(A\) given scenario \(B_i\).</div>
+
+<div class="question"><strong>Q21.</strong> \(P(A^c\mid B)=\)<div class="mcq-options"><p>(a) \(1-P(A)\) &nbsp; (b) \(1-P(A\mid B)\) &nbsp; (c) \(P(A\mid B^c)\) &nbsp; (d) \(P(B\mid A^c)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq21')">Show Answer ▼</button>
+<div id="mcq21" class="answer"><strong>Answer:</strong> (b) \(1-P(A\mid B)\) — since \(P(\cdot\mid B)\) is a valid probability measure, the complement rule applies.</div>
+
+<div class="question"><strong>Q22.</strong> If \(P(A)=0.3\) and \(A,B\) independent with \(P(B)=0.6\), then \(P(A\cup B)=\)<div class="mcq-options"><p>(a) 0.72 &nbsp; (b) 0.90 &nbsp; (c) 0.18 &nbsp; (d) 0.82</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq22')">Show Answer ▼</button>
+<div id="mcq22" class="answer"><strong>Answer:</strong> (a) 0.72 — \(P(A\cup B)=0.3+0.6-0.3\times 0.6=0.9-0.18=0.72\)</div>
+
+<div class="question"><strong>Q23.</strong> Thomas Bayes was:<div class="mcq-options"><p>(a) A French mathematician &nbsp; (b) An English statistician and philosopher &nbsp; (c) A German probabilist &nbsp; (d) A Russian mathematician</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq23')">Show Answer ▼</button>
+<div id="mcq23" class="answer"><strong>Answer:</strong> (b) An English statistician and philosopher (1702–1761). His essay was published posthumously in 1763.</div>
+
+<div class="question"><strong>Q24.</strong> \(P(A\cup B\mid C)=\)<div class="mcq-options"><p>(a) \(P(A\mid C)+P(B\mid C)\) always<br>(b) \(P(A\mid C)+P(B\mid C)-P(A\cap B\mid C)\)<br>(c) \(P(A\cup B)/P(C)\)<br>(d) None</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq24')">Show Answer ▼</button>
+<div id="mcq24" class="answer"><strong>Answer:</strong> (b) \(P(A\mid C)+P(B\mid C)-P(A\cap B\mid C)\) — addition rule applied to the valid measure \(P(\cdot\mid C)\).</div>
+
+<div class="question"><strong>Q25.</strong> Probability that a system of 3 independent components (each reliability 0.8) in parallel works:<div class="mcq-options"><p>(a) \(0.8^3\) &nbsp; (b) \(1-0.2^3\) &nbsp; (c) \(3\times 0.8\) &nbsp; (d) \(1-0.8^3\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq25')">Show Answer ▼</button>
+<div id="mcq25" class="answer"><strong>Answer:</strong> (b) \(1-0.2^3 = 0.992\) — parallel system fails only if all components fail.</div>
+
+<div class="question"><strong>Q26.</strong> If \(P(A\mid B)=0.5\) and \(P(B\mid A)=0.4\), then \(P(A)/P(B)\) equals:<div class="mcq-options"><p>(a) 1.25 &nbsp; (b) 0.8 &nbsp; (c) 1 &nbsp; (d) 0.5</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq26')">Show Answer ▼</button>
+<div id="mcq26" class="answer"><strong>Answer:</strong> (a) 1.25 — \(0.5P(B)=0.4P(A)\Rightarrow P(A)/P(B)=0.5/0.4=1.25\)</div>
+
+<div class="question"><strong>Q27.</strong> The total probability formula is an application of:<div class="mcq-options"><p>(a) The complement rule &nbsp; (b) Partition of \(S\) into mutually exclusive exhaustive events &nbsp; (c) Inclusion-exclusion &nbsp; (d) De Morgan's laws</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq27')">Show Answer ▼</button>
+<div id="mcq27" class="answer"><strong>Answer:</strong> (b) — The key ingredient is partitioning \(A\) using mutually exclusive, exhaustive events \(B_1,\ldots,B_k\).</div>
+
+<div class="question"><strong>Q28.</strong> The 'false positive rate' in medical testing corresponds to:<div class="mcq-options"><p>(a) \(P(T^+\mid D)\) &nbsp; (b) \(P(T^+\mid D^c)\) &nbsp; (c) \(P(D\mid T^+)\) &nbsp; (d) \(P(D)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq28')">Show Answer ▼</button>
+<div id="mcq28" class="answer"><strong>Answer:</strong> (b) \(P(T^+\mid D^c)\) — probability of testing positive given the person does NOT have the disease.</div>
+
+<div class="question"><strong>Q29.</strong> If \(A\) and \(B\) are independent with \(P(A)=p\) and \(P(B)=q\), then \(P(A\cap B^c)=\)<div class="mcq-options"><p>(a) \(p(1-q)\) &nbsp; (b) \(pq\) &nbsp; (c) \((1-p)q\) &nbsp; (d) \(p+q-pq\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq29')">Show Answer ▼</button>
+<div id="mcq29" class="answer"><strong>Answer:</strong> (a) \(p(1-q)\) — since \(A\) and \(B^c\) are also independent, \(P(A\cap B^c)=P(A)P(B^c)=p(1-q)\).</div>
+
+<div class="question"><strong>Q30.</strong> For two independent events \(A\) and \(B\), \(P(A\mid A\cup B)\) equals:<div class="mcq-options"><p>(a) \(P(A)\) &nbsp; (b) \(P(A)/P(A\cup B)\) &nbsp; (c) \(P(A)P(B)\) &nbsp; (d) 1</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq30')">Show Answer ▼</button>
+<div id="mcq30" class="answer"><strong>Answer:</strong> (b) \(P(A)/P(A\cup B)\) — \(P(A\mid A\cup B)=P(A\cap(A\cup B))/P(A\cup B)=P(A)/P(A\cup B)\)</div>
+
+</div></div>
+
+<!-- FILL IN THE BLANKS -->
+<div id="fib" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
+
+<div class="question"><strong>Q1.</strong> The conditional probability of \(A\) given \(B\) is defined as \(P(A\mid B) = \) __________ when \(P(B)>0\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+<div id="fib1" class="answer"><strong>Answer:</strong> \(P(A\cap B)/P(B)\)</div>
+
+<div class="question"><strong>Q2.</strong> The Multiplication Rule states \(P(A\cap B)=P(B)\cdot\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+<div id="fib2" class="answer"><strong>Answer:</strong> \(P(A\mid B)\)</div>
+
+<div class="question"><strong>Q3.</strong> Two events \(A\) and \(B\) are independent if \(P(A\cap B)=\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib3')">Show Answer ▼</button>
+<div id="fib3" class="answer"><strong>Answer:</strong> \(P(A)\cdot P(B)\)</div>
+
+<div class="question"><strong>Q4.</strong> If \(A\) and \(B\) are independent, then \(P(A\mid B)=\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib4')">Show Answer ▼</button>
+<div id="fib4" class="answer"><strong>Answer:</strong> \(P(A)\)</div>
+
+<div class="question"><strong>Q5.</strong> Boole's inequality states \(P(A_1\cup\cdots\cup A_n)\leq\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib5')">Show Answer ▼</button>
+<div id="fib5" class="answer"><strong>Answer:</strong> \(P(A_1)+P(A_2)+\cdots+P(A_n)\)</div>
+
+<div class="question"><strong>Q6.</strong> The Bonferroni inequality gives \(P(\bigcap_{i=1}^n A_i)\geq\sum P(A_i)-\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib6')">Show Answer ▼</button>
+<div id="fib6" class="answer"><strong>Answer:</strong> \((n-1)\)</div>
+
+<div class="question"><strong>Q7.</strong> Events \(B_1,B_2,\ldots,B_k\) form a partition of \(S\) if they are mutually __________ and __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib7')">Show Answer ▼</button>
+<div id="fib7" class="answer"><strong>Answer:</strong> Exclusive; exhaustive</div>
+
+<div class="question"><strong>Q8.</strong> The Total Probability Theorem states \(P(A)=\sum_{i=1}^k P(B_i)\cdot\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib8')">Show Answer ▼</button>
+<div id="fib8" class="answer"><strong>Answer:</strong> \(P(A\mid B_i)\)</div>
+
+<div class="question"><strong>Q9.</strong> In Bayes' Theorem, \(P(B_j)\) is called the __________ probability.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib9')">Show Answer ▼</button>
+<div id="fib9" class="answer"><strong>Answer:</strong> Prior</div>
+
+<div class="question"><strong>Q10.</strong> In Bayes' Theorem, \(P(B_j\mid A)\) is called the __________ probability.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib10')">Show Answer ▼</button>
+<div id="fib10" class="answer"><strong>Answer:</strong> Posterior</div>
+
+<div class="question"><strong>Q11.</strong> The 'likelihood' in Bayes' Theorem refers to __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib11')">Show Answer ▼</button>
+<div id="fib11" class="answer"><strong>Answer:</strong> \(P(A\mid B_j)\)</div>
+
+<div class="question"><strong>Q12.</strong> If \(A\) and \(B\) are mutually exclusive with positive probabilities, then they are __________ independent.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib12')">Show Answer ▼</button>
+<div id="fib12" class="answer"><strong>Answer:</strong> Not (they cannot be independent)</div>
+
+<div class="question"><strong>Q13.</strong> \(P(A^c\mid B)=1-\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib13')">Show Answer ▼</button>
+<div id="fib13" class="answer"><strong>Answer:</strong> \(P(A\mid B)\)</div>
+
+<div class="question"><strong>Q14.</strong> The Chain Rule for three events: \(P(A\cap B\cap C)=P(A)\cdot P(B\mid A)\cdot\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib14')">Show Answer ▼</button>
+<div id="fib14" class="answer"><strong>Answer:</strong> \(P(C\mid A\cap B)\)</div>
+
+<div class="question"><strong>Q15.</strong> Pairwise independence of three events __________ imply mutual independence.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib15')">Show Answer ▼</button>
+<div id="fib15" class="answer"><strong>Answer:</strong> Does not</div>
+
+<div class="question"><strong>Q16.</strong> The 'base-rate fallacy' refers to neglecting the __________ probability when interpreting test results.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib16')">Show Answer ▼</button>
+<div id="fib16" class="answer"><strong>Answer:</strong> Prior (base-rate/prior)</div>
+
+<div class="question"><strong>Q17.</strong> In a medical test, sensitivity is \(P(T^+\mid D)\) and the false positive rate is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib17')">Show Answer ▼</button>
+<div id="fib17" class="answer"><strong>Answer:</strong> \(P(T^+\mid D^c)\)</div>
+
+<div class="question"><strong>Q18.</strong> If \(A\subset B\), then \(P(A\mid B)=P(A)/\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib18')">Show Answer ▼</button>
+<div id="fib18" class="answer"><strong>Answer:</strong> \(P(B)\)</div>
+
+<div class="question"><strong>Q19.</strong> The probability that \(A\) does not occur, given \(B\) occurred, is written __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib19')">Show Answer ▼</button>
+<div id="fib19" class="answer"><strong>Answer:</strong> \(P(A^c\mid B)\)</div>
+
+<div class="question"><strong>Q20.</strong> For three independent events \(A, B, C\): \(P(A\cap B\cap C)=\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib20')">Show Answer ▼</button>
+<div id="fib20" class="answer"><strong>Answer:</strong> \(P(A)\cdot P(B)\cdot P(C)\)</div>
+
+<div class="question"><strong>Q21.</strong> The denominator in Bayes' Theorem, \(P(A)=\sum P(B_i)P(A\mid B_i)\), is called the __________ probability.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib21')">Show Answer ▼</button>
+<div id="fib21" class="answer"><strong>Answer:</strong> Marginal (or total)</div>
+
+<div class="question"><strong>Q22.</strong> If \(P(A\mid B)=P(A\mid B^c)\), then \(A\) and \(B\) are __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib22')">Show Answer ▼</button>
+<div id="fib22" class="answer"><strong>Answer:</strong> Independent</div>
+
+<div class="question"><strong>Q23.</strong> Bayes published his probability essay posthumously in the year __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib23')">Show Answer ▼</button>
+<div id="fib23" class="answer"><strong>Answer:</strong> 1763</div>
+
+<div class="question"><strong>Q24.</strong> The multiplication rule for \(n\) events is also called the __________ rule.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib24')">Show Answer ▼</button>
+<div id="fib24" class="answer"><strong>Answer:</strong> Chain</div>
+
+<div class="question"><strong>Q25.</strong> If \(P(B)>0\), then \(P(\cdot\mid B)\) satisfies the three Kolmogorov __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib25')">Show Answer ▼</button>
+<div id="fib25" class="answer"><strong>Answer:</strong> Axioms</div>
+
+<div class="question"><strong>Q26.</strong> The false positive rate and sensitivity together determine the __________ probability that a positive test corresponds to true disease.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib26')">Show Answer ▼</button>
+<div id="fib26" class="answer"><strong>Answer:</strong> Posterior (positive predictive value)</div>
+
+<div class="question"><strong>Q27.</strong> \(P(A\cup B\mid C)=P(A\mid C)+P(B\mid C)-\) __________ when \(P(C)>0\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib27')">Show Answer ▼</button>
+<div id="fib27" class="answer"><strong>Answer:</strong> \(P(A\cap B\mid C)\)</div>
+
+<div class="question"><strong>Q28.</strong> For independent events, \(P(A\cup B)=P(A)+P(B)-\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib28')">Show Answer ▼</button>
+<div id="fib28" class="answer"><strong>Answer:</strong> \(P(A)\cdot P(B)\)</div>
+
+<div class="question"><strong>Q29.</strong> A system of \(n\) independent components each with reliability \(r\) in series has reliability __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib29')">Show Answer ▼</button>
+<div id="fib29" class="answer"><strong>Answer:</strong> \(r^n\)</div>
+
+<div class="question"><strong>Q30.</strong> A system of \(n\) independent components each with reliability \(r\) in parallel has reliability __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib30')">Show Answer ▼</button>
+<div id="fib30" class="answer"><strong>Answer:</strong> \(1-(1-r)^n\)</div>
+
+</div></div>
+
+<!-- TRUE/FALSE -->
+<div id="tf" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
+
+<div class="question"><strong>Q1.</strong> \(P(A\mid B)=P(B\mid A)\) for all events \(A, B\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+<div id="tf1" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — They are equal only when \(P(A)=P(B)\).</div>
+
+<div class="question"><strong>Q2.</strong> If \(P(A\mid B)=P(A)\), then \(A\) and \(B\) are independent. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+<div id="tf2" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — This is the equivalent definition of statistical independence.</div>
+
+<div class="question"><strong>Q3.</strong> Two events can be both mutually exclusive and independent if one has probability 0. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf3')">Show Answer ▼</button>
+<div id="tf3" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — If \(P(A)=0\): \(P(A\cap B)=0=P(A)\cdot P(B)\), so the independence condition holds trivially.</div>
+
+<div class="question"><strong>Q4.</strong> The Multiplication Rule \(P(A\cap B)=P(A)\cdot P(B\mid A)\) requires \(P(A)>0\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf4')">Show Answer ▼</button>
+<div id="tf4" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — We need \(P(A)>0\) to define \(P(B\mid A)\).</div>
+
+<div class="question"><strong>Q5.</strong> For any event \(B\) with \(P(B)>0\), we have \(P(S\mid B)=1\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf5')">Show Answer ▼</button>
+<div id="tf5" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — \(P(S\mid B) = P(S\cap B)/P(B) = P(B)/P(B) = 1\).</div>
+
+<div class="question"><strong>Q6.</strong> Boole's inequality can give an upper bound greater than 1 when probabilities sum to more than 1. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf6')">Show Answer ▼</button>
+<div id="tf6" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — The bound \(\sum P(A_i)\) can exceed 1; the inequality is still valid (just not tight).</div>
+
+<div class="question"><strong>Q7.</strong> The Total Probability Theorem requires the conditioning events to be independent. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf7')">Show Answer ▼</button>
+<div id="tf7" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — They must form a partition: mutually exclusive and exhaustive. Independence is not required.</div>
+
+<div class="question"><strong>Q8.</strong> Bayes' Theorem and the Total Probability Theorem are separate, unrelated results. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf8')">Show Answer ▼</button>
+<div id="tf8" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — Bayes' Theorem uses the Total Probability Theorem in its denominator \(P(A)\).</div>
+
+<div class="question"><strong>Q9.</strong> If \(A\) and \(B\) are independent, then \(P(A\cap B)\neq P(A)\cdot P(B)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf9')">Show Answer ▼</button>
+<div id="tf9" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — By definition of independence: \(P(A\cap B)=P(A)\cdot P(B)\).</div>
+
+<div class="question"><strong>Q10.</strong> The posterior probability \(P(B_j\mid A)\) can be greater than the prior \(P(B_j)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf10')">Show Answer ▼</button>
+<div id="tf10" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — If \(A\) is evidence supporting scenario \(B_j\), the posterior exceeds the prior.</div>
+
+<div class="question"><strong>Q11.</strong> \(P(A\mid B)+P(A^c\mid B)=1\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf11')">Show Answer ▼</button>
+<div id="tf11" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — Since \(P(\cdot\mid B)\) is a valid probability measure, the complement rule gives \(P(A^c\mid B)=1-P(A\mid B)\).</div>
+
+<div class="question"><strong>Q12.</strong> \(P(A\mid B)+P(A\mid B^c)=1\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf12')">Show Answer ▼</button>
+<div id="tf12" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — These do not generally sum to 1. This is a common misconception.</div>
+
+<div class="question"><strong>Q13.</strong> If \(A_1,\ldots,A_n\) are mutually independent, then they are also pairwise independent. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf13')">Show Answer ▼</button>
+<div id="tf13" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — Mutual independence requires all pairwise conditions as special cases (\(k=2\) subsets).</div>
+
+<div class="question"><strong>Q14.</strong> If \(A_1,\ldots,A_n\) are pairwise independent, then they are also mutually independent. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf14')">Show Answer ▼</button>
+<div id="tf14" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — Bernstein's example shows three pairwise independent events that are not mutually independent.</div>
+
+<div class="question"><strong>Q15.</strong> Bayes was an English statistician who published his theorem himself in 1763. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf15')">Show Answer ▼</button>
+<div id="tf15" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — Bayes died in 1761; his theorem was published posthumously in 1763 by Richard Price.</div>
+
+<div class="question"><strong>Q16.</strong> In a medical test with high sensitivity but low specificity, a negative result is highly reliable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf16')">Show Answer ▼</button>
+<div id="tf16" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — High sensitivity (few false negatives) means a negative result strongly suggests no disease.</div>
+
+<div class="question"><strong>Q17.</strong> If \(P(A\cap B)>P(A)\cdot P(B)\), events \(A\) and \(B\) are positively correlated. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf17')">Show Answer ▼</button>
+<div id="tf17" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — Positive correlation means \(A\) and \(B\) tend to occur together more than by chance.</div>
+
+<div class="question"><strong>Q18.</strong> For the Chain Rule: \(P(A_1\cap A_2\cap A_3)=P(A_1)P(A_2)P(A_3)\) always. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf18')">Show Answer ▼</button>
+<div id="tf18" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — This holds only when \(A_1, A_2, A_3\) are mutually independent.</div>
+
+<div class="question"><strong>Q19.</strong> The probabilities \(P(B_j\mid A)\) in Bayes' Theorem satisfy \(\sum_j P(B_j\mid A)=1\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf19')">Show Answer ▼</button>
+<div id="tf19" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — The \(B_j\) partition \(S\), so \(\sum_j P(B_j\mid A)=P(S\mid A)=1\).</div>
+
+<div class="question"><strong>Q20.</strong> Conditional probability is undefined when \(P(B)=0\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf20')">Show Answer ▼</button>
+<div id="tf20" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — The definition \(P(A\mid B)=P(A\cap B)/P(B)\) requires \(P(B)>0\) to avoid division by zero.</div>
+
+<div class="question"><strong>Q21.</strong> Boole's inequality is an equality when the events are mutually exclusive. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf21')">Show Answer ▼</button>
+<div id="tf21" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — If \(A_i\cap A_j=\emptyset\) for all \(i\neq j\), then \(P(\bigcup A_i)=\sum P(A_i)\) by additivity.</div>
+
+<div class="question"><strong>Q22.</strong> The multiplication rule \(P(A\cap B)=P(A)P(B\mid A)\) is valid for any events (provided \(P(A)>0\)). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf22')">Show Answer ▼</button>
+<div id="tf22" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — This follows directly from the definition of conditional probability.</div>
+
+<div class="question"><strong>Q23.</strong> A system in series is more reliable than each of its components. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf23')">Show Answer ▼</button>
+<div id="tf23" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — A series system fails if any component fails, so it is less reliable: \(r^n < r\) for \(r<1\) and \(n>1\).</div>
+
+<div class="question"><strong>Q24.</strong> A system in parallel is more reliable than any single component. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf24')">Show Answer ▼</button>
+<div id="tf24" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — A parallel system works if at least one component works: reliability \(1-(1-r)^n > r\) for \(r<1\) and \(n>1\).</div>
+
+<div class="question"><strong>Q25.</strong> \(P(A\mid B)\leq P(A\cup B)\) always. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf25')">Show Answer ▼</button>
+<div id="tf25" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — Since \(P(A\cup B) \geq P(A\cup B)/P(B)\cdot P(A\mid B)\)... more simply, both are at most 1 but \(P(A\cup B) \geq P(B) \geq P(A\cap B) = P(A\mid B)\cdot P(B)\leq P(A\mid B)\).</div>
+
+<div class="question"><strong>Q26.</strong> If \(A\) is a subset of \(B\), then \(P(A\mid B)=P(A)/P(B)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf26')">Show Answer ▼</button>
+<div id="tf26" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — Since \(A\subset B\): \(A\cap B=A\), so \(P(A\mid B)=P(A\cap B)/P(B)=P(A)/P(B)\).</div>
+
+<div class="question"><strong>Q27.</strong> The false discovery rate equals \(1-P(D\mid T^+)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf27')">Show Answer ▼</button>
+<div id="tf27" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — The false discovery rate is the proportion of positive tests that are false positives, i.e., \(1-\text{PPV}=1-P(D\mid T^+)\).</div>
+
+<div class="question"><strong>Q28.</strong> \(P(A\cap B\cap C)=P(A\mid B\cap C)\cdot P(B\mid C)\cdot P(C)\) is the chain rule for three events. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf28')">Show Answer ▼</button>
+<div id="tf28" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — This follows by applying the definition of conditional probability twice.</div>
+
+<div class="question"><strong>Q29.</strong> If \(P(A)=0.9\) and \(P(B)=0.9\), then \(P(A\cap B)\geq 0.8\) (Bonferroni). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf29')">Show Answer ▼</button>
+<div id="tf29" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — Bonferroni for \(n=2\): \(P(A\cap B)\geq P(A)+P(B)-1=0.9+0.9-1=0.8\).</div>
+
+<div class="question"><strong>Q30.</strong> The 'prior' probability in Bayesian inference is updated to form the 'posterior' after observing new evidence. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf30')">Show Answer ▼</button>
+<div id="tf30" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — This is the fundamental purpose of Bayes' Theorem: prior + likelihood → posterior.</div>
+
+</div></div>
+
+</main>
+
+<footer class="book-footer">
+    <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+    CCS Haryana Agricultural University, Hisar</p>
+    <p class="university">© 2026 Statistics 102 | All mathematical content rendered with MathJax | Toggle answers for self-assessment</p>
+</footer>
+
+<script>
+    // Toggle sidebar on mobile
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+    
+    // Show topic section
+    function showTopic(topicId) {
+        // Hide all sections
+        document.querySelectorAll('.topic-section').forEach(sec => sec.classList.remove('active'));
+        // Show target section
+        document.getElementById(topicId).classList.add('active');
+        // Update nav active state
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        // Close sidebar on mobile after selection
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+        // Scroll to top
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    
+    // Toggle answer visibility
+    function toggleAnswer(id) {
+        const answer = document.getElementById(id);
+        const btn = event.target;
+        if (answer.classList.contains('show')) {
+            answer.classList.remove('show');
+            btn.innerHTML = 'Show Answer ▼';
+        } else {
+            answer.classList.add('show');
+            btn.innerHTML = 'Hide Answer ▲';
+        }
+    }
+    
+    // Initialize MathJax after page load
+    window.addEventListener('load', function() {
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    });
+    
+    // Handle responsive nav
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.querySelector('.menu-toggle');
+        if (window.innerWidth <= 768 && sidebar.classList.contains('open') && 
+            !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+</script>
+</body>
+</html>

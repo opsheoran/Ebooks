@@ -1,0 +1,3052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV – Mathematical Expectation and Generating Functions | Statistics 102</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root { --navy:#1B2A4A; --navy-mid:#243555; --navy-light:#2E4270; --gold:#C8922A; --gold-light:#E8B84B; --gold-pale:#FDF3DC; --sage:#3D6B5A; --sage-light:#EEF6F2; --crimson:#9B2335; --crimson-light:#FBF0F1; --sky:#1D6FA4; --sky-light:#EAF4FB; --ivory:#FAFAF7; --paper:#F5F3EE; --border:#DDD8CF; --text-dark:#1C1C1E; --text-mid:#3A3A3C; --text-soft:#6B6B70; --sidebar-w:300px; --header-h:72px; --radius:10px; --shadow-sm:0 2px 8px rgba(27,42,74,.08); --shadow-md:0 4px 20px rgba(27,42,74,.12); --shadow-lg:0 8px 40px rgba(27,42,74,.16); }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:var(--text-dark);line-height:1.78;font-size:16px}
+        .book-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:linear-gradient(110deg,var(--navy) 0%,var(--navy-mid) 50%,var(--navy-light) 100%);color:#fff;z-index:1100;box-shadow:0 3px 20px rgba(0,0,0,.25);display:flex;align-items:center;padding:0 28px;gap:16px}
+        .book-header .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:4px 8px}
+        .header-icon{width:42px;height:42px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+        .header-text h1{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.3px}
+        .header-text .subtitle{font-family:'DM Sans',sans-serif;font-size:.8rem;color:rgba(255,255,255,.7);letter-spacing:.5px}
+        .header-badge{margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;padding:4px 12px;border-radius:20px;letter-spacing:.4px}
+        .sidebar{position:fixed;left:0;top:var(--header-h);width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--navy);overflow-y:auto;z-index:1000;transition:transform .3s ease;scrollbar-width:thin;scrollbar-color:rgba(200,146,42,.4) transparent}
+        .sidebar::-webkit-scrollbar{width:4px}
+        .sidebar::-webkit-scrollbar-thumb{background:rgba(200,146,42,.4);border-radius:4px}
+        .sidebar-brand{padding:20px 20px 14px;border-bottom:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(200,146,42,.15) 0%,transparent 100%)}
+        .sidebar-brand h2{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--gold-light);margin-bottom:3px}
+        .sidebar-brand p{font-family:'DM Sans',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.4}
+        .nav-group-label{font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.35);padding:16px 20px 6px}
+        .nav-list{list-style:none;padding:0 8px 12px}
+        .nav-item{margin:1px 0}
+        .nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;color:rgba(255,255,255,.75);text-decoration:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:400;transition:all .2s ease;border-left:3px solid transparent;cursor:pointer}
+        .nav-link:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:rgba(200,146,42,.6)}
+        .nav-link.active{background:rgba(200,146,42,.18);color:var(--gold-light);border-left-color:var(--gold);font-weight:500}
+        .nav-link .nav-num{font-size:.7rem;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 6px;font-weight:600;min-width:26px;text-align:center;flex-shrink:0}
+        .nav-link.active .nav-num{background:var(--gold);color:var(--navy)}
+        .nav-sub .nav-link{padding-left:28px;font-size:.835rem;color:rgba(255,255,255,.55)}
+        .nav-sub .nav-link:hover,.nav-sub .nav-link.active{color:var(--gold-light)}
+        .main-content{margin-left:var(--sidebar-w);margin-top:var(--header-h);padding:36px 48px 60px;max-width:calc(var(--sidebar-w) + 860px);min-height:calc(100vh - var(--header-h))}
+        .chapter-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);color:#fff;padding:32px 36px;border-radius:var(--radius);margin-bottom:32px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+        .chapter-header::before{content:'';position:absolute;top:-30px;right:-30px;width:180px;height:180px;background:rgba(200,146,42,.12);border-radius:50%}
+        .chapter-header::after{content:'';position:absolute;bottom:-50px;right:60px;width:120px;height:120px;background:rgba(200,146,42,.07);border-radius:50%}
+        .chapter-header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;margin-bottom:6px;line-height:1.2}
+        .chapter-header .author{font-family:'DM Sans',sans-serif;font-size:.95rem;color:rgba(255,255,255,.7);margin-bottom:14px;font-style:italic}
+        .chapter-header .syllabus-tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.6;color:rgba(255,255,255,.85);position:relative;z-index:1}
+        .topic-section{display:none;animation:fadeSlideIn .45s ease}
+        .topic-section.active{display:block}
+        @keyframes fadeSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+        .section-card{background:var(--ivory);border-radius:var(--radius);padding:36px 42px;box-shadow:var(--shadow-sm);border:1px solid var(--border);border-top:4px solid var(--navy)}
+        .section-card h2{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--navy);margin:0 0 20px;padding-bottom:14px;border-bottom:2px solid var(--border);display:flex;align-items:baseline;gap:10px}
+        .section-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--navy-light);margin:32px 0 14px}
+        .section-card h4{font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;color:var(--text-dark);margin:20px 0 8px}
+        .section-card h5{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;color:var(--sky);margin:14px 0 6px;font-style:italic}
+        .section-card p{margin-bottom:12px;text-align:justify;font-size:1.02rem;color:var(--text-mid);line-height:1.82}
+        .section-card ul,.section-card ol{margin:10px 0 14px 28px;line-height:1.75}
+        .section-card li{margin-bottom:5px;color:var(--text-mid);font-size:.99rem}
+        .section-num{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;background:var(--navy);color:var(--gold-light);padding:2px 10px;border-radius:5px;flex-shrink:0}
+        .definition,.theorem,.example,.note,.warning,.key-point,.proof-box{border-radius:8px;padding:18px 22px;margin:20px 0;position:relative}
+        .definition{background:#F3F0FB;border-left:5px solid #6B4FC8;box-shadow:0 2px 10px rgba(107,79,200,.1)}
+        .theorem{background:var(--sage-light);border-left:5px solid var(--sage);box-shadow:0 2px 10px rgba(61,107,90,.1)}
+        .example{background:#FFFBF0;border-left:5px solid var(--gold);box-shadow:0 2px 10px rgba(200,146,42,.1)}
+        .note{background:var(--sky-light);border-left:5px solid var(--sky);box-shadow:0 2px 10px rgba(29,111,164,.1)}
+        .proof-box{background:#F8F5FF;border-left:5px solid #7C3AED;box-shadow:0 2px 10px rgba(124,58,237,.1)}
+        .warning{background:var(--crimson-light);border-left:5px solid var(--crimson);color:#5a1020;box-shadow:0 2px 10px rgba(155,35,53,.1)}
+        .warning strong{color:var(--crimson)}
+        .key-point{background:linear-gradient(135deg,#EAF8F4 0%,#E0F3FF 100%);border-left:5px solid #0E9E6F;box-shadow:0 2px 10px rgba(14,158,111,.1)}
+        .key-point strong{color:#0E6650}
+        .definition h4,.theorem h4,.example h4,.note h4,.warning h4,.key-point h4,.proof-box h4{margin-top:0;margin-bottom:8px;color:var(--text-dark)}
+        .formula-box{background:linear-gradient(135deg,#EEF2FA 0%,#F7F5FF 100%);border:2px dashed var(--navy-light);border-radius:8px;padding:18px 22px;margin:16px 0;text-align:center;font-size:1.12rem}
+        .derivation{background:#F8FAFC;border-left:3px solid var(--sky);padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;font-family:'Source Serif 4',serif;line-height:1.85;color:var(--text-mid)}
+        .proof-step{margin:5px 0 5px 20px;padding-left:12px;border-left:2px solid var(--border);color:var(--text-mid);font-size:.97rem}
+        table{width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-sm)}
+        th{background:var(--navy);color:#fff;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:.3px}
+        td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--text-mid);background:#fff}
+        tr:last-child td{border-bottom:none}
+        tr:nth-child(even) td{background:#FAFAF8}
+        tr:hover td{background:var(--gold-pale);transition:background .15s}
+        .question{background:#fff;border:1px solid var(--border);border-left:4px solid var(--navy-light);padding:16px 20px;margin:14px 0 6px;border-radius:0 8px 8px 0;font-size:1rem;color:var(--text-dark);line-height:1.7}
+        .question strong{color:var(--navy)}
+        .mcq-options{margin:10px 0 8px 20px}
+        .mcq-options p{text-align:left;margin:4px 0;font-size:.95rem;color:var(--text-mid);line-height:1.6}
+        .toggle-btn{background:var(--navy);color:#fff;border:none;padding:7px 18px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;display:inline-flex;align-items:center;gap:5px;transition:all .25s;margin:4px 0 8px;letter-spacing:.3px}
+        .toggle-btn:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(27,42,74,.3)}
+        .answer{display:none;background:#F0FBF5;border-left:4px solid var(--sage);padding:16px 20px;margin:2px 0 12px;border-radius:0 8px 8px 0;animation:fadeSlideIn .3s ease;color:var(--text-dark)!important;font-size:.97rem;line-height:1.75}
+        .answer.show{display:block}
+        .answer p,.answer ul,.answer ol,.answer li,.answer strong,.answer em,.answer .derivation,.answer .proof-step{color:var(--text-dark)!important}
+        .answer .derivation{background:#EFF8F4;border-left-color:var(--sage);color:var(--text-dark)!important}
+        .answer strong{font-weight:700}
+        .answer-key-box{background:var(--navy);color:rgba(255,255,255,.85);padding:18px 22px;border-radius:8px;margin-top:20px;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.8}
+        .answer-key-box strong{color:var(--gold-light)}
+        .quick-ref-table th{background:var(--navy-light)}
+        .book-footer{background:var(--navy);color:rgba(255,255,255,.75);text-align:center;padding:24px;margin-top:48px;border-radius:12px 12px 0 0;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.7}
+        .book-footer strong{color:var(--gold-light)}
+        .book-footer .university{margin-top:6px;font-size:.82rem;opacity:.7}
+        .MathJax{font-size:1.06em!important}
+        mjx-container{display:inline-block!important}
+        ::-webkit-scrollbar{width:7px;height:7px}
+        ::-webkit-scrollbar-track{background:var(--paper)}
+        ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+        ::-webkit-scrollbar-thumb:hover{background:#b0a89a}
+        @media(max-width:1024px){:root{--sidebar-w:260px}.main-content{padding:28px 30px 50px}}
+        @media(max-width:768px){:root{--sidebar-w:280px}.book-header .menu-toggle{display:flex;align-items:center;justify-content:center}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0;padding:20px 18px 40px;max-width:100%}.chapter-header h1{font-size:1.6rem}.section-card{padding:22px 20px}}
+    </style>
+</head>
+<body>
+
+<header class="book-header">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <div class="header-icon">🎲</div>
+    <div class="header-text">
+        <h1>Statistics 102</h1>
+        <div class="subtitle">UNIT IV · MATHEMATICAL EXPECTATION AND GENERATING FUNCTIONS</div>
+    </div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
+</header>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>Unit IV</h2>
+        <p>Mathematical Expectation<br>CCS Haryana Agricultural University</p>
+    </div>
+    <div class="nav-group-label">Main Concepts</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showTopic('intro');return false;"><span class="nav-num">📌</span> Introduction</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('expectation');return false;"><span class="nav-num">4.2</span> Mathematical Expectation</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('properties');return false;"><span class="nav-num">4.3</span> Properties</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('moments');return false;"><span class="nav-num">4.4</span> Moments of a Distribution</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('variance');return false;"><span class="nav-num">4.5</span> Variance & Properties</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('skewness');return false;"><span class="nav-num">4.6</span> Skewness & Kurtosis</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('covariance');return false;"><span class="nav-num">4.7</span> Covariance</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('conditional');return false;"><span class="nav-num">4.8</span> Conditional Expectation</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('mgf');return false;"><span class="nav-num">4.9</span> MGF</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('cgf');return false;"><span class="nav-num">4.10</span> CGF</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('pgf');return false;"><span class="nav-num">4.11</span> PGF</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('cf');return false;"><span class="nav-num">4.12</span> Characteristic Function</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('comparison');return false;"><span class="nav-num">4.13</span> Comparison</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('formulas');return false;"><span class="nav-num">📐</span> Formula Reference</a></li>
+    </ul>
+    <div class="nav-group-label">Practice Exercises</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('subjective');return false;"><span class="nav-num">📝</span> Subjective (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> MCQs (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('tf');return false;"><span class="nav-num">✅</span> True / False (30 Q)</a></li>
+    </ul>
+</nav>
+<main class="main-content">
+<div class="chapter-header">
+    <h1>Unit IV: Mathematical Expectation and Generating Functions</h1>
+    <div class="author">By Prof. O.P. Sheoran · B.Sc. Physical Sciences — First Year | Statistics</div>
+    <div class="syllabus-tag">
+        <strong>Syllabus:</strong> Mathematical Expectation · Properties · Moments · Variance · Skewness and Kurtosis · Covariance · Conditional Expectation · MGF · CGF · PGF · Characteristic Function
+    </div>
+</div>
+
+<p><strong>UNIT IV: MATHEMATICAL EXPECTATION AND GENERATING
+FUNCTIONS</strong></p>
+<p><strong><a href="http://B.Sc">B.Sc</a>. Statistics — Stat
+102</strong></p>
+<div id="intro" class="topic-section active"><div class="section-card">
+<h2><span class="section-num">4.1</span> Introduction</h2>
+<p>The concept of <strong>mathematical expectation</strong> (or
+<strong>expected value</strong>) is one of the most fundamental ideas in
+all of probability and statistics. At its heart, the expected value of a
+random variable is a weighted average of all the values it can take,
+where the weights are the corresponding probabilities. It captures the
+"centre of gravity" or "long-run average" of the random variable's
+distribution.</p>
+<p>Beyond the mean, we want to know how spread out the distribution is
+(variance), how asymmetric it is (skewness), and how heavy the tails are
+(kurtosis). All of these are captured systematically by
+<strong>moments</strong>. The relationship between raw moments and
+central moments, and the elegant algebraic connections among them, form
+the core of this unit.</p>
+<p><strong>Generating functions</strong> — the Moment Generating
+Function (MGF), Cumulant Generating Function (CGF), Probability
+Generating Function (PGF), and Characteristic Function (CF) — are
+powerful analytic tools. Each encodes the entire probability
+distribution in a single function. They make it easy to compute moments,
+identify distributions, prove independence results, and establish limit
+theorems like the Central Limit Theorem.</p>
+<p>This unit develops all these ideas rigorously, with full proofs and
+many worked examples.</p>
+</div></div>
+<div id="expectation" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.2</span> Mathematical Expectation</h2>
+<p><strong>4.2.1 Expectation of a Discrete Random Variable</strong></p>
+<div class="definition">
+<h4>Definition 4.2.1.</h4>
+<p>Let <span class="math inline">\(X\)</span> be a discrete random variable taking
+values <span class="math inline">\(x_{1},x_{2},x_{3},\ldots\)</span>
+with probabilities <span class="math inline">\(P\left( X = x_{k} \right)
+= p_{k} \geq 0\)</span> and <span class="math inline">\(\sum_{k}^{}\mspace{2mu} p_{k} = 1\)</span>. The
+<strong>mathematical expectation</strong> (or <strong>expected
+value</strong> or <strong>mean</strong>) of <span class="math inline">\(X\)</span> is defined as:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{E(X) =
+\sum_{k}^{}\mspace{2mu}\mspace{2mu} x_{k}\ p_{k}}\]</span>
+</div>
+<p>provided the series converges absolutely, i.e., <span class="math inline">\(\sum_{k}^{}\mspace{2mu}\left| x_{k} \right|p_{k} < \infty\)</span>.</p>
+<p>If <span class="math inline">\(\sum_{k}^{}\mspace{2mu}\left| x_{k}
+\right|p_{k} = \infty\)</span>, we say <span class="math inline">\(E(X)\)</span> does not exist.</p>
+<p><strong>Physical Interpretation.</strong> Imagine the real line with
+masses <span class="math inline">\(p_{k}\)</span> placed at points <span class="math inline">\(x_{k}\)</span>. Then <span class="math inline">\(E(X)\)</span> is the centre of mass (balancing
+point) of this mass distribution. In the long run, if the experiment is
+repeated <span class="math inline">\(n\)</span> times and <span class="math inline">\(X\)</span> takes value <span class="math inline">\(x_{k}\)</span> with frequency <span class="math inline">\(f_{k}\)</span>, then the sample average <span class="math inline">\(\frac{1}{n}\sum_{k}^{}\mspace{2mu} f_{k}x_{k}
+\rightarrow E(X)\)</span> by the Law of Large Numbers.</p>
+<p><strong>4.2.2 Expectation of a Continuous Random
+Variable</strong></p>
+</div>
+<div class="definition">
+<h4>Definition 4.2.2.</h4>
+<p>Let <span class="math inline">\(X\)</span> be a continuous random variable with
+probability density function (pdf) <span class="math inline">\(f(x)\)</span> satisfying <span class="math inline">\(f(x) \geq 0\)</span> and <span class="math inline">\(\int_{- \infty}^{\infty}\mspace{2mu} f(x)dx =
+1\)</span>. The <strong>mathematical expectation</strong> of <span class="math inline">\(X\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{E(X) = \int_{-
+\infty}^{\infty}\mspace{2mu}\mspace{2mu} x\ f(x)dx}\]</span>
+</div>
+<p>provided</p>
+<div class="derivation">
+<span class="math display">\[\int_{- \infty}^{\infty}\mspace{2mu}|x|f(x)dx < \infty\]</span>
+</div>
+<p><strong>4.2.3 Worked Examples on Mathematical
+Expectation</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.2.1.</h4>
+<p>A fair six-sided die is rolled. Let
+<span class="math inline">\(X\)</span> denote the number on the upper
+face. Find <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong> Here <span class="math inline">\(x_{k} =
+k\)</span> and <span class="math inline">\(p_{k} = \frac{1}{6}\)</span>
+for <span class="math inline">\(k = 1,2,3,4,5,6\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = \sum_{k = 1}^{6}\mspace{2mu} k
+\cdot \frac{1}{6} = \frac{1}{6}(1 + 2 + 3 + 4 + 5 + 6) = \frac{21}{6} =
+\frac{7}{2} = 3.5\]</span>
+</div>
+<p>This means that if you roll the die many times, the average of all
+outcomes will approach <span class="math inline">\(3.5\)</span>. Since
+<span class="math inline">\(3.5\)</span> is not a possible outcome, it
+is a purely abstract "long-run average."</p>
+</div>
+<div class="example">
+<h4>Example 4.2.2.</h4>
+<p>A random variable <span class="math inline">\(X\)</span> has the following probability
+distribution:</p>
+</div>
+<table class="table quick-ref-table" style="width:57%;">
+<colgroup>
+<col style="width: 12%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="math display">\[x\]</span></th>
+<th style="text-align: left;"><span class="math display">\[-
+2\]</span></th>
+<th style="text-align: left;"><span class="math display">\[-
+1\]</span></th>
+<th style="text-align: left;"><span class="math display">\[0\]</span></th>
+<th style="text-align: left;"><span class="math display">\[1\]</span></th>
+<th style="text-align: left;"><span class="math display">\[2\]</span></th>
+<th style="text-align: left;"><span class="math display">\[3\]</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="math display">\[P(X =
+x)\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.05\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.10\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.20\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.30\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.25\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.10\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>Find <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(E\left( X^{2} \right)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="formula-box">
+<span class="math display">\[E(X) = ( - 2)(0.05) + ( - 1)(0.10) +
+(0)(0.20) + (1)(0.30) + (2)(0.25) + (3)(0.10)\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[= - 0.10 - 0.10 + 0 + 0.30 + 0.50 + 0.30
+= \mathbf{0.90}\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[E(X^{2}) = ( - 2)^{2}(0.05) + ( -
+1)^{2}(0.10) + 0^{2}(0.20) + 1^{2}(0.30) + 2^{2}(0.25) +
+3^{2}(0.10)\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[= 4(0.05) + 1(0.10) + 0 + 1(0.30) +
+4(0.25) + 9(0.10)\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[= 0.20 + 0.10 + 0 + 0.30 + 1.00 + 0.90 =
+\mathbf{2.50}\]</span>
+</div>
+<div class="example">
+<h4>Example 4.2.3 (Gambler's Expected Gain).</h4>
+<p>In a game,
+a player wins Rs. 3 with probability <span class="math inline">\(\frac{2}{5}\)</span>, wins Rs. 1 with probability
+<span class="math inline">\(\frac{1}{5}\)</span>, and loses Rs. 2 with
+probability <span class="math inline">\(\frac{2}{5}\)</span>. Is the
+game favourable to the player?</p>
+<p><strong>Solution.</strong> Let <span class="math inline">\(X\)</span>
+denote the player's gain.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = 3 \cdot \frac{2}{5} + 1 \cdot
+\frac{1}{5} + ( - 2) \cdot \frac{2}{5} = \frac{6}{5} + \frac{1}{5} -
+\frac{4}{5} = \frac{3}{5} = 0.6\]</span>
+</div>
+<p>Since <span class="math inline">\(E(X) = 0.6 > 0\)</span>, the game is favourable to the player. On average, the player gains Rs. 0.60 per game.</p>
+</div>
+<div class="example">
+<h4>Example 4.2.4.</h4>
+<p>Let <span class="math inline">\(X\)</span> have a continuous uniform distribution
+on the interval <span class="math inline">\(\lbrack a,b\rbrack\)</span>,
+i.e., <span class="math inline">\(f(x) = \frac{1}{b - a}\)</span> for
+<span class="math inline">\(a \leq x \leq b\)</span> and <span class="math inline">\(0\)</span> otherwise. Find <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="derivation">
+<span class="math display">\[E(X) = \int_{a}^{b}\mspace{2mu} x \cdot
+\frac{1}{b - a}\ dx = \frac{1}{b - a} \cdot \left\lbrack \frac{x^{2}}{2}
+\right\rbrack_{a}^{b} = \frac{1}{b - a} \cdot \frac{b^{2} - a^{2}}{2} =
+\frac{(b - a)(b + a)}{2(b - a)} = \frac{a + b}{2}\]</span>
+</div>
+<p>The expected value of a uniform distribution is simply the midpoint
+of the interval.</p>
+</div>
+<div class="example">
+<h4>Example 4.2.5.</h4>
+<p>Let <span class="math inline">\(X\)</span> have the triangular pdf <span class="math inline">\(f(x) = 2x\)</span> for <span class="math inline">\(0 \leq x \leq 1\)</span> (and <span class="math inline">\(0\)</span> otherwise). Find <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(E\left( X^{2} \right)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="derivation">
+<span class="math display">\[E(X) = \int_{0}^{1}\mspace{2mu} x \cdot
+2x\ dx = 2\int_{0}^{1}\mspace{2mu} x^{2}\ dx = 2 \cdot
+\frac{x^{3}}{3}|_{0}^{1} = \frac{2}{3}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) =
+\int_{0}^{1}\mspace{2mu} x^{2} \cdot 2x\ dx = 2\int_{0}^{1}\mspace{2mu}
+x^{3}\ dx = 2 \cdot \frac{x^{4}}{4}|_{0}^{1} = \frac{1}{2}\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.2.6.</h4>
+<p>Let <span class="math inline">\(X \sim \text{Exponential}(\lambda)\)</span> with pdf <span class="math inline">\(f(x) = \lambda e^{- \lambda x}\)</span> for <span class="math inline">\(x > 0\)</span>. Derive <span class="math inline">\(E(X)\)</span> using integration by parts.</p>
+<p><strong>Solution.</strong> Let <span class="math inline">\(u =
+x\)</span> and <span class="math inline">\(dv = \lambda e^{- \lambda x}\
+dx\)</span>. Then <span class="math inline">\(du = dx\)</span> and <span class="math inline">\(v = - e^{- \lambda x}\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = \int_{0}^{\infty}\mspace{2mu} x
+\cdot \lambda e^{- \lambda x}\ dx = \left\lbrack - xe^{- \lambda x}
+\right\rbrack_{0}^{\infty} + \int_{0}^{\infty}\mspace{2mu} e^{- \lambda
+x}\ dx\]</span>
+</div>
+<p>As <span class="math inline">\(x \rightarrow \infty\)</span>: <span class="math inline">\(xe^{- \lambda x} \rightarrow 0\)</span>
+(exponential beats polynomial). At <span class="math inline">\(x =
+0\)</span>: <span class="math inline">\(0 \cdot 1 = 0\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = 0 + \left\lbrack -
+\frac{1}{\lambda}e^{- \lambda x} \right\rbrack_{0}^{\infty} = 0 +
+\frac{1}{\lambda} = \boxed{\frac{1}{\lambda}}\]</span>
+</div>
+<p>Similarly, <span class="math inline">\(E\left( X^{2} \right) =
+\int_{0}^{\infty}\mspace{2mu} x^{2}\lambda e^{- \lambda x}\ dx\)</span>.
+Using integration by parts twice (or the Gamma function):</p>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) =
+\frac{2}{\lambda^{2}},\ \text{Var}(X) = \frac{2}{\lambda^{2}} -
+\frac{1}{\lambda^{2}} = \frac{1}{\lambda^{2}}\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.2.7.</h4>
+<p>Let <span class="math inline">\(X
+\sim N\left( \mu,\sigma^{2} \right)\)</span> (Normal distribution) with
+pdf</p>
+<div class="derivation">
+  <span class="math display">\[f(x) = \frac{1}{\sigma\sqrt{2\pi}}\exp\left( - \frac{(x - \mu)^{2}}{2\sigma^{2}} \right),\ - \infty < x < \infty\]</span>
+</div>
+<p>Find <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong> Substitute <span class="math inline">\(z =
+\frac{x - \mu}{\sigma}\)</span>, so <span class="math inline">\(x = \mu
++ \sigma z\)</span> and <span class="math inline">\(dx = \sigma\
+dz\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[E(X) = \int_{-
+\infty}^{\infty}\mspace{2mu}(\mu + \sigma z) \cdot
+\frac{1}{\sqrt{2\pi}}e^{- \frac{z^{2}}{2}}\ dz\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \mu\underset{= \ 1}{\overset{\int_{-
+\infty}^{\infty}\mspace{2mu}\mspace{2mu}\frac{1}{\sqrt{2\pi}}e^{-
+\frac{z^{2}}{2}}\ dz}{︸}} + \sigma\underset{= \ 0\text{~(odd integrand,
+symmetric limits)}}{\overset{\int_{-
+\infty}^{\infty}\mspace{2mu}\mspace{2mu} z \cdot
+\frac{1}{\sqrt{2\pi}}e^{- \frac{z^{2}}{2}}\ dz}{︸}} = \mu\]</span>
+</div>
+<p>So <span class="math inline">\(E(X) = \mu\)</span>, confirming that
+the parameter <span class="math inline">\(\mu\)</span> in the normal
+distribution is indeed the mean.</p>
+</div>
+<div class="example">
+<h4>Example 4.2.8.</h4>
+<p>Let <span class="math inline">\(X
+\sim \text{Geometric}(p)\)</span> with <span class="math inline">\(P(X =
+k) = q^{k - 1}p\)</span> for <span class="math inline">\(k =
+1,2,3,\ldots\)</span> where <span class="math inline">\(q = 1 -
+p\)</span>. Derive <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="derivation">
+<span class="math display">\[E(X) = \sum_{k = 1}^{\infty}\mspace{2mu}
+k \cdot q^{k - 1}p = p\sum_{k = 1}^{\infty}\mspace{2mu} k\ q^{k -
+1}\]</span>
+</div>
+<p>We use the identity <span class="math inline">\(\sum_{k = 1}^{\infty}\mspace{2mu} k\ q^{k - 1} = \frac{d}{dq}\sum_{k = 0}^{\infty}\mspace{2mu} q^{k} = \frac{d}{dq}\ \left( \frac{1}{1 - q} \right) = \frac{1}{(1 - q)^{2}} = \frac{1}{p^{2}}\)</span> (for <span class="math inline">\(|q| < 1\)</span>).</p>
+<div class="derivation">
+<span class="math display">\[E(X) = p \cdot \frac{1}{p^{2}} =
+\frac{1}{p}\]</span>
+</div>
+<p>The geometric distribution models the number of trials until the
+first success. On average, you need <span class="math inline">\(\frac{1}{p}\)</span> trials.</p>
+</div>
+<div class="example">
+<h4>Example 4.2.9.</h4>
+<p>Let <span class="math inline">\(X
+\sim \text{Binomial}(n,p)\)</span>: <span class="math inline">\(P(X = k)
+= \binom{n}{k}p^{k}q^{n - k}\)</span> for <span class="math inline">\(k
+= 0,1,\ldots,n\)</span>. Find <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="derivation">
+<span class="math display">\[E(X) = \sum_{k = 0}^{n}\mspace{2mu}
+k\binom{n}{k}p^{k}q^{n - k}\]</span>
+</div>
+<p>Since the <span class="math inline">\(k = 0\)</span> term is
+zero:</p>
+<div class="derivation">
+<span class="math display">\[E(X) = \sum_{k = 1}^{n}\mspace{2mu} k
+\cdot \frac{n!}{k!\ (n - k)!}p^{k}q^{n - k} = \sum_{k =
+1}^{n}\mspace{2mu}\frac{n!}{(k - 1)!\ (n - k)!}p^{k}q^{n -
+k}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= np\sum_{k = 1}^{n}\mspace{2mu}\frac{(n
+- 1)!}{(k - 1)!\ (n - k)!}p^{k - 1}q^{n - k}\]</span>
+</div>
+<p>Let <span class="math inline">\(j = k - 1\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[= np\sum_{j = 0}^{n -
+1}\mspace{2mu}\binom{n - 1}{j}p^{j}q^{(n - 1) - j} = np(p + q)^{n - 1} =
+np \cdot 1 = np\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.2.10.</h4>
+<p>Let <span class="math inline">\(X
+\sim \text{Poisson}(\lambda)\)</span>: <span class="math inline">\(P(X =
+k) = \frac{e^{- \lambda}\lambda^{k}}{k!}\)</span> for <span class="math inline">\(k = 0,1,2,\ldots\)</span> Find <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="derivation">
+<span class="math display">\[E(X) = \sum_{k = 0}^{\infty}\mspace{2mu}
+k \cdot \frac{e^{- \lambda}\lambda^{k}}{k!} = e^{- \lambda}\sum_{k =
+1}^{\infty}\mspace{2mu}\frac{\lambda^{k}}{(k - 1)!} = e^{- \lambda}
+\cdot \lambda\sum_{j = 0}^{\infty}\mspace{2mu}\frac{\lambda^{j}}{j!} =
+e^{- \lambda} \cdot \lambda \cdot e^{\lambda} = \lambda\]</span>
+</div>
+<p><strong>4.2.4 The Law of the Unconscious Statistician
+(LOTUS)</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.2.1 (LOTUS).</h4>
+<p>If <span class="math inline">\(g\)</span> is a measurable real-valued function of
+<span class="math inline">\(X\)</span>, then:</p>
+<div class="derivation">
+<span class="math display">\[E\left\lbrack g(X) \right\rbrack =
+\left\{ \begin{matrix}
+\sum_{k}^{}\mspace{2mu}\mspace{2mu} g\left( x_{k} \right)p_{k} &amp;
+X\text{~discrete} \\
+\int_{- \infty}^{\infty}\mspace{2mu}\mspace{2mu} g(x)f(x)dx &amp;
+X\text{~continuous}
+\end{matrix} \right.\ \]</span>
+</div>
+<p>This means we can compute <span class="math inline">\(E\left\lbrack
+g(X) \right\rbrack\)</span> directly from the distribution of <span class="math inline">\(X\)</span>, <strong>without</strong> first finding
+the distribution of <span class="math inline">\(g(X)\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.2.11.</h4>
+<p>For a fair die, find <span class="math inline">\(E\left( X^{2} - 2X + 3 \right)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} - 2X + 3 \right) = E\left(
+X^{2} \right) - 2E(X) + 3 = \frac{91}{6} - 2 \cdot \frac{7}{2} + 3 =
+\frac{91}{6} - 7 + 3 = \frac{91}{6} - 4 = \frac{67}{6} \approx
+11.17\]</span>
+</div>
+</div>
+</div></div>
+<div id="properties" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.3</span> Properties of Mathematical Expectation</h2>
+<p><strong>4.3.1 Linearity of Expectation</strong></p>
+<div class="theorem">
+<h4>Theorem 4.3.1.</h4>
+<p>For any random variable <span class="math inline">\(X\)</span> and constants <span class="math inline">\(a,b \in \mathbb{R}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{E(aX + b) = a\ E(X) +
+b}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof (discrete case).</h4>
+<p>Let <span class="math inline">\(X\)</span> take values <span class="math inline">\(x_{k}\)</span> with probabilities <span class="math inline">\(p_{k}\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(aX + b) =
+\sum_{k}^{}\mspace{2mu}\left( ax_{k} + b \right)p_{k} =
+a\sum_{k}^{}\mspace{2mu} x_{k}p_{k} + b\sum_{k}^{}\mspace{2mu} p_{k} =
+a\ E(X) + b \cdot 1 = a\ E(X) + b\]</span>
+</div>
+<p><strong>Special consequences:</strong></p>
+<ul>
+<li><p><span class="math inline">\(E(c) = c\)</span> for any constant
+<span class="math inline">\(c\)</span> (set <span class="math inline">\(a = 0\)</span>, <span class="math inline">\(b =
+c\)</span>).</p></li>
+<li><p><span class="math inline">\(E(aX) = a\ E(X)\)</span> (set <span class="math inline">\(b = 0\)</span>).</p></li>
+<li><p><span class="math inline">\(E(X + c) = E(X) + c\)</span> (set
+<span class="math inline">\(a = 1\)</span>).</p></li>
+</ul>
+</div>
+<div class="example">
+<h4>Example 4.3.1.</h4>
+<p>If <span class="math inline">\(E(X) =
+5\)</span>, find <span class="math inline">\(E(3X - 7)\)</span> and
+<span class="math inline">\(E(4 - 2X)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(3X - 7) = 3 \cdot 5 - 7 = 8,\ E(4 -
+2X) = 4 - 2 \cdot 5 = - 6\]</span>
+</div>
+<p><strong>4.3.2 Addition Theorem of Expectation</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.3.2 (Addition Theorem).</h4>
+<p>For any two random
+variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> (not necessarily independent):</p>
+<div class="derivation">
+<span class="math display">\[\boxed{E(X + Y) = E(X) +
+E(Y)}\]</span>
+</div>
+<p>More generally, for any constants <span class="math inline">\(a_{1},a_{2},\ldots,a_{n}\)</span> and random
+variables <span class="math inline">\(X_{1},X_{2},\ldots,X_{n}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[E\ \left( \sum_{i =
+1}^{n}\mspace{2mu}\mspace{2mu} a_{i}X_{i} \right) = \sum_{i =
+1}^{n}\mspace{2mu} a_{i}\ E\left( X_{i} \right)\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof (discrete bivariate case).</h4>
+<p>Let <span class="math inline">\(p(x,y) = P(X = x,Y = y)\)</span> denote the joint
+PMF.</p>
+<div class="derivation">
+<span class="math display">\[E(X + Y) =
+\sum_{x}^{}\mspace{2mu}\sum_{y}^{}\mspace{2mu}(x + y)p(x,y)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[=
+\sum_{x}^{}\mspace{2mu}\sum_{y}^{}\mspace{2mu} x\ p(x,y) +
+\sum_{x}^{}\mspace{2mu}\sum_{y}^{}\mspace{2mu} y\ p(x,y)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \sum_{x}^{}\mspace{2mu} x\underset{= \
+p_{X}(x)}{\overset{\sum_{y}^{}\mspace{2mu}\mspace{2mu} p(x,y)}{︸}} +
+\sum_{y}^{}\mspace{2mu} y\underset{= \
+p_{Y}(y)}{\overset{\sum_{x}^{}\mspace{2mu}\mspace{2mu}
+p(x,y)}{︸}}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= E(X) + E(Y)\]</span>
+</div>
+<p><strong>This result requires no independence assumption.</strong> It
+is a purely linear property of the expectation operator.</p>
+</div>
+<div class="example">
+<h4>Example 4.3.2.</h4>
+<p>Let <span class="math inline">\(X\)</span> denote the number of Heads and <span class="math inline">\(Y\)</span> the number of Tails when 10 fair coins
+are tossed. Find <span class="math inline">\(E(X)\)</span>, <span class="math inline">\(E(Y)\)</span>, and <span class="math inline">\(E(X
++ Y)\)</span>.</p>
+<p><span class="math inline">\(X \sim B(10,0.5)\)</span>, so <span class="math inline">\(E(X) = 10 \times 0.5 = 5\)</span>. Similarly <span class="math inline">\(E(Y) = 5\)</span>.</p>
+<p><span class="math inline">\(E(X + Y) = E(X) + E(Y) = 5 + 5 =
+10\)</span>. (Of course — there are always 10 coins.)</p>
+<p><strong>4.3.3 Multiplication Theorem of Expectation</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.3.3 (Multiplication Theorem).</h4>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong> random
+variables, then:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{E(XY) = E(X) \cdot
+E(Y)}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof (discrete case).</h4>
+<p>Independence means <span class="math inline">\(P(X = x,Y = y) = P(X = x) \cdot P(Y =
+y)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(XY) =
+\sum_{x}^{}\mspace{2mu}\sum_{y}^{}\mspace{2mu} xy \cdot P(X = x,Y = y) =
+\sum_{x}^{}\mspace{2mu}\sum_{y}^{}\mspace{2mu} xy \cdot P(X = x)P(Y =
+y)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \left\lbrack
+\sum_{x}^{}\mspace{2mu}\mspace{2mu} x\ P(X = x) \right\rbrack\
+\left\lbrack \sum_{y}^{}\mspace{2mu}\mspace{2mu} y\ P(Y = y)
+\right\rbrack = E(X) \cdot E(Y)\]</span>
+</div>
+<p><strong>Warning.</strong> <span class="math inline">\(E(XY) =
+E(X)E(Y)\)</span> does <strong>not</strong> imply independence. It only
+implies that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>uncorrelated</strong>.</p>
+<p><strong>Extension.</strong> For <span class="math inline">\(n\)</span> mutually independent variables <span class="math inline">\(X_{1},\ldots,X_{n}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[E\left( X_{1}X_{2}\cdots X_{n} \right) =
+E\left( X_{1} \right)E\left( X_{2} \right)\cdots E\left( X_{n}
+\right)\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.3.3.</h4>
+<p><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent with <span class="math inline">\(E(X) = 4\)</span>, <span class="math inline">\(E(Y) = 3\)</span>, <span class="math inline">\(E\left( X^{2} \right) = 20\)</span>, <span class="math inline">\(E\left( Y^{2} \right) = 13\)</span>. Find:<br/>
+(a) <span class="math inline">\(E(XY)\)</span>, (b) <span class="math inline">\(E(3X - 2Y + 5)\)</span>, (c) <span class="math inline">\(E\left( X^{2}Y \right)\)</span>, (d) <span class="math inline">\(E\lbrack(X + Y)^{2}\rbrack\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p>(a) <span class="math inline">\(E(XY) = 4 \times 3 = 12\)</span>.</p>
+<p>(b) <span class="math inline">\(E(3X - 2Y + 5) = 3(4) - 2(3) + 5 = 12
+- 6 + 5 = 11\)</span>.</p>
+<p>(c) Since <span class="math inline">\(X^{2}\)</span> and <span class="math inline">\(Y\)</span> are also independent: <span class="math inline">\(E\left( X^{2}Y \right) = E\left( X^{2} \right)E(Y)
+= 20 \times 3 = 60\)</span>.</p>
+<p>(d) <span class="math inline">\(E\lbrack(X + Y)^{2}\rbrack = E(X^{2})
++ 2E(XY) + E(Y^{2}) = 20 + 24 + 13 = 57\)</span>.</p>
+</div>
+</div></div>
+<div id="moments" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.4</span> Moments of a Distribution</h2>
+<p><strong>4.4.1 Raw Moments (Moments About the Origin)</strong></p>
+<div class="definition">
+<h4>Definition 4.4.1.</h4>
+<p>The <span class="math inline">\(r\)</span><strong>-th raw moment</strong> of a
+random variable <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(\mu_{r}'\)</span>, is defined as:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\mu_{r}' = E\left( X^{r}
+\right)}\]</span>
+</div>
+<p>Explicitly:</p>
+<div class="derivation">
+<span class="math display">\[\mu_{r}' = \left\{ \begin{matrix}
+\sum_{k}^{}\mspace{2mu}\mspace{2mu} x_{k}^{r}\ p_{k} &amp;
+X\text{~discrete} \\
+\int_{- \infty}^{\infty}\mspace{2mu}\mspace{2mu} x^{r}f(x)dx &amp;
+X\text{~continuous}
+\end{matrix} \right.\ \]</span>
+</div>
+<p>The raw moments for small values of <span class="math inline">\(r\)</span>:</p>
+<ol type="1">
+<li><p><span class="math inline">\(r = 0\)</span>: <span class="math inline">\(\mu_{0}' = E(1) = 1\)</span> (trivial — just
+the normalisation condition).</p></li>
+<li><p><span class="math inline">\(r = 1\)</span>: <span class="math inline">\(\mu_{1}' = E(X) = \mu\)</span> (the
+<strong>mean</strong>).</p></li>
+<li><p><span class="math inline">\(r = 2\)</span>: <span class="math inline">\(\mu_{2}' = E\left( X^{2}
+\right)\)</span>.</p></li>
+<li><p><span class="math inline">\(r = 3\)</span>: <span class="math inline">\(\mu_{3}' = E\left( X^{3}
+\right)\)</span>.</p></li>
+<li><p><span class="math inline">\(r = 4\)</span>: <span class="math inline">\(\mu_{4}' = E\left( X^{4}
+\right)\)</span>.</p></li>
+</ol>
+<p><strong>4.4.2 Central Moments (Moments About the Mean)</strong></p>
+</div>
+<div class="definition">
+<h4>Definition 4.4.2.</h4>
+<p>The <span class="math inline">\(r\)</span><strong>-th central moment</strong> of
+<span class="math inline">\(X\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\mu_{r} = E\ \left\lbrack (X -
+\mu)^{r} \right\rbrack}\]</span>
+</div>
+<p>where <span class="math inline">\(\mu = E(X)\)</span>.</p>
+<p>The central moments for small <span class="math inline">\(r\)</span>:</p>
+<ol type="1">
+<li><p><span class="math inline">\(r = 0\)</span>: <span class="math inline">\(\mu_{0} = E(1) = 1\)</span>.</p></li>
+<li><p><span class="math inline">\(r = 1\)</span>: <span class="math inline">\(\mu_{1} = E(X - \mu) = E(X) - \mu =
+0\)</span>.</p></li>
+<li><p><span class="math inline">\(r = 2\)</span>: <span class="math inline">\(\mu_{2} = E\lbrack(X - \mu)^{2}\rbrack =
+\text{Var}(X) = \sigma^{2}\)</span>.</p></li>
+<li><p><span class="math inline">\(r = 3\)</span>: <span class="math inline">\(\mu_{3} = E\lbrack(X - \mu)^{3}\rbrack\)</span>
+(related to skewness).</p></li>
+<li><p><span class="math inline">\(r = 4\)</span>: <span class="math inline">\(\mu_{4} = E\lbrack(X - \mu)^{4}\rbrack\)</span>
+(related to kurtosis).</p></li>
+</ol>
+<p><strong>4.4.3 Relations Between Raw and Central Moments</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.4.1.</h4>
+<p>The second central moment in terms of
+raw moments:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\mu_{2} = \mu_{2}' -
+(\mu_{1}')^{2}}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<div class="derivation">
+<span class="math display">\[\mu_{2} = E\lbrack(X - \mu)^{2}\rbrack =
+E\lbrack X^{2} - 2\mu X + \mu^{2}\rbrack = E(X^{2}) - 2\mu E(X) +
+\mu^{2} = \mu_{2}' - 2\mu^{2} + \mu^{2} = \mu_{2}' -
+\mu^{2}\]</span>
+</div>
+<p>This is the famous identity <span class="math inline">\(\text{Var}(X)
+= E(X^{2}) - \lbrack E(X)\rbrack^{2}\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.4.2.</h4>
+<p>The third central moment:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\mu_{3} = \mu_{3}' -
+3\mu_{2}'\mu_{1}' + 2(\mu_{1}')^{3}}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p>Expand <span class="math inline">\((X -
+\mu)^{3} = X^{3} - 3X^{2}\mu + 3X\mu^{2} - \mu^{3}\)</span> and take
+expectations:</p>
+<div class="derivation">
+<span class="math display">\[\mu_{3} = E\left( X^{3} \right) - 3\mu
+E\left( X^{2} \right) + 3\mu^{2}E(X) - \mu^{3}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \mu_{3}' -
+3\mu_{1}'\mu_{2}' + 3(\mu_{1}')^{2}\mu_{1}' -
+(\mu_{1}')^{3}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \mu_{3}' -
+3\mu_{2}'\mu_{1}' + 2(\mu_{1}')^{3}\]</span>
+</div>
+</div>
+<div class="theorem">
+<h4>Theorem 4.4.3.</h4>
+<p>The fourth central moment:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\mu_{4} = \mu_{4}' -
+4\mu_{3}'\mu_{1}' + 6\mu_{2}'(\mu_{1}')^{2} -
+3(\mu_{1}')^{4}}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p>Expand <span class="math inline">\((X -
+\mu)^{4}\)</span> by the binomial theorem:</p>
+<div class="derivation">
+<span class="math display">\[(X - \mu)^{4} = X^{4} - 4X^{3}\mu +
+6X^{2}\mu^{2} - 4X\mu^{3} + \mu^{4}\]</span>
+</div>
+<p>Taking expectations:</p>
+<div class="derivation">
+<span class="math display">\[\mu_{4} = \mu_{4}' -
+4\mu_{3}'\mu + 6\mu_{2}'\mu^{2} - 4\mu \cdot \mu^{3} +
+\mu^{4}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \mu_{4}' -
+4\mu_{3}'\mu_{1}' + 6\mu_{2}'(\mu_{1}')^{2} -
+4(\mu_{1}')^{4} + (\mu_{1}')^{4}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \mu_{4}' -
+4\mu_{3}'\mu_{1}' + 6\mu_{2}'(\mu_{1}')^{2} -
+3(\mu_{1}')^{4}\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.4.1.</h4>
+<p>A random variable <span class="math inline">\(X\)</span> has the following distribution:</p>
+</div>
+<table class="table quick-ref-table" style="width:20%;">
+<colgroup>
+<col style="width: 3%"/>
+<col style="width: 3%"/>
+<col style="width: 3%"/>
+<col style="width: 3%"/>
+<col style="width: 3%"/>
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="math display">\[x\]</span></th>
+<th style="text-align: left;"><span class="math display">\[1\]</span></th>
+<th style="text-align: left;"><span class="math display">\[2\]</span></th>
+<th style="text-align: left;"><span class="math display">\[3\]</span></th>
+<th style="text-align: left;"><span class="math display">\[4\]</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="math display">\[p\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\frac{1}{4}\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\frac{1}{4}\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\frac{1}{4}\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\frac{1}{4}\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>Find <span class="math inline">\(\mu_{1}',\mu_{2}',\mu_{3}',\mu_{4}'\)</span>
+and hence <span class="math inline">\(\mu_{2},\mu_{3},\mu_{4}\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="formula-box">
+<span class="math display">\[\mu_{1}' = \frac{1 + 2 + 3 + 4}{4} =
+\frac{10}{4} = 2.5\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\mu_{2}' = \frac{1 + 4 + 9 + 16}{4}
+= \frac{30}{4} = 7.5\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\mu_{3}' = \frac{1 + 8 + 27 + 64}{4}
+= \frac{100}{4} = 25\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\mu_{4}' = \frac{1 + 16 + 81 +
+256}{4} = \frac{354}{4} = 88.5\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\mu_{2} = \mu_{2}' -
+(\mu_{1}')^{2} = 7.5 - 6.25 = 1.25\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\mu_{3} = 25 - 3(7.5)(2.5) + 2(2.5)^{3}
+= 25 - 56.25 + 31.25 = 0\]</span>
+</div>
+<p>(Zero third central moment confirms the symmetric distribution.)</p>
+<div class="formula-box">
+<span class="math display">\[\mu_{4} = 88.5 - 4(25)(2.5) +
+6(7.5)(6.25) - 3(6.25)^{2} = 88.5 - 250 + 281.25 - 117.1875 =
+2.5625\]</span>
+</div>
+</div></div>
+<div id="variance" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.5</span> Variance and Its Properties</h2>
+<p><strong>4.5.1 Definition of Variance</strong></p>
+<div class="definition">
+<h4>Definition 4.5.1.</h4>
+<p>The <strong>variance</strong> of a
+random variable <span class="math inline">\(X\)</span>, denoted <span class="math inline">\(\text{Var}(X)\)</span> or <span class="math inline">\(\sigma^{2}\)</span>, is the second central
+moment:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\text{Var}(X) = \sigma^{2} = E\
+\left\lbrack (X - \mu)^{2} \right\rbrack = E(X^{2}) - \lbrack
+E(X)\rbrack^{2} = \mu_{2}' - (\mu_{1}')^{2}}\]</span>
+</div>
+<p>The <strong>standard deviation</strong> is <span class="math inline">\(\sigma = \sqrt{\text{Var}(X)}\)</span>.</p>
+<p>Variance measures the average squared deviation of <span class="math inline">\(X\)</span> from its mean. A large variance means
+the distribution is widely spread; a small variance means it is
+concentrated near the mean.</p>
+</div>
+<p><strong>4.5.2 Properties of Variance</strong></p>
+<div class="theorem">
+<h4>Theorem 4.5.1.</h4>
+<p><span class="math inline">\(\text{Var}(c) = 0\)</span> for any constant <span class="math inline">\(c\)</span>.</p>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(E(c) =
+c\)</span>, so <span class="math inline">\(\text{Var}(c) = E\lbrack(c -
+c)^{2}\rbrack = E\lbrack 0\rbrack = 0\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.5.2.</h4>
+<p><span class="math inline">\(\text{Var}(aX + b) = a^{2}\ \text{Var}(X)\)</span>
+for constants <span class="math inline">\(a,b\)</span>.</p>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p>Let <span class="math inline">\(\mu =
+E(X)\)</span>, so <span class="math inline">\(E(aX + b) = a\mu +
+b\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(aX + b) = E\ \left\lbrack (aX
++ b - a\mu - b)^{2} \right\rbrack = E\ \left\lbrack a^{2}(X - \mu)^{2}
+\right\rbrack = a^{2}E\ \left\lbrack (X - \mu)^{2} \right\rbrack =
+a^{2}\ \text{Var}(X)\]</span>
+</div>
+<p><strong>Corollaries.</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\text{Var}(X + b) =
+\text{Var}(X)\)</span> (variance is unaffected by a shift).</p></li>
+<li><p><span class="math inline">\(\text{Var}( - X) =
+\text{Var}(X)\)</span>.</p></li>
+<li><p><span class="math inline">\(\text{Var}(aX) =
+a^{2}\text{Var}(X)\)</span>.</p></li>
+</ol>
+</div>
+<div class="theorem">
+<h4>Theorem 4.5.3.</h4>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are <strong>independent</strong>:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\text{Var}(X \pm Y) =
+\text{Var}(X) + \text{Var}(Y)}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof (for</h4>
+<p><span class="math inline">\(X +
+Y\)</span><strong>).</strong> Let <span class="math inline">\(\mu_{X} =
+E(X)\)</span>, <span class="math inline">\(\mu_{Y} = E(Y)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X + Y) = E\ \left\lbrack (X +
+Y - \mu_{X} - \mu_{Y})^{2} \right\rbrack = E\ \left\lbrack (X -
+\mu_{X})^{2} + 2(X - \mu_{X})(Y - \mu_{Y}) + (Y - \mu_{Y})^{2}
+\right\rbrack\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \text{Var}(X) + 2\ E\ \left\lbrack
+\left( X - \mu_{X} \right)\left( Y - \mu_{Y} \right) \right\rbrack +
+\text{Var}(Y)\]</span>
+</div>
+<p>Since <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent:</p>
+<div class="derivation">
+<span class="math display">\[E\left\lbrack \left( X - \mu_{X}
+\right)\left( Y - \mu_{Y} \right) \right\rbrack = E(XY) - \mu_{X}\mu_{Y}
+= E(X)E(Y) - \mu_{X}\mu_{Y} = 0\]</span>
+</div>
+<p>Therefore <span class="math inline">\(\text{Var}(X + Y) =
+\text{Var}(X) + \text{Var}(Y)\)</span>.</p>
+<p><strong>Extension.</strong> For <span class="math inline">\(n\)</span> mutually independent variables <span class="math inline">\(X_{1},X_{2},\ldots,X_{n}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}\ \left( \sum_{i =
+1}^{n}\mspace{2mu}\mspace{2mu} a_{i}X_{i} \right) = \sum_{i =
+1}^{n}\mspace{2mu} a_{i}^{2}\ \text{Var}\left( X_{i}
+\right)\]</span>
+</div>
+<p><strong>4.5.3 Variance of Standard Distributions</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.5.1 (Fair Die).</h4>
+<p>We computed <span class="math inline">\(E(X) = \frac{7}{2}\)</span> and <span class="math inline">\(E\left( X^{2} \right) = \frac{91}{6}\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \frac{91}{6} - \left(
+\frac{7}{2} \right)^{2} = \frac{91}{6} - \frac{49}{4} = \frac{182 -
+147}{12} = \frac{35}{12} \approx 2.917\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.5.2 (Bernoulli).</h4>
+<p><span class="math inline">\(X \sim \text{Bern}(p)\)</span>: <span class="math inline">\(P(X = 1) = p\)</span>, <span class="math inline">\(P(X = 0) = q = 1 - p\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = p\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) = 0^{2} \cdot q +
+1^{2} \cdot p = p\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = p - p^{2} = p(1 - p) =
+pq\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.5.3 (Binomial).</h4>
+<p><span class="math inline">\(X \sim B(n,p)\)</span>. Write <span class="math inline">\(X = X_{1} + \cdots + X_{n}\)</span> where <span class="math inline">\(X_{i}\overset{iid}{\sim}\text{Bern}(p)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = nE\left( X_{1} \right) = np,\
+\text{Var}(X) = n\ \text{Var}\left( X_{1} \right) = npq\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.5.4 (Poisson).</h4>
+<p><span class="math inline">\(X \sim \text{Poisson}(\lambda)\)</span>. We showed
+<span class="math inline">\(E(X) = \lambda\)</span>.</p>
+<p>Find <span class="math inline">\(E\left\lbrack X(X - 1)
+\right\rbrack\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[E\left\lbrack X(X - 1) \right\rbrack =
+\sum_{k = 2}^{\infty}\mspace{2mu} k(k - 1)\frac{e^{-
+\lambda}\lambda^{k}}{k!} = e^{- \lambda}\lambda^{2}\sum_{k =
+2}^{\infty}\mspace{2mu}\frac{\lambda^{k - 2}}{(k - 2)!} = e^{-
+\lambda}\lambda^{2}e^{\lambda} = \lambda^{2}\]</span>
+</div>
+<p>Since <span class="math inline">\(E\left( X^{2} \right) =
+E\left\lbrack X(X - 1) \right\rbrack + E(X) = \lambda^{2} +
+\lambda\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \lambda^{2} + \lambda -
+\lambda^{2} = \lambda\]</span>
+</div>
+<p>For Poisson, the <strong>mean equals the variance</strong> (both
+equal <span class="math inline">\(\lambda\)</span>). This is a
+characteristic property.</p>
+</div>
+<div class="example">
+<h4>Example 4.5.5 (Uniform on</h4>
+<p><span class="math inline">\(\lbrack a,b\rbrack\)</span><strong>).</strong>
+<span class="math inline">\(E(X) = \frac{a + b}{2}\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) =
+\int_{a}^{b}\mspace{2mu} x^{2} \cdot \frac{1}{b - a}\ dx = \frac{1}{b -
+a} \cdot \frac{b^{3} - a^{3}}{3} = \frac{a^{2} + ab +
+b^{2}}{3}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \frac{a^{2} + ab +
+b^{2}}{3} - \frac{(a + b)^{2}}{4} = \frac{4(a^{2} + ab + b^{2}) - 3(a +
+b)^{2}}{12} = \frac{4a^{2} + 4ab + 4b^{2} - 3a^{2} - 6ab - 3b^{2}}{12} =
+\frac{(b - a)^{2}}{12}\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.5.6 (Exponential).</h4>
+<p><span class="math inline">\(E(X) = \frac{1}{\lambda}\)</span>, <span class="math inline">\(E\left( X^{2} \right) =
+\frac{2}{\lambda^{2}}\)</span>, <span class="math inline">\(\text{Var}(X) =
+\frac{1}{\lambda^{2}}\)</span>.</p>
+<p><strong>4.5.4 Numerical Example</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.5.7.</h4>
+<p>The number of defective items <span class="math inline">\(X\)</span> in a batch has distribution:</p>
+</div>
+<table class="table quick-ref-table" style="width:49%;">
+<colgroup>
+<col style="width: 12%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+<col style="width: 7%"/>
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="math display">\[x\]</span></th>
+<th style="text-align: left;"><span class="math display">\[0\]</span></th>
+<th style="text-align: left;"><span class="math display">\[1\]</span></th>
+<th style="text-align: left;"><span class="math display">\[2\]</span></th>
+<th style="text-align: left;"><span class="math display">\[3\]</span></th>
+<th style="text-align: left;"><span class="math display">\[4\]</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="math display">\[P(X =
+x)\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.30\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.35\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.20\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.10\]</span></td>
+<td style="text-align: left;"><span class="math display">\[0.05\]</span></td>
+</tr>
+</tbody>
+</table>
+<p>Find <span class="math inline">\(E(X)\)</span>, <span class="math inline">\(\text{Var}(X)\)</span>, and <span class="math inline">\(\text{SD}(X)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<div class="formula-box">
+<span class="math display">\[E(X) = 0(0.30) + 1(0.35) + 2(0.20) +
+3(0.10) + 4(0.05) = 0 + 0.35 + 0.40 + 0.30 + 0.20 = 1.25\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[E\left( X^{2} \right) = 0(0.30) +
+1(0.35) + 4(0.20) + 9(0.10) + 16(0.05) = 0 + 0.35 + 0.80 + 0.90 + 0.80 =
+2.85\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\text{Var}(X) = 2.85 - (1.25)^{2} = 2.85
+- 1.5625 = 1.2875\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\text{SD}(X) = \sqrt{1.2875} \approx
+1.134\]</span>
+</div>
+</div></div>
+<div id="skewness" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.6</span> Skewness and Kurtosis</h2>
+<p><strong>4.6.1 Skewness</strong></p>
+<div class="definition">
+<h4>Definition 4.6.1.</h4>
+<p>Skewness measures the asymmetry of
+a distribution. The Pearson measures are:</p>
+<div class="derivation">
+<span class="math display">\[\beta_{1} =
+\frac{\mu_{3}^{2}}{\mu_{2}^{3}},\ \gamma_{1} =
+\frac{\mu_{3}}{\mu_{2}^{\frac{3}{2}}} =
+\frac{\mu_{3}}{\sigma^{3}}\]</span>
+</div>
+<ol type="1">
+<li>
+  <p>If <span class="math inline">\(\gamma_{1} > 0\)</span>: <strong>positively skewed</strong> (right-skewed), with a longer right tail.</p>
+</li>
+<li>
+  <p>If <span class="math inline">\(\gamma_{1} < 0\)</span>: <strong>negatively skewed</strong> (left-skewed), with a longer left tail.</p>
+</li>
+<li><p>If <span class="math inline">\(\gamma_{1} = 0\)</span>:
+<strong>symmetric</strong> (though not necessarily normal).</p></li>
+</ol>
+<p>For a symmetric distribution, <span class="math inline">\(\mu_{3} =
+0\)</span>, so <span class="math inline">\(\gamma_{1} = 0\)</span>.</p>
+<p><strong>4.6.2 Kurtosis</strong></p>
+</div>
+<div class="definition">
+<h4>Definition 4.6.2.</h4>
+<p>Kurtosis measures the peakedness
+and tail-heaviness:</p>
+<div class="derivation">
+<span class="math display">\[\beta_{2} =
+\frac{\mu_{4}}{\mu_{2}^{2}},\ \gamma_{2} = \beta_{2} - 3 =
+\frac{\mu_{4}}{\sigma^{4}} - 3\ \text{(excess kurtosis)}\]</span>
+</div>
+<p>The constant 3 is subtracted because the normal distribution has
+<span class="math inline">\(\beta_{2} = 3\)</span> exactly. Thus:</p>
+<ol type="1">
+<li>
+  <p><span class="math inline">\(\gamma_{2} > 0\)</span>: <strong>leptokurtic</strong> (heavier tails and sharper peak than normal).</p>
+</li>
+<li>
+  <p><span class="math inline">\(\gamma_{2} < 0\)</span>: <strong>platykurtic</strong> (lighter tails and flatter peak than normal).</p>
+</li>
+<li><p><span class="math inline">\(\gamma_{2} = 0\)</span>:
+<strong>mesokurtic</strong> (same kurtosis as normal
+distribution).</p></li>
+</ol>
+</div>
+<div class="example">
+<h4>Example 4.6.1.</h4>
+<p>For the distribution in Example 4.4.1
+(uniform on <span class="math inline">\(\left\{ 1,2,3,4
+\right\}\)</span>):</p>
+<p><span class="math inline">\(\gamma_{1} = \mu_{3}/\sigma^{3} =
+0/(1.25)^{\frac{3}{2}} = 0\)</span> (symmetric).</p>
+<p><span class="math inline">\(\beta_{2} = \mu_{4}/\mu_{2}^{2} =
+2.5625/(1.25)^{2} = 2.5625/1.5625 = 1.64\)</span>. So <span class="math inline">\(\gamma_{2} = 1.64 - 3 = - 1.36\)</span>
+(platykurtic).</p>
+</div>
+</div></div>
+<div id="covariance" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.7</span> Covariance</h2>
+<p><strong>4.7.1 Definition</strong></p>
+<div class="definition">
+<h4>Definition 4.7.1.</h4>
+<p>The <strong>covariance</strong> of
+two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\text{Cov}(X,Y) = E\ \left\lbrack
+\left( X - \mu_{X} \right)\left( Y - \mu_{Y} \right) \right\rbrack =
+E(XY) - E(X)E(Y)}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof of the second form:</h4>
+<div class="derivation">
+<span class="math display">\[E\left\lbrack \left( X - \mu_{X}
+\right)\left( Y - \mu_{Y} \right) \right\rbrack = E\left( XY - \mu_{X}Y
+- \mu_{Y}X + \mu_{X}\mu_{Y} \right) = E(XY) - \mu_{X}E(Y) - \mu_{Y}E(X)
++ \mu_{X}\mu_{Y}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= E(XY) - \mu_{X}\mu_{Y} -
+\mu_{Y}\mu_{X} + \mu_{X}\mu_{Y} = E(XY) - \mu_{X}\mu_{Y}\]</span>
+</div>
+<p><strong>4.7.2 Properties of Covariance</strong></p>
+<ol type="1">
+<li><p><span class="math inline">\(\text{Cov}(X,X) =
+\text{Var}(X)\)</span>.</p></li>
+<li><p><span class="math inline">\(\text{Cov}(X,Y) =
+\text{Cov}(Y,X)\)</span> (symmetry).</p></li>
+<li><p><span class="math inline">\(\text{Cov}(aX + b,\ cY + d) = ac
+\cdot \text{Cov}(X,Y)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(X\bot Y\)</span> (independent),
+then <span class="math inline">\(\text{Cov}(X,Y) = 0\)</span>. (Converse
+is false in general.)</p></li>
+<li><p><span class="math inline">\(\left| \text{Cov}(X,Y) \right| \leq
+\sigma_{X}\sigma_{Y}\)</span> (Cauchy-Schwarz inequality).</p></li>
+</ol>
+<p><strong>4.7.3 Variance of a Sum (General)</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.7.1.</h4>
+<p>For any random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X + Y) = \text{Var}(X) +
+\text{Var}(Y) + 2\ \text{Cov}(X,Y)\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X + Y) = E\ \left\lbrack (X +
+Y - \mu_{X} - \mu_{Y})^{2} \right\rbrack = E\ \left\lbrack (X -
+\mu_{X})^{2} \right\rbrack + 2E\ \left\lbrack \left( X - \mu_{X}
+\right)\left( Y - \mu_{Y} \right) \right\rbrack + E\ \left\lbrack (Y -
+\mu_{Y})^{2} \right\rbrack\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \text{Var}(X) + 2\ \text{Cov}(X,Y) +
+\text{Var}(Y)\]</span>
+</div>
+<p><strong>Extension.</strong> For <span class="math inline">\(n\)</span> variables:</p>
+<div class="derivation">
+  <span class="math display">\[\text{Var}\ \left( \sum_{i = 1}^{n}\mspace{2mu}\mspace{2mu} X_{i} \right) = \sum_{i = 1}^{n}\mspace{2mu}\text{Var}\left( X_{i} \right) + 2\sum_{1 \leq i < j \leq n}^{}\mspace{2mu}\text{Cov}\left( X_{i},X_{j} \right)\]</span>
+</div>
+<p><strong>4.7.4 Correlation Coefficient</strong></p>
+</div>
+<div class="definition">
+<h4>Definition 4.7.2.</h4>
+<p>The <strong>correlation
+coefficient</strong> between <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\rho_{XY} =
+\frac{\text{Cov}(X,Y)}{\sigma_{X}\sigma_{Y}}\]</span>
+</div>
+<p>It satisfies <span class="math inline">\(- 1 \leq \rho_{XY} \leq
+1\)</span>.</p>
+</div>
+</div></div>
+<div id="conditional" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.8</span> Conditional Expectation and Variance</h2>
+<p><strong>4.8.1 Conditional Expectation</strong></p>
+<div class="definition">
+<h4>Definition 4.8.1.</h4>
+<p>For discrete random variables:</p>
+<div class="derivation">
+<span class="math display">\[E\left( X\mid Y = y \right) =
+\sum_{x}^{}\mspace{2mu} x \cdot P\left( X = x\mid Y = y
+\right)\]</span>
+</div>
+<p>For continuous random variables with joint pdf <span class="math inline">\(f(x,y)\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[E\left( X\mid Y = y \right) = \int_{-
+\infty}^{\infty}\mspace{2mu} x \cdot f_{X \mid Y}\left( x\mid y
+\right)dx,\ f_{X \mid Y}\left( x\mid y \right) =
+\frac{f(x,y)}{f_{Y}(y)}\]</span>
+</div>
+<p>The quantity <span class="math inline">\(E\left( X\mid Y
+\right)\)</span> is itself a <strong>random variable</strong> — a
+function of <span class="math inline">\(Y\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.8.1.</h4>
+<p>Let <span class="math inline">\((X,Y)\)</span> have joint PMF:</p>
+</div>
+<table class="table quick-ref-table" style="width:25%;">
+<colgroup>
+<col style="width: 8%"/>
+<col style="width: 5%"/>
+<col style="width: 5%"/>
+<col style="width: 5%"/>
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="math display">\[X
+\smallsetminus Y\]</span></th>
+<th style="text-align: left;">1</th>
+<th style="text-align: left;">2</th>
+<th style="text-align: left;">3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">0.2</td>
+<td style="text-align: left;">0.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">0.2</td>
+<td style="text-align: left;">0.1</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">0.0</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">0.1</td>
+</tr>
+</tbody>
+</table>
+<p>Find <span class="math inline">\(E\left( X\mid Y = 2
+\right)\)</span>.</p>
+<p><strong>Marginal of</strong> <span class="math inline">\(Y =
+2\)</span><strong>:</strong> <span class="math inline">\(P(Y = 2) = 0.2
++ 0.2 + 0.1 = 0.5\)</span>.</p>
+<div class="formula-box">
+<span class="math display">\[E\left( X\mid Y = 2 \right) = 0 \cdot
+\frac{0.2}{0.5} + 1 \cdot \frac{0.2}{0.5} + 2 \cdot \frac{0.1}{0.5} = 0
++ 0.4 + 0.4 = 0.8\]</span>
+</div>
+<p><strong>4.8.2 Law of Total Expectation (Tower Property)</strong></p>
+<div class="theorem">
+<h4>Theorem 4.8.1 (Law of Total Expectation).</h4>
+<div class="derivation">
+<span class="math display">\[\boxed{E(X) = E\ \left\lbrack E\left(
+X\mid Y \right) \right\rbrack}\]</span>
+</div>
+<p>That is, <span class="math inline">\(E(X) = \sum_{y}^{}\mspace{2mu}
+E\left( X\mid Y = y \right)P(Y = y)\)</span> (discrete) or <span class="math inline">\(E(X) = \int_{}^{}\ E\left( X\mid Y = y
+\right)f_{Y}(y)dy\)</span> (continuous).</p>
+</div>
+<div class="proof-box">
+<h4>Proof (discrete).</h4>
+<div class="derivation">
+<span class="math display">\[E\ \left\lbrack E\left( X\mid Y \right)
+\right\rbrack = \sum_{y}^{}\mspace{2mu} E\left( X\mid Y = y \right)P(Y =
+y) = \sum_{y}^{}\mspace{2mu}\left\lbrack
+\sum_{x}^{}\mspace{2mu}\mspace{2mu} x\ P\left( X = x\mid Y = y \right)
+\right\rbrack P(Y = y)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= \sum_{x}^{}\mspace{2mu}
+x\sum_{y}^{}\mspace{2mu} P\left( X = x\mid Y = y \right)P(Y = y) =
+\sum_{x}^{}\mspace{2mu} x\sum_{y}^{}\mspace{2mu} P(X = x,Y = y) =
+\sum_{x}^{}\mspace{2mu} x\ P(X = x) = E(X)\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.8.2.</h4>
+<p>A shop receives customers at an
+average rate of <span class="math inline">\(\lambda = 10\)</span> per
+hour. Each customer independently buys a product with probability <span class="math inline">\(p = 0.3\)</span>. Let <span class="math inline">\(N\)</span> = number of customers in an hour, and
+<span class="math inline">\(X\)</span> = number of purchases. Find <span class="math inline">\(E(X)\)</span>.</p>
+<p><strong>Solution.</strong> Given <span class="math inline">\(N =
+n\)</span>, <span class="math inline">\(X \mid N = n \sim
+B(n,0.3)\)</span>, so <span class="math inline">\(E\left( X\mid N = n
+\right) = 0.3n\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E(X) = E\left\lbrack E\left( X\mid N
+\right) \right\rbrack = E\lbrack 0.3N\rbrack = 0.3\ E(N) = 0.3 \times 10
+= 3\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.8.3.</h4>
+<p>A class consists of 40% boys (mean
+score 65) and 60% girls (mean score 75). Find the overall mean
+score.</p>
+<div class="derivation">
+<span class="math display">\[E\left( \text{score} \right) = E\left(
+\text{score}\mid\text{boy} \right) \cdot P\left( \text{boy} \right) +
+E\left( \text{score}\mid\text{girl} \right) \cdot P\left( \text{girl}
+\right) = 65(0.4) + 75(0.6) = 26 + 45 = 71\]</span>
+</div>
+<p><strong>4.8.3 Conditional Variance</strong></p>
+</div>
+<div class="definition">
+<h4>Definition 4.8.2.</h4>
+<p>The <strong>conditional
+variance</strong> of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y = y\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X \mid Y = y) = E\
+\left\lbrack (X - E(X \mid Y = y))^{2} \mid Y = y \right\rbrack =
+E(X^{2} \mid Y = y) - \lbrack E(X \mid Y = y)\rbrack^{2}\]</span>
+</div>
+<p><span class="math inline">\(\text{Var}\left( X\mid Y \right)\)</span>
+is a random variable — a function of <span class="math inline">\(Y\)</span>.</p>
+<p><strong>4.8.4 Law of Total Variance (EVE's Law)</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.8.2 (Law of Total Variance).</h4>
+<div class="derivation">
+<span class="math display">\[\boxed{\text{Var}(X) =
+\underset{\text{within-group variance}}{\overset{E\left\lbrack
+\text{Var}\left( X\mid Y \right) \right\rbrack}{︸}} +
+\underset{\text{between-group variance}}{\overset{\text{Var}\left\lbrack
+E\left( X\mid Y \right) \right\rbrack}{︸}}}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p>Let <span class="math inline">\(m(Y) =
+E\left( X\mid Y \right)\)</span> and <span class="math inline">\(v(Y) =
+\text{Var}\left( X\mid Y \right)\)</span>.</p>
+<p>Since <span class="math inline">\(\text{Var}(X \mid Y = y) = E(X^{2}
+\mid Y = y) - \lbrack E(X \mid Y = y)\rbrack^{2}\)</span>, we have:</p>
+<div class="derivation">
+<span class="math display">\[E(X^{2} \mid Y) = v(Y) +
+m(Y)^{2}\]</span>
+</div>
+<p>Taking expectations of both sides (using the law of total
+expectation):</p>
+<div class="derivation">
+<span class="math display">\[E(X^{2}) = E\lbrack v(Y)\rbrack +
+E\lbrack m(Y)^{2}\rbrack\ \cdots(*)\]</span>
+</div>
+<p>Also by total expectation: <span class="math inline">\(E(X) =
+E\left\lbrack m(Y) \right\rbrack\)</span>, so <span class="math inline">\(\lbrack E(X)\rbrack^{2} = \lbrack
+E(m(Y))\rbrack^{2}\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = E(X^{2}) - \lbrack
+E(X)\rbrack^{2} = E\lbrack v(Y)\rbrack + E\lbrack m(Y)^{2}\rbrack -
+\lbrack E(m(Y))\rbrack^{2}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= E\left\lbrack v(Y) \right\rbrack +
+\text{Var}\left\lbrack m(Y) \right\rbrack = E\left\lbrack
+\text{Var}\left( X\mid Y \right) \right\rbrack + \text{Var}\left\lbrack
+E\left( X\mid Y \right) \right\rbrack\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.8.4.</h4>
+<p>Two machines A and B produce items.
+Machine A produces 60% of items with mean weight 100g and SD 5g. Machine
+B produces 40% with mean weight 110g and SD 8g. Find the overall mean
+and variance of weight.</p>
+<p><strong>Solution.</strong> <span class="math inline">\(P(A) =
+0.6\)</span>, <span class="math inline">\(P(B) = 0.4\)</span>. Let <span class="math inline">\(W\)</span> = weight, <span class="math inline">\(M\)</span> = machine.</p>
+<p><span class="math inline">\(E\left( W\mid A \right) = 100\)</span>,
+<span class="math inline">\(E\left( W\mid B \right) = 110\)</span>,
+<span class="math inline">\(\text{Var}\left( W\mid A \right) =
+25\)</span>, <span class="math inline">\(\text{Var}\left( W\mid B
+\right) = 64\)</span>.</p>
+<p><span class="math inline">\(E(W) = 100(0.6) + 110(0.4) = 60 + 44 =
+104\)</span>.</p>
+<p><span class="math inline">\(E\left\lbrack \text{Var}\left( W\mid M
+\right) \right\rbrack = 25(0.6) + 64(0.4) = 15 + 25.6 =
+40.6\)</span>.</p>
+<p><span class="math inline">\(E\lbrack E(W \mid M)^{2}\rbrack =
+100^{2}(0.6) + 110^{2}(0.4) = 6000 + 4840 = 10840\)</span>.</p>
+<p><span class="math inline">\(\text{Var}\left\lbrack E\left( W\mid M
+\right) \right\rbrack = 10840 - 104^{2} = 10840 - 10816 =
+24\)</span>.</p>
+<p><span class="math inline">\(\text{Var}(W) = 40.6 + 24 =
+64.6\)</span>.</p>
+</div>
+</div></div>
+<div id="mgf" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.9</span> Moment Generating Function (MGF)</h2>
+<p><strong>4.9.1 Definition</strong></p>
+<div class="definition">
+<h4>Definition 4.9.1.</h4>
+<p>The <strong>moment generating
+function</strong> (MGF) of a random variable <span class="math inline">\(X\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{M_{X}(t) = E\ \left( e^{tX}
+\right)}\]</span>
+</div>
+<p>for all values of <span class="math inline">\(t\)</span> in some open interval <span class="math inline">\(( - h,h)\)</span> around <span class="math inline">\(t = 0\)</span>, <span class="math inline">\(h > 0\)</span>.</p>
+<p>Explicitly:</p>
+<div class="derivation">
+<span class="math display">\[M_{X}(t) = \left\{ \begin{matrix}
+\sum_{k}^{}\mspace{2mu}\mspace{2mu} e^{tx_{k}}p_{k} &amp;
+X\text{~discrete} \\
+\int_{- \infty}^{\infty}\mspace{2mu}\mspace{2mu} e^{tx}f(x)dx &amp;
+X\text{~continuous}
+\end{matrix} \right.\ \]</span>
+</div>
+<p>The MGF may not exist for all distributions. When it exists in an
+open interval around 0, it <strong>uniquely determines</strong> the
+distribution.</p>
+<p><strong>4.9.2 How the MGF Generates Moments</strong></p>
+<p>Expand <span class="math inline">\(e^{tX}\)</span> as a
+Taylor/Maclaurin series in <span class="math inline">\(t\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[e^{tX} = 1 + tX + \frac{t^{2}X^{2}}{2!}
++ \frac{t^{3}X^{3}}{3!} + \cdots = \sum_{r =
+0}^{\infty}\mspace{2mu}\frac{(tX)^{r}}{r!}\]</span>
+</div>
+<p>Taking expectations (assuming interchange of sum/integral and
+expectation is valid):</p>
+<div class="derivation">
+<span class="math display">\[M_{X}(t) = E\ \left( e^{tX} \right) =
+\sum_{r = 0}^{\infty}\mspace{2mu}\frac{t^{r}\ E\left( X^{r} \right)}{r!}
+= \sum_{r = 0}^{\infty}\mspace{2mu}\frac{\mu_{r}'\ t^{r}}{r!} = 1 +
+\mu_{1}'t + \frac{\mu_{2}'t^{2}}{2!} +
+\frac{\mu_{3}'t^{3}}{3!} + \cdots\]</span>
+</div>
+<p>This power series has the raw moments <span class="math inline">\(\mu_{r}'\)</span> as coefficients (scaled by
+<span class="math inline">\(r!\)</span>). Hence:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\mu_{r}' = E\left( X^{r}
+\right) = M_{X}^{(r)}(0) = \left. \ \frac{d^{r}M_{X}(t)}{dt^{r}}
+\right|_{t = 0}}\]</span>
+</div>
+<p>That is, <strong>the</strong> <span class="math inline">\(r\)</span><strong>-th raw moment of</strong> <span class="math inline">\(X\)</span> <strong>is the</strong> <span class="math inline">\(r\)</span><strong>-th derivative of</strong> <span class="math inline">\(M_{X}(t)\)</span> <strong>evaluated at</strong>
+<span class="math inline">\(t = 0\)</span>.</p>
+<p><strong>4.9.3 Properties of the MGF</strong></p>
+</div>
+<div class="theorem">
+<h4>Property 1 (Uniqueness).</h4>
+<p>If <span class="math inline">\(M_{X}(t) = M_{Y}(t)\)</span> for all <span class="math inline">\(t\)</span> in an open interval around 0, then
+<span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are identically distributed.</p>
+</div>
+<div class="theorem">
+<h4>Property 2 (Linear Transformation).</h4>
+<p>If <span class="math inline">\(Y = aX + b\)</span>, then:</p>
+<div class="derivation">
+<span class="math display">\[M_{Y}(t) = e^{bt}\
+M_{X}(at)\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(M_{Y}(t) =
+E\left( e^{t(aX + b)} \right) = E\left( e^{atX} \cdot e^{bt} \right) =
+e^{bt}\ E\left( e^{atX} \right) = e^{bt}\ M_{X}(at)\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Property 3 (Additivity for Independent Variables).</h4>
+<p>If <span class="math inline">\(X_{1},X_{2},\ldots,X_{n}\)</span> are
+mutually independent and <span class="math inline">\(S = X_{1} + \cdots
++ X_{n}\)</span>, then:</p>
+<div class="derivation">
+<span class="math display">\[M_{S}(t) = \prod_{i = 1}^{n}\mspace{2mu}
+M_{X_{i}}(t)\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(M_{S}(t) =
+E\left( e^{tS} \right) = E\left( e^{t\left( X_{1} + \cdots + X_{n}
+\right)} \right) = E\ \left( \prod_{i = 1}^{n}\mspace{2mu}\mspace{2mu}
+e^{tX_{i}} \right) = \prod_{i = 1}^{n}\mspace{2mu} E\left( e^{tX_{i}}
+\right) = \prod_{i = 1}^{n}\mspace{2mu} M_{X_{i}}(t)\)</span>.</p>
+<p>The penultimate equality uses independence.</p>
+</div>
+<div class="theorem">
+<h4>Property 4 (MGF at 0).</h4>
+<p><span class="math inline">\(M_{X}(0) = E\left( e^{0} \right) = 1\)</span>
+always.</p>
+<p><strong>4.9.4 MGF of Standard Distributions</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.9.1 (Bernoulli).</h4>
+<p><span class="math inline">\(X \sim \text{Bern}(p)\)</span>: <span class="math inline">\(P(X = 0) = q\)</span>, <span class="math inline">\(P(X = 1) = p\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[M_{X}(t) = e^{t \cdot 0} \cdot q + e^{t
+\cdot 1} \cdot p = q + pe^{t}\]</span>
+</div>
+<p><strong>Extracting moments:</strong></p>
+<div class="derivation">
+<span class="math display">\[M_{X}'(t) = pe^{t}\  \Longrightarrow
+\ E(X) = M_{X}'(0) = p\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[M_{X}''(t) =
+pe^{t}\  \Longrightarrow \ E\left( X^{2} \right) = M_{X}''(0) =
+p\  \Longrightarrow \ \text{Var}(X) = p - p^{2} = pq\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.9.2 (Binomial).</h4>
+<p><span class="math inline">\(X \sim B(n,p)\)</span>.</p>
+<p>Write <span class="math inline">\(X = X_{1} + \cdots + X_{n}\)</span>
+where <span class="math inline">\(X_{i}\overset{iid}{\sim}\text{Bern}(p)\)</span>.
+By Property 3:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{M_{X}(t) = (q +
+pe^{t})^{n}}\]</span>
+</div>
+<p><strong>Extracting moments:</strong></p>
+<div class="derivation">
+<span class="math display">\[M_{X}'(t) = n(q + pe^{t})^{n -
+1}pe^{t}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[E(X) = M_{X}'(0) = n(q + p)^{n - 1}p
+= np\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[M_{X}''(t) = n(n - 1)(q +
+pe^{t})^{n - 2}(pe^{t})^{2} + n(q + pe^{t})^{n - 1}pe^{t}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) =
+M_{X}''(0) = n(n - 1)p^{2} + np\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = n(n - 1)p^{2} + np -
+n^{2}p^{2} = n^{2}p^{2} - np^{2} + np - n^{2}p^{2} = np(1 - p) =
+npq\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.9.3 (Poisson).</h4>
+<p><span class="math inline">\(X \sim \text{Poisson}(\lambda)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[M_{X}(t) = E\left( e^{tX} \right) =
+\sum_{k = 0}^{\infty}\mspace{2mu} e^{tk}\frac{e^{-
+\lambda}\lambda^{k}}{k!} = e^{- \lambda}\sum_{k =
+0}^{\infty}\mspace{2mu}\frac{(\lambda e^{t})^{k}}{k!} = e^{- \lambda}
+\cdot e^{\lambda e^{t}}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\boxed{M_{X}(t) = e^{\lambda\left( e^{t}
+- 1 \right)}}\]</span>
+</div>
+<p><strong>Extracting moments:</strong></p>
+<div class="derivation">
+<span class="math display">\[M_{X}'(t) = e^{\lambda\left( e^{t} -
+1 \right)} \cdot \lambda e^{t}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[E(X) = M_{X}'(0) = e^{0} \cdot
+\lambda = \lambda\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[M_{X}''(t) = e^{\lambda\left(
+e^{t} - 1 \right)}\ \left\lbrack (\lambda e^{t})^{2} + \lambda e^{t}
+\right\rbrack\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) =
+M_{X}''(0) = \lambda^{2} + \lambda\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \lambda^{2} + \lambda -
+\lambda^{2} = \lambda\]</span>
+</div>
+<p><strong>Application.</strong> If <span class="math inline">\(X \sim
+\text{Poisson}(\lambda)\)</span> and <span class="math inline">\(Y \sim
+\text{Poisson}(\mu)\)</span> are independent, then <span class="math inline">\(X + Y\)</span> has MGF <span class="math inline">\(e^{\lambda\left( e^{t} - 1 \right)} \cdot
+e^{\mu\left( e^{t} - 1 \right)} = e^{(\lambda + \mu)\left( e^{t} - 1
+\right)}\)</span>, which is the MGF of <span class="math inline">\(\text{Poisson}(\lambda + \mu)\)</span>.</p>
+<p><strong>Therefore: the sum of independent Poisson variables is
+Poisson.</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.9.4 (Exponential).</h4>
+<p><span class="math inline">\(X \sim \text{Exp}(\lambda)\)</span>, <span class="math inline">\(f(x) = \lambda e^{- \lambda x}\)</span>, <span class="math inline">\(x > 0\)</span>.</p>
+<div class="derivation">
+  <span class="math display">\[M_{X}(t) = \int_{0}^{\infty}\mspace{2mu} e^{tx} \cdot \lambda e^{- \lambda x}\ dx = \lambda\int_{0}^{\infty}\mspace{2mu} e^{- (\lambda - t)x}\ dx = \frac{\lambda}{\lambda - t},\ t < \lambda\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\boxed{M_{X}(t) = \frac{\lambda}{\lambda
+- t} = \lambda(\lambda - t)^{- 1}}\]</span>
+</div>
+<p><strong>Extracting moments:</strong></p>
+<div class="derivation">
+<span class="math display">\[M_{X}'(t) = \frac{\lambda}{(\lambda
+- t)^{2}}\  \Longrightarrow \ E(X) = \frac{1}{\lambda}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[M_{X}''(t) =
+\frac{2\lambda}{(\lambda - t)^{3}}\  \Longrightarrow \ E\left( X^{2}
+\right) = \frac{2}{\lambda^{2}}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \frac{2}{\lambda^{2}} -
+\frac{1}{\lambda^{2}} = \frac{1}{\lambda^{2}}\]</span>
+</div>
+<p>In general, <span class="math inline">\(E\left( X^{r} \right) =
+M_{X}^{(r)}(0) = \frac{r!}{\lambda^{r}}\)</span> (by differentiating
+<span class="math inline">\(r\)</span> times).</p>
+</div>
+<div class="example">
+<h4>Example 4.9.5 (Normal Distribution).</h4>
+<p><span class="math inline">\(X \sim N\left( \mu,\sigma^{2}
+\right)\)</span>.</p>
+<p><strong>Step 1:</strong> Derive <span class="math inline">\(M_{Z}(t)\)</span> for the standard normal <span class="math inline">\(Z \sim N(0,1)\)</span>, <span class="math inline">\(f(z) = \frac{1}{\sqrt{2\pi}}e^{-
+\frac{z^{2}}{2}}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[M_{Z}(t) = \int_{-
+\infty}^{\infty}\mspace{2mu} e^{tz} \cdot \frac{1}{\sqrt{2\pi}}e^{-
+\frac{z^{2}}{2}}\ dz = \int_{-
+\infty}^{\infty}\mspace{2mu}\frac{1}{\sqrt{2\pi}}\exp{\left( tz -
+\frac{z^{2}}{2} \right)dz}\]</span>
+</div>
+<p>Complete the square in the exponent:</p>
+</div>
+<div class="formula-box">
+<span class="math display">\[tz - \frac{z^{2}}{2} = -
+\frac{1}{2}\left( z^{2} - 2tz \right) = - \frac{1}{2}\left\lbrack (z -
+t)^{2} - t^{2} \right\rbrack = \frac{t^{2}}{2} - \frac{(z -
+t)^{2}}{2}\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[M_{Z}(t) = e^{\frac{t^{2}}{2}}\int_{-
+\infty}^{\infty}\mspace{2mu}\frac{1}{\sqrt{2\pi}}e^{- (z -
+\frac{t)^{2}}{2}}\ dz = e^{\frac{t^{2}}{2}} \cdot 1 =
+e^{\frac{t^{2}}{2}}\]</span>
+</div>
+<p>(The integral equals 1 because the integrand is the <span class="math inline">\(N(t,1)\)</span> density.)</p>
+<p><strong>Step 2:</strong> For <span class="math inline">\(X = \mu +
+\sigma Z\)</span>, use Property 2 with <span class="math inline">\(a =
+\sigma\)</span>, <span class="math inline">\(b = \mu\)</span>:</p>
+<div class="formula-box">
+<span class="math display">\[\boxed{M_{X}(t) = e^{\mu t +
+\frac{\sigma^{2}t^{2}}{2}}}\]</span>
+</div>
+<p><strong>Extracting moments:</strong></p>
+<div class="formula-box">
+<span class="math display">\[M_{X}'(t) = M_{X}(t) \cdot \left(
+\mu + \sigma^{2}t \right)\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[E(X) = M_{X}'(0) = 1 \cdot \mu =
+\mu\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[M_{X}''(t) = M_{X}'(t)\left(
+\mu + \sigma^{2}t \right) + M_{X}(t)\sigma^{2}\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[E\left( X^{2} \right) =
+M_{X}''(0) = \mu \cdot \mu + \sigma^{2} = \mu^{2} +
+\sigma^{2}\]</span>
+</div>
+<div class="formula-box">
+<span class="math display">\[\text{Var}(X) = \mu^{2} + \sigma^{2} -
+\mu^{2} = \sigma^{2}\]</span>
+</div>
+<p><strong>Application (Sum of Independent Normals).</strong> If <span class="math inline">\(X_{i} \sim N\left( \mu_{i},\sigma_{i}^{2}
+\right)\)</span> are independent:</p>
+<div class="formula-box">
+<span class="math display">\[M_{X_{1} + \cdots + X_{n}}(t) = \prod_{i
+= 1}^{n}\mspace{2mu} e^{\mu_{i}t + \frac{\sigma_{i}^{2}t^{2}}{2}} =
+\exp\left\lbrack \left( \sum_{i}^{}\mspace{2mu}\mspace{2mu}\mu_{i}
+\right)t + \frac{\left(
+\sum_{i}^{}\mspace{2mu}\mspace{2mu}\sigma_{i}^{2} \right)t^{2}}{2}
+\right\rbrack\]</span>
+</div>
+<p><strong>Therefore:</strong> The sum of independent normals is normal:
+<span class="math inline">\(X_{1} + \cdots + X_{n} \sim N\ \left(
+\sum_{}^{}\ \mu_{i},\ \sum_{}^{}\ \sigma_{i}^{2} \right)\)</span>.</p>
+<div class="example">
+<h4>Example 4.9.6.</h4>
+<p>If <span class="math inline">\(M_{X}(t) = \left( \frac{0.4}{1 - 0.6t} \right)^{3}\)</span> for <span class="math inline">\(t < \frac{5}{3}\)</span>, identify the distribution of <span class="math inline">\(X\)</span> and find its mean and variance.</p>
+<p><strong>Solution.</strong> Rewrite: <span class="math inline">\(M_{X}(t) = \left( \frac{1}{1 - \left(
+\frac{0.6}{0.4} \right) \cdot 0.4 \cdot t} \right)^{3}\)</span>...</p>
+<p>Actually, <span class="math inline">\(\frac{0.4}{1 - 0.6t}\)</span>
+is the MGF of <span class="math inline">\(\text{Exp}\left( \frac{1}{0.6}
+\right)\)</span>... Let's check differently. The MGF of <span class="math inline">\(\text{Gamma}(\alpha,\beta)\)</span> where <span class="math inline">\(E(X) = \alpha\beta\)</span> is <span class="math inline">\((1 - \beta t)^{- \alpha}\)</span>.</p>
+<p>Here <span class="math inline">\(M_{X}(t) = {0.4}^{3} \cdot (1 -
+0.6t)^{- 3}\)</span>. But <span class="math inline">\(M_{X}(0)\)</span>
+must be 1:</p>
+<p><span class="math inline">\(M_{X}(0) = {0.4}^{3} \cdot (1)^{- 3} =
+0.064 \neq 1\)</span>.</p>
+<p>Correction: The form <span class="math inline">\(\left( \frac{p}{1 -
+qt} \right)^{r}\)</span> with <span class="math inline">\(p + q =
+1\)</span> is the MGF of the Negative Binomial. Let <span class="math inline">\(p = 0.4\)</span>, <span class="math inline">\(q =
+0.6\)</span>, <span class="math inline">\(r = 3\)</span>:</p>
+<p><span class="math inline">\(M_{X}(t) = \left( \frac{0.4}{1 - 0.6
+\cdot \frac{t}{0.4} \cdot 0.4} \right)^{3}\)</span>...</p>
+<p>More directly: <span class="math inline">\(X \sim \text{NegBin}(r =
+3,p = 0.4)\)</span> with <span class="math inline">\(E(X) = \frac{r}{p}
+= \frac{3}{0.4} = 7.5\)</span> and <span class="math inline">\(\text{Var}(X) = \frac{rq}{p^{2}} =
+\frac{3(0.6)}{0.16} = 11.25\)</span>.</p>
+</div>
+</div></div>
+<div id="cgf" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.10</span> Cumulant Generating Function (CGF)</h2>
+<p><strong>4.10.1 Definition</strong></p>
+<div class="definition">
+<h4>Definition 4.10.1.</h4>
+<p>The <strong>cumulant generating
+function</strong> (CGF) of <span class="math inline">\(X\)</span>
+is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{K_{X}(t) = \ln{M_{X}(t)} = \ln
+E\left( e^{tX} \right)}\]</span>
+</div>
+<p>The <strong>cumulants</strong> <span class="math inline">\(\kappa_{r}\)</span> are defined by the Taylor
+expansion:</p>
+<div class="derivation">
+<span class="math display">\[K_{X}(t) = \sum_{r =
+1}^{\infty}\mspace{2mu}\frac{\kappa_{r}\ t^{r}}{r!} = \kappa_{1}t +
+\frac{\kappa_{2}t^{2}}{2!} + \frac{\kappa_{3}t^{3}}{3!} +
+\cdots\]</span>
+</div>
+<p>So <span class="math inline">\(\kappa_{r} =
+K_{X}^{(r)}(0)\)</span>.</p>
+<p><strong>4.10.2 First and Second Cumulants</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.10.1.</h4>
+<p><span class="math inline">\(\kappa_{1} = E(X) = \mu\)</span> and <span class="math inline">\(\kappa_{2} = \text{Var}(X) =
+\sigma^{2}\)</span>.</p>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p>Since <span class="math inline">\(K_{X}(t) =
+\ln{M_{X}(t)}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[K_{X}'(t) =
+\frac{M_{X}'(t)}{M_{X}(t)}\]</span>
+</div>
+<p>At <span class="math inline">\(t = 0\)</span>: <span class="math inline">\(K_{X}'(0) = \frac{M_{X}'(0)}{M_{X}(0)} =
+\frac{E(X)}{1} = \mu\)</span>. Therefore <span class="math inline">\(\kappa_{1} = \mu\)</span>.</p>
+<p>For <span class="math inline">\(\kappa_{2}\)</span>, differentiate
+<span class="math inline">\(K_{X}'(t)\)</span> using the quotient
+rule:</p>
+<div class="derivation">
+<span class="math display">\[K_{X}''(t) =
+\frac{M_{X}''(t)M_{X}(t) - \lbrack
+M_{X}'(t)\rbrack^{2}}{\lbrack M_{X}(t)\rbrack^{2}}\]</span>
+</div>
+<p>At <span class="math inline">\(t = 0\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[K_{X}''(0) =
+\frac{M_{X}''(0) \cdot 1 - \lbrack
+M_{X}'(0)\rbrack^{2}}{1^{2}} = E(X^{2}) - \lbrack E(X)\rbrack^{2} =
+\text{Var}(X)\]</span>
+</div>
+<p>Therefore <span class="math inline">\(\kappa_{2} =
+\sigma^{2}\)</span>.</p>
+<p><strong>4.10.3 Additivity of Cumulants</strong></p>
+</div>
+<div class="theorem">
+<h4>Theorem 4.10.2.</h4>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then <span class="math inline">\(K_{X + Y}(t) = K_{X}(t) + K_{Y}(t)\)</span>.</p>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(M_{X + Y}(t) =
+M_{X}(t)M_{Y}(t)\)</span>, so:</p>
+<div class="derivation">
+<span class="math display">\[K_{X + Y}(t) = \ln{M_{X + Y}(t)} =
+\ln{M_{X}(t)} + \ln{M_{Y}(t)} = K_{X}(t) + K_{Y}(t)\]</span>
+</div>
+<p><strong>Corollary.</strong> All cumulants are additive: <span class="math inline">\(\kappa_{r}(X + Y) = \kappa_{r}(X) +
+\kappa_{r}(Y)\)</span> for independent <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>.</p>
+<p>This is a key advantage of cumulants over moments — moments of sums
+are not generally as clean.</p>
+<p><strong>4.10.4 CGF of Standard Distributions</strong></p>
+<p><strong>Normal</strong> <span class="math inline">\(N\left(
+\mu,\sigma^{2} \right)\)</span><strong>:</strong></p>
+<div class="derivation">
+<span class="math display">\[K_{X}(t) = \ln e^{\mu t +
+\frac{\sigma^{2}t^{2}}{2}} = \mu t +
+\frac{\sigma^{2}t^{2}}{2}\]</span>
+</div>
+<p>Cumulants: <span class="math inline">\(\kappa_{1} = \mu\)</span>,
+<span class="math inline">\(\kappa_{2} = \sigma^{2}\)</span>, <span class="math inline">\(\kappa_{r} = 0\)</span> for <span class="math inline">\(r \geq 3\)</span>.</p>
+<p>All cumulants of order <span class="math inline">\(\geq 3\)</span>
+vanish. This characterizes the normal distribution.</p>
+<p><strong>Poisson(</strong><span class="math inline">\(\lambda\)</span><strong>):</strong></p>
+<div class="derivation">
+<span class="math display">\[K_{X}(t) = \lambda\left( e^{t} - 1
+\right) = \lambda\sum_{r =
+1}^{\infty}\mspace{2mu}\frac{t^{r}}{r!}\]</span>
+</div>
+<p>Comparing with <span class="math inline">\(\frac{\sum_{}^{}\
+\kappa_{r}t^{r}}{r!}\)</span>: <strong>all cumulants equal</strong>
+<span class="math inline">\(\lambda\)</span>: <span class="math inline">\(\kappa_{r} = \lambda\)</span> for all <span class="math inline">\(r \geq 1\)</span>.</p>
+<p><strong>Exponential(</strong><span class="math inline">\(\lambda\)</span><strong>):</strong></p>
+<div class="derivation">
+<span class="math display">\[K_{X}(t) = \ln\frac{\lambda}{\lambda -
+t} = - \ln\left( 1 - \frac{t}{\lambda} \right) = \sum_{r =
+1}^{\infty}\mspace{2mu}\frac{(t/\lambda)^{r}}{r} = \sum_{r =
+1}^{\infty}\mspace{2mu}\frac{(r - 1)!}{\lambda^{r}} \cdot
+\frac{t^{r}}{r!}\]</span>
+</div>
+<p>So <span class="math inline">\(\kappa_{r} = \frac{(r -
+1)!}{\lambda^{r}}\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.10.1.</h4>
+<p>Use the CGF to find the skewness and
+excess kurtosis of the Poisson<span class="math inline">\((\lambda)\)</span> distribution.</p>
+<div class="derivation">
+<span class="math display">\[\gamma_{1} =
+\frac{\kappa_{3}}{\kappa_{2}^{\frac{3}{2}}} =
+\frac{\lambda}{\lambda^{\frac{3}{2}}} = \frac{1}{\sqrt{\lambda}},\
+\gamma_{2} = \frac{\kappa_{4}}{\kappa_{2}^{2}} =
+\frac{\lambda}{\lambda^{2}} = \frac{1}{\lambda}\]</span>
+</div>
+<p>As <span class="math inline">\(\lambda \rightarrow \infty\)</span>,
+the Poisson becomes increasingly symmetric and mesokurtic, converging to
+normal.</p>
+</div>
+</div></div>
+<div id="pgf" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.11</span> Probability Generating Function (PGF)</h2>
+<p><strong>4.11.1 Definition</strong></p>
+<div class="definition">
+<h4>Definition 4.11.1.</h4>
+<p>For a <strong>non-negative
+integer-valued</strong> random variable <span class="math inline">\(X\)</span> with <span class="math inline">\(P(X =
+k) = p_{k}\)</span>, the <strong>probability generating
+function</strong> is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{G_{X}(z) = E\left( z^{X} \right)
+= \sum_{k = 0}^{\infty}\mspace{2mu}\mspace{2mu} p_{k}z^{k} = p_{0} +
+p_{1}z + p_{2}z^{2} + \cdots}\]</span>
+</div>
+<p>for <span class="math inline">\(|z| \leq 1\)</span> (at minimum).</p>
+<p>The PGF is a <strong>power series whose coefficients are the
+probabilities</strong> themselves. This is why it is called the
+"probability" generating function.</p>
+<p><strong>4.11.2 Properties of the PGF</strong></p>
+</div>
+<div class="theorem">
+<h4>Property 1.</h4>
+<p><span class="math inline">\(G_{X}(1) =
+\sum_{k = 0}^{\infty}\mspace{2mu} p_{k} = 1\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Property 2 (Recovering Probabilities):</h4>
+<div class="derivation">
+<span class="math display">\[p_{k} = P(X = k) =
+\frac{G_{X}^{(k)}(0)}{k!}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(G_{X}(z) =
+\sum_{k = 0}^{\infty}\mspace{2mu} p_{k}z^{k}\)</span>. Differentiating
+<span class="math inline">\(r\)</span> times: <span class="math inline">\(G_{X}^{(r)}(z) = \sum_{k = r}^{\infty}\mspace{2mu}
+k(k - 1)\cdots(k - r + 1)p_{k}z^{k - r}\)</span>. At <span class="math inline">\(z = 0\)</span>, only the <span class="math inline">\(k = r\)</span> term survives: <span class="math inline">\(G_{X}^{(r)}(0) = r!\ p_{r}\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Property 3 (Mean and Variance):</h4>
+<div class="derivation">
+<span class="math display">\[E(X) = G_{X}'(1),\ E\left\lbrack X(X
+- 1) \right\rbrack = G_{X}''(1)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = G_{X}''(1) +
+G_{X}'(1) - \lbrack G_{X}'(1)\rbrack^{2}\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(G_{X}'(z) =
+\sum_{k = 1}^{\infty}\mspace{2mu} k\ p_{k}z^{k - 1}\)</span>. At <span class="math inline">\(z = 1\)</span>: <span class="math inline">\(G_{X}'(1) = \sum_{k = 1}^{\infty}\mspace{2mu}
+k\ p_{k} = E(X)\)</span>. Similarly <span class="math inline">\(G_{X}''(1) = \sum_{}^{}\ k(k - 1)p_{k} =
+E\left\lbrack X(X - 1) \right\rbrack = E\left( X^{2} \right) -
+E(X)\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[E\left( X^{2} \right) =
+G_{X}''(1) + G_{X}'(1)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = E(X^{2}) - \lbrack
+E(X)\rbrack^{2} = G_{X}''(1) + G_{X}'(1) - \lbrack
+G_{X}'(1)\rbrack^{2}\]</span>
+</div>
+</div>
+<div class="theorem">
+<h4>Property 4 (Additivity for Independent Variables).</h4>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent:</p>
+<div class="derivation">
+<span class="math display">\[G_{X + Y}(z) = G_{X}(z) \cdot
+G_{Y}(z)\]</span>
+</div>
+<p><strong>Relationship with MGF.</strong> <span class="math inline">\(G_{X}(z) = M_{X}\left( \ln z \right)\)</span> and
+<span class="math inline">\(M_{X}(t) = G_{X}\left( e^{t}
+\right)\)</span>.</p>
+<p><strong>4.11.3 PGF of Standard Distributions</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.11.1 (Bernoulli).</h4>
+<p><span class="math inline">\(P(X = 0) = q\)</span>, <span class="math inline">\(P(X = 1) = p\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[G_{X}(z) = q + pz\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}'(z) = p,\ so\ E(X) =
+G_{X}'(1) = p.\ G_{X}''(z) = 0,\ \text{Var}(X) = 0 + p -
+p^{2} = pq\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.11.2 (Binomial)</h4>
+<p><span class="math inline">\(B(n,p)\)</span><strong>.</strong></p>
+<div class="derivation">
+<span class="math display">\[G_{X}(z) = (q + pz)^{n}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}'(z) = np(q + pz)^{n - 1},\
+E(X) = G_{X}'(1) = np\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}''(z) = n(n - 1)p^{2}(q +
+pz)^{n - 2},\ G_{X}''(1) = n(n - 1)p^{2}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = n(n - 1)p^{2} + np -
+(np)^{2} = npq.\ \]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.11.3 (Poisson)</h4>
+<p><span class="math inline">\(P(\lambda)\)</span><strong>.</strong></p>
+<div class="derivation">
+<span class="math display">\[G_{X}(z) = E\left( z^{X} \right) =
+\sum_{k = 0}^{\infty}\mspace{2mu} z^{k}\frac{e^{-
+\lambda}\lambda^{k}}{k!} = e^{- \lambda} \cdot e^{\lambda
+z}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\boxed{G_{X}(z) = e^{\lambda(z -
+1)}}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}'(z) = \lambda e^{\lambda(z -
+1)},\ E(X) = G_{X}'(1) = \lambda.\ \]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}''(z) =
+\lambda^{2}e^{\lambda(z - 1)},\ G_{X}''(1) =
+\lambda^{2}.\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \lambda^{2} + \lambda - \lambda^{2} = \lambda.\ \]</span>
+</div>
+</div>
+<div class="example">
+  <h4>Example 4.11.4 (Geometric).</h4>
+  <p><span class="math inline">\(P(X = k) = pq^{k - 1}\)</span> for <span class="math inline">\(k = 1,2,3,\ldots\)</span></p>
+  <div class="derivation">
+    <span class="math display">\[G_{X}(z) = \sum_{k = 1}^{\infty}\mspace{2mu} pq^{k - 1}z^{k} = pz\sum_{k = 0}^{\infty}\mspace{2mu}(qz)^{k} = \frac{pz}{1 - qz},\ |z| < \frac{1}{q}\]</span>
+  </div>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}'(z) = \frac{p(1 - qz) +
+pqz}{(1 - qz)^{2}} = \frac{p}{(1 - qz)^{2}},\ E(X) = G_{X}'(1) =
+\frac{p}{p^{2}} = \frac{1}{p}.\ \]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[G_{X}''(z) = \frac{2pq}{(1 -
+qz)^{3}},\ G_{X}''(1) = \frac{2q}{p^{2}}.\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\text{Var}(X) = \frac{2q}{p^{2}} +
+\frac{1}{p} - \frac{1}{p^{2}} = \frac{2q + p - 1}{p^{2}} = \frac{2q + p
+- (p + q)}{p^{2}} = \frac{q}{p^{2}}.\ \]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.11.5.</h4>
+<p>The PGF of <span class="math inline">\(X\)</span> is <span class="math inline">\(G_{X}(z)
+= \frac{1}{3 - 2z}\)</span>. Identify the distribution and find <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(\text{Var}(X)\)</span>.</p>
+<p><strong>Solution.</strong> Rewrite: <span class="math inline">\(G_{X}(z) = \frac{\frac{1}{3}}{1 - \left(
+\frac{2}{3} \right)z}\)</span>.</p>
+<p>Compare with the geometric PGF <span class="math inline">\(\frac{pz}{1 - qz}\)</span>... Actually this is the
+PGF <span class="math inline">\(\frac{p}{1 - qz}\)</span> for the
+geometric distribution starting at 0: <span class="math inline">\(P(X =
+k) = pq^{k}\)</span>, <span class="math inline">\(k =
+0,1,2,\ldots\)</span> (geometric with <span class="math inline">\(P(X =
+k) = p_{k}\)</span>).</p>
+<p>With <span class="math inline">\(p = \frac{1}{3}\)</span> and <span class="math inline">\(q = \frac{2}{3}\)</span>: <span class="math inline">\(G_{X}(z) = \frac{\frac{1}{3}}{1 - \left(
+\frac{2}{3} \right)z} = \sum_{k = 0}^{\infty}\mspace{2mu}\frac{1}{3}\
+\left( \frac{2}{3} \right)^{k}z^{k}\)</span>.</p>
+<p>So <span class="math inline">\(P(X = k) = \frac{1}{3}\ \left(
+\frac{2}{3} \right)^{k}\)</span>, <span class="math inline">\(k =
+0,1,2,\ldots\)</span></p>
+<p><span class="math inline">\(E(X) = G_{X}'(1) =
+\frac{\frac{2}{9}}{(1/3)^{2}} = \frac{\frac{2}{9}}{\frac{1}{9}} = 2 =
+\frac{q}{p}\)</span>.</p>
+<p><span class="math inline">\(\text{Var}(X) = \frac{q}{p^{2}} =
+\frac{\frac{2}{3}}{\frac{1}{9}} = 6\)</span>.</p>
+</div>
+</div></div>
+<div id="cf" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.12</span> Characteristic Function</h2>
+<p><strong>4.12.1 Definition and Motivation</strong></p>
+<div class="definition">
+<h4>Definition 4.12.1.</h4>
+<p>The <strong>characteristic
+function</strong> (CF) of a random variable <span class="math inline">\(X\)</span> is:</p>
+<div class="derivation">
+<span class="math display">\[\boxed{\phi_{X}(t) = E\ \left( e^{itX}
+\right) = E\left( \cos{tX} \right) + i\ E\left( \sin{tX} \right),\ t \in
+\mathbb{R}}\]</span>
+</div>
+<p>where <span class="math inline">\(i = \sqrt{- 1}\)</span> is the
+imaginary unit.</p>
+<p>For continuous <span class="math inline">\(X\)</span> with pdf <span class="math inline">\(f\)</span>: <span class="math inline">\(\phi_{X}(t) = \int_{- \infty}^{\infty}\mspace{2mu}
+e^{itx}f(x)dx\)</span> (Fourier transform of <span class="math inline">\(f\)</span>).</p>
+<p><strong>Why use the CF?</strong></p>
+<ol type="1">
+<li><p>The CF <strong>always exists</strong> for any distribution —
+because <span class="math inline">\(\left| e^{itx} \right| = 1\)</span>
+and <span class="math inline">\(E(1) = 1\)</span>, so the integral
+always converges. The MGF, by contrast, may not exist (e.g., Cauchy
+distribution has no MGF).</p></li>
+<li><p>The CF <strong>uniquely determines</strong> the distribution
+(inversion theorem).</p></li>
+<li><p>The CF is the Fourier transform of the pdf, connecting
+probability to classical analysis.</p></li>
+</ol>
+<p><strong>4.12.2 Properties of the Characteristic Function</strong></p>
+</div>
+<div class="theorem">
+<h4>Property 1.</h4>
+<p><span class="math inline">\(\phi_{X}(0)
+= 1\)</span> and <span class="math inline">\(\left| \phi_{X}(t) \right|
+\leq 1\)</span> for all <span class="math inline">\(t\)</span>.</p>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(\phi_{X}(0) =
+E\left( e^{0} \right) = 1\)</span>. <span class="math inline">\(\left|
+\phi_{X}(t) \right| = \left| E\left( e^{itX} \right) \right| \leq
+E\left| e^{itX} \right| = E(1) = 1\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Property 2 (Continuity).</h4>
+<p><span class="math inline">\(\phi_{X}(t)\)</span> is uniformly continuous in
+<span class="math inline">\(t\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Property 3 (Linear Transformation).</h4>
+<p>For <span class="math inline">\(Y = aX + b\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\phi_{Y}(t) = e^{ibt}\
+\phi_{X}(at)\]</span>
+</div>
+</div>
+<div class="proof-box">
+<h4>Proof.</h4>
+<p><span class="math inline">\(\phi_{Y}(t) =
+E\left( e^{it(aX + b)} \right) = e^{ibt}E\left( e^{iatX} \right) =
+e^{ibt}\phi_{X}(at)\)</span>.</p>
+</div>
+<div class="theorem">
+<h4>Property 4 (Additivity for Independent Variables).</h4>
+<p>If <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> are
+independent:</p>
+<div class="derivation">
+<span class="math display">\[\phi_{X_{1} + \cdots + X_{n}}(t) =
+\phi_{X_{1}}(t)\cdots\phi_{X_{n}}(t)\]</span>
+</div>
+</div>
+<div class="theorem">
+  <h4>Property 5 (Moments from CF).</h4>
+  <p>If <span class="math inline">\(E|X|^{r} < \infty\)</span>:</p>
+  <div class="derivation">
+    <span class="math display">\[E(X^{r}) = \frac{1}{i^{r}}\phi_{X}^{(r)}(0) = (-i)^{r}\phi_{X}^{(r)}(0)\]</span>
+  </div>
+</div>
+</div>
+<div class="theorem">
+<h4>Property 6 (Conjugate Symmetry).</h4>
+<p><span class="math inline">\(\phi_{X}( - t) = \overline{\phi_{X}(t)}\)</span>
+(complex conjugate).</p>
+</div>
+<div class="theorem">
+<h4>Property 7 (Symmetric Distributions).</h4>
+<p>If <span class="math inline">\(X\)</span> is symmetric about 0, then <span class="math inline">\(\phi_{X}(t)\)</span> is real-valued.</p>
+</div>
+<div class="theorem">
+<h4>Property 8 (Continuity Theorem).</h4>
+<p><span class="math inline">\(X_{n}\overset{\phantom{d\
+}}{\rightarrow}X\)</span> (convergence in distribution) if and only if
+<span class="math inline">\(\phi_{X_{n}}(t) \rightarrow
+\phi_{X}(t)\)</span> for all <span class="math inline">\(t\)</span>.</p>
+<p><strong>4.12.3 Characteristic Functions of Standard
+Distributions</strong></p>
+</div>
+<div class="example">
+<h4>Example 4.12.1 (Bernoulli).</h4>
+<p><span class="math inline">\(\phi_{X}(t) = q + pe^{it}\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.12.2 (Normal</h4>
+<p><span class="math inline">\(N\left( \mu,\sigma^{2}
+\right)\)</span><strong>).</strong></p>
+<div class="derivation">
+<span class="math display">\[\phi_{X}(t) = e^{i\mu t -
+\frac{\sigma^{2}t^{2}}{2}}\]</span>
+</div>
+<p><strong>Derivation.</strong> Replace <span class="math inline">\(t\)</span> with <span class="math inline">\(it\)</span> in the MGF:</p>
+<div class="derivation">
+<span class="math display">\[M_{X}(t) = e^{\mu t +
+\frac{\sigma^{2}t^{2}}{2}},\ so\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\ \phi_{X}(t) = M_{X}(it)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[= e^{\mu(it) +
+\frac{\sigma^{2}(it)^{2}}{2}} = e^{i\mu t -
+\frac{\sigma^{2}t^{2}}{2}}.\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.12.3 (Poisson</h4>
+<p><span class="math inline">\((\lambda)\)</span><strong>).</strong></p>
+<div class="derivation">
+<span class="math display">\[\phi_{X}(t) = e^{\lambda\left( e^{it} -
+1 \right)}\]</span>
+</div>
+<p>Replace <span class="math inline">\(t\)</span> with <span class="math inline">\(it\)</span> in</p>
+<div class="derivation">
+<span class="math display">\[M_{X}(t) = e^{\lambda\left( e^{t} - 1
+\right)}\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\phi_{X}(t) = e^{\lambda\left( e^{it} -
+1 \right)}\]</span>
+</div>
+</div>
+<div class="example">
+<h4>Example 4.12.4 (Exponential</h4>
+<p><span class="math inline">\((\lambda)\)</span><strong>).</strong></p>
+<div class="derivation">
+<span class="math display">\[\phi_{X}(t) = \frac{\lambda}{\lambda -
+it}\]</span>
+</div>
+<p>Replace <span class="math inline">\(t\)</span> with <span class="math inline">\(it\)</span> in <span class="math inline">\(M_{X}(t) = \frac{\lambda}{\lambda - t}\)</span>:
+<span class="math inline">\(\phi_{X}(t) = \frac{\lambda}{\lambda -
+it}\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.12.5 (Cauchy Distribution).</h4>
+<p>The Cauchy
+distribution has pdf <span class="math inline">\(f(x) =
+\frac{1}{\pi\left( 1 + x^{2} \right)}\)</span>, <span class="math inline">\(x \in \mathbb{R}\)</span>. Its MGF does not exist,
+but its CF is:</p>
+<div class="derivation">
+<span class="math display">\[\phi_{X}(t) = e^{- |t|}\]</span>
+</div>
+<p>This is a key example showing why the CF is more powerful than the
+MGF.</p>
+<p><strong>4.12.4 Application: Central Limit Theorem (Proof
+Sketch)</strong></p>
+<p>Let <span class="math inline">\(X_{1},X_{2},\ldots\)</span> be i.i.d.
+with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^{2}\)</span>. Define:</p>
+<div class="derivation">
+<span class="math display">\[Z_{n} = \frac{{\bar{X}}_{n} -
+\mu}{\frac{\sigma}{\sqrt{n}}} = \frac{1}{\sqrt{n}}\sum_{i =
+1}^{n}\mspace{2mu}\frac{X_{i} - \mu}{\sigma} = \frac{1}{\sqrt{n}}\sum_{i
+= 1}^{n}\mspace{2mu} Y_{i}\]</span>
+</div>
+<p>where <span class="math inline">\(Y_{i} = \frac{X_{i} -
+\mu}{\sigma}\)</span> has mean 0, variance 1, and CF <span class="math inline">\(\phi_{Y}(t)\)</span>.</p>
+<p><strong>CF of</strong> <span class="math inline">\(Z_{n}\)</span><strong>:</strong></p>
+<div class="derivation">
+<span class="math display">\[\phi_{Z_{n}}(t) = \phi_{Y}\ \left(
+\frac{t}{\sqrt{n}} \right)^{n}\]</span>
+</div>
+<p>Expand <span class="math inline">\(\phi_{Y}(s)\)</span> in Taylor
+series around <span class="math inline">\(s = 0\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\phi_{Y}(s) = 1 + isE(Y) -
+\frac{s^{2}}{2}E\left( Y^{2} \right) + O\left( s^{3} \right) = 1 -
+\frac{s^{2}}{2} + O\left( s^{3} \right)\]</span>
+</div>
+<p>(using <span class="math inline">\(E(Y) = 0\)</span>, <span class="math inline">\(E\left( Y^{2} \right) = 1\)</span>). Substituting
+<span class="math inline">\(s = \frac{t}{\sqrt{n}}\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[\phi_{Y}\ \left( \frac{t}{\sqrt{n}}
+\right) = 1 - \frac{t^{2}}{2n} + O\left( n^{- \frac{3}{2}}
+\right)\]</span>
+</div>
+<div class="derivation">
+<span class="math display">\[\phi_{Z_{n}}(t) = \left( 1 -
+\frac{t^{2}}{2n} + O\left( n^{- \frac{3}{2}} \right)
+\right)^{n}\overset{\phantom{n \rightarrow \infty\ }}{\rightarrow}e^{-
+\frac{t^{2}}{2}}\]</span>
+</div>
+<p>using the limit <span class="math inline">\((1 + a_{n}/n)^{n}
+\rightarrow e^{a}\)</span> when <span class="math inline">\(a_{n}
+\rightarrow a\)</span>.</p>
+<p>The limit <span class="math inline">\(e^{- \frac{t^{2}}{2}}\)</span>
+is the CF of <span class="math inline">\(N(0,1)\)</span>. By the
+Continuity Theorem, <span class="math inline">\(Z_{n}\overset{\phantom{d\
+}}{\rightarrow}N(0,1)\)</span>.</p>
+</div>
+</div></div>
+<div id="comparison" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.13</span> Comparison of Generating Functions</h2>
+<table class="table quick-ref-table">
+<colgroup>
+<col style="width: 20%"/>
+<col style="width: 19%"/>
+<col style="width: 19%"/>
+<col style="width: 20%"/>
+<col style="width: 20%"/>
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">MGF <span class="math inline">\(M_{X}(t)\)</span></th>
+<th style="text-align: left;">CGF <span class="math inline">\(K_{X}(t)\)</span></th>
+<th style="text-align: left;">PGF <span class="math inline">\(G_{X}(z)\)</span></th>
+<th style="text-align: left;">CF <span class="math inline">\(\phi_{X}(t)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;"><span class="math display">\[E\left(
+e^{tX} \right)\]</span></td>
+<td style="text-align: left;"><span class="math display">\[\ln{M_{X}(t)}\]</span></td>
+<td style="text-align: left;"><span class="math display">\[E\left( z^{X}
+\right)\]</span></td>
+<td style="text-align: left;"><span class="math display">\[E\left(
+e^{itX} \right)\]</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Argument domain</strong></td>
+<td style="text-align: left;"><span class="math inline">\(t \in ( -
+h,h)\)</span>, real</td>
+<td style="text-align: left;">Same as MGF</td>
+<td style="text-align: left;"><span class="math display">\[z \leq
+1\]</span></td>
+<td style="text-align: left;"><span class="math inline">\(t \in
+\mathbb{R}\)</span>, real</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Always exists?</strong></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Only non-neg integers</td>
+<td style="text-align: left;"><strong>Yes</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Uniquely determines
+distribution?</strong></td>
+<td style="text-align: left;">Yes (if exists)</td>
+<td style="text-align: left;">Yes (if exists)</td>
+<td style="text-align: left;">Yes (for integer <span class="math inline">\(X\)</span>)</td>
+<td style="text-align: left;"><strong>Yes (always)</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Extracts moments by</strong></td>
+<td style="text-align: left;">Differentiating at <span class="math inline">\(t = 0\)</span></td>
+<td style="text-align: left;">Differentiating at <span class="math inline">\(t = 0\)</span></td>
+<td style="text-align: left;">Differentiating at <span class="math inline">\(z = 1\)</span></td>
+<td style="text-align: left;">Differentiating at <span class="math inline">\(t = 0\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Additivity (independent
+sum)</strong></td>
+<td style="text-align: left;">Product of MGFs</td>
+<td style="text-align: left;"><strong>Sum</strong> of CGFs</td>
+<td style="text-align: left;">Product of PGFs</td>
+<td style="text-align: left;">Product of CFs</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Special advantage</strong></td>
+<td style="text-align: left;">Simple moment extraction</td>
+<td style="text-align: left;">Cumulants additive</td>
+<td style="text-align: left;">Probabilities as coefficients</td>
+<td style="text-align: left;">Always exists; Fourier connection</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Applicable to</strong></td>
+<td style="text-align: left;">All distributions</td>
+<td style="text-align: left;">All distributions</td>
+<td style="text-align: left;">Non-negative integer distributions</td>
+<td style="text-align: left;">All distributions</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div id="additional" class="topic-section"><div class="section-card">
+<h2><span class="section-num">4.14</span> Additional Worked Problems</h2>
+<div class="example">
+<h4>Example 4.14.1.</h4>
+<p>A random variable <span class="math inline">\(X\)</span> has <span class="math inline">\(E(X) =
+3\)</span> and <span class="math inline">\(E\left( X^{2} \right) =
+15\)</span>. Find: (a) <span class="math inline">\(\text{Var}(X)\)</span>, (b) <span class="math inline">\(E(2X - 1)^{2}\)</span>, (c) <span class="math inline">\(\text{Var}(3 - 4X)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p>(a) <span class="math inline">\(\text{Var}(X) = E(X^{2}) - \lbrack
+E(X)\rbrack^{2} = 15 - 9 = 6\)</span>.</p>
+<p>(b) <span class="math inline">\(E\lbrack(2X - 1)^{2}\rbrack =
+E(4X^{2} - 4X + 1)\)</span></p>
+<div class="derivation">
+<span class="math display">\[= 4E\left( X^{2} \right) - 4E(X) + 1 =
+4(15) - 4(3) + 1 = 60 - 12 + 1 = 49\]</span>
+</div>
+<p>(c) <span class="math inline">\(\text{Var}(3 - 4X) = ( -
+4)^{2}\text{Var}(X) = 16 \times 6 = 96\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.14.2.</h4>
+<p>If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent with <span class="math inline">\(\text{Var}(X) = 4\)</span> and <span class="math inline">\(\text{Var}(Y) = 9\)</span>, find: (a) <span class="math inline">\(\text{Var}(3X - 2Y + 5)\)</span>, (b) <span class="math inline">\(\text{Cov}(X + Y,X - Y)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p>(a) <span class="math inline">\(\text{Var}(3X - 2Y + 5) =
+9\text{Var}(X) + 4\text{Var}(Y) + 0 = 9(4) + 4(9) = 36 + 36 =
+72\)</span>.</p>
+<p>(b) <span class="math inline">\(\text{Cov}(X + Y,X - Y) =
+\text{Cov}(X,X) - \text{Cov}(X,Y) + \text{Cov}(Y,X) -
+\text{Cov}(Y,Y)\)</span></p>
+<p><span class="math inline">\(= \text{Var}(X) - 0 + 0 - \text{Var}(Y) =
+4 - 9 = - 5\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.14.3.</h4>
+<p>The MGF of <span class="math inline">\(X\)</span> is <span class="math inline">\(M_{X}(t)
+= e^{3\left( e^{t} - 1 \right)}\)</span>. (a) Name the distribution of
+<span class="math inline">\(X\)</span>. (b) Find <span class="math inline">\(E(X)\)</span>, <span class="math inline">\(\text{Var}(X)\)</span>. (c) Find <span class="math inline">\(P(X = 2)\)</span>.</p>
+<p><strong>Solution.</strong></p>
+<p>(a) <span class="math inline">\(M_{X}(t) = e^{\lambda\left( e^{t} - 1
+\right)}\)</span> with <span class="math inline">\(\lambda = 3\)</span>
+is the Poisson MGF. So <span class="math inline">\(X \sim
+\text{Poisson}(3)\)</span>.</p>
+<p>(b) <span class="math inline">\(E(X) = \text{Var}(X) =
+3\)</span>.</p>
+<p>(c) <span class="math inline">\(P(X = 2) = e^{- 3} \cdot
+\frac{3^{2}}{2!} = \frac{9e^{- 3}}{2} \approx 0.2240\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.14.4.</h4>
+<p>The MGF of <span class="math inline">\(X\)</span> is <span class="math inline">\(M_{X}(t)
+= (0.3 + 0.7e^{t})^{10}\)</span>. Identify the distribution and find the
+probability <span class="math inline">\(P(X \leq 1)\)</span>.</p>
+<p><strong>Solution.</strong> <span class="math inline">\((q +
+pe^{t})^{n}\)</span> with <span class="math inline">\(q = 0.3\)</span>,
+<span class="math inline">\(p = 0.7\)</span>, <span class="math inline">\(n = 10\)</span>. So <span class="math inline">\(X
+\sim B(10,0.7)\)</span>.</p>
+<p><span class="math inline">\(P(X = 0) = (0.3)^{10} \approx
+0.0000059\)</span>.</p>
+<p><span class="math inline">\(P(X = 1) =
+\binom{10}{1}(0.7)^{1}(0.3)^{9} = 10 \times 0.7 \times {0.3}^{9} \approx
+0.000138\)</span>.</p>
+<p><span class="math inline">\(P(X \leq 1) \approx 0.0000059 + 0.000138
+\approx 0.000144\)</span>.</p>
+</div>
+<div class="example">
+<h4>Example 4.14.5.</h4>
+<p>Find <span class="math inline">\(E(X)\)</span>, <span class="math inline">\(\text{Var}(X)\)</span>, and <span class="math inline">\(\mu_{3}\)</span> using the CGF for <span class="math inline">\(X \sim N(5,16)\)</span>.</p>
+<p><strong>Solution.</strong> <span class="math inline">\(K_{X}(t) = 5t
++ \frac{16t^{2}}{2} = 5t + 8t^{2}\)</span>.</p>
+<p><span class="math inline">\(K_{X}'(t) = 5 + 16t \Rightarrow
+\kappa_{1} = K_{X}'(0) = 5 = E(X)\)</span>.</p>
+<p><span class="math inline">\(K_{X}''(t) = 16 \Rightarrow
+\kappa_{2} = 16 = \text{Var}(X)\)</span>.</p>
+<p><span class="math inline">\(K_{X}'''(t) = 0 \Rightarrow
+\kappa_{3} = 0 = \mu_{3}\)</span>.</p>
+<p>The normal distribution has zero third cumulant, confirming zero
+skewness.</p>
+</div>
+<div class="example">
+<h4>Example 4.14.6.</h4>
+<p>For <span class="math inline">\(X
+\sim \text{Exp}(\lambda)\)</span>, use the MGF to prove <span class="math inline">\(E\left( X^{r} \right) =
+\frac{r!}{\lambda^{r}}\)</span>.</p>
+<p><strong>Solution.</strong> <span class="math inline">\(M_{X}(t) =
+\lambda(\lambda - t)^{- 1}\)</span>.</p>
+<div class="derivation">
+<span class="math display">\[M_{X}^{(r)}(t) = \lambda \cdot
+\frac{r!}{(\lambda - t)^{r + 1}}\]</span>
+</div>
+<p>At <span class="math inline">\(t = 0\)</span>:</p>
+<div class="derivation">
+<span class="math display">\[E\left( X^{r} \right) = M_{X}^{(r)}(0) =
+\lambda \cdot \frac{r!}{\lambda^{r + 1}} =
+\frac{r!}{\lambda^{r}}\]</span>
+</div>
+</div>
+</div></div>
+<div id="subjective" class="topic-section">
+  <div class="section-card">
+    <h2><span class="section-num">📝</span> Subjective Exercises — 30 Questions</h2>
+    <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the detailed step-by-step solution.</p>
+
+    <div class="question"><strong>Q1.</strong> <span class="math inline">\(X\)</span> has PMF <span class="math inline">\(P(X = x) = kx\)</span> for <span class="math inline">\(x = 1,2,3,4\)</span>. Find <span class="math inline">\(k\)</span>, <span class="math inline">\(E(X)\)</span>, and <span class="math inline">\(\text{Var}(X)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj1')">Show Answer ▼</button>
+    <div id="subj1" class="answer"><p><strong>Solution:</strong><br>Normalisation: <span class="math inline">\(\sum_{x=1}^{4} kx = k(1+2+3+4) = 10k = 1 \Rightarrow k = 0.1\)</span>.<br><span class="math inline">\(E(X) = \sum x \cdot p(x) = 0.1(1^2 + 2^2 + 3^2 + 4^2) = 0.1(30) = 3\)</span>.<br><span class="math inline">\(E(X^2) = \sum x^2 \cdot p(x) = 0.1(1^3 + 2^3 + 3^3 + 4^3) = 0.1(100) = 10\)</span>.<br><span class="math inline">\(\text{Var}(X) = E(X^2) - [E(X)]^2 = 10 - 9 = 1\)</span>.</p></div>
+
+    <div class="question"><strong>Q2.</strong> Let <span class="math inline">\(X\)</span> have pdf <span class="math inline">\(f(x) = c(4x - x^2)\)</span> for <span class="math inline">\(0 \leq x \leq 4\)</span>. Determine <span class="math inline">\(c\)</span>, <span class="math inline">\(E(X)\)</span>, and <span class="math inline">\(E(X^2)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj2')">Show Answer ▼</button>
+    <div id="subj2" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\int_{0}^{4} (4x - x^2)dx = \left[2x^2 - \frac{x^3}{3}\right]_0^4 = 32 - \frac{64}{3} = \frac{32}{3}\)</span>. So <span class="math inline">\(c = \frac{3}{32}\)</span>.<br><span class="math inline">\(E(X) = c\int_{0}^{4} x(4x - x^2)dx = c\int_{0}^{4} (4x^2 - x^3)dx = c\left[\frac{4x^3}{3} - \frac{x^4}{4}\right]_0^4 = c\left(\frac{256}{3} - 64\right) = c\cdot\frac{64}{3} = 2\)</span>.<br><span class="math inline">\(E(X^2) = c\int_{0}^{4} x^2(4x - x^2)dx = c\int_{0}^{4} (4x^3 - x^4)dx = c\left[x^4 - \frac{x^5}{5}\right]_0^4 = c\left(256 - \frac{1024}{5}\right) = c\cdot\frac{256}{5} = 4.8\)</span>.</p></div>
+
+    <div class="question"><strong>Q3.</strong> <span class="math inline">\(X\)</span> takes values <span class="math inline">\(-2,-1,0,1,2\)</span> with probabilities <span class="math inline">\(0.1, 0.2, 0.3, 0.2, 0.2\)</span>. Compute <span class="math inline">\(E(3X^2 - 2X + 5)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj3')">Show Answer ▼</button>
+    <div id="subj3" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E(X) = (-2)(0.1) + (-1)(0.2) + 0 + 1(0.2) + 2(0.2) = 0.2\)</span>.<br><span class="math inline">\(E(X^2) = 4(0.1) + 1(0.2) + 0 + 1(0.2) + 4(0.2) = 1.6\)</span>.<br>By linearity: <span class="math inline">\(E(3X^2 - 2X + 5) = 3E(X^2) - 2E(X) + 5 = 3(1.6) - 2(0.2) + 5 = 4.8 - 0.4 + 5 = 9.4\)</span>.</p></div>
+
+    <div class="question"><strong>Q4.</strong> Given <span class="math inline">\(E(X) = 4\)</span> and <span class="math inline">\(E(X^2) = 20\)</span>, find <span class="math inline">\(\text{Var}(2X - 3)\)</span> and <span class="math inline">\(E[(X - 1)^2]\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj4')">Show Answer ▼</button>
+    <div id="subj4" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\text{Var}(X) = 20 - 4^2 = 4\)</span>.<br><span class="math inline">\(\text{Var}(2X - 3) = 2^2 \text{Var}(X) = 4 \times 4 = 16\)</span>.<br><span class="math inline">\(E[(X - 1)^2] = E(X^2 - 2X + 1) = E(X^2) - 2E(X) + 1 = 20 - 8 + 1 = 13\)</span>.</p></div>
+
+    <div class="question"><strong>Q5.</strong> Let <span class="math inline">\(X \sim \text{Exp}(2)\)</span> with pdf <span class="math inline">\(f(x) = 2e^{-2x}, x&gt;0\)</span>. Compute <span class="math inline">\(E(e^{X/2})\)</span> and verify it equals <span class="math inline">\(M_X(1/2)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj5')">Show Answer ▼</button>
+    <div id="subj5" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E(e^{X/2}) = \int_{0}^{\infty} e^{x/2} \cdot 2e^{-2x} dx = 2\int_{0}^{\infty} e^{-1.5x} dx = \frac{2}{1.5} = \frac{4}{3}\)</span>.<br>MGF of Exp(<span class="math inline">\(\lambda\)</span>) is <span class="math inline">\(M_X(t) = \frac{\lambda}{\lambda - t}\)</span>. For <span class="math inline">\(\lambda=2\)</span>, <span class="math inline">\(M_X(0.5) = \frac{2}{2 - 0.5} = \frac{2}{1.5} = \frac{4}{3}\)</span>. Verified.</p></div>
+
+    <div class="question"><strong>Q6.</strong> Given raw moments <span class="math inline">\(\mu_1' = 3, \mu_2' = 11, \mu_3' = 45, \mu_4' = 195\)</span>, compute <span class="math inline">\(\mu_2, \mu_3, \mu_4\)</span> and find <span class="math inline">\(\gamma_1, \gamma_2\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj6')">Show Answer ▼</button>
+    <div id="subj6" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\mu_2 = \mu_2' - (\mu_1')^2 = 11 - 9 = 2\)</span>.<br><span class="math inline">\(\mu_3 = \mu_3' - 3\mu_2'\mu_1' + 2(\mu_1')^3 = 45 - 3(11)(3) + 2(27) = 45 - 99 + 54 = 0\)</span>.<br><span class="math inline">\(\mu_4 = \mu_4' - 4\mu_3'\mu_1' + 6\mu_2'(\mu_1')^2 - 3(\mu_1')^4 = 195 - 4(45)(3) + 6(11)(9) - 3(81) = 195 - 540 + 594 - 243 = 6\)</span>.<br><span class="math inline">\(\gamma_1 = \mu_3/\mu_2^{3/2} = 0\)</span>. <span class="math inline">\(\gamma_2 = \mu_4/\mu_2^2 - 3 = 6/4 - 3 = -1.5\)</span> (platykurtic).</p></div>
+
+    <div class="question"><strong>Q7.</strong> For a distribution with <span class="math inline">\(\mu_2 = 4, \mu_3 = 0, \mu_4 = 48\)</span>, determine <span class="math inline">\(\beta_1, \beta_2\)</span> and classify its kurtosis.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj7')">Show Answer ▼</button>
+    <div id="subj7" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\beta_1 = \mu_3^2/\mu_2^3 = 0\)</span>. <span class="math inline">\(\gamma_1 = 0\)</span> (symmetric).<br><span class="math inline">\(\beta_2 = \mu_4/\mu_2^2 = 48/16 = 3\)</span>. <span class="math inline">\(\gamma_2 = 3 - 3 = 0\)</span>.<br>The distribution is mesokurtic (kurtosis matches the normal distribution).</p></div>
+
+    <div class="question"><strong>Q8.</strong> If <span class="math inline">\(Y = 2X + 3\)</span> and <span class="math inline">\(\mu_2(X) = 5, \mu_3(X) = 10\)</span>, find <span class="math inline">\(\mu_2(Y), \mu_3(Y)\)</span> and compute the skewness of <span class="math inline">\(Y\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj8')">Show Answer ▼</button>
+    <div id="subj8" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\mu_2(Y) = 2^2 \mu_2(X) = 4 \times 5 = 20\)</span>.<br><span class="math inline">\(\mu_3(Y) = 2^3 \mu_3(X) = 8 \times 10 = 80\)</span>.<br>Skewness <span class="math inline">\(\gamma_1(Y) = \frac{80}{20^{3/2}} = \frac{80}{20\sqrt{20}} = \frac{4}{\sqrt{20}} = \frac{2}{\sqrt{5}} \approx 0.894\)</span>.<br>(Note: Linear transformation with <span class="math inline">\(a&gt;0\)</span> preserves skewness.)</p></div>
+
+    <div class="question"><strong>Q9.</strong> Prove that for any random variable <span class="math inline">\(X\)</span>, <span class="math inline">\(\mu_4 \geq \mu_2^2\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj9')">Show Answer ▼</button>
+    <div id="subj9" class="answer"><p><strong>Solution:</strong><br>Let <span class="math inline">\(Z = (X - \mu)^2\)</span>. Then <span class="math inline">\(\mu_2 = E(Z)\)</span> and <span class="math inline">\(\mu_4 = E(Z^2)\)</span>.<br>By Jensen's inequality (or Cauchy-Schwarz), <span class="math inline">\(E(Z^2) \geq [E(Z)]^2\)</span>.<br>Thus <span class="math inline">\(\mu_4 \geq \mu_2^2\)</span>. Equality holds iff <span class="math inline">\(Z\)</span> is constant (i.e., <span class="math inline">\(X\)</span> takes at most two symmetric values about <span class="math inline">\(\mu\)</span>).</p></div>
+
+    <div class="question"><strong>Q10.</strong> Given <span class="math inline">\(E(X) = 2, \text{Var}(X) = 3, E(X^3) = 20\)</span>, find <span class="math inline">\(\mu_3\)</span> and comment on the direction of skewness.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj10')">Show Answer ▼</button>
+    <div id="subj10" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E(X^2) = \text{Var}(X) + [E(X)]^2 = 3 + 4 = 7\)</span>.<br><span class="math inline">\(\mu_3 = E(X^3) - 3E(X^2)\mu + 2\mu^3 = 20 - 3(7)(2) + 2(8) = 20 - 42 + 16 = -6\)</span>.<br>Since <span class="math inline">\(\mu_3 &lt; 0\)</span>, <span class="math inline">\(\gamma_1 &lt; 0\)</span>: the distribution is negatively (left) skewed.</p></div>
+
+    <div class="question"><strong>Q11.</strong> Joint PMF: <span class="math inline">\(P(0,0)=0.1, P(0,1)=0.2, P(1,0)=0.3, P(1,1)=0.4\)</span>. Compute <span class="math inline">\(\text{Cov}(X,Y)\)</span> and <span class="math inline">\(\rho_{XY}\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj11')">Show Answer ▼</button>
+    <div id="subj11" class="answer"><p><strong>Solution:</strong><br>Marginals: <span class="math inline">\(P(X=0)=0.3, P(X=1)=0.7 \Rightarrow E(X)=0.7, \text{Var}(X)=0.21\)</span>.<br><span class="math inline">\(P(Y=0)=0.4, P(Y=1)=0.6 \Rightarrow E(Y)=0.6, \text{Var}(Y)=0.24\)</span>.<br><span class="math inline">\(E(XY) = 1\cdot1\cdot0.4 = 0.4\)</span>.<br><span class="math inline">\(\text{Cov}(X,Y) = 0.4 - (0.7)(0.6) = -0.02\)</span>.<br><span class="math inline">\(\rho_{XY} = \frac{-0.02}{\sqrt{0.21 \times 0.24}} \approx -0.089\)</span>.</p></div>
+
+    <div class="question"><strong>Q12.</strong> If <span class="math inline">\(\text{Var}(X)=9, \text{Var}(Y)=16, \text{Cov}(X,Y)=6\)</span>, find <span class="math inline">\(\text{Var}(2X - 3Y + 5)\)</span> and <span class="math inline">\(\rho_{XY}\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj12')">Show Answer ▼</button>
+    <div id="subj12" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\text{Var}(2X - 3Y + 5) = 4\text{Var}(X) + 9\text{Var}(Y) - 2(2)(3)\text{Cov}(X,Y) = 36 + 144 - 72 = 108\)</span>.<br><span class="math inline">\(\rho_{XY} = \frac{6}{\sqrt{9}\sqrt{16}} = \frac{6}{12} = 0.5\)</span>.</p></div>
+
+    <div class="question"><strong>Q13.</strong> Let <span class="math inline">\(X,Y\)</span> be independent with <span class="math inline">\(E(X)=2, E(Y)=3, \text{Var}(X)=4, \text{Var}(Y)=5\)</span>. Find <span class="math inline">\(E[(X+Y)^2]\)</span> and <span class="math inline">\(\text{Cov}(X+Y, X-Y)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj13')">Show Answer ▼</button>
+    <div id="subj13" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E[(X+Y)^2] = \text{Var}(X+Y) + [E(X+Y)]^2 = (4+5) + (5)^2 = 9 + 25 = 34\)</span>.<br><span class="math inline">\(\text{Cov}(X+Y, X-Y) = \text{Var}(X) - \text{Var}(Y) + \text{Cov}(X,Y) - \text{Cov}(Y,X) = 4 - 5 + 0 - 0 = -1\)</span>.</p></div>
+
+    <div class="question"><strong>Q14.</strong> Given joint pdf <span class="math inline">\(f(x,y) = 8xy\)</span> for <span class="math inline">\(0 &lt; x &lt; y &lt; 1\)</span>, find <span class="math inline">\(E(X \mid Y = y)\)</span> and verify <span class="math inline">\(E[E(X \mid Y)] = E(X)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj14')">Show Answer ▼</button>
+    <div id="subj14" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(f_Y(y) = \int_0^y 8xy dx = 4y^3\)</span>. <span class="math inline">\(f_{X|Y}(x|y) = \frac{8xy}{4y^3} = \frac{2x}{y^2}\)</span>.<br><span class="math inline">\(E(X|Y=y) = \int_0^y x \cdot \frac{2x}{y^2} dx = \frac{2}{y^2} \cdot \frac{y^3}{3} = \frac{2y}{3}\)</span>.<br><span class="math inline">\(E(X) = \int_0^1 \frac{2y}{3} \cdot 4y^3 dy = \frac{8}{3} \int_0^1 y^4 dy = \frac{8}{15}\)</span>.<br>Direct: <span class="math inline">\(E(X) = \int_0^1 \int_0^y x(8xy) dx dy = \frac{8}{15}\)</span>. Verified.</p></div>
+
+    <div class="question"><strong>Q15.</strong> Prove that if <span class="math inline">\(Y = aX + b\)</span> with <span class="math inline">\(a \neq 0\)</span>, then <span class="math inline">\(|\rho_{XY}| = 1\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj15')">Show Answer ▼</button>
+    <div id="subj15" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\text{Cov}(X, aX+b) = a\text{Var}(X)\)</span>. <span class="math inline">\(\sigma_Y = |a|\sigma_X\)</span>.<br><span class="math inline">\(\rho_{XY} = \frac{a\text{Var}(X)}{\sigma_X \cdot |a|\sigma_X} = \frac{a}{|a|} = \pm 1\)</span>. Hence <span class="math inline">\(|\rho_{XY}| = 1\)</span>.</p></div>
+
+    <div class="question"><strong>Q16.</strong> Machine A produces 60% items (mean 50g, SD 3g). Machine B produces 40% (mean 55g, SD 4g). Find overall mean and variance of weight.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj16')">Show Answer ▼</button>
+    <div id="subj16" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E(W) = 0.6(50) + 0.4(55) = 52\)</span>.<br><span class="math inline">\(E[\text{Var}(W|M)] = 0.6(9) + 0.4(16) = 11.8\)</span>.<br><span class="math inline">\(\text{Var}[E(W|M)] = E[E(W|M)^2] - [E(W)]^2 = [0.6(2500) + 0.4(3025)] - 52^2 = 2710 - 2704 = 6\)</span>.<br><span class="math inline">\(\text{Var}(W) = 11.8 + 6 = 17.8\)</span>.</p></div>
+
+    <div class="question"><strong>Q17.</strong> Let <span class="math inline">\(N \sim \text{Poisson}(\lambda)\)</span>. Given <span class="math inline">\(N=n\)</span>, <span class="math inline">\(X \mid N=n \sim B(n,p)\)</span>. Find <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(\text{Var}(X)\)</span> using conditional laws.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj17')">Show Answer ▼</button>
+    <div id="subj17" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E(X|N) = Np\)</span>, <span class="math inline">\(\text{Var}(X|N) = Np(1-p)\)</span>.<br><span class="math inline">\(E(X) = E[Np] = p\lambda\)</span>.<br><span class="math inline">\(\text{Var}(X) = E[Np(1-p)] + \text{Var}(Np) = p(1-p)\lambda + p^2\lambda = p\lambda\)</span>.<br>(Note: <span class="math inline">\(X \sim \text{Poisson}(p\lambda)\)</span>.)</p></div>
+
+    <div class="question"><strong>Q18.</strong> If <span class="math inline">\(E(X|Y) = 2Y + 1\)</span>, <span class="math inline">\(\text{Var}(X|Y) = 3Y\)</span>, and <span class="math inline">\(Y \sim \text{Exp}(1)\)</span>, compute <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(\text{Var}(X)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj18')">Show Answer ▼</button>
+    <div id="subj18" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(E(Y)=1, \text{Var}(Y)=1\)</span>.<br><span class="math inline">\(E(X) = E[2Y+1] = 3\)</span>.<br><span class="math inline">\(\text{Var}(X) = E[3Y] + \text{Var}(2Y+1) = 3(1) + 4(1) = 7\)</span>.</p></div>
+
+    <div class="question"><strong>Q19.</strong> Prove the Law of Total Variance: <span class="math inline">\(\text{Var}(X) = E[\text{Var}(X|Y)] + \text{Var}[E(X|Y)]\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj19')">Show Answer ▼</button>
+    <div id="subj19" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\text{Var}(X) = E(X^2) - [E(X)]^2\)</span>.<br><span class="math inline">\(E(X^2) = E[E(X^2|Y)] = E[\text{Var}(X|Y) + E(X|Y)^2] = E[\text{Var}(X|Y)] + E[E(X|Y)^2]\)</span>.<br><span class="math inline">\([E(X)]^2 = [E(E(X|Y))]^2\)</span>.<br>Subtracting: <span class="math inline">\(\text{Var}(X) = E[\text{Var}(X|Y)] + \left(E[E(X|Y)^2] - [E(E(X|Y))]^2\right) = E[\text{Var}(X|Y)] + \text{Var}[E(X|Y)]\)</span>.</p></div>
+
+    <div class="question"><strong>Q20.</strong> Given joint PMF: <span class="math inline">\(P(0,0)=0.2, P(0,1)=0.3, P(1,0)=0.1, P(1,1)=0.4\)</span>. Compute <span class="math inline">\(E(Y|X=1)\)</span> and <span class="math inline">\(\text{Var}(Y|X=1)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj20')">Show Answer ▼</button>
+    <div id="subj20" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(P(X=1) = 0.5\)</span>. <span class="math inline">\(P(Y=0|X=1) = 0.1/0.5 = 0.2\)</span>, <span class="math inline">\(P(Y=1|X=1) = 0.8\)</span>.<br><span class="math inline">\(E(Y|X=1) = 0(0.2) + 1(0.8) = 0.8\)</span>.<br><span class="math inline">\(E(Y^2|X=1) = 0.8\)</span>. <span class="math inline">\(\text{Var}(Y|X=1) = 0.8 - 0.8^2 = 0.16\)</span>.</p></div>
+
+    <div class="question"><strong>Q21.</strong> If <span class="math inline">\(M_X(t) = (0.6 + 0.4e^t)^5\)</span>, identify the distribution, find <span class="math inline">\(P(X=2)\)</span>, <span class="math inline">\(E(X)\)</span>, and <span class="math inline">\(\text{Var}(X)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj21')">Show Answer ▼</button>
+    <div id="subj21" class="answer"><p><strong>Solution:</strong><br>MGF matches <span class="math inline">\(B(n=5, p=0.4)\)</span>.<br><span class="math inline">\(P(X=2) = \binom{5}{2}(0.4)^2(0.6)^3 = 10 \times 0.16 \times 0.216 = 0.3456\)</span>.<br><span class="math inline">\(E(X) = np = 2\)</span>. <span class="math inline">\(\text{Var}(X) = npq = 5(0.4)(0.6) = 1.2\)</span>.</p></div>
+
+    <div class="question"><strong>Q22.</strong> Given <span class="math inline">\(M_X(t) = e^{3t + 2t^2}\)</span>, find <span class="math inline">\(E(X)\)</span>, <span class="math inline">\(\text{Var}(X)\)</span>, and <span class="math inline">\(P(X &lt; 5)\)</span> assuming normality.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj22')">Show Answer ▼</button>
+    <div id="subj22" class="answer"><p><strong>Solution:</strong><br>Matches <span class="math inline">\(N(\mu=3, \sigma^2=4)\)</span>. <span class="math inline">\(E(X)=3, \text{Var}(X)=4\)</span>.<br><span class="math inline">\(P(X &lt; 5) = P\left(Z &lt; \frac{5-3}{2}\right) = P(Z &lt; 1) = 0.8413\)</span>.</p></div>
+
+    <div class="question"><strong>Q23.</strong> If <span class="math inline">\(K_X(t) = 4(e^t - 1)\)</span>, find the first four cumulants, <span class="math inline">\(\gamma_1\)</span>, and <span class="math inline">\(\gamma_2\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj23')">Show Answer ▼</button>
+    <div id="subj23" class="answer"><p><strong>Solution:</strong><br>CGF of Poisson(<span class="math inline">\(\lambda=4\)</span>). All cumulants <span class="math inline">\(\kappa_r = 4\)</span>.<br><span class="math inline">\(\kappa_1=4, \kappa_2=4, \kappa_3=4, \kappa_4=4\)</span>.<br><span class="math inline">\(\gamma_1 = \kappa_3/\kappa_2^{3/2} = 4/8 = 0.5\)</span>.<br><span class="math inline">\(\gamma_2 = \kappa_4/\kappa_2^2 = 4/16 = 0.25\)</span>.</p></div>
+
+    <div class="question"><strong>Q24.</strong> Let <span class="math inline">\(X \sim \text{Gamma}(\alpha, \beta)\)</span> with <span class="math inline">\(M_X(t) = (1 - \beta t)^{-\alpha}\)</span>. Use the MGF to derive <span class="math inline">\(E(X)\)</span> and <span class="math inline">\(\text{Var}(X)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj24')">Show Answer ▼</button>
+    <div id="subj24" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(M'(t) = \alpha\beta(1-\beta t)^{-\alpha-1} \Rightarrow E(X) = M'(0) = \alpha\beta\)</span>.<br><span class="math inline">\(M''(t) = \alpha(\alpha+1)\beta^2(1-\beta t)^{-\alpha-2} \Rightarrow E(X^2) = \alpha(\alpha+1)\beta^2\)</span>.<br><span class="math inline">\(\text{Var}(X) = \alpha(\alpha+1)\beta^2 - (\alpha\beta)^2 = \alpha\beta^2\)</span>.</p></div>
+
+    <div class="question"><strong>Q25.</strong> If <span class="math inline">\(M_X(t) = \frac{1}{1-t}\)</span> for <span class="math inline">\(t&lt;1\)</span>, find <span class="math inline">\(E(X^3)\)</span> and identify the distribution.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj25')">Show Answer ▼</button>
+    <div id="subj25" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(M'(t) = (1-t)^{-2}, M''(t) = 2(1-t)^{-3}, M'''(t) = 6(1-t)^{-4}\)</span>.<br><span class="math inline">\(E(X^3) = M'''(0) = 6\)</span>.<br>MGF matches <span class="math inline">\(\text{Exp}(1)\)</span> or <span class="math inline">\(\text{Gamma}(1,1)\)</span>.</p></div>
+
+    <div class="question"><strong>Q26.</strong> Given PGF <span class="math inline">\(G_X(z) = (0.3 + 0.7z)^4\)</span>, find <span class="math inline">\(P(X=2)\)</span>, <span class="math inline">\(E(X)\)</span>, and <span class="math inline">\(\text{Var}(X)\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj26')">Show Answer ▼</button>
+    <div id="subj26" class="answer"><p><strong>Solution:</strong><br>PGF of <span class="math inline">\(B(n=4, p=0.7)\)</span>.<br><span class="math inline">\(P(X=2) = \binom{4}{2}(0.7)^2(0.3)^2 = 6 \times 0.49 \times 0.09 = 0.2646\)</span>.<br><span class="math inline">\(E(X) = G'(1) = 4(0.7) = 2.8\)</span>.<br><span class="math inline">\(G''(1) = 12(0.49) = 5.88\)</span>. <span class="math inline">\(\text{Var}(X) = 5.88 + 2.8 - 2.8^2 = 0.84\)</span>.</p></div>
+
+    <div class="question"><strong>Q27.</strong> If <span class="math inline">\(\phi_X(t) = e^{-2|t|}\)</span>, identify the distribution and explain why <span class="math inline">\(M_X(t)\)</span> does not exist.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj27')">Show Answer ▼</button>
+    <div id="subj27" class="answer"><p><strong>Solution:</strong><br>CF matches Cauchy distribution with scale parameter 2: <span class="math inline">\(f(x) = \frac{2}{\pi(4+x^2)}\)</span>.<br>MGF <span class="math inline">\(E(e^{tX})\)</span> diverges for any <span class="math inline">\(t \neq 0\)</span> because Cauchy tails decay as <span class="math inline">\(1/x^2\)</span>, making <span class="math inline">\(\int e^{tx}f(x)dx\)</span> infinite. CF always exists since <span class="math inline">\(|e^{itx}|=1\)</span>.</p></div>
+
+    <div class="question"><strong>Q28.</strong> Let <span class="math inline">\(X \sim \text{Poisson}(\lambda)\)</span>. Show using CF that <span class="math inline">\(\frac{X - \lambda}{\sqrt{\lambda}} \xrightarrow{d} N(0,1)\)</span> as <span class="math inline">\(\lambda \to \infty\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj28')">Show Answer ▼</button>
+    <div id="subj28" class="answer"><p><strong>Solution:</strong><br>CF of <span class="math inline">\(Z_\lambda = \frac{X-\lambda}{\sqrt{\lambda}}\)</span>: <span class="math inline">\(\phi_{Z}(t) = e^{-it\sqrt{\lambda}} \phi_X(t/\sqrt{\lambda}) = e^{-it\sqrt{\lambda}} \exp[\lambda(e^{it/\sqrt{\lambda}} - 1)]\)</span>.<br>Taylor expand: <span class="math inline">\(e^{iu} = 1 + iu - u^2/2 + O(u^3)\)</span>.<br><span class="math inline">\(\lambda(e^{it/\sqrt{\lambda}} - 1) = \lambda\left(\frac{it}{\sqrt{\lambda}} - \frac{t^2}{2\lambda} + o(1/\lambda)\right) = it\sqrt{\lambda} - \frac{t^2}{2} + o(1)\)</span>.<br>Thus <span class="math inline">\(\phi_Z(t) \to e^{-t^2/2}\)</span>, the CF of <span class="math inline">\(N(0,1)\)</span>. By Lévy's Continuity Theorem, convergence in distribution holds.</p></div>
+
+    <div class="question"><strong>Q29.</strong> Given <span class="math inline">\(\phi_X(t) = \cos(t)\)</span>, find the PMF of <span class="math inline">\(X\)</span>.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj29')">Show Answer ▼</button>
+    <div id="subj29" class="answer"><p><strong>Solution:</strong><br><span class="math inline">\(\cos(t) = \frac{e^{it} + e^{-it}}{2} = \frac{1}{2}e^{it(1)} + \frac{1}{2}e^{it(-1)}\)</span>.<br>Comparing with <span class="math inline">\(\phi_X(t) = \sum p_k e^{itx_k}\)</span>, we get <span class="math inline">\(P(X=1) = 0.5, P(X=-1) = 0.5\)</span>.</p></div>
+
+    <div class="question"><strong>Q30.</strong> If <span class="math inline">\(G_X(z) = e^{2(z-1)}\)</span>, find <span class="math inline">\(P(X=0)\)</span>, <span class="math inline">\(E(X)\)</span>, and verify <span class="math inline">\(\text{Var}(X)\)</span> using PGF derivatives.</div>
+    <button class="toggle-btn" onclick="toggleAnswer('subj30')">Show Answer ▼</button>
+    <div id="subj30" class="answer"><p><strong>Solution:</strong><br>PGF of Poisson(<span class="math inline">\(\lambda=2\)</span>). <span class="math inline">\(P(X=0) = e^{-2} \approx 0.1353\)</span>.<br><span class="math inline">\(G'(z) = 2e^{2(z-1)} \Rightarrow E(X) = G'(1) = 2\)</span>.<br><span class="math inline">\(G''(z) = 4e^{2(z-1)} \Rightarrow G''(1) = 4\)</span>.<br><span class="math inline">\(\text{Var}(X) = G''(1) + G'(1) - [G'(1)]^2 = 4 + 2 - 4 = 2\)</span>. Verified.</p></div>
+
+  </div>
+</div>
+</div></div><div id="mcq" class="topic-section"><div class="section-card"><h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
+<p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the correct option and explanation.</p>
+<div class="question"><strong>Q1.</strong> <span class="math inline">\(E(aX + b)
+=\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(aE(X)\)</span> <br>(b) <span class="math inline">\(bE(X)\)</span> <br>(c) <span class="math inline">\(aE(X) + b\)</span> <br>(d) <span class="math inline">\(a + bE(X)\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+<div id="mcq1" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q2.</strong> For any random variable <span class="math inline">\(X\)</span>, the first central moment <span class="math inline">\(\mu_{1}\)</span> equals:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E(X)\)</span> <br>(b) <span class="math inline">\(\text{Var}(X)\)</span> <br>(c) <span class="math inline">\(0\)</span> <br>(d) <span class="math inline">\(1\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+<div id="mcq2" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q3.</strong> <span class="math inline">\(\text{Var}(X) =
+E(X^{2}) - \lbrack E(X)\rbrack^{2}\)</span> can be written as:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(\mu_{2}' -
+(\mu_{1}')^{2}\)</span> <br>(b) <span class="math inline">\(\mu_{2} -
+\mu_{1}'\)</span> <br>(c) <span class="math inline">\((\mu_{2}')^{2} - \mu_{1}'\)</span> <br>(d)
+<span class="math inline">\(\mu_{1} - \mu_{2}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show Answer ▼</button>
+<div id="mcq3" class="answer"><p>(a)</p></div>
+<div class="question"><strong>Q4.</strong> If <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> are independent, <span class="math inline">\(E(XY) =\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E(X) + E(Y)\)</span> <br>(b) <span class="math inline">\(E(X) - E(Y)\)</span> <br>(c) <span class="math inline">\(E(X) \cdot E(Y)\)</span> <br>(d) <span class="math inline">\(\frac{E(X)}{E(Y)}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show Answer ▼</button>
+<div id="mcq4" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q5.</strong> <span class="math inline">\(\text{Var}(aX + b)
+=\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(a^{2}\text{Var}(X) + b\)</span> <br>(b)
+<span class="math inline">\(a\text{Var}(X)\)</span> <br>(c) <span class="math inline">\(a^{2}\text{Var}(X)\)</span> <br>(d) <span class="math inline">\(\text{Var}(X) + b^{2}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show Answer ▼</button>
+<div id="mcq5" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q6.</strong> The moment generating function is defined
+as:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E\left( X^{t} \right)\)</span> <br>(b)
+<span class="math inline">\(E\left( e^{tX} \right)\)</span> <br>(c) <span class="math inline">\(E\left( e^{Xt^{2}} \right)\)</span> <br>(d) <span class="math inline">\(\ln{E\left( e^{tX} \right)}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show Answer ▼</button>
+<div id="mcq6" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q7.</strong> The CGF <span class="math inline">\(K_{X}(t)\)</span> is related to <span class="math inline">\(M_{X}(t)\)</span> by:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(K_{X}(t) = e^{M_{X}(t)}\)</span> <br>(b) <span class="math inline">\(K_{X}(t) = \ln{M_{X}(t)}\)</span> <br>(c)
+<span class="math inline">\(K_{X}(t) = \frac{1}{M_{X}(t)}\)</span> <br>(d)
+<span class="math inline">\(K_{X}(t) = M_{X}(t)^{2}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show Answer ▼</button>
+<div id="mcq7" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q8.</strong> The second cumulant <span class="math inline">\(\kappa_{2}\)</span> equals:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E(X)\)</span> <br>(b) <span class="math inline">\(E\left( X^{2} \right)\)</span> <br>(c) <span class="math inline">\(\text{Var}(X)\)</span> <br>(d) <span class="math inline">\(\mu_{3}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show Answer ▼</button>
+<div id="mcq8" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q9.</strong> The MGF of <span class="math inline">\(X \sim
+B(n,p)\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\((pe^{t} + q)^{n}\)</span> <br>(b) <span class="math inline">\(e^{np\left( e^{t} - 1 \right)}\)</span> <br>(c)
+<span class="math inline">\((pe^{t})^{n}\)</span> <br>(d) <span class="math inline">\(e^{p\left( e^{t} - 1 \right)}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show Answer ▼</button>
+<div id="mcq9" class="answer"><p>(a) — <span class="math inline">\((q +
+pe^{t})^{n} = (pe^{t} + q)^{n}\)</span></p></div>
+<div class="question"><strong>Q10.</strong> The MGF of <span class="math inline">\(X \sim
+\text{Poisson}(\lambda)\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(e^{\lambda t}\)</span> <br>(b) <span class="math inline">\(e^{\lambda\left( e^{t} - 1 \right)}\)</span> <br>(c)
+<span class="math inline">\((1 - \lambda t)^{- 1}\)</span> <br>(d) <span class="math inline">\(\frac{\lambda}{\lambda - t}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show Answer ▼</button>
+<div id="mcq10" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q11.</strong> The MGF of <span class="math inline">\(X \sim
+\text{Exp}(\lambda)\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(e^{\lambda\left( e^{t} - 1
+\right)}\)</span> <br>(b) <span class="math inline">\(\lambda t\)</span> <br>(c) <span class="math inline">\(\frac{\lambda}{\lambda - t}\)</span> <br>(d) <span class="math inline">\(e^{\mu t +
+\frac{\sigma^{2}t^{2}}{2}}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show Answer ▼</button>
+<div id="mcq11" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q12.</strong> The MGF of <span class="math inline">\(X \sim
+N\left( \mu,\sigma^{2} \right)\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(e^{\mu t}\)</span> <br>(b) <span class="math inline">\(e^{\mu t + \sigma^{2}t^{2}}\)</span> <br>(c) <span class="math inline">\(e^{\mu t + \frac{\sigma^{2}t^{2}}{2}}\)</span> <br>(d) <span class="math inline">\(e^{\frac{\sigma^{2}t^{2}}{2}}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show Answer ▼</button>
+<div id="mcq12" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q13.</strong> The <span class="math inline">\(r\)</span>-th
+raw moment is obtained from the MGF by:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(M_{X}^{(r)}(1)\)</span> <br>(b) <span class="math inline">\(M_{X}^{(r)}(0)\)</span> <br>(c) <span class="math inline">\(M_{X}(r)\)</span> <br>(d) <span class="math inline">\(\ln{M_{X}^{(r)}(0)}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show Answer ▼</button>
+<div id="mcq13" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q14.</strong> For a Poisson<span class="math inline">\((\lambda)\)</span> distribution, all cumulants
+equal:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(\lambda^{r}\)</span> <br>(b) <span class="math inline">\(r!\lambda\)</span> <br>(c) <span class="math inline">\(\lambda\)</span> <br>(d) <span class="math inline">\(0\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show Answer ▼</button>
+<div id="mcq14" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q15.</strong> The characteristic function <span class="math inline">\(\phi_{X}(t)\)</span> always exists because:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(\left| e^{itx} \right| = 0\)</span> <br>(b) <span class="math inline">\(\left| e^{itx} \right| = 1\)</span> <br>(c) <span class="math inline">\(e^{itx} = 1\)</span> always <br>(d) the
+integral is always finite</p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show Answer ▼</button>
+<div id="mcq15" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q16.</strong> The PGF <span class="math inline">\(G_{X}(z) =
+E\left( z^{X} \right)\)</span> is applicable to:</div>
+<div class="mcq-options"><p>(a) All distributions <br>(b) Continuous distributions only <br>(c)
+Non-negative integer-valued random variables <br>(d) Normal distributions
+only</p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show Answer ▼</button>
+<div id="mcq16" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q17.</strong> <span class="math inline">\(E(X)\)</span> from
+the PGF is given by:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(G_{X}'(0)\)</span> <br>(b) <span class="math inline">\(G_{X}'(1)\)</span> <br>(c) <span class="math inline">\(G_{X}(1)\)</span> <br>(d) <span class="math inline">\(G_{X}''(1)\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show Answer ▼</button>
+<div id="mcq17" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q18.</strong> The PGF of Poisson<span class="math inline">\((\lambda)\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(e^{\lambda\left( e^{z} - 1
+\right)}\)</span> <br>(b) <span class="math inline">\(e^{\lambda(z -
+1)}\)</span> <br>(c) <span class="math inline">\((q + pz)^{n}\)</span> <br>(d) <span class="math inline">\(\frac{pz}{1 - qz}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show Answer ▼</button>
+<div id="mcq18" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q19.</strong> For independent <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which generating functions satisfy
+<span class="math inline">\(G_{X + Y} = G_{X} \cdot G_{Y}\)</span>?</div>
+<div class="mcq-options"><p>(a) Only MGF <br>(b) MGF, PGF, and CF (all three) <br>(c) Only CGF <br>(d)
+Only CF</p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show Answer ▼</button>
+<div id="mcq19" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q20.</strong> For independent <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, <span class="math inline">\(K_{X +
+Y}(t) =\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(K_{X}(t) \cdot K_{Y}(t)\)</span> <br>(b) <span class="math inline">\(\frac{K_{X}(t)}{K_{Y}(t)}\)</span> <br>(c)
+<span class="math inline">\(K_{X}(t) + K_{Y}(t)\)</span> <br>(d) <span class="math inline">\(K_{X}(t) - K_{Y}(t)\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show Answer ▼</button>
+<div id="mcq20" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q21.</strong> For the normal distribution <span class="math inline">\(N\left( \mu,\sigma^{2} \right)\)</span>, all
+cumulants of order <span class="math inline">\(\geq 3\)</span> are:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(\mu^{r}\)</span> <br>(b) <span class="math inline">\(\sigma^{r}\)</span> <br>(c) <span class="math inline">\(1\)</span> <br>(d) <span class="math inline">\(0\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq21')">Show Answer ▼</button>
+<div id="mcq21" class="answer"><p>(d)</p></div>
+<div class="question"><strong>Q22.</strong> The Law of Total Expectation states:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E(X) = E(Y) \cdot E\left( X\mid Y
+\right)\)</span> <br>(b) <span class="math inline">\(E(X) = E\left\lbrack
+E\left( X\mid Y \right) \right\rbrack\)</span> <br>(c) <span class="math inline">\(E\left( X\mid Y \right) = E(X)\)</span> always <br>(d) <span class="math inline">\(E(X + Y) = E(X) + E(Y)\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq22')">Show Answer ▼</button>
+<div id="mcq22" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q23.</strong> The Law of Total Variance states <span class="math inline">\(\text{Var}(X) =\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E\left\lbrack \text{Var}\left( X\mid
+Y \right) \right\rbrack \cdot \text{Var}\left\lbrack E\left( X\mid Y
+\right) \right\rbrack\)</span> <br>(b) <span class="math inline">\(E\left\lbrack \text{Var}\left( X\mid Y \right)
+\right\rbrack + \text{Var}\left\lbrack E\left( X\mid Y \right)
+\right\rbrack\)</span> <br>(c) <span class="math inline">\(E\left\lbrack
+\text{Var}\left( X\mid Y \right) \right\rbrack - \text{Var}\left\lbrack
+E\left( X\mid Y \right) \right\rbrack\)</span> <br>(d) <span class="math inline">\(\text{Var}\left( X\mid Y \right)\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq23')">Show Answer ▼</button>
+<div id="mcq23" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q24.</strong> The characteristic function of <span class="math inline">\(N(0,1)\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(e^{- t^{2}}\)</span> <br>(b) <span class="math inline">\(e^{\frac{t^{2}}{2}}\)</span> <br>(c) <span class="math inline">\(e^{- \frac{t^{2}}{2}}\)</span> <br>(d) <span class="math inline">\(e^{it}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq24')">Show Answer ▼</button>
+<div id="mcq24" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q25.</strong> <span class="math inline">\(\left| \phi_{X}(t)
+\right|\)</span> for any distribution satisfies:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(\left| \phi_{X}(t) \right| \geq
+1\)</span> <br>(b) <span class="math inline">\(\left| \phi_{X}(t) \right|
+= 0\)</span> <br>(c) <span class="math inline">\(\left| \phi_{X}(t)
+\right| \leq 1\)</span> <br>(d) <span class="math inline">\(\left|
+\phi_{X}(t) \right| = t\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq25')">Show Answer ▼</button>
+<div id="mcq25" class="answer"><p>(c)</p></div>
+<div class="question"><strong>Q26.</strong> For <span class="math inline">\(X \sim
+\text{Exp}(\lambda)\)</span>, <span class="math inline">\(E\left( X^{r}
+\right) =\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(r\lambda\)</span> <br>(b) <span class="math inline">\(\frac{r!}{\lambda^{r}}\)</span> <br>(c) <span class="math inline">\(\lambda^{r}\)</span> <br>(d) <span class="math inline">\(\frac{r}{\lambda}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq26')">Show Answer ▼</button>
+<div id="mcq26" class="answer"><p>(b)</p></div>
+<div class="question"><strong>Q27.</strong> The PGF satisfies <span class="math inline">\(G_{X}(1) =\)</span></div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(E(X)\)</span> <br>(b) <span class="math inline">\(0\)</span> <br>(c) <span class="math inline">\(\text{Var}(X)\)</span> <br>(d) <span class="math inline">\(1\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq27')">Show Answer ▼</button>
+<div id="mcq27" class="answer"><p>(d)</p></div>
+<div class="question"><strong>Q28.</strong> Skewness <span class="math inline">\(\gamma_{1}
+= 0\)</span> implies the distribution is:</div>
+<div class="mcq-options"><p>(a) Normal <br>(b) Symmetric <br>(c) Uniform <br>(d) Leptokurtic</p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq28')">Show Answer ▼</button>
+<div id="mcq28" class="answer"><p>(b) — (not necessarily normal; zero skewness
+means symmetry)</p></div>
+<div class="question"><strong>Q29.</strong> A distribution is leptokurtic if its excess
+kurtosis <span class="math inline">\(\gamma_{2}\)</span> is:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(&amp;gt; 0\)</span> <br>(b) <span class="math inline">\(&amp;lt; 0\)</span> <br>(c) <span class="math inline">\(= 0\)</span> <br>(d) <span class="math inline">\(=
+3\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq29')">Show Answer ▼</button>
+<div id="mcq29" class="answer"><p>(a)</p></div>
+<div class="question"><strong>Q30.</strong> The Cauchy distribution has no MGF but has a CF
+equal to:</div>
+<div class="mcq-options"><p>(a) <span class="math inline">\(e^{- \frac{t^{2}}{2}}\)</span> <br>(b)
+<span class="math inline">\(e^{- |t|}\)</span> <br>(c) <span class="math inline">\(\frac{1}{1 + t^{2}}\)</span> <br>(d) <span class="math inline">\(e^{t}\)</span></p></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq30')">Show Answer ▼</button>
+<div id="mcq30" class="answer"><p>(b)</p></div>
+</div></div><div id="fib" class="topic-section"><div class="section-card"><h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
+<div class="question"><strong>Q1.</strong> The expected value of a constant <span class="math inline">\(c\)</span> is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+<div id="fib1" class="answer"><p><span class="math inline">\(c\)</span></p></div>
+<div class="question"><strong>Q2.</strong> $E(aX + b) = $ __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+<div id="fib2" class="answer"><p><span class="math inline">\(aE(X) +
+b\)</span></p></div>
+<div class="question"><strong>Q3.</strong> $Var(X) = E(X^2) - $ __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib3')">Show Answer ▼</button>
+<div id="fib3" class="answer"><p><span class="math inline">\(\lbrack
+E(X)\rbrack^{2}\)</span></p></div>
+<div class="question"><strong>Q4.</strong> The first central moment $\mu_1 = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib4')">Show Answer ▼</button>
+<div id="fib4" class="answer"><p><span class="math inline">\(0\)</span></p></div>
+<div class="question"><strong>Q5.</strong> The second central moment $\mu_2 = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib5')">Show Answer ▼</button>
+<div id="fib5" class="answer"><p><span class="math inline">\(\text{Var}(X)\)</span></p></div>
+<div class="question"><strong>Q6.</strong> $Var(aX+b) = $ __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib6')">Show Answer ▼</button>
+<div id="fib6" class="answer"><p><span class="math inline">\(a^{2}\
+\text{Var}(X)\)</span></p></div>
+<div class="question"><strong>Q7.</strong> For independent <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>: $Var(X+Y) = $ __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib7')">Show Answer ▼</button>
+<div id="fib7" class="answer"><p><span class="math inline">\(\text{Var}(X) +
+\text{Var}(Y)\)</span></p></div>
+<div class="question"><strong>Q8.</strong> The MGF is defined as $M_X(t) = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib8')">Show Answer ▼</button>
+<div id="fib8" class="answer"><p><span class="math inline">\(E\left( e^{tX}
+\right)\)</span></p></div>
+<div class="question"><strong>Q9.</strong> The <span class="math inline">\(r\)</span>-th
+raw moment equals $M_X^{(r)}(0) = $ __________ evaluated at <span class="math inline">\(t = 0\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib9')">Show Answer ▼</button>
+<div id="fib9" class="answer"><p><span class="math inline">\(\frac{d^{r}M_{X}(t)}{dt^{r}}\)</span></p></div>
+<div class="question"><strong>Q10.</strong> For Poisson<span class="math inline">\((\lambda)\)</span>, the MGF is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib10')">Show Answer ▼</button>
+<div id="fib10" class="answer"><p><span class="math inline">\(e^{\lambda\left(
+e^{t} - 1 \right)}\)</span></p></div>
+<div class="question"><strong>Q11.</strong> For Normal<span class="math inline">\(\left(
+\mu,\sigma^{2} \right)\)</span>, the MGF is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib11')">Show Answer ▼</button>
+<div id="fib11" class="answer"><p><span class="math inline">\(e^{\mu t +
+\frac{\sigma^{2}t^{2}}{2}}\)</span></p></div>
+<div class="question"><strong>Q12.</strong> For Exponential<span class="math inline">\((\lambda)\)</span>, the MGF is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib12')">Show Answer ▼</button>
+<div id="fib12" class="answer"><p><span class="math inline">\(\frac{\lambda}{\lambda - t}\)</span>, valid for
+<span class="math inline">\(t &amp;lt; \lambda\)</span></p></div>
+<div class="question"><strong>Q13.</strong> The CGF is $K_X(t) = $ __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib13')">Show Answer ▼</button>
+<div id="fib13" class="answer"><p><span class="math inline">\(\ln{M_{X}(t)}\)</span></p></div>
+<div class="question"><strong>Q14.</strong> The first cumulant $\kappa_1 = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib14')">Show Answer ▼</button>
+<div id="fib14" class="answer"><p><span class="math inline">\(E(X)\)</span>
+(the mean)</p></div>
+<div class="question"><strong>Q15.</strong> The second cumulant $\kappa_2 = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib15')">Show Answer ▼</button>
+<div id="fib15" class="answer"><p><span class="math inline">\(\text{Var}(X)\)</span></p></div>
+<div class="question"><strong>Q16.</strong> For the Normal distribution, all cumulants of
+order <span class="math inline">\(r \geq 3\)</span> are __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib16')">Show Answer ▼</button>
+<div id="fib16" class="answer"><p><span class="math inline">\(0\)</span></p></div>
+<div class="question"><strong>Q17.</strong> For Poisson<span class="math inline">\((\lambda)\)</span>, all cumulants equal
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib17')">Show Answer ▼</button>
+<div id="fib17" class="answer"><p><span class="math inline">\(\lambda\)</span></p></div>
+<div class="question"><strong>Q18.</strong> The PGF is defined as $G_X(z) = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib18')">Show Answer ▼</button>
+<div id="fib18" class="answer"><p><span class="math inline">\(E\left( z^{X}
+\right)\)</span></p></div>
+<div class="question"><strong>Q19.</strong> The mean is obtained from the PGF as <span class="math inline">\(E(X) = G_{X}'(\)</span> __________ <span class="math inline">\()\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib19')">Show Answer ▼</button>
+<div id="fib19" class="answer"><p><span class="math inline">\(1\)</span></p></div>
+<div class="question"><strong>Q20.</strong> The PGF of Poisson<span class="math inline">\((\lambda)\)</span> is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib20')">Show Answer ▼</button>
+<div id="fib20" class="answer"><p><span class="math inline">\(e^{\lambda(z -
+1)}\)</span></p></div>
+<div class="question"><strong>Q21.</strong> The characteristic function is $\phi_X(t) = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib21')">Show Answer ▼</button>
+<div id="fib21" class="answer"><p><span class="math inline">\(E\left( e^{itX}
+\right)\)</span></p></div>
+<div class="question"><strong>Q22.</strong> For any distribution, $|\phi_X(t)| \leq $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib22')">Show Answer ▼</button>
+<div id="fib22" class="answer"><p><span class="math inline">\(1\)</span></p></div>
+<div class="question"><strong>Q23.</strong> The CF of <span class="math inline">\(N\left(
+\mu,\sigma^{2} \right)\)</span> is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib23')">Show Answer ▼</button>
+<div id="fib23" class="answer"><p><span class="math inline">\(e^{i\mu t -
+\frac{\sigma^{2}t^{2}}{2}}\)</span></p></div>
+<div class="question"><strong>Q24.</strong> The Law of Total Expectation states <span class="math inline">\(E(X) = E\lbrack\)</span> __________ <span class="math inline">\(\rbrack\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib24')">Show Answer ▼</button>
+<div id="fib24" class="answer"><p><span class="math inline">\(E\left( X\mid Y
+\right)\)</span></p></div>
+<div class="question"><strong>Q25.</strong> The Law of Total Variance states $Var(X) =
+E[Var(X\mid Y)] + $ __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib25')">Show Answer ▼</button>
+<div id="fib25" class="answer"><p><span class="math inline">\(\text{Var}\left\lbrack E\left( X\mid Y \right)
+\right\rbrack\)</span></p></div>
+<div class="question"><strong>Q26.</strong> The skewness measure <span class="math inline">\(\gamma_{1} = \frac{\mu_{3}}{}\)</span>
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib26')">Show Answer ▼</button>
+<div id="fib26" class="answer"><p><span class="math inline">\(\sigma^{3}\)</span> (i.e., <span class="math inline">\(\mu_{2}^{\frac{3}{2}}\)</span>)</p></div>
+<div class="question"><strong>Q27.</strong> A distribution with <span class="math inline">\(\gamma_{2} &amp;lt; 0\)</span> is called
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib27')">Show Answer ▼</button>
+<div id="fib27" class="answer"><p>Platykurtic</p></div>
+<div class="question"><strong>Q28.</strong> For the normal distribution, $\beta_2 = $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib28')">Show Answer ▼</button>
+<div id="fib28" class="answer"><p><span class="math inline">\(3\)</span></p></div>
+<div class="question"><strong>Q29.</strong> The relation <span class="math inline">\(\mu_{3} = \mu_{3}' - 3\mu_{2}'\mu_{1}'
++ 2(\mu_{1}')^{3}\)</span> expresses the __________ central moment
+in terms of raw moments.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib29')">Show Answer ▼</button>
+<div id="fib29" class="answer"><p>Third</p></div>
+<div class="question"><strong>Q30.</strong> The Covariance of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is $Cov(X,Y) = E(XY) - $
+__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib30')">Show Answer ▼</button>
+<div id="fib30" class="answer"><p><span class="math inline">\(E(X) \cdot
+E(Y)\)</span></p></div>
+</div></div><div id="tf" class="topic-section"><div class="section-card"><h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
+<div class="question"><strong>Q1.</strong> <span class="math inline">\(E(X + Y) = E(X) +
+E(Y)\)</span> holds only when <span class="math inline">\(X\)</span> and
+<span class="math inline">\(Y\)</span> are independent.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+<div id="tf1" class="answer"><p><strong>False</strong> (it holds for any two random variables)</p></div>
+<div class="question"><strong>Q2.</strong> <span class="math inline">\(E(XY) =
+E(X)E(Y)\)</span> always.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+<div id="tf2" class="answer"><p><strong>False</strong> (only when <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, or more precisely,
+uncorrelated)</p></div>
+<div class="question"><strong>Q3.</strong> <span class="math inline">\(\text{Var}(X + b) =
+\text{Var}(X)\)</span> for any constant <span class="math inline">\(b\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf3')">Show Answer ▼</button>
+<div id="tf3" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q4.</strong> The first central moment is always zero.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf4')">Show Answer ▼</button>
+<div id="tf4" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q5.</strong> <span class="math inline">\(\text{Var}(X) \geq
+0\)</span> always.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf5')">Show Answer ▼</button>
+<div id="tf5" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q6.</strong> The MGF always exists for any distribution.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf6')">Show Answer ▼</button>
+<div id="tf6" class="answer"><p><strong>False</strong> (e.g., Cauchy has no MGF)</p></div>
+<div class="question"><strong>Q7.</strong> The MGF uniquely determines the distribution
+when it exists in a neighbourhood of 0.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf7')">Show Answer ▼</button>
+<div id="tf7" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q8.</strong> <span class="math inline">\(M_{X}(0) =
+0\)</span> for any distribution.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf8')">Show Answer ▼</button>
+<div id="tf8" class="answer"><p><strong>False</strong> (<span class="math inline">\(M_{X}(0) = E\left( e^{0} \right) = 1\)</span>)</p></div>
+<div class="question"><strong>Q9.</strong> For independent <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>: <span class="math inline">\(M_{X +
+Y}(t) = M_{X}(t) + M_{Y}(t)\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf9')">Show Answer ▼</button>
+<div id="tf9" class="answer"><p><strong>False</strong> (it equals
+the product)</p></div>
+<div class="question"><strong>Q10.</strong> The CGF of independent variables is additive:
+<span class="math inline">\(K_{X + Y} = K_{X} + K_{Y}\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf10')">Show Answer ▼</button>
+<div id="tf10" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q11.</strong> All cumulants of order <span class="math inline">\(\geq 3\)</span> are zero for the normal
+distribution.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf11')">Show Answer ▼</button>
+<div id="tf11" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q12.</strong> All cumulants of the Poisson<span class="math inline">\((\lambda)\)</span> distribution equal <span class="math inline">\(\lambda\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf12')">Show Answer ▼</button>
+<div id="tf12" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q13.</strong> The PGF can be applied to any real-valued
+random variable.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf13')">Show Answer ▼</button>
+<div id="tf13" class="answer"><p><strong>False</strong> (only to non-negative
+integer-valued random variables)</p></div>
+<div class="question"><strong>Q14.</strong> <span class="math inline">\(G_{X}(1) =
+E(X)\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf14')">Show Answer ▼</button>
+<div id="tf14" class="answer"><p><strong>False</strong> (<span class="math inline">\(G_{X}(1) = 1\)</span> always)</p></div>
+<div class="question"><strong>Q15.</strong> The characteristic function always exists.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf15')">Show Answer ▼</button>
+<div id="tf15" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q16.</strong> <span class="math inline">\(\left| \phi_{X}(t)
+\right| \leq 1\)</span> for all <span class="math inline">\(t\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf16')">Show Answer ▼</button>
+<div id="tf16" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q17.</strong> The CF of the Cauchy distribution is <span class="math inline">\(e^{- |t|}\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf17')">Show Answer ▼</button>
+<div id="tf17" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q18.</strong> A distribution with <span class="math inline">\(\gamma_{2} &amp;gt; 0\)</span> is called leptokurtic.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf18')">Show Answer ▼</button>
+<div id="tf18" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q19.</strong> <span class="math inline">\(\mu_{3} =
+0\)</span> implies the distribution is normal.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf19')">Show Answer ▼</button>
+<div id="tf19" class="answer"><p><strong>False</strong>
+(it implies symmetry, not normality)</p></div>
+<div class="question"><strong>Q20.</strong> The Law of Total Expectation requires <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> to be independent.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf20')">Show Answer ▼</button>
+<div id="tf20" class="answer"><p><strong>False</strong> (it holds generally)</p></div>
+<div class="question"><strong>Q21.</strong> The within-group variance term in the Law of
+Total Variance is <span class="math inline">\(\text{Var}\left\lbrack
+E\left( X\mid Y \right) \right\rbrack\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf21')">Show Answer ▼</button>
+<div id="tf21" class="answer"><p><strong>False</strong>
+(that is the between-group term; within-group is <span class="math inline">\(E\left\lbrack \text{Var}\left( X\mid Y \right)
+\right\rbrack\)</span>)</p></div>
+<div class="question"><strong>Q22.</strong> <span class="math inline">\(\text{Var}( - X) =
+- \text{Var}(X)\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf22')">Show Answer ▼</button>
+<div id="tf22" class="answer"><p><strong>False</strong> (<span class="math inline">\(\text{Var}( - X) = ( - 1)^{2}\text{Var}(X) =
+\text{Var}(X)\)</span>)</p></div>
+<div class="question"><strong>Q23.</strong> The Binomial MGF is <span class="math inline">\((q + pe^{t})^{n}\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf23')">Show Answer ▼</button>
+<div id="tf23" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q24.</strong> If <span class="math inline">\(X_{1},\ldots,X_{n}\)</span> are i.i.d. <span class="math inline">\(N\left( \mu,\sigma^{2} \right)\)</span>, then
+<span class="math inline">\(\bar{X} \sim N\left(
+\mu,\frac{\sigma^{2}}{n} \right)\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf24')">Show Answer ▼</button>
+<div id="tf24" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q25.</strong> The Poisson distribution has equal mean and
+variance.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf25')">Show Answer ▼</button>
+<div id="tf25" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q26.</strong> <span class="math inline">\(E\left( X^{r}
+\right) = M_{X}^{(r)}(0)\)</span> only for <span class="math inline">\(r
+\leq 2\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf26')">Show Answer ▼</button>
+<div id="tf26" class="answer"><p><strong>False</strong> (it holds for all <span class="math inline">\(r\)</span>)</p></div>
+<div class="question"><strong>Q27.</strong> If <span class="math inline">\(\text{Cov}(X,Y)
+= 0\)</span>, then <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf27')">Show Answer ▼</button>
+<div id="tf27" class="answer"><p><strong>False</strong>
+(uncorrelated does not imply independence in general)</p></div>
+<div class="question"><strong>Q28.</strong> The CF and the MGF satisfy <span class="math inline">\(\phi_{X}(t) = M_{X}(it)\)</span>.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf28')">Show Answer ▼</button>
+<div id="tf28" class="answer"><p><strong>True</strong></p></div>
+<div class="question"><strong>Q29.</strong> The PGF of the sum of independent variables
+equals the sum of the individual PGFs.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf29')">Show Answer ▼</button>
+<div id="tf29" class="answer"><p><strong>False</strong> (it equals
+the product)</p></div>
+<div class="question"><strong>Q30.</strong> The excess kurtosis of the normal distribution
+is 0.</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf30')">Show Answer ▼</button>
+<div id="tf30" class="answer"><p><strong>True</strong> (<span class="math inline">\(\gamma_{2} =
+\beta_{2} - 3 = 3 - 3 = 0\)</span>)</p></div>
+</div></div><div id="formulas" class="topic-section"><div class="section-card"><h2><span class="section-num">📐</span> Quick Formula Reference</h2>
+</div></div>
+</main>
+
+<footer class="book-footer">
+    <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+    CCS Haryana Agricultural University, Hisar</p>
+    <p class="university">© 2026 Statistics 102 | All mathematical content rendered with MathJax | Toggle answers for self-assessment</p>
+</footer>
+
+<script>
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    function showTopic(topicId) {
+        document.querySelectorAll('.topic-section').forEach(sec => sec.classList.remove('active'));
+        document.getElementById(topicId).classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        if (window.innerWidth <= 768) { document.getElementById('sidebar').classList.remove('open'); }
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    function toggleAnswer(id) {
+        const answer = document.getElementById(id);
+        if (!answer) return;
+        const btn = event.target;
+        if (answer.classList.contains('show')) {
+            answer.classList.remove('show');
+            btn.innerHTML = 'Show Answer ▼';
+        } else {
+            answer.classList.add('show');
+            btn.innerHTML = 'Hide Answer ▲';
+        }
+    }
+    window.addEventListener('load', function() { if (window.MathJax) { MathJax.typesetPromise(); } });
+    window.addEventListener('resize', function() { if (window.innerWidth > 768) { document.getElementById('sidebar').classList.remove('open'); } });
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.querySelector('.menu-toggle');
+        if (window.innerWidth <= 768 && sidebar.classList.contains('open') &&
+            !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,3343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit I – Concepts in Probability | Statistics 102</title>
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts: Playfair Display + Source Serif + DM Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ============================================================
+           DESIGN SYSTEM — Professional Textbook
+           Palette: Deep Navy · Warm Ivory · Golden Amber · Sage Green
+        ============================================================ */
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
+        }
+
+        .book-header .menu-toggle {
+            display: none;
+            background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 42px; height: 42px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(200,146,42,.4); border-radius: 4px; }
+
+        .sidebar-brand {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 3px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            color: rgba(255,255,255,.55);
+            line-height: 1.4;
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-item { margin: 1px 0; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            font-weight: 400;
+            transition: all .2s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-left-color: rgba(200,146,42,.6);
+        }
+
+        .nav-link.active {
+            background: rgba(200,146,42,.18);
+            color: var(--gold-light);
+            border-left-color: var(--gold);
+            font-weight: 500;
+        }
+
+        .nav-link .nav-num {
+            font-size: .7rem;
+            background: rgba(255,255,255,.12);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-weight: 600;
+            min-width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link.active .nav-num {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .nav-sub .nav-link {
+            padding-left: 28px;
+            font-size: .835rem;
+            color: rgba(255,255,255,.55);
+        }
+
+        .nav-sub .nav-link:hover,
+        .nav-sub .nav-link.active {
+            color: var(--gold-light);
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 860px);
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        /* ── PAGE HEADER (chapter intro) ──────────────────────────── */
+        .chapter-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            padding: 32px 36px;
+            border-radius: var(--radius);
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute; top: -30px; right: -30px;
+            width: 180px; height: 180px;
+            background: rgba(200,146,42,.12);
+            border-radius: 50%;
+        }
+
+        .chapter-header::after {
+            content: '';
+            position: absolute; bottom: -50px; right: 60px;
+            width: 120px; height: 120px;
+            background: rgba(200,146,42,.07);
+            border-radius: 50%;
+        }
+
+        .chapter-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .chapter-header .author {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .95rem;
+            color: rgba(255,255,255,.7);
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .chapter-header .syllabus-tag {
+            display: inline-block;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,.85);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── TOPIC SECTION SHOW/HIDE ──────────────────────────────── */
+        .topic-section {
+            display: none;
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .topic-section.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SECTION CARD ─────────────────────────────────────────── */
+        .section-card {
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+        }
+
+        /* ── TYPOGRAPHY ───────────────────────────────────────────── */
+        .section-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: baseline; gap: 10px;
+        }
+
+        .section-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 32px 0 14px;
+        }
+
+        .section-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 20px 0 8px;
+        }
+
+        .section-card h5 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .95rem;
+            font-weight: 500;
+            color: var(--sky);
+            margin: 14px 0 6px;
+            font-style: italic;
+        }
+
+        .section-card p {
+            margin-bottom: 12px;
+            text-align: justify;
+            font-size: 1.02rem;
+            color: var(--text-mid);
+            line-height: 1.82;
+        }
+
+        .section-card ul,
+        .section-card ol {
+            margin: 10px 0 14px 28px;
+            line-height: 1.75;
+        }
+
+        .section-card li {
+            margin-bottom: 5px;
+            color: var(--text-mid);
+            font-size: .99rem;
+        }
+
+        .section-num {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 700;
+            background: var(--navy);
+            color: var(--gold-light);
+            padding: 2px 10px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note, .warning, .key-point {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .definition {
+            background: #F3F0FB;
+            border-left: 5px solid #6B4FC8;
+            box-shadow: 0 2px 10px rgba(107,79,200,.1);
+        }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+
+        .theorem {
+            background: var(--sage-light);
+            border-left: 5px solid var(--sage);
+            box-shadow: 0 2px 10px rgba(61,107,90,.1);
+        }
+
+        .theorem h4::before { content: "Theorem — "; color: var(--sage); }
+
+        .example {
+            background: #FFFBF0;
+            border-left: 5px solid var(--gold);
+            box-shadow: 0 2px 10px rgba(200,146,42,.1);
+        }
+
+        .example h4::before { content: ""; }
+
+        .note {
+            background: var(--sky-light);
+            border-left: 5px solid var(--sky);
+            box-shadow: 0 2px 10px rgba(29,111,164,.1);
+        }
+
+        .note h4::before { content: "📘 "; }
+
+        .warning {
+            background: var(--crimson-light);
+            border-left: 5px solid var(--crimson);
+            color: #5a1020;
+            box-shadow: 0 2px 10px rgba(155,35,53,.1);
+        }
+
+        .warning strong { color: var(--crimson); }
+
+        .key-point {
+            background: linear-gradient(135deg, #EAF8F4 0%, #E0F3FF 100%);
+            border-left: 5px solid #0E9E6F;
+            box-shadow: 0 2px 10px rgba(14,158,111,.1);
+        }
+
+        .key-point strong { color: #0E6650; }
+
+        .definition h4, .theorem h4, .example h4,
+        .note h4, .warning h4, .key-point h4 {
+            margin-top: 0; margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        /* ── FORMULA BOX ──────────────────────────────────────────── */
+        .formula-box {
+            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
+            border: 2px dashed var(--navy-light);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.12rem;
+        }
+
+        /* ── DERIVATION & PROOF ───────────────────────────────────── */
+        .derivation {
+            background: #F8FAFC;
+            border-left: 3px solid var(--sky);
+            padding: 12px 16px;
+            margin: 10px 0;
+            border-radius: 0 6px 6px 0;
+            font-family: 'Source Serif 4', serif;
+            line-height: 1.85;
+            color: var(--text-mid);
+        }
+
+        .proof-step {
+            margin: 5px 0 5px 20px;
+            padding-left: 12px;
+            border-left: 2px solid var(--border);
+            color: var(--text-mid);
+            font-size: .97rem;
+        }
+
+        /* ── TABLES ───────────────────────────────────────────────── */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 18px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th {
+            background: var(--navy);
+            color: #fff;
+            padding: 12px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+
+        td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: .95rem;
+            color: var(--text-mid);
+            background: #fff;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:nth-child(even) td { background: #FAFAF8; }
+
+        tr:hover td { background: var(--gold-pale); transition: background .15s; }
+
+        /* ── VENN DIAGRAMS ────────────────────────────────────────── */
+        .venn-container {
+            display: flex;
+            justify-content: center;
+            margin: 18px 0;
+            padding: 16px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .venn-diagram { width: 300px; height: 200px; }
+        .venn-diagram svg { width: 100%; height: 100%; }
+
+        .venn-circle {
+            fill-opacity: .38;
+            stroke: #334;
+            stroke-width: 2;
+        }
+
+        .venn-label {
+            font-family: 'Source Serif 4', serif;
+            font-size: 14px;
+            font-weight: 600;
+            fill: #1B2A4A;
+        }
+
+        .venn-shaded {
+            fill: rgba(59,130,246,.55);
+            stroke: #1e40af;
+            stroke-width: 2;
+        }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .exercise-section {
+            background: transparent;
+            border-left: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .exercise-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            padding: 24px 30px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 0;
+        }
+
+        .exercise-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            border: none;
+            padding: 0; margin: 0 0 4px;
+        }
+
+        .exercise-header p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .85rem;
+            color: rgba(255,255,255,.7);
+            margin: 0;
+        }
+
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .question strong { color: var(--navy); }
+
+        /* ── TOGGLE ANSWER BUTTON ─────────────────────────────────── */
+        .toggle-btn {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 8px;
+            letter-spacing: .3px;
+        }
+
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
+        /* ── ANSWER REVEAL ────────────────────────────────────────── */
+        .answer {
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 12px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
+        }
+
+        .answer.show { display: block; }
+
+        .answer p, .answer ul, .answer ol,
+        .answer li, .answer strong, .answer em,
+        .answer .derivation, .answer .proof-step {
+            color: var(--text-dark) !important;
+        }
+
+        .answer .derivation {
+            background: #EFF8F4;
+            border-left-color: var(--sage);
+            color: var(--text-dark) !important;
+        }
+
+        .answer strong { font-weight: 700; }
+
+        /* ── MCQ OPTIONS ──────────────────────────────────────────── */
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+            font-size: .95rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
+        /* ── ANSWER KEY BOX ───────────────────────────────────────── */
+        .answer-key {
+            background: rgba(255,255,255,.15);
+            padding: 14px 18px;
+            border-radius: 7px;
+            margin-top: 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.8;
+        }
+
+        .answer-key strong { color: var(--gold-light); }
+
+        /* ── BADGE ────────────────────────────────────────────────── */
+        .badge {
+            display: inline-block;
+            background: var(--crimson);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* ── QUICK REF TABLE ──────────────────────────────────────── */
+        .quick-ref-table th { background: var(--navy-light); }
+
+        /* ── FOOTER ───────────────────────────────────────────────── */
+        .book-footer {
+            background: var(--navy);
+            color: rgba(255,255,255,.75);
+            text-align: center;
+            padding: 24px;
+            margin-top: 48px;
+            border-radius: 12px 12px 0 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+        .book-footer strong { color: var(--gold-light); }
+        .book-footer .university {
+            margin-top: 6px;
+            font-size: .82rem;
+            opacity: .7;
+        }
+
+        /* ── MATHJAX ──────────────────────────────────────────────── */
+        .MathJax { font-size: 1.06em !important; }
+        mjx-container { display: inline-block !important; }
+
+        /* ── SCROLLBAR ────────────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: var(--paper); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b0a89a; }
+
+        /* ── RESPONSIVE ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+            :root { --sidebar-w: 260px; }
+            .main-content { padding: 28px 30px 50px; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --sidebar-w: 280px; }
+            .book-header .menu-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-content {
+                margin-left: 0;
+                padding: 20px 18px 40px;
+                max-width: 100%;
+            }
+            .chapter-header h1 { font-size: 1.6rem; }
+            .section-card { padding: 22px 20px; }
+        }
+
+        /* ── EXERCISE SECTION OVERRIDES ──────────────────────────── */
+        .section-card .exercise-section {
+            background: transparent;
+            padding: 0;
+        }
+
+        .section-card h2:has(.section-num) + * { margin-top: 8px; }
+
+        /* Progress bar decoration for exercise headers */
+        .section-card > h2 {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">📐</div>
+        <div class="header-text">
+            <h1>Statistics 102</h1>
+            <div class="subtitle">UNIT I · CONCEPTS IN PROBABILITY</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>Unit I</h2>
+            <p>Concepts in Probability<br>CCS Haryana Agricultural University</p>
+        </div>
+
+        <div class="nav-group-label">Main Concepts</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="showTopic('intro'); return false;">
+                    <span class="nav-num">📌</span> Introduction
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('random-experiment'); return false;">
+                    <span class="nav-num">1</span> Random Experiment
+                </a>
+            </li>
+            <li class="nav-item nav-sub">
+                <a class="nav-link" href="#" onclick="showTopic('random-experiment'); return false;">
+                    <span class="nav-num">1.2</span> Trial &amp; Sample Point
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('sample-space'); return false;">
+                    <span class="nav-num">2</span> Sample Space &amp; Events
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('operations'); return false;">
+                    <span class="nav-num">3</span> Operations on Events
+                </a>
+            </li>
+            <li class="nav-item nav-sub">
+                <a class="nav-link" href="#" onclick="showTopic('operations'); return false;">
+                    <span class="nav-num">3.6</span> De Morgan's Laws
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('event-types'); return false;">
+                    <span class="nav-num">4</span> Types of Events
+                </a>
+            </li>
+            <li class="nav-item nav-sub">
+                <a class="nav-link" href="#" onclick="showTopic('event-types'); return false;">
+                    <span class="nav-num">4.5</span> Exclusive vs Independent
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('classical'); return false;">
+                    <span class="nav-num">5</span> Classical Probability
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('relative-frequency'); return false;">
+                    <span class="nav-num">6</span> Relative Frequency
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('subjective'); return false;">
+                    <span class="nav-num">7</span> Subjective Probability
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('axiomatic'); return false;">
+                    <span class="nav-num">8</span> Axiomatic Approach
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('theorems'); return false;">
+                    <span class="nav-num">9</span> Basic Theorems
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('comparison'); return false;">
+                    <span class="nav-num">10</span> Comparison of Approaches
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('solved'); return false;">
+                    <span class="nav-num">11</span> Solved Problems
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('formulas'); return false;">
+                    <span class="nav-num">12</span> Formula Reference
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-group-label">Practice Exercises</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('exercises'); return false;">
+                    <span class="nav-num">📝</span> Subjective (30 Q)
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('mcq'); return false;">
+                    <span class="nav-num">❓</span> MCQs (30 Q)
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('fib'); return false;">
+                    <span class="nav-num">✏️</span> Fill in Blanks (30 Q)
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showTopic('tf'); return false;">
+                    <span class="nav-num">✅</span> True / False (30 Q)
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+
+        <!-- Chapter Banner (always visible) -->
+        <div class="chapter-header">
+            <h1>Unit I: Concepts in Probability</h1>
+            <div class="author">By Prof. O.P. Sheoran · Department of Mathematics &amp; Statistics</div>
+            <div class="syllabus-tag">
+                <strong>Syllabus:</strong> Random experiment · Trial · Sample point · Sample space · Operations on events · Exhaustive · Equally likely · Mutually exclusive · Independent events · Classical · Relative frequency · Statistical · Axiomatic approaches to probability
+            </div>
+        </div>
+
+        <!-- ========== TOPIC SECTIONS (click-to-show) ========== -->
+
+        <div id="intro" class="topic-section active">
+            <section class="section-card">
+<h2><span class="section-num">Introduction</span>Why Study Probability?</h2>
+                <p>Probability helps us understand and quantify uncertainty. From weather forecasts to medical diagnoses, from stock markets to game strategies—probability is everywhere in our daily lives.</p>
+                
+                <div class="note">
+                    <h4>What You Will Learn</h4>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Understanding random experiments and sample spaces</li>
+                        <li>Different types of events and their operations</li>
+                        <li>Three main approaches to probability</li>
+                        <li>Kolmogorov's axiomatic foundation</li>
+                        <li>Essential theorems and formulas</li>
+                    </ul>
+                </div>
+                
+                <div class="key-point">
+                    <strong>Note:</strong> This chapter builds the foundation for all probability theory. Take your time to understand each concept thoroughly before moving forward.
+                </div>
+            </section>
+        </div>
+
+        <div id="random-experiment" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">1.</span>Random Experiment and Basic Terminology</h2>
+                <p>Before we define probability, we need to understand what kind of situation it applies to. Not every activity is random. Adding two numbers always gives the same answer. The Sun always rises in the east.</p>
+                <p>But flipping a coin, rolling a die, drawing a card from a shuffled deck — these are situations where the outcome is genuinely uncertain.</p>
+                
+                <div class="definition">
+                    <h4>Definition: Random Experiment</h4>
+                    <p>A <strong>random experiment</strong> (or <strong>statistical experiment</strong>) is any well-defined procedure or process that satisfies the following three conditions:</p>
+                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>All possible outcomes are known in advance (even if the list is very long).</li>
+                        <li>The experiment can be repeated under identical conditions.</li>
+                        <li>The exact outcome of any given trial cannot be predicted with certainty before it is performed.</li>
+                    </ol>
+                    <p style="margin-top: 0.8rem;"><strong>Key Point:</strong> The word "random" here does not mean haphazard or careless. It simply means that chance is involved.</p>
+                </div>
+                
+                <h3>1.1.1 Examples of Random Experiments</h3>
+                
+                <div class="example">
+                    <h4>Example 1.1.1: Tossing a fair coin once</h4>
+                    <p>The possible outcomes are Head (H) and Tail (T). We know both possibilities, but we cannot say which will appear.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.1.2: Rolling a fair six-sided die</h4>
+                    <p>The outcomes are \( \{1, 2, 3, 4, 5, 6\} \). Each roll is a fresh trial.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.1.3: Drawing one card from a well-shuffled deck of 52 cards</h4>
+                    <p>Any of the 52 cards could appear.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.1.4: Recording the number of phone calls received at a customer-service centre in one hour</h4>
+                    <p>The count could be 0, 1, 2, 3, and so on.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.1.5: Measuring the lifetime (in hours) of a randomly selected electric bulb from a batch</h4>
+                    <p>The lifetime can be any positive real number.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.1.6: Selecting a student at random from a class and recording their height</h4>
+                    <p>Height is a continuous measurement — any positive real value is possible.</p>
+                </div>
+                
+                <h3>1.1.2 Non-Examples (Not Random Experiments)</h3>
+                <ol style="margin-left: 1.5rem;">
+                    <li>Computing \( 2 + 3 = 5 \) — the answer is always \( 5 \).</li>
+                    <li>Checking whether the Sun will rise tomorrow — this is certain.</li>
+                    <li>Measuring the speed of light in vacuum — a physical constant.</li>
+                </ol>
+                
+                <h3 id="trial-sample">1.2 Trial and Sample Point</h3>
+                
+                <h4>1.2.1 Trial</h4>
+                <p>A <strong>trial</strong> is a single performance (one execution) of a random experiment. Each time you toss a coin, that one toss is one trial. Each roll of a die is one trial. Trials are sometimes called <em>repetitions</em> or <em>observations</em>.</p>
+                
+                <h4>1.2.2 Sample Point (Elementary Event)</h4>
+                <p>A <strong>sample point</strong> is any single possible outcome of a random experiment. It is the smallest, most specific result that can occur. Sample points are also called <em>elementary events</em> or <em>simple events</em>.</p>
+                
+                <div class="example">
+                    <h4>Example 1.2.1</h4>
+                    <p>In rolling a die, the sample points are: \( \{1, 2, 3, 4, 5, 6\} \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.2.2</h4>
+                    <p>In tossing two coins, the sample points are: \( \{HH, HT, TH, TT\} \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.2.3</h4>
+                    <p>In drawing one card from a 52-card deck, there are 52 sample points — one for each distinct card.</p>
+                </div>
+            </section>
+        </div>
+
+        <div id="sample-space" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">2.</span>Sample Space and Events</h2>
+                
+                <div class="definition">
+                    <h4>Definition: Sample Space</h4>
+                    <p>The <strong>sample space</strong> \( S \) (also called the <strong>universal set</strong> of the experiment) is the set of <strong>all</strong> possible sample points of a random experiment. It is the complete catalogue of every outcome that can occur.</p>
+                    <p>Nothing outside \( S \) can possibly happen. \( S \) itself represents the certain event.</p>
+                </div>
+                
+                <h3>2.1 Types of Sample Spaces</h3>
+                
+                <h4>1. Finite Sample Space</h4>
+                <p>\( S \) contains finitely many elements.</p>
+                
+                <div class="example">
+                    <h4>Example 1.3.1</h4>
+                    <p>Toss a coin once: \( S = \{H, T\} \), \( n(S) = 2 \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.3.2</h4>
+                    <p>Roll a die once: \( S = \{1, 2, 3, 4, 5, 6\} \), \( n(S) = 6 \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.3.3</h4>
+                    <p>Toss two coins: \( S = \{HH, HT, TH, TT\} \), \( n(S) = 4 \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.3.4</h4>
+                    <p>Toss three coins: \( S = \{HHH, HHT, HTH, HTT, THH, THT, TTH, TTT\} \), \( n(S) = 8 \).</p>
+                </div>
+                
+                <h4>2. Countably Infinite Sample Space</h4>
+                <p>\( S \) has infinitely many elements but they can be listed.</p>
+                
+                <div class="example">
+                    <h4>Example 1.3.5</h4>
+                    <p>Toss a coin repeatedly until Head appears. The number of tosses \( n \) can be \( 1, 2, 3, \ldots \). So \( S = \{1, 2, 3, \ldots\} \).</p>
+                </div>
+                
+                <h4>3. Uncountably Infinite (Continuous) Sample Space</h4>
+                <p>\( S \) is an interval or union of intervals on the real line.</p>
+                
+                <div class="example">
+                    <h4>Example 1.3.6</h4>
+                    <p>Lifetime of a light bulb: \( S = \{t : t \geq 0\} \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.3.7</h4>
+                    <p>Height of a randomly chosen person: \( S = (0, \infty) \) or a realistic interval like \( [140, 210] \) cm.</p>
+                </div>
+                
+                <h4>4. Two-Dimensional Sample Space</h4>
+                <p>When two quantities are recorded simultaneously, each outcome is an ordered pair.</p>
+                
+                <div class="example">
+                    <h4>Example 1.3.8</h4>
+                    <p>Roll two dice simultaneously. Each outcome is a pair \( (i, j) \) where \( i \) is the result on die 1 and \( j \) on die 2.</p>
+                </div>
+                
+                <h3>2.2 Events</h3>
+                <p>An <strong>event</strong> is any subset of the sample space \( S \). We denote events by capital letters \( A, B, C, \ldots \)</p>
+                
+                <h4>2.2.1 Types of Events</h4>
+                <ol style="margin-left: 1.5rem;">
+                    <li><strong>Simple event:</strong> A subset containing exactly one sample point. For example, \( A = \{3\} \) when rolling a die.</li>
+                    <li><strong>Compound event:</strong> A subset containing two or more sample points. For example, \( B = \{2, 4, 6\} \) (even number on a die).</li>
+                    <li><strong>Impossible event (Null event):</strong> The empty set \( \emptyset \). It never occurs. For example, "getting 7 on a standard die" — \( \emptyset \).</li>
+                    <li><strong>Sure event (Certain event):</strong> The entire sample space \( S \). It always occurs.</li>
+                </ol>
+                
+                <div class="example">
+                    <h4>Example 1.4.1: Rolling a fair die</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \)</p>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>\( A = \{2, 4, 6\} \) = "even number"</li>
+                        <li>\( B = \{2, 3, 5\} \) = "prime number"</li>
+                        <li>\( C = \{1, 2, 3, 4\} \) = "number \( \leq 4 \)"</li>
+                        <li>\( D = \{7\} = \emptyset \) = "number \( > 6 \)" (impossible)</li>
+                        <li>\( S \) = "number \( \leq 6 \)" (certain)</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <div id="operations" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">3.</span>Operations on Events</h2>
+                <p>Since events are sets, all set-theoretic operations apply. These operations have natural probability interpretations.</p>
+                
+                <h3>3.1 Union: \( A \cup B \)</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>\( A \cup B = \{x : x \in A \text{ or } x \in B\} \)</p>
+                    <p><strong>Probability meaning:</strong> \( A \cup B \) occurs if <strong>at least one</strong> of \( A \) or \( B \) occurs.</p>
+                </div>
+                
+                <div class="venn-container">
+                    <div class="venn-diagram">
+                        <svg viewBox="0 0 300 200">
+                            <circle class="venn-circle" cx="90" cy="100" r="60" fill="#60a5fa"/>
+                            <circle class="venn-circle" cx="210" cy="100" r="60" fill="#fbbf24"/>
+                            <text class="venn-label" x="50" y="60">A</text>
+                            <text class="venn-label" x="240" y="60">B</text>
+                            <text class="venn-label" x="140" y="110">A ∪ B</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.5.1</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \), \( A = \{2, 4, 6\} \), \( B = \{4, 5, 6\} \). Then \( A \cup B = \{2, 4, 5, 6\} \).</p>
+                </div>
+                
+                <h3>3.2 Intersection: \( A \cap B \)</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>\( A \cap B = \{x : x \in A \text{ and } x \in B\} \)</p>
+                    <p><strong>Probability meaning:</strong> \( A \cap B \) occurs if <strong>both</strong> \( A \) and \( B \) occur simultaneously.</p>
+                </div>
+                
+                <div class="venn-container">
+                    <div class="venn-diagram">
+                        <svg viewBox="0 0 300 200">
+                            <circle class="venn-circle" cx="90" cy="100" r="60" fill="#60a5fa"/>
+                            <circle class="venn-circle" cx="210" cy="100" r="60" fill="#fbbf24"/>
+                            <ellipse class="venn-shaded" cx="150" cy="100" rx="30" ry="50"/>
+                            <text class="venn-label" x="50" y="60">A</text>
+                            <text class="venn-label" x="240" y="60">B</text>
+                            <text class="venn-label" x="135" y="105">A ∩ B</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.5.2</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \), \( A = \{2, 4, 6\} \), \( B = \{4, 5, 6\} \). Then \( A \cap B = \{4, 6\} \).</p>
+                </div>
+                
+                <h3>3.3 Complement: \( A^c \) or \( A' \) (also written \( \bar{A} \) or \( \tilde{A} \))</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>\( A^c = \{x \in S : x \notin A\} \)</p>
+                    <p><strong>Probability meaning:</strong> \( A^c \) occurs if and only if \( A \) does <strong>not</strong> occur.</p>
+                </div>
+                
+                <div class="venn-container">
+                    <div class="venn-diagram">
+                        <svg viewBox="0 0 300 200">
+                            <rect width="300" height="200" fill="#f1f5f9" stroke="#64748b"/>
+                            <circle class="venn-circle" cx="150" cy="100" r="55" fill="#60a5fa"/>
+                            <text class="venn-label" x="135" y="105">A</text>
+                            <text class="venn-label" x="10" y="20">S</text>
+                            <text class="venn-label" x="220" y="40">A^c</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.5.3</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \), \( A = \{2, 4, 6\} \). Then \( A^c = \{1, 3, 5\} \).</p>
+                </div>
+                
+                <h3>3.4 Difference: \( A - B \)</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>\( A - B = \{x \in A : x \notin B\} = A \cap B^c \)</p>
+                    <p><strong>Probability meaning:</strong> \( A \) occurs but \( B \) does not.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.5.4</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \), \( A = \{2, 4, 6\} \), \( B = \{4, 5, 6\} \). Then \( A - B = \{2\} \).</p>
+                </div>
+                
+                <h3>3.5 Symmetric Difference: \( A \triangle B \)</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>\( A \triangle B = (A - B) \cup (B - A) = (A \cup B) - (A \cap B) \)</p>
+                    <p><strong>Probability meaning:</strong> Exactly one of \( A \) or \( B \) occurs (but not both).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.5.5</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \), \( A = \{2, 4, 6\} \), \( B = \{4, 5, 6\} \). Then \( A \triangle B = \{2, 5\} \).</p>
+                </div>
+                
+                <h3 id="de-morgan">3.6 De Morgan's Laws</h3>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.5.1 (De Morgan's Laws)</h4>
+                    <p>1. \( (A \cup B)^c = A^c \cap B^c \)</p>
+                    <p>2. \( (A \cap B)^c = A^c \cup B^c \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof of First Law:</h4>
+                    <div class="derivation">
+                        <p>Let \( x \in (A \cup B)^c \).</p>
+                        <p class="proof-step">Then \( x \notin A \cup B \), which means \( x \notin A \) and \( x \notin B \).</p>
+                        <p class="proof-step">So \( x \in A^c \) and \( x \in B^c \), hence \( x \in A^c \cap B^c \).</p>
+                        <p class="proof-step">Therefore, \( (A \cup B)^c \subseteq A^c \cap B^c \). &nbsp;&nbsp;&nbsp; ...(i)</p>
+                        <br>
+                        <p>Conversely, let \( x \in A^c \cap B^c \).</p>
+                        <p class="proof-step">Then \( x \in A^c \) and \( x \in B^c \), so \( x \notin A \) and \( x \notin B \).</p>
+                        <p class="proof-step">Thus \( x \notin A \cup B \), which means \( x \in (A \cup B)^c \).</p>
+                        <p class="proof-step">Therefore, \( A^c \cap B^c \subseteq (A \cup B)^c \). &nbsp;&nbsp;&nbsp; ...(ii)</p>
+                        <br>
+                        <p>From (i) and (ii), we conclude that \( (A \cup B)^c = A^c \cap B^c \). </p>
+                    </div>
+                    <p style="margin-top: 0.8rem;"><em>The second law is proved similarly (exercise).</em></p>
+                    
+                    <h4 style="margin-top: 1rem;">Extension to \( n \) events:</h4>
+                    <p>\( \left( \bigcup_{i=1}^{n} A_i \right)^c = \bigcap_{i=1}^{n} A_i^c \) and \( \left( \bigcap_{i=1}^{n} A_i \right)^c = \bigcup_{i=1}^{n} A_i^c \)</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.5.6: Verify De Morgan's first law</h4>
+                    <p>For \( S = \{1,2,3,4,5,6\} \), \( A = \{2,4,6\} \), \( B = \{4,5,6\} \).</p>
+                    <p>\( A \cup B = \{2,4,5,6\} \), so \( (A \cup B)^c = \{1,3\} \).</p>
+                    <p>\( A^c = \{1,3,5\} \), \( B^c = \{1,2,3\} \). So \( A^c \cap B^c = \{1,3\} \). </p>
+                </div>
+            </section>
+        </div>
+
+        <div id="event-types" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">4.</span>Types of Events</h2>
+                
+                <h3>4.1 Exhaustive Events</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>Events \( A_1, A_2, \ldots, A_n \) are called <strong>exhaustive</strong> if their union covers the entire sample space:</p>
+                    <p class="formula-box">\( \displaystyle \bigcup_{i=1}^{n} A_i = S \)</p>
+                    <p>This means every outcome in \( S \) belongs to at least one of the \( A_i \). Together they leave nothing uncovered.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.1</h4>
+                    <p>\( S = \{1, 2, 3, 4, 5, 6\} \). Let \( A = \{1, 2\} \), \( B = \{3, 4, 5\} \), \( C = \{6\} \). Then \( A \cup B \cup C = S \). So \( A, B, C \) are exhaustive.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.2</h4>
+                    <p>For any event \( A \), the pair \( A \) and \( A^c \) is always exhaustive, since \( A \cup A^c = S \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.3</h4>
+                    <p>Drawing a card: \( A \) = "red card", \( B \) = "black card". \( A \cup B = S \). Exhaustive.</p>
+                </div>
+                
+                <h3>4.2 Equally Likely Events</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>Events \( A_1, A_2, \ldots, A_n \) are <strong>equally likely</strong> if no one event is more probable than any other — each event has the same probability of occurring.</p>
+                    <p><strong>Important:</strong> This is a physical assumption, not a mathematical one. It arises from symmetry: a balanced coin, a fair die, a well-shuffled deck.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.4</h4>
+                    <p>For a fair die, the six sample points \( \{1, 2, 3, 4, 5, 6\} \) are equally likely, each with probability \( \frac{1}{6} \).</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.5</h4>
+                    <p>For a biased coin with \( P(H) = 0.7 \), the events \( \{H\} \) and \( \{T\} \) are NOT equally likely.</p>
+                </div>
+                
+                <h3>4.3 Mutually Exclusive Events (Disjoint Events)</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>Two events \( A \) and \( B \) are <strong>mutually exclusive</strong> (or <strong>disjoint</strong>) if they cannot both occur in the same trial:</p>
+                    <p class="formula-box">\( A \cap B = \emptyset \)</p>
+                    <p>If \( A \) occurs, \( B \) is automatically ruled out, and vice versa.</p>
+                </div>
+                
+                <div class="venn-container">
+                    <div class="venn-diagram">
+                        <svg viewBox="0 0 300 200">
+                            <circle class="venn-circle" cx="80" cy="100" r="50" fill="#60a5fa"/>
+                            <circle class="venn-circle" cx="220" cy="100" r="50" fill="#fbbf24"/>
+                            <text class="venn-label" x="60" y="70">A</text>
+                            <text class="venn-label" x="230" y="70">B</text>
+                            <text class="venn-label" x="120" y="110">A ∩ B = ∅</text>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.6</h4>
+                    <p>Rolling a die: \( A = \{1, 3, 5\} \) (odd), \( B = \{2, 4, 6\} \) (even). \( A \cap B = \emptyset \). Mutually exclusive.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.7</h4>
+                    <p>Rolling a die: \( A = \{2, 4, 6\} \), \( B = \{4, 5, 6\} \). \( A \cap B = \{4, 6\} \neq \emptyset \). NOT mutually exclusive.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.8</h4>
+                    <p>Tossing a coin: \( \{H\} \) and \( \{T\} \) are mutually exclusive.</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.6.1</h4>
+                    <p>If \( A \) and \( B \) are mutually exclusive, then:</p>
+                    <p class="formula-box">\( P(A \cup B) = P(A) + P(B) \)</p>
+                    <p><em>(This follows from Axiom 3 of Kolmogorov, established in Section 1.10.)</em></p>
+                </div>
+                
+                <h3>4.4 Independent Events</h3>
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>Two events \( A \) and \( B \) are <strong>independent</strong> if the occurrence of one does not affect the probability of the other. Mathematically:</p>
+                    <p class="formula-box">\( P(A \cap B) = P(A) \cdot P(B) \)</p>
+                    <p>This is the defining condition for independence. If this equation holds, \( A \) and \( B \) are independent.</p>
+                    <p><strong>Intuition:</strong> Knowing that \( A \) occurred gives no information about whether \( B \) will occur.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.9: Independent Events</h4>
+                    <p>Toss a fair coin twice.</p>
+                    <p>\( A \) = "first toss is H", \( B \) = "second toss is T"</p>
+                    <p>\( P(A) = \frac{1}{2} \), \( P(B) = \frac{1}{2} \), \( P(A \cap B) = P(\{HT\}) = \frac{1}{4} \)</p>
+                    <p>Since \( \frac{1}{4} = \frac{1}{2} \times \frac{1}{2} \), \( A \) and \( B \) are independent. </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.6.10: Dependent Events</h4>
+                    <p>A bag has 3 red and 2 blue balls. Draw 2 without replacement.</p>
+                    <p>\( A \) = "first ball is red", \( B \) = "second ball is red"</p>
+                    <p>\( P(A) = \frac{3}{5} \)</p>
+                    <p>\( P(B|A) = \frac{2}{4} = \frac{1}{2} \) (after removing one red)</p>
+                    <p>\( P(A \cap B) = \frac{3}{5} \times \frac{2}{4} = \frac{3}{10} \)</p>
+                    <p>But \( P(A) \cdot P(B) \neq \frac{3}{10} \), so \( A \) and \( B \) are NOT independent.</p>
+                </div>
+                
+                <h3 id="mutual-indep">4.5 Mutually Exclusive vs. Independent — A Critical Distinction</h3>
+                
+                <div class="warning">
+                    <strong>Warning:</strong> Students often confuse these two concepts. They are fundamentally different!
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Mutually Exclusive</th>
+                            <th>Independent</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Condition</td>
+                            <td>\( A \cap B = \emptyset \)</td>
+                            <td>\( P(A \cap B) = P(A)P(B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Interpretation</td>
+                            <td>Cannot happen together</td>
+                            <td>Don't influence each other</td>
+                        </tr>
+                        <tr>
+                            <td>If \( A \) occurs...</td>
+                            <td>\( B \) is impossible</td>
+                            <td>\( P(B) \) is unchanged</td>
+                        </tr>
+                        <tr>
+                            <td>Example</td>
+                            <td>\( H \) and \( T \) on one toss</td>
+                            <td>Two separate tosses</td>
+                        </tr>
+                        <tr>
+                            <td>Can coexist?</td>
+                            <td>Yes, if \( P(A) = 0 \) or \( P(B) = 0 \)</td>
+                            <td>Yes, in general</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="key-point">
+                    <strong>Key Point:</strong> Can two events be <strong>both</strong> mutually exclusive and independent? Yes, but <strong>only if</strong> \( P(A) = 0 \) or \( P(B) = 0 \).<br><br>
+                    If \( A \) and \( B \) are mutually exclusive and both have a positive probability, they <strong>cannot</strong> be independent. Because if \( A \) occurs, \( P(B|A) = 0 \), which does not equal \( P(B) > 0 \).
+                </div>
+            </section>
+        </div>
+
+        <div id="classical" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">5.</span>Classical (A Priori) Probability</h2>
+                <p>This is the oldest and most intuitive definition of probability, developed by mathematicians like Pascal, Fermat, and formalised by Laplace.</p>
+                
+                <h3>5.1 Definition</h3>
+                <div class="definition">
+                    <h4>Definition (Classical Probability)</h4>
+                    <p>If a random experiment has \( n \) exhaustive, equally likely, and mutually exclusive outcomes, and event \( A \) can occur in \( m \) of these outcomes, then the probability of \( A \) is:</p>
+                    <p class="formula-box">\( \displaystyle P(A) = \frac{m}{n} = \frac{\text{Number of favourable outcomes}}{\text{Total number of outcomes}} \)</p>
+                    <p>Equivalently: \( \displaystyle P(A) = \frac{n(A)}{n(S)} \), where \( n(A) \) is the count of elements in \( A \) and \( n(S) \) the count in \( S \).</p>
+                </div>
+                
+                <h3>5.2 Properties Immediately Derivable</h3>
+                <p>From this definition:</p>
+                <ol style="margin-left: 1.5rem;">
+                    <li>\( 0 \leq P(A) \leq 1 \) since \( 0 \leq m \leq n \).</li>
+                    <li>\( P(\emptyset) = 0 \) (no favourable outcomes).</li>
+                    <li>\( P(S) = 1 \) (all outcomes are favourable).</li>
+                    <li>\( P(A^c) = 1 - P(A) \) since \( n(A^c) = n - m \).</li>
+                </ol>
+                
+                <h3>5.3 Worked Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1.7.1: A fair die is rolled</h4>
+                    <p>Find: (a) \( P(\text{even}) \), (b) \( P(\text{prime}) \), (c) \( P(\text{number} \leq 4) \), (d) \( P(\text{number} > 6) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Detailed Solution:</h4>
+                    <p><strong>Step 1:</strong> Identify the sample space.</p>
+                    <p class="derivation">\( S = \{1, 2, 3, 4, 5, 6\} \), so \( n(S) = 6 \)</p>
+                    
+                    <p><strong>Step 2:</strong> For part (a), identify event \( A \) = "even number".</p>
+                    <p class="derivation">\( A = \{2, 4, 6\} \), so \( n(A) = 3 \)</p>
+                    <p class="derivation">\( P(A) = \frac{n(A)}{n(S)} = \frac{3}{6} = \frac{1}{2} \) </p>
+                    
+                    <p><strong>Step 3:</strong> For part (b), identify event \( B \) = "prime number".</p>
+                    <p class="derivation">Prime numbers in \( S \): 2, 3, 5</p>
+                    <p class="derivation">\( B = \{2, 3, 5\} \), so \( n(B) = 3 \)</p>
+                    <p class="derivation">\( P(B) = \frac{3}{6} = \frac{1}{2} \) </p>
+                    
+                    <p><strong>Step 4:</strong> For part (c), identify event \( C \) = "number \( \leq 4 \)".</p>
+                    <p class="derivation">\( C = \{1, 2, 3, 4\} \), so \( n(C) = 4 \)</p>
+                    <p class="derivation">\( P(C) = \frac{4}{6} = \frac{2}{3} \) </p>
+                    
+                    <p><strong>Step 5:</strong> For part (d), identify event \( D \) = "number \( > 6 \)".</p>
+                    <p class="derivation">No outcome in \( S \) satisfies this, so \( D = \emptyset \), \( n(D) = 0 \)</p>
+                    <p class="derivation">\( P(D) = \frac{0}{6} = 0 \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.7.2: Two fair dice are thrown simultaneously</h4>
+                    <p>Find: (a) \( P(\text{sum} = 7) \), (b) \( P(\text{sum} \geq 10) \), (c) \( P(\text{doublet}) \), (d) \( P(\text{prime sum}) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Detailed Solution:</h4>
+                    <p><strong>Step 1:</strong> Determine total number of outcomes.</p>
+                    <p class="derivation">Each die has 6 faces, so \( n(S) = 6 \times 6 = 36 \)</p>
+                    
+                    <p><strong>Step 2:</strong> For part (a), find pairs summing to 7.</p>
+                    <p class="derivation">Pairs: \( (1,6), (2,5), (3,4), (4,3), (5,2), (6,1) \) — 6 pairs</p>
+                    <p class="derivation">\( P(\text{sum} = 7) = \frac{6}{36} = \frac{1}{6} \) </p>
+                    
+                    <p><strong>Step 3:</strong> For part (b), find pairs with sum \( \geq 10 \).</p>
+                    <p class="derivation">Sum = 10: \( (4,6), (5,5), (6,4) \) — 3 pairs</p>
+                    <p class="derivation">Sum = 11: \( (5,6), (6,5) \) — 2 pairs</p>
+                    <p class="derivation">Sum = 12: \( (6,6) \) — 1 pair</p>
+                    <p class="derivation">Total favourable = 3 + 2 + 1 = 6</p>
+                    <p class="derivation">\( P(\text{sum} \geq 10) = \frac{6}{36} = \frac{1}{6} \) </p>
+                    
+                    <p><strong>Step 4:</strong> For part (c), find doublets (same number on both dice).</p>
+                    <p class="derivation">Doublets: \( (1,1), (2,2), (3,3), (4,4), (5,5), (6,6) \) — 6 pairs</p>
+                    <p class="derivation">\( P(\text{doublet}) = \frac{6}{36} = \frac{1}{6} \) </p>
+                    
+                    <p><strong>Step 5:</strong> For part (d), find prime sums: 2, 3, 5, 7, 11.</p>
+                    <p class="derivation">Sum = 2: \( (1,1) \) — 1 pair</p>
+                    <p class="derivation">Sum = 3: \( (1,2), (2,1) \) — 2 pairs</p>
+                    <p class="derivation">Sum = 5: \( (1,4), (2,3), (3,2), (4,1) \) — 4 pairs</p>
+                    <p class="derivation">Sum = 7: 6 pairs (from part a)</p>
+                    <p class="derivation">Sum = 11: \( (5,6), (6,5) \) — 2 pairs</p>
+                    <p class="derivation">Total favourable = 1 + 2 + 4 + 6 + 2 = 15</p>
+                    <p class="derivation">\( P(\text{prime sum}) = \frac{15}{36} = \frac{5}{12} \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.7.3: A card is drawn at random from a pack of 52 cards</h4>
+                    <p>Find: (a) \( P(\text{ace}) \), (b) \( P(\text{red card}) \), (c) \( P(\text{face card}) \), (d) \( P(\text{heart}) \), (e) \( P(\text{red king}) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Detailed Solution:</h4>
+                    <p><strong>Step 1:</strong> Total outcomes: \( n(S) = 52 \)</p>
+                    
+                    <p><strong>Step 2:</strong> Part (a): Number of aces = 4</p>
+                    <p class="derivation">\( P(\text{ace}) = \frac{4}{52} = \frac{1}{13} \) </p>
+                    
+                    <p><strong>Step 3:</strong> Part (b): Red cards = hearts + diamonds = 13 + 13 = 26</p>
+                    <p class="derivation">\( P(\text{red card}) = \frac{26}{52} = \frac{1}{2} \) </p>
+                    
+                    <p><strong>Step 4:</strong> Part (c): Face cards = J, Q, K in each suit = 3 × 4 = 12</p>
+                    <p class="derivation">\( P(\text{face card}) = \frac{12}{52} = \frac{3}{13} \) </p>
+                    
+                    <p><strong>Step 5:</strong> Part (d): Hearts = 13 cards</p>
+                    <p class="derivation">\( P(\text{heart}) = \frac{13}{52} = \frac{1}{4} \) </p>
+                    
+                    <p><strong>Step 6:</strong> Part (e): Red kings = King of hearts + King of diamonds = 2</p>
+                    <p class="derivation">\( P(\text{red king}) = \frac{2}{52} = \frac{1}{26} \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.7.4: Three cards are drawn simultaneously from a pack of 52</h4>
+                    <p>Find: (a) \( P(\text{all aces}) \), (b) \( P(\text{2 kings and 1 queen}) \), (c) \( P(\text{no ace}) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Detailed Solution:</h4>
+                    <p><strong>Step 1:</strong> Total ways to choose 3 cards from 52:</p>
+                    <p class="derivation">\( n(S) = \binom{52}{3} = \frac{52 \times 51 \times 50}{3 \times 2 \times 1} = 22100 \)</p>
+                    
+                    <p><strong>Step 2:</strong> Part (a): Choose 3 aces from 4 aces</p>
+                    <p class="derivation">Favourable ways = \( \binom{4}{3} = 4 \)</p>
+                    <p class="derivation">\( P(\text{all aces}) = \frac{4}{22100} = \frac{1}{5525} \) </p>
+                    
+                    <p><strong>Step 3:</strong> Part (b): Choose 2 kings from 4 and 1 queen from 4</p>
+                    <p class="derivation">Favourable ways = \( \binom{4}{2} \times \binom{4}{1} = 6 \times 4 = 24 \)</p>
+                    <p class="derivation">\( P(\text{2 kings and 1 queen}) = \frac{24}{22100} = \frac{6}{5525} \) </p>
+                    
+                    <p><strong>Step 4:</strong> Part (c): Choose 3 cards from 48 non-aces</p>
+                    <p class="derivation">Favourable ways = \( \binom{48}{3} = \frac{48 \times 47 \times 46}{6} = 17296 \)</p>
+                    <p class="derivation">\( P(\text{no ace}) = \frac{17296}{22100} = \frac{4324}{5525} \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.7.5: A box has 6 red, 4 blue, and 5 white balls</h4>
+                    <p>Three balls are drawn at random. Find: (a) \( P(\text{all red}) \), (b) \( P(\text{all same colour}) \), (c) \( P(\text{at least one blue}) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Solution:</h4>
+                    <p class="derivation">Total balls = 6 + 4 + 5 = 15</p>
+                    <p class="derivation">Total ways to choose 3: \( \binom{15}{3} = 455 \)</p>
+                    <p class="derivation">(a) All red: \( \binom{6}{3} = 20 \), so \( P = \frac{20}{455} = \frac{4}{91} \) </p>
+                    <p class="derivation">(b) All same colour: Red: \( \binom{6}{3}=20 \), Blue: \( \binom{4}{3}=4 \), White: \( \binom{5}{3}=10 \)</p>
+                    <p class="derivation">Total favourable = 20 + 4 + 10 = 34, so \( P = \frac{34}{455} \) </p>
+                    <p class="derivation">(c) At least one blue = 1 - P(no blue) = 1 - \( \frac{\binom{11}{3}}{\binom{15}{3}} = 1 - \frac{165}{455} = \frac{290}{455} = \frac{58}{91} \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.7.6: Four boys and 3 girls sit in a row of 7 seats randomly</h4>
+                    <p>Find: (a) \( P(\text{all boys together}) \), (b) \( P(\text{no two girls together}) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Solution:</h4>
+                    <p class="derivation">Total arrangements: \( 7! = 5040 \)</p>
+                    <p class="derivation">(a) Treat 4 boys as one block: 4 units (block + 3 girls). Arrange: \( 4! \). Boys within block: \( 4! \).</p>
+                    <p class="derivation">Favourable = \( 4! \times 4! = 24 \times 24 = 576 \)</p>
+                    <p class="derivation">\( P = \frac{576}{5040} = \frac{4}{35} \) </p>
+                    <p class="derivation">(b) Arrange 4 boys first: \( 4! \) ways. This creates 5 gaps: _ B _ B _ B _ B _</p>
+                    <p class="derivation">Choose 3 gaps for girls: \( \binom{5}{3} \). Arrange girls: \( 3! \)</p>
+                    <p class="derivation">Favourable = \( 4! \times \binom{5}{3} \times 3! = 24 \times 10 \times 6 = 1440 \)</p>
+                    <p class="derivation">\( P = \frac{1440}{5040} = \frac{2}{7} \) </p>
+                </div>
+                
+                <h3>5.4 Limitations of Classical Probability</h3>
+                <p>The classical definition is elegant but has serious limitations:</p>
+                <ol style="margin-left: 1.5rem;">
+                    <li><strong>Requires finite sample space:</strong> It breaks down when \( S \) is infinite. What is the probability of picking a rational number from \( [0,1] \)?</li>
+                    <li><strong>Requires equally likely outcomes:</strong> A biased die does not satisfy this assumption. We cannot use \( P(i) = \frac{1}{6} \) for each face.</li>
+                    <li><strong>Circular reasoning:</strong> The definition uses "equally likely" — but this itself means "equal probability." So the definition contains the concept it is trying to define.</li>
+                </ol>
+                <p>These limitations motivated the development of alternative definitions.</p>
+            </section>
+        </div>
+
+        <div id="relative-frequency" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">6.</span>Relative Frequency (Statistical / Empirical) Approach</h2>
+                
+                <h3>6.1 Basic Idea</h3>
+                <p>Rather than reasoning about symmetry, we observe what actually happens when an experiment is repeated many times.</p>
+                
+                <div class="definition">
+                    <h4>Definition</h4>
+                    <p>If an experiment is repeated \( n \) times under identical conditions and event \( A \) occurs \( f \) times, then the <strong>relative frequency</strong> of \( A \) is</p>
+                    <p class="formula-box">\( \displaystyle f_n(A) = \frac{f}{n} \)</p>
+                    <p>As \( n \) becomes very large, this ratio stabilises and approaches a limiting value, which we call the probability of \( A \):</p>
+                    <p class="formula-box">\( \displaystyle P(A) = \lim_{n \to \infty} f_n(A) \)</p>
+                    <p>This is the <strong>von Mises</strong> definition (after Richard von Mises, 1928).</p>
+                </div>
+                
+                <h3>6.2 Worked Examples</h3>
+                
+                <div class="example">
+                    <h4>Example 1.8.1: Coin Toss</h4>
+                    <p>A coin is tossed 500 times. Heads appears 262 times.</p>
+                    <p class="derivation">\( n = 500 \), \( f = 262 \)</p>
+                    <p class="derivation">\( P(H) \approx \frac{262}{500} = 0.524 \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.8.2: Quality Control</h4>
+                    <p>A factory inspects 10,000 items. 320 are found defective.</p>
+                    <p class="derivation">\( P(\text{defective}) \approx \frac{320}{10000} = 0.032 \)</p>
+                    <p>This means approximately 3.2% of items are defective. </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.8.3: Medical Study</h4>
+                    <p>In a study, 1500 patients take a drug. 1125 recover.</p>
+                    <p class="derivation">\( P(\text{recovery}) \approx \frac{1125}{1500} = 0.75 \)</p>
+                    <p>The drug has a 75% success rate based on this data. </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.8.4: Biased Die</h4>
+                    <p>A biased die is rolled 600 times. The outcomes:</p>
+                    <table>
+                        <thead>
+                            <tr><th>Face</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Frequency</td><td>85</td><td>92</td><td>110</td><td>105</td><td>108</td><td>100</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="derivation">\( P(1) \approx \frac{85}{600} = 0.142 \)</p>
+                    <p class="derivation">\( P(2) \approx \frac{92}{600} = 0.153 \)</p>
+                    <p class="derivation">\( P(3) \approx \frac{110}{600} = 0.183 \)</p>
+                    <p class="derivation">And so on...</p>
+                    <p><strong>Note:</strong> Not \( \frac{1}{6} \), confirming the die is biased. </p>
+                </div>
+                
+                <h3>6.3 Properties</h3>
+                <ol style="margin-left: 1.5rem;">
+                    <li>\( 0 \leq f \leq n \), so \( 0 \leq f_n(A) \leq 1 \).</li>
+                    <li>\( f_n(S) = 1 \), so \( P(S) = 1 \).</li>
+                    <li>If \( A \) and \( B \) are mutually exclusive, \( f_n(A \cup B) = f_n(A) + f_n(B) \), so \( P(A \cup B) = P(A) + P(B) \).</li>
+                </ol>
+                
+                <h3>6.4 Advantages and Limitations</h3>
+                
+                <div class="note">
+                    <h4>Advantages</h4>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Works for unequal-probability situations</li>
+                        <li>Based on observed data</li>
+                        <li>No symmetry assumption needed</li>
+                    </ul>
+                </div>
+                
+                <div class="warning">
+                    <h4>Limitations</h4>
+                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                        <li>Requires many repetitions (sometimes impractical)</li>
+                        <li>The limiting value may never be reached</li>
+                        <li>Different runs give different estimates</li>
+                        <li>Not applicable to one-time events (probability of a specific historical event)</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <div id="subjective" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">7.</span>Statistical (Subjective) Probability</h2>
+                <p>For events that cannot be repeated — one-time occurrences, expert assessments, future uncertainties — neither the classical nor the frequency approach is applicable. In such cases, probability represents a <strong>degree of belief</strong> held by a rational person.</p>
+                
+                <div class="example">
+                    <h4>Example 1.9.1: Weather Forecast</h4>
+                    <p>"There is a 60% probability that it will rain tomorrow." — A meteorologist's assessment based on data and models.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.9.2: Medical Prognosis</h4>
+                    <p>"I believe there is a 70% chance the patient will recover within a week." — A doctor's clinical judgement.</p>
+                </div>
+                
+                <div class="example">
+                    <h4>Example 1.9.3: Archaeological Dating</h4>
+                    <p>"The probability that this archaeological artefact is at least 2000 years old is 80%." — An expert's belief based on evidence.</p>
+                </div>
+                
+                <div class="key-point">
+                    <strong>Key Points:</strong><br>
+                    • This approach is used extensively in Bayesian statistics.<br>
+                    • Different people may assign different subjective probabilities to the same event based on their knowledge and experience.<br>
+                    • It is the only feasible approach for unique, non-repeatable events.
+                </div>
+            </section>
+        </div>
+
+        <div id="axiomatic" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">8.</span>Axiomatic Approach — Kolmogorov's Axioms</h2>
+                <p>In 1933, the Soviet mathematician Andrei Nikolaevich Kolmogorov published <em>Foundations of Probability Theory</em>, giving probability theory its modern mathematical foundation. His approach avoids the weaknesses of all previous definitions.</p>
+                
+                <h3>8.1 Probability Space</h3>
+                <p>The axiomatic framework requires three objects — collectively called a <strong>probability space</strong> — denoted \( (S, \mathcal{F}, P) \):</p>
+                <ol style="margin-left: 1.5rem;">
+                    <li>\( S \): the sample space (set of all outcomes).</li>
+                    <li>\( \mathcal{F} \): a σ-algebra of subsets of \( S \) (the collection of all events we will assign probabilities to).</li>
+                    <li>\( P \): a probability measure (a function from \( \mathcal{F} \) to \( [0,1] \)).</li>
+                </ol>
+                <p><strong>Note:</strong> At the introductory level, \( \mathcal{F} \) is typically taken to be the power set of \( S \) (collection of all subsets), and we simply specify \( P \) on all events.</p>
+                
+                <h3>8.2 Kolmogorov's Three Axioms</h3>
+                <p>Let \( (S, \mathcal{F}, P) \) be a probability space. \( P \) is called a <strong>probability measure</strong> if it satisfies:</p>
+                
+                <div class="theorem">
+                    <h4>Axiom 1: Non-negativity</h4>
+                    <p class="formula-box">\( P(A) \geq 0 \) for every event \( A \in \mathcal{F} \)</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Axiom 2: Normalization</h4>
+                    <p class="formula-box">\( P(S) = 1 \)</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Axiom 3: Countable Additivity</h4>
+                    <p>If \( A_1, A_2, A_3, \ldots \) are pairwise mutually exclusive events, then</p>
+                    <p class="formula-box">\( \displaystyle P\left(\bigcup_{i=1}^{\infty} A_i\right) = \sum_{i=1}^{\infty} P(A_i) \)</p>
+                </div>
+                
+                <div class="key-point">
+                    <strong>Important:</strong> These three axioms are the complete foundation. Everything else in probability theory is a logical consequence.
+                </div>
+            </section>
+        </div>
+
+        <div id="theorems" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">9.</span>Basic Theorems Derived from Axioms</h2>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.1: Probability of the Impossible Event</h4>
+                    <p class="formula-box">\( P(\emptyset) = 0 \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>Since \( \emptyset \) and \( \emptyset \) are mutually exclusive and \( \emptyset \cup \emptyset = \emptyset \):</p>
+                        <p class="proof-step">By Axiom 3: \( P(\emptyset) = P(\emptyset \cup \emptyset) = P(\emptyset) + P(\emptyset) \)</p>
+                        <p class="proof-step">Subtract \( P(\emptyset) \) from both sides: \( 0 = P(\emptyset) \)</p>
+                        <p class="proof-step">Therefore, \( P(\emptyset) = 0 \). </p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.2: Complement Rule</h4>
+                    <p class="formula-box">\( P(A^c) = 1 - P(A) \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>\( A \) and \( A^c \) are mutually exclusive and \( A \cup A^c = S \).</p>
+                        <p class="proof-step">By Axiom 3: \( P(A \cup A^c) = P(A) + P(A^c) \)</p>
+                        <p class="proof-step">But \( P(A \cup A^c) = P(S) = 1 \) (by Axiom 2)</p>
+                        <p class="proof-step">So \( 1 = P(A) + P(A^c) \)</p>
+                        <p class="proof-step">Therefore, \( P(A^c) = 1 - P(A) \). </p>
+                    </div>
+                    
+                    <p style="margin-top: 0.8rem;"><strong>Corollary:</strong> \( P(A) = 1 - P(A^c) \). This is often used to compute probabilities of events whose complements are simpler.</p>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.3: Probability is Between 0 and 1</h4>
+                    <p class="formula-box">\( 0 \leq P(A) \leq 1 \) for any event \( A \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>From Axiom 1, \( P(A) \geq 0 \). </p>
+                        <p>From the complement rule, \( P(A^c) = 1 - P(A) \geq 0 \) (by Axiom 1)</p>
+                        <p class="proof-step">So \( 1 - P(A) \geq 0 \)</p>
+                        <p class="proof-step">Therefore, \( P(A) \leq 1 \). </p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.4: Monotonicity</h4>
+                    <p>If \( A \subseteq B \), then \( P(A) \leq P(B) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>Since \( A \subseteq B \), we can write \( B = A \cup (B - A) \), where \( A \) and \( B - A \) are mutually exclusive.</p>
+                        <p class="proof-step">By Axiom 3: \( P(B) = P(A) + P(B - A) \)</p>
+                        <p class="proof-step">Since \( P(B - A) \geq 0 \) (by Axiom 1)</p>
+                        <p class="proof-step">Therefore, \( P(B) \geq P(A) \), i.e., \( P(A) \leq P(B) \). </p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.5: General Addition Rule (Inclusion-Exclusion for Two Events)</h4>
+                    <p class="formula-box">\( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>We can partition \( A \cup B \) into three disjoint pieces:</p>
+                        <p class="proof-step">\( A - B \), \( A \cap B \), \( B - A \)</p>
+                        <p class="proof-step">These three sets are pairwise mutually exclusive, so by Axiom 3:</p>
+                        <p class="proof-step">\( P(A \cup B) = P(A - B) + P(A \cap B) + P(B - A) \) &nbsp;&nbsp;&nbsp; ...(1)</p>
+                        <br>
+                        <p>Also:</p>
+                        <p class="proof-step">\( P(A) = P(A - B) + P(A \cap B) \) &nbsp;&nbsp;&nbsp; ...(2)</p>
+                        <p class="proof-step">\( P(B) = P(B - A) + P(A \cap B) \) &nbsp;&nbsp;&nbsp; ...(3)</p>
+                        <br>
+                        <p>Adding (2) and (3):</p>
+                        <p class="proof-step">\( P(A) + P(B) = P(A - B) + P(B - A) + 2P(A \cap B) \)</p>
+                        <br>
+                        <p>Substituting into (1):</p>
+                        <p class="proof-step">\( P(A \cup B) = [P(A) + P(B) - 2P(A \cap B)] + P(A \cap B) \)</p>
+                        <p class="proof-step">Therefore, \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \). </p>
+                    </div>
+                    
+                    <div class="example" style="margin-top: 1rem;">
+                        <h4>Example 1.11.1</h4>
+                        <p>\( P(A) = 0.6 \), \( P(B) = 0.5 \), \( P(A \cap B) = 0.3 \). Find \( P(A \cup B) \).</p>
+                        <p class="derivation">\( P(A \cup B) = 0.6 + 0.5 - 0.3 = 0.8 \) </p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.6: Addition Rule for Three Events (Inclusion-Exclusion)</h4>
+                    <p class="formula-box">\( \displaystyle P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(B \cap C) - P(A \cap C) + P(A \cap B \cap C) \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>Apply Theorem 1.11.5 twice:</p>
+                        <p class="proof-step">\( P(A \cup B \cup C) = P((A \cup B) \cup C) \)</p>
+                        <p class="proof-step">\( = P(A \cup B) + P(C) - P((A \cup B) \cap C) \)</p>
+                        <p class="proof-step">\( = [P(A) + P(B) - P(A \cap B)] + P(C) - P((A \cap C) \cup (B \cap C)) \)</p>
+                        <p class="proof-step">\( = P(A) + P(B) + P(C) - P(A \cap B) - [P(A \cap C) + P(B \cap C) - P(A \cap B \cap C)] \)</p>
+                        <p class="proof-step">Therefore, \( P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(B \cap C) - P(A \cap C) + P(A \cap B \cap C) \). </p>
+                    </div>
+                    
+                    <div class="example" style="margin-top: 1rem;">
+                        <h4>Example 1.11.2</h4>
+                        <p>In a class of 100 students: 60 study Maths (\( M \)), 55 study Physics (\( P \)), 50 study Chemistry (\( C \)), 35 study both \( M \) and \( P \), 30 both \( M \) and \( C \), 28 both \( P \) and \( C \), 20 study all three.</p>
+                        <p>Find \( P(M \cup P \cup C) \).</p>
+                        
+                        <h4 style="margin-top: 1rem;">Solution:</h4>
+                        <p class="derivation">\( P(M) = 0.60 \), \( P(P) = 0.55 \), \( P(C) = 0.50 \)</p>
+                        <p class="derivation">\( P(M \cap P) = 0.35 \), \( P(M \cap C) = 0.30 \), \( P(P \cap C) = 0.28 \)</p>
+                        <p class="derivation">\( P(M \cap P \cap C) = 0.20 \)</p>
+                        <p class="derivation">\( P(M \cup P \cup C) = 0.60 + 0.55 + 0.50 - 0.35 - 0.30 - 0.28 + 0.20 \)</p>
+                        <p class="derivation">\( = 1.65 - 0.93 + 0.20 = 0.92 \)</p>
+                        <p>So 92 students study at least one subject. </p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.7: Probability Difference Rule</h4>
+                    <p>For events \( A, B \):</p>
+                    <p class="formula-box">\( P(A - B) = P(A) - P(A \cap B) \)</p>
+                    
+                    <h4 style="margin-top: 1rem;">Proof:</h4>
+                    <div class="derivation">
+                        <p>\( A = (A - B) \cup (A \cap B) \), disjoint.</p>
+                        <p class="proof-step">So \( P(A) = P(A - B) + P(A \cap B) \)</p>
+                        <p class="proof-step">Therefore, \( P(A - B) = P(A) - P(A \cap B) \). </p>
+                    </div>
+                </div>
+                
+                <div class="theorem">
+                    <h4>Theorem 1.11.8: Continuity of Probability (Sequential Events)</h4>
+                    <p>If \( A_1 \supseteq A_2 \supseteq A_3 \supseteq \cdots \) (decreasing sequence), then:</p>
+                    <p class="formula-box">\( \displaystyle P\left(\bigcap_{i=1}^{\infty} A_i\right) = \lim_{n \to \infty} P(A_n) \)</p>
+                    <p>If \( A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots \) (increasing sequence), then:</p>
+                    <p class="formula-box">\( \displaystyle P\left(\bigcup_{i=1}^{\infty} A_i\right) = \lim_{n \to \infty} P(A_n) \)</p>
+                    <p><em>(Proof uses Axiom 3 and standard analysis — omitted here.)</em></p>
+                </div>
+            </section>
+        </div>
+
+        <div id="comparison" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">10.</span>Comparison of All Four Approaches</h2>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Classical</th>
+                            <th>Relative Frequency</th>
+                            <th>Subjective</th>
+                            <th>Axiomatic</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Based on</td>
+                            <td>Symmetry</td>
+                            <td>Observed data</td>
+                            <td>Expert belief</td>
+                            <td>Mathematical axioms</td>
+                        </tr>
+                        <tr>
+                            <td>Formula</td>
+                            <td>\( \frac{m}{n} \)</td>
+                            <td>\( \lim_{n\to\infty} \frac{f}{n} \)</td>
+                            <td>Personal judgement</td>
+                            <td>Axioms 1-3</td>
+                        </tr>
+                        <tr>
+                            <td>Requires</td>
+                            <td>Equally likely outcomes</td>
+                            <td>Many repetitions</td>
+                            <td>Domain knowledge</td>
+                            <td>Axioms 1-3</td>
+                        </tr>
+                        <tr>
+                            <td>Works for</td>
+                            <td>Coins, dice, cards</td>
+                            <td>Industry, surveys</td>
+                            <td>One-time events</td>
+                            <td>All cases</td>
+                        </tr>
+                        <tr>
+                            <td>Limitation</td>
+                            <td>Equal likelihood needed</td>
+                            <td>Infinite trials needed</td>
+                            <td>Subjective; varies</td>
+                            <td>Abstract</td>
+                        </tr>
+                        <tr>
+                            <td>Rigour</td>
+                            <td>Moderate</td>
+                            <td>Moderate</td>
+                            <td>Low</td>
+                            <td>Highest</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <div id="solved" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">11.</span>Solved Problems (Mixed)</h2>
+                
+                <div class="example">
+                    <h4>Problem 1.13.1: In a single throw of two dice, find the probability that:</h4>
+                    <p>(a) the sum is 8, (b) one die shows 6, (c) sum is divisible by 5, (d) the product is 12.</p>
+                    
+                    <h4 style="margin-top: 1rem;">Solution:</h4>
+                    <p class="derivation">\( n(S) = 36 \)</p>
+                    <p class="derivation">(a) Sum = 8: (2,6), (3,5), (4,4), (5,3), (6,2) — 5 outcomes. \( P = \frac{5}{36} \) </p>
+                    <p class="derivation">(b) One die shows 6: (6,1-6) and (1-5,6) = 6 + 5 = 11 outcomes. \( P = \frac{11}{36} \) </p>
+                    <p class="derivation">(c) Sum divisible by 5: sums 5 or 10. Sum=5: 4 outcomes, Sum=10: 3 outcomes. Total=7. \( P = \frac{7}{36} \) </p>
+                    <p class="derivation">(d) Product = 12: (2,6), (3,4), (4,3), (6,2) — 4 outcomes. \( P = \frac{4}{36} = \frac{1}{9} \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Problem 1.13.2: Letters of the word MATHEMATICS are arranged at random</h4>
+                    <p>Find: (a) all vowels come together, (b) the two T's are together.</p>
+                    
+                    <h4 style="margin-top: 1rem;">Solution:</h4>
+                    <p class="derivation">MATHEMATICS has 11 letters: M, A, T, H, E, M, A, T, I, C, S.</p>
+                    <p class="derivation">Repeated letters: M × 2, A × 2, T × 2.</p>
+                    <p class="derivation">Total arrangements: \( \frac{11!}{2!2!2!} = 4989600 \)</p>
+                    <br>
+                    <p class="derivation">(a) Vowels: A, A, E, I — 4 vowels (with A repeated twice). Treat as one block.</p>
+                    <p class="derivation">Block + 7 consonants = 8 units. Consonants: M, T, H, M, T, C, S — with M × 2, T × 2.</p>
+                    <p class="derivation">Arrangements of 8 units: \( \frac{8!}{2!2!} \)</p>
+                    <p class="derivation">Arrangements within vowel block: \( \frac{4!}{2!} \)</p>
+                    <p class="derivation">Favourable = \( \frac{8!}{2!2!} \times \frac{4!}{2!} = 10080 \times 12 = 120960 \)</p>
+                    <p class="derivation">\( P = \frac{120960}{4989600} = \frac{12}{495} = \frac{4}{165} \) </p>
+                    <br>
+                    <p class="derivation">(b) Treat two T's as one block. 10 units with M × 2, A × 2.</p>
+                    <p class="derivation">Arrangements: \( \frac{10!}{2!2!} = 907200 \)</p>
+                    <p class="derivation">\( P = \frac{907200}{4989600} = \frac{9072}{49896} = \frac{2}{11} \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Problem 1.13.3: If \( P(A) = 0.4 \), \( P(B) = 0.5 \), and \( P(A \cap B) = 0.2 \), find:</h4>
+                    <p>(a) \( P(A \cup B) \), (b) \( P(A^c) \), (c) \( P(A - B) \), (d) \( P(A^c \cap B^c) \).</p>
+                    
+                    <h4 style="margin-top: 1rem;">Solution:</h4>
+                    <p class="derivation">(a) \( P(A \cup B) = 0.4 + 0.5 - 0.2 = 0.7 \) </p>
+                    <p class="derivation">(b) \( P(A^c) = 1 - 0.4 = 0.6 \) </p>
+                    <p class="derivation">(c) \( P(A - B) = P(A) - P(A \cap B) = 0.4 - 0.2 = 0.2 \) </p>
+                    <p class="derivation">(d) \( P(A^c \cap B^c) = P((A \cup B)^c) = 1 - P(A \cup B) = 1 - 0.7 = 0.3 \) </p>
+                </div>
+                
+                <div class="example">
+                    <h4>Problem 1.13.4: A sample space has 8 equally likely outcomes: \( S = \{a,b,c,d,e,f,g,h\} \)</h4>
+                    <p>\( A = \{a,b,c,d\} \), \( B = \{c,d,e,f\} \). Find (a) \( P(A) \), (b) \( P(B) \), (c) \( P(A \cap B) \), (d) \( P(A \cup B) \), (e) \( P(A^c) \), (f) Are \( A \) and \( B \) independent?</p>
+                    
+                    <h4 style="margin-top: 1rem;">Solution:</h4>
+                    <p class="derivation">Each outcome has probability \( \frac{1}{8} \)</p>
+                    <p class="derivation">(a) \( P(A) = \frac{4}{8} = \frac{1}{2} \) </p>
+                    <p class="derivation">(b) \( P(B) = \frac{4}{8} = \frac{1}{2} \) </p>
+                    <p class="derivation">(c) \( A \cap B = \{c,d\} \), so \( P(A \cap B) = \frac{2}{8} = \frac{1}{4} \) </p>
+                    <p class="derivation">(d) \( A \cup B = \{a,b,c,d,e,f\} \), so \( P(A \cup B) = \frac{6}{8} = \frac{3}{4} \) </p>
+                    <p class="derivation">(e) \( P(A^c) = 1 - \frac{1}{2} = \frac{1}{2} \) </p>
+                    <p class="derivation">(f) Check: \( P(A)P(B) = \frac{1}{2} \times \frac{1}{2} = \frac{1}{4} = P(A \cap B) \)</p>
+                    <p class="derivation">Since \( P(A \cap B) = P(A)P(B) \), \( A \) and \( B \) are <strong>independent</strong>. </p>
+                </div>
+            </section>
+        </div>
+
+        <div id="formulas" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">12.</span>Quick Formula Reference</h2>
+                
+                <table class="quick-ref-table">
+                    <thead>
+                        <tr>
+                            <th>Concept</th>
+                            <th>Formula</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Classical probability</td>
+                            <td>\( P(A) = \frac{n(A)}{n(S)} \)</td>
+                        </tr>
+                        <tr>
+                            <td>Complement</td>
+                            <td>\( P(A^c) = 1 - P(A) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Certain event</td>
+                            <td>\( P(S) = 1 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Impossible event</td>
+                            <td>\( P(\emptyset) = 0 \)</td>
+                        </tr>
+                        <tr>
+                            <td>Mutually exclusive</td>
+                            <td>\( P(A \cup B) = P(A) + P(B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>General addition</td>
+                            <td>\( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Three events</td>
+                            <td>\( P(A \cup B \cup C) = P(A) + P(B) + P(C) - P(A \cap B) - P(B \cap C) - P(A \cap C) + P(A \cap B \cap C) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Independence</td>
+                            <td>\( P(A \cap B) = P(A) \cdot P(B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Difference</td>
+                            <td>\( P(A - B) = P(A) - P(A \cap B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>De Morgan I</td>
+                            <td>\( (A \cup B)^c = A^c \cap B^c \)</td>
+                        </tr>
+                        <tr>
+                            <td>De Morgan II</td>
+                            <td>\( (A \cap B)^c = A^c \cup B^c \)</td>
+                        </tr>
+                        <tr>
+                            <td>Monotonicity</td>
+                            <td>\( A \subseteq B \Rightarrow P(A) \leq P(B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Boole's inequality</td>
+                            <td>\( P(A \cup B) \leq P(A) + P(B) \)</td>
+                        </tr>
+                        <tr>
+                            <td>Relative frequency</td>
+                            <td>\( f_n(A) = \frac{f}{n} \)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+
+        <div id="exercises" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">13.</span>Exercises — Subjective (30 Questions)</h2>
+                
+                <div class="question">Q1. Define a random experiment. Give 3 examples from daily life and explain why each qualifies.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans1')">Show/Hide Answer ▼</button>
+                <div id="ans1" class="answer">
+                    <p><strong>Solution:</strong> A random experiment is any well-defined procedure that satisfies: (1) all possible outcomes are known in advance, (2) can be repeated under identical conditions, (3) exact outcome cannot be predicted with certainty.</p>
+                    <p><strong>Examples:</strong></p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li><strong>Tossing a coin:</strong> Outcomes {H, T} known, repeatable, outcome uncertain.</li>
+                        <li><strong>Rolling a die:</strong> Outcomes {1,2,3,4,5,6} known, repeatable, outcome uncertain.</li>
+                        <li><strong>Drawing a card:</strong> 52 possible cards known, repeatable with shuffling, outcome uncertain.</li>
+                    </ol>
+                </div>
+                
+                <div class="question">Q2. Distinguish between: (a) sample point and event, (b) impossible event and sure event, (c) simple event and compound event.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans2')">Show/Hide Answer ▼</button>
+                <div id="ans2" class="answer">
+                    <p><strong>(a) Sample point vs Event:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Sample point: Single possible outcome (e.g., {3} when rolling a die)</li>
+                        <li>Event: Any subset of sample space (e.g., {2,4,6} = even numbers)</li>
+                    </ul>
+                    <p><strong>(b) Impossible vs Sure event:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Impossible event: \( \emptyset \), never occurs, \( P = 0 \)</li>
+                        <li>Sure event: \( S \), always occurs, \( P = 1 \)</li>
+                    </ul>
+                    <p><strong>(c) Simple vs Compound event:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Simple event: Contains exactly one sample point</li>
+                        <li>Compound event: Contains two or more sample points</li>
+                    </ul>
+                </div>
+                
+                <div class="question">Q3. Write the sample space for: (a) Tossing 4 coins, (b) Rolling two dice, (c) Drawing 2 balls from a bag with 3 colours, (d) Picking 2 cards from a deck.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans3')">Show/Hide Answer ▼</button>
+                <div id="ans3" class="answer">
+                    <p><strong>(a) Tossing 4 coins:</strong><br>
+                    \( S = \{HHHH, HHHT, HHTH, HHTT, HTHH, HTHT, HTTH, HTTT, THHH, THHT, THTH, THTT, TTHH, TTHT, TTTH, TTTT\} \), \( n(S) = 16 \)</p>
+                    
+                    <p><strong>(b) Rolling two dice:</strong><br>
+                    \( S = \{(i,j) : i,j \in \{1,2,3,4,5,6\}\} \), \( n(S) = 36 \)</p>
+                    
+                    <p><strong>(c) Drawing 2 balls from bag with colours {R, G, W} (with replacement):</strong><br>
+                    \( S = \{RR, RG, RW, GR, GG, GW, WR, WG, WW\} \), \( n(S) = 9 \)</p>
+                    
+                    <p><strong>(d) Picking 2 cards from deck (order doesn't matter):</strong><br>
+                    \( n(S) = \binom{52}{2} = 1326 \) possible pairs</p>
+                </div>
+                
+                <div class="question">Q4. Prove: \( (A \cup B)^c = A^c \cap B^c \) and \( (A \cap B)^c = A^c \cup B^c \) (De Morgan's Laws).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans4')">Show/Hide Answer ▼</button>
+                <div id="ans4" class="answer">
+                    <p><strong>Proof of First Law:</strong> \( (A \cup B)^c = A^c \cap B^c \)</p>
+                    <div class="derivation">
+                        <p>Let \( x \in (A \cup B)^c \)</p>
+                        <p class="proof-step">⇒ \( x \notin A \cup B \)</p>
+                        <p class="proof-step">⇒ \( x \notin A \) and \( x \notin B \)</p>
+                        <p class="proof-step">⇒ \( x \in A^c \) and \( x \in B^c \)</p>
+                        <p class="proof-step">⇒ \( x \in A^c \cap B^c \)</p>
+                        <p>Thus \( (A \cup B)^c \subseteq A^c \cap B^c \) ...(i)</p>
+                        <br>
+                        <p>Conversely, let \( x \in A^c \cap B^c \)</p>
+                        <p class="proof-step">⇒ \( x \in A^c \) and \( x \in B^c \)</p>
+                        <p class="proof-step">⇒ \( x \notin A \) and \( x \notin B \)</p>
+                        <p class="proof-step">⇒ \( x \notin A \cup B \)</p>
+                        <p class="proof-step">⇒ \( x \in (A \cup B)^c \)</p>
+                        <p>Thus \( A^c \cap B^c \subseteq (A \cup B)^c \) ...(ii)</p>
+                        <br>
+                        <p>From (i) and (ii): \( (A \cup B)^c = A^c \cap B^c \). </p>
+                    </div>
+                    <p><em>Second law proved similarly.</em></p>
+                </div>
+                
+                <div class="question">Q5. Explain the classical definition of probability. State its assumptions and limitations.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans5')">Show/Hide Answer ▼</button>
+                <div id="ans5" class="answer">
+                    <p><strong>Classical Definition:</strong> If experiment has \( n \) exhaustive, equally likely, mutually exclusive outcomes, and event \( A \) occurs in \( m \) outcomes, then \( P(A) = \frac{m}{n} \).</p>
+                    
+                    <p><strong>Assumptions:</strong></p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>Finite sample space</li>
+                        <li>All outcomes equally likely</li>
+                        <li>Outcomes mutually exclusive</li>
+                    </ol>
+                    
+                    <p><strong>Limitations:</strong></p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>Does not work for infinite sample spaces</li>
+                        <li>Cannot handle biased/unfair experiments</li>
+                        <li>Circular: "equally likely" presupposes probability concept</li>
+                    </ol>
+                </div>
+                
+                <div class="question">Q6. In a group of 30 students, 18 play cricket, 15 play football, 10 play both. Find probability that randomly selected student plays (a) at least one sport, (b) exactly one sport, (c) neither sport.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans6')">Show/Hide Answer ▼</button>
+                <div id="ans6" class="answer">
+                    <p><strong>Given:</strong> \( n(S) = 30 \), \( n(C) = 18 \), \( n(F) = 15 \), \( n(C \cap F) = 10 \)</p>
+                    
+                    <p><strong>(a) At least one sport:</strong></p>
+                    <p class="derivation">\( n(C \cup F) = n(C) + n(F) - n(C \cap F) = 18 + 15 - 10 = 23 \)</p>
+                    <p class="derivation">\( P(C \cup F) = \frac{23}{30} \) </p>
+                    
+                    <p><strong>(b) Exactly one sport:</strong></p>
+                    <p class="derivation">Only cricket: \( 18 - 10 = 8 \)</p>
+                    <p class="derivation">Only football: \( 15 - 10 = 5 \)</p>
+                    <p class="derivation">Total = \( 8 + 5 = 13 \)</p>
+                    <p class="derivation">\( P = \frac{13}{30} \) </p>
+                    
+                    <p><strong>(c) Neither sport:</strong></p>
+                    <p class="derivation">\( n(\text{neither}) = 30 - 23 = 7 \)</p>
+                    <p class="derivation">\( P = \frac{7}{30} \) </p>
+                </div>
+                
+                <!-- Questions 7-30 with detailed solutions -->
+                <div class="question">Q7. A fair die is rolled twice. Find the probability that: (a) the sum is 9, (b) both show the same number, (c) the first exceeds the second, (d) product is greater than 15.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans7')">Show/Hide Answer ▼</button>
+                <div id="ans7" class="answer">
+                    <p class="derivation">\( n(S) = 36 \)</p>
+                    <p class="derivation">(a) Sum = 9: (3,6), (4,5), (5,4), (6,3) — 4 outcomes. \( P = \frac{4}{36} = \frac{1}{9} \) </p>
+                    <p class="derivation">(b) Same number: (1,1), (2,2), ..., (6,6) — 6 outcomes. \( P = \frac{6}{36} = \frac{1}{6} \) </p>
+                    <p class="derivation">(c) First > Second: (2,1), (3,1-2), (4,1-3), (5,1-4), (6,1-5) = 1+2+3+4+5 = 15. \( P = \frac{15}{36} = \frac{5}{12} \) </p>
+                    <p class="derivation">(d) Product > 15: (4,5), (4,6), (5,4), (5,5), (5,6), (6,4), (6,5), (6,6) — 8 outcomes. \( P = \frac{8}{36} = \frac{2}{9} \) </p>
+                </div>
+                
+                <div class="question">Q8. Two cards are drawn from a pack of 52. Find the probability of getting: (a) both aces, (b) one king and one queen, (c) at least one diamond, (d) both of the same suit.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans8')">Show/Hide Answer ▼</button>
+                <div id="ans8" class="answer">
+                    <p class="derivation">Total ways: \( \binom{52}{2} = 1326 \)</p>
+                    <p class="derivation">(a) Both aces: \( \binom{4}{2} = 6 \). \( P = \frac{6}{1326} = \frac{1}{221} \) </p>
+                    <p class="derivation">(b) One king, one queen: \( \binom{4}{1} \times \binom{4}{1} = 16 \). \( P = \frac{16}{1326} = \frac{8}{663} \) </p>
+                    <p class="derivation">(c) At least one diamond = 1 - P(no diamond) = 1 - \( \frac{\binom{39}{2}}{\binom{52}{2}} = 1 - \frac{741}{1326} = \frac{585}{1326} = \frac{15}{34} \) </p>
+                    <p class="derivation">(d) Same suit: 4 suits × \( \binom{13}{2} = 4 \times 78 = 312 \). \( P = \frac{312}{1326} = \frac{4}{17} \) </p>
+                </div>
+                
+                <div class="question">Q9. Prove that \( P(\emptyset) = 0 \) using Kolmogorov's axioms.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans9')">Show/Hide Answer ▼</button>
+                <div id="ans9" class="answer">
+                    <p><strong>Proof:</strong> Since \( \emptyset \) and \( \emptyset \) are mutually exclusive and \( \emptyset \cup \emptyset = \emptyset \):</p>
+                    <p class="derivation">By Axiom 3: \( P(\emptyset) = P(\emptyset \cup \emptyset) = P(\emptyset) + P(\emptyset) \)</p>
+                    <p class="derivation">Subtract \( P(\emptyset) \) from both sides: \( 0 = P(\emptyset) \)</p>
+                    <p class="derivation">Therefore, \( P(\emptyset) = 0 \). </p>
+                </div>
+                
+                <div class="question">Q10. Prove that \( P(A^c) = 1 - P(A) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans10')">Show/Hide Answer ▼</button>
+                <div id="ans10" class="answer">
+                    <p><strong>Proof:</strong> \( A \) and \( A^c \) are mutually exclusive and \( A \cup A^c = S \).</p>
+                    <p class="derivation">By Axiom 3: \( P(A \cup A^c) = P(A) + P(A^c) \)</p>
+                    <p class="derivation">But \( P(A \cup A^c) = P(S) = 1 \) (by Axiom 2)</p>
+                    <p class="derivation">So \( 1 = P(A) + P(A^c) \)</p>
+                    <p class="derivation">Therefore, \( P(A^c) = 1 - P(A) \). </p>
+                </div>
+                
+                <!-- Continue with Q11-Q30 (abbreviated for space, but all included in final HTML) -->
+                <div class="question">Q11. State Kolmogorov's three axioms of probability. Derive the complement rule from these axioms.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans11')">Show/Hide Answer ▼</button>
+                <div id="ans11" class="answer">
+                    <p><strong>Kolmogorov's Axioms:</strong></p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li>Non-negativity: \( P(A) \geq 0 \) for all events \( A \)</li>
+                        <li>Normalization: \( P(S) = 1 \)</li>
+                        <li>Countable additivity: If \( A_i \) pairwise disjoint, \( P(\bigcup A_i) = \sum P(A_i) \)</li>
+                    </ol>
+                    <p><strong>Derivation of complement rule:</strong> As shown in Q10.</p>
+                </div>
+                
+                <div class="question">Q12. If \( P(A) = 0.5 \), \( P(B) = 0.4 \), \( P(A \cap B) = 0.2 \), find \( P(A \cup B) \), \( P(A^c) \), \( P(B^c) \), \( P(A^c \cap B^c) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans12')">Show/Hide Answer ▼</button>
+                <div id="ans12" class="answer">
+                    <p class="derivation">\( P(A \cup B) = 0.5 + 0.4 - 0.2 = 0.7 \) </p>
+                    <p class="derivation">\( P(A^c) = 1 - 0.5 = 0.5 \) </p>
+                    <p class="derivation">\( P(B^c) = 1 - 0.4 = 0.6 \) </p>
+                    <p class="derivation">\( P(A^c \cap B^c) = P((A \cup B)^c) = 1 - 0.7 = 0.3 \) </p>
+                </div>
+                
+                <div class="question">Q13. Prove that if \( A \subseteq B \), then \( P(A) \leq P(B) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans13')">Show/Hide Answer ▼</button>
+                <div id="ans13" class="answer">
+                    <p><strong>Proof:</strong> Since \( A \subseteq B \), we can write \( B = A \cup (B - A) \), where \( A \) and \( B - A \) are mutually exclusive.</p>
+                    <p class="derivation">By Axiom 3: \( P(B) = P(A) + P(B - A) \)</p>
+                    <p class="derivation">Since \( P(B - A) \geq 0 \) (by Axiom 1)</p>
+                    <p class="derivation">Therefore, \( P(B) \geq P(A) \), i.e., \( P(A) \leq P(B) \). </p>
+                </div>
+                
+                <div class="question">Q14. A bag has 5 red, 3 green, and 4 white balls. Two balls are drawn. Find probability that (a) both same colour, (b) at least one white.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans14')">Show/Hide Answer ▼</button>
+                <div id="ans14" class="answer">
+                    <p class="derivation">Total balls = 12, total ways = \( \binom{12}{2} = 66 \)</p>
+                    <p class="derivation">(a) Same colour: Red: \( \binom{5}{2}=10 \), Green: \( \binom{3}{2}=3 \), White: \( \binom{4}{2}=6 \). Total = 19. \( P = \frac{19}{66} \) </p>
+                    <p class="derivation">(b) At least one white = 1 - P(no white) = 1 - \( \frac{\binom{8}{2}}{66} = 1 - \frac{28}{66} = \frac{38}{66} = \frac{19}{33} \) </p>
+                </div>
+                
+                <div class="question">Q15. Three dice are thrown simultaneously. Find: (a) \( P(\text{sum} = 10) \), (b) \( P(\text{all different}) \), (c) \( P(\text{at least one 6}) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans15')">Show/Hide Answer ▼</button>
+                <div id="ans15" class="answer">
+                    <p class="derivation">\( n(S) = 6^3 = 216 \)</p>
+                    <p class="derivation">(a) Sum = 10: Count triples (i,j,k) with i+j+k=10. By enumeration: 27 outcomes. \( P = \frac{27}{216} = \frac{1}{8} \) </p>
+                    <p class="derivation">(b) All different: First die: 6 choices, second: 5, third: 4. \( 6 \times 5 \times 4 = 120 \). \( P = \frac{120}{216} = \frac{5}{9} \) </p>
+                    <p class="derivation">(c) At least one 6 = 1 - P(no 6) = 1 - \( (\frac{5}{6})^3 = 1 - \frac{125}{216} = \frac{91}{216} \) </p>
+                </div>
+                
+                <div class="question">Q16. What is the relative frequency approach to probability? How does it overcome the limitations of the classical approach?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans16')">Show/Hide Answer ▼</button>
+                <div id="ans16" class="answer">
+                    <p><strong>Relative Frequency Approach:</strong> Probability is defined as the limiting value of relative frequency as number of trials approaches infinity: \( P(A) = \lim_{n \to \infty} \frac{f}{n} \).</p>
+                    <p><strong>Overcomes classical limitations:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Works for biased/unfair experiments (no equal likelihood assumption)</li>
+                        <li>Can handle infinite sample spaces through limiting process</li>
+                        <li>Based on empirical data rather than theoretical symmetry</li>
+                    </ul>
+                </div>
+                
+                <div class="question">Q17. Letters of PROBABILITY are arranged at random. Find \( P(\text{vowels together}) \) and \( P(\text{two B's together}) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans17')">Show/Hide Answer ▼</button>
+                <div id="ans17" class="answer">
+                    <p class="derivation">PROBABILITY: 11 letters, B×2, I×2. Total arrangements: \( \frac{11!}{2!2!} \)</p>
+                    <p class="derivation">Vowels: O, A, I, I (4 letters, I×2). Treat as block: 8 units. Arrangements: \( \frac{8!}{2!} \times \frac{4!}{2!} \)</p>
+                    <p class="derivation">\( P(\text{vowels together}) = \frac{\frac{8!}{2!} \times \frac{4!}{2!}}{\frac{11!}{2!2!}} = \frac{20160 \times 12}{19958400} = \frac{241920}{19958400} = \frac{4}{330} = \frac{2}{165} \) </p>
+                    <p class="derivation">Two B's together: Treat as block. 10 units with I×2. Arrangements: \( \frac{10!}{2!} \)</p>
+                    <p class="derivation">\( P = \frac{\frac{10!}{2!}}{\frac{11!}{2!2!}} = \frac{1814400}{19958400} = \frac{2}{11} \) </p>
+                </div>
+                
+                <div class="question">Q18. A committee of 3 is formed from 4 men and 5 women. Find \( P(\text{at least one woman}) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans18')">Show/Hide Answer ▼</button>
+                <div id="ans18" class="answer">
+                    <p class="derivation">Total ways: \( \binom{9}{3} = 84 \)</p>
+                    <p class="derivation">At least one woman = 1 - P(all men) = 1 - \( \frac{\binom{4}{3}}{84} = 1 - \frac{4}{84} = \frac{80}{84} = \frac{20}{21} \) </p>
+                </div>
+                
+                <div class="question">Q19. \( A \), \( B \), and \( C \) are independent. Find \( P(A \cap B \cap C) \) and \( P(A \cup B \cup C) \) if \( P(A)=0.3 \), \( P(B)=0.4 \), \( P(C)=0.5 \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans19')">Show/Hide Answer ▼</button>
+                <div id="ans19" class="answer">
+                    <p class="derivation">Since independent: \( P(A \cap B \cap C) = P(A)P(B)P(C) = 0.3 \times 0.4 \times 0.5 = 0.06 \) </p>
+                    <p class="derivation">\( P(A \cup B \cup C) = 0.3 + 0.4 + 0.5 - (0.12 + 0.15 + 0.20) + 0.06 = 1.2 - 0.47 + 0.06 = 0.79 \) </p>
+                </div>
+                
+                <div class="question">Q20. Show that for any three events: \( P(A \cup B \cup C) \leq P(A) + P(B) + P(C) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans20')">Show/Hide Answer ▼</button>
+                <div id="ans20" class="answer">
+                    <p><strong>Proof (Boole's Inequality):</strong></p>
+                    <p class="derivation">From inclusion-exclusion: \( P(A \cup B \cup C) = P(A)+P(B)+P(C) - P(A\cap B) - P(B\cap C) - P(A\cap C) + P(A\cap B\cap C) \)</p>
+                    <p class="derivation">Since \( P(A\cap B) \geq 0 \), \( P(B\cap C) \geq 0 \), \( P(A\cap C) \geq 0 \), and \( P(A\cap B\cap C) \geq 0 \)</p>
+                    <p class="derivation">Removing negative terms: \( P(A \cup B \cup C) \leq P(A) + P(B) + P(C) \). </p>
+                </div>
+                
+                <!-- Q21-Q30 continue with same detailed format -->
+                <div class="question">Q21. A number is selected at random from 1 to 100. Find the probability that it is (a) divisible by 7, (b) a perfect square, (c) divisible by both 3 and 5, (d) divisible by 3 or 5.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans21')">Show/Hide Answer ▼</button>
+                <div id="ans21" class="answer">
+                    <p class="derivation">Total outcomes: 100</p>
+                    <p class="derivation">(a) Divisible by 7: 7,14,...,98 → 14 numbers. \( P = \frac{14}{100} = 0.14 \) </p>
+                    <p class="derivation">(b) Perfect squares: 1,4,9,16,25,36,49,64,81,100 → 10 numbers. \( P = \frac{10}{100} = 0.1 \) </p>
+                    <p class="derivation">(c) Divisible by both 3 and 5 = divisible by 15: 15,30,...,90 → 6 numbers. \( P = \frac{6}{100} = 0.06 \) </p>
+                    <p class="derivation">(d) Divisible by 3 or 5: By inclusion-exclusion: \( \lfloor\frac{100}{3}\rfloor + \lfloor\frac{100}{5}\rfloor - \lfloor\frac{100}{15}\rfloor = 33 + 20 - 6 = 47 \). \( P = \frac{47}{100} = 0.47 \) </p>
+                </div>
+                
+                <div class="question">Q22. Prove: \( P(A \cup B) \leq P(A) + P(B) \) for any two events \( A \) and \( B \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans22')">Show/Hide Answer ▼</button>
+                <div id="ans22" class="answer">
+                    <p><strong>Proof:</strong> From general addition rule: \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</p>
+                    <p class="derivation">Since \( P(A \cap B) \geq 0 \) (by Axiom 1)</p>
+                    <p class="derivation">Therefore, \( P(A \cup B) \leq P(A) + P(B) \). </p>
+                </div>
+                
+                <div class="question">Q23. From a group of 6 boys and 4 girls, a committee of 4 is selected at random. Find the probability that the committee contains: (a) exactly 2 boys and 2 girls, (b) at most one girl, (c) at least 3 boys.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans23')">Show/Hide Answer ▼</button>
+                <div id="ans23" class="answer">
+                    <p class="derivation">Total ways: \( \binom{10}{4} = 210 \)</p>
+                    <p class="derivation">(a) 2 boys, 2 girls: \( \binom{6}{2} \times \binom{4}{2} = 15 \times 6 = 90 \). \( P = \frac{90}{210} = \frac{3}{7} \) </p>
+                    <p class="derivation">(b) At most one girl = 0 girls or 1 girl: \( \binom{6}{4} + \binom{6}{3}\binom{4}{1} = 15 + 20 \times 4 = 15 + 80 = 95 \). \( P = \frac{95}{210} = \frac{19}{42} \) </p>
+                    <p class="derivation">(c) At least 3 boys = 3 boys 1 girl or 4 boys: \( \binom{6}{3}\binom{4}{1} + \binom{6}{4} = 20 \times 4 + 15 = 80 + 15 = 95 \). \( P = \frac{95}{210} = \frac{19}{42} \) </p>
+                </div>
+                
+                <div class="question">Q24. What do you understand by the axiomatic definition of probability? Why is it considered the most rigorous?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans24')">Show/Hide Answer ▼</button>
+                <div id="ans24" class="answer">
+                    <p><strong>Axiomatic Definition:</strong> Probability is a function \( P \) from events to [0,1] satisfying Kolmogorov's three axioms: non-negativity, normalization, and countable additivity.</p>
+                    <p><strong>Why most rigorous:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>Mathematically precise foundation without circular definitions</li>
+                        <li>Applies to finite, countably infinite, and uncountable sample spaces</li>
+                        <li>All other probability definitions can be derived as special cases</li>
+                        <li>Enables development of measure-theoretic probability theory</li>
+                    </ul>
+                </div>
+                
+                <div class="question">Q25. If \( P(A) = 0.6 \), \( P(B) = 0.5 \), \( P(A \cap B) = 0.3 \), find whether \( A \) and \( B \) are independent.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans25')">Show/Hide Answer ▼</button>
+                <div id="ans25" class="answer">
+                    <p class="derivation">Check independence condition: \( P(A)P(B) = 0.6 \times 0.5 = 0.3 \)</p>
+                    <p class="derivation">Given \( P(A \cap B) = 0.3 \)</p>
+                    <p class="derivation">Since \( P(A \cap B) = P(A)P(B) \), events \( A \) and \( B \) <strong>are independent</strong>. </p>
+                </div>
+                
+                <div class="question">Q26. In a single draw from a pack of 52 cards, find the probability of getting a card that is: (a) red or a king, (b) a heart or a face card, (c) neither a jack nor a queen.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans26')">Show/Hide Answer ▼</button>
+                <div id="ans26" class="answer">
+                    <p class="derivation">(a) Red or king: Red cards = 26, Kings = 4, Red kings = 2. By inclusion-exclusion: 26 + 4 - 2 = 28. \( P = \frac{28}{52} = \frac{7}{13} \) </p>
+                    <p class="derivation">(b) Heart or face card: Hearts = 13, Face cards = 12, Heart face cards = 3. 13 + 12 - 3 = 22. \( P = \frac{22}{52} = \frac{11}{26} \) </p>
+                    <p class="derivation">(c) Neither jack nor queen: Total cards = 52, Jacks = 4, Queens = 4. Favourable = 52 - 8 = 44. \( P = \frac{44}{52} = \frac{11}{13} \) </p>
+                </div>
+                
+                <div class="question">Q27. Explain the subjective (personal) probability approach. Give two real-life examples where this is the only feasible approach.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans27')">Show/Hide Answer ▼</button>
+                <div id="ans27" class="answer">
+                    <p><strong>Subjective Probability:</strong> Represents a rational person's degree of belief about an uncertain event, based on available information, experience, and judgement.</p>
+                    <p><strong>Examples where only feasible:</strong></p>
+                    <ol style="margin-left: 1.5rem;">
+                        <li><strong>Legal cases:</strong> Probability that a defendant is guilty based on evidence (cannot repeat the trial)</li>
+                        <li><strong>Climate predictions:</strong> Probability of specific climate outcome in 2050 (unique future event)</li>
+                    </ol>
+                </div>
+                
+                <div class="question">Q28. Four persons \( A, B, C, D \) apply for a job. Assume each is equally likely to be selected. Find \( P(\text{at least one of } A \text{ or } B \text{ gets the job}) \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans28')">Show/Hide Answer ▼</button>
+                <div id="ans28" class="answer">
+                    <p class="derivation">Assume one person is selected. \( P(A) = P(B) = P(C) = P(D) = \frac{1}{4} \)</p>
+                    <p class="derivation">At least one of A or B = \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \)</p>
+                    <p class="derivation">Since only one can be selected, \( P(A \cap B) = 0 \)</p>
+                    <p class="derivation">\( P(A \cup B) = \frac{1}{4} + \frac{1}{4} - 0 = \frac{1}{2} \) </p>
+                </div>
+                
+                <div class="question">Q29. Two integers are chosen at random from \( \{1,2,\ldots,10\} \) without replacement. Find the probability that (a) both are even, (b) their sum is 10, (c) their product is even.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans29')">Show/Hide Answer ▼</button>
+                <div id="ans29" class="answer">
+                    <p class="derivation">Total ways: \( \binom{10}{2} = 45 \)</p>
+                    <p class="derivation">(a) Both even: Even numbers = {2,4,6,8,10} (5 numbers). \( \binom{5}{2} = 10 \). \( P = \frac{10}{45} = \frac{2}{9} \) </p>
+                    <p class="derivation">(b) Sum = 10: Pairs: (1,9), (2,8), (3,7), (4,6) — 4 pairs. \( P = \frac{4}{45} \) </p>
+                    <p class="derivation">(c) Product even = 1 - P(both odd). Odd numbers = 5. \( P(\text{both odd}) = \frac{\binom{5}{2}}{45} = \frac{10}{45} \). So \( P = 1 - \frac{10}{45} = \frac{35}{45} = \frac{7}{9} \) </p>
+                </div>
+                
+                <div class="question">Q30. Three events \( A \), \( B \), \( C \) are such that \( P(A)=0.4 \), \( P(B)=0.3 \), \( P(C)=0.2 \), \( P(A\cap B)=0.12 \), \( P(B\cap C)=0.06 \), \( P(A\cap C)=0.08 \), \( P(A\cap B\cap C)=0.024 \). Are \( A \), \( B \), \( C \) mutually independent?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('ans30')">Show/Hide Answer ▼</button>
+                <div id="ans30" class="answer">
+                    <p><strong>Check pairwise independence:</strong></p>
+                    <p class="derivation">\( P(A)P(B) = 0.4 \times 0.3 = 0.12 = P(A\cap B) \) </p>
+                    <p class="derivation">\( P(B)P(C) = 0.3 \times 0.2 = 0.06 = P(B\cap C) \) </p>
+                    <p class="derivation">\( P(A)P(C) = 0.4 \times 0.2 = 0.08 = P(A\cap C) \) </p>
+                    <p><strong>Check mutual independence:</strong></p>
+                    <p class="derivation">\( P(A)P(B)P(C) = 0.4 \times 0.3 \times 0.2 = 0.024 = P(A\cap B\cap C) \) </p>
+                    <p>Since all conditions satisfied, \( A \), \( B \), \( C \) <strong>are mutually independent</strong>. </p>
+                </div>
+                
+                <div class="answer-key">
+                    <strong>Answer Key Summary:</strong> All subjective questions include detailed step-by-step solutions accessible via toggle buttons. Students should attempt each problem before viewing the solution.
+                </div>
+            </section>
+        </div>
+
+        <div id="mcq" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">14.</span>Multiple Choice Questions (30 MCQs)</h2>
+                
+                <div class="question">
+                    <p>1. The sample space for tossing 3 coins has:</p>
+                    <div class="mcq-options">
+                        <label><input type="radio" name="q1"> (a) 4 elements</label>
+                        <label><input type="radio" name="q1"> (b) 6 elements</label>
+                        <label><input type="radio" name="q1"> (c) 8 elements</label>
+                        <label><input type="radio" name="q1"> (d) 9 elements</label>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer ▼</button>
+                <div id="mcq1" class="answer">
+                    <p><strong>Answer: (c) 8 elements</strong></p>
+                    <p class="derivation">Each coin has 2 outcomes, so \( 2^3 = 8 \) sample points: {HHH, HHT, HTH, HTT, THH, THT, TTH, TTT}</p>
+                </div>
+                
+                <div class="question">
+                    <p>2. An event is:</p>
+                    <div class="mcq-options">
+                        <label><input type="radio" name="q2"> (a) any element of \( S \)</label>
+                        <label><input type="radio" name="q2"> (b) any subset of \( S \)</label>
+                        <label><input type="radio" name="q2"> (c) any superset of \( S \)</label>
+                        <label><input type="radio" name="q2"> (d) only \( S \) itself</label>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer ▼</button>
+                <div id="mcq2" class="answer">
+                    <p><strong>Answer: (b) any subset of \( S \)</strong></p>
+                    <p>By definition, an event is any subset of the sample space \( S \).</p>
+                </div>
+                
+                <div class="question">
+                    <p>3. If \( A \cap B = \emptyset \), then \( A \) and \( B \) are:</p>
+                    <div class="mcq-options">
+                        <label><input type="radio" name="q3"> (a) independent</label>
+                        <label><input type="radio" name="q3"> (b) mutually exclusive</label>
+                        <label><input type="radio" name="q3"> (c) exhaustive</label>
+                        <label><input type="radio" name="q3"> (d) equally likely</label>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer ▼</button>
+                <div id="mcq3" class="answer">
+                    <p><strong>Answer: (b) mutually exclusive</strong></p>
+                    <p>By definition, two events are mutually exclusive if their intersection is empty.</p>
+                </div>
+                
+                <div class="question">
+                    <p>4. For independent events \( A \) and \( B \):</p>
+                    <div class="mcq-options">
+                        <label><input type="radio" name="q4"> (a) \( P(A \cup B) = P(A) + P(B) \)</label>
+                        <label><input type="radio" name="q4"> (b) \( P(A|B) = P(A) \)</label>
+                        <label><input type="radio" name="q4"> (c) \( P(A \cap B) = P(A)P(B) \)</label>
+                        <label><input type="radio" name="q4"> (d) \( A \cap B = \emptyset \)</label>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer ▼</button>
+                <div id="mcq4" class="answer">
+                    <p><strong>Answer: (c) \( P(A \cap B) = P(A)P(B) \)</strong></p>
+                    <p>This is the defining condition for independence of two events.</p>
+                </div>
+                
+                <div class="question">
+                    <p>5. \( P(A \cup B) \) equals:</p>
+                    <div class="mcq-options">
+                        <label><input type="radio" name="q5"> (a) \( P(A) + P(B) \)</label>
+                        <label><input type="radio" name="q5"> (b) \( P(A)P(B) \)</label>
+                        <label><input type="radio" name="q5"> (c) \( P(A) + P(B) - P(A \cap B) \)</label>
+                        <label><input type="radio" name="q5"> (d) \( P(A) - P(B) \)</label>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer ▼</button>
+                <div id="mcq5" class="answer">
+                    <p><strong>Answer: (c) \( P(A) + P(B) - P(A \cap B) \)</strong></p>
+                    <p>This is the general addition rule (inclusion-exclusion) for two events.</p>
+                </div>
+                
+                <!-- Continue with MCQs 6-30 (abbreviated for space) -->
+                <div class="question">
+                    <p>6. Classical probability requires:</p>
+                    <div class="mcq-options">
+                        <label><input type="radio" name="q6"> (a) repeated trials</label>
+                        <label><input type="radio" name="q6"> (b) equally likely, exhaustive outcomes</label>
+                        <label><input type="radio" name="q6"> (c) subjective judgement</label>
+                        <label><input type="radio" name="q6"> (d) limiting frequency</label>
+                    </div>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer ▼</button>
+                <div id="mcq6" class="answer">
+                    <p><strong>Answer: (b) equally likely, exhaustive outcomes</strong></p>
+                    <p>Classical probability assumes finite sample space with equally likely outcomes.</p>
+                </div>
+                
+<!-- MCQs 7-30 -->
+<div class="question">
+    <p>7. \( P(A \cup B) \) for mutually exclusive events is:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q7"> (a) \( P(A)P(B) \)</label>
+        <label><input type="radio" name="q7"> (b) 0</label>
+        <label><input type="radio" name="q7"> (c) \( P(A) + P(B) \)</label>
+        <label><input type="radio" name="q7"> (d) \( P(A) - P(B) \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer ▼</button>
+<div id="mcq7" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) \( P(A) + P(B) \)</strong></p>
+    <p class="derivation">By Axiom 3 (Countable Additivity), if \( A \cap B = \emptyset \), then \( P(A \cup B) = P(A) + P(B) \).</p>
+</div>
+
+<div class="question">
+    <p>8. If \( P(A)=0.3 \), \( P(B)=0.4 \), \( P(A \cap B)=0.12 \), then \( P(A \cup B) \) equals:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q8"> (a) 0.3</label>
+        <label><input type="radio" name="q8"> (b) 0.4</label>
+        <label><input type="radio" name="q8"> (c) 0.58</label>
+        <label><input type="radio" name="q8"> (d) 0.6</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer ▼</button>
+<div id="mcq8" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) 0.58</strong></p>
+    <p class="derivation">Using General Addition Rule: \( P(A \cup B) = P(A) + P(B) - P(A \cap B) = 0.3 + 0.4 - 0.12 = 0.58 \).</p>
+</div>
+
+<div class="question">
+    <p>9. De Morgan's first law states:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q9"> (a) \( (A \cup B)^c = A^c \cup B^c \)</label>
+        <label><input type="radio" name="q9"> (b) \( (A \cup B)^c = A^c \cap B^c \)</label>
+        <label><input type="radio" name="q9"> (c) \( (A \cap B)^c = A^c \cap B^c \)</label>
+        <label><input type="radio" name="q9"> (d) \( (A \cup B)^c = A \cap B \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer ▼</button>
+<div id="mcq9" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) \( (A \cup B)^c = A^c \cap B^c \)</strong></p>
+    <p>De Morgan's laws relate complements of unions and intersections.</p>
+</div>
+
+<div class="question">
+    <p>10. For a fair die, \( P(\text{prime}) \) is:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q10"> (a) \( \frac{1}{2} \)</label>
+        <label><input type="radio" name="q10"> (b) \( \frac{1}{3} \)</label>
+        <label><input type="radio" name="q10"> (c) \( \frac{2}{3} \)</label>
+        <label><input type="radio" name="q10"> (d) \( \frac{1}{6} \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer ▼</button>
+<div id="mcq10" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (a) \( \frac{1}{2} \)</strong></p>
+    <p class="derivation">Primes on a die: 2, 3, 5 (3 outcomes). Total: 6. \( P = \frac{3}{6} = \frac{1}{2} \).</p>
+</div>
+
+<div class="question">
+    <p>11. If \( A \), \( B \), and \( C \) are independent, then \( P(A \cap B \cap C) \) equals:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q11"> (a) \( P(A)P(B)P(C) \)</label>
+        <label><input type="radio" name="q11"> (b) \( P(A) + P(B) + P(C) \)</label>
+        <label><input type="radio" name="q11"> (c) 0</label>
+        <label><input type="radio" name="q11"> (d) 1</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer ▼</button>
+<div id="mcq11" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (a) \( P(A)P(B)P(C) \)</strong></p>
+    <p>Definition of mutual independence.</p>
+</div>
+
+<div class="question">
+    <p>12. Number of outcomes when two dice are rolled:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q12"> (a) 6</label>
+        <label><input type="radio" name="q12"> (b) 12</label>
+        <label><input type="radio" name="q12"> (c) 36</label>
+        <label><input type="radio" name="q12"> (d) 216</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer ▼</button>
+<div id="mcq12" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) 36</strong></p>
+    <p class="derivation">Each die has 6 faces. Total outcomes = \( 6 \times 6 = 36 \).</p>
+</div>
+
+<div class="question">
+    <p>13. Events \( A, B \) are exhaustive if:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q13"> (a) \( A \cap B = S \)</label>
+        <label><input type="radio" name="q13"> (b) \( A \cup B = S \)</label>
+        <label><input type="radio" name="q13"> (c) all have equal probability</label>
+        <label><input type="radio" name="q13"> (d) none of the above</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer ▼</button>
+<div id="mcq13" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) \( A \cup B = S \)</strong></p>
+    <p>Exhaustive events cover the entire sample space.</p>
+</div>
+
+<div class="question">
+    <p>14. \( P(A \cup B) = P(A) + P(B) - P(A \cap B) \) is:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q14"> (a) valid only for independent events</label>
+        <label><input type="radio" name="q14"> (b) valid for all events</label>
+        <label><input type="radio" name="q14"> (c) valid only if \( A \subset B \)</label>
+        <label><input type="radio" name="q14"> (d) Bayes' formula</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer ▼</button>
+<div id="mcq14" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) valid for all events</strong></p>
+    <p>This is the general addition rule (Inclusion-Exclusion Principle).</p>
+</div>
+
+<div class="question">
+    <p>15. Relative frequency probability is defined as:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q15"> (a) \( \frac{m}{n} \)</label>
+        <label><input type="radio" name="q15"> (b) \( \lim_{n \to \infty} \frac{f}{n} \)</label>
+        <label><input type="radio" name="q15"> (c) subjective belief</label>
+        <label><input type="radio" name="q15"> (d) \( P(A|B) \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer ▼</button>
+<div id="mcq15" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) \( \lim_{n \to \infty} \frac{f}{n} \)</strong></p>
+    <p>Von Mises definition based on long-run relative frequency.</p>
+</div>
+
+<div class="question">
+    <p>16. If \( A \subseteq B \), then \( P(A) \leq P(B) \). This is called:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q16"> (a) complement rule</label>
+        <label><input type="radio" name="q16"> (b) addition rule</label>
+        <label><input type="radio" name="q16"> (c) monotonicity</label>
+        <label><input type="radio" name="q16"> (d) independence</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer ▼</button>
+<div id="mcq16" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) monotonicity</strong></p>
+    <p>Monotonicity property of probability measures.</p>
+</div>
+
+<div class="question">
+    <p>17. In a draw of 2 cards from 52, total number of outcomes is:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q17"> (a) 104</label>
+        <label><input type="radio" name="q17"> (b) \( \binom{52}{2} \)</label>
+        <label><input type="radio" name="q17"> (c) \( 52^2 \)</label>
+        <label><input type="radio" name="q17"> (d) 2600</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer ▼</button>
+<div id="mcq17" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) \( \binom{52}{2} \)</strong></p>
+    <p class="derivation">Choosing 2 from 52 without regard to order: \( \binom{52}{2} = 1326 \).</p>
+</div>
+
+<div class="question">
+    <p>18. \( P(A - B) \) equals:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q18"> (a) \( P(A) - P(B) \)</label>
+        <label><input type="radio" name="q18"> (b) \( P(A) - P(A \cap B) \)</label>
+        <label><input type="radio" name="q18"> (c) \( P(B) - P(A \cap B) \)</label>
+        <label><input type="radio" name="q18"> (d) \( P(A) + P(B) \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer ▼</button>
+<div id="mcq18" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) \( P(A) - P(A \cap B) \)</strong></p>
+    <p>Probability difference rule derived from partition \( A = (A-B) \cup (A \cap B) \).</p>
+</div>
+
+<div class="question">
+    <p>19. \( P(A^c) \) equals:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q19"> (a) \( P(A) \)</label>
+        <label><input type="radio" name="q19"> (b) \( 1 + P(A) \)</label>
+        <label><input type="radio" name="q19"> (c) \( 1 - P(A) \)</label>
+        <label><input type="radio" name="q19"> (d) 0</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer ▼</button>
+<div id="mcq19" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) \( 1 - P(A) \)</strong></p>
+    <p>Complement rule: \( P(A^c) = 1 - P(A) \).</p>
+</div>
+
+<div class="question">
+    <p>20. Which axiom says \( P(A) \geq 0 \)?</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q20"> (a) Axiom 1</label>
+        <label><input type="radio" name="q20"> (b) Axiom 2</label>
+        <label><input type="radio" name="q20"> (c) Axiom 3</label>
+        <label><input type="radio" name="q20"> (d) Complement rule</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer ▼</button>
+<div id="mcq20" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (a) Axiom 1</strong></p>
+    <p>Non-negativity axiom.</p>
+</div>
+
+<div class="question">
+    <p>21. Which axiom says \( P(S) = 1 \)?</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q21"> (a) Axiom 1</label>
+        <label><input type="radio" name="q21"> (b) Axiom 2</label>
+        <label><input type="radio" name="q21"> (c) Axiom 3</label>
+        <label><input type="radio" name="q21"> (d) Monotonicity</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq21')">Show/Hide Answer ▼</button>
+<div id="mcq21" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) Axiom 2</strong></p>
+    <p>Normalization axiom.</p>
+</div>
+
+<div class="question">
+    <p>22. Two events are equally likely if:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q22"> (a) they have the same number of elements</label>
+        <label><input type="radio" name="q22"> (b) they have the same probability</label>
+        <label><input type="radio" name="q22"> (c) they are mutually exclusive</label>
+        <label><input type="radio" name="q22"> (d) their union is \( S \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq22')">Show/Hide Answer ▼</button>
+<div id="mcq22" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) they have the same probability</strong></p>
+    <p>Definition of equally likely events.</p>
+</div>
+
+<div class="question">
+    <p>23. \( P(\text{Face card}) \) in a deck of 52 cards:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q23"> (a) \( \frac{4}{52} \)</label>
+        <label><input type="radio" name="q23"> (b) \( \frac{12}{52} \)</label>
+        <label><input type="radio" name="q23"> (c) \( \frac{13}{52} \)</label>
+        <label><input type="radio" name="q23"> (d) \( \frac{26}{52} \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq23')">Show/Hide Answer ▼</button>
+<div id="mcq23" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (b) \( \frac{12}{52} \)</strong></p>
+    <p class="derivation">Face cards = J, Q, K of 4 suits = 12 cards. \( P = \frac{12}{52} = \frac{3}{13} \).</p>
+</div>
+
+<div class="question">
+    <p>24. The number of sample points in the sample space of rolling a die and tossing a coin:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q24"> (a) 2</label>
+        <label><input type="radio" name="q24"> (b) 6</label>
+        <label><input type="radio" name="q24"> (c) 12</label>
+        <label><input type="radio" name="q24"> (d) 8</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq24')">Show/Hide Answer ▼</button>
+<div id="mcq24" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) 12</strong></p>
+    <p class="derivation">Die outcomes: 6, Coin outcomes: 2. Total = \( 6 \times 2 = 12 \).</p>
+</div>
+
+<div class="question">
+    <p>25. If \( A \) and \( B \) are mutually exclusive and \( P(A) > 0 \), \( P(B) > 0 \), then:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q25"> (a) \( P(A|B) = 0 \)</label>
+        <label><input type="radio" name="q25"> (b) \( P(A|B) = P(A) \)</label>
+        <label><input type="radio" name="q25"> (c) \( P(A \cap B) = P(A)P(B) \)</label>
+        <label><input type="radio" name="q25"> (d) they are independent</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq25')">Show/Hide Answer ▼</button>
+<div id="mcq25" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (a) \( P(A|B) = 0 \)</strong></p>
+    <p class="derivation">If mutually exclusive, \( A \cap B = \emptyset \), so \( P(A \cap B) = 0 \). Thus \( P(A|B) = \frac{P(A \cap B)}{P(B)} = 0 \).</p>
+</div>
+
+<div class="question">
+    <p>26. Kolmogorov's axiomatic definition was published in:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q26"> (a) 1900</label>
+        <label><input type="radio" name="q26"> (b) 1920</label>
+        <label><input type="radio" name="q26"> (c) 1933</label>
+        <label><input type="radio" name="q26"> (d) 1950</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq26')">Show/Hide Answer ▼</button>
+<div id="mcq26" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) 1933</strong></p>
+    <p>Foundations of Probability Theory.</p>
+</div>
+
+<div class="question">
+    <p>27. A sure event has probability:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q27"> (a) 0</label>
+        <label><input type="radio" name="q27"> (b) -1</label>
+        <label><input type="radio" name="q27"> (c) 1</label>
+        <label><input type="radio" name="q27"> (d) depends on context</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq27')">Show/Hide Answer ▼</button>
+<div id="mcq27" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) 1</strong></p>
+    <p>Axiom 2: Normalization.</p>
+</div>
+
+<div class="question">
+    <p>28. \( P(A-B) \) in terms of \( P(A) \) and \( P(A \cap B) \):</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q28"> (a) \( P(A) - P(A \cap B) \)</label>
+        <label><input type="radio" name="q28"> (b) \( P(A) + P(B) \)</label>
+        <label><input type="radio" name="q28"> (c) \( P(B) - P(A \cap B) \)</label>
+        <label><input type="radio" name="q28"> (d) \( 1 - P(A \cap B) \)</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq28')">Show/Hide Answer ▼</button>
+<div id="mcq28" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (a) \( P(A) - P(A \cap B) \)</strong></p>
+    <p>Probability difference rule.</p>
+</div>
+
+<div class="question">
+    <p>29. Which of the following is NOT a valid probability?</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q29"> (a) 0</label>
+        <label><input type="radio" name="q29"> (b) 0.5</label>
+        <label><input type="radio" name="q29"> (c) 1</label>
+        <label><input type="radio" name="q29"> (d) 1.5</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq29')">Show/Hide Answer ▼</button>
+<div id="mcq29" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (d) 1.5</strong></p>
+    <p>Probability must be in \([0,1]\).</p>
+</div>
+
+<div class="question">
+    <p>30. Subjective probability is most useful in:</p>
+    <div class="mcq-options">
+        <label><input type="radio" name="q30"> (a) coin tossing</label>
+        <label><input type="radio" name="q30"> (b) die rolling</label>
+        <label><input type="radio" name="q30"> (c) one-time events requiring expert judgement</label>
+        <label><input type="radio" name="q30"> (d) quality control</label>
+    </div>
+</div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq30')">Show/Hide Answer ▼</button>
+<div id="mcq30" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: (c) one-time events requiring expert judgement</strong></p>
+    <p>Used for unique, non-repeatable events where data is scarce.</p>
+</div>
+            </section>
+        </div>
+
+        <div id="fib" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">15.</span>Fill in the Blanks (30 Questions)</h2>
+                
+                <div class="question">1. A random experiment has a __________ known set of possible outcomes.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer ▼</button>
+                <div id="fib1" class="answer">
+                    <p><strong>Answer:</strong> well-defined</p>
+                </div>
+                
+                <div class="question">2. The set of all possible outcomes of a random experiment is called the __________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer ▼</button>
+                <div id="fib2" class="answer">
+                    <p><strong>Answer:</strong> sample space</p>
+                </div>
+                
+                <div class="question">3. A single performance of a random experiment is called a __________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer ▼</button>
+                <div id="fib3" class="answer">
+                    <p><strong>Answer:</strong> trial</p>
+                </div>
+                
+                <div class="question">4. Each individual possible outcome is called a __________ or __________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer ▼</button>
+                <div id="fib4" class="answer">
+                    <p><strong>Answer:</strong> sample point / elementary event</p>
+                </div>
+                
+                <div class="question">5. An event is any __________ of the sample space \( S \).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer ▼</button>
+                <div id="fib5" class="answer">
+                    <p><strong>Answer:</strong> subset</p>
+                </div>
+                
+                <!-- Continue with FIB 6-30 -->
+                <div class="question">6. The impossible event is denoted by __________ and has probability __________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer ▼</button>
+                <div id="fib6" class="answer">
+                    <p><strong>Answer:</strong> \( \emptyset \); 0</p>
+                </div>
+                
+<!-- FIBs 7-30 -->
+<div class="question">7. The certain (sure) event is __________ and has probability __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer ▼</button>
+<div id="fib7" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( S \); 1</p>
+</div>
+
+<div class="question">8. \( P(A^c) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer ▼</button>
+<div id="fib8" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( 1 - P(A) \)</p>
+</div>
+
+<div class="question">9. Two events are mutually exclusive if __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer ▼</button>
+<div id="fib9" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( A \cap B = \emptyset \)</p>
+</div>
+
+<div class="question">10. Two events are independent if __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer ▼</button>
+<div id="fib10" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( P(A \cap B) = P(A)P(B) \)</p>
+</div>
+
+<div class="question">11. \( P(A \cup B) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer ▼</button>
+<div id="fib11" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( P(A) + P(B) - P(A \cap B) \)</p>
+</div>
+
+<div class="question">12. \( P(A \cap B) = \) __________ (for independent events).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer ▼</button>
+<div id="fib12" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( P(A)P(B) \)</p>
+</div>
+
+<div class="question">13. De Morgan's law: \( (A \cup B)^c = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer ▼</button>
+<div id="fib13" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( A^c \cap B^c \)</p>
+</div>
+
+<div class="question">14. Classical probability: \( P(A) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer ▼</button>
+<div id="fib14" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( \frac{n(A)}{n(S)} \)</p>
+</div>
+
+<div class="question">15. If outcomes are equally likely, the probability of each is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer ▼</button>
+<div id="fib15" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( \frac{1}{n} \)</p>
+</div>
+
+<div class="question">16. Relative frequency probability: \( P(A) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer ▼</button>
+<div id="fib16" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( \lim_{n \to \infty} \frac{f}{n} \)</p>
+</div>
+
+<div class="question">17. Kolmogorov gave __________ axioms of probability.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer ▼</button>
+<div id="fib17" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> three</p>
+</div>
+
+<div class="question">18. Axiom 1 states \( P(A) \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer ▼</button>
+<div id="fib18" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( \geq 0 \)</p>
+</div>
+
+<div class="question">19. Axiom 2 states \( P(S) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer ▼</button>
+<div id="fib19" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> 1</p>
+</div>
+
+<div class="question">20. Axiom 3 applies to __________ mutually exclusive events.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer ▼</button>
+<div id="fib20" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> countably infinitely many</p>
+</div>
+
+<div class="question">21. If \( A \subseteq B \), then \( P(A) \) __________ \( P(B) \).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib21')">Show/Hide Answer ▼</button>
+<div id="fib21" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( \leq \)</p>
+</div>
+
+<div class="question">22. \( P(A - B) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib22')">Show/Hide Answer ▼</button>
+<div id="fib22" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( P(A) - P(A \cap B) \)</p>
+</div>
+
+<div class="question">23. For two dice, \( n(S) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib23')">Show/Hide Answer ▼</button>
+<div id="fib23" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> 36</p>
+</div>
+
+<div class="question">24. For \( n \) coin tosses, \( n(S) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib24')">Show/Hide Answer ▼</button>
+<div id="fib24" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( 2^n \)</p>
+</div>
+
+<div class="question">25. Events \( A_i \) are exhaustive if their __________ equals \( S \).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib25')">Show/Hide Answer ▼</button>
+<div id="fib25" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> union</p>
+</div>
+
+<div class="question">26. The relative frequency approach was developed by __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib26')">Show/Hide Answer ▼</button>
+<div id="fib26" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> von Mises</p>
+</div>
+
+<div class="question">27. The axiomatic approach was developed by __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib27')">Show/Hide Answer ▼</button>
+<div id="fib27" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> Kolmogorov</p>
+</div>
+
+<div class="question">28. \( P(A \cup B) \) __________ \( P(A) + P(B) \).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib28')">Show/Hide Answer ▼</button>
+<div id="fib28" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( \leq \)</p>
+</div>
+
+<div class="question">29. \( P(A \cup B \cup C) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib29')">Show/Hide Answer ▼</button>
+<div id="fib29" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> \( P(A)+P(B)+P(C)-P(A\cap B)-P(B\cap C)-P(A\cap C)+P(A\cap B\cap C) \)</p>
+</div>
+
+<div class="question">30. If \( P(A)=0.4 \), \( P(B)=0.5 \), \( P(A\cap B)=0.2 \), then \( P(A^c \cap B^c) = \) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib30')">Show/Hide Answer ▼</button>
+<div id="fib30" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer:</strong> 0.3</p>
+    <p class="derivation">\( P(A^c \cap B^c) = P((A \cup B)^c) = 1 - P(A \cup B) = 1 - (0.4+0.5-0.2) = 1 - 0.7 = 0.3 \).</p>
+</div>
+            </section>
+        </div>
+
+        <div id="tf" class="topic-section">
+            <section class="section-card">
+<h2><span class="section-num">16.</span>True or False (30 Questions)</h2>
+                
+                <div class="question">1. Every sample point is also an event. [T/F]</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer ▼</button>
+                <div id="tf1" class="answer">
+                    <p><strong>Answer: True</strong></p>
+                    <p>Every sample point {ω} is a singleton subset of S, hence an event.</p>
+                </div>
+                
+                <div class="question">2. \( P(\emptyset) = 1 \) is a valid event with probability 1. [T/F]</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer ▼</button>
+                <div id="tf2" class="answer">
+                    <p><strong>Answer: False</strong></p>
+                    <p>\( P(\emptyset) = 0 \), not 1. The certain event S has probability 1.</p>
+                </div>
+                
+                <div class="question">3. Every event is a subset of the sample space. [T/F]</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer ▼</button>
+                <div id="tf3" class="answer">
+                    <p><strong>Answer: True</strong></p>
+                    <p>By definition, an event is any subset of the sample space S.</p>
+                </div>
+                
+                <div class="question">4. Mutually exclusive events are always independent. [T/F]</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer ▼</button>
+                <div id="tf4" class="answer">
+                    <p><strong>Answer: False</strong></p>
+                    <p>Mutually exclusive events with positive probability cannot be independent. If A occurs, B cannot occur, so they influence each other.</p>
+                </div>
+                
+                <div class="question">5. Independent events cannot be mutually exclusive (if both have positive probability). [T/F]</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer ▼</button>
+                <div id="tf5" class="answer">
+                    <p><strong>Answer: True</strong></p>
+                    <p>If A and B are mutually exclusive and P(A)>0, P(B)>0, then P(A∩B)=0 ≠ P(A)P(B), so they cannot be independent.</p>
+                </div>
+                
+<!-- T/F 7-30 -->
+<div class="question">7. \( P(S) = 1 \) always. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer ▼</button>
+<div id="tf7" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Normalization axiom.</p>
+</div>
+
+<div class="question">8. Classical probability requires the sample space to be finite and outcomes equally likely. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer ▼</button>
+<div id="tf8" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Core assumptions of Laplace's classical definition.</p>
+</div>
+
+<div class="question">9. \( P(A) = 0 \) implies \( A = \emptyset \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer ▼</button>
+<div id="tf9" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>In continuous sample spaces, individual points have probability 0 but are not impossible (e.g., picking exactly 0.5 from [0,1]).</p>
+</div>
+
+<div class="question">10. Relative frequency probability requires infinite repetitions. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer ▼</button>
+<div id="tf10" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Theoretically requires \( n \to \infty \), though in practice large \( n \) is used.</p>
+</div>
+
+<div class="question">11. \( P(A \cup B) = P(A) + P(B) \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer ▼</button>
+<div id="tf11" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>Only true if \( A \) and \( B \) are mutually exclusive.</p>
+</div>
+
+<div class="question">12. De Morgan's law: \( (A \cap B)^c = A^c \cup B^c \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer ▼</button>
+<div id="tf12" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Second De Morgan's Law.</p>
+</div>
+
+<div class="question">13. For a fair six-sided die, \( P(\text{even}) = 1/2 \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer ▼</button>
+<div id="tf13" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Even numbers: {2, 4, 6} → 3/6 = 1/2.</p>
+</div>
+
+<div class="question">14. \( P(A \cup B) = 0 \) when \( A \) and \( B \) are independent. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer ▼</button>
+<div id="tf14" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>Independence does not imply disjointness or zero union probability.</p>
+</div>
+
+<div class="question">15. The number of elements in the sample space of tossing 5 coins is 32. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer ▼</button>
+<div id="tf15" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p class="derivation">\( 2^5 = 32 \).</p>
+</div>
+
+<div class="question">16. \( P(A \cup B) \leq P(A) + P(B) \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer ▼</button>
+<div id="tf16" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Boole's Inequality (union bound).</p>
+</div>
+
+<div class="question">17. If \( P(A \cap B) = P(A)P(B) \), events \( A \) and \( B \) are independent. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer ▼</button>
+<div id="tf17" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>This is the mathematical definition of independence.</p>
+</div>
+
+<div class="question">18. A sample space must always be finite. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer ▼</button>
+<div id="tf18" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>Can be countably infinite (e.g., coin tosses until first H) or uncountable (e.g., height measurement).</p>
+</div>
+
+<div class="question">19. Subjective probability always equals classical probability. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer ▼</button>
+<div id="tf19" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>Subjective is based on belief/expertise, classical on symmetry/equally likely outcomes.</p>
+</div>
+
+<div class="question">20. Axiom 3 (countable additivity) is the most powerful of Kolmogorov's axioms. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer ▼</button>
+<div id="tf20" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Enables handling infinite sequences and convergence.</p>
+</div>
+
+<div class="question">21. \( P(A \cup B \cup C) = P(A)+P(B)+P(C) \) when all three are mutually exclusive. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf21')">Show/Hide Answer ▼</button>
+<div id="tf21" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Follows from additivity axiom.</p>
+</div>
+
+<div class="question">22. Two events can be both exhaustive and mutually exclusive. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf22')">Show/Hide Answer ▼</button>
+<div id="tf22" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Example: \( A \) and \( A^c \) partition \( S \).</p>
+</div>
+
+<div class="question">23. \( P(A) > 0.5 \) implies \( P(A^c) > 0.5 \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf23')">Show/Hide Answer ▼</button>
+<div id="tf23" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>If \( P(A) > 0.5 \), then \( P(A^c) = 1 - P(A) < 0.5 \).</p>
+</div>
+
+<div class="question">24. For any event \( A \): \( 0 \leq P(A) \leq 1 \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf24')">Show/Hide Answer ▼</button>
+<div id="tf24" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>Basic range of probability measure.</p>
+</div>
+
+<div class="question">25. The complement of the impossible event is the certain event. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf25')">Show/Hide Answer ▼</button>
+<div id="tf25" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>\( \emptyset^c = S \).</p>
+</div>
+
+<div class="question">26. Relative frequency and classical approaches always give the same probability. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf26')">Show/Hide Answer ▼</button>
+<div id="tf26" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>They differ for biased experiments or when outcomes aren't equally likely.</p>
+</div>
+
+<div class="question">27. For 52-card draw, \( P(\text{red}) = 1/2 \). [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf27')">Show/Hide Answer ▼</button>
+<div id="tf27" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p>26 red cards out of 52.</p>
+</div>
+
+<div class="question">28. \( P(A \cap B) = P(A)P(B) \) in general. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf28')">Show/Hide Answer ▼</button>
+<div id="tf28" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>Only true if \( A \) and \( B \) are independent.</p>
+</div>
+
+<div class="question">29. If \( P(A \cap B) = 0 \), then \( A \) and \( B \) are mutually exclusive. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf29')">Show/Hide Answer ▼</button>
+<div id="tf29" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: False</strong></p>
+    <p>Can hold in continuous spaces even if \( A \cap B \neq \emptyset \) (probability zero sets aren't necessarily empty).</p>
+</div>
+
+<div class="question">30. Kolmogorov's axiomatic theory was published in 1933. [T/F]</div>
+<button class="toggle-btn" onclick="toggleAnswer('tf30')">Show/Hide Answer ▼</button>
+<div id="tf30" class="answer" style="color: #1e293b !important; background: #f0fdf4; border-left: 4px solid #166534; padding: 1rem; margin: 0.5rem 0; border-radius: 0 6px 6px 0; display: none;">
+    <p><strong>Answer: True</strong></p>
+    <p><em>Foundations of the Theory of Probability</em> (1933).</p>
+</div>
+            </section>
+        </div>
+
+
+    </main>
+
+    <footer class="book-footer">
+        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+        CCS Haryana Agricultural University, Hisar</p>
+    </footer>
+
+    <script>
+        // ── Show/hide topic section on nav click ──────────────────
+        function showTopic(topicId) {
+            // hide all
+            document.querySelectorAll('.topic-section').forEach(s => s.classList.remove('active'));
+            // show target
+            const target = document.getElementById(topicId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            // update nav active state
+            document.querySelectorAll('.nav-link').forEach(a => a.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(a => {
+                if (a.getAttribute('onclick') && a.getAttribute('onclick').includes("'" + topicId + "'")) {
+                    a.classList.add('active');
+                }
+            });
+            // close sidebar on mobile
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+            // re-typeset MathJax for visible content
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([target]).catch(console.error);
+            }
+        }
+
+        // ── Toggle answer ─────────────────────────────────────────
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            const btn = event.currentTarget;
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                btn.innerHTML = 'Show Answer ▼';
+            } else {
+                answer.classList.add('show');
+                btn.innerHTML = 'Hide Answer ▲';
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([answer]).catch(console.error);
+                }
+            }
+        }
+
+        // ── Mobile sidebar toggle ─────────────────────────────────
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // close sidebar clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle  = document.querySelector('.menu-toggle');
+            if (window.innerWidth <= 768
+                && !sidebar.contains(e.target)
+                && toggle && !toggle.contains(e.target)
+                && sidebar.classList.contains('open')) {
+                sidebar.classList.remove('open');
+            }
+        });
+
+        // ── Init: make intro active ───────────────────────────────
+        document.addEventListener('DOMContentLoaded', function() {
+            showTopic('intro');
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+        });
+    </script>
+</body>
+</html>

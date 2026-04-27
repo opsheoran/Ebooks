@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit III – Random Variable and Probability Functions | Statistics 102</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy:#1B2A4A; --navy-mid:#243555; --navy-light:#2E4270;
+            --gold:#C8922A; --gold-light:#E8B84B; --gold-pale:#FDF3DC;
+            --sage:#3D6B5A; --sage-light:#EEF6F2; --crimson:#9B2335; --crimson-light:#FBF0F1;
+            --sky:#1D6FA4; --sky-light:#EAF4FB; --ivory:#FAFAF7; --paper:#F5F3EE;
+            --border:#DDD8CF; --text-dark:#1C1C1E; --text-mid:#3A3A3C; --text-soft:#6B6B70;
+            --sidebar-w:300px; --header-h:72px; --radius:10px;
+            --shadow-sm:0 2px 8px rgba(27,42,74,.08); --shadow-md:0 4px 20px rgba(27,42,74,.12); --shadow-lg:0 8px 40px rgba(27,42,74,.16);
+        }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Source Serif 4',Georgia,serif;background:var(--paper);color:var(--text-dark);line-height:1.78;font-size:16px}
+        .book-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:linear-gradient(110deg,var(--navy) 0%,var(--navy-mid) 50%,var(--navy-light) 100%);color:#fff;z-index:1100;box-shadow:0 3px 20px rgba(0,0,0,.25);display:flex;align-items:center;padding:0 28px;gap:16px}
+        .book-header .menu-toggle{display:none;background:none;border:none;color:#fff;font-size:1.3rem;cursor:pointer;padding:4px 8px}
+        .header-icon{width:42px;height:42px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+        .header-text h1{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.3px}
+        .header-text .subtitle{font-family:'DM Sans',sans-serif;font-size:.8rem;color:rgba(255,255,255,.7);letter-spacing:.5px}
+        .header-badge{margin-left:auto;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-family:'DM Sans',sans-serif;font-size:.75rem;font-weight:500;padding:4px 12px;border-radius:20px;letter-spacing:.4px}
+        .sidebar{position:fixed;left:0;top:var(--header-h);width:var(--sidebar-w);height:calc(100vh - var(--header-h));background:var(--navy);overflow-y:auto;z-index:1000;transition:transform .3s ease;scrollbar-width:thin;scrollbar-color:rgba(200,146,42,.4) transparent}
+        .sidebar::-webkit-scrollbar{width:4px}
+        .sidebar::-webkit-scrollbar-thumb{background:rgba(200,146,42,.4);border-radius:4px}
+        .sidebar-brand{padding:20px 20px 14px;border-bottom:1px solid rgba(255,255,255,.1);background:linear-gradient(180deg,rgba(200,146,42,.15) 0%,transparent 100%)}
+        .sidebar-brand h2{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--gold-light);margin-bottom:3px}
+        .sidebar-brand p{font-family:'DM Sans',sans-serif;font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.4}
+        .nav-group-label{font-family:'DM Sans',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.35);padding:16px 20px 6px}
+        .nav-list{list-style:none;padding:0 8px 12px}
+        .nav-item{margin:1px 0}
+        .nav-link{display:flex;align-items:center;gap:10px;padding:9px 12px;color:rgba(255,255,255,.75);text-decoration:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:.875rem;font-weight:400;transition:all .2s ease;border-left:3px solid transparent;cursor:pointer}
+        .nav-link:hover{background:rgba(255,255,255,.08);color:#fff;border-left-color:rgba(200,146,42,.6)}
+        .nav-link.active{background:rgba(200,146,42,.18);color:var(--gold-light);border-left-color:var(--gold);font-weight:500}
+        .nav-link .nav-num{font-size:.7rem;background:rgba(255,255,255,.12);border-radius:4px;padding:1px 6px;font-weight:600;min-width:26px;text-align:center;flex-shrink:0}
+        .nav-link.active .nav-num{background:var(--gold);color:var(--navy)}
+        .nav-sub .nav-link{padding-left:28px;font-size:.835rem;color:rgba(255,255,255,.55)}
+        .nav-sub .nav-link:hover,.nav-sub .nav-link.active{color:var(--gold-light)}
+        .main-content{margin-left:var(--sidebar-w);margin-top:var(--header-h);padding:36px 48px 60px;max-width:calc(var(--sidebar-w) + 860px);min-height:calc(100vh - var(--header-h))}
+        .chapter-header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-light) 100%);color:#fff;padding:32px 36px;border-radius:var(--radius);margin-bottom:32px;box-shadow:var(--shadow-md);position:relative;overflow:hidden}
+        .chapter-header::before{content:'';position:absolute;top:-30px;right:-30px;width:180px;height:180px;background:rgba(200,146,42,.12);border-radius:50%}
+        .chapter-header::after{content:'';position:absolute;bottom:-50px;right:60px;width:120px;height:120px;background:rgba(200,146,42,.07);border-radius:50%}
+        .chapter-header h1{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;margin-bottom:6px;line-height:1.2}
+        .chapter-header .author{font-family:'DM Sans',sans-serif;font-size:.95rem;color:rgba(255,255,255,.7);margin-bottom:14px;font-style:italic}
+        .chapter-header .syllabus-tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:10px 16px;font-family:'DM Sans',sans-serif;font-size:.82rem;line-height:1.6;color:rgba(255,255,255,.85);position:relative;z-index:1}
+        .topic-section{display:none;animation:fadeSlideIn .45s ease}
+        .topic-section.active{display:block}
+        @keyframes fadeSlideIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+        .section-card{background:var(--ivory);border-radius:var(--radius);padding:36px 42px;box-shadow:var(--shadow-sm);border:1px solid var(--border);border-top:4px solid var(--navy)}
+        .section-card h2{font-family:'Playfair Display',serif;font-size:1.85rem;font-weight:700;color:var(--navy);margin:0 0 20px;padding-bottom:14px;border-bottom:2px solid var(--border);display:flex;align-items:baseline;gap:10px}
+        .section-card h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:600;color:var(--navy-light);margin:32px 0 14px}
+        .section-card h4{font-family:'DM Sans',sans-serif;font-size:1.05rem;font-weight:600;color:var(--text-dark);margin:20px 0 8px}
+        .section-card h5{font-family:'DM Sans',sans-serif;font-size:.95rem;font-weight:500;color:var(--sky);margin:14px 0 6px;font-style:italic}
+        .section-card p{margin-bottom:12px;text-align:justify;font-size:1.02rem;color:var(--text-mid);line-height:1.82}
+        .section-card ul,.section-card ol{margin:10px 0 14px 28px;line-height:1.75}
+        .section-card li{margin-bottom:5px;color:var(--text-mid);font-size:.99rem}
+        .section-num{font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;background:var(--navy);color:var(--gold-light);padding:2px 10px;border-radius:5px;flex-shrink:0}
+        .definition,.theorem,.example,.note,.warning,.key-point,.proof-box{border-radius:8px;padding:18px 22px;margin:20px 0;position:relative}
+        .definition{background:#F3F0FB;border-left:5px solid #6B4FC8;box-shadow:0 2px 10px rgba(107,79,200,.1)}
+        .theorem{background:var(--sage-light);border-left:5px solid var(--sage);box-shadow:0 2px 10px rgba(61,107,90,.1)}
+        .example{background:#FFFBF0;border-left:5px solid var(--gold);box-shadow:0 2px 10px rgba(200,146,42,.1)}
+        .note{background:var(--sky-light);border-left:5px solid var(--sky);box-shadow:0 2px 10px rgba(29,111,164,.1)}
+        .proof-box{background:#F8F5FF;border-left:5px solid #7C3AED;box-shadow:0 2px 10px rgba(124,58,237,.1)}
+        .warning{background:var(--crimson-light);border-left:5px solid var(--crimson);color:#5a1020;box-shadow:0 2px 10px rgba(155,35,53,.1)}
+        .warning strong{color:var(--crimson)}
+        .key-point{background:linear-gradient(135deg,#EAF8F4 0%,#E0F3FF 100%);border-left:5px solid #0E9E6F;box-shadow:0 2px 10px rgba(14,158,111,.1)}
+        .key-point strong{color:#0E6650}
+        .definition h4,.theorem h4,.example h4,.note h4,.warning h4,.key-point h4,.proof-box h4{margin-top:0;margin-bottom:8px;color:var(--text-dark)}
+        .formula-box{background:linear-gradient(135deg,#EEF2FA 0%,#F7F5FF 100%);border:2px dashed var(--navy-light);border-radius:8px;padding:18px 22px;margin:16px 0;text-align:center;font-size:1.12rem}
+        .derivation{background:#F8FAFC;border-left:3px solid var(--sky);padding:12px 16px;margin:10px 0;border-radius:0 6px 6px 0;font-family:'Source Serif 4',serif;line-height:1.85;color:var(--text-mid)}
+        .proof-step{margin:5px 0 5px 20px;padding-left:12px;border-left:2px solid var(--border);color:var(--text-mid);font-size:.97rem}
+        table{width:100%;border-collapse:separate;border-spacing:0;margin:18px 0;border-radius:8px;overflow:hidden;box-shadow:var(--shadow-sm)}
+        th{background:var(--navy);color:#fff;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:600;letter-spacing:.3px}
+        td{padding:11px 16px;border-bottom:1px solid var(--border);font-size:.95rem;color:var(--text-mid);background:#fff}
+        tr:last-child td{border-bottom:none}
+        tr:nth-child(even) td{background:#FAFAF8}
+        tr:hover td{background:var(--gold-pale);transition:background .15s}
+        .question{background:#fff;border:1px solid var(--border);border-left:4px solid var(--navy-light);padding:16px 20px;margin:14px 0 6px;border-radius:0 8px 8px 0;font-size:1rem;color:var(--text-dark);line-height:1.7}
+        .question strong{color:var(--navy)}
+        .mcq-options{margin:10px 0 8px 20px}
+        .mcq-options p{text-align:left;margin:4px 0;font-size:.95rem;color:var(--text-mid);line-height:1.6}
+        .toggle-btn{background:var(--navy);color:#fff;border:none;padding:7px 18px;border-radius:20px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;display:inline-flex;align-items:center;gap:5px;transition:all .25s;margin:4px 0 8px;letter-spacing:.3px}
+        .toggle-btn:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:0 4px 12px rgba(27,42,74,.3)}
+        .answer{display:none;background:#F0FBF5;border-left:4px solid var(--sage);padding:16px 20px;margin:2px 0 12px;border-radius:0 8px 8px 0;animation:fadeSlideIn .3s ease;color:var(--text-dark)!important;font-size:.97rem;line-height:1.75}
+        .answer.show{display:block}
+        .answer p,.answer ul,.answer ol,.answer li,.answer strong,.answer em,.answer .derivation,.answer .proof-step{color:var(--text-dark)!important}
+        .answer .derivation{background:#EFF8F4;border-left-color:var(--sage);color:var(--text-dark)!important}
+        .answer strong{font-weight:700}
+        .answer-key-box{background:var(--navy);color:rgba(255,255,255,.85);padding:18px 22px;border-radius:8px;margin-top:20px;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.8}
+        .answer-key-box strong{color:var(--gold-light)}
+        .quick-ref-table th{background:var(--navy-light)}
+        .book-footer{background:var(--navy);color:rgba(255,255,255,.75);text-align:center;padding:24px;margin-top:48px;border-radius:12px 12px 0 0;font-family:'DM Sans',sans-serif;font-size:.88rem;line-height:1.7}
+        .book-footer strong{color:var(--gold-light)}
+        .book-footer .university{margin-top:6px;font-size:.82rem;opacity:.7}
+        .MathJax{font-size:1.06em!important}
+        mjx-container{display:inline-block!important}
+        ::-webkit-scrollbar{width:7px;height:7px}
+        ::-webkit-scrollbar-track{background:var(--paper)}
+        ::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+        ::-webkit-scrollbar-thumb:hover{background:#b0a89a}
+        @media(max-width:1024px){:root{--sidebar-w:260px}.main-content{padding:28px 30px 50px}}
+        @media(max-width:768px){:root{--sidebar-w:280px}.book-header .menu-toggle{display:flex;align-items:center;justify-content:center}.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0;padding:20px 18px 40px;max-width:100%}.chapter-header h1{font-size:1.6rem}.section-card{padding:22px 20px}}
+    </style>
+</head>
+<body>
+
+<header class="book-header">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <div class="header-icon">🎲</div>
+    <div class="header-text">
+        <h1>Statistics 102</h1>
+        <div class="subtitle">UNIT III · RANDOM VARIABLE AND PROBABILITY FUNCTIONS</div>
+    </div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
+</header>
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>Unit III</h2>
+        <p>Random Variable & Probability Functions<br>CCS Haryana Agricultural University</p>
+    </div>
+    <div class="nav-group-label">Main Concepts</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showTopic('intro');return false;"><span class="nav-num">📌</span> Introduction</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('types');return false;"><span class="nav-num">3.2</span> Discrete & Continuous</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('functions');return false;"><span class="nav-num">3.3</span> Probability Functions</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('functions');return false;"><span class="nav-num">3.3.4</span> Comparison</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('cdf');return false;"><span class="nav-num">3.4</span> Distribution Function</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('cdf');return false;"><span class="nav-num">3.4.4</span> Properties</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('transformation');return false;"><span class="nav-num">3.5</span> Functions of R.V.</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('bivariate');return false;"><span class="nav-num">3.6</span> Joint, Marginal, Conditional</a></li>
+        <li class="nav-item nav-sub"><a class="nav-link" href="#" onclick="showTopic('bivariate');return false;"><span class="nav-num">3.6.5</span> Independence</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('formulas');return false;"><span class="nav-num">📐</span> Formula Reference</a></li>
+    </ul>
+    <div class="nav-group-label">Practice Exercises</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('exercises');return false;"><span class="nav-num">📝</span> Subjective (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> MCQs (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks (30 Q)</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('tf');return false;"><span class="nav-num">✅</span> True / False (30 Q)</a></li>
+    </ul>
+</nav>
+
+<main class="main-content">
+
+<div class="chapter-header">
+    <h1>Unit III: Random Variable and Probability Functions</h1>
+    <div class="author">By Prof. O.P. Sheoran · B.Sc. Physical Sciences — First Year | Statistics</div>
+    <div class="syllabus-tag">
+        <strong>Syllabus:</strong> Definition of random variable · Discrete and continuous random variables · Probability function, PMF, PDF · Distribution function and properties · Functions of random variables · Joint, marginal, and conditional probability distributions
+    </div>
+</div>
+
+<!-- INTRODUCTION -->
+<div id="intro" class="topic-section active">
+<div class="section-card">
+<h2><span class="section-num">3.1</span> What is a Random Variable?</h2>
+<p>Before we start with the formal definition, let us think about it with a simple everyday situation.</p>
+<p>Suppose you toss a coin twice. You know that the possible outcomes are: HH, HT, TH, TT. Now if someone asks you — <em>"How many heads did you get?"</em> — your answer will be 0, 1, or 2, depending on what happened. This answer changes every time you do the experiment. It is numerical, and it depends on chance. <strong>This is exactly what a random variable is.</strong></p>
+
+<h3>3.1.1 Definition</h3>
+<div class="definition">
+<h4>Definition 3.1.1 — Random Variable</h4>
+<p>A <em>random variable</em> (usually denoted by capital letters \(X\), \(Y\), \(Z\)) is a <strong>real-valued function</strong> defined on the sample space \(S\) of a random experiment. It assigns a numerical value to each outcome of the experiment.</p>
+<p>Mathematically, we write:</p>
+<div class="formula-box">\[X:S\rightarrow \mathbb{R}\]</div>
+<p>That is, \(X\) maps every outcome \(\omega \in S\) to a real number \(X(\omega)\).</p>
+<p><strong>In plain words:</strong> A random variable converts the outcomes of a random experiment into numbers so that we can do mathematics on them.</p>
+</div>
+
+<h3>3.1.2 Why Do We Need Random Variables?</h3>
+<p>In real experiments, outcomes are often non-numerical — "Head", "Tail", "Red ball", "Defective item", and so on. Mathematics does not work well with words. A random variable converts these wordy outcomes into numbers, making it possible to apply algebraic and calculus tools.</p>
+
+<h3>3.1.3 Examples</h3>
+<div class="example">
+<h4>Example 3.1.1 — Tossing a coin twice</h4>
+<p>Experiment: Toss a fair coin twice.</p>
+<p>Sample space: \(S = \{ HH,\ HT,\ TH,\ TT\}\)</p>
+<p>Define \(X\) = number of heads obtained.</p>
+<table>
+<thead><tr><th>Outcome</th><th>Value of \(X\)</th></tr></thead>
+<tbody>
+<tr><td>HH</td><td>2</td></tr>
+<tr><td>HT</td><td>1</td></tr>
+<tr><td>TH</td><td>1</td></tr>
+<tr><td>TT</td><td>0</td></tr>
+</tbody>
+</table>
+<p>So \(X\) takes values \(0,1,2\). This is a random variable.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.1.2 — Rolling a die</h4>
+<p>Experiment: Roll a fair six-sided die once.</p>
+<p>Sample space: \(S = \{ 1,2,3,4,5,6\}\)</p>
+<p>Define \(X\) = number on the top face. Then \(X \in \{ 1,2,3,4,5,6\}\). Since every outcome is already a number, the mapping is straightforward.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.1.3 — Drawing a card</h4>
+<p>Experiment: Draw one card from a standard deck of 52 cards.</p>
+<p>Define \(X\) = number on the card (Ace = 1, Jack = 11, Queen = 12, King = 13).</p>
+<p>Then \(X\) takes values \(1,2,3,\ldots,13\).</p>
+</div>
+
+<div class="example">
+<h4>Example 3.1.4 — Measuring rainfall</h4>
+<p>Experiment: Record the rainfall in your city on a particular day.</p>
+<p>Define \(X\) = amount of rainfall in mm.</p>
+<p>\(X\) can take any value in \(\lbrack 0,\infty)\). This is also a random variable — we will see later that it is a <em>continuous</em> random variable.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.1.5 — Counting defective items</h4>
+<p>A batch of 50 bulbs is inspected. Define \(X\) = number of defective bulbs found.</p>
+<p>\(X\) can take values \(0,1,2,\ldots,50\).</p>
+</div>
+
+<div class="note">
+<strong>Important Note:</strong> A random variable is not really a "variable" in the usual algebra sense. It is a <em>function</em>. The word "random" indicates that its value is determined by the outcome of a random (chance-based) experiment.
+</div>
+
+</div></div>
+
+<!-- DISCRETE AND CONTINUOUS -->
+<div id="types" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">3.2</span> Discrete and Continuous Random Variables</h2>
+<p>Random variables are classified into two main types based on the nature of values they can take. This classification is very important because the methods we use for them are completely different.</p>
+
+<h3>3.2.1 Discrete Random Variable</h3>
+<div class="definition">
+<h4>Definition 3.2.1 — Discrete Random Variable</h4>
+<p>A random variable \(X\) is called <strong>discrete</strong> if it can take only a <em>countable</em> number of distinct values — either a finite set like \(\{ 0,1,2,3\}\) or a countably infinite set like \(\{ 0,1,2,3,\ldots\}\).</p>
+<p><strong>Simple test:</strong> Can you <em>list</em> all possible values of \(X\), even if the list is long? If yes — it is discrete.</p>
+</div>
+<div class="note">
+<h4>Examples of Discrete Random Variables:</h4>
+<ul>
+<li>Number of heads in 5 coin tosses → \(X \in \{ 0,1,2,3,4,5\}\)</li>
+<li>Number of students absent in a class of 60 → \(X \in \{ 0,1,2,\ldots,60\}\)</li>
+<li>Number of calls received at a helpline per hour → \(X \in \{ 0,1,2,3,\ldots\}\)</li>
+<li>Number of accidents on a road per day → \(X \in \{ 0,1,2,3,\ldots\}\)</li>
+<li>Score on a single die → \(X \in \{ 1,2,3,4,5,6\}\)</li>
+<li>Number of defective items in a batch of 100 → \(X \in \{ 0,1,2,\ldots,100\}\)</li>
+</ul>
+</div>
+
+<h3>3.2.2 Continuous Random Variable</h3>
+<div class="definition">
+<h4>Definition 3.2.2 — Continuous Random Variable</h4>
+<p>A random variable \(X\) is called <strong>continuous</strong> if it can take any value in a given interval (or union of intervals). The set of possible values is <em>uncountably infinite</em> — you cannot list them out.</p>
+<p><strong>Simple test:</strong> Does \(X\) measure something on a continuous scale (height, weight, time, temperature, distance)? If yes — it is continuous.</p>
+</div>
+<div class="note">
+<h4>Examples of Continuous Random Variables:</h4>
+<ul>
+<li>Height of a student (e.g., 165.3 cm, 172.84 cm, ...)</li>
+<li>Weight of a newborn baby (e.g., 2.7 kg, 3.125 kg, ...)</li>
+<li>Time taken to finish an exam (any value in, say, \(\lbrack 0,180\rbrack\) minutes)</li>
+<li>Temperature of a city on a given day</li>
+<li>Lifetime of an electric bulb (in hours)</li>
+<li>Daily rainfall in mm</li>
+<li>Speed of a vehicle on a highway</li>
+</ul>
+</div>
+
+<h3>3.2.3 A Very Important Difference</h3>
+<p>For a <strong>discrete</strong> random variable, we can say \(P(X = 3) = 0.2\) — this is perfectly meaningful.</p>
+<p>For a <strong>continuous</strong> random variable, \(P(X = x) = 0\) for <em>every</em> specific value \(x\). This might seem strange at first. Here is why:</p>
+<p>If height \(X\) is continuous, the probability that a person is <em>exactly</em> 165.000000... cm is zero — because there are infinitely many possible exact values, and no single one carries any probability. Instead, we talk about probability over an <em>interval</em>:</p>
+<div class="formula-box">\[P(164 \leq X \leq 166) = \text{some positive number}\]</div>
+
+<h3>3.2.4 Comparison Table</h3>
+<table>
+<thead><tr><th>Feature</th><th>Discrete R.V.</th><th>Continuous R.V.</th></tr></thead>
+<tbody>
+<tr><td>Values</td><td>Countable</td><td>Uncountable (fills an interval)</td></tr>
+<tr><td>Probability at a point</td><td>\(P(X = x) \geq 0\)</td><td>\(P(X = x) = 0\) always</td></tr>
+<tr><td>Probability tool</td><td>PMF</td><td>PDF</td></tr>
+<tr><td>Total probability</td><td>\(\sum p(x) = 1\)</td><td>\(\int_{- \infty}^{\infty}f(x)\, dx = 1\)</td></tr>
+<tr><td>Graph</td><td>Bar chart (isolated bars)</td><td>Smooth curve</td></tr>
+<tr><td>Examples</td><td>Dice, coin, count data</td><td>Height, weight, time, temperature</td></tr>
+</tbody>
+</table>
+
+</div></div>
+
+<!-- PROBABILITY FUNCTIONS -->
+<div id="functions" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">3.3</span> Probability Function, PMF, and PDF</h2>
+<p>Now the key question: how do we <em>describe</em> or <em>specify</em> the probability behaviour of a random variable? The answer is through a <strong>probability function</strong>.</p>
+
+<h3>3.3.1 Probability Function — General Idea</h3>
+<p>A <strong>probability function</strong> is a mathematical rule (formula or table) that tells us the probability associated with each value (or range of values) of a random variable.</p>
+<p>Think of it like a menu card — it lists what values \(X\) can take and what probability is attached to each.</p>
+<p>There are two versions of this idea — one for discrete variables (called <strong>PMF</strong>) and one for continuous variables (called <strong>PDF</strong>).</p>
+
+<h3>3.3.2 Probability Mass Function (PMF) — For Discrete R.V.</h3>
+<div class="definition">
+<h4>Definition 3.3.1 — PMF</h4>
+<p>For a discrete random variable \(X\), the <strong>Probability Mass Function (PMF)</strong> is a function \(p(x)\) defined as:</p>
+<div class="formula-box">\[p(x) = P(X = x)\quad\text{for each possible value }x\text{ of }X\]</div>
+<p><strong>Conditions for a valid PMF:</strong> A function \(p(x)\) is a valid PMF if and only if:</p>
+<div class="formula-box">\[\text{(i)}\quad p(x_{i}) \geq 0\quad\text{for all }i\]
+\[\text{(ii)}\quad\sum_{\text{all }x_{i}}^{}p(x_{i}) = 1\]</div>
+<p>The first condition says probabilities cannot be negative. The second says all probabilities must add up to 1.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.3.1 — PMF of Two Coin Tosses</h4>
+<p>Let \(X\) = number of heads in two tosses of a fair coin.</p>
+<p>Sample space: \(\{ HH,HT,TH,TT\}\) — all outcomes equally likely with probability \(\frac{1}{4}\).</p>
+<table>
+<thead><tr><th>\(x\)</th><th>Outcomes giving \(X = x\)</th><th>\(p(x) = P(X = x)\)</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>TT</td><td>\(\frac{1}{4} = 0.25\)</td></tr>
+<tr><td>1</td><td>HT, TH</td><td>\(\frac{2}{4} = 0.50\)</td></tr>
+<tr><td>2</td><td>HH</td><td>\(\frac{1}{4} = 0.25\)</td></tr>
+</tbody>
+</table>
+<p><strong>Verification:</strong></p>
+<div class="derivation">\[p(0) + p(1) + p(2) = \frac{1}{4} + \frac{2}{4} + \frac{1}{4} = 1\]</div>
+<p>This table completely describes the probability behaviour of \(X\). It is the PMF of \(X\).</p>
+</div>
+
+<div class="example">
+<h4>Example 3.3.2 — PMF of a Fair Die</h4>
+<p>Let \(X\) = number shown on rolling a fair die.</p>
+<div class="derivation">\[p(x) = \frac{1}{6},\quad x = 1,2,3,4,5,6\]</div>
+<p>All values are equally likely. <strong>Verification:</strong> \(6 \times \frac{1}{6} = 1\)</p>
+<p>This is called a <strong>Discrete Uniform Distribution</strong>.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.3.3 — Finding the Unknown Constant \(k\)</h4>
+<p>A discrete random variable \(X\) has PMF:</p>
+<div class="derivation">\[p(x) = kx,\quad x = 1,2,3,4\quad\text{(and 0 elsewhere)}\]</div>
+<p><strong>Find the value of</strong> \(k\)<strong>.</strong></p>
+<p><strong>Solution:</strong></p>
+<p>Using the condition \(\sum p(x) = 1\):</p>
+<div class="derivation">\[p(1) + p(2) + p(3) + p(4) = 1\]</div>
+<div class="derivation">\[k(1) + k(2) + k(3) + k(4) = 1\]</div>
+<div class="derivation">\[k(1 + 2 + 3 + 4) = 1\]</div>
+<div class="derivation">\[10k = 1 \Longrightarrow k = \frac{1}{10}\]</div>
+<p>The PMF is \(p(x) = \frac{x}{10}\) for \(x = 1,2,3,4\).</p>
+<table>
+<tbody>
+<tr><th>\(x\)</th><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+<tr><th>\(p(x)\)</th><td>\(\frac{1}{10}\)</td><td>\(\frac{2}{10}\)</td><td>\(\frac{3}{10}\)</td><td>\(\frac{4}{10}\)</td></tr>
+</tbody>
+</table>
+<p><strong>Verification:</strong> \(\frac{1 + 2 + 3 + 4}{10} = \frac{10}{10} = 1\)</p>
+</div>
+
+<div class="example">
+<h4>Example 3.3.4 — PMF of Number of Defective Bulbs</h4>
+<p>Two bulbs are drawn from a box containing 3 good and 2 defective bulbs (without replacement). Let \(X\) = number of defective bulbs drawn.</p>
+<p>\(X\) can take values \(0,1,2\).</p>
+<div class="derivation">\[P(X = 0) = \frac{\binom{2}{0}\binom{3}{2}}{\binom{5}{2}} = \frac{1 \times 3}{10} = \frac{3}{10}\]</div>
+<div class="derivation">\[P(X = 1) = \frac{\binom{2}{1}\binom{3}{1}}{\binom{5}{2}} = \frac{2 \times 3}{10} = \frac{6}{10}\]</div>
+<div class="derivation">\[P(X = 2) = \frac{\binom{2}{2}\binom{3}{0}}{\binom{5}{2}} = \frac{1 \times 1}{10} = \frac{1}{10}\]</div>
+<p><strong>Verification:</strong> \(\frac{3 + 6 + 1}{10} = 1\)</p>
+</div>
+
+<h3>3.3.3 Probability Density Function (PDF) — For Continuous R.V.</h3>
+<p>Since a continuous random variable takes uncountably many values, we cannot assign probability to individual points. Instead, we describe <em>how densely</em> the probability is spread using a <strong>Probability Density Function (PDF)</strong>.</p>
+<div class="definition">
+<h4>Definition 3.3.2 — PDF</h4>
+<p>A function \(f(x)\) is called the <strong>Probability Density Function (PDF)</strong> of a continuous random variable \(X\) if it satisfies:</p>
+<div class="formula-box">\[\text{(i)}\quad f(x) \geq 0\quad\text{for all }x \in ( - \infty, + \infty)\]
+\[\text{(ii)}\quad\int_{- \infty}^{\infty}f(x)\, dx = 1\]</div>
+<p>And the probability of \(X\) lying in the interval \(\lbrack a,b\rbrack\) is:</p>
+<div class="formula-box">\[P(a \leq X \leq b) = \int_{a}^{b}f(x)\, dx\]</div>
+<p>This is the <strong>area under the curve</strong> \(f(x)\) from \(a\) to \(b\).</p>
+</div>
+<div class="warning">
+<strong>Critical Point:</strong> \(f(x)\) is <strong>not</strong> the probability itself. It is the probability <em>density</em> — probability per unit length. Actual probability is the <strong>area</strong> under \(f(x)\), not its height. Also, \(f(x)\) can be greater than 1 at some points, and that is perfectly valid, as long as the total area equals 1.<br><br>
+<strong>Also Note:</strong> For a continuous random variable, since \(P(X = a) = \int_{a}^{a}f(x)\, dx = 0\), it does not matter whether we write \(&lt;\), \(\leq\), \(&gt;\), or \(\geq\) in probability:
+<div class="derivation">\[P(a &lt; X &lt; b) = P(a \leq X \leq b) = P(a \leq X &lt; b) = \int_{a}^{b}f(x)\, dx\]</div>
+</div>
+
+<div class="example">
+<h4>Example 3.3.5 — Verifying a PDF</h4>
+<div class="derivation">\[f(x) = 2x,\quad 0 \leq x \leq 1\quad\text{(and 0 elsewhere)}\]</div>
+<p><strong>Step 1: Check non-negativity.</strong> For \(0 \leq x \leq 1\): \(f(x) = 2x \geq 0\)</p>
+<p><strong>Step 2: Check total area = 1.</strong></p>
+<div class="derivation">\[\int_{0}^{1}2x\, dx = \left\lbrack x^{2} \right\rbrack_{0}^{1} = 1 - 0 = 1\]</div>
+<p>This is a valid PDF.</p>
+<p><strong>Step 3: Find</strong> \(P(0.25 \leq X \leq 0.75)\)<strong>.</strong></p>
+<div class="derivation">\[P(0.25 \leq X \leq 0.75) = \int_{0.25}^{0.75}2x\, dx = \left\lbrack x^{2} \right\rbrack_{0.25}^{0.75} = (0.75)^{2} - (0.25)^{2}\]</div>
+<div class="derivation">\[= 0.5625 - 0.0625 = 0.50\]</div>
+<p>So there is a 50% probability that \(X\) lies in this interval.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.3.6 — Finding the Constant \(c\)</h4>
+<div class="derivation">\[f(x) = c(1 - x^{2}),\quad 0 \leq x \leq 1\]</div>
+<p><strong>Find</strong> \(c\)<strong>.</strong></p>
+<p>Using \(\int_{0}^{1}f(x)\, dx = 1\):</p>
+<div class="derivation">\[\int_{0}^{1}c(1 - x^{2})\, dx = 1\]</div>
+<div class="derivation">\[c\left\lbrack x - \frac{x^{3}}{3} \right\rbrack_{0}^{1} = 1\]</div>
+<div class="derivation">\[c\left( 1 - \frac{1}{3} \right) = 1\]</div>
+<div class="derivation">\[c \cdot \frac{2}{3} = 1 \Longrightarrow c = \frac{3}{2}\]</div>
+</div>
+
+<div class="example">
+<h4>Example 3.3.7 — PDF with Two Sub-intervals</h4>
+<div class="derivation">\[f(x) = \left\{ \begin{matrix}
+x & 0 \leq x \leq 1 \\
+2 - x & 1 &lt; x \leq 2 \\
+0 & \text{elsewhere}
+\end{matrix} \right.\]</div>
+<p><strong>Verify this is a valid PDF.</strong></p>
+<div class="derivation">\[\int_{0}^{1}x\, dx + \int_{1}^{2}(2 - x)\, dx = \left\lbrack \frac{x^{2}}{2} \right\rbrack_{0}^{1} + \left\lbrack 2x - \frac{x^{2}}{2} \right\rbrack_{1}^{2}\]</div>
+<div class="derivation">\[= \frac{1}{2} + \left\lbrack (4 - 2) - \left( 2 - \frac{1}{2} \right) \right\rbrack = \frac{1}{2} + \left\lbrack 2 - \frac{3}{2} \right\rbrack = \frac{1}{2} + \frac{1}{2} = 1\]</div>
+<p><strong>Find</strong> \(P(0.5 \leq X \leq 1.5)\)<strong>.</strong></p>
+<div class="derivation">\[P(0.5 \leq X \leq 1.5) = \int_{0.5}^{1}x\, dx + \int_{1}^{1.5}(2 - x)\, dx\]</div>
+<div class="derivation">\[= \left\lbrack \frac{x^{2}}{2} \right\rbrack_{0.5}^{1} + \left\lbrack 2x - \frac{x^{2}}{2} \right\rbrack_{1}^{1.5}\]</div>
+<div class="derivation">\[= \left( \frac{1}{2} - \frac{1}{8} \right) + \left\lbrack \left( 3 - \frac{9}{8} \right) - \left( 2 - \frac{1}{2} \right) \right\rbrack\]</div>
+<div class="derivation">\[= \frac{3}{8} + \left\lbrack \frac{15}{8} - \frac{3}{2} \right\rbrack = \frac{3}{8} + \frac{3}{8} = \frac{3}{4} = 0.75\]</div>
+</div>
+
+<h3>3.3.4 Comparison — PMF vs. PDF</h3>
+<table>
+<thead><tr><th>Feature</th><th>PMF — Discrete</th><th>PDF — Continuous</th></tr></thead>
+<tbody>
+<tr><td>Notation</td><td>\(p(x)\)</td><td>\(f(x)\)</td></tr>
+<tr><td>Gives probability directly?</td><td>Yes, \(p(x) = P(X = x)\)</td><td>No — gives density</td></tr>
+<tr><td>Value at a point</td><td>\(0 \leq p(x) \leq 1\)</td><td>\(f(x) \geq 0\), can be \(&gt; 1\)</td></tr>
+<tr><td>Total probability</td><td>\(\sum p(x) = 1\)</td><td>\(\int f(x)\, dx = 1\)</td></tr>
+<tr><td>Probability in interval \(\lbrack a,b\rbrack\)</td><td>\(\sum_{x = a}^{b}p(x)\)</td><td>\(\int_{a}^{b}f(x)\, dx\)</td></tr>
+</tbody>
+</table>
+
+</div></div>
+
+<!-- CDF -->
+<div id="cdf" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">3.4</span> Distribution Function and Its Properties</h2>
+<p>We have seen PMF and PDF as tools for describing a random variable. There is another extremely useful tool called the <strong>Cumulative Distribution Function (CDF)</strong>, or simply the <strong>Distribution Function</strong>.</p>
+
+<h3>3.4.1 Definition of CDF</h3>
+<div class="definition">
+<h4>Definition 3.4.1 — CDF</h4>
+<p>The <strong>Cumulative Distribution Function (CDF)</strong> of a random variable \(X\) is defined as:</p>
+<div class="formula-box">\[F(x) = P(X \leq x),\quad - \infty &lt; x &lt; + \infty\]</div>
+<p>In plain words: \(F(x)\) tells us the probability that \(X\) takes a value <strong>less than or equal to</strong> \(x\).</p>
+<p>Think of CDF as a running total. If PMF is like your daily pocket money, the CDF is like the total money in your piggy bank up to that day!</p>
+</div>
+
+<h3>3.4.2 CDF for a Discrete Random Variable</h3>
+<p>For a discrete random variable:</p>
+<div class="formula-box">\[F(x) = P(X \leq x) = \sum_{x_{i} \leq x}^{}p(x_{i})\]</div>
+<p>That is, add up all PMF values for all \(x_{i}\) that are \(\leq x\).</p>
+
+<div class="example">
+<h4>Example 3.4.1 — CDF from the Two-Coin PMF</h4>
+<p>From Example 3.3.1: \(p(0) = \frac{1}{4}\), \(p(1) = \frac{2}{4}\), \(p(2) = \frac{1}{4}\)</p>
+<table>
+<thead><tr><th>Range of \(x\)</th><th>\(F(x) = P(X \leq x)\)</th><th>Calculation</th></tr></thead>
+<tbody>
+<tr><td>\(x &lt; 0\)</td><td>\(0\)</td><td>No values below 0</td></tr>
+<tr><td>\(0 \leq x &lt; 1\)</td><td>\(\frac{1}{4} = 0.25\)</td><td>\(p(0)\)</td></tr>
+<tr><td>\(1 \leq x &lt; 2\)</td><td>\(\frac{3}{4} = 0.75\)</td><td>\(p(0) + p(1) = \frac{1}{4} + \frac{2}{4}\)</td></tr>
+<tr><td>\(x \geq 2\)</td><td>\(1.00\)</td><td>\(p(0) + p(1) + p(2)\)</td></tr>
+</tbody>
+</table>
+<p>Notice: \(F(x)\) starts at 0, <strong>jumps</strong> at each value of \(X\), and finally reaches 1. For discrete variables, the CDF is a <strong>step function</strong>.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.4.2 — CDF of Die Roll</h4>
+<p>\(X\) = outcome on a fair die; \(p(x) = \frac{1}{6}\) for \(x = 1,2,...,6\).</p>
+<div class="derivation">\[F(x) = \frac{\lfloor x\rfloor}{6}\quad\text{for }1 \leq x \leq 6\]</div>
+<p>For example: \(F(3.5) = P(X \leq 3.5) = P(X \leq 3) = \frac{3}{6} = \frac{1}{2}\).</p>
+</div>
+
+<h3>3.4.3 CDF for a Continuous Random Variable</h3>
+<p>For a continuous random variable:</p>
+<div class="formula-box">\[F(x) = P(X \leq x) = \int_{- \infty}^{x}f(t)\, dt\]</div>
+<p>And conversely, differentiating both sides:</p>
+<div class="formula-box">\[f(x) = \frac{d}{dx}F(x)\]</div>
+<p>The PDF is the <strong>derivative</strong> of the CDF.</p>
+
+<div class="example">
+<h4>Example 3.4.3 — CDF from a Given PDF</h4>
+<p>Given \(f(x) = 2x\) for \(0 \leq x \leq 1\). Find \(F(x)\).</p>
+<p><strong>Case 1:</strong> \(x &lt; 0\)</p>
+<div class="derivation">\[F(x) = 0\]</div>
+<p><strong>Case 2:</strong> \(0 \leq x \leq 1\)</p>
+<div class="derivation">\[F(x) = \int_{0}^{x}2t\, dt = \left\lbrack t^{2} \right\rbrack_{0}^{x} = x^{2}\]</div>
+<p><strong>Case 3:</strong> \(x &gt; 1\)</p>
+<div class="derivation">\[F(x) = 1\]</div>
+<p>Therefore:</p>
+<div class="derivation">\[F(x) = \left\{ \begin{matrix}
+0 & x &lt; 0 \\
+x^{2} & 0 \leq x \leq 1 \\
+1 & x &gt; 1
+\end{matrix} \right.\]</div>
+<p><strong>Check:</strong> \(F(0.5) = (0.5)^{2} = 0.25\), meaning \(P(X \leq 0.5) = 25\%\). Makes sense since the PDF is higher near \(x = 1\) (triangular-shaped).</p>
+</div>
+
+<div class="example">
+<h4>Example 3.4.4 — CDF of Exponential Type</h4>
+<div class="derivation">\[f(x) = e^{- x},\quad x &gt; 0\]</div>
+<div class="derivation">\[F(x) = \int_{0}^{x}e^{- t}\, dt = \left\lbrack - e^{- t} \right\rbrack_{0}^{x} = 1 - e^{- x},\quad x &gt; 0\]</div>
+<p><strong>Find</strong> \(P(1 &lt; X &lt; 2)\)<strong>:</strong></p>
+<div class="derivation">\[P(1 &lt; X &lt; 2) = F(2) - F(1) = (1 - e^{- 2}) - (1 - e^{- 1}) = e^{- 1} - e^{- 2}\]</div>
+<div class="derivation">\[\approx 0.3679 - 0.1353 = 0.2326\]</div>
+</div>
+
+<h3>3.4.4 Properties of the Distribution Function</h3>
+<p>These are very important for examinations. Learn them carefully.</p>
+
+<div class="theorem">
+<p><strong>Property 1:</strong> \(F(x)\) is <strong>non-decreasing</strong>.</p>
+<p>If \(x_{1} &lt; x_{2}\), then \(F(x_{1}) \leq F(x_{2})\).</p>
+<p><em>Reason:</em> If \(x\) increases, more values are included in \(P(X \leq x)\), so it can only stay same or increase.</p>
+<br>
+<p><strong>Property 2:</strong> \(F( - \infty) = 0\)</p>
+<div class="derivation">\[\lim_{x \rightarrow - \infty}F(x) = 0\]</div>
+<p><em>Reason:</em> \(P(X \leq - \infty) = 0\) — nothing can be less than \(- \infty\).</p>
+<br>
+<p><strong>Property 3:</strong> \(F( + \infty) = 1\)</p>
+<div class="derivation">\[\lim_{x \rightarrow + \infty}F(x) = 1\]</div>
+<p><em>Reason:</em> \(P(X \leq + \infty) = 1\) — \(X\) must take some finite value.</p>
+<br>
+<p><strong>Property 4:</strong> \(F(x)\) is <strong>right-continuous</strong>.</p>
+<div class="derivation">\[F(x^{+}) = F(x)\quad\text{for all }x\]</div>
+<br>
+<p><strong>Property 5:</strong> Interval probability:</p>
+<div class="formula-box">\[P(a &lt; X \leq b) = F(b) - F(a)\]</div>
+<p>This is the most frequently used property in calculations.</p>
+<br>
+<p><strong>Property 6:</strong> For any \(x\):</p>
+<div class="derivation">\[P(X &gt; x) = 1 - F(x)\]</div>
+<br>
+<p><strong>Property 7:</strong> \(0 \leq F(x) \leq 1\) for all \(x\).</p>
+<br>
+<p><strong>Property 8 (Discrete):</strong> \(F(x)\) is a <strong>step function</strong> — it is constant between values and jumps at each possible value of \(X\).</p>
+<br>
+<p><strong>Property 9 (Continuous):</strong> \(F(x)\) is a <strong>continuous and smooth</strong> function everywhere.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.4.5 — Using CDF Properties</h4>
+<p>Given \(F(x) = x^{2}\) for \(0 \leq x \leq 1\). Find:</p>
+<p><strong>(a)</strong> \(P(0.3 &lt; X \leq 0.7)\)</p>
+<div class="derivation">\[P(0.3 &lt; X \leq 0.7) = F(0.7) - F(0.3) = (0.7)^{2} - (0.3)^{2} = 0.49 - 0.09 = 0.40\]</div>
+<p><strong>(b)</strong> \(P(X &gt; 0.6)\)</p>
+<div class="derivation">\[P(X &gt; 0.6) = 1 - F(0.6) = 1 - (0.6)^{2} = 1 - 0.36 = 0.64\]</div>
+<p><strong>(c)</strong> \(P(X \leq 0.4)\)</p>
+<div class="derivation">\[P(X \leq 0.4) = F(0.4) = (0.4)^{2} = 0.16\]</div>
+</div>
+
+<div class="example">
+<h4>Example 3.4.6 — Finding PDF from CDF</h4>
+<p>Given:</p>
+<div class="derivation">\[F(x) = \left\{ \begin{matrix}
+0 & x &lt; 0 \\
+\frac{x^{3}}{8} & 0 \leq x \leq 2 \\
+1 & x &gt; 2
+\end{matrix} \right.\]</div>
+<p><strong>Find the PDF</strong> \(f(x)\)<strong>.</strong></p>
+<p>Differentiating \(F(x)\):</p>
+<div class="derivation">\[f(x) = \frac{d}{dx}F(x) = \frac{d}{dx}\left( \frac{x^{3}}{8} \right) = \frac{3x^{2}}{8},\quad 0 \leq x \leq 2\]</div>
+<p><strong>Verify:</strong> \(\int_{0}^{2}\frac{3x^{2}}{8}\, dx = \frac{3}{8}\left\lbrack \frac{x^{3}}{3} \right\rbrack_{0}^{2} = \frac{3}{8} \cdot \frac{8}{3} = 1\)</p>
+</div>
+
+</div></div>
+
+<!-- TRANSFORMATION -->
+<div id="transformation" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">3.5</span> Functions of Random Variables</h2>
+<p>Very often in practice, we are not interested in \(X\) itself, but in some function of \(X\). For example:</p>
+<ul>
+<li>If \(X\) = radius of a circle, we may want \(Y = \pi X^{2}\) (area).</li>
+<li>If \(X\) = temperature in Celsius, we may want \(Y = \frac{9}{5}X + 32\) (Fahrenheit).</li>
+<li>If \(X\) = a measurement, we may want \(Y = X^{2}\) or \(Y = \ln X\) or \(Y = |X|\).</li>
+</ul>
+<p>Since \(X\) is a random variable and \(Y = g(X)\), \(Y\) is also a random variable. The question is: <strong>what is the distribution of</strong> \(Y\)<strong>?</strong></p>
+
+<h3>3.5.1 Functions of Discrete Random Variables</h3>
+<p>This is the simpler case. If \(X\) has PMF \(p(x)\) and \(Y = g(X)\), then:</p>
+<div class="formula-box">\[P(Y = y) = \sum_{\{ x\,:\, g(x) = y\}}^{}p(x)\]</div>
+<p>In words: add up \(p(x)\) for all \(x\) values that give \(g(x) = y\).</p>
+
+<div class="example">
+<h4>Example 3.5.1 — \(Y = X^{2}\) for a Die</h4>
+<p>\(X\) = outcome on a fair die; \(p(x) = \frac{1}{6}\) for \(x = 1,2,...,6\).</p>
+<p>Define \(Y = X^{2}\).</p>
+<table>
+<thead><tr><th>\(x\)</th><th>\(p(x)\)</th><th>\(y = x^{2}\)</th><th>\(P(Y = y)\)</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>\(\frac{1}{6}\)</td><td>1</td><td>\(\frac{1}{6}\)</td></tr>
+<tr><td>2</td><td>\(\frac{1}{6}\)</td><td>4</td><td>\(\frac{1}{6}\)</td></tr>
+<tr><td>3</td><td>\(\frac{1}{6}\)</td><td>9</td><td>\(\frac{1}{6}\)</td></tr>
+<tr><td>4</td><td>\(\frac{1}{6}\)</td><td>16</td><td>\(\frac{1}{6}\)</td></tr>
+<tr><td>5</td><td>\(\frac{1}{6}\)</td><td>25</td><td>\(\frac{1}{6}\)</td></tr>
+<tr><td>6</td><td>\(\frac{1}{6}\)</td><td>36</td><td>\(\frac{1}{6}\)</td></tr>
+</tbody>
+</table>
+<p>\(Y = X^{2}\) takes values \(\{ 1,4,9,16,25,36\}\), each with probability \(\frac{1}{6}\).</p>
+</div>
+
+<div class="example">
+<h4>Example 3.5.2 — Linear Transformation \(Y = 2X + 1\)</h4>
+<p>\(X\) takes values \(- 1,0,1\) with probabilities \(0.3,0.4,0.3\).</p>
+<table>
+<thead><tr><th>\(x\)</th><th>\(P(X = x)\)</th><th>\(y = 2x + 1\)</th><th>\(P(Y = y)\)</th></tr></thead>
+<tbody>
+<tr><td>\(- 1\)</td><td>\(0.3\)</td><td>\(- 1\)</td><td>\(0.3\)</td></tr>
+<tr><td>\(0\)</td><td>\(0.4\)</td><td>\(1\)</td><td>\(0.4\)</td></tr>
+<tr><td>\(1\)</td><td>\(0.3\)</td><td>\(3\)</td><td>\(0.3\)</td></tr>
+</tbody>
+</table>
+<p>\(Y\) takes values \(\{ - 1,1,3\}\) with probabilities \(\{ 0.3,0.4,0.3\}\).</p>
+</div>
+
+<div class="example">
+<h4>Example 3.5.3 — Two Values of \(X\) Map to Same \(Y\)</h4>
+<p>Let \(X\) take values \(- 2, - 1,0,1,2\) each with probability \(\frac{1}{5}\).</p>
+<p>Define \(Y = X^{2}\).</p>
+<table>
+<thead><tr><th>\(y\)</th><th>Values of \(x\) giving \(y\)</th><th>\(P(Y = y)\)</th></tr></thead>
+<tbody>
+<tr><td>0</td><td>\(x = 0\)</td><td>\(\frac{1}{5}\)</td></tr>
+<tr><td>1</td><td>\(x = - 1\) and \(x = 1\)</td><td>\(\frac{2}{5}\)</td></tr>
+<tr><td>4</td><td>\(x = - 2\) and \(x = 2\)</td><td>\(\frac{2}{5}\)</td></tr>
+</tbody>
+</table>
+<p>Notice: two values of \(X\) can give the same value of \(Y\), so we add their probabilities.</p>
+</div>
+
+<h3>3.5.2 Functions of Continuous Random Variables — CDF Method</h3>
+<p>For continuous random variables, finding the distribution of \(Y = g(X)\) uses the following procedure:</p>
+<p><strong>Step 1:</strong> Find the CDF of \(Y\):</p>
+<div class="derivation">\[F_{Y}(y) = P(Y \leq y) = P(g(X) \leq y)\]</div>
+<p>Express this in terms of \(X\) and evaluate using the CDF of \(X\).</p>
+<p><strong>Step 2:</strong> Differentiate to get the PDF of \(Y\):</p>
+<div class="derivation">\[f_{Y}(y) = \frac{d}{dy}F_{Y}(y)\]</div>
+
+<div class="example">
+<h4>Example 3.5.4 — \(Y = X^{2}\) when \(X\) has \(f(x) = 2x\), \(0 \leq x \leq 1\)</h4>
+<p>We know \(F_{X}(x) = x^{2}\) (from Example 3.4.3).</p>
+<p><strong>Find the distribution of</strong> \(Y = X^{2}\)<strong>.</strong></p>
+<p><strong>Step 1:</strong> Find \(F_{Y}(y)\).</p>
+<p>For \(0 \leq y \leq 1\):</p>
+<div class="derivation">\[F_{Y}(y) = P(Y \leq y) = P(X^{2} \leq y) = P(X \leq \sqrt{y})\]</div>
+<p>(Since \(X \geq 0\), \(X^{2} \leq y \Leftrightarrow X \leq \sqrt{y}\).)</p>
+<div class="derivation">\[F_{Y}(y) = F_{X}(\sqrt{y}) = (\sqrt{y})^{2} = y\]</div>
+<p><strong>Step 2:</strong> Differentiate:</p>
+<div class="derivation">\[f_{Y}(y) = \frac{d}{dy}(y) = 1,\quad 0 \leq y \leq 1\]</div>
+<p>So \(Y \sim \text{Uniform}\lbrack 0,1\rbrack\) — an interesting result!</p>
+</div>
+
+<div class="example">
+<h4>Example 3.5.5 — Linear Transformation \(Y = aX + b\)</h4>
+<p>Let \(X\) have PDF \(f_{X}(x)\) and CDF \(F_{X}(x)\). Define \(Y = aX + b\) where \(a &gt; 0\).</p>
+<div class="derivation">\[F_{Y}(y) = P(Y \leq y) = P(aX + b \leq y) = P\left( X \leq \frac{y - b}{a} \right) = F_{X}\left( \frac{y - b}{a} \right)\]</div>
+<p>Differentiating:</p>
+<div class="formula-box">\[f_{Y}(y) = \frac{1}{a}f_{X}\left( \frac{y - b}{a} \right)\]</div>
+<p>This is the general formula for a linear transformation of a continuous random variable.</p>
+</div>
+
+</div></div>
+
+<!-- BIVARIATE -->
+<div id="bivariate" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">3.6</span> Joint, Marginal, and Conditional Probability Distributions</h2>
+<p>So far we have studied one random variable at a time. But in real life, we often have two (or more) random variables observed together from the same experiment. For example:</p>
+<ul>
+<li>Marks in Physics (\(X\)) and marks in Chemistry (\(Y\)) of the same student.</li>
+<li>Height (\(X\)) and weight (\(Y\)) of the same person.</li>
+<li>Daily temperature (\(X\)) and humidity (\(Y\)) of the same city.</li>
+</ul>
+<p>To understand such situations, we study <strong>bivariate distributions</strong> — distributions of two random variables together.</p>
+
+<h3>3.6.1 Joint Probability Distribution — Discrete Case</h3>
+<div class="definition">
+<h4>Definition 3.6.1 — Joint PMF</h4>
+<p>The <strong>Joint Probability Mass Function (Joint PMF)</strong> of two discrete random variables \(X\) and \(Y\) is:</p>
+<div class="formula-box">\[p(x,y) = P(X = x,\ Y = y)\]</div>
+<p>for all pairs \((x,y)\) that \(X\) and \(Y\) can jointly take.</p>
+<p><strong>Conditions for a valid Joint PMF:</strong></p>
+<div class="formula-box">\[\text{(i)}\quad p(x,y) \geq 0\quad\text{for all }(x,y)\]
+\[\text{(ii)}\quad\sum_{x}^{}{\sum_{y}^{}p}(x,y) = 1\]</div>
+</div>
+
+<div class="example">
+<h4>Example 3.6.1 — Two Fair Dice</h4>
+<p>Two fair dice are rolled. Let \(X\) = score on first die, \(Y\) = score on second die.</p>
+<p>Since the dice are independent:</p>
+<div class="derivation">\[p(x,y) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36},\quad x = 1,...,6;\ y = 1,...,6\]</div>
+<p>All 36 pairs are equally likely.</p>
+<p><strong>Find</strong> \(P(X + Y = 5)\)<strong>:</strong></p>
+<p>Pairs summing to 5: \((1,4),(2,3),(3,2),(4,1)\) — four pairs.</p>
+<div class="derivation">\[P(X + Y = 5) = 4 \times \frac{1}{36} = \frac{1}{9}\]</div>
+</div>
+
+<div class="example">
+<h4>Example 3.6.2 — Joint PMF in a Table</h4>
+<p>A bag has 2 red (R) and 3 black (B) balls. Two balls are drawn without replacement. Define:</p>
+<p>\(X\) = number of red balls among the two drawn. \(Y\) = number of black balls among the two drawn.</p>
+<p>Note: \(X + Y = 2\) always, so \(Y = 2 - X\), but we can still write the joint table.</p>
+<table>
+<thead><tr><th></th><th>\(Y = 0\)</th><th>\(Y = 1\)</th><th>\(Y = 2\)</th><th>Row Total</th></tr></thead>
+<tbody>
+<tr><th>\(X = 0\)</th><td>0</td><td>0</td><td>\(\frac{3}{10}\)</td><td>\(\frac{3}{10}\)</td></tr>
+<tr><th>\(X = 1\)</th><td>0</td><td>\(\frac{6}{10}\)</td><td>0</td><td>\(\frac{6}{10}\)</td></tr>
+<tr><th>\(X = 2\)</th><td>\(\frac{1}{10}\)</td><td>0</td><td>0</td><td>\(\frac{1}{10}\)</td></tr>
+<tr><th><strong>Col Total</strong></th><td>\(\frac{1}{10}\)</td><td>\(\frac{6}{10}\)</td><td>\(\frac{3}{10}\)</td><td><strong>1</strong></td></tr>
+</tbody>
+</table>
+<p><strong>Verification:</strong> \(\frac{3}{10} + \frac{6}{10} + \frac{1}{10} = 1\)</p>
+</div>
+
+<div class="example">
+<h4>Example 3.6.3 — Constructing a Joint PMF</h4>
+<p>The joint PMF of \((X,Y)\) is given as:</p>
+<div class="derivation">\[p(x,y) = \frac{x + y}{21},\quad x = 1,2,3;\ y = 1,2\]</div>
+<p><strong>Verify it is a valid joint PMF.</strong></p>
+<table>
+<thead><tr><th></th><th>\(y = 1\)</th><th>\(y = 2\)</th></tr></thead>
+<tbody>
+<tr><th>\(x = 1\)</th><td>\(\frac{2}{21}\)</td><td>\(\frac{3}{21}\)</td></tr>
+<tr><th>\(x = 2\)</th><td>\(\frac{3}{21}\)</td><td>\(\frac{4}{21}\)</td></tr>
+<tr><th>\(x = 3\)</th><td>\(\frac{4}{21}\)</td><td>\(\frac{5}{21}\)</td></tr>
+</tbody>
+</table>
+<div class="derivation">\[\text{Sum} = \frac{2 + 3 + 3 + 4 + 4 + 5}{21} = \frac{21}{21} = 1\]</div>
+</div>
+
+<h3>3.6.2 Joint PDF — Continuous Case</h3>
+<div class="definition">
+<h4>Definition 3.6.2 — Joint PDF</h4>
+<p>A function \(f(x,y)\) is the <strong>Joint Probability Density Function</strong> of two continuous random variables \(X\) and \(Y\) if:</p>
+<div class="formula-box">\[\text{(i)}\quad f(x,y) \geq 0\quad\text{for all }(x,y)\]
+\[\text{(ii)}\quad\int_{- \infty}^{\infty}{\int_{- \infty}^{\infty}f}(x,y)\, dx\, dy = 1\]</div>
+<p>The probability over a region \(A\) is:</p>
+<div class="formula-box">\[P\left( (X,Y) \in A \right) = \iint_{A}^{}f(x,y)\, dx\, dy\]</div>
+</div>
+
+<h3>3.6.3 Marginal Probability Distribution</h3>
+<p>From the joint distribution, we can recover the <strong>individual</strong> distributions of \(X\) and \(Y\) separately. These are called <strong>Marginal Distributions</strong> because they are found at the <em>margins</em> (totals) of the joint probability table.</p>
+<p><strong>For Discrete Random Variables:</strong></p>
+<div class="formula-box">\[p_{X}(x) = \sum_{y}^{}p(x,y)\quad\quad\text{(Marginal PMF of }X\text{)}\]
+\[p_{Y}(y) = \sum_{x}^{}p(x,y)\quad\quad\text{(Marginal PMF of }Y\text{)}\]</div>
+<p><strong>For Continuous Random Variables:</strong></p>
+<div class="formula-box">\[f_{X}(x) = \int_{- \infty}^{\infty}f(x,y)\, dy\quad\quad\text{(Marginal PDF of }X\text{)}\]
+\[f_{Y}(y) = \int_{- \infty}^{\infty}f(x,y)\, dx\quad\quad\text{(Marginal PDF of }Y\text{)}\]</div>
+
+<div class="example">
+<h4>Example 3.6.4 — Marginal PMF (from Example 3.6.3)</h4>
+<div class="derivation">\[p(x,y) = \frac{x + y}{21},\quad x = 1,2,3;\ y = 1,2\]</div>
+<p><strong>Marginal PMF of</strong> \(X\)<strong>:</strong></p>
+<div class="derivation">\[p_{X}(1) = \frac{2}{21} + \frac{3}{21} = \frac{5}{21}\]</div>
+<div class="derivation">\[p_{X}(2) = \frac{3}{21} + \frac{4}{21} = \frac{7}{21}\]</div>
+<div class="derivation">\[p_{X}(3) = \frac{4}{21} + \frac{5}{21} = \frac{9}{21}\]</div>
+<p><strong>Verification:</strong> \(\frac{5 + 7 + 9}{21} = \frac{21}{21} = 1\)</p>
+<p><strong>Marginal PMF of</strong> \(Y\)<strong>:</strong></p>
+<div class="derivation">\[p_{Y}(1) = \frac{2}{21} + \frac{3}{21} + \frac{4}{21} = \frac{9}{21}\]</div>
+<div class="derivation">\[p_{Y}(2) = \frac{3}{21} + \frac{4}{21} + \frac{5}{21} = \frac{12}{21}\]</div>
+<p><strong>Verification:</strong> \(\frac{9 + 12}{21} = 1\)</p>
+</div>
+
+<div class="example">
+<h4>Example 3.6.5 — Marginal PDFs (Continuous)</h4>
+<p>Given joint PDF:</p>
+<div class="derivation">\[f(x,y) = 2,\quad 0 \leq x \leq y \leq 1\]</div>
+<p><strong>Find the marginal PDFs of</strong> \(X\) <strong>and</strong> \(Y\)<strong>.</strong></p>
+<p><strong>Marginal PDF of</strong> \(X\)<strong>:</strong></p>
+<p>For a fixed \(x\), \(y\) ranges from \(x\) to \(1\):</p>
+<div class="derivation">\[f_{X}(x) = \int_{x}^{1}2\, dy = 2(1 - x),\quad 0 \leq x \leq 1\]</div>
+<p><strong>Marginal PDF of</strong> \(Y\)<strong>:</strong></p>
+<p>For a fixed \(y\), \(x\) ranges from \(0\) to \(y\):</p>
+<div class="derivation">\[f_{Y}(y) = \int_{0}^{y}2\, dx = 2y,\quad 0 \leq y \leq 1\]</div>
+<p><strong>Verification:</strong></p>
+<div class="derivation">\[\int_{0}^{1}2(1 - x)\, dx = 2\left\lbrack x - \frac{x^{2}}{2} \right\rbrack_{0}^{1} = 2\left( 1 - \frac{1}{2} \right) = 1\]</div>
+<div class="derivation">\[\int_{0}^{1}2y\, dy = \left\lbrack y^{2} \right\rbrack_{0}^{1} = 1\]</div>
+</div>
+
+<div class="example">
+<h4>Example 3.6.6 — Marginal PDFs with Exponential Type</h4>
+<div class="derivation">\[f(x,y) = e^{- (x + y)},\quad x &gt; 0,\ y &gt; 0\]</div>
+<p><strong>Marginal PDF of</strong> \(X\)<strong>:</strong></p>
+<div class="derivation">\[f_{X}(x) = \int_{0}^{\infty}e^{- (x + y)}\, dy = e^{- x}\int_{0}^{\infty}e^{- y}\, dy = e^{- x} \cdot 1 = e^{- x},\quad x &gt; 0\]</div>
+<p><strong>Marginal PDF of</strong> \(Y\)<strong>:</strong></p>
+<p>By symmetry: \(f_{Y}(y) = e^{- y}\), \(y &gt; 0\).</p>
+<p>Note: \(f(x,y) = e^{- x} \cdot e^{- y} = f_{X}(x) \cdot f_{Y}(y)\), confirming \(X\) and \(Y\) are <strong>independent</strong>.</p>
+</div>
+
+<h3>3.6.4 Conditional Probability Distribution</h3>
+<p>The <strong>conditional distribution</strong> of \(X\) given \(Y = y\) answers the question:</p>
+<p><em>"If we already know that</em> \(Y = y\)<em>, what is the distribution of</em> \(X\)<em>?"</em></p>
+<p>It uses the extra information about \(Y\) to refine our knowledge about \(X\).</p>
+<p><strong>For Discrete Random Variables:</strong></p>
+<div class="formula-box">\[P(X = x \mid Y = y) = \frac{p(x,y)}{p_{Y}(y)},\quad\text{provided }p_{Y}(y) &gt; 0\]</div>
+<p><strong>For Continuous Random Variables:</strong></p>
+<div class="formula-box">\[f(x \mid y) = \frac{f(x,y)}{f_{Y}(y)},\quad\text{provided }f_{Y}(y) &gt; 0\]
+\[f(y \mid x) = \frac{f(x,y)}{f_{X}(x)},\quad\text{provided }f_{X}(x) &gt; 0\]</div>
+
+<div class="example">
+<h4>Example 3.6.7 — Conditional PMF (Discrete)</h4>
+<p>From Example 3.6.3: \(p(x,y) = \frac{x + y}{21}\); \(p_{Y}(1) = \frac{9}{21}\).</p>
+<p><strong>Find the conditional distribution of</strong> \(X\) <strong>given</strong> \(Y = 1\)<strong>.</strong></p>
+<div class="derivation">\[P(X = 1 \mid Y = 1) = \frac{p(1,1)}{p_{Y}(1)} = \frac{2/21}{9/21} = \frac{2}{9}\]</div>
+<div class="derivation">\[P(X = 2 \mid Y = 1) = \frac{p(2,1)}{p_{Y}(1)} = \frac{3/21}{9/21} = \frac{3}{9} = \frac{1}{3}\]</div>
+<div class="derivation">\[P(X = 3 \mid Y = 1) = \frac{p(3,1)}{p_{Y}(1)} = \frac{4/21}{9/21} = \frac{4}{9}\]</div>
+<p><strong>Verification:</strong> \(\frac{2}{9} + \frac{3}{9} + \frac{4}{9} = \frac{9}{9} = 1\)</p>
+</div>
+
+<div class="example">
+<h4>Example 3.6.8 — Conditional PDF (Continuous)</h4>
+<p>From Example 3.6.5: \(f(x,y) = 2\) for \(0 \leq x \leq y \leq 1\), and \(f_{Y}(y) = 2y\).</p>
+<p><strong>Find</strong> \(f(x \mid y)\)<strong>.</strong></p>
+<div class="derivation">\[f(x \mid y) = \frac{f(x,y)}{f_{Y}(y)} = \frac{2}{2y} = \frac{1}{y},\quad 0 \leq x \leq y\]</div>
+<p>This is a Uniform distribution on \(\lbrack 0,y\rbrack\).</p>
+<p><strong>Interpretation:</strong> Given that \(Y = y\), the random variable \(X\) is uniformly spread between 0 and \(y\).</p>
+<p><strong>Find</strong> \(P\left( X &lt; \frac{y}{2}\,|\, Y = y \right)\)<strong>:</strong></p>
+<div class="derivation">\[P\left( X &lt; \frac{y}{2}\,|\, Y = y \right) = \int_{0}^{y/2}\frac{1}{y}\, dx = \frac{1}{y} \cdot \frac{y}{2} = \frac{1}{2}\]</div>
+</div>
+
+<h3>3.6.5 Independence of Random Variables</h3>
+<div class="definition">
+<h4>Definition 3.6.3 — Independence</h4>
+<p>Two random variables \(X\) and \(Y\) are said to be <strong>independent</strong> if their joint distribution equals the product of their marginal distributions:</p>
+<p><strong>Discrete case:</strong></p>
+<div class="formula-box">\[p(x,y) = p_{X}(x) \cdot p_{Y}(y)\quad\text{for all }(x,y)\]</div>
+<p><strong>Continuous case:</strong></p>
+<div class="formula-box">\[f(x,y) = f_{X}(x) \cdot f_{Y}(y)\quad\text{for all }(x,y)\]</div>
+<p><strong>Intuition:</strong> \(X\) and \(Y\) are independent when knowing the value of one gives you <em>no information</em> about the other.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.6.9 — Checking Independence (Discrete)</h4>
+<p>Joint PMF: \(p(x,y) = \frac{x + y}{21}\) for \(x = 1,2,3\); \(y = 1,2\).</p>
+<p>From Example 3.6.4: \(p_{X}(1) = \frac{5}{21}\), \(p_{Y}(1) = \frac{9}{21}\).</p>
+<p>Check: \(p_{X}(1) \cdot p_{Y}(1) = \frac{5}{21} \times \frac{9}{21} = \frac{45}{441}\)</p>
+<p>But \(p(1,1) = \frac{2}{21} = \frac{42}{441}\)</p>
+<p>Since \(\frac{45}{441} 
+eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independent</strong>.</p>
+</div>
+
+<div class="example">
+<h4>Example 3.6.10 — Checking Independence (Continuous)</h4>
+<p>From Example 3.6.6: \(f(x,y) = e^{- (x + y)}\), \(f_{X}(x) = e^{- x}\), \(f_{Y}(y) = e^{- y}\).</p>
+<div class="derivation">\[f_{X}(x) \cdot f_{Y}(y) = e^{- x} \cdot e^{- y} = e^{- (x + y)} = f(x,y)\]</div>
+<p>\(X\) <strong>and</strong> \(Y\) <strong>are independent.</strong></p>
+</div>
+
+<h3>3.6.6 Summary — Joint, Marginal, Conditional</h3>
+<table>
+<thead><tr><th>Concept</th><th>Discrete</th><th>Continuous</th></tr></thead>
+<tbody>
+<tr><td>Joint</td><td>\(p(x,y)\)</td><td>\(f(x,y)\)</td></tr>
+<tr><td>Marginal of \(X\)</td><td>\(\sum_{y}^{}p(x,y)\)</td><td>\(\int f(x,y)\, dy\)</td></tr>
+<tr><td>Marginal of \(Y\)</td><td>\(\sum_{x}^{}p(x,y)\)</td><td>\(\int f(x,y)\, dx\)</td></tr>
+<tr><td>Conditional \(X \mid y\)</td><td>\(p(x,y)/p_{Y}(y)\)</td><td>\(f(x,y)/f_{Y}(y)\)</td></tr>
+<tr><td>Conditional \(Y \mid x\)</td><td>\(p(x,y)/p_{X}(x)\)</td><td>\(f(x,y)/f_{X}(x)\)</td></tr>
+<tr><td>Independence</td><td>\(p(x,y) = p_{X}(x) \cdot p_{Y}(y)\)</td><td>\(f(x,y) = f_{X}(x) \cdot f_{Y}(y)\)</td></tr>
+</tbody>
+</table>
+
+</div></div>
+
+<!-- FORMULAS -->
+<div id="formulas" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">📐</span> Quick Formula Reference</h2>
+<table class="quick-ref-table">
+<thead><tr><th>Concept</th><th>Discrete</th><th>Continuous</th></tr></thead>
+<tbody>
+<tr><td>Probability at a point</td><td>\(p(x) = P(X = x)\)</td><td>\(f(x)\) (density only)</td></tr>
+<tr><td>Validity</td><td>\(\sum p(x) = 1,\ p(x) \geq 0\)</td><td>\(\int f(x)\, dx = 1,\ f(x) \geq 0\)</td></tr>
+<tr><td>CDF</td><td>\(F(x) = \sum_{x_{i} \leq x}^{}p(x_{i})\)</td><td>\(F(x) = \int_{- \infty}^{x}f(t)\, dt\)</td></tr>
+<tr><td>Interval probability</td><td>\(\sum_{a &lt; x_{i} \leq b}^{}p(x_{i})\)</td><td>\(\int_{a}^{b}f(x)\, dx\)</td></tr>
+<tr><td>\(F\) and \(f\)</td><td>---</td><td>\(f(x) = F'(x)\)</td></tr>
+<tr><td>Marginal of \(X\)</td><td>\(\sum_{y}^{}p(x,y)\)</td><td>\(\int f(x,y)\, dy\)</td></tr>
+<tr><td>Marginal of \(Y\)</td><td>\(\sum_{x}^{}p(x,y)\)</td><td>\(\int f(x,y)\, dx\)</td></tr>
+<tr><td>Conditional \(X \mid y\)</td><td>\(p(x,y)/p_{Y}(y)\)</td><td>\(f(x,y)/f_{Y}(y)\)</td></tr>
+<tr><td>Independence</td><td>\(p(x,y) = p_{X}(x) \cdot p_{Y}(y)\)</td><td>\(f(x,y) = f_{X}(x) \cdot f_{Y}(y)\)</td></tr>
+</tbody>
+</table>
+</div></div>
+
+<!-- EXERCISES -->
+<div id="exercises" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">📝</span> Subjective Exercises — 30 Questions</h2>
+<p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the detailed solution for each question.</p>
+
+<div class="question"><strong>Q1.</strong> Define a random variable. Give two examples from daily life.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub1')">Show Answer ▼</button>
+<div id="sub1" class="answer"><p>A <strong>random variable</strong> is a real-valued function defined on the sample space of a random experiment. Examples: 1. Number of heads in 3 coin tosses. 2. Lifespan of a bulb in hours.</p></div>
+
+<div class="question"><strong>Q2.</strong> Distinguish between a discrete and a continuous random variable with one example of each.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub2')">Show Answer ▼</button>
+<div id="sub2" class="answer"><p><strong>Discrete:</strong> Takes countable values (e.g., number of defective items in a batch). <strong>Continuous:</strong> Takes uncountably many values in an interval (e.g., height of students).</p></div>
+
+<div class="question"><strong>Q3.</strong> State the two conditions that must be satisfied for \(p(x)\) to be a valid PMF.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub3')">Show Answer ▼</button>
+<div id="sub3" class="answer"><p>(i) \(p(x) \geq 0\) for all \(x\)<br>(ii) \(\sum p(x) = 1\)</p></div>
+
+<div class="question"><strong>Q4.</strong> State the two conditions for \(f(x)\) to be a valid PDF.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub4')">Show Answer ▼</button>
+<div id="sub4" class="answer"><p>(i) \(f(x) \geq 0\) for all \(x\)<br>(ii) \(\int_{-\infty}^{\infty} f(x) dx = 1\)</p></div>
+
+<div class="question"><strong>Q5.</strong> Define CDF. Write the formula for finding \(P(a &lt; X \leq b)\) using CDF.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub5')">Show Answer ▼</button>
+<div id="sub5" class="answer"><p>The <strong>CDF</strong> \(F(x)\) is defined as \(F(x) = P(X \leq x)\).<br>\(P(a &lt; X \leq b) = F(b) - F(a)\).</p></div>
+
+<div class="question"><strong>Q6.</strong> List any <strong>five</strong> properties of the distribution function \(F(x)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub6')">Show Answer ▼</button>
+<div id="sub6" class="answer"><p>1. Non-decreasing: If \(x_1 &lt; x_2\), \(F(x_1) \leq F(x_2)\).<br>2. \(F(-\infty) = 0\)<br>3. \(F(+\infty) = 1\)<br>4. Right-continuous: \(F(x^+) = F(x)\)<br>5. \(0 \leq F(x) \leq 1\)</p></div>
+
+<div class="question"><strong>Q7.</strong> What is the relationship between PDF \(f(x)\) and CDF \(F(x)\) for a continuous random variable?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub7')">Show Answer ▼</button>
+<div id="sub7" class="answer"><p>\(f(x) = \frac{d}{dx} F(x)\) and \(F(x) = \int_{-\infty}^{x} f(t) dt\).</p></div>
+
+<div class="question"><strong>Q8.</strong> Define marginal distribution. How is it obtained from the joint distribution?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub8')">Show Answer ▼</button>
+<div id="sub8" class="answer"><p><strong>Marginal distribution</strong> gives the individual distribution of one variable from a joint distribution.<br>For discrete: \(p_X(x) = \sum_y p(x,y)\).<br>For continuous: \(f_X(x) = \int_{-\infty}^{\infty} f(x,y) dy\).</p></div>
+
+<div class="question"><strong>Q9.</strong> What is a conditional distribution? Give its formula for both discrete and continuous cases.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub9')">Show Answer ▼</button>
+<div id="sub9" class="answer"><p>It's the distribution of one variable given the value of another.<br>Discrete: \(P(X=x | Y=y) = \frac{p(x,y)}{p_Y(y)}\)<br>Continuous: \(f(x|y) = \frac{f(x,y)}{f_Y(y)}\)</p></div>
+
+<div class="question"><strong>Q10.</strong> When are two random variables \(X\) and \(Y\) said to be independent?</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub10')">Show Answer ▼</button>
+<div id="sub10" class="answer"><p>When their joint distribution equals the product of their marginal distributions.<br>Discrete: \(p(x,y) = p_X(x) p_Y(y)\)<br>Continuous: \(f(x,y) = f_X(x) f_Y(y)\)</p></div>
+
+<div class="question"><strong>Q11.</strong> A random variable \(X\) has the PMF: \(p(0)=0\), \(p(1)=k\), \(p(2)=2k\), \(p(3)=2k\), \(p(4)=3k\), \(p(5)=k^2\), \(p(6)=2k^2\), \(p(7)=7k^2 + k\). Find \(k\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub11')">Show Answer ▼</button>
+<div id="sub11" class="answer"><div class='derivation'>\(\sum p(x) = 1 \implies 0 + k + 2k + 2k + 3k + k^2 + 2k^2 + 7k^2 + k = 1\)</div><div class='derivation'>\(10k^2 + 9k - 1 = 0 \implies (10k - 1)(k + 1) = 0\)</div><div class='derivation'>Since \(k \geq 0\), \(k = 1/10\).</div></div>
+
+<div class="question"><strong>Q12.</strong> For the continuous random variable \(X\) with PDF \(f(x) = 3x^2\) for \(0 \leq x \leq 1\), find the CDF \(F(x)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub12')">Show Answer ▼</button>
+<div id="sub12" class="answer"><div class='derivation'>For \(0 \leq x \leq 1\), \(F(x) = \int_0^x 3t^2 dt = [t^3]_0^x = x^3\).</div><p>So \(F(x) = 0\) for \(x&lt;0\), \(x^3\) for \(0 \leq x \leq 1\), and \(1\) for \(x&gt;1\).</p></div>
+
+<div class="question"><strong>Q13.</strong> A bag contains 4 white and 3 black balls. Two balls are drawn without replacement. Let \(X\) = number of white balls drawn. Find the PMF of \(X\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub13')">Show Answer ▼</button>
+<div id="sub13" class="answer"><p>Total ways to draw 2 from 7 = \(\binom{7}{2} = 21\).</p><div class='derivation'>\(P(X=0) = \binom{3}{2}/21 = 3/21 = 1/7\)</div><div class='derivation'>\(P(X=1) = \binom{4}{1}\binom{3}{1}/21 = 12/21 = 4/7\)</div><div class='derivation'>\(P(X=2) = \binom{4}{2}/21 = 6/21 = 2/7\)</div></div>
+
+<div class="question"><strong>Q14.</strong> Three fair coins are tossed. Let \(X\) = number of heads. Find \(P(X \geq 2)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub14')">Show Answer ▼</button>
+<div id="sub14" class="answer"><p>The PMF is \(p(0)=1/8\), \(p(1)=3/8\), \(p(2)=3/8\), \(p(3)=1/8\).</p><div class='derivation'>\(P(X \geq 2) = p(2) + p(3) = 3/8 + 1/8 = 4/8 = 1/2\).</div></div>
+
+<div class="question"><strong>Q15.</strong> Given PDF \(f(x) = cx\) for \(0 \leq x \leq 2\) and \(c(4-x)\) for \(2 &lt; x \leq 4\). Find \(c\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub15')">Show Answer ▼</button>
+<div id="sub15" class="answer"><div class='derivation'>\(\int_0^2 cx dx + \int_2^4 c(4-x) dx = 1\)</div><div class='derivation'>\(c[x^2/2]_0^2 + c[4x - x^2/2]_2^4 = 1\)</div><div class='derivation'>\(c(2) + c((16-8) - (8-2)) = 1 \implies 2c + 2c = 1 \implies 4c = 1 \implies c = 1/4\).</div></div>
+
+<div class="question"><strong>Q16.</strong> The CDF is \(F(x) = x^3\) for \(0 \leq x \leq 1\). Find \(P(0.3 &lt; X \leq 0.7)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub16')">Show Answer ▼</button>
+<div id="sub16" class="answer"><div class='derivation'>\(P(0.3 &lt; X \leq 0.7) = F(0.7) - F(0.3) = (0.7)^3 - (0.3)^3 = 0.343 - 0.027 = 0.316\).</div></div>
+
+<div class="question"><strong>Q17.</strong> The joint PMF of \((X,Y)\) is \(p(x,y) = \frac{x+y}{21}\) for \(x=1,2,3\); \(y=1,2\). Find the marginal PMF of \(X\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub17')">Show Answer ▼</button>
+<div id="sub17" class="answer"><div class='derivation'>\(p_X(1) = \frac{1+1}{21} + \frac{1+2}{21} = \frac{5}{21}\)</div><div class='derivation'>\(p_X(2) = \frac{2+1}{21} + \frac{2+2}{21} = \frac{7}{21}\)</div><div class='derivation'>\(p_X(3) = \frac{3+1}{21} + \frac{3+2}{21} = \frac{9}{21}\)</div></div>
+
+<div class="question"><strong>Q18.</strong> The joint PDF of \((X,Y)\) is \(f(x,y) = 6xy^2\) for \(0 \leq x \leq 1\), \(0 \leq y \leq 1\). Find marginal PDF of \(X\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub18')">Show Answer ▼</button>
+<div id="sub18" class="answer"><div class='derivation'>\(f_X(x) = \int_0^1 6xy^2 dy = 6x [y^3/3]_0^1 = 2x\) for \(0 \leq x \leq 1\).</div></div>
+
+<div class="question"><strong>Q19.</strong> Let \(X\) have PMF \(p(x) = 1/5\) for \(x = -2, -1, 0, 1, 2\). Find the distribution of \(Y = X^2\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub19')">Show Answer ▼</button>
+<div id="sub19" class="answer"><div class='derivation'>\(Y\) takes values \(0, 1, 4\).</div><div class='derivation'>\(P(Y=0) = P(X=0) = 1/5\)</div><div class='derivation'>\(P(Y=1) = P(X=-1) + P(X=1) = 2/5\)</div><div class='derivation'>\(P(Y=4) = P(X=-2) + P(X=2) = 2/5\)</div></div>
+
+<div class="question"><strong>Q20.</strong> Given \(f(x) = 2e^{-2x}\) for \(x &gt; 0\). Find the CDF \(F(x)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub20')">Show Answer ▼</button>
+<div id="sub20" class="answer"><div class='derivation'>\(F(x) = \int_0^x 2e^{-2t} dt = [-e^{-2t}]_0^x = 1 - e^{-2x}\) for \(x &gt; 0\).</div></div>
+
+<div class="question"><strong>Q21.</strong> A continuous random variable \(X\) has PDF \(f(x) = k(1-x^2)\) for \(-1 \leq x \leq 1\). Find \(k\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub21')">Show Answer ▼</button>
+<div id="sub21" class="answer"><div class='derivation'>\(\int_{-1}^1 k(1-x^2) dx = 1 \implies k[x - x^3/3]_{-1}^1 = 1\)</div><div class='derivation'>\(k((1 - 1/3) - (-1 + 1/3)) = k(2/3 + 2/3) = 4k/3 = 1 \implies k = 3/4\).</div></div>
+
+<div class="question"><strong>Q22.</strong> Let \(X\) have CDF \(F(x) = 1 - e^{-\lambda x}\) for \(x &gt; 0\). Find the PDF of \(X\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub22')">Show Answer ▼</button>
+<div id="sub22" class="answer"><div class='derivation'>\(f(x) = \frac{d}{dx} F(x) = \frac{d}{dx}(1 - e^{-\lambda x}) = \lambda e^{-\lambda x}\) for \(x &gt; 0\).</div></div>
+
+<div class="question"><strong>Q23.</strong> Find the constant \(c\) such that \(p(x) = c/x\) for \(x = 1, 2, 3\) is a valid PMF.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub23')">Show Answer ▼</button>
+<div id="sub23" class="answer"><div class='derivation'>\(\sum p(x) = c/1 + c/2 + c/3 = c(1 + 1/2 + 1/3) = c(11/6) = 1 \implies c = 6/11\).</div></div>
+
+<div class="question"><strong>Q24.</strong> Verify if \(f(x) = 1/2\) for \(0 \leq x \leq 2\) is a valid PDF.</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub24')">Show Answer ▼</button>
+<div id="sub24" class="answer"><div class='derivation'>1. \(f(x) \geq 0\) is satisfied.</div><div class='derivation'>2. \(\int_0^2 (1/2) dx = [x/2]_0^2 = 2/2 - 0 = 1\). Thus, it is a valid PDF.</div></div>
+
+<div class="question"><strong>Q25.</strong> Let the joint PDF of \(X\) and \(Y\) be \(f(x,y) = c(x+y)\) for \(0 \leq x \leq 1, 0 \leq y \leq 1\). Find \(c\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub25')">Show Answer ▼</button>
+<div id="sub25" class="answer"><div class='derivation'>\(\int_0^1 \int_0^1 c(x+y) dx dy = c \int_0^1 [x^2/2 + xy]_0^1 dy = c \int_0^1 (1/2 + y) dy\)</div><div class='derivation'>\(= c [y/2 + y^2/2]_0^1 = c(1/2 + 1/2) = c = 1\).</div></div>
+
+<div class="question"><strong>Q26.</strong> Find the marginal PDF of \(X\) for the joint PDF \(f(x,y) = 2\) for \(0 \leq x \leq y \leq 1\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub26')">Show Answer ▼</button>
+<div id="sub26" class="answer"><div class='derivation'>\(f_X(x) = \int_x^1 2 dy = 2[y]_x^1 = 2(1-x)\) for \(0 \leq x \leq 1\).</div></div>
+
+<div class="question"><strong>Q27.</strong> Given the joint PMF \(p(x,y) = (x+y)/21\) for \(x=1,2,3; y=1,2\), find \(P(X=Y)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub27')">Show Answer ▼</button>
+<div id="sub27" class="answer"><p>\(X\) and \(Y\) are equal only when \(x=1, y=1\) and \(x=2, y=2\).</p><div class='derivation'>\(P(X=Y) = p(1,1) + p(2,2) = (1+1)/21 + (2+2)/21 = 2/21 + 4/21 = 6/21 = 2/7\).</div></div>
+
+<div class="question"><strong>Q28.</strong> Let \(X\) and \(Y\) be independent random variables with PDFs \(f_X(x) = 2x\) \((0&lt;x&lt;1)\) and \(f_Y(y) = 3y^2\) \((0&lt;y&lt;1)\). Find the joint PDF of \(X\) and \(Y\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub28')">Show Answer ▼</button>
+<div id="sub28" class="answer"><p>Since they are independent, \(f(x,y) = f_X(x) f_Y(y)\).</p><div class='derivation'>\(f(x,y) = (2x)(3y^2) = 6xy^2\) for \(0 &lt; x &lt; 1, 0 &lt; y &lt; 1\).</div></div>
+
+<div class="question"><strong>Q29.</strong> Let \(X\) have PMF \(p(x) = 1/6\) for \(x=1,2,3,4,5,6\). Find the PMF of \(Y = 2X\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub29')">Show Answer ▼</button>
+<div id="sub29" class="answer"><p>\(Y\) takes values \(2,4,6,8,10,12\).</p><div class='derivation'>\(P(Y=y) = P(2X=y) = P(X=y/2) = 1/6\) for \(y \in \{2,4,6,8,10,12\}\).</div></div>
+
+<div class="question"><strong>Q30.</strong> Let \(X\) have PDF \(f(x) = 2x\) for \(0&lt;x&lt;1\). Find the PDF of \(Y = X^2\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('sub30')">Show Answer ▼</button>
+<div id="sub30" class="answer"><div class='derivation'>\(F_Y(y) = P(Y \leq y) = P(X^2 \leq y) = P(X \leq \sqrt{y}) = \int_0^{\sqrt{y}} 2x dx = [x^2]_0^{\sqrt{y}} = y\).</div><div class='derivation'>\(f_Y(y) = F_Y'(y) = 1\) for \(0 &lt; y &lt; 1\). Thus \(Y \sim \text{Uniform}(0,1)\).</div></div>
+</div>
+</div>
+
+<!-- MCQs -->
+<div id="mcq" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
+<p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the correct option and explanation.</p>
+
+<div class="question"><strong>Q1.</strong> A random variable is defined as:<div class="mcq-options"><p>(a) A variable that takes random values without any rule<br>(b) A real-valued function defined on the sample space<br>(c) Any number between 0 and 1<br>(d) The probability of an event</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+<div id="mcq1" class="answer"><strong>Answer:</strong> (b) A real-valued function defined on the sample space</div>
+
+<div class="question"><strong>Q2.</strong> Which of the following is a <strong>continuous</strong> random variable?<div class="mcq-options"><p>(a) Number of tosses until first head<br>(b) Number of defective items in a box<br>(c) Time taken to run 100 metres<br>(d) Number of phone calls received in an hour</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+<div id="mcq2" class="answer"><strong>Answer:</strong> (c) Time taken to run 100 metres</div>
+
+<div class="question"><strong>Q3.</strong> For a valid PMF \(p(x)\), which condition is correct?<div class="mcq-options"><p>(a) \(\sum p(x) = 0\) and \(p(x) \leq 1\)<br>(b) \(\sum p(x) = 1\) and \(p(x) \geq 0\)<br>(c) \(\sum p(x) = 1\) and \(p(x)\) can be negative<br>(d) \(\sum p(x) \leq 1\) and \(p(x) &gt; 0\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show Answer ▼</button>
+<div id="mcq3" class="answer"><strong>Answer:</strong> (b) \(\sum p(x) = 1\) and \(p(x) \geq 0\)</div>
+
+<div class="question"><strong>Q4.</strong> For a continuous random variable \(X\), \(P(X = 4)\) is always:<div class="mcq-options"><p>(a) \(0.25\) &nbsp; (b) \(0.5\) &nbsp; (c) \(1\) &nbsp; (d) \(0\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show Answer ▼</button>
+<div id="mcq4" class="answer"><strong>Answer:</strong> (d) \(0\)</div>
+
+<div class="question"><strong>Q5.</strong> The total area under a PDF curve equals:<div class="mcq-options"><p>(a) \(0\) &nbsp; (b) \(0.5\) &nbsp; (c) \(1\) &nbsp; (d) It depends on \(f(x)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show Answer ▼</button>
+<div id="mcq5" class="answer"><strong>Answer:</strong> (c) \(1\)</div>
+
+<div class="question"><strong>Q6.</strong> The CDF \(F(x)\) is defined as:<div class="mcq-options"><p>(a) \(P(X = x)\) &nbsp; (b) \(P(X &gt; x)\) &nbsp; (c) \(P(X \leq x)\) &nbsp; (d) \(P(X \geq x)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show Answer ▼</button>
+<div id="mcq6" class="answer"><strong>Answer:</strong> (c) \(P(X \leq x)\)</div>
+
+<div class="question"><strong>Q7.</strong> \(P(a &lt; X \leq b)\) in terms of CDF is:<div class="mcq-options"><p>(a) \(F(a) - F(b)\) &nbsp; (b) \(F(b) - F(a)\) &nbsp; (c) \(F(a) + F(b)\) &nbsp; (d) \(F(b) \cdot F(a)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show Answer ▼</button>
+<div id="mcq7" class="answer"><strong>Answer:</strong> (b) \(F(b) - F(a)\)</div>
+
+<div class="question"><strong>Q8.</strong> \(F( - \infty)\) equals:<div class="mcq-options"><p>(a) \(1\) &nbsp; (b) \(- 1\) &nbsp; (c) \(\infty\) &nbsp; (d) \(0\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show Answer ▼</button>
+<div id="mcq8" class="answer"><strong>Answer:</strong> (d) \(0\)</div>
+
+<div class="question"><strong>Q9.</strong> For a continuous random variable, the PDF \(f(x)\) and CDF \(F(x)\) are related by:<div class="mcq-options"><p>(a) \(F(x) = f'(x)\) &nbsp; (b) \(f(x) = F'(x)\) &nbsp; (c) \(f(x) = \int F(x)\, dx\) &nbsp; (d) \(f(x) = F(x)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show Answer ▼</button>
+<div id="mcq9" class="answer"><strong>Answer:</strong> (b) \(f(x) = F'(x)\)</div>
+
+<div class="question"><strong>Q10.</strong> If \(f(x) = 2x\) for \(0 \leq x \leq 1\), then \(P(X \leq 0.5)\) equals:<div class="mcq-options"><p>(a) \(0.50\) &nbsp; (b) \(0.75\) &nbsp; (c) \(0.25\) &nbsp; (d) \(0.10\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show Answer ▼</button>
+<div id="mcq10" class="answer"><strong>Answer:</strong> (c) \(0.25\)</div>
+
+<div class="question"><strong>Q11.</strong> The marginal PMF of \(X\) from joint PMF \(p(x,y)\) is:<div class="mcq-options"><p>(a) \(p(x,y) \cdot p_Y(y)\) &nbsp; (b) \(\sum_x p(x,y)\) &nbsp; (c) \(\sum_y p(x,y)\) &nbsp; (d) \(p(x,y)/p_Y(y)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show Answer ▼</button>
+<div id="mcq11" class="answer"><strong>Answer:</strong> (c) \(\sum_y p(x,y)\)</div>
+
+<div class="question"><strong>Q12.</strong> \(X\) and \(Y\) are independent if and only if:<div class="mcq-options"><p>(a) \(f(x,y) = f_X(x) + f_Y(y)\) &nbsp; (b) \(f(x,y) = f_X(x) \cdot f_Y(y)\) &nbsp; (c) \(f(x,y) = f(x|y)\) &nbsp; (d) \(E(XY) = E(X) + E(Y)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show Answer ▼</button>
+<div id="mcq12" class="answer"><strong>Answer:</strong> (b) \(f(x,y) = f_X(x) \cdot f_Y(y)\)</div>
+
+<div class="question"><strong>Q13.</strong> The conditional PMF \(P(X = x \mid Y = y)\) equals:<div class="mcq-options"><p>(a) \(p(x,y) \cdot p_Y(y)\) &nbsp; (b) \(p_X(x)/p(x,y)\) &nbsp; (c) \(p(x,y)/p_Y(y)\) &nbsp; (d) \(p_X(x) \cdot p_Y(y)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show Answer ▼</button>
+<div id="mcq13" class="answer"><strong>Answer:</strong> (c) \(p(x,y)/p_Y(y)\)</div>
+
+<div class="question"><strong>Q14.</strong> If \(p(x) = \frac{x}{10}\) for \(x = 1,2,3,4\), then \(P(X \leq 2)\) equals:<div class="mcq-options"><p>(a) \(\frac{1}{10}\) &nbsp; (b) \(\frac{2}{10}\) &nbsp; (c) \(\frac{3}{10}\) &nbsp; (d) \(\frac{4}{10}\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show Answer ▼</button>
+<div id="mcq14" class="answer"><strong>Answer:</strong> (c) \(\frac{3}{10}\)</div>
+
+<div class="question"><strong>Q15.</strong> For a CDF \(F(x)\), which of the following is always true?<div class="mcq-options"><p>(a) \(F(x)\) is a decreasing function<br>(b) \(F(x)\) can be greater than 1<br>(c) \(F(x)\) is non-decreasing and right-continuous<br>(d) \(F(x) = f(x)\) always</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show Answer ▼</button>
+<div id="mcq15" class="answer"><strong>Answer:</strong> (c) \(F(x)\) is non-decreasing and right-continuous</div>
+
+<div class="question"><strong>Q16.</strong> If \(f(x) = kx^2\) for \(0 &lt; x &lt; 1\) is a PDF, then \(k\) equals:<div class="mcq-options"><p>(a) 1 &nbsp; (b) 2 &nbsp; (c) 3 &nbsp; (d) 4</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show Answer ▼</button>
+<div id="mcq16" class="answer"><strong>Answer:</strong> (c) 3</div>
+
+<div class="question"><strong>Q17.</strong> For a continuous random variable \(X\), the area under the PDF curve between \(x=a\) and \(x=b\) represents:<div class="mcq-options"><p>(a) \(P(X=a)\) &nbsp; (b) \(P(a &lt; X &lt; b)\) &nbsp; (c) \(P(X &gt; b)\) &nbsp; (d) CDF</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show Answer ▼</button>
+<div id="mcq17" class="answer"><strong>Answer:</strong> (b) \(P(a &lt; X &lt; b)\)</div>
+
+<div class="question"><strong>Q18.</strong> Which of the following is a property of CDF?<div class="mcq-options"><p>(a) \(F(-\infty) = 1\) &nbsp; (b) \(F(+\infty) = 0\) &nbsp; (c) Non-decreasing &nbsp; (d) Can be negative</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show Answer ▼</button>
+<div id="mcq18" class="answer"><strong>Answer:</strong> (c) Non-decreasing</div>
+
+<div class="question"><strong>Q19.</strong> If \(X\) and \(Y\) are independent, their joint PDF \(f(x,y)\) is:<div class="mcq-options"><p>(a) \(f_X(x) + f_Y(y)\) &nbsp; (b) \(f_X(x) f_Y(y)\) &nbsp; (c) \(f_X(x) / f_Y(y)\) &nbsp; (d) \(f_X(x) - f_Y(y)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show Answer ▼</button>
+<div id="mcq19" class="answer"><strong>Answer:</strong> (b) \(f_X(x) f_Y(y)\)</div>
+
+<div class="question"><strong>Q20.</strong> The marginal PMF of \(Y\) is obtained by summing the joint PMF over all values of:<div class="mcq-options"><p>(a) \(Y\) &nbsp; (b) \(X\) &nbsp; (c) \(X\) and \(Y\) &nbsp; (d) none</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show Answer ▼</button>
+<div id="mcq20" class="answer"><strong>Answer:</strong> (b) \(X\)</div>
+
+<div class="question"><strong>Q21.</strong> If \(P(X=x, Y=y) = P(X=x)P(Y=y)\), the variables are:<div class="mcq-options"><p>(a) dependent &nbsp; (b) mutually exclusive &nbsp; (c) independent &nbsp; (d) continuous</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq21')">Show Answer ▼</button>
+<div id="mcq21" class="answer"><strong>Answer:</strong> (c) independent</div>
+
+<div class="question"><strong>Q22.</strong> The derivative of CDF of a continuous RV is its:<div class="mcq-options"><p>(a) PMF &nbsp; (b) PDF &nbsp; (c) Mean &nbsp; (d) Variance</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq22')">Show Answer ▼</button>
+<div id="mcq22" class="answer"><strong>Answer:</strong> (b) PDF</div>
+
+<div class="question"><strong>Q23.</strong> The probability \(P(X=c)\) for a continuous RV is:<div class="mcq-options"><p>(a) 1 &nbsp; (b) 0 &nbsp; (c) \(f(c)\) &nbsp; (d) \(F(c)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq23')">Show Answer ▼</button>
+<div id="mcq23" class="answer"><strong>Answer:</strong> (b) 0</div>
+
+<div class="question"><strong>Q24.</strong> A valid PMF must have sum of probabilities equal to:<div class="mcq-options"><p>(a) 0 &nbsp; (b) 0.5 &nbsp; (c) 1 &nbsp; (d) infinity</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq24')">Show Answer ▼</button>
+<div id="mcq24" class="answer"><strong>Answer:</strong> (c) 1</div>
+
+<div class="question"><strong>Q25.</strong> What is the value of \(F(+\infty)\)?<div class="mcq-options"><p>(a) 0 &nbsp; (b) 0.5 &nbsp; (c) 1 &nbsp; (d) infinity</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq25')">Show Answer ▼</button>
+<div id="mcq25" class="answer"><strong>Answer:</strong> (c) 1</div>
+
+<div class="question"><strong>Q26.</strong> If \(X\) takes values 0, 1, 2, it is a:<div class="mcq-options"><p>(a) continuous RV &nbsp; (b) discrete RV &nbsp; (c) constant &nbsp; (d) variable</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq26')">Show Answer ▼</button>
+<div id="mcq26" class="answer"><strong>Answer:</strong> (b) discrete RV</div>
+
+<div class="question"><strong>Q27.</strong> The function \(f(x|y)\) is known as:<div class="mcq-options"><p>(a) Marginal PDF &nbsp; (b) Joint PDF &nbsp; (c) Conditional PDF &nbsp; (d) CDF</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq27')">Show Answer ▼</button>
+<div id="mcq27" class="answer"><strong>Answer:</strong> (c) Conditional PDF</div>
+
+<div class="question"><strong>Q28.</strong> If \(Y = aX + b\) for \(a &gt; 0\), then \(f_Y(y)\) is:<div class="mcq-options"><p>(a) \(\frac{1}{a} f_X\left(\frac{y-b}{a}\right)\) &nbsp; (b) \(f_X(y)\) &nbsp; (c) \(a f_X(y)\) &nbsp; (d) \(f_X(a y + b)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq28')">Show Answer ▼</button>
+<div id="mcq28" class="answer"><strong>Answer:</strong> (a) \(\frac{1}{a} f_X\left(\frac{y-b}{a}\right)\)</div>
+
+<div class="question"><strong>Q29.</strong> Number of students in a class is a:<div class="mcq-options"><p>(a) Continuous RV &nbsp; (b) Discrete RV &nbsp; (c) Joint RV &nbsp; (d) Dummy variable</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq29')">Show Answer ▼</button>
+<div id="mcq29" class="answer"><strong>Answer:</strong> (b) Discrete RV</div>
+
+<div class="question"><strong>Q30.</strong> The joint CDF \(F(x,y)\) is:<div class="mcq-options"><p>(a) \(P(X \leq x, Y \leq y)\) &nbsp; (b) \(P(X = x, Y = y)\) &nbsp; (c) \(P(X &lt; x, Y &lt; y)\) &nbsp; (d) \(P(X &gt; x, Y &gt; y)\)</p></div></div>
+<button class="toggle-btn" onclick="toggleAnswer('mcq30')">Show Answer ▼</button>
+<div id="mcq30" class="answer"><strong>Answer:</strong> (a) \(P(X \leq x, Y \leq y)\)</div>
+
+</div>
+</div>
+
+<!-- FILL IN THE BLANKS -->
+<div id="fib" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
+
+<div class="question"><strong>Q1.</strong> A random variable is a __________ valued function defined on the __________ of a random experiment.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+<div id="fib1" class="answer"><strong>Answer:</strong> real; sample space</div>
+
+<div class="question"><strong>Q2.</strong> A random variable that takes only countable number of values is called a __________ random variable.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+<div id="fib2" class="answer"><strong>Answer:</strong> discrete</div>
+
+<div class="question"><strong>Q3.</strong> A random variable that can take any value within an interval is called a __________ random variable.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib3')">Show Answer ▼</button>
+<div id="fib3" class="answer"><strong>Answer:</strong> continuous</div>
+
+<div class="question"><strong>Q4.</strong> For a PMF, \(p(x)\) must satisfy: \(p(x) \geq\) __________ and \(\sum p(x) =\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib4')">Show Answer ▼</button>
+<div id="fib4" class="answer"><strong>Answer:</strong> 0; 1</div>
+
+<div class="question"><strong>Q5.</strong> For a continuous random variable \(X\), \(P(X = a) =\) __________ for any specific value \(a\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib5')">Show Answer ▼</button>
+<div id="fib5" class="answer"><strong>Answer:</strong> 0</div>
+
+<div class="question"><strong>Q6.</strong> For a valid PDF, \(\int_{- \infty}^{\infty}f(x)\, dx =\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib6')">Show Answer ▼</button>
+<div id="fib6" class="answer"><strong>Answer:</strong> 1</div>
+
+<div class="question"><strong>Q7.</strong> The CDF \(F(x) = P(X\) __________ \(x)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib7')">Show Answer ▼</button>
+<div id="fib7" class="answer"><strong>Answer:</strong> \(\leq\)</div>
+
+<div class="question"><strong>Q8.</strong> If \(F(x) = x^2\) for \(0 \leq x \leq 1\), then \(P(0.3 &lt; X \leq 0.7) =\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib8')">Show Answer ▼</button>
+<div id="fib8" class="answer"><strong>Answer:</strong> \((0.7)^2 - (0.3)^2 = 0.40\)</div>
+
+<div class="question"><strong>Q9.</strong> \(P(X &gt; x) = 1 -\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib9')">Show Answer ▼</button>
+<div id="fib9" class="answer"><strong>Answer:</strong> \(F(x)\)</div>
+
+<div class="question"><strong>Q10.</strong> For a continuous random variable, \(f(x) = \frac{d}{dx}\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib10')">Show Answer ▼</button>
+<div id="fib10" class="answer"><strong>Answer:</strong> \(F(x)\)</div>
+
+<div class="question"><strong>Q11.</strong> \(F( - \infty) =\) __________ and \(F( + \infty) =\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib11')">Show Answer ▼</button>
+<div id="fib11" class="answer"><strong>Answer:</strong> 0; 1</div>
+
+<div class="question"><strong>Q12.</strong> For a discrete R.V., the CDF is a __________ function (it has jumps at values of \(X\)).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib12')">Show Answer ▼</button>
+<div id="fib12" class="answer"><strong>Answer:</strong> step</div>
+
+<div class="question"><strong>Q13.</strong> The marginal PDF of \(X\) from joint PDF \(f(x,y)\) is \(f_X(x) = \int_{- \infty}^{\infty}f(x,y)\, d\)__________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib13')">Show Answer ▼</button>
+<div id="fib13" class="answer"><strong>Answer:</strong> \(y\)</div>
+
+<div class="question"><strong>Q14.</strong> The conditional PDF \(f(x \mid y) = f(x,y)\) divided by __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib14')">Show Answer ▼</button>
+<div id="fib14" class="answer"><strong>Answer:</strong> \(f_Y(y)\)</div>
+
+<div class="question"><strong>Q15.</strong> \(X\) and \(Y\) are independent if \(f(x,y) = f_X(x)\) __________ \(f_Y(y)\).</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib15')">Show Answer ▼</button>
+<div id="fib15" class="answer"><strong>Answer:</strong> \(\times\) (multiplied by)</div>
+
+<div class="question"><strong>Q16.</strong> If \(f(x) = 3x^2\) for \(0 \leq x \leq 1\), then \(\int_0^1 f(x)\, dx =\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib16')">Show Answer ▼</button>
+<div id="fib16" class="answer"><strong>Answer:</strong> 1</div>
+
+<div class="question"><strong>Q17.</strong> For a continuous R.V., \(P(a &lt; X &lt; b) = P(a \leq X \leq b)\) because \(P(X = a) =\) __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib17')">Show Answer ▼</button>
+<div id="fib17" class="answer"><strong>Answer:</strong> 0</div>
+
+<div class="question"><strong>Q18.</strong> The marginal PMF of \(Y\) from \(p(x,y)\) is obtained by summing over all values of __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib18')">Show Answer ▼</button>
+<div id="fib18" class="answer"><strong>Answer:</strong> \(x\)</div>
+
+<div class="question"><strong>Q19.</strong> A random variable that can take uncountably infinite values is called __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib19')">Show Answer ▼</button>
+<div id="fib19" class="answer"><strong>Answer:</strong> continuous</div>
+
+<div class="question"><strong>Q20.</strong> The sum of all probabilities in a joint PMF table must be __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib20')">Show Answer ▼</button>
+<div id="fib20" class="answer"><strong>Answer:</strong> 1</div>
+
+<div class="question"><strong>Q21.</strong> The derivative of the distribution function gives the __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib21')">Show Answer ▼</button>
+<div id="fib21" class="answer"><strong>Answer:</strong> probability density function (PDF)</div>
+
+<div class="question"><strong>Q22.</strong> The marginal PDF of \(X\) is obtained by integrating the joint PDF with respect to __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib22')">Show Answer ▼</button>
+<div id="fib22" class="answer"><strong>Answer:</strong> \(y\)</div>
+
+<div class="question"><strong>Q23.</strong> If \(X\) and \(Y\) are independent, their joint PMF is the __________ of their marginal PMFs.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib23')">Show Answer ▼</button>
+<div id="fib23" class="answer"><strong>Answer:</strong> product</div>
+
+<div class="question"><strong>Q24.</strong> For a discrete random variable, the CDF is a __________ function.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib24')">Show Answer ▼</button>
+<div id="fib24" class="answer"><strong>Answer:</strong> step</div>
+
+<div class="question"><strong>Q25.</strong> \(P(X &gt; x)\) can be found using the CDF as __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib25')">Show Answer ▼</button>
+<div id="fib25" class="answer"><strong>Answer:</strong> \(1 - F(x)\)</div>
+
+<div class="question"><strong>Q26.</strong> The conditional distribution \(f(x|y)\) is valid provided \(f_Y(y)\) is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib26')">Show Answer ▼</button>
+<div id="fib26" class="answer"><strong>Answer:</strong> > 0</div>
+
+<div class="question"><strong>Q27.</strong> The area under the entire PDF curve from \(-\infty\) to \(+\infty\) is __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib27')">Show Answer ▼</button>
+<div id="fib27" class="answer"><strong>Answer:</strong> 1</div>
+
+<div class="question"><strong>Q28.</strong> The number of accidents in a day is an example of a __________ random variable.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib28')">Show Answer ▼</button>
+<div id="fib28" class="answer"><strong>Answer:</strong> discrete</div>
+
+<div class="question"><strong>Q29.</strong> The total probability \(P(a &lt; X \leq b)\) equals __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib29')">Show Answer ▼</button>
+<div id="fib29" class="answer"><strong>Answer:</strong> \(F(b) - F(a)\)</div>
+
+<div class="question"><strong>Q30.</strong> A function can be a valid PDF even if its value at some point is greater than __________.</div>
+<button class="toggle-btn" onclick="toggleAnswer('fib30')">Show Answer ▼</button>
+<div id="fib30" class="answer"><strong>Answer:</strong> 1</div>
+
+</div>
+</div>
+
+<!-- TRUE/FALSE -->
+<div id="tf" class="topic-section">
+<div class="section-card">
+<h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
+
+<div class="question"><strong>Q1.</strong> A random variable must always take positive values only. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+<div id="tf1" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q2.</strong> The number of customers arriving at a bank per hour is a discrete random variable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+<div id="tf2" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q3.</strong> For a continuous random variable, \(P(X = 5) = 0\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf3')">Show Answer ▼</button>
+<div id="tf3" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q4.</strong> A PMF \(p(x)\) can sometimes be negative. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf4')">Show Answer ▼</button>
+<div id="tf4" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q5.</strong> \(\int_{- \infty}^{\infty}f(x)\, dx = 1\) for any valid PDF \(f(x)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf5')">Show Answer ▼</button>
+<div id="tf5" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q6.</strong> The CDF \(F(x)\) is always a non-decreasing function. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf6')">Show Answer ▼</button>
+<div id="tf6" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q7.</strong> \(F( + \infty) = 0\) for any random variable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf7')">Show Answer ▼</button>
+<div id="tf7" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q8.</strong> \(P(a &lt; X \leq b) = F(b) - F(a)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf8')">Show Answer ▼</button>
+<div id="tf8" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q9.</strong> The PDF \(f(x)\) can take values greater than 1 at some points. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf9')">Show Answer ▼</button>
+<div id="tf9" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q10.</strong> Temperature of a room at a given time is a discrete random variable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf10')">Show Answer ▼</button>
+<div id="tf10" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q11.</strong> If \(X\) and \(Y\) are independent, then \(f(x,y) = f_X(x) + f_Y(y)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf11')">Show Answer ▼</button>
+<div id="tf11" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q12.</strong> The marginal distribution of \(X\) can be obtained from the joint distribution. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf12')">Show Answer ▼</button>
+<div id="tf12" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q13.</strong> For a continuous R.V., \(f(x) = \frac{d}{dx}F(x)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf13')">Show Answer ▼</button>
+<div id="tf13" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q14.</strong> \(P(X = x \mid Y = y)\) is defined even when \(P(Y = y) = 0\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf14')">Show Answer ▼</button>
+<div id="tf14" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q15.</strong> The sum of all values of a PMF equals 1. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf15')">Show Answer ▼</button>
+<div id="tf15" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q16.</strong> The CDF \(F(x)\) is right-continuous. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf16')">Show Answer ▼</button>
+<div id="tf16" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q17.</strong> If \(f(x,y) = f_X(x) \cdot f_Y(y)\), then \(X\) and \(Y\) are independent. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf17')">Show Answer ▼</button>
+<div id="tf17" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q18.</strong> \(P(X &gt; x) = 1 - F(x)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf18')">Show Answer ▼</button>
+<div id="tf18" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q19.</strong> For a discrete random variable, the CDF is a smooth and continuous curve. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf19')">Show Answer ▼</button>
+<div id="tf19" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q20.</strong> Weight of a bag of rice selected at random is a continuous random variable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf20')">Show Answer ▼</button>
+<div id="tf20" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q21.</strong> \(P(a \leq X \leq b) = P(a &lt; X &lt; b)\) for a discrete random variable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf21')">Show Answer ▼</button>
+<div id="tf21" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q22.</strong> A function \(f(x)\) can be a PDF even if \(f(x) &gt; 1\) at some point. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf22')">Show Answer ▼</button>
+<div id="tf22" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q23.</strong> The conditional distribution of \(X\) given \(Y = y\) sums (or integrates) to 1. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf23')">Show Answer ▼</button>
+<div id="tf23" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q24.</strong> Two dice are rolled. The scores \(X\) and \(Y\) on the two dice are independent. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf24')">Show Answer ▼</button>
+<div id="tf24" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q25.</strong> For continuous R.V., \(P(a &lt; X \leq b) = P(a &lt; X &lt; b)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf25')">Show Answer ▼</button>
+<div id="tf25" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q26.</strong> The joint PMF can be negative for some pairs \((x,y)\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf26')">Show Answer ▼</button>
+<div id="tf26" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q27.</strong> If \(F(x)\) is a CDF, then \(F(x)\) is right-continuous. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf27')">Show Answer ▼</button>
+<div id="tf27" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q28.</strong> The marginal PDF of \(Y\) is found by integrating the joint PDF with respect to \(x\). &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf28')">Show Answer ▼</button>
+<div id="tf28" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+<div class="question"><strong>Q29.</strong> A continuous random variable can take exact integer values with non-zero probability. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf29')">Show Answer ▼</button>
+<div id="tf29" class="answer"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
+
+<div class="question"><strong>Q30.</strong> The transformation \(Y = X^2\) of a continuous random variable \(X\) is always a continuous random variable. &nbsp;<em>[True / False]</em></div>
+<button class="toggle-btn" onclick="toggleAnswer('tf30')">Show Answer ▼</button>
+<div id="tf30" class="answer"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
+
+</div>
+</div>
+
+</main>
+
+<footer class="book-footer">
+    <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+    CCS Haryana Agricultural University, Hisar</p>
+    <p class="university">© 2026 Statistics 102 | All mathematical content rendered with MathJax | Toggle answers for self-assessment</p>
+</footer>
+
+<script>
+    // Toggle sidebar on mobile
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+    }
+    
+    // Show topic section
+    function showTopic(topicId) {
+        // Hide all sections
+        document.querySelectorAll('.topic-section').forEach(sec => sec.classList.remove('active'));
+        // Show target section
+        document.getElementById(topicId).classList.add('active');
+        // Update nav active state
+        document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        // Close sidebar on mobile after selection
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+        // Scroll to top
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    
+    // Toggle answer visibility
+    function toggleAnswer(id) {
+        const answer = document.getElementById(id);
+        const btn = event.target;
+        if (answer.classList.contains('show')) {
+            answer.classList.remove('show');
+            btn.innerHTML = 'Show Answer ▼';
+        } else {
+            answer.classList.add('show');
+            btn.innerHTML = 'Hide Answer ▲';
+        }
+    }
+    
+    // Initialize MathJax after page load
+    window.addEventListener('load', function() {
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    });
+    
+    // Handle responsive nav
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+    });
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(e) {
+        const sidebar = document.getElementById('sidebar');
+        const menuToggle = document.querySelector('.menu-toggle');
+        if (window.innerWidth <= 768 && sidebar.classList.contains('open') && 
+            !sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+            sidebar.classList.remove('open');
+        }
+    });
+</script>
+</body>
+</html>
