@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unit IV – Stratified Sampling | Sampling Techniques</title>
 
-    <!-- MathJax -->
+    <!-- MathJax for formulas -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <!-- Font Awesome -->
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- Google Fonts for easy reading -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Shared Design System (Replicated from Stat 102) */
+        /* Easy-to-read textbook colors */
         :root {
             --navy:          #1B2A4A;
             --navy-mid:      #243555;
@@ -36,26 +36,24 @@
             --sidebar-w:     300px;
             --header-h:      72px;
             --radius:        10px;
-            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
-            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
         }
 
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior: smooth; }
 
+        /* Clean, big font for reading on phones or laptops */
         body {
             font-family: 'Source Serif 4', Georgia, serif;
             background: var(--paper);
             color: var(--text-dark);
-            line-height: 1.78;
-            font-size: 16px;
+            line-height: 1.8;
+            font-size: 17px;
         }
 
-        /* ── TOP HEADER ───────────────────────────────────────────── */
+        /* ── HEADER ── */
         .book-header {
             position: fixed; top: 0; left: 0; right: 0;
             height: var(--header-h);
-            background: var(--navy);
             background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
             color: #fff;
             z-index: 1100;
@@ -68,33 +66,30 @@
 
         .header-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 1.3rem; font-weight: 700;
+            font-size: 1.4rem; font-weight: 700;
             letter-spacing: .3px;
             color: #fff;
         }
 
         .header-text .subtitle {
             font-family: 'DM Sans', sans-serif;
-            font-size: .8rem;
-            color: rgba(255,255,255,.7);
-            letter-spacing: .5px;
+            font-size: .85rem;
+            color: rgba(255,255,255,.8);
         }
 
         .header-badge {
             margin-left: auto;
-            background: rgba(255,255,255,.12);
-            border: 1px solid rgba(255,255,255,.2);
-            color: rgba(255,255,255,.9);
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.3);
+            color: #fff;
             font-family: 'DM Sans', sans-serif;
-            font-size: .75rem;
-            font-weight: 500;
-            padding: 4px 12px;
+            font-size: .8rem;
+            padding: 5px 15px;
             border-radius: 20px;
-            letter-spacing: .4px;
             margin-right: 15px;
         }
 
-        /* ── SIDEBAR ──────────────────────────────────────────────── */
+        /* ── SIDEBAR ── */
         .sidebar {
             position: fixed;
             left: 0; top: var(--header-h);
@@ -103,7 +98,6 @@
             background: var(--navy);
             overflow-y: auto;
             z-index: 1000;
-            transition: transform .3s ease;
         }
 
         .sidebar-author {
@@ -111,25 +105,27 @@
             align-items: center;
             gap: 12px;
             padding: 20px;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.25);
             border-bottom: 1px solid rgba(255,255,255,0.1);
         }
 
         .sidebar-photo {
-            width: 44px; height: 44px;
+            width: 50px; height: 50px;
             border-radius: 50%;
             object-fit: cover;
             object-position: top;
             border: 2px solid var(--gold);
         }
 
+        .sidebar-info div { color: #fff; }
+
         .nav-group-label {
             font-family: 'DM Sans', sans-serif;
-            font-size: .68rem;
-            font-weight: 600;
+            font-size: .7rem;
+            font-weight: 700;
             letter-spacing: 1.2px;
             text-transform: uppercase;
-            color: rgba(255,255,255,.35);
+            color: rgba(255,255,255,.4);
             padding: 16px 20px 6px;
         }
 
@@ -139,100 +135,143 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 9px 12px;
-            color: rgba(255,255,255,.75);
+            padding: 10px 14px;
+            color: rgba(255,255,255,.8);
             text-decoration: none;
             border-radius: 7px;
             font-family: 'DM Sans', sans-serif;
-            font-size: .875rem;
+            font-size: .9rem;
             transition: all .2s ease;
             cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
-            background: rgba(255,255,255,.08);
-            color: #fff;
+            background: rgba(255,255,255,.1);
+            color: var(--gold-light);
+            font-weight: 600;
         }
 
-        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        /* ── MAIN CONTENT ── */
         .main-content {
             margin-left: var(--sidebar-w);
             margin-top: var(--header-h);
-            padding: 36px 48px 60px;
-            max-width: calc(var(--sidebar-w) + 900px);
+            padding: 40px 50px;
+            max-width: calc(var(--sidebar-w) + 1100px);
         }
 
+        /* Only show active sections */
         .section-card {
             display: none;
-            background: var(--ivory);
-            border-radius: var(--radius);
-            padding: 36px 42px;
-            box-shadow: var(--shadow-sm);
+            background: #fff;
+            border-radius: 12px;
+            padding: 40px 50px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
             border: 1px solid var(--border);
-            border-top: 4px solid var(--navy);
-            animation: fadeSlideIn .45s ease;
+            border-top: 6px solid var(--navy);
+            margin-bottom: 40px;
+            animation: fadeIn .4s ease;
         }
 
         .section-card.active { display: block; }
 
-        @keyframes fadeSlideIn {
-            from { opacity: 0; transform: translateY(18px); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
-        h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 32px 0 14px; }
-        p { margin-bottom: 12px; text-align: justify; }
+        /* Text Styles */
+        h2 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--navy-light); margin: 35px 0 15px; border-left: 5px solid var(--gold); padding-left: 15px; }
+        h4 { font-family: 'DM Sans', sans-serif; font-size: 1.2rem; color: var(--text-dark); margin: 20px 0 10px; font-weight: 700; }
+        p { margin-bottom: 15px; text-align: justify; color: var(--text-mid); font-size: 1.05rem; }
+        ul, ol { margin-bottom: 15px; margin-left: 30px; font-size: 1.05rem; color: var(--text-mid); }
+        li { margin-bottom: 8px; }
 
-        /* ── CALLOUT BOXES ────────────────────────────────────────── */
-        .definition, .theorem, .example, .note {
+        /* ── SPECIAL BOXES ── */
+        .definition, .theorem, .example, .note, .warning, .proof {
             border-radius: 8px;
-            padding: 18px 22px;
-            margin: 20px 0;
+            padding: 20px 25px;
+            margin: 25px 0;
+            font-size: 1.05rem;
         }
-        .definition { background: #F3F0FB; border-left: 5px solid #6B4FC8; }
-        .example { background: #FFFBF0; border-left: 5px solid var(--gold); }
-        .note { background: var(--sky-light); border-left: 5px solid var(--sky); }
-        .theorem { background: #EAF4FB; border-left: 5px solid var(--sky); }
+        .definition { background: #f4f0fc; border-left: 6px solid #6B4FC8; }
+        .example { background: #fffcf0; border-left: 6px solid var(--gold); }
+        .note { background: #f0f7f4; border-left: 6px solid var(--sage); }
+        .warning { background: #fcf0f2; border-left: 6px solid var(--crimson); }
+        .theorem { background: #EAF4FB; border-left: 6px solid var(--sky); }
+        .proof { background: #fff; border: 1px solid var(--border); border-left: 6px solid var(--text-soft); font-style: italic; }
 
-        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
-        .example h4::before { content: "Example — "; color: var(--gold); }
-        .theorem h4::before { content: "Theorem — "; color: var(--sky); }
+        .formula-box { background: #f0f6fc; border: 2px dashed #1D6FA4; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center; font-size: 1.2rem; overflow-x: auto; }
+        
+        .solved-box { background: #fbf9f1; border: 1px solid var(--gold); border-radius: 8px; padding: 20px 25px; margin: 25px 0; }
+        .solved-box h4 { color: var(--gold); margin-top: 0; font-family: 'DM Sans', sans-serif; text-transform: uppercase; letter-spacing: 1px; font-size: 1rem; border-bottom: 1px dashed var(--gold); padding-bottom: 10px; }
 
-        /* ── FORMULA BOX ── */
-        .formula-box {
-            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
-            border: 2px dashed var(--navy-light);
-            border-radius: 8px;
-            padding: 18px 22px;
-            margin: 16px 0;
-            text-align: center;
-            font-size: 1.12rem;
+        /* Add icons to boxes */
+        .definition h4::before { content: "📘 "; }
+        .example h4::before { content: "💡 "; }
+        .note h4::before { content: "📝 "; }
+        .warning h4::before { content: "⚠️ "; }
+        .theorem h4::before { content: "📜 "; }
+        .proof h4::before { content: "🖋️ "; }
+
+        /* ── PRACTICE QUESTIONS ── */
+        .question-block {
+            margin-bottom: 25px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            border-radius: 6px;
+            overflow: hidden;
         }
+        .question-text {
+            padding: 15px 20px;
+            font-weight: 600;
+            color: var(--navy);
+            font-size: 1.1rem;
+            background: #fafafa;
+        }
+        .mcq-options {
+            padding: 10px 20px 15px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .toggle-btn { 
+            background: var(--navy); color: #fff; border: none; padding: 8px 20px; 
+            border-radius: 20px; cursor: pointer; font-family: 'DM Sans'; font-size: 0.9rem; 
+            margin: 0 0 15px 20px; transition: all 0.2s;
+        }
+        .toggle-btn:hover { background: var(--gold); }
+        .answer { 
+            display: none; background: #f0fdf4; border-top: 1px solid #c3e6cb; 
+            padding: 15px 20px; color: #155724; font-size: 1rem;
+        }
+        .answer.show { display: block; animation: slideDown 0.3s ease; }
 
-        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
-        .question { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light); padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0; }
-        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .82rem; margin: 4px 0 8px; }
-        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 2px 0 12px; border-radius: 0 8px 8px 0; }
-        .answer.show { display: block; }
+        @keyframes slideDown { from { opacity: 0; } to { opacity: 1; } }
 
+        /* Teacher's Canvas Button */
         .draw-mode-toggle {
-            background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;
+            background: #C8922A; color: #1B2A4A; border: none; padding: 10px 20px; 
+            border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px;
         }
 
-        @media (max-width: 768px) {
+        /* Responsive */
+        @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .main-content { margin-left: 0; padding: 20px; }
+            .mcq-options { grid-template-columns: 1fr; }
         }
     </style>
+    <!-- Include Whiteboard files -->
     <link rel="stylesheet" href="whiteboard.css?v=1.2">
 </head>
 <body>
 
 <header class="book-header">
     <div class="header-text">
-        <h1>Sampling Techniques</h1>
-        <div class="subtitle">UNIT IV · STRATIFIED RANDOM SAMPLING</div>
+        <h1>Sampling Techniques (STAT-M-201)</h1>
+        <div class="subtitle">UNIT IV · DETAILED CLASS NOTES & SOLVED EXAMPLES</div>
     </div>
     <div class="header-badge">Prof. O.P. Sheoran</div>
     <button class="draw-mode-toggle" id="draw-mode-btn">
@@ -244,147 +283,865 @@
     <div class="sidebar-author">
         <img src="opsheoran.png" alt="Author" class="sidebar-photo">
         <div class="sidebar-info">
-            <div style="font-weight:700; font-size: 0.9rem; color:#fff;">Prof. O.P. Sheoran</div>
-            <div style="font-size: 0.7rem; opacity: 0.6; color:#fff;">CCSHAU Hisar</div>
+            <div style="font-weight:700; font-size: 0.95rem;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.75rem; opacity: 0.7;">CCSHAU Hisar</div>
         </div>
     </div>
-    <div class="nav-group-label">Navigation</div>
-    <a href="sampling.html" class="nav-link"><i class="fas fa-home"></i> Course Home</a>
+    
+    <div class="nav-group-label">Course Navigation</div>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-arrow-left"></i> Back to Main Menu</a>
     
     <div class="nav-group-label">Unit IV Topics</div>
-    <a onclick="showTopic('strat-intro')" class="nav-link active" id="link-strat-intro">4.1 Core Principles</a>
-    <a onclick="showTopic('estimation')" class="nav-link" id="link-estimation">4.2 Estimation & Variance</a>
-    <a onclick="showTopic('allocation')" class="nav-link" id="link-allocation">4.3 Allocation Methods</a>
-    <a onclick="showTopic('comparison')" class="nav-link" id="link-comparison">4.4 Stratified vs SRS</a>
-    <a onclick="showTopic('practice')" class="nav-link" id="link-practice">4.5 Practice Exercises</a>
+    <a onclick="showTopic('sec1')" class="nav-link active" id="link-sec1">4.1 Core Principles</a>
+    <a onclick="showTopic('sec2')" class="nav-link" id="link-sec2">4.2 Estimation & Variance</a>
+    <a onclick="showTopic('sec3')" class="nav-link" id="link-sec3">4.3 Allocation Methods</a>
+    <a onclick="showTopic('sec4')" class="nav-link" id="link-sec4">4.4 Efficiency Comparison</a>
+    
+    <div class="nav-group-label">Practice Section (80 Qs)</div>
+    <a onclick="showTopic('practice-sub')" class="nav-link" id="link-practice-sub"><i class="fas fa-pen"></i> Subjective (20 Q)</a>
+    <a onclick="showTopic('practice-mcq')" class="nav-link" id="link-practice-mcq"><i class="fas fa-list-ul"></i> MCQs (20 Q)</a>
+    <a onclick="showTopic('practice-fib')" class="nav-link" id="link-practice-fib"><i class="fas fa-edit"></i> Fill Blanks (20 Q)</a>
+    <a onclick="showTopic('practice-tf')" class="nav-link" id="link-practice-tf"><i class="fas fa-check-square"></i> True/False (20 Q)</a>
 </nav>
 
 <main class="main-content">
-    <!-- SECTION 4.1 -->
-    <section class="section-card active" id="strat-intro">
+
+    <!-- 4.1 CORE PRINCIPLES -->
+    <section class="section-card active" id="sec1">
         <h2>4.1 Core Principles of Stratification</h2>
-        <p>In Simple Random Sampling, we treat the whole population as one big group. But what if the group is very diverse? For example, if you want to know the average pocket money of students, it might be very different between students living in hostels and those living at home.</p>
+        <p>Hello students! In the previous unit, we studied Simple Random Sampling (SRS), where we treated the entire population as one big, single group. SRS works wonderfully when everyone in the population is somewhat similar to each other. But what happens if the population is extremely diverse, or <strong>heterogeneous</strong>?</p>
         
-        <p><strong>Stratification</strong> is the process of dividing a diverse population into smaller, more "alike" groups called <strong>Strata</strong> (singular: Stratum).</p>
+        <p>Imagine a fruit basket containing 100 apples and 100 watermelons. You want to estimate the average weight of a piece of fruit in the basket, so you use SRS to pick a sample of 10 fruits. Just by bad luck (random chance), your sample might contain 9 watermelons and 1 apple! Your estimated average weight will be completely wrong because it doesn't represent the true mix of the basket. This is the biggest weakness of SRS.</p>
+
+        <p>To solve this, we use <strong>Stratified Random Sampling</strong>. Instead of picking blindly from the whole basket, we first divide the basket into two separate groups: one for apples, and one for watermelons. These groups are called <strong>Strata</strong> (singular: Stratum). Then, we pick a random sample of apples from the apple group, and a random sample of watermelons from the watermelon group.</p>
+
+        <div class="definition">
+            <h4>Stratified Random Sampling</h4>
+            <p>It is a sampling procedure in which the entire heterogeneous population of size \(N\) is first divided into \(k\) non-overlapping, distinct sub-populations called <strong>Strata</strong> (of sizes \(N_1, N_2, \dots, N_k\)). Then, independent Simple Random Samples (of sizes \(n_1, n_2, \dots, n_k\)) are drawn separately from each individual stratum.</p>
+        </div>
 
         <div class="note">
-            <h4>The Golden Rule of Stratification:</h4>
+            <h4>The Golden Rule of Stratification</h4>
+            <p>For stratification to be successful, you must construct your strata such that the units <strong>inside</strong> a stratum are as similar as possible, while the different strata are as different from each other as possible.</p>
             <ul>
-                <li><strong>Within Strata:</strong> The units should be as <strong>similar</strong> as possible (Homogeneous).</li>
-                <li><strong>Between Strata:</strong> The groups should be as <strong>different</strong> as possible (Heterogeneous).</li>
+                <li><strong>Within Strata:</strong> Maximum Homogeneity (Low Variance \(S_i^2\)).</li>
+                <li><strong>Between Strata:</strong> Maximum Heterogeneity.</li>
             </ul>
         </div>
 
         <div class="example">
-            <p>Imagine a fruit basket with 100 apples and 100 watermelons. If you pick a random sample of 5, you might get all apples by chance! In <strong>Stratified Sampling</strong>, you divide them into two strata: Apples and Watermelons. Then you pick 2 apples and 3 watermelons. Now your sample is perfectly balanced.</p>
+            <h4>Real-Life Examples of Stratification</h4>
+            <ol>
+                <li><strong>Estimating Student Pocket Money:</strong> Students living in hostels spend much more than day scholars living at home. So, we divide the university into two strata: "Hostelers" and "Day Scholars". We sample independently from both.</li>
+                <li><strong>Agricultural Crop Yield:</strong> Yields vary drastically based on water. We stratify the farms into "Irrigated Farms" and "Un-irrigated Farms".</li>
+                <li><strong>Industrial Quality Control:</strong> If a factory produces screws using 3 different machines (A, B, and C), we treat each machine's output as a separate stratum, because one machine might be older and produce more defects.</li>
+            </ol>
         </div>
+
+        <h3>Advantages of Stratified Sampling over SRS</h3>
+        <ul>
+            <li><strong>Greater Precision:</strong> Because we force the sample to include units from every single sub-group, it is far more representative. This mathematically reduces the sampling error (Variance).</li>
+            <li><strong>Protection against Bad Samples:</strong> It is impossible to accidentally draw a sample containing only watermelons, because we are forced to pick some apples from the apple stratum.</li>
+            <li><strong>Administrative Convenience:</strong> Different strata can be handled by different field offices. For a national survey, each State can be treated as a stratum, and the State's own local office can conduct the survey independently.</li>
+            <li><strong>Sub-group Estimates:</strong> Not only do we get a highly accurate estimate for the whole country, but we also get separate, highly accurate estimates for each individual state (stratum).</li>
+        </ul>
     </section>
 
-    <!-- SECTION 4.2 -->
-    <section class="section-card" id="estimation">
-        <h2>4.2 Estimation and Variance</h2>
-        <p>In Stratified Sampling, we calculate the mean for each stratum first, and then combine them to get the overall population mean.</p>
+    <!-- 4.2 ESTIMATION & VARIANCE -->
+    <section class="section-card" id="sec2">
+        <h2>4.2 Estimation & Variance (The Math of Stratification)</h2>
+        <p>Now we must dive into the mathematics of how to combine the data from all our different strata to make one final, grand estimate for the entire population. First, let us clearly define our notations. In examinations, writing the correct notations is half the battle won!</p>
 
-        <div class="formula-box">
-            Overall Mean (\(\bar{y}_{st}\)) = \(\sum_{i=1}^k W_i \bar{y}_i\)
+        <div class="note">
+            <h4>Notation Guide for the \(i^{th}\) Stratum</h4>
+            <p>Let the population of size \(N\) be divided into \(k\) strata. For any specific stratum (let's call it the \(i^{th}\) stratum):</p>
+            <ul>
+                <li><strong>\(N_i\):</strong> Total number of units in the \(i^{th}\) stratum population. (Note: \(N_1 + N_2 + \dots + N_k = N\)).</li>
+                <li><strong>\(n_i\):</strong> Number of units selected in the sample from the \(i^{th}\) stratum. (Note: \(n_1 + n_2 + \dots + n_k = n\)).</li>
+                <li><strong>\(W_i\):</strong> The "Weight" of the \(i^{th}\) stratum. It is the proportion of the total population that belongs to this stratum. \(W_i = \frac{N_i}{N}\).</li>
+                <li><strong>\(\bar{Y}_i\):</strong> The true Population Mean of the \(i^{th}\) stratum.</li>
+                <li><strong>\(\bar{y}_i\):</strong> The Sample Mean of the \(i^{th}\) stratum.</li>
+                <li><strong>\(S_i^2\):</strong> The true Population Variance (Mean Square) inside the \(i^{th}\) stratum.</li>
+            </ul>
+            <p>Our ultimate goal is to find the overall Population Mean, denoted by \(\bar{Y}\).</p>
         </div>
-        <p>Where \(W_i\) is the "weight" or importance of that group (Stratum Size / Total Population Size).</p>
+
+        <p>How do we estimate the overall mean? We calculate the sample mean for each stratum, and then take a <strong>Weighted Average</strong> of them, based on how big each stratum is.</p>
+
+        <div class="definition">
+            <h4>The Stratified Sample Mean (\(\bar{y}_{st}\))</h4>
+            <p>The estimator for the overall population mean in stratified sampling is denoted by \(\bar{y}_{st}\) (where 'st' stands for stratified).</p>
+            <div class="formula-box">
+                \[ \bar{y}_{st} = \sum_{i=1}^k W_i \bar{y}_i = \sum_{i=1}^k \left( \frac{N_i}{N} \right) \bar{y}_i \]
+            </div>
+        </div>
 
         <div class="theorem">
-            <h4>Theorem: Unbiasedness</h4>
-            <p>The stratified sample mean \(\bar{y}_{st}\) is an unbiased estimator of the population mean \(\bar{Y}\).</p>
+            <h4>Theorem 4.1: Unbiasedness of Stratified Mean</h4>
+            <p>If a simple random sample is taken independently from each stratum, then the stratified sample mean \(\bar{y}_{st}\) is an unbiased estimator of the overall population mean \(\bar{Y}\). Mathematically: \(E(\bar{y}_{st}) = \bar{Y}\).</p>
+        </div>
+        
+        <div class="proof">
+            <h4>🖋️ Proof of Theorem 4.1</h4>
+            <p>We start with the definition of the stratified mean: \[ \bar{y}_{st} = \sum_{i=1}^k W_i \bar{y}_i \]</p>
+            <p>Take the Expected Value of both sides. Since \(W_i\) (the stratum weights) are fixed constants, we can pull the Expectation operator inside the sum:</p>
+            <p>\[ E(\bar{y}_{st}) = E \left( \sum_{i=1}^k W_i \bar{y}_i \right) = \sum_{i=1}^k W_i E(\bar{y}_i) \]</p>
+            <p>Now, recall what we learned in Unit III. Because we are drawing a Simple Random Sample from <em>inside</em> the \(i^{th}\) stratum, Theorem 3.3 guarantees that the sample mean of that stratum is an unbiased estimator of that stratum's true mean. Therefore, \(E(\bar{y}_i) = \bar{Y}_i\).</p>
+            <p>Substitute this back into our equation:</p>
+            <p>\[ E(\bar{y}_{st}) = \sum_{i=1}^k W_i \bar{Y}_i \]</p>
+            <p>By definition, the sum of the weighted stratum means is exactly the overall Population Mean \(\bar{Y}\).</p>
+            <div class="formula-box">
+                \[ E(\bar{y}_{st}) = \bar{Y} \]
+            </div>
+            <p>Hence proved! The stratified estimator perfectly targets the true population mean.</p>
         </div>
 
-        <h3>Why is it better?</h3>
-        <p>Because we have forced the sample to represent every sub-group, the <strong>Sampling Variance</strong> is usually much lower than in SRS. This means our guesses are much more accurate.</p>
+        <div class="theorem">
+            <h4>Theorem 4.2: Variance of the Stratified Mean</h4>
+            <p>If samples are drawn independently from each stratum using SRSWOR, the variance of the stratified sample mean \(\bar{y}_{st}\) is given by:</p>
+            <div class="formula-box">
+                \[ V(\bar{y}_{st}) = \sum_{i=1}^k W_i^2 V(\bar{y}_i) = \sum_{i=1}^k W_i^2 \left( \frac{N_i - n_i}{N_i n_i} \right) S_i^2 \]
+            </div>
+            <p><em>(Note: If the strata populations \(N_i\) are very large, the FPC term \((N_i-n_i)/N_i \approx 1\), and the formula simplifies to \(V(\bar{y}_{st}) = \sum W_i^2 \frac{S_i^2}{n_i}\)).</em></p>
+        </div>
+
+        <div class="proof">
+            <h4>🖋️ Proof of Theorem 4.2</h4>
+            <p>We know that \(\bar{y}_{st} = \sum_{i=1}^k W_i \bar{y}_i\). We need to find its variance.</p>
+            <p>According to the laws of probability, the variance of a sum of <strong>independent</strong> variables is simply the sum of their individual variances. The constants (\(W_i\)) are squared when pulled out of a variance operator. Because we specifically designed our survey to draw samples from each stratum <em>independently</em> of the others, the covariance between \(\bar{y}_i\) and \(\bar{y}_j\) is absolutely zero!</p>
+            <p>\[ V(\bar{y}_{st}) = V \left( \sum_{i=1}^k W_i \bar{y}_i \right) = \sum_{i=1}^k W_i^2 V(\bar{y}_i) \]</p>
+            <p>From Unit III (Theorem 3.5), we already know the exact formula for the variance of a sample mean drawn via SRSWOR for any specific stratum 'i':</p>
+            <p>\[ V(\bar{y}_i) = \left( \frac{N_i - n_i}{N_i} \right) \frac{S_i^2}{n_i} \]</p>
+            <p>Substitute this into our summation:</p>
+            <div class="formula-box">
+                \[ V(\bar{y}_{st}) = \sum_{i=1}^k W_i^2 \left( \frac{N_i - n_i}{N_i n_i} \right) S_i^2 \]
+            </div>
+            <p>Proved! Notice how the variance depends entirely on the variance <em>inside</em> the strata (\(S_i^2\)). If we followed the Golden Rule and made the strata highly homogeneous (very low \(S_i^2\)), our total variance \(V(\bar{y}_{st})\) will be incredibly small, meaning our survey is highly accurate.</p>
+        </div>
+
+        <div class="solved-box">
+            <h4>Solved Example 1: Calculating Stratified Mean and Variance</h4>
+            <p><strong>Problem:</strong> A population of \(N=1000\) farms is divided into two strata based on irrigation. <br>
+            Stratum 1 (Irrigated): \(N_1 = 400\), sample drawn \(n_1 = 40\), sample mean yield \(\bar{y}_1 = 80\) qt, sample variance \(s_1^2 = 60\).<br>
+            Stratum 2 (Un-irrigated): \(N_2 = 600\), sample drawn \(n_2 = 60\), sample mean yield \(\bar{y}_2 = 30\) qt, sample variance \(s_2^2 = 90\).<br>
+            Calculate the Stratified Sample Mean (\(\bar{y}_{st}\)) and estimate its Variance \(V(\bar{y}_{st})\).</p>
+            
+            <p><strong>Solution:</strong><br>
+            <strong>Step 1: Calculate the Weights (\(W_i\))</strong><br>
+            \(W_1 = N_1 / N = 400 / 1000 = 0.4\)<br>
+            \(W_2 = N_2 / N = 600 / 1000 = 0.6\)<br><br>
+            
+            <strong>Step 2: Calculate Stratified Mean (\(\bar{y}_{st}\))</strong><br>
+            \(\bar{y}_{st} = W_1\bar{y}_1 + W_2\bar{y}_2\)<br>
+            \(\bar{y}_{st} = (0.4 \times 80) + (0.6 \times 30)\)<br>
+            \(\bar{y}_{st} = 32 + 18 =\) <strong>50 quintals.</strong><br><br>
+            
+            <strong>Step 3: Estimate the Variance \(V(\bar{y}_{st})\)</strong><br>
+            Since population variances (\(S_i^2\)) are unknown, we use sample variances (\(s_i^2\)) as unbiased estimates.<br>
+            Formula: \(V(\bar{y}_{st}) = W_1^2 \left( \frac{N_1 - n_1}{N_1 n_1} \right) s_1^2 + W_2^2 \left( \frac{N_2 - n_2}{N_2 n_2} \right) s_2^2\)<br>
+            For Stratum 1: \((0.4)^2 \times \left( \frac{400 - 40}{400 \times 40} \right) \times 60 = 0.16 \times \left( \frac{360}{16000} \right) \times 60 = 0.16 \times 0.0225 \times 60 = 0.216\)<br>
+            For Stratum 2: \((0.6)^2 \times \left( \frac{600 - 60}{600 \times 60} \right) \times 90 = 0.36 \times \left( \frac{540}{36000} \right) \times 90 = 0.36 \times 0.015 \times 90 = 0.486\)<br>
+            Total Estimated Variance = \(0.216 + 0.486 =\) <strong>0.702</strong>.
+            </p>
+        </div>
     </section>
 
-    <!-- SECTION 4.3 -->
-    <section class="section-card" id="allocation">
-        <h2>4.3 Allocation Methods</h2>
-        <p>Once you've divided the population into strata, how many units should you pick from each group? There are four main methods:</p>
+    <!-- 4.3 ALLOCATION METHODS -->
+    <section class="section-card" id="sec3">
+        <h2>4.3 Allocation Methods (The Core Optimization Problem)</h2>
+        <p>We know we need to draw a total sample of size \(n\). But how many units should we take from Stratum 1? How many from Stratum 2? The process of distributing the total sample size \(n\) among the different strata (\(n_1, n_2, \dots, n_k\)) is called <strong>Allocation</strong>.</p>
+        <p>This is the most important decision a statistician makes. A bad allocation destroys the advantages of stratification. There are four main methods.</p>
 
         <h3>1. Equal Allocation</h3>
-        <p>You pick the same number from every group. (e.g., 10 from every stratum). Simple, but not always efficient.</p>
+        <p>This is the lazy method. We simply divide the total sample size equally among all strata. If we need 100 samples from 4 strata, we take 25 from each.</p>
+        <div class="formula-box">
+            \[ n_i = \frac{n}{k} \]
+        </div>
+        <p><strong>When to use:</strong> Practically never, unless all strata are exactly the same size and have the same variance, or if you simply have no prior information about the strata sizes. It is highly inefficient.</p>
 
         <h3>2. Proportional Allocation</h3>
-        <p>You pick more from the bigger groups. If one stratum makes up 60% of the population, 60% of your sample comes from there.</p>
-        <div class="formula-box">\(n_i = n \times (N_i / N)\)</div>
+        <p>This is the most common method. Here, the number of units taken from a stratum is strictly proportional to the total size of that stratum. If a stratum contains 60% of the total population, then 60% of our sample must come from that stratum.</p>
+        <div class="formula-box">
+            \[ n_i \propto N_i \implies n_i = n \times \frac{N_i}{N} = n \cdot W_i \]
+        </div>
+        <p><strong>Mathematical Magic:</strong> If we substitute \(n_i = n W_i\) into our massive Variance formula (Theorem 4.2), assuming a large population where FPC is ignored (\(N_i-n_i \approx N_i\)), the variance formula simplifies drastically to a beautiful, clean equation:</p>
+        <div class="formula-box">
+            \[ V_{prop}(\bar{y}_{st}) = \frac{1}{n} \sum_{i=1}^k W_i S_i^2 \]
+        </div>
 
         <h3>3. Neyman's (Optimum) Allocation</h3>
-        <p>This is even smarter. You pick more from groups that are either <strong>very large</strong> or <strong>very diverse</strong> (high standard deviation). If a group is very predictable, you don't need a large sample from it.</p>
-        <div class="formula-box">\(n_i = n \times \frac{W_i S_i}{\sum W_i S_i}\)</div>
+        <p>Proportional allocation is good, but it is not <em>optimal</em>. It only considers the SIZE of the stratum. What if a stratum is very large, but all the units inside it are identical (variance \(S_i^2 = 0\))? We don't need a large sample to understand it; just picking 1 unit gives us all the information! Conversely, a small stratum might be wildly heterogeneous, demanding a massive sample.</p>
+        <p><strong>Neyman's Allocation</strong> solves this by allocating the sample size based on BOTH the size of the stratum (\(W_i\)) and its internal variation (\(S_i\)). We take more samples from a stratum if it is large, OR if it is highly variable.</p>
 
-        <h3>4. Allocation for Fixed Cost</h3>
-        <p>If some groups are more expensive to study (e.g., people living in remote mountains), you take a smaller sample from them to save money while keeping high accuracy.</p>
+        <div class="proof">
+            <h4>🖋️ Derivation of Neyman's Allocation</h4>
+            <p>Our goal is to minimize the Variance \(V(\bar{y}_{st}) = \sum_{i=1}^k W_i^2 \frac{S_i^2}{n_i}\) subject to the fixed total sample size constraint: \(\sum_{i=1}^k n_i = n\).</p>
+            <p>We use the method of Lagrange Multipliers. Let our function be \(\Phi\):</p>
+            <p>\[ \Phi = \sum_{i=1}^k \frac{W_i^2 S_i^2}{n_i} + \lambda \left( \sum_{i=1}^k n_i - n \right) \]</p>
+            <p>To find the minimum, we take the partial derivative with respect to \(n_i\) and set it to zero:</p>
+            <p>\[ \frac{\partial \Phi}{\partial n_i} = - \frac{W_i^2 S_i^2}{n_i^2} + \lambda = 0 \]</p>
+            <p>\[ n_i^2 = \frac{W_i^2 S_i^2}{\lambda} \implies n_i = \frac{W_i S_i}{\sqrt{\lambda}} \]</p>
+            <p>This tells us that \(n_i \propto W_i S_i\). To find the exact value, we sum both sides over all \(k\) strata:</p>
+            <p>\[ \sum_{i=1}^k n_i = \sum_{i=1}^k \frac{W_i S_i}{\sqrt{\lambda}} \implies n = \frac{1}{\sqrt{\lambda}} \sum_{i=1}^k W_i S_i \]</p>
+            <p>So, \(\frac{1}{\sqrt{\lambda}} = \frac{n}{\sum_{i=1}^k W_i S_i}\). Substitute this back into our \(n_i\) equation:</p>
+            <div class="formula-box">
+                \[ n_i = n \frac{W_i S_i}{\sum_{i=1}^k W_i S_i} \]
+            </div>
+            <p>This is the famous Neyman Allocation formula! If we substitute this \(n_i\) back into the variance formula, we get the absolute minimum possible variance:</p>
+            <div class="formula-box">
+                \[ V_{opt}(\bar{y}_{st}) = \frac{1}{n} \left( \sum_{i=1}^k W_i S_i \right)^2 \]
+            </div>
+        </div>
+
+        <div class="solved-box">
+            <h4>Solved Example 2: Proportional vs. Neyman Allocation</h4>
+            <p><strong>Problem:</strong> A population is divided into 3 strata. <br>
+            Stratum 1: \(N_1 = 2000, S_1 = 5\)<br>
+            Stratum 2: \(N_2 = 3000, S_2 = 10\)<br>
+            Stratum 3: \(N_3 = 5000, S_3 = 20\)<br>
+            We need to draw a total sample of \(n = 100\). Calculate the sample allocations (\(n_1, n_2, n_3\)) under (i) Proportional Allocation and (ii) Neyman's Allocation.</p>
+            
+            <p><strong>Solution:</strong><br>
+            Total \(N = 2000 + 3000 + 5000 = 10,000\).<br>
+            Weights: \(W_1 = 0.2\), \(W_2 = 0.3\), \(W_3 = 0.5\).<br><br>
+            
+            <strong>(i) Proportional Allocation: (\(n_i = n \cdot W_i\))</strong><br>
+            \(n_1 = 100 \times 0.2 =\) <strong>20</strong><br>
+            \(n_2 = 100 \times 0.3 =\) <strong>30</strong><br>
+            \(n_3 = 100 \times 0.5 =\) <strong>50</strong><br><br>
+
+            <strong>(ii) Neyman's Allocation: (\(n_i = n \frac{W_i S_i}{\sum_{i=1}^k W_i S_i}\))</strong><br>
+            First, calculate \(W_i S_i\) for each stratum:<br>
+            Stratum 1: \(0.2 \times 5 = 1.0\)<br>
+            Stratum 2: \(0.3 \times 10 = 3.0\)<br>
+            Stratum 3: \(0.5 \times 20 = 10.0\)<br>
+            Sum (\(\sum_{i=1}^k W_i S_i\)) = \(1.0 + 3.0 + 10.0 = 14.0\).<br><br>
+            Now allocate:<br>
+            \(n_1 = 100 \times (1.0 / 14.0) = 7.14 \approx\) <strong>7</strong><br>
+            \(n_2 = 100 \times (3.0 / 14.0) = 21.42 \approx\) <strong>21</strong><br>
+            \(n_3 = 100 \times (10.0 / 14.0) = 71.42 \approx\) <strong>72</strong><br><br>
+            <em>Notice the brilliance of Neyman: Stratum 3 has massive variation (\(S_3=20\)), so Neyman forces us to take 72 samples from there to control the error, completely ignoring the "proportional" rule of taking only 50!</em>
+            </p>
+        </div>
+
+        <h3>4. Optimum Allocation for Fixed Cost</h3>
+        <p>In the real world, surveying a unit in a city slum costs 10 rupees, while surveying a unit in a remote Himalayan village costs 500 rupees. The cost is not equal across strata!</p>
+        <p>Let total cost \(C = c_0 + \sum_{i=1}^k c_i n_i\), where \(c_0\) is fixed overhead cost, and \(c_i\) is the cost per unit in the \(i^{th}\) stratum. If we use Lagrange multipliers again to minimize variance subject to this cost constraint, the math tells us to allocate samples directly proportional to size and variance, and <strong>inversely proportional to the square root of the cost</strong>.</p>
+
+        <div class="formula-box">
+            \[ n_i \propto \frac{W_i S_i}{\sqrt{c_i}} \implies n_i = n \frac{W_i S_i / \sqrt{c_i}}{\sum_{i=1}^k (W_i S_i / \sqrt{c_i})} \]
+        </div>
+        <p>This means if a stratum is extremely expensive to survey (\(c_i\) is huge), the math automatically reduces the number of samples we take from it to save our budget.</p>
+
+        <div class="solved-box">
+            <h4>Solved Example 3: Cost Optimization</h4>
+            <p><strong>Problem:</strong> A state has 2 strata: Urban and Rural. <br>
+            Urban: \(N_1 = 40,000, S_1 = 5\). Cost per survey \(c_1 = \text{Rs. } 9\).<br>
+            Rural: \(N_2 = 60,000, S_2 = 8\). Cost per survey \(c_2 = \text{Rs. } 16\).<br>
+            If total sample size is \(n=100\), calculate the Optimum Cost Allocation.</p>
+            
+            <p><strong>Solution:</strong><br>
+            Total \(N = 100,000\). Weights: \(W_1 = 0.4\), \(W_2 = 0.6\).<br>
+            Calculate the weighting factor: \(W_i S_i / \sqrt{c_i}\)<br>
+            Urban: \(0.4 \times 5 / \sqrt{9} = 2.0 / 3 = 0.667\)<br>
+            Rural: \(0.6 \times 8 / \sqrt{16} = 4.8 / 4 = 1.200\)<br>
+            Sum of factors = \(0.667 + 1.200 = 1.867\).<br><br>
+            Allocate \(n=100\):<br>
+            \(n_1 \text{ (Urban)} = 100 \times (0.667 / 1.867) \approx\) <strong>36</strong><br>
+            \(n_2 \text{ (Rural)} = 100 \times (1.200 / 1.867) \approx\) <strong>64</strong><br>
+            <em>Because the Rural survey is much more expensive (Rs. 16), the formula restricted its sample size compared to pure Neyman allocation, optimizing our budget while maintaining maximum possible precision.</em>
+            </p>
+        </div>
     </section>
 
-    <!-- SECTION 4.4 -->
-    <section class="section-card" id="comparison">
-        <h2>4.4 Stratified Sampling vs. Simple Random Sampling</h2>
-        <p>Is Stratified Sampling always better? Almost always!</p>
+    <!-- 4.4 EFFICIENCY COMPARISON -->
+    <section class="section-card" id="sec4">
+        <h2>4.4 Efficiency Comparison: Stratified vs. SRS</h2>
+        <p>Is Stratified Random Sampling always better than Simple Random Sampling? The answer is almost always yes, provided you do the allocation correctly. We measure "better" by comparing the variances. Lower variance means higher efficiency and greater precision.</p>
 
         <div class="theorem">
-            <h4>Gain in Precision</h4>
-            <p>The variance of the estimate in Stratified Sampling is <strong>always less than or equal to</strong> the variance in SRS, provided the allocation is proportional.</p>
+            <h4>Theorem 4.3: The Hierarchy of Efficiency</h4>
+            <p>For a given population and a fixed total sample size \(n\), the variance of the sample mean follows this strict hierarchy (ignoring the finite population correction for simplicity):</p>
+            <div class="formula-box">
+                \[ V_{opt}(\bar{y}_{st}) \le V_{prop}(\bar{y}_{st}) \le V_{srs}(\bar{y}) \]
+            </div>
+            <p>This means Optimum (Neyman) Allocation is the best (lowest variance). Proportional is the second best. Pure SRS is the worst (highest variance).</p>
         </div>
 
-        <div class="example">
-            <h4>Summary of Benefits:</h4>
-            <ul>
-                <li><strong>Better Representation:</strong> No important sub-group is left out.</li>
-                <li><strong>Greater Precision:</strong> You get a more accurate answer with the same sample size.</li>
-                <li><strong>Administrative Convenience:</strong> Different teams can handle different strata simultaneously.</li>
-            </ul>
+        <div class="proof">
+            <h4>🖋️ Algebraic Proof of Efficiency (Proportional vs SRS)</h4>
+            <p>Why does Proportional Stratification beat SRS? Let's look at the famous Analysis of Variance (ANOVA) identity for a population divided into strata:</p>
+            <p>Total Variance = Variance WITHIN Strata + Variance BETWEEN Strata.</p>
+            <p>Mathematically: \[ S^2 \approx \sum_{i=1}^k W_i S_i^2 + \sum_{i=1}^k W_i (\bar{Y}_i - \bar{Y})^2 \]</p>
+            <p>We know \(V_{srs} = \frac{S^2}{n}\). Let's substitute the ANOVA expansion into the SRS formula:</p>
+            <p>\[ V_{srs} = \frac{1}{n} \left[ \sum_{i=1}^k W_i S_i^2 + \sum_{i=1}^k W_i (\bar{Y}_i - \bar{Y})^2 \right] \]</p>
+            <p>But wait! We proved earlier that the variance for Proportional Allocation is exactly the first term: \(V_{prop} = \frac{1}{n} \sum_{i=1}^k W_i S_i^2\). Substitute this in:</p>
+            <div class="formula-box">
+                \[ V_{srs} = V_{prop} + \frac{1}{n} \sum_{i=1}^k W_i (\bar{Y}_i - \bar{Y})^2 \]
+            </div>
+            <p>Because a squared term \((\bar{Y}_i - \bar{Y})^2\) is always positive, we are adding a positive number to \(V_{prop}\) to get \(V_{srs}\). This rigorously proves that \(V_{srs}\) is ALWAYS greater than (or equal to) \(V_{prop}\).</p>
+            <p><strong>The Conceptual Meaning:</strong> SRS suffers from the "Between Strata Variance" (the difference in means between the groups). Proportional Stratification mathematically eliminates the "Between Strata" error entirely! It only suffers from the "Within Strata" error. This is why the Golden Rule is "Heterogeneous between, Homogeneous within".</p>
+        </div>
+
+        <div class="solved-box">
+            <h4>Solved Example 4: Gain in Precision</h4>
+            <p><strong>Problem:</strong> A researcher calculates the variances of an estimator under different designs for a population: \(V_{srs} = 85.0\), \(V_{prop} = 50.0\), and \(V_{opt} = 40.0\). Calculate the Percentage Gain in Precision when shifting from SRS to Proportional Allocation, and from SRS to Optimum Allocation.</p>
+            
+            <p><strong>Solution:</strong><br>
+            Gain in Precision is calculated as: \[ \frac{V_{worse} - V_{better}}{V_{better}} \times 100\% \]<br><br>
+            
+            <strong>1. Gain of Proportional over SRS:</strong><br>
+            Gain = \(\frac{85.0 - 50.0}{50.0} \times 100 = \frac{35.0}{50.0} \times 100 =\) <strong>70% Gain in Precision.</strong><br><br>
+
+            <strong>2. Gain of Optimum over SRS:</strong><br>
+            Gain = \(\frac{85.0 - 40.0}{40.0} \times 100 = \frac{45.0}{40.0} \times 100 =\) <strong>112.5% Gain in Precision!</strong><br><br>
+            <em>Conclusion: By simply organizing the population into strata and using Neyman's optimum formula, the researcher more than doubled the precision of the survey without spending money to increase the sample size \(n\).</em>
+            </p>
         </div>
     </section>
 
-    <!-- SECTION 4.5 -->
-    <section class="section-card" id="practice">
-        <h2>4.5 Practice Exercises</h2>
+    <!-- MASSIVE PRACTICE SECTION -->
+    <section class="section-card" id="practice-sub">
+        <h2>4.5 Practice Section: Subjective Questions (20)</h2>
+        <p>Test your deep conceptual understanding and mathematical derivation skills. Formulate your answers before checking the detailed solutions.</p>
 
-        <h3>Part A: Subjective Questions</h3>
-        <div class="question">1. Explain the "Golden Rule" of stratification with a real-life example.</div>
-        <div class="question">2. Define Proportional Allocation and give its mathematical formula.</div>
-        <div class="question">3. When would you prefer Neyman's Allocation over Proportional Allocation?</div>
-
-        <h3 style="margin-top:40px;">Part B: Multiple Choice Questions</h3>
-        
-        <div class="question"><strong>Q1.</strong> In stratified sampling, the sub-groups (strata) should be:
-            <div style="margin-top:10px;">(a) Heterogeneous within &nbsp;&nbsp; (b) Homogeneous within &nbsp;&nbsp; (c) Randomly mixed &nbsp;&nbsp; (d) Overlapping</div>
+        <div class="question-block">
+            <div class="question-text">Q1. Define Stratified Random Sampling and clearly state the 'Golden Rule' of forming strata.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub1')">Show Solution ▼</button>
+            <div id="sub1" class="answer"><strong>Solution:</strong> Stratified Random Sampling is a method where a heterogeneous population of size \(N\) is sub-divided into \(k\) non-overlapping, distinct subgroups called strata. Then, an independent Simple Random Sample is drawn from each stratum. The 'Golden Rule' of stratification is to construct the strata such that the units within a single stratum are as homogeneous (similar) as possible, while the different strata are as heterogeneous (different) from each other as possible.</div>
         </div>
-        <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
-        <div id="mcq1" class="answer"><strong>Correct Answer: (b) Homogeneous within</strong><br>Explanation: Units inside a single stratum should be as similar as possible.</div>
 
-        <div class="question"><strong>Q2.</strong> Which allocation method considers both group size and internal diversity (S.D.)?
-            <div style="margin-top:10px;">(a) Equal &nbsp;&nbsp; (b) Proportional &nbsp;&nbsp; (c) Neyman's &nbsp;&nbsp; (d) SRS</div>
+        <div class="question-block">
+            <div class="question-text">Q2. What is the fundamental formula for the Stratified Sample Mean (\(\bar{y}_{st}\))? Prove that it is an unbiased estimator of the Population Mean (\(\bar{Y}\)).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub2')">Show Solution ▼</button>
+            <div id="sub2" class="answer"><strong>Solution:</strong> The formula is \(\bar{y}_{st} = \sum_{i=1}^k W_i \bar{y}_i\), where \(W_i = N_i/N\).<br><strong>Proof:</strong> Take the expectation: \(E(\bar{y}_{st}) = E(\sum_{i=1}^k W_i \bar{y}_i)\). Since \(W_i\) are constants, we pull them out: \(\sum_{i=1}^k W_i E(\bar{y}_i)\). Since samples are drawn via SRS within each stratum, Theorem 3.3 applies: \(E(\bar{y}_i) = \bar{Y}_i\). Substituting this gives: \(\sum_{i=1}^k W_i \bar{Y}_i\). By definition, the weighted sum of stratum means is the overall population mean \(\bar{Y}\). Thus, \(E(\bar{y}_{st}) = \bar{Y}\).</div>
         </div>
-        <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
-        <div id="mcq2" class="answer"><strong>Correct Answer: (c) Neyman's</strong></div>
 
-        <h3 style="margin-top:40px;">Part C: Fill in the Blanks</h3>
-        
-        <div class="question">1. Proportional allocation is used when the only information available for each stratum is its ___________.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
-        <div id="fib1" class="answer"><strong>Answer: Size (or Population)</strong></div>
+        <div class="question-block">
+            <div class="question-text">Q3. Why is the variance of the stratified mean \(V(\bar{y}_{st})\) simply the sum of the variances of the individual strata? What property guarantees this?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub3')">Show Solution ▼</button>
+            <div id="sub3" class="answer"><strong>Solution:</strong> The formula \(V(\sum W_i \bar{y}_i) = \sum W_i^2 V(\bar{y}_i)\) holds true entirely because of the property of <strong>Independence</strong>. By the strict definition of stratified sampling, the sample drawn from the \(i^{th}\) stratum is drawn completely independently of the sample drawn from the \(j^{th}\) stratum. Because they are independent random variables, their covariance is zero. The variance of a sum of independent variables is the sum of their individual variances.</div>
+        </div>
 
-        <div class="question">2. Stratification increases the ___________ of the final estimate.</div>
-        <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
-        <div id="fib2" class="answer"><strong>Answer: Precision (or Accuracy)</strong></div>
+        <div class="question-block">
+            <div class="question-text">Q4. Define Proportional Allocation. Show how it simplifies the general variance formula (assuming FPC is ignored).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub4')">Show Solution ▼</button>
+            <div id="sub4" class="answer"><strong>Solution:</strong> Proportional Allocation means the sample size drawn from a stratum is proportional to the total size of that stratum. Formula: \(n_i = n W_i\).<br>The general variance formula (ignoring FPC) is \(V(\bar{y}_{st}) = \sum W_i^2 \frac{S_i^2}{n_i}\).<br>Substitute \(n_i = n W_i\) into the denominator: \(V = \sum W_i^2 \frac{S_i^2}{n W_i}\).<br>One \(W_i\) on top cancels the \(W_i\) on the bottom, simplifying beautifully to: \(V_{prop} = \frac{1}{n} \sum W_i S_i^2\).</div>
+        </div>
 
-        <h3 style="margin-top:40px;">Part D: True or False</h3>
-        
-        <div class="question">1. Strata must be mutually exclusive (non-overlapping). [True / False]</div>
-        <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
-        <div id="tf1" class="answer"><strong>Answer: True</strong></div>
+        <div class="question-block">
+            <div class="question-text">Q5. Explain the logical flaw in Proportional Allocation that Neyman's Optimum Allocation fixes.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub5')">Show Solution ▼</button>
+            <div id="sub5" class="answer"><strong>Solution:</strong> Proportional allocation allocates sample size based <em>only</em> on the population size of the stratum (\(N_i\)). Its logical flaw is ignoring the internal variance (\(S_i^2\)). A stratum might be huge, but if every unit inside it is identical (zero variance), we only need a sample of \(n=1\) to know everything about it! Proportional allocation would waste hundreds of samples on it. Neyman's allocation fixes this by allocating based on BOTH size and variance (\(n_i \propto W_i S_i\)), drawing more units only if the stratum is highly variable.</div>
+        </div>
 
-        <div class="question">2. Stratified sampling always requires a larger sample size than SRS for the same accuracy. [True / False]</div>
-        <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
-        <div id="tf2" class="answer"><strong>Answer: False</strong><br>Explanation: It usually requires a <em>smaller</em> sample size for the same level of accuracy.</div>
+        <div class="question-block">
+            <div class="question-text">Q6. Write down the formula for Neyman's Optimum Allocation. What does the term \(\sum_{i=1}^k W_i S_i\) in the denominator represent?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub6')">Show Solution ▼</button>
+            <div id="sub6" class="answer"><strong>Solution:</strong> The formula is \(n_i = n \frac{W_i S_i}{\sum_{i=1}^k W_i S_i}\). The denominator \(\sum_{i=1}^k W_i S_i\) is simply a normalizing constant. It is the sum of the size-variance products for all strata. Dividing by this sum ensures that when you add up all the allocated \(n_i\)'s across all \(k\) strata, they perfectly sum up to the total allowed sample size \(n\).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q7. Under what specific condition does Optimum Allocation (Neyman) yield the exact same sample sizes as Proportional Allocation?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub7')">Show Solution ▼</button>
+            <div id="sub7" class="answer"><strong>Solution:</strong> Neyman's allocation simplifies to Proportional allocation if and only if the variance is exactly the same across all strata. If \(S_1 = S_2 = \dots = S_k = S\) (a constant), then in the formula \(n_i = n \frac{W_i S}{\sum W_i S}\), the constant \(S\) can be factored out of the sum. It cancels with the \(S\) in the numerator. Since \(\sum W_i = 1\), the formula collapses to \(n_i = n W_i\), which is Proportional Allocation.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q8. Outline the algebraic proof showing that \(V_{srs} \ge V_{prop}\). What is the conceptual meaning of this result?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub8')">Show Solution ▼</button>
+            <div id="sub8" class="answer"><strong>Solution:</strong> Using the ANOVA identity, Total Variance \(S^2 \approx \sum W_i S_i^2 + \sum W_i (\bar{Y}_i - \bar{Y})^2\). Substituting this into the SRS variance formula \(V_{srs} = S^2/n\) yields: \(V_{srs} = \frac{1}{n}[\sum W_i S_i^2 + \sum W_i (\bar{Y}_i - \bar{Y})^2]\). We recognize the first term as exactly \(V_{prop}\). Thus, \(V_{srs} = V_{prop} + \frac{1}{n}\sum W_i (\bar{Y}_i - \bar{Y})^2\). Since the second term is a square (always positive), \(V_{srs}\) must be greater than \(V_{prop}\). Conceptually, it proves that proportional stratification mathematically eliminates the error caused by the difference between strata means.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q9. How does the introduction of varying survey costs (\(c_i\)) change the optimum allocation formula? Explain the logic.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub9')">Show Solution ▼</button>
+            <div id="sub9" class="answer"><strong>Solution:</strong> When costs vary, the allocation formula becomes \(n_i \propto \frac{W_i S_i}{\sqrt{c_i}}\). The logic is driven by mathematical optimization (Lagrange multipliers) to get the most information for a fixed budget. The \(\sqrt{c_i}\) is in the denominator, meaning if a stratum is extremely expensive to survey, the formula heavily penalizes it and drastically reduces the number of samples drawn from it, reallocating budget to cheaper strata to maximize overall precision.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q10. Discuss three main practical advantages of Stratified Random Sampling over Simple Random Sampling.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub10')">Show Solution ▼</button>
+            <div id="sub10" class="answer"><strong>Solution:</strong> 1. <strong>Higher Precision:</strong> By ensuring all subgroups are represented, it drastically lowers the sampling variance. 2. <strong>Administrative Efficiency:</strong> A massive population (like a country) can be divided into strata (states), allowing local field offices to handle their own strata independently. 3. <strong>Sub-population Data:</strong> It provides highly accurate, standalone estimates for each specific stratum, whereas SRS only provides a reliable estimate for the country as a whole.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q11. Explain how the method of Lagrange multipliers is used to derive Neyman's optimum allocation formula.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub11')">Show Solution ▼</button>
+            <div id="sub11" class="answer"><strong>Solution:</strong> The goal is to minimize the variance function \(V(\bar{y}_{st}) = \sum (W_i^2 S_i^2)/n_i\) subject to the constraint that the sum of sample sizes equals \(n\), i.e., \(\sum n_i - n = 0\). We form the Lagrange function \(\Phi = \sum (W_i^2 S_i^2)/n_i + \lambda (\sum n_i - n)\). By taking the partial derivative of \(\Phi\) with respect to \(n_i\) and setting it to zero, we get \(-W_i^2 S_i^2 / n_i^2 + \lambda = 0\). Solving for \(n_i\) yields \(n_i = (W_i S_i) / \sqrt{\lambda}\), which proves that \(n_i\) is directly proportional to \(W_i S_i\). Summing this across all strata gives the normalizing constant to find the exact formula.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q12. What happens to the efficiency of Stratified Random Sampling if the strata are formed poorly (i.e., heterogeneous within, homogeneous between)?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub12')">Show Solution ▼</button>
+            <div id="sub12" class="answer"><strong>Solution:</strong> If strata are formed poorly, the within-strata variance (\(S_i^2\)) will be very high, and the between-strata variance will be very low. Since the variance of the stratified estimator \(V(\bar{y}_{st})\) depends almost entirely on the within-strata variance, a poorly formed stratification will result in a very high variance. In extreme cases of bad stratification, stratified sampling can actually become less efficient than simple random sampling.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q13. Show algebraically that \(\sum_{i=1}^k W_i = 1\). Why is this important?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub13')">Show Solution ▼</button>
+            <div id="sub13" class="answer"><strong>Solution:</strong> By definition, the weight of the \(i^{th}\) stratum is \(W_i = N_i / N\). When we sum these weights across all \(k\) strata, we get: \(\sum_{i=1}^k W_i = \sum_{i=1}^k (N_i / N)\). Since \(N\) is a constant denominator, we can write this as \((\sum N_i) / N\). By the definition of stratification, the sum of the sizes of all non-overlapping strata exactly equals the total population size \(N\). Therefore, \(N / N = 1\). This is important because it mathematically ensures that our weighted averages are true proportional averages.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q14. In cost optimization, if the overhead cost \(c_0\) increases, how does it affect the allocation of \(n_i\)?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub14')">Show Solution ▼</button>
+            <div id="sub14" class="answer"><strong>Solution:</strong> The overhead cost \(c_0\) is a fixed constant that does not depend on the sample sizes \(n_i\). In the optimization process (taking derivatives with respect to \(n_i\)), the constant \(c_0\) drops out entirely. Therefore, a change in the fixed overhead cost does not change the optimal *proportion* or *allocation* of the sample across the strata, though it may reduce the total sample size \(n\) you can afford if your overall budget is strictly fixed.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q15. Define 'Gain in Precision' and explain how to calculate it when comparing Stratified Sampling to SRS.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub15')">Show Solution ▼</button>
+            <div id="sub15" class="answer"><strong>Solution:</strong> Gain in Precision measures how much more efficient a new sampling design is compared to a baseline design (usually SRS). It is calculated using the variances of the estimators. The formula is: Gain = \(((V_{srs} - V_{st}) / V_{st}) \times 100\%\). A positive percentage indicates that the stratified design is more precise (has less variance) than the simple random design for the same sample size.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q16. What is the impact of ignoring the Finite Population Correction (FPC) when calculating \(V(\bar{y}_{st})\) for a relatively small population?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub16')">Show Solution ▼</button>
+            <div id="sub16" class="answer"><strong>Solution:</strong> If the population is small (or the sampling fraction \(n/N\) is large, typically > 5%), ignoring the FPC will cause you to significantly over-estimate the variance. The FPC, calculated as \((N-n)/N\), reduces the variance because drawing a large portion of a finite population without replacement leaves less uncertainty about the un-sampled portion. Ignoring it makes your results look much worse (less precise) than they actually are.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q17. Explain the difference between 'Estimation' and 'Allocation' in the context of Stratified Sampling.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub17')">Show Solution ▼</button>
+            <div id="sub17" class="answer"><strong>Solution:</strong> <strong>Allocation</strong> is the planning step: it is the mathematical process of deciding *how many* sample units to draw from each stratum (\(n_1, n_2\), etc.) before the survey begins, using methods like Proportional or Neyman. <strong>Estimation</strong> is the analysis step: it is the mathematical process of combining the data *after* the survey is completed to calculate the final Stratified Mean (\(\bar{y}_{st}\)) and its Variance to make inferences about the whole population.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q18. If a population has extremely skewed income distribution (a few billionaires and many poor people), why is Stratification vastly superior to SRS?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub18')">Show Solution ▼</button>
+            <div id="sub18" class="answer"><strong>Solution:</strong> Income is highly skewed, meaning the population variance (\(S^2\)) is massive. In SRS, a random sample might accidentally include too many billionaires (drastically overestimating the average) or none at all (underestimating). By stratifying into "High Income", "Middle", and "Low", we force the sample to represent the billionaires exactly according to their true proportion. This captures the extreme between-strata variance, reducing the sampling error immensely.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q19. Can Proportional Allocation ever result in a higher variance than Simple Random Sampling? Justify your answer.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub19')">Show Solution ▼</button>
+            <div id="sub19" class="answer"><strong>Solution:</strong> No, practically and mathematically, Proportional Allocation cannot result in a higher variance than SRS (assuming we ignore the minor effects of finite population correction in small samples). As proven by the ANOVA identity, \(V_{srs} = V_{prop} + \text{positive term}\). Since the added term (representing between-strata variance) must be zero or positive, \(V_{prop}\) is always less than or equal to \(V_{srs}\). The worst-case scenario is that they are exactly equal (if there is no difference between strata means).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q20. In the cost optimization formula \(n_i \propto \frac{W_i S_i}{\sqrt{c_i}}\), what happens if the cost is identical across all strata (\(c_1 = c_2 = \dots = c_k\))?</div>
+            <button class="toggle-btn" onclick="toggleAnswer('sub20')">Show Solution ▼</button>
+            <div id="sub20" class="answer"><strong>Solution:</strong> If the cost \(c_i\) is a constant \(c\) for all strata, then the term \(\sqrt{c}\) can be factored out as a constant denominator in the proportionality equation. It will cancel out entirely when we divide by the sum to find the exact \(n_i\). The formula will mathematically collapse into \(n_i \propto W_i S_i\), which is exactly Neyman's Optimum Allocation formula! This proves Neyman's is just a special case of cost optimization where costs are equal.</div>
+        </div>
     </section>
+
+    <section class="section-card" id="practice-mcq">
+        <h3 style="color:var(--navy); border-bottom: 2px solid var(--navy);">Part B: Multiple Choice Questions (20 Qs)</h3>
+        
+        <div class="question-block">
+            <div class="question-text">Q1. The fundamental "Golden Rule" of constructing strata is that units should be:</div>
+            <div class="mcq-options">
+                <label>(A) Heterogeneous within, Homogeneous between</label> <label>(B) Homogeneous within, Heterogeneous between</label>
+                <label>(C) Randomly mixed across all boundaries</label> <label>(D) Exactly equal in population size</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+            <div id="mcq1" class="answer"><strong>Correct Answer: (B) Homogeneous within, Heterogeneous between</strong><br>Reason: This minimizes the within-strata variance \(S_i^2\), which drives down the total stratified variance.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q2. In stratified sampling, the samples are drawn from the different strata:</div>
+            <div class="mcq-options">
+                <label>(A) Dependently</label> <label>(B) Subjectively</label>
+                <label>(C) Independently</label> <label>(D) Sequentially</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+            <div id="mcq2" class="answer"><strong>Correct Answer: (C) Independently</strong><br>Reason: Independence guarantees that the covariance between strata means is zero, allowing us to simply sum their variances.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q3. The symbol \(W_i\) represents the 'Weight' of the \(i^{th}\) stratum. It is calculated as:</div>
+            <div class="mcq-options">
+                <label>(A) \(n_i / n\)</label> <label>(B) \(N_i / N\)</label>
+                <label>(C) \(S_i / S\)</label> <label>(D) \(\bar{Y}_i / \bar{Y}\)</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show Answer ▼</button>
+            <div id="mcq3" class="answer"><strong>Correct Answer: (B) \(N_i / N\)</strong><br>Reason: Weight is strictly the proportion of the total population that belongs to the stratum.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q4. Which allocation method ensures that \(n_i\) is directly proportional to \(N_i\)?</div>
+            <div class="mcq-options">
+                <label>(A) Equal Allocation</label> <label>(B) Neyman's Allocation</label>
+                <label>(C) Cost Optimum Allocation</label> <label>(D) Proportional Allocation</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show Answer ▼</button>
+            <div id="mcq4" class="answer"><strong>Correct Answer: (D) Proportional Allocation</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q5. Neyman's Optimum Allocation minimizes the variance subject to which constraint?</div>
+            <div class="mcq-options">
+                <label>(A) Fixed budget (Cost)</label> <label>(B) Fixed total sample size (\(n\))</label>
+                <label>(C) Fixed margin of error</label> <label>(D) Equal variance across strata</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show Answer ▼</button>
+            <div id="mcq5" class="answer"><strong>Correct Answer: (B) Fixed total sample size (\(n\))</strong><br>Reason: It minimizes variance assuming we can only draw \(n\) total units, regardless of cost.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q6. According to Neyman's allocation (\(n_i \propto W_i S_i\)), we should draw a larger sample from a stratum if it is:</div>
+            <div class="mcq-options">
+                <label>(A) Large in size and highly variable</label> <label>(B) Small in size and homogeneous</label>
+                <label>(C) Very expensive to survey</label> <label>(D) Easy to access</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show Answer ▼</button>
+            <div id="mcq6" class="answer"><strong>Correct Answer: (A) Large in size and highly variable</strong><br>Reason: Both high \(W_i\) and high \(S_i\) increase the allocation \(n_i\).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q7. The Stratified Sample Mean \(\bar{y}_{st}\) is an unbiased estimator of \(\bar{Y}\). This mathematically means:</div>
+            <div class="mcq-options">
+                <label>(A) \(V(\bar{y}_{st}) = 0\)</label> <label>(B) \(E(\bar{y}_{st}) = \bar{Y}\)</label>
+                <label>(C) \(\bar{y}_{st} = \bar{Y}\) in every sample</label> <label>(D) Bias is infinite</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show Answer ▼</button>
+            <div id="mcq7" class="answer"><strong>Correct Answer: (B) \(E(\bar{y}_{st}) = \bar{Y}\)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q8. In the formula \(n_i \propto \frac{W_i S_i}{\sqrt{c_i}}\), what happens to \(n_i\) if the cost \(c_i\) of surveying that stratum quadruples (x4)?</div>
+            <div class="mcq-options">
+                <label>(A) It quadruples</label> <label>(B) It doubles</label>
+                <label>(C) It is cut in half</label> <label>(D) It remains unchanged</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show Answer ▼</button>
+            <div id="mcq8" class="answer"><strong>Correct Answer: (C) It is cut in half</strong><br>Reason: The square root of 4 is 2. Since cost is in the denominator, dividing by 2 halves the sample size.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q9. Which of the following inequalities correctly ranks the variance (efficiency) of the estimators?</div>
+            <div class="mcq-options">
+                <label>(A) \(V_{srs} \le V_{prop} \le V_{opt}\)</label> <label>(B) \(V_{opt} \le V_{prop} \le V_{srs}\)</label>
+                <label>(C) \(V_{prop} \le V_{opt} \le V_{srs}\)</label> <label>(D) \(V_{opt} = V_{prop} = V_{srs}\)</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show Answer ▼</button>
+            <div id="mcq9" class="answer"><strong>Correct Answer: (B) \(V_{opt} \le V_{prop} \le V_{srs}\)</strong><br>Reason: Optimum (Neyman) is the best (lowest variance). SRS is the worst.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q10. Proportional allocation completely eliminates which component of variance?</div>
+            <div class="mcq-options">
+                <label>(A) Within-strata variance</label> <label>(B) Between-strata variance</label>
+                <label>(C) Measurement error</label> <label>(D) Standard error</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show Answer ▼</button>
+            <div id="mcq10" class="answer"><strong>Correct Answer: (B) Between-strata variance</strong><br>Reason: The ANOVA proof shows that \(V_{srs} = V_{prop} + \text{Between Strata Variance}\). Thus, proportional removes it.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q11. The sum of the weights of all strata (\(\sum_{i=1}^k W_i\)) is always equal to:</div>
+            <div class="mcq-options">
+                <label>(A) 0</label> <label>(B) \(N\)</label>
+                <label>(C) \(n\)</label> <label>(D) 1</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show Answer ▼</button>
+            <div id="mcq11" class="answer"><strong>Correct Answer: (D) 1</strong><br>Reason: Because \(W_i = N_i/N\), and the sum of all parts equals the whole (\(N/N = 1\)).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q12. If strata are formed such that they are highly heterogeneous *within* themselves, the efficiency of stratified sampling will:</div>
+            <div class="mcq-options">
+                <label>(A) Increase</label> <label>(B) Decrease</label>
+                <label>(C) Remain unchanged</label> <label>(D) Become exactly equal to zero</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show Answer ▼</button>
+            <div id="mcq12" class="answer"><strong>Correct Answer: (B) Decrease</strong><br>Reason: This violates the Golden Rule. High within-strata variance (\(S_i^2\)) directly increases the total variance of the estimator.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q13. To derive Neyman's optimum allocation, the mathematical technique used to minimize variance under a constraint is called:</div>
+            <div class="mcq-options">
+                <label>(A) Newton's Method</label> <label>(B) Gaussian Elimination</label>
+                <label>(C) Method of Lagrange Multipliers</label> <label>(D) Taylor Series Expansion</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show Answer ▼</button>
+            <div id="mcq13" class="answer"><strong>Correct Answer: (C) Method of Lagrange Multipliers</strong><br>Reason: It is the standard calculus method for finding local maxima/minima subject to equality constraints.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q14. In equal allocation, the sample size \(n_i\) drawn from each stratum is calculated as:</div>
+            <div class="mcq-options">
+                <label>(A) \(n \times W_i\)</label> <label>(B) \(n / k\)</label>
+                <label>(C) \(N / k\)</label> <label>(D) \(n_i = n\)</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show Answer ▼</button>
+            <div id="mcq14" class="answer"><strong>Correct Answer: (B) \(n / k\)</strong><br>Reason: Total sample size \(n\) is divided equally among the \(k\) strata.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q15. The formula \(V(\bar{y}_{st}) = \sum W_i^2 V(\bar{y}_i)\) requires that samples from different strata are drawn:</div>
+            <div class="mcq-options">
+                <label>(A) Proportionally</label> <label>(B) Consecutively</label>
+                <label>(C) Independently</label> <label>(D) Subjectively</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show Answer ▼</button>
+            <div id="mcq15" class="answer"><strong>Correct Answer: (C) Independently</strong><br>Reason: Independence ensures the covariance between sample means of different strata is zero.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q16. Cost optimization allocation penalizes (reduces sample size from) strata that are:</div>
+            <div class="mcq-options">
+                <label>(A) Very cheap to survey</label> <label>(B) Very expensive to survey</label>
+                <label>(C) Highly variable</label> <label>(D) Very large in population</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show Answer ▼</button>
+            <div id="mcq16" class="answer"><strong>Correct Answer: (B) Very expensive to survey</strong><br>Reason: Because cost \(c_i\) is in the denominator of the allocation formula.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q17. The 'Gain in Precision' when moving from SRS to Stratified Sampling is usually expressed as a:</div>
+            <div class="mcq-options">
+                <label>(A) Negative number</label> <label>(B) Percentage</label>
+                <label>(C) Logarithm</label> <label>(D) P-value</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show Answer ▼</button>
+            <div id="mcq17" class="answer"><strong>Correct Answer: (B) Percentage</strong><br>Reason: It is calculated as \([(V_{srs} - V_{st})/V_{st}] \times 100\%\).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q18. If a population is extremely skewed (e.g., highly unequal wealth distribution), which method is best?</div>
+            <div class="mcq-options">
+                <label>(A) Simple Random Sampling</label> <label>(B) Subjective Sampling</label>
+                <label>(C) Stratified Random Sampling</label> <label>(D) Lottery Method</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show Answer ▼</button>
+            <div id="mcq18" class="answer"><strong>Correct Answer: (C) Stratified Random Sampling</strong><br>Reason: It prevents drawing a sample that accidentally contains only the extreme outliers or misses them entirely.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q19. In Neyman's allocation, the sample size \(n_i\) is directly proportional to:</div>
+            <div class="mcq-options">
+                <label>(A) Only \(W_i\)</label> <label>(B) Only \(S_i\)</label>
+                <label>(C) The product \(W_i S_i\)</label> <label>(D) The ratio \(W_i / S_i\)</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show Answer ▼</button>
+            <div id="mcq19" class="answer"><strong>Correct Answer: (C) The product \(W_i S_i\)</strong><br>Reason: It considers both the size (\(W_i\)) and the internal variation (\(S_i\)) of the stratum.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">Q20. If \(S_1 = S_2 = \dots = S_k\) (constant variance across all strata), then Neyman's allocation mathematically reduces to:</div>
+            <div class="mcq-options">
+                <label>(A) Equal Allocation</label> <label>(B) Cost Optimization</label>
+                <label>(C) SRS</label> <label>(D) Proportional Allocation</label>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show Answer ▼</button>
+            <div id="mcq20" class="answer"><strong>Correct Answer: (D) Proportional Allocation</strong><br>Reason: The constant \(S\) cancels out of the formula \(n_i = n (W_i S) / \sum(W_i S)\), leaving \(n_i = n W_i\).</div>
+        </div>
+    </section>
+
+    <section class="section-card" id="practice-fib">
+        <h3 style="color:var(--navy); border-bottom: 2px solid var(--navy);">Part C: Fill in the Blanks (20 Qs)</h3>
+
+        <div class="question-block">
+            <div class="question-text">1. In stratified sampling, the heterogeneous population is divided into non-overlapping groups called ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button><div id="fib1" class="answer"><strong>Answer: Strata</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">2. For maximum efficiency, units within the same stratum should be highly ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button><div id="fib2" class="answer"><strong>Answer: Homogeneous (or Similar)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">3. The process of distributing the total sample size \(n\) among the various strata is called ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show Answer ▼</button><div id="fib3" class="answer"><strong>Answer: Allocation</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">4. The term \(N_i / N\) is mathematically defined as the ____________ of the \(i^{th}\) stratum.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show Answer ▼</button><div id="fib4" class="answer"><strong>Answer: Weight (\(W_i\))</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">5. If \(n_i = n \times W_i\), the allocation method is known as ____________ allocation.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show Answer ▼</button><div id="fib5" class="answer"><strong>Answer: Proportional</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">6. ____________ Allocation minimizes the variance of the stratified mean for a fixed total sample size.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show Answer ▼</button><div id="fib6" class="answer"><strong>Answer: Neyman's (or Optimum)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">7. To prove Neyman's optimum allocation mathematically, we use the method of ____________ Multipliers.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show Answer ▼</button><div id="fib7" class="answer"><strong>Answer: Lagrange</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">8. In optimum allocation for fixed cost, the sample size \(n_i\) is inversely proportional to the ____________ root of the cost \(c_i\).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show Answer ▼</button><div id="fib8" class="answer"><strong>Answer: Square</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">9. The stratified sample mean \(\bar{y}_{st}\) is an ____________ estimator of the overall population mean \(\bar{Y}\).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show Answer ▼</button><div id="fib9" class="answer"><strong>Answer: Unbiased</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">10. Proportional allocation mathematically eliminates the ____________-strata variance from the sampling error.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show Answer ▼</button><div id="fib10" class="answer"><strong>Answer: Between</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">11. A single unit belonging to multiple strata violates the rule that strata must be non-____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show Answer ▼</button><div id="fib11" class="answer"><strong>Answer: Overlapping</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">12. The mathematical symbol \(S_i^2\) represents the population ____________ inside the \(i^{th}\) stratum.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show Answer ▼</button><div id="fib12" class="answer"><strong>Answer: Variance (or Mean Square)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">13. The sum of all strata weights (\(\sum W_i\)) must always exactly equal ____________.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show Answer ▼</button><div id="fib13" class="answer"><strong>Answer: One (1)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">14. If samples are drawn independently, the ____________ between the sample means of different strata is zero.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show Answer ▼</button><div id="fib14" class="answer"><strong>Answer: Covariance</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">15. In ANOVA for stratification, Total Variance equals Within Strata Variance plus ____________ Strata Variance.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show Answer ▼</button><div id="fib15" class="answer"><strong>Answer: Between</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">16. ____________ allocation is usually considered the most inefficient unless no prior information is available.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show Answer ▼</button><div id="fib16" class="answer"><strong>Answer: Equal</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">17. In the cost function \(C = c_0 + \sum c_i n_i\), the term \(c_0\) represents the fixed ____________ cost.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show Answer ▼</button><div id="fib17" class="answer"><strong>Answer: Overhead</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">18. The symbol \(V_{opt}\) represents the variance of the estimator under ____________ allocation.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show Answer ▼</button><div id="fib18" class="answer"><strong>Answer: Optimum (or Neyman's)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">19. If \(c_1 = c_2 = \dots = c_k\), the optimum cost allocation formula mathematically reduces to ____________ allocation.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show Answer ▼</button><div id="fib19" class="answer"><strong>Answer: Neyman's (or Optimum)</strong></div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">20. The ____________ in precision is calculated to measure how much better Stratified Sampling is compared to SRS.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show Answer ▼</button><div id="fib20" class="answer"><strong>Answer: Gain</strong></div>
+        </div>
+    </section>
+
+    <section class="section-card" id="practice-tf">
+        <h3 style="color:var(--navy); border-bottom: 2px solid var(--navy);">Part D: True or False (20 Qs)</h3>
+
+        <div class="question-block">
+            <div class="question-text">1. Stratified random sampling is generally less precise than simple random sampling.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button><div id="tf1" class="answer"><strong>False.</strong> It is almost always MORE precise because it ensures all heterogeneous subgroups are represented properly.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">2. Strata must be mutually exclusive and non-overlapping.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button><div id="tf2" class="answer"><strong>True.</strong> A single unit cannot belong to two different strata; otherwise, probabilities of selection are corrupted.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">3. Equal allocation is the most scientifically efficient method of drawing a stratified sample.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show Answer ▼</button><div id="tf3" class="answer"><strong>False.</strong> Equal allocation is highly inefficient unless all strata are identical in size and variance. Neyman's is the most scientifically efficient.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">4. Neyman's allocation requires prior knowledge of the standard deviation (\(S_i\)) of each stratum.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show Answer ▼</button><div id="tf4" class="answer"><strong>True.</strong> Because the formula contains \(S_i\), you must estimate it using a pilot survey before applying the formula.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">5. If \(S_1 = S_2 = \dots = S_k\), then Neyman's allocation gives the exact same result as Proportional allocation.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show Answer ▼</button><div id="tf5" class="answer"><strong>True.</strong> If variances are constant across all strata, the \(S\) cancels out of the formula, collapsing it to \(n_i = n W_i\).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">6. The variance of the stratified mean is calculated by multiplying the variances of the individual strata.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show Answer ▼</button><div id="tf6" class="answer"><strong>False.</strong> Because the samples are drawn independently, we ADD their weighted variances, we do not multiply them.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">7. In cost optimization, if a stratum is very cheap to survey, we should draw a smaller sample from it.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show Answer ▼</button><div id="tf7" class="answer"><strong>False.</strong> Because cost \(c_i\) is in the denominator (\(1/\sqrt{c_i}\)), a smaller cost means the fraction becomes LARGER, so we draw MORE samples from cheap areas to maximize information for our budget.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">8. \(V_{prop} \le V_{srs}\) is a mathematically proven theorem in sampling.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show Answer ▼</button><div id="tf8" class="answer"><strong>True.</strong> Proportional stratification mathematically guarantees a variance less than or equal to SRS by eliminating between-strata error.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">9. Stratification completely eliminates Sampling Error.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show Answer ▼</button><div id="tf9" class="answer"><strong>False.</strong> It reduces it significantly, but sampling error always exists unless you conduct a complete census.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">10. The sum of all strata weights (\(\sum W_i\)) must always exactly equal 1.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show Answer ▼</button><div id="tf10" class="answer"><strong>True.</strong> Since \(W_i = N_i/N\), summing all \(N_i\) gives \(N\). Therefore \(N/N = 1\).</div>
+        </div>
+        
+        <div class="question-block">
+            <div class="question-text">11. Independence of drawing samples from different strata is necessary to ensure the covariance between their means is zero.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show Answer ▼</button><div id="tf11" class="answer"><strong>True.</strong> This independence allows us to add the individual variances algebraically without complicated cross-terms.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">12. The mathematical formula for optimum allocation under variable cost contains \(c_i\) directly in the numerator.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show Answer ▼</button><div id="tf12" class="answer"><strong>False.</strong> The square root of the cost (\(\sqrt{c_i}\)) is located in the denominator, not the numerator.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">13. Proportional allocation implies that \(n_1/N_1 = n_2/N_2 = \dots = n_k/N_k\).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show Answer ▼</button><div id="tf13" class="answer"><strong>True.</strong> This states that the sampling fraction is constant across all strata, which is the definition of proportional allocation.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">14. The "Golden Rule" suggests that between-strata variance should be minimized.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show Answer ▼</button><div id="tf14" class="answer"><strong>False.</strong> The Golden Rule says between-strata variance should be MAXIMIZED (heterogeneous between), while within-strata variance should be minimized (homogeneous within).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">15. The Lagrange multiplier method is a calculus technique used to minimize variance under constraints.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show Answer ▼</button><div id="tf15" class="answer"><strong>True.</strong> It is the standard mathematical proof method for deriving Neyman's optimum allocation.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">16. A Stratified Sample Mean \(\bar{y}_{st}\) is only unbiased if proportional allocation is used.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show Answer ▼</button><div id="tf16" class="answer"><strong>False.</strong> Theorem 4.1 proves it is unbiased REGARDLESS of the allocation method used, as long as SRS is used within each stratum.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">17. In the cost function \(C = c_0 + \sum c_i n_i\), the term \(c_0\) affects the optimum ratio of \(n_i\) to \(n_j\).</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show Answer ▼</button><div id="tf17" class="answer"><strong>False.</strong> Since \(c_0\) is a constant overhead, its derivative is zero during optimization and does not affect the allocation ratios.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">18. The "Gain in Precision" percentage can be negative if stratification is done very poorly.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show Answer ▼</button><div id="tf18" class="answer"><strong>True.</strong> If you group completely dissimilar units together (high within-variance), the stratified variance can actually exceed SRS variance, resulting in a negative gain (a loss of precision).</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">19. Stratified sampling allows for reliable sub-population estimates, which is impossible to guarantee with pure SRS.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show Answer ▼</button><div id="tf19" class="answer"><strong>True.</strong> SRS might accidentally select zero people from a specific minority group, while stratification guarantees a predetermined sample size from every subgroup.</div>
+        </div>
+
+        <div class="question-block">
+            <div class="question-text">20. The inequality \(V_{opt} \le V_{prop} \le V_{srs}\) is known as the hierarchy of efficiency.</div>
+            <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show Answer ▼</button><div id="tf20" class="answer"><strong>True.</strong> This mathematically ranks the methods from best (Optimum) to worst (SRS) in terms of sampling variance.</div>
+        </div>
+    </section>
+
 </main>
 
 <script>
+    // Navigation logic
     function showTopic(id) {
         document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
@@ -392,11 +1149,23 @@
         document.getElementById('link-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    
+    // Toggle Answers logic
     function toggleAnswer(id) {
         const ans = document.getElementById(id);
         ans.classList.toggle('show');
+        const btn = event.currentTarget;
+        if(ans.classList.contains('show')) {
+            btn.innerHTML = "Hide Solution ▲";
+        } else {
+            btn.innerHTML = "Show Answer ▼";
+            if(id.startsWith('sub')) btn.innerHTML = "Show Solution ▼";
+        }
     }
 </script>
-<script src="whiteboard.js?v=1.2"></script>
+
+<!-- Pro Whiteboard Plugin -->
+<script src="whiteboard.js?v=1.3"></script>
+
 </body>
 </html>
