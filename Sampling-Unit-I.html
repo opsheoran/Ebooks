@@ -15,47 +15,202 @@
     <style>
         /* Shared Design System (Replicated from Stat 102) */
         :root {
-            --navy: #1B2A4A; --navy-light: #2E4270; --gold: #C8922A; --gold-light: #E8B84B;
-            --paper: #F5F3EE; --ivory: #FAFAF7; --border: #DDD8CF; --text-dark: #1C1C1E;
-            --sidebar-w: 300px; --header-h: 72px;
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
         }
+
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Source Serif 4', serif; background: var(--paper); color: var(--text-dark); line-height: 1.7; }
-        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
         .book-header {
-            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
-            background: linear-gradient(110deg, var(--navy), var(--navy-light));
-            color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px;
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
         }
-        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
-        .header-text .subtitle { font-size: 0.75rem; opacity: 0.8; }
 
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+            margin-right: 15px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
         .sidebar {
-            position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w);
-            height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; color: #fff;
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
         }
-        .sidebar-author { display: flex; align-items: center; gap: 12px; padding: 20px; background: rgba(0,0,0,0.2); }
-        .sidebar-photo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; object-position: top; }
-        
-        .nav-group-label { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; text-transform: uppercase; padding: 16px 20px 8px; opacity: 0.5; }
-        .nav-link { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'DM Sans'; font-size: 0.85rem; }
-        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
 
-        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1200px; }
-        .section-card { background: var(--ivory); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border); border-top: 5px solid var(--navy); margin-bottom: 40px; }
-        
-        h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2rem; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
-        h3 { font-family: 'Playfair Display', serif; color: var(--navy-light); margin-top: 32px; margin-bottom: 16px; }
-        p { margin-bottom: 16px; text-align: justify; }
-        
-        .definition { background: #f3f0fb; border-left: 5px solid #6b4fc8; padding: 20px; margin: 20px 0; border-radius: 8px; }
-        .definition strong { color: #6b4fc8; }
-        
-        .highlight-box { background: #fffbe6; border-left: 5px solid #ffe58f; padding: 20px; margin: 20px 0; }
+        .sidebar-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-        .draw-mode-toggle { background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: auto; }
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
 
-        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } }
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 900px);
+        }
+
+        .section-card {
+            display: none;
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .section-card.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 32px 0 14px; }
+        p { margin-bottom: 12px; text-align: justify; }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+        .definition { background: #F3F0FB; border-left: 5px solid #6B4FC8; }
+        .example { background: #FFFBF0; border-left: 5px solid var(--gold); }
+        .note { background: var(--sky-light); border-left: 5px solid var(--sky); }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+        .example h4::before { content: "Example — "; color: var(--gold); }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .question { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light); padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .82rem; margin: 4px 0 8px; }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 2px 0 12px; border-radius: 0 8px 8px 0; }
+        .answer.show { display: block; }
+
+        .draw-mode-toggle {
+            background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
     </style>
     <link rel="stylesheet" href="whiteboard.css?v=1.2">
 </head>
@@ -64,9 +219,9 @@
 <header class="book-header">
     <div class="header-text">
         <h1>Sampling Techniques</h1>
-        <div class="subtitle">UNIT I · BASIC CONCEPTS</div>
+        <div class="subtitle">UNIT I · BASIC CONCEPTS & TERMINOLOGY</div>
     </div>
-    <div class="header-badge" style="margin-left:auto; margin-right: 20px;">Prof. O.P. Sheoran</div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
     <button class="draw-mode-toggle" id="draw-mode-btn">
         <i class="fas fa-chalkboard"></i> Open Whiteboard
     </button>
@@ -76,109 +231,196 @@
     <div class="sidebar-author">
         <img src="opsheoran.png" alt="Author" class="sidebar-photo">
         <div class="sidebar-info">
-            <div style="font-weight:700; font-size: 0.9rem;">Prof. O.P. Sheoran</div>
-            <div style="font-size: 0.7rem; opacity: 0.6;">CCSHAU Hisar</div>
+            <div style="font-weight:700; font-size: 0.9rem; color:#fff;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.7rem; opacity: 0.6; color:#fff;">CCSHAU Hisar</div>
         </div>
     </div>
     <div class="nav-group-label">Navigation</div>
-    <a href="sampling.html" class="nav-link"><i class="fas fa-home" style="margin-right:8px;"></i> Course Home</a>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-home"></i> Course Home</a>
     
     <div class="nav-group-label">Unit I Topics</div>
-    <a href="#" class="nav-link active" onclick="showTopic('concepts')">Basic Concepts</a>
-    <a href="#" class="nav-link" onclick="showTopic('need')">Need for Sampling</a>
-    <a href="#" class="nav-link" onclick="showTopic('steps')">Steps in Survey</a>
-    <a href="#" class="nav-link" onclick="showTopic('types')">Types of Sampling</a>
+    <a onclick="showTopic('intro')" class="nav-link active" id="link-intro">1.1 Introduction</a>
+    <a onclick="showTopic('definitions')" class="nav-link" id="link-definitions">1.2 Key Definitions</a>
+    <a onclick="showTopic('census')" class="nav-link" id="link-census">1.3 Census vs Sample</a>
+    <a onclick="showTopic('steps')" class="nav-link" id="link-steps">1.4 Steps in Survey</a>
+    <a onclick="showTopic('types')" class="nav-link" id="link-types">1.5 Types of Sampling</a>
+    <a onclick="showTopic('practice')" class="nav-link" id="link-practice">1.6 Practice Exercises</a>
 </nav>
 
 <main class="main-content">
-    <section class="section-card" id="concepts">
-        <h2>Basic Concepts in Sampling</h2>
+    <!-- SECTION 1.1 -->
+    <section class="section-card active" id="intro">
+        <h2>1.1 Introduction to Sampling</h2>
+        <p>In our daily lives, we often use sampling without even realizing it. When a cook tastes a spoonful of soup to check the salt, they are sampling. When a doctor takes a few drops of blood to test for an illness, they are sampling. We don't need to drink the whole pot of soup or drain all the blood to know the quality or health status.</p>
+        
+        <p>In Statistics, <strong>Sampling Techniques</strong> provide the scientific framework for this common-sense approach. It allows us to study a small part of a group (the sample) and make very accurate guesses about the whole group (the population).</p>
+
+        <div class="note">
+            <h4>Why do we use Sampling?</h4>
+            <p>Imagine you want to know the average income of every person in India. Interviewing 1.4 billion people would be impossible—it would take decades and cost a fortune. Sampling allows us to get a very close answer by interviewing just a few thousand people in a systematic way.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1.2 -->
+    <section class="section-card" id="definitions">
+        <h2>1.2 Key Definitions & Terminology</h2>
         
         <div class="definition">
-            <strong>Population:</strong> The set of all possible observations under study is called population. It is denoted by (N).
+            <h4>Population (N)</h4>
+            <p>The total set of all possible observations or units under study. If we are studying the height of students in a college, every single student in that college is part of the <strong>Population</strong>.</p>
         </div>
 
         <div class="definition">
-            <strong>Sample:</strong> It is the subset of a population that has been collected through data collection. It is denoted by (n).
+            <h4>Sample (n)</h4>
+            <p>A smaller group or subset selected from the population. If we pick 50 students from the college to measure their height, those 50 students form the <strong>Sample</strong>.</p>
         </div>
 
         <div class="definition">
-            <strong>Statistic:</strong> Any function of the sample values is called statistic.
+            <h4>Parameter vs. Statistic</h4>
+            <p><strong>Parameter:</strong> A value calculated from the whole population (like the average height of ALL students). It is a fixed constant.</p>
+            <p><strong>Statistic:</strong> A value calculated from the sample (like the average height of just the 50 students picked). It varies from sample to sample.</p>
+        </div>
+
+        <div class="example">
+            <h4>Finite vs. Infinite Population</h4>
+            <p><strong>Finite:</strong> The number of students in your university. You can count them. (e.g., N = 10,000).</p>
+            <p><strong>Infinite:</strong> The number of stars in the sky or the number of fish in the ocean. It is impossible to count them all.</p>
         </div>
 
         <div class="definition">
-            <strong>Sample Space:</strong> The totality all sample points consistent with the method of sample adapter will be called sample space. For example: \(S = \{H, T\}\) when tossing a coin.
+            <h4>Sampling Frame</h4>
+            <p>A list or map that identifies every unit in the population. For example, the college roll-call list is a <strong>Sampling Frame</strong> for studying the students.</p>
         </div>
-
-        <div class="definition">
-            <strong>Event:</strong> A subset of a sample space is called an event.
-        </div>
-
-        <div class="definition">
-            <strong>Estimator:</strong> An estimator is a random sample and may take different values from sample to sample.
-        </div>
-
-        <div class="definition">
-            <strong>Parameter:</strong> Any population constants are called parameter.
-        </div>
-
-        <div class="definition">
-            <strong>Unbiased Estimator:</strong> An estimator (t) is set to be unbiased estimator for the parameter (\(\theta\)), if \(E(t) = \theta\) or \(E(t) - \theta = 0\). Similarly \(E(t) - \theta = B(t)\) is known as biased estimator.
-        </div>
-
-        <div class="definition">
-            <strong>Standard Error:</strong> The positive square root of variance is called standard error of the estimator.
-        </div>
-
-        <h3>Finite and Infinite Populations</h3>
-        <p><strong>Finite Population:</strong> A population said to be finite if it has countable number of values. For example: number of students in the M.S. University.</p>
-        <p><strong>Infinite Population:</strong> A population said to be infinite if it has uncountable number of values. For example: Number of stars in the sky.</p>
-
-        <h3>Sampling Unit and Frame</h3>
-        <p><strong>Sampling Unit:</strong> The contribution of population which all the individuals to the sample from the population that cannot be further subdivided for the purpose of sampling at time is called sampling unit. For example, to know that the average income of a family, the head of family is called sampling unit.</p>
-        <p><strong>Sampling Frame:</strong> we need to frame the structure of the survey for adapting any sampling procedure, it is essential to have a list or map to identify each sampling unit by a number, such a list or map is called sampling frame. For example, If list of voters in a particular place.</p>
     </section>
 
-    <section class="section-card" id="need" style="display:none;">
-        <h2>Need for Sampling</h2>
-        <p>The sampling methods have been extensively used for a variety of purposes and in great diversity of situations. In practice it may not be possible to collect the information on all units of a population due to various reasons such as:</p>
-        <ul style="margin-left: 40px; margin-bottom: 20px;">
-            <li>Lack of resources in terms of money, personnel and equipment.</li>
-            <li>The experimentation may be destructive in nature. Eg- finding out the germination percentage of seed material or in evaluating the efficiency of an insecticide.</li>
-            <li>The data may be was useful if they are not collected within a time limit.</li>
-            <li>Sampling remains the only way when population contains infinitely many number of units.</li>
-            <li>Greater accuracy.</li>
-        </ul>
+    <!-- SECTION 1.3 -->
+    <section class="section-card" id="census">
+        <h2>1.3 Census vs. Sample Survey</h2>
+        <p>A <strong>Census</strong> is a complete count—studying every single member of the population. A <strong>Sample Survey</strong> studies only a selected portion.</p>
 
-        <h3>Census and Sample Survey</h3>
-        <p>The total count of all units of the population for a certain characteristic is known as complete enumeration or census survey. The money, man power and time required for carrying out complete enumeration is generally large and there are many situations with limited means where the complete enumeration will not be possible.</p>
-        <p>When only a part of the population is selected denoted as sample and examine it is called sample enumeration or sample survey.</p>
+        <h3>Comparison</h3>
+        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+            <tr style="background:#1B2A4A; color:#fff;">
+                <th style="padding:10px; border:1px solid #ddd;">Feature</th>
+                <th style="padding:10px; border:1px solid #ddd;">Census</th>
+                <th style="padding:10px; border:1px solid #ddd;">Sample Survey</th>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;"><strong>Cost</strong></td>
+                <td style="padding:10px; border:1px solid #ddd;">Very High</td>
+                <td style="padding:10px; border:1px solid #ddd;">Relatively Low</td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;"><strong>Time</strong></td>
+                <td style="padding:10px; border:1px solid #ddd;">Takes a long time</td>
+                <td style="padding:10px; border:1px solid #ddd;">Very quick results</td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;"><strong>Accuracy</strong></td>
+                <td style="padding:10px; border:1px solid #ddd;">Higher (in theory)</td>
+                <td style="padding:10px; border:1px solid #ddd;">High (if done scientifically)</td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;"><strong>Destructive Testing</strong></td>
+                <td style="padding:10px; border:1px solid #ddd;">Impossible</td>
+                <td style="padding:10px; border:1px solid #ddd;">The only way</td>
+            </tr>
+        </table>
+
+        <div class="note">
+            <p><strong>Example of Destructive Testing:</strong> If you want to test how much weight a bridge can hold before it breaks, or how long a bulb lasts before it fuses, you <em>cannot</em> test every unit (Census), because you would destroy everything. Sampling is the <strong>only</strong> way here.</p>
+        </div>
     </section>
 
-    <section class="section-card" id="steps" style="display:none;">
-        <h2>The Principle Steps in a Sample Survey</h2>
-        <ol style="margin-left: 40px; line-height: 2;">
-            <li><strong>Objectives of the survey:</strong> Define clear and concrete terms of the objectives.</li>
-            <li><strong>Defining the population to be sampled:</strong> Aggregate of objects from which sample is chosen.</li>
-            <li><strong>The frame and sampling units:</strong> Population must be capable of division into sampling units.</li>
-            <li><strong>Data to be collected:</strong> Keeping in view the objectives.</li>
-            <li><strong>The questionnaire or schedule:</strong> Construction of the tool for enquiries.</li>
-            <li><strong>Method of collecting information:</strong> Interview method, Mailed questionnaire method.</li>
-            <li><strong>Non respondent:</strong> Handling cases where data cannot be collected.</li>
-            <li><strong>Selection of proper sampling designs:</strong> Size of sample and procedure of selection.</li>
-            <li><strong>Organization of field work:</strong> Training personnel for data collection.</li>
-            <li><strong>Summary and analysis of the data:</strong> Scrutiny, Tabulation, Statistical analysis, Reporting.</li>
+    <!-- SECTION 1.4 -->
+    <section class="section-card" id="steps">
+        <h2>1.4 Principal Steps in a Sample Survey</h2>
+        <p>Planning a survey is like building a house. You need a clear plan. Here are the 11 essential steps:</p>
+        <ol style="margin-left:25px;">
+            <li><strong>Define Objectives:</strong> What do you want to find out? (e.g., "I want to know the average yield of wheat per acre").</li>
+            <li><strong>Define Population:</strong> Who or what are you studying? (e.g., "All farmers in Hisar").</li>
+            <li><strong>Sampling Unit & Frame:</strong> What is the smallest piece? (e.g., "One individual farm"). Where is the list of farms?</li>
+            <li><strong>Data Collection Tool:</strong> Will you use a <strong>Questionnaire</strong> (filled by respondent) or a <strong>Schedule</strong> (filled by investigator)?</li>
+            <li><strong>Selection of Design:</strong> Will you use Simple, Stratified, or Systematic sampling?</li>
+            <li><strong>Training:</strong> Train the people who will go to the field to collect data.</li>
+            <li><strong>Field Work:</strong> Actually going out and collecting the data.</li>
+            <li><strong>Data Scrutiny:</strong> Checking for errors or missing information in the collected data.</li>
+            <li><strong>Analysis:</strong> Using statistical formulas to calculate results.</li>
+            <li><strong>Reporting:</strong> Writing the final results clearly for others to read.</li>
         </ol>
+    </section>
+
+    <!-- SECTION 1.5 -->
+    <section class="section-card" id="types">
+        <h2>1.5 Types of Sampling</h2>
+        <p>There are three broad ways to pick a sample:</p>
+
+        <h3>1. Subjective (Judgment) Sampling</h3>
+        <p>The researcher uses their own personal "judgment" to pick the units. There is no mathematical rule. This is often biased but useful for quick, informal studies.</p>
+
+        <h3>2. Probability Sampling</h3>
+        <p>This is the gold standard. Every unit in the population has a <strong>known mathematical chance</strong> of being selected. This eliminates personal bias. Examples include Simple Random Sampling and Stratified Sampling.</p>
+
+        <h3>3. Mixed Sampling</h3>
+        <p>A combination of both. For example, picking which colleges to study (Judgment) and then picking students from those colleges using a random rule (Probability).</p>
+    </section>
+
+    <!-- SECTION 1.6 -->
+    <section class="section-card" id="practice">
+        <h2>1.6 Practice Exercises</h2>
+
+        <h3>Part A: Subjective Questions</h3>
+        <div class="question">1. Distinguish between Population and Sample with examples.</div>
+        <div class="question">2. Why is sampling mandatory in destructive testing? Explain.</div>
+        <div class="question">3. What are the merits and demerits of the Questionnaire method?</div>
+
+        <h3 style="margin-top:40px;">Part B: Multiple Choice Questions</h3>
+        
+        <div class="question"><strong>Q1.</strong> Any numerical value calculated from the <strong>sample</strong> is called:
+            <div style="margin-top:10px;">(a) Parameter &nbsp;&nbsp; (b) Statistic &nbsp;&nbsp; (c) Bias &nbsp;&nbsp; (d) Error</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+        <div id="mcq1" class="answer"><strong>Correct Answer: (b) Statistic</strong><br>Explanation: Values from the population are parameters; values from the sample are statistics.</div>
+
+        <div class="question"><strong>Q2.</strong> The list of all sampling units in the population is known as:
+            <div style="margin-top:10px;">(a) Sample Space &nbsp;&nbsp; (b) Sampling Frame &nbsp;&nbsp; (c) Sampling Design &nbsp;&nbsp; (d) Census</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+        <div id="mcq2" class="answer"><strong>Correct Answer: (b) Sampling Frame</strong></div>
+
+        <h3 style="margin-top:40px;">Part C: Fill in the Blanks</h3>
+        
+        <div class="question">1. An estimator is said to be ___________ if its expected value is equal to the population parameter.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+        <div id="fib1" class="answer"><strong>Answer: Unbiased</strong></div>
+
+        <div class="question">2. Sampling error can be reduced by ___________ the sample size.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+        <div id="fib2" class="answer"><strong>Answer: Increasing</strong></div>
+
+        <h3 style="margin-top:40px;">Part D: True or False</h3>
+        
+        <div class="question">1. Census survey is more economical (cheaper) than sample survey. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+        <div id="tf1" class="answer"><strong>Answer: False</strong><br>Explanation: Sample surveys are much cheaper as they study fewer units.</div>
+
+        <div class="question">2. Probability sampling eliminates personal bias. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+        <div id="tf2" class="answer"><strong>Answer: True</strong></div>
     </section>
 </main>
 
 <script>
     function showTopic(id) {
-        document.querySelectorAll('.section-card').forEach(s => s.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        document.getElementById('link-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function toggleAnswer(id) {
+        const ans = document.getElementById(id);
+        ans.classList.toggle('show');
     }
 </script>
 <script src="whiteboard.js?v=1.2"></script>

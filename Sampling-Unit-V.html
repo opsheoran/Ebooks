@@ -13,43 +13,217 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Shared Design System */
+        /* Shared Design System (Replicated from Stat 102) */
         :root {
-            --navy: #1B2A4A; --navy-light: #2E4270; --gold: #C8922A; --gold-light: #E8B84B;
-            --paper: #F5F3EE; --ivory: #FAFAF7; --border: #DDD8CF; --text-dark: #1C1C1E;
-            --sidebar-w: 300px; --header-h: 72px;
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
         }
+
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Source Serif 4', serif; background: var(--paper); color: var(--text-dark); line-height: 1.7; }
-        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
         .book-header {
-            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
-            background: linear-gradient(110deg, var(--navy), var(--navy-light));
-            color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px;
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
         }
-        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
 
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+            margin-right: 15px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
         .sidebar {
-            position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w);
-            height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; color: #fff;
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
         }
-        .sidebar-author { display: flex; align-items: center; gap: 12px; padding: 20px; background: rgba(0,0,0,0.2); }
-        .sidebar-photo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; object-position: top; }
-        
-        .nav-link { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'DM Sans'; font-size: 0.85rem; }
-        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
 
-        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1200px; }
-        .section-card { background: var(--ivory); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border); border-top: 5px solid var(--navy); margin-bottom: 40px; }
-        
-        h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2rem; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
-        h3 { font-family: 'Playfair Display', serif; color: var(--navy-light); margin-top: 32px; margin-bottom: 16px; }
-        
-        .theorem { background: #fdf3dc; border-left: 5px solid var(--gold); padding: 20px; margin: 20px 0; border-radius: 8px; }
-        .formula-box { background: #f0f7ff; border: 2px dashed #1D6FA4; padding: 20px; text-align: center; margin: 20px 0; font-size: 1.1rem; }
+        .sidebar-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-        .draw-mode-toggle { background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: auto; }
-        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } }
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 900px);
+        }
+
+        .section-card {
+            display: none;
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .section-card.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 32px 0 14px; }
+        p { margin-bottom: 12px; text-align: justify; }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+        .definition { background: #F3F0FB; border-left: 5px solid #6B4FC8; }
+        .example { background: #FFFBF0; border-left: 5px solid var(--gold); }
+        .note { background: var(--sky-light); border-left: 5px solid var(--sky); }
+        .theorem { background: #FDF3DC; border-left: 5px solid var(--gold); }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+        .example h4::before { content: "Example — "; color: var(--gold); }
+        .theorem h4::before { content: "Theorem — "; color: var(--gold); }
+
+        /* ── FORMULA BOX ── */
+        .formula-box {
+            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
+            border: 2px dashed var(--navy-light);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.12rem;
+        }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .question { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light); padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .82rem; margin: 4px 0 8px; }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 2px 0 12px; border-radius: 0 8px 8px 0; }
+        .answer.show { display: block; }
+
+        .draw-mode-toggle {
+            background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
     </style>
     <link rel="stylesheet" href="whiteboard.css?v=1.2">
 </head>
@@ -58,9 +232,9 @@
 <header class="book-header">
     <div class="header-text">
         <h1>Sampling Techniques</h1>
-        <div class="subtitle">UNIT V · SYSTEMATIC SAMPLING</div>
+        <div class="subtitle">UNIT V · SYSTEMATIC RANDOM SAMPLING</div>
     </div>
-    <div class="header-badge" style="margin-left:auto; margin-right: 20px;">Prof. O.P. Sheoran</div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
     <button class="draw-mode-toggle" id="draw-mode-btn">
         <i class="fas fa-chalkboard"></i> Open Whiteboard
     </button>
@@ -70,67 +244,152 @@
     <div class="sidebar-author">
         <img src="opsheoran.png" alt="Author" class="sidebar-photo">
         <div class="sidebar-info">
-            <div style="font-weight:700; font-size: 0.9rem;">Prof. O.P. Sheoran</div>
-            <div style="font-size: 0.7rem; opacity: 0.6;">CCSHAU Hisar</div>
+            <div style="font-weight:700; font-size: 0.9rem; color:#fff;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.7rem; opacity: 0.6; color:#fff;">CCSHAU Hisar</div>
         </div>
     </div>
     <div class="nav-group-label">Navigation</div>
-    <a href="sampling.html" class="nav-link"><i class="fas fa-home" style="margin-right:8px;"></i> Course Home</a>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-home"></i> Course Home</a>
     
     <div class="nav-group-label">Unit V Topics</div>
-    <a href="#" class="nav-link active" onclick="showTopic('intro')">Definition</a>
-    <a href="#" class="nav-link" onclick="showTopic('circular')">Circular Sampling</a>
-    <a href="#" class="nav-link" onclick="showTopic('merits')">Merits &amp; Demerits</a>
+    <a onclick="showTopic('sys-intro')" class="nav-link active" id="link-sys-intro">5.1 Concept & Pattern</a>
+    <a onclick="showTopic('circular')" class="nav-link" id="link-circular">5.2 Circular Sampling</a>
+    <a onclick="showTopic('comparison')" class="nav-link" id="link-comparison">5.3 Efficiency</a>
+    <a onclick="showTopic('merits')" class="nav-link" id="link-merits">5.4 Merits &amp; Demerits</a>
+    <a onclick="showTopic('practice')" class="nav-link" id="link-practice">5.5 Practice Exercises</a>
 </nav>
 
 <main class="main-content">
-    <section class="section-card" id="intro">
-        <h2>Systematic Random Sampling</h2>
-        <p>A sampling technique in which only the first unit is selected with the help of random numbers and the rest get selected automatically according to some pre-designed pattern is known as systematic random sampling. Suppose N units of the population are numbered from 1 to N in some order. Let N=nk, where n is the sample size and k is an integer, called sampling interval.</p>
+    <!-- SECTION 5.1 -->
+    <section class="section-card active" id="sys-intro">
+        <h2>5.1 The Concept of Systematic Sampling</h2>
+        <p>Systematic sampling is a highly organized and easy way to pick a sample. Instead of picking every unit randomly, you only pick the <strong>first unit</strong> randomly and then select the rest at a fixed, regular interval.</p>
         
-        <p>Select a random number less than or equal to k be selected and every \(k^{th}\) unit thereafter. The resultant sample is called every \(k^{th}\) systematic sample and such a procedure termed linear systematic sampling.</p>
+        <p>Imagine a librarian wants to check 100 books from a shelf of 1,000. They pick a random starting number between 1 and 10 (let's say 3). Then, they pick the 3rd, 13th, 23rd, 33rd book, and so on. This is <strong>Systematic Sampling</strong>.</p>
+
+        <div class="definition">
+            <h4>Linear Systematic Sampling</h4>
+            <p>If the population size (N) is a perfect multiple of the sample size (n), we calculate the interval \(k = N/n\). We pick a random start \(r\) where \(1 \le r \le k\). The sample units will be: \(r, r+k, r+2k, \ldots, r+(n-1)k\).</p>
+        </div>
 
         <div class="theorem">
-            <strong>Theorem 5.1:</strong> If N=nk the systematic sample mean \(\bar{y}_{sys}\) is an unbiased estimate of the population mean \(\bar{Y}\).
+            <h4>Theorem 5.1</h4>
+            <p>If \(N = nk\), the systematic sample mean (\(\bar{y}_{sys}\)) is an unbiased estimator of the population mean (\(\bar{Y}\)).</p>
         </div>
     </section>
 
-    <section class="section-card" id="circular" style="display:none;">
-        <h2>Circular Systematic Sampling</h2>
-        <p>If N is not a multiple of n, the linear systematic sampling does not provide a fixed sample size n. In such cases, <strong>Circular Systematic Sampling</strong> is used.</p>
-        <ol style="margin-left:40px;">
-            <li>Select a random number \(r\) from 1 to N.</li>
-            <li>The units with serial numbers \((r + j k) \pmod N\) for \(j = 0, 1, \ldots, n-1\) are selected.</li>
-        </ol>
-        <p>This ensures that each unit in the population has an equal chance of being included in the sample.</p>
+    <!-- SECTION 5.2 -->
+    <section class="section-card" id="circular">
+        <h2>5.2 Circular Systematic Sampling</h2>
+        <p>What if \(N\) is not exactly divisible by \(n\)? For example, if you have 11 students and want to pick 3. \(11/3 = 3.66\). In such cases, <strong>Circular Systematic Sampling</strong> is the best solution.</p>
+
+        <div class="example">
+            <h4>How it works:</h4>
+            <ol>
+                <li>Think of the population as a circle (the last unit is followed by the first).</li>
+                <li>Pick a random starting number \(r\) from <strong>1 to N</strong> (any unit can be the start).</li>
+                <li>Calculate the interval \(k\) (usually the integer closest to \(N/n\)).</li>
+                <li>Pick your units by jumping by \(k\) each time around the circle until you have \(n\) units.</li>
+            </ol>
+        </div>
+
+        <div class="note">
+            <p>This method ensures that every single unit in the population has an <strong>equal chance</strong> of being selected, which makes it more fair than simple linear sampling when \(N \neq nk\).</p>
+        </div>
     </section>
 
-    <section class="section-card" id="merits" style="display:none;">
-        <h2>Merits and Demerits</h2>
-        
-        <h3>Merits:</h3>
-        <ul style="margin-left:40px;">
-            <li>Operationally more convenient than SRS or Stratified.</li>
-            <li>Time and work involved is relatively much less.</li>
-            <li>Yields a sample which is evenly spread over the entire population.</li>
-        </ul>
+    <!-- SECTION 5.3 -->
+    <section class="section-card" id="comparison">
+        <h2>5.3 Efficiency and Comparison</h2>
+        <p>How does Systematic Sampling compare to Simple Random Sampling (SRS) and Stratified Sampling?</p>
 
-        <h3>Demerits:</h3>
-        <ul style="margin-left:40px;">
-            <li>If N is not a multiple of n, the actual sample size is different from that requirement.</li>
-            <li>Sample mean is not an unbiased estimate if N is not a multiple of n in linear systematic sampling.</li>
-            <li>May yield highly biased estimates if there are periodic features associated with the sampling interval.</li>
-        </ul>
+        <h3>1. vs. Simple Random Sampling</h3>
+        <p>Systematic sampling is usually <strong>more precise</strong> than SRS if the population is ordered in a way that creates diversity within the sample. However, it can be very poor if there is a "periodic trend" in the data (e.g., if you sample every 7th day, you might always pick a Sunday!).</p>
+
+        <h3>2. vs. Stratified Sampling</h3>
+        <p>Systematic sampling is actually a type of <strong>Implicit Stratification</strong>. It's like dividing the population into 'n' blocks and picking one unit from each block at the same position. It is often as efficient as stratified sampling but much easier to carry out.</p>
+    </section>
+
+    <!-- SECTION 5.4 -->
+    <section class="section-card" id="merits">
+        <h2>5.4 Merits and Demerits</h2>
+        
+        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
+            <tr style="background:#1B2A4A; color:#fff;">
+                <th style="padding:10px; border:1px solid #ddd;">Merits (Advantages)</th>
+                <th style="padding:10px; border:1px solid #ddd;">Demerits (Disadvantages)</th>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;">Very simple and fast to implement.</td>
+                <td style="padding:10px; border:1px solid #ddd;">Can be highly biased if there are periodic patterns.</td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;">Low cost and less field work required.</td>
+                <td style="padding:10px; border:1px solid #ddd;">Hard to estimate the "Sampling Error" from a single sample.</td>
+            </tr>
+            <tr>
+                <td style="padding:10px; border:1px solid #ddd;">Sample is spread evenly across the population.</td>
+                <td style="padding:10px; border:1px solid #ddd;">Not truly "random" for all units after the first one.</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- SECTION 5.5 -->
+    <section class="section-card" id="practice">
+        <h2>5.5 Practice Exercises</h2>
+
+        <h3>Part A: Subjective Questions</h3>
+        <div class="question">1. Describe the difference between Linear and Circular systematic sampling.</div>
+        <div class="question">2. When is systematic sampling considered "Implicit Stratification"?</div>
+        <div class="question">3. What are the major demerits of systematic random sampling?</div>
+
+        <h3 style="margin-top:40px;">Part B: Multiple Choice Questions</h3>
+        
+        <div class="question"><strong>Q1.</strong> If \(N=100\) and \(n=10\), the sampling interval \(k\) is:
+            <div style="margin-top:10px;">(a) 1 &nbsp;&nbsp; (b) 10 &nbsp;&nbsp; (c) 100 &nbsp;&nbsp; (d) 0.1</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+        <div id="mcq1" class="answer"><strong>Correct Answer: (b) 10</strong><br>Explanation: \(k = N/n = 100/10 = 10\).</div>
+
+        <div class="question"><strong>Q2.</strong> Systematic sampling is most likely to fail if the population has:
+            <div style="margin-top:10px;">(a) Random order &nbsp;&nbsp; (b) Periodic variation &nbsp;&nbsp; (c) Homogeneity &nbsp;&nbsp; (d) Small size</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+        <div id="mcq2" class="answer"><strong>Correct Answer: (b) Periodic variation</strong></div>
+
+        <h3 style="margin-top:40px;">Part C: Fill in the Blanks</h3>
+        
+        <div class="question">1. In systematic sampling, only the ___________ unit is selected at random.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+        <div id="fib1" class="answer"><strong>Answer: First</strong></div>
+
+        <div class="question">2. Circular systematic sampling is used when \(N\) is not a ___________ of \(n\).</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+        <div id="fib2" class="answer"><strong>Answer: Multiple (or divisible)</strong></div>
+
+        <h3 style="margin-top:40px;">Part D: True or False</h3>
+        
+        <div class="question">1. Systematic sampling is generally easier to perform in the field than stratified sampling. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+        <div id="tf1" class="answer"><strong>Answer: True</strong></div>
+
+        <div class="question">2. In systematic sampling, every possible combination of 'n' units has an equal chance of being selected. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+        <div id="tf2" class="answer"><strong>Answer: False</strong><br>Explanation: Only 'k' possible samples are ever possible in linear systematic sampling, unlike SRS.</div>
     </section>
 </main>
 
 <script>
     function showTopic(id) {
-        document.querySelectorAll('.section-card').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
         document.getElementById(id).style.display = 'block';
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        document.getElementById('link-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function toggleAnswer(id) {
+        const ans = document.getElementById(id);
+        ans.classList.toggle('show');
     }
 </script>
 <script src="whiteboard.js?v=1.2"></script>

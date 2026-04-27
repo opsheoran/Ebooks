@@ -13,46 +13,217 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Shared Design System */
+        /* Shared Design System (Replicated from Stat 102) */
         :root {
-            --navy: #1B2A4A; --navy-light: #2E4270; --gold: #C8922A; --gold-light: #E8B84B;
-            --paper: #F5F3EE; --ivory: #FAFAF7; --border: #DDD8CF; --text-dark: #1C1C1E;
-            --sidebar-w: 300px; --header-h: 72px; --sage: #3D6B5A; --crimson: #9B2335;
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
         }
+
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Source Serif 4', serif; background: var(--paper); color: var(--text-dark); line-height: 1.7; }
-        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
         .book-header {
-            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
-            background: linear-gradient(110deg, var(--navy), var(--navy-light));
-            color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px;
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
         }
-        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
-        .header-text .subtitle { font-size: 0.75rem; opacity: 0.8; }
 
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+            margin-right: 15px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
         .sidebar {
-            position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w);
-            height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; color: #fff;
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
         }
-        .sidebar-author { display: flex; align-items: center; gap: 12px; padding: 20px; background: rgba(0,0,0,0.2); }
-        .sidebar-photo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; object-position: top; }
-        
-        .nav-group-label { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; text-transform: uppercase; padding: 16px 20px 8px; opacity: 0.5; }
-        .nav-link { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'DM Sans'; font-size: 0.85rem; }
-        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
 
-        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1200px; }
-        .section-card { background: var(--ivory); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border); border-top: 5px solid var(--navy); margin-bottom: 40px; }
-        
-        h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2rem; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
-        h3 { font-family: 'Playfair Display', serif; color: var(--navy-light); margin-top: 32px; margin-bottom: 16px; }
-        
-        .warning { background: #fff1f0; border-left: 5px solid var(--crimson); padding: 20px; margin: 20px 0; border-radius: 8px; }
-        .formula-box { background: #f0f7ff; border: 2px dashed #1D6FA4; padding: 20px; text-align: center; margin: 20px 0; font-size: 1.2rem; }
+        .sidebar-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-        .draw-mode-toggle { background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: auto; }
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
 
-        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } }
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 900px);
+        }
+
+        .section-card {
+            display: none;
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .section-card.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 32px 0 14px; }
+        p { margin-bottom: 12px; text-align: justify; }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note, .warning {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+        .definition { background: #F3F0FB; border-left: 5px solid #6B4FC8; }
+        .example { background: #FFFBF0; border-left: 5px solid var(--gold); }
+        .note { background: var(--sky-light); border-left: 5px solid var(--sky); }
+        .warning { background: var(--crimson-light); border-left: 5px solid var(--crimson); }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+        .example h4::before { content: "Example — "; color: var(--gold); }
+        .warning h4::before { content: "Warning — "; color: var(--crimson); }
+
+        /* ── FORMULA BOX ── */
+        .formula-box {
+            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
+            border: 2px dashed var(--navy-light);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.12rem;
+        }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .question { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light); padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .82rem; margin: 4px 0 8px; }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 2px 0 12px; border-radius: 0 8px 8px 0; }
+        .answer.show { display: block; }
+
+        .draw-mode-toggle {
+            background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
     </style>
     <link rel="stylesheet" href="whiteboard.css?v=1.2">
 </head>
@@ -61,9 +232,9 @@
 <header class="book-header">
     <div class="header-text">
         <h1>Sampling Techniques</h1>
-        <div class="subtitle">UNIT II · ERRORS IN SAMPLING</div>
+        <div class="subtitle">UNIT II · SAMPLING &amp; NON-SAMPLING ERRORS</div>
     </div>
-    <div class="header-badge" style="margin-left:auto; margin-right: 20px;">Prof. O.P. Sheoran</div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
     <button class="draw-mode-toggle" id="draw-mode-btn">
         <i class="fas fa-chalkboard"></i> Open Whiteboard
     </button>
@@ -73,86 +244,152 @@
     <div class="sidebar-author">
         <img src="opsheoran.png" alt="Author" class="sidebar-photo">
         <div class="sidebar-info">
-            <div style="font-weight:700; font-size: 0.9rem;">Prof. O.P. Sheoran</div>
-            <div style="font-size: 0.7rem; opacity: 0.6;">CCSHAU Hisar</div>
+            <div style="font-weight:700; font-size: 0.9rem; color:#fff;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.7rem; opacity: 0.6; color:#fff;">CCSHAU Hisar</div>
         </div>
     </div>
     <div class="nav-group-label">Navigation</div>
-    <a href="sampling.html" class="nav-link"><i class="fas fa-home" style="margin-right:8px;"></i> Course Home</a>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-home"></i> Course Home</a>
     
     <div class="nav-group-label">Unit II Topics</div>
-    <a href="#" class="nav-link active" onclick="showTopic('types')">Types of Errors</a>
-    <a href="#" class="nav-link" onclick="showTopic('mse')">Bias &amp; MSE</a>
-    <a href="#" class="nav-link" onclick="showTopic('sources')">Sources of Errors</a>
+    <a onclick="showTopic('types')" class="nav-link active" id="link-types">2.1 Types of Errors</a>
+    <a onclick="showTopic('sampling-error')" class="nav-link" id="link-sampling-error">2.2 Sampling Error</a>
+    <a onclick="showTopic('non-sampling')" class="nav-link" id="link-non-sampling">2.3 Non-Sampling Error</a>
+    <a onclick="showTopic('mse')" class="nav-link" id="link-mse">2.4 Bias &amp; MSE</a>
+    <a onclick="showTopic('practice')" class="nav-link" id="link-practice">2.5 Practice Exercises</a>
 </nav>
 
 <main class="main-content">
-    <section class="section-card" id="types">
-        <h2>Sampling and Non-Sampling Errors</h2>
-        <p>The errors involved in the collection, processing and analysis data in a survey may be classified as:</p>
-        <ol style="margin-left:40px;">
-            <li>Sampling error</li>
-            <li>Non-sampling error</li>
-        </ol>
-
-        <h3>1. Sampling Error</h3>
-        <p>The error which arises due to only a sample being to estimate the population being used to estimate the population parameter is tripped sample error or sampling fluctuations. The error is inherent and available in any and every sampling scheme. A sample with the smallest sampling error will always be consisted a good reprehensive of the population.</p>
+    <!-- SECTION 2.1 -->
+    <section class="section-card active" id="types">
+        <h2>2.1 Understanding Errors in Surveys</h2>
+        <p>In a perfect world, our sample results would match the population exactly. However, in reality, there is always some difference. This difference is called an <strong>Error</strong>.</p>
         
-        <p>This error can be reduced by increasing the size of the sample unfair the degree of sampling error is inversely proportional to the square root of the sample size.</p>
+        <p>Think of it like target practice. If you aim for the bullseye (the population parameter) but hit slightly to the left, that gap is your error. In sampling, these errors come from two main sources:</p>
+        <ol style="margin-left:25px;">
+            <li><strong>Sampling Error:</strong> Due to the fact that we only looked at a small part of the group.</li>
+            <li><strong>Non-Sampling Error:</strong> Due to mistakes in how we collected, recorded, or processed the data.</li>
+        </ol>
+    </section>
+
+    <!-- SECTION 2.2 -->
+    <section class="section-card" id="sampling-error">
+        <h2>2.2 Sampling Error</h2>
+        <p>This error happens because we are using a <strong>sample</strong> instead of a <strong>census</strong>. It is naturally built into every sampling plan.</p>
+        
+        <div class="definition">
+            <h4>Sampling Error</h4>
+            <p>The difference between the estimate obtained from a sample and the true value that would be obtained if the entire population were studied using the same procedures.</p>
+        </div>
+
+        <h3>How to reduce it?</h3>
+        <p>The most effective way to reduce sampling error is to <strong>increase the sample size</strong>. As you study more people, your results get closer to the true population value.</p>
+
         <div class="formula-box">
             Sampling Error \(\propto \frac{1}{\sqrt{n}}\)
         </div>
-
-        <h3>2. Non-sampling Error</h3>
-        <p>Besides sampling error, the sample estimate may be subject to the other errors which group together is term non sampling error. The main sources of non-sampling errors are:</p>
-        <ul style="margin-left:40px;">
-            <li>Failure to measure some of the units in the selected sample.</li>
-            <li>Observational errors due to defective measurements technique.</li>
-            <li>Errors intituous editing coding and tabulation the results.</li>
-        </ul>
+        <p>This formula tells us that if you want to cut your error in half, you need to make your sample 4 times larger!</p>
     </section>
 
-    <section class="section-card" id="mse" style="display:none;">
-        <h2>Bias and Mean Square Error (MSE)</h2>
+    <!-- SECTION 2.3 -->
+    <section class="section-card" id="non-sampling">
+        <h2>2.3 Non-Sampling Error</h2>
+        <p>These errors are much more dangerous because they can happen in both samples <em>and</em> full census counts. They are usually caused by human mistakes.</p>
+
+        <div class="example">
+            <h4>Common Sources of Non-Sampling Error</h4>
+            <ul>
+                <li><strong>Non-Response:</strong> A person picked for the sample refuses to answer.</li>
+                <li><strong>Measurement Error:</strong> The weighing scale is broken, or a student lies about their age.</li>
+                <li><strong>Processing Error:</strong> A data entry clerk types "90" instead of "09".</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <h4>The Danger of Frame Error</h4>
+            <p>If your list of people (Sampling Frame) is old or incorrect (e.g., using a 2010 phone book in 2026), you will have a massive non-sampling error because you are missing everyone who moved or got a new number!</p>
+        </div>
+    </section>
+
+    <!-- SECTION 2.4 -->
+    <section class="section-card" id="mse">
+        <h2>2.4 Bias and Mean Square Error (MSE)</h2>
         
         <h3>Bias</h3>
-        <p>The different between estimator (t) and the parameter (\(\theta\)) is called bias are error. An estimator (t) is said to be unbiased estimator for the parameter \(\theta\) if \(E(t) = \theta\), otherwise biased thus bias is given by \(E(t) - \theta = B(t)\).</p>
+        <p>Bias is a consistent mistake in one direction. If your scale always shows 2kg extra, your results are <strong>Biased</strong>.</p>
+        <div class="formula-box">
+            \(Bias = E(t) - \theta\)
+        </div>
+        <p>If \(Bias = 0\), the estimator is called <strong>Unbiased</strong>.</p>
 
         <h3>Mean Square Error (MSE)</h3>
-        <p>A relative measure of bias is \(\frac{B(t)}{\theta}\). The mean of square of the error taken from is called mean square error. Symbolically,</p>
+        <p>MSE is the best way to measure the total quality of an estimator. It combines both the <strong>Variance</strong> (how spread out the guesses are) and the <strong>Bias</strong> (how far the average guess is from the truth).</p>
+
         <div class="formula-box">
-            \(MSE(t) = E(t - \theta)^2\)
+            \(MSE(t) = Variance(t) + (Bias)^2\)
         </div>
-        <p>In terms of variance, \(MSE(t) = V(t) + B^2(t)\).</p>
-        <p>Since t is unbiased, \(MSE(t) = V(t)\).</p>
+
+        <div class="note">
+            <p>An ideal estimator has low variance (consistent) and zero bias (accurate).</p>
+        </div>
     </section>
 
-    <section class="section-card" id="sources" style="display:none;">
-        <h2>Sources and Types of Non-Sampling Errors</h2>
-        <p>Non-sampling errors occur at any one are more of this stages of the survey planning field work and tabulation of the survey data. These errors are badly classify errors follows:</p>
+    <!-- SECTION 2.5 -->
+    <section class="section-card" id="practice">
+        <h2>2.5 Practice Exercises</h2>
+
+        <h3>Part A: Subjective Questions</h3>
+        <div class="question">1. Why can non-sampling errors occur even in a census?</div>
+        <div class="question">2. Explain the relationship between sample size and sampling error.</div>
+        <div class="question">3. Define Mean Square Error and state its components.</div>
+
+        <h3 style="margin-top:40px;">Part B: Multiple Choice Questions</h3>
         
-        <h3>Type 1: Non-Response Error</h3>
-        <p>Errors resulting from inadequate preparation.</p>
-        
-        <h3>Type 2: Responses Error</h3>
-        <p>Error resulting in the stage of the collection or taking observations.</p>
-        
-        <h3>Type 3: Tabulation Error</h3>
-        <p>Errors resulting from data processing.</p>
-        
-        <div class="warning">
-            <strong>Critical Note:</strong> If the sampling frame is not abraded or old frame is use on account of economic or time saving device it may lead to bias as the targeted population is not enumerated.
+        <div class="question"><strong>Q1.</strong> Which error can be reduced by increasing the sample size?
+            <div style="margin-top:10px;">(a) Non-sampling error &nbsp;&nbsp; (b) Sampling error &nbsp;&nbsp; (c) Human error &nbsp;&nbsp; (d) All of these</div>
         </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+        <div id="mcq1" class="answer"><strong>Correct Answer: (b) Sampling error</strong></div>
+
+        <div class="question"><strong>Q2.</strong> If the expected value of an estimator equals the population parameter, the bias is:
+            <div style="margin-top:10px;">(a) Positive &nbsp;&nbsp; (b) Negative &nbsp;&nbsp; (c) Zero &nbsp;&nbsp; (d) Infinite</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+        <div id="mcq2" class="answer"><strong>Correct Answer: (c) Zero</strong></div>
+
+        <h3 style="margin-top:40px;">Part C: Fill in the Blanks</h3>
+        
+        <div class="question">1. Non-sampling error ___________ as the sample size increases.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+        <div id="fib1" class="answer"><strong>Answer: Increases</strong> (because there are more opportunities for human mistakes in a larger study).</div>
+
+        <div class="question">2. MSE is equal to Variance plus the square of ___________.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+        <div id="fib2" class="answer"><strong>Answer: Bias</strong></div>
+
+        <h3 style="margin-top:40px;">Part D: True or False</h3>
+        
+        <div class="question">1. Sampling error is always present in a census. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+        <div id="tf1" class="answer"><strong>Answer: False</strong><br>Explanation: Sampling error is 0 in a census because n=N.</div>
+
+        <div class="question">2. A biased estimator can still be useful if its MSE is very low. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+        <div id="tf2" class="answer"><strong>Answer: True</strong></div>
     </section>
 </main>
 
 <script>
     function showTopic(id) {
-        document.querySelectorAll('.section-card').forEach(s => s.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        document.getElementById('link-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function toggleAnswer(id) {
+        const ans = document.getElementById(id);
+        ans.classList.toggle('show');
     }
 </script>
 <script src="whiteboard.js?v=1.2"></script>

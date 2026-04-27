@@ -13,43 +13,217 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 
     <style>
-        /* Shared Design System */
+        /* Shared Design System (Replicated from Stat 102) */
         :root {
-            --navy: #1B2A4A; --navy-light: #2E4270; --gold: #C8922A; --gold-light: #E8B84B;
-            --paper: #F5F3EE; --ivory: #FAFAF7; --border: #DDD8CF; --text-dark: #1C1C1E;
-            --sidebar-w: 300px; --header-h: 72px;
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
         }
+
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Source Serif 4', serif; background: var(--paper); color: var(--text-dark); line-height: 1.7; }
-        
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
         .book-header {
-            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
-            background: linear-gradient(110deg, var(--navy), var(--navy-light));
-            color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px;
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
         }
-        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
 
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+            margin-right: 15px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
         .sidebar {
-            position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w);
-            height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; color: #fff;
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
         }
-        .sidebar-author { display: flex; align-items: center; gap: 12px; padding: 20px; background: rgba(0,0,0,0.2); }
-        .sidebar-photo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; object-position: top; }
-        
-        .nav-link { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'DM Sans'; font-size: 0.85rem; }
-        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
 
-        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1200px; }
-        .section-card { background: var(--ivory); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border); border-top: 5px solid var(--navy); margin-bottom: 40px; }
-        
-        h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2rem; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
-        h3 { font-family: 'Playfair Display', serif; color: var(--navy-light); margin-top: 32px; margin-bottom: 16px; }
-        
-        .theorem { background: #e6f7ff; border-left: 5px solid #1890ff; padding: 20px; margin: 20px 0; border-radius: 8px; }
-        .formula-box { background: #f0f7ff; border: 2px dashed #1D6FA4; padding: 20px; text-align: center; margin: 20px 0; font-size: 1.1rem; }
+        .sidebar-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
 
-        .draw-mode-toggle { background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: auto; }
-        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } }
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 900px);
+        }
+
+        .section-card {
+            display: none;
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .section-card.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 14px; }
+        h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 32px 0 14px; }
+        p { margin-bottom: 12px; text-align: justify; }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+        }
+        .definition { background: #F3F0FB; border-left: 5px solid #6B4FC8; }
+        .example { background: #FFFBF0; border-left: 5px solid var(--gold); }
+        .note { background: var(--sky-light); border-left: 5px solid var(--sky); }
+        .theorem { background: #EAF4FB; border-left: 5px solid var(--sky); }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+        .example h4::before { content: "Example — "; color: var(--gold); }
+        .theorem h4::before { content: "Theorem — "; color: var(--sky); }
+
+        /* ── FORMULA BOX ── */
+        .formula-box {
+            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
+            border: 2px dashed var(--navy-light);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.12rem;
+        }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .question { background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light); padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-size: .82rem; margin: 4px 0 8px; }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 2px 0 12px; border-radius: 0 8px 8px 0; }
+        .answer.show { display: block; }
+
+        .draw-mode-toggle {
+            background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; padding: 20px; }
+        }
     </style>
     <link rel="stylesheet" href="whiteboard.css?v=1.2">
 </head>
@@ -60,7 +234,7 @@
         <h1>Sampling Techniques</h1>
         <div class="subtitle">UNIT IV · STRATIFIED RANDOM SAMPLING</div>
     </div>
-    <div class="header-badge" style="margin-left:auto; margin-right: 20px;">Prof. O.P. Sheoran</div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
     <button class="draw-mode-toggle" id="draw-mode-btn">
         <i class="fas fa-chalkboard"></i> Open Whiteboard
     </button>
@@ -70,81 +244,157 @@
     <div class="sidebar-author">
         <img src="opsheoran.png" alt="Author" class="sidebar-photo">
         <div class="sidebar-info">
-            <div style="font-weight:700; font-size: 0.9rem;">Prof. O.P. Sheoran</div>
-            <div style="font-size: 0.7rem; opacity: 0.6;">CCSHAU Hisar</div>
+            <div style="font-weight:700; font-size: 0.9rem; color:#fff;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.7rem; opacity: 0.6; color:#fff;">CCSHAU Hisar</div>
         </div>
     </div>
     <div class="nav-group-label">Navigation</div>
-    <a href="sampling.html" class="nav-link"><i class="fas fa-home" style="margin-right:8px;"></i> Course Home</a>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-home"></i> Course Home</a>
     
     <div class="nav-group-label">Unit IV Topics</div>
-    <a href="#" class="nav-link active" onclick="showTopic('intro')">Principles</a>
-    <a href="#" class="nav-link" onclick="showTopic('allocation')">Allocation</a>
-    <a href="#" class="nav-link" onclick="showTopic('comparison')">Comparison</a>
+    <a onclick="showTopic('strat-intro')" class="nav-link active" id="link-strat-intro">4.1 Core Principles</a>
+    <a onclick="showTopic('estimation')" class="nav-link" id="link-estimation">4.2 Estimation & Variance</a>
+    <a onclick="showTopic('allocation')" class="nav-link" id="link-allocation">4.3 Allocation Methods</a>
+    <a onclick="showTopic('comparison')" class="nav-link" id="link-comparison">4.4 Stratified vs SRS</a>
+    <a onclick="showTopic('practice')" class="nav-link" id="link-practice">4.5 Practice Exercises</a>
 </nav>
 
 <main class="main-content">
-    <section class="section-card" id="intro">
-        <h2>Stratified Random Sampling</h2>
-        <p>Stratification means division into layers auxiliary information related to the character under study may be used to divided population into various groups such that,</p>
-        <ol style="margin-left:40px;">
-            <li>Units within each groups or us homogenous as possible.</li>
-            <li>The group means as widely difference as possible.</li>
-        </ol>
-
-        <p>Thus a population consisting of ‘N’ sampling units is divided into ‘k’ relatively homogenous mutually disjoint subgroups terms as strata of sizes \(N_1, N_2, \ldots, N_k\) such that \(\sum_{i=1}^k N_i = N\).</p>
+    <!-- SECTION 4.1 -->
+    <section class="section-card active" id="strat-intro">
+        <h2>4.1 Core Principles of Stratification</h2>
+        <p>In Simple Random Sampling, we treat the whole population as one big group. But what if the group is very diverse? For example, if you want to know the average pocket money of students, it might be very different between students living in hostels and those living at home.</p>
         
-        <p>If a sample random sampling (generally without replacement) of sizes \(n_i\) (\(i = 1, 2, \ldots, k\)) is drawn from the stratum respectively such that \(\sum_{i=1}^k n_i = n\). This sample is termed as stratified sample of size ‘n’ and the technique of drawing such a sample is called stratified random sampling.</p>
+        <p><strong>Stratification</strong> is the process of dividing a diverse population into smaller, more "alike" groups called <strong>Strata</strong> (singular: Stratum).</p>
+
+        <div class="note">
+            <h4>The Golden Rule of Stratification:</h4>
+            <ul>
+                <li><strong>Within Strata:</strong> The units should be as <strong>similar</strong> as possible (Homogeneous).</li>
+                <li><strong>Between Strata:</strong> The groups should be as <strong>different</strong> as possible (Heterogeneous).</li>
+            </ul>
+        </div>
+
+        <div class="example">
+            <p>Imagine a fruit basket with 100 apples and 100 watermelons. If you pick a random sample of 5, you might get all apples by chance! In <strong>Stratified Sampling</strong>, you divide them into two strata: Apples and Watermelons. Then you pick 2 apples and 3 watermelons. Now your sample is perfectly balanced.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 4.2 -->
+    <section class="section-card" id="estimation">
+        <h2>4.2 Estimation and Variance</h2>
+        <p>In Stratified Sampling, we calculate the mean for each stratum first, and then combine them to get the overall population mean.</p>
 
         <div class="formula-box">
-            Sample Mean: \(\bar{y}_{st} = \sum_{i=1}^k W_i \bar{y}_i\)<br>
-            where \(W_i = N_i/N\) is the stratum weight.
+            Overall Mean (\(\bar{y}_{st}\)) = \(\sum_{i=1}^k W_i \bar{y}_i\)
         </div>
+        <p>Where \(W_i\) is the "weight" or importance of that group (Stratum Size / Total Population Size).</p>
 
         <div class="theorem">
-            <strong>Theorem 4.1:</strong> If in every stratum the sample estimator \(\bar{y}_i\) is unbiased and samples are drawn independently in difference strata then \(\bar{y}_{st}\) is an unbiased estimator of the population mean and its sampling variance is given by:
-            <p>\[V(\bar{y}_{st}) = \sum_{i=1}^k W_i^2 V(\bar{y}_i)\]</p>
+            <h4>Theorem: Unbiasedness</h4>
+            <p>The stratified sample mean \(\bar{y}_{st}\) is an unbiased estimator of the population mean \(\bar{Y}\).</p>
+        </div>
+
+        <h3>Why is it better?</h3>
+        <p>Because we have forced the sample to represent every sub-group, the <strong>Sampling Variance</strong> is usually much lower than in SRS. This means our guesses are much more accurate.</p>
+    </section>
+
+    <!-- SECTION 4.3 -->
+    <section class="section-card" id="allocation">
+        <h2>4.3 Allocation Methods</h2>
+        <p>Once you've divided the population into strata, how many units should you pick from each group? There are four main methods:</p>
+
+        <h3>1. Equal Allocation</h3>
+        <p>You pick the same number from every group. (e.g., 10 from every stratum). Simple, but not always efficient.</p>
+
+        <h3>2. Proportional Allocation</h3>
+        <p>You pick more from the bigger groups. If one stratum makes up 60% of the population, 60% of your sample comes from there.</p>
+        <div class="formula-box">\(n_i = n \times (N_i / N)\)</div>
+
+        <h3>3. Neyman's (Optimum) Allocation</h3>
+        <p>This is even smarter. You pick more from groups that are either <strong>very large</strong> or <strong>very diverse</strong> (high standard deviation). If a group is very predictable, you don't need a large sample from it.</p>
+        <div class="formula-box">\(n_i = n \times \frac{W_i S_i}{\sum W_i S_i}\)</div>
+
+        <h3>4. Allocation for Fixed Cost</h3>
+        <p>If some groups are more expensive to study (e.g., people living in remote mountains), you take a smaller sample from them to save money while keeping high accuracy.</p>
+    </section>
+
+    <!-- SECTION 4.4 -->
+    <section class="section-card" id="comparison">
+        <h2>4.4 Stratified Sampling vs. Simple Random Sampling</h2>
+        <p>Is Stratified Sampling always better? Almost always!</p>
+
+        <div class="theorem">
+            <h4>Gain in Precision</h4>
+            <p>The variance of the estimate in Stratified Sampling is <strong>always less than or equal to</strong> the variance in SRS, provided the allocation is proportional.</p>
+        </div>
+
+        <div class="example">
+            <h4>Summary of Benefits:</h4>
+            <ul>
+                <li><strong>Better Representation:</strong> No important sub-group is left out.</li>
+                <li><strong>Greater Precision:</strong> You get a more accurate answer with the same sample size.</li>
+                <li><strong>Administrative Convenience:</strong> Different teams can handle different strata simultaneously.</li>
+            </ul>
         </div>
     </section>
 
-    <section class="section-card" id="allocation" style="display:none;">
-        <h2>Allocation of Sample Size</h2>
-        <p>There are four method of allocation of sample size is to different strata in a stratified sampling procedure:</p>
+    <!-- SECTION 4.5 -->
+    <section class="section-card" id="practice">
+        <h2>4.5 Practice Exercises</h2>
 
-        <h3>1. Equal Allocation</h3>
-        <p>In this method a total sample size ‘n’ is divided equally among all the strata, i.e., for the \(i^{th}\) stratum: \(n_i = n/k\).</p>
+        <h3>Part A: Subjective Questions</h3>
+        <div class="question">1. Explain the "Golden Rule" of stratification with a real-life example.</div>
+        <div class="question">2. Define Proportional Allocation and give its mathematical formula.</div>
+        <div class="question">3. When would you prefer Neyman's Allocation over Proportional Allocation?</div>
 
-        <h3>2. Proportional Allocation</h3>
-        <p>The procedure of allocation is very common in practice because of its simplicity when no other information except the total of number of units in the \(i^{th}\) stratum is available a allocation of a given sample of size ‘n’ to different strata it’s done in proportion to their sizes. i.e., in the \(i^{th}\) stratum:</p>
-        <div class="formula-box">\(n_i = \frac{n N_i}{N} = n W_i\)</div>
-
-        <h3>3. Neyman’s Allocation</h3>
-        <p>This allocation of the total sample size to strata is called minimum variance per unit among difference strata in the same and the size of the its fixed. Sample size is are allocated by:</p>
-        <div class="formula-box">\(n_i = \frac{n W_i S_i}{\sum W_i S_i}\)</div>
-
-        <h3>4. Optimum Allocation</h3>
-        <p>In this method of allocation a sample sizes ‘\(n_i\)’ in the respective strata are determine with the view to minimize variance for \(\bar{y}_{st}\) for a specified cost of containing the sample survey or to minimize the cost for a specified value of variance of (\(\bar{y}_{st}\)).</p>
-    </section>
-
-    <section class="section-card" id="comparison" style="display:none;">
-        <h2>Comparison with Simple Random Sampling</h2>
-        <p>The variance of estimate of population mean in simple random sampling is given by:</p>
-        <div class="formula-box">\(V(\bar{y}_n)_{srs} = (1 - f) \frac{S^2}{n}\)</div>
+        <h3 style="margin-top:40px;">Part B: Multiple Choice Questions</h3>
         
-        <p>In stratified sampling with proportional allocation:</p>
-        <div class="formula-box">\(V(\bar{y}_{st})_{prop} = (1 - f) \sum \frac{W_i S_i^2}{n}\)</div>
+        <div class="question"><strong>Q1.</strong> In stratified sampling, the sub-groups (strata) should be:
+            <div style="margin-top:10px;">(a) Heterogeneous within &nbsp;&nbsp; (b) Homogeneous within &nbsp;&nbsp; (c) Randomly mixed &nbsp;&nbsp; (d) Overlapping</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
+        <div id="mcq1" class="answer"><strong>Correct Answer: (b) Homogeneous within</strong><br>Explanation: Units inside a single stratum should be as similar as possible.</div>
 
-        <p>The difference in the stratum means greater is the gain in precision stratified random sampling with proportional allocation over unstratified simple random sampling.</p>
+        <div class="question"><strong>Q2.</strong> Which allocation method considers both group size and internal diversity (S.D.)?
+            <div style="margin-top:10px;">(a) Equal &nbsp;&nbsp; (b) Proportional &nbsp;&nbsp; (c) Neyman's &nbsp;&nbsp; (d) SRS</div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show Answer ▼</button>
+        <div id="mcq2" class="answer"><strong>Correct Answer: (c) Neyman's</strong></div>
+
+        <h3 style="margin-top:40px;">Part C: Fill in the Blanks</h3>
+        
+        <div class="question">1. Proportional allocation is used when the only information available for each stratum is its ___________.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show Answer ▼</button>
+        <div id="fib1" class="answer"><strong>Answer: Size (or Population)</strong></div>
+
+        <div class="question">2. Stratification increases the ___________ of the final estimate.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show Answer ▼</button>
+        <div id="fib2" class="answer"><strong>Answer: Precision (or Accuracy)</strong></div>
+
+        <h3 style="margin-top:40px;">Part D: True or False</h3>
+        
+        <div class="question">1. Strata must be mutually exclusive (non-overlapping). [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
+        <div id="tf1" class="answer"><strong>Answer: True</strong></div>
+
+        <div class="question">2. Stratified sampling always requires a larger sample size than SRS for the same accuracy. [True / False]</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show Answer ▼</button>
+        <div id="tf2" class="answer"><strong>Answer: False</strong><br>Explanation: It usually requires a <em>smaller</em> sample size for the same level of accuracy.</div>
     </section>
 </main>
 
 <script>
     function showTopic(id) {
-        document.querySelectorAll('.section-card').forEach(s => s.style.display = 'none');
-        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.section-card').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
         document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-        event.currentTarget.classList.add('active');
+        document.getElementById('link-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function toggleAnswer(id) {
+        const ans = document.getElementById(id);
+        ans.classList.toggle('show');
     }
 </script>
 <script src="whiteboard.js?v=1.2"></script>
