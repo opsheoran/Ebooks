@@ -1,5 +1,5 @@
 /**
- * ── TEACHER'S TRANSPARENT OVERLAY WHITEBOARD ──
+ * ── TEACHER'S TRANSPARENT OVERLAY WHITEBOARD (Optimized for Real-Time) ──
  */
 
 (function() {
@@ -34,65 +34,38 @@
 
     document.body.insertAdjacentHTML('beforeend', overlayHTML);
 
-    // 2. State & Elements
+    // 2. Elements & State
     const overlay = document.getElementById('whiteboard-overlay');
     const canvas = document.getElementById('overlay-canvas');
-    const ctx = canvas.getContext('2d');
-    const toggleBtnTemplate = `
-        <button class="draw-mode-toggle" id="draw-mode-btn">
-            <i class="fas fa-edit"></i> Draw Mode
-        </button>
-    `;
-
-    // Inject toggle button into header
+    const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true }); // 'desynchronized' reduces latency in modern browsers
+    
     const header = document.querySelector('.book-header');
     if (header) {
-        header.insertAdjacentHTML('beforeend', toggleBtnTemplate);
+        header.insertAdjacentHTML('beforeend', `
+            <button class="draw-mode-toggle" id="draw-mode-btn">
+                <i class="fas fa-edit"></i> Draw Mode
+            </button>
+        `);
     }
 
     let isDrawing = false;
-    let lastX = 0;
-    let lastY = 0;
     let currentTool = 'pen';
     let currentColor = '#000000';
     let currentSize = 4;
+    
+    // Position tracking
+    let points = [];
 
-    // 3. Functions
+    // 3. Optimized Drawing Logic
     function initCanvas() {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
+        updateContextSettings();
     }
 
-    function getPos(e) {
-        let x, y;
-        if (e.type.includes('touch')) {
-            x = e.touches[0].clientX;
-            y = e.touches[0].clientY;
-        } else {
-            x = e.clientX;
-            y = e.clientY;
-        }
-        return { x, y };
-    }
-
-    function startDrawing(e) {
-        if (!overlay.classList.contains('active')) return;
-        isDrawing = true;
-        const pos = getPos(e);
-        [lastX, lastY] = [pos.x, pos.y];
-    }
-
-    function draw(e) {
-        if (!isDrawing) return;
-        e.preventDefault();
-        const pos = getPos(e);
-
-        ctx.beginPath();
-        ctx.moveTo(lastX, lastY);
-        ctx.lineTo(pos.x, pos.y);
-
+    function updateContextSettings() {
         if (currentTool === 'eraser') {
             ctx.globalCompositeOperation = 'destination-out';
             ctx.lineWidth = currentSize * 4;
@@ -101,36 +74,69 @@
             ctx.strokeStyle = currentColor;
             ctx.lineWidth = currentSize;
         }
+    }
 
-        ctx.stroke();
-        [lastX, lastY] = [pos.x, pos.y];
+    function getPos(e) {
+        if (e.touches && e.touches.length > 0) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        }
+        return { x: e.clientX, y: e.clientY };
+    }
+
+    function startDrawing(e) {
+        if (!overlay.classList.contains('active')) return;
+        isDrawing = true;
+        const pos = getPos(e);
+        points = [pos];
+    }
+
+    function draw(e) {
+        if (!isDrawing) return;
+        if (e.cancelable) e.preventDefault();
+        
+        const pos = getPos(e);
+        points.push(pos);
+
+        // Optimization: Draw only the latest segment immediately for lowest latency
+        if (points.length > 1) {
+            const start = points[points.length - 2];
+            const end = points[points.length - 1];
+            
+            ctx.beginPath();
+            ctx.moveTo(start.x, start.y);
+            ctx.lineTo(end.x, end.y);
+            ctx.stroke();
+        }
     }
 
     function stopDrawing() {
         isDrawing = false;
-        ctx.beginPath();
+        points = [];
     }
 
     // 4. Event Listeners
     window.addEventListener('resize', initCanvas);
     initCanvas();
 
+    // Mouse
     canvas.addEventListener('mousedown', startDrawing);
     canvas.addEventListener('mousemove', draw);
-    canvas.addEventListener('mouseup', stopDrawing);
-    canvas.addEventListener('mouseout', stopDrawing);
+    window.addEventListener('mouseup', stopDrawing);
 
+    // Touch
     canvas.addEventListener('touchstart', startDrawing, { passive: false });
     canvas.addEventListener('touchmove', draw, { passive: false });
     canvas.addEventListener('touchend', stopDrawing);
 
     // 5. Tool Controls
     document.getElementById('draw-mode-btn').addEventListener('click', function() {
+        const isActive = overlay.classList.toggle('active');
         this.classList.toggle('active');
-        overlay.classList.toggle('active');
-        if (overlay.classList.contains('active')) {
+        
+        if (isActive) {
             this.innerHTML = '<i class="fas fa-times"></i> Exit Draw';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling while drawing
+            document.body.style.overflow = 'hidden';
+            updateContextSettings();
         } else {
             this.innerHTML = '<i class="fas fa-edit"></i> Draw Mode';
             document.body.style.overflow = '';
@@ -143,11 +149,13 @@
 
     document.getElementById('overlay-pen').addEventListener('click', function() {
         currentTool = 'pen';
+        updateContextSettings();
         setActiveTool(this);
     });
 
     document.getElementById('overlay-eraser').addEventListener('click', function() {
         currentTool = 'eraser';
+        updateContextSettings();
         setActiveTool(this);
     });
 
@@ -162,12 +170,14 @@
             document.querySelectorAll('.overlay-color-dot').forEach(d => d.classList.remove('active'));
             this.classList.add('active');
             currentTool = 'pen';
+            updateContextSettings();
             setActiveTool(document.getElementById('overlay-pen'));
         });
     });
 
     document.getElementById('overlay-size').addEventListener('input', function() {
         currentSize = this.value;
+        updateContextSettings();
     });
 
     document.getElementById('overlay-clear').addEventListener('click', () => {
