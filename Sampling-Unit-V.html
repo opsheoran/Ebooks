@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit V – Systematic Sampling | Sampling Techniques</title>
+
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Shared Design System */
+        :root {
+            --navy: #1B2A4A; --navy-light: #2E4270; --gold: #C8922A; --gold-light: #E8B84B;
+            --paper: #F5F3EE; --ivory: #FAFAF7; --border: #DDD8CF; --text-dark: #1C1C1E;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: var(--paper); color: var(--text-dark); line-height: 1.7; }
+        
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+            background: linear-gradient(110deg, var(--navy), var(--navy-light));
+            color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px;
+        }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
+
+        .sidebar {
+            position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; color: #fff;
+        }
+        .sidebar-author { display: flex; align-items: center; gap: 12px; padding: 20px; background: rgba(0,0,0,0.2); }
+        .sidebar-photo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; object-position: top; }
+        
+        .nav-link { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'DM Sans'; font-size: 0.85rem; }
+        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
+
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1200px; }
+        .section-card { background: var(--ivory); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border); border-top: 5px solid var(--navy); margin-bottom: 40px; }
+        
+        h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2rem; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-family: 'Playfair Display', serif; color: var(--navy-light); margin-top: 32px; margin-bottom: 16px; }
+        
+        .theorem { background: #fdf3dc; border-left: 5px solid var(--gold); padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .formula-box { background: #f0f7ff; border: 2px dashed #1D6FA4; padding: 20px; text-align: center; margin: 20px 0; font-size: 1.1rem; }
+
+        .draw-mode-toggle { background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: auto; }
+        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } }
+    </style>
+    <link rel="stylesheet" href="whiteboard.css?v=1.2">
+</head>
+<body>
+
+<header class="book-header">
+    <div class="header-text">
+        <h1>Sampling Techniques</h1>
+        <div class="subtitle">UNIT V · SYSTEMATIC SAMPLING</div>
+    </div>
+    <div class="header-badge" style="margin-left:auto; margin-right: 20px;">Prof. O.P. Sheoran</div>
+    <button class="draw-mode-toggle" id="draw-mode-btn">
+        <i class="fas fa-chalkboard"></i> Open Whiteboard
+    </button>
+</header>
+
+<nav class="sidebar">
+    <div class="sidebar-author">
+        <img src="opsheoran.png" alt="Author" class="sidebar-photo">
+        <div class="sidebar-info">
+            <div style="font-weight:700; font-size: 0.9rem;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.7rem; opacity: 0.6;">CCSHAU Hisar</div>
+        </div>
+    </div>
+    <div class="nav-group-label">Navigation</div>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-home" style="margin-right:8px;"></i> Course Home</a>
+    
+    <div class="nav-group-label">Unit V Topics</div>
+    <a href="#" class="nav-link active" onclick="showTopic('intro')">Definition</a>
+    <a href="#" class="nav-link" onclick="showTopic('circular')">Circular Sampling</a>
+    <a href="#" class="nav-link" onclick="showTopic('merits')">Merits &amp; Demerits</a>
+</nav>
+
+<main class="main-content">
+    <section class="section-card" id="intro">
+        <h2>Systematic Random Sampling</h2>
+        <p>A sampling technique in which only the first unit is selected with the help of random numbers and the rest get selected automatically according to some pre-designed pattern is known as systematic random sampling. Suppose N units of the population are numbered from 1 to N in some order. Let N=nk, where n is the sample size and k is an integer, called sampling interval.</p>
+        
+        <p>Select a random number less than or equal to k be selected and every \(k^{th}\) unit thereafter. The resultant sample is called every \(k^{th}\) systematic sample and such a procedure termed linear systematic sampling.</p>
+
+        <div class="theorem">
+            <strong>Theorem 5.1:</strong> If N=nk the systematic sample mean \(\bar{y}_{sys}\) is an unbiased estimate of the population mean \(\bar{Y}\).
+        </div>
+    </section>
+
+    <section class="section-card" id="circular" style="display:none;">
+        <h2>Circular Systematic Sampling</h2>
+        <p>If N is not a multiple of n, the linear systematic sampling does not provide a fixed sample size n. In such cases, <strong>Circular Systematic Sampling</strong> is used.</p>
+        <ol style="margin-left:40px;">
+            <li>Select a random number \(r\) from 1 to N.</li>
+            <li>The units with serial numbers \((r + j k) \pmod N\) for \(j = 0, 1, \ldots, n-1\) are selected.</li>
+        </ol>
+        <p>This ensures that each unit in the population has an equal chance of being included in the sample.</p>
+    </section>
+
+    <section class="section-card" id="merits" style="display:none;">
+        <h2>Merits and Demerits</h2>
+        
+        <h3>Merits:</h3>
+        <ul style="margin-left:40px;">
+            <li>Operationally more convenient than SRS or Stratified.</li>
+            <li>Time and work involved is relatively much less.</li>
+            <li>Yields a sample which is evenly spread over the entire population.</li>
+        </ul>
+
+        <h3>Demerits:</h3>
+        <ul style="margin-left:40px;">
+            <li>If N is not a multiple of n, the actual sample size is different from that requirement.</li>
+            <li>Sample mean is not an unbiased estimate if N is not a multiple of n in linear systematic sampling.</li>
+            <li>May yield highly biased estimates if there are periodic features associated with the sampling interval.</li>
+        </ul>
+    </section>
+</main>
+
+<script>
+    function showTopic(id) {
+        document.querySelectorAll('.section-card').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+<script src="whiteboard.js?v=1.2"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit II – Errors in Sampling | Sampling Techniques</title>
+
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Shared Design System */
+        :root {
+            --navy: #1B2A4A; --navy-light: #2E4270; --gold: #C8922A; --gold-light: #E8B84B;
+            --paper: #F5F3EE; --ivory: #FAFAF7; --border: #DDD8CF; --text-dark: #1C1C1E;
+            --sidebar-w: 300px; --header-h: 72px; --sage: #3D6B5A; --crimson: #9B2335;
+        }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: var(--paper); color: var(--text-dark); line-height: 1.7; }
+        
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+            background: linear-gradient(110deg, var(--navy), var(--navy-light));
+            color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px;
+        }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.2rem; }
+        .header-text .subtitle { font-size: 0.75rem; opacity: 0.8; }
+
+        .sidebar {
+            position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; color: #fff;
+        }
+        .sidebar-author { display: flex; align-items: center; gap: 12px; padding: 20px; background: rgba(0,0,0,0.2); }
+        .sidebar-photo { width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--gold); object-fit: cover; object-position: top; }
+        
+        .nav-group-label { font-family: 'DM Sans', sans-serif; font-size: 0.7rem; text-transform: uppercase; padding: 16px 20px 8px; opacity: 0.5; }
+        .nav-link { display: flex; align-items: center; padding: 10px 20px; color: rgba(255,255,255,0.7); text-decoration: none; font-family: 'DM Sans'; font-size: 0.85rem; }
+        .nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: #fff; }
+
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1200px; }
+        .section-card { background: var(--ivory); padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border: 1px solid var(--border); border-top: 5px solid var(--navy); margin-bottom: 40px; }
+        
+        h2 { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 2rem; margin-bottom: 24px; border-bottom: 2px solid var(--border); padding-bottom: 12px; }
+        h3 { font-family: 'Playfair Display', serif; color: var(--navy-light); margin-top: 32px; margin-bottom: 16px; }
+        
+        .warning { background: #fff1f0; border-left: 5px solid var(--crimson); padding: 20px; margin: 20px 0; border-radius: 8px; }
+        .formula-box { background: #f0f7ff; border: 2px dashed #1D6FA4; padding: 20px; text-align: center; margin: 20px 0; font-size: 1.2rem; }
+
+        .draw-mode-toggle { background: #C8922A; color: #1B2A4A; border: none; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-left: auto; }
+
+        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; } }
+    </style>
+    <link rel="stylesheet" href="whiteboard.css?v=1.2">
+</head>
+<body>
+
+<header class="book-header">
+    <div class="header-text">
+        <h1>Sampling Techniques</h1>
+        <div class="subtitle">UNIT II · ERRORS IN SAMPLING</div>
+    </div>
+    <div class="header-badge" style="margin-left:auto; margin-right: 20px;">Prof. O.P. Sheoran</div>
+    <button class="draw-mode-toggle" id="draw-mode-btn">
+        <i class="fas fa-chalkboard"></i> Open Whiteboard
+    </button>
+</header>
+
+<nav class="sidebar">
+    <div class="sidebar-author">
+        <img src="opsheoran.png" alt="Author" class="sidebar-photo">
+        <div class="sidebar-info">
+            <div style="font-weight:700; font-size: 0.9rem;">Prof. O.P. Sheoran</div>
+            <div style="font-size: 0.7rem; opacity: 0.6;">CCSHAU Hisar</div>
+        </div>
+    </div>
+    <div class="nav-group-label">Navigation</div>
+    <a href="sampling.html" class="nav-link"><i class="fas fa-home" style="margin-right:8px;"></i> Course Home</a>
+    
+    <div class="nav-group-label">Unit II Topics</div>
+    <a href="#" class="nav-link active" onclick="showTopic('types')">Types of Errors</a>
+    <a href="#" class="nav-link" onclick="showTopic('mse')">Bias &amp; MSE</a>
+    <a href="#" class="nav-link" onclick="showTopic('sources')">Sources of Errors</a>
+</nav>
+
+<main class="main-content">
+    <section class="section-card" id="types">
+        <h2>Sampling and Non-Sampling Errors</h2>
+        <p>The errors involved in the collection, processing and analysis data in a survey may be classified as:</p>
+        <ol style="margin-left:40px;">
+            <li>Sampling error</li>
+            <li>Non-sampling error</li>
+        </ol>
+
+        <h3>1. Sampling Error</h3>
+        <p>The error which arises due to only a sample being to estimate the population being used to estimate the population parameter is tripped sample error or sampling fluctuations. The error is inherent and available in any and every sampling scheme. A sample with the smallest sampling error will always be consisted a good reprehensive of the population.</p>
+        
+        <p>This error can be reduced by increasing the size of the sample unfair the degree of sampling error is inversely proportional to the square root of the sample size.</p>
+        <div class="formula-box">
+            Sampling Error \(\propto \frac{1}{\sqrt{n}}\)
+        </div>
+
+        <h3>2. Non-sampling Error</h3>
+        <p>Besides sampling error, the sample estimate may be subject to the other errors which group together is term non sampling error. The main sources of non-sampling errors are:</p>
+        <ul style="margin-left:40px;">
+            <li>Failure to measure some of the units in the selected sample.</li>
+            <li>Observational errors due to defective measurements technique.</li>
+            <li>Errors intituous editing coding and tabulation the results.</li>
+        </ul>
+    </section>
+
+    <section class="section-card" id="mse" style="display:none;">
+        <h2>Bias and Mean Square Error (MSE)</h2>
+        
+        <h3>Bias</h3>
+        <p>The different between estimator (t) and the parameter (\(\theta\)) is called bias are error. An estimator (t) is said to be unbiased estimator for the parameter \(\theta\) if \(E(t) = \theta\), otherwise biased thus bias is given by \(E(t) - \theta = B(t)\).</p>
+
+        <h3>Mean Square Error (MSE)</h3>
+        <p>A relative measure of bias is \(\frac{B(t)}{\theta}\). The mean of square of the error taken from is called mean square error. Symbolically,</p>
+        <div class="formula-box">
+            \(MSE(t) = E(t - \theta)^2\)
+        </div>
+        <p>In terms of variance, \(MSE(t) = V(t) + B^2(t)\).</p>
+        <p>Since t is unbiased, \(MSE(t) = V(t)\).</p>
+    </section>
+
+    <section class="section-card" id="sources" style="display:none;">
+        <h2>Sources and Types of Non-Sampling Errors</h2>
+        <p>Non-sampling errors occur at any one are more of this stages of the survey planning field work and tabulation of the survey data. These errors are badly classify errors follows:</p>
+        
+        <h3>Type 1: Non-Response Error</h3>
+        <p>Errors resulting from inadequate preparation.</p>
+        
+        <h3>Type 2: Responses Error</h3>
+        <p>Error resulting in the stage of the collection or taking observations.</p>
+        
+        <h3>Type 3: Tabulation Error</h3>
+        <p>Errors resulting from data processing.</p>
+        
+        <div class="warning">
+            <strong>Critical Note:</strong> If the sampling frame is not abraded or old frame is use on account of economic or time saving device it may lead to bias as the targeted population is not enumerated.
+        </div>
+    </section>
+</main>
+
+<script>
+    function showTopic(id) {
+        document.querySelectorAll('.section-card').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+<script src="whiteboard.js?v=1.2"></script>
+</body>
+</html>
