@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theory of Sampling | Prof. O.P. Sheoran</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --accent: #3498db;
+            --accent-dark: #2980b9;
+            --gold: #d4af37;
+            --crimson: #c0392b;
+            --sage: #27ae60;
+            --sky: #3498db;
+            --bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border: #e0e0e0;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: 0; bottom: 0;
+            width: 280px;
+            background: var(--primary);
+            color: white;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .book-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .nav-list { list-style: none; }
+        .nav-item { margin-bottom: 0.5rem; }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1rem;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .nav-link:hover, .nav-link.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        .nav-link i { width: 20px; margin-right: 12px; font-size: 1.1rem; }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            margin-left: 280px;
+            padding: 3rem;
+            max-width: 1200px;
+        }
+
+        header {
+            margin-bottom: 3rem;
+        }
+
+        .course-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: var(--accent);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .author-name {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* ── SECTION CARDS ── */
+        .page-section { display: none; }
+        .page-section.active { display: block; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* ── GRID ── */
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .unit-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+            border-color: var(--accent);
+        }
+
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 6px; height: 100%;
+            background: var(--accent);
+        }
+
+        .unit-card.c1::before { background: var(--accent); }
+        .unit-card.c2::before { background: var(--sage); }
+        .unit-card.c3::before { background: var(--gold); }
+        .unit-card.c4::before { background: var(--crimson); }
+        .unit-card.c5::before { background: #9b59b6; }
+        .unit-card.c6::before { background: #e67e22; }
+        .unit-card.c7::before { background: #1abc9c; }
+        .unit-card.c8::before { background: #34495e; }
+        .unit-card.c9::before { background: #7f8c8d; }
+
+        .unit-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .unit-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+        h3 { font-family: 'Crimson Pro', serif; font-size: 1.4rem; margin-bottom: 1rem; color: var(--primary); }
+
+        .unit-topics {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .unit-topics li { margin-bottom: 0.4rem; display: flex; align-items: flex-start; gap: 8px; }
+        .unit-topics li::before { content: '•'; color: var(--accent); font-weight: bold; }
+
+        .unit-card-footer {
+            margin-top: auto;
+            font-weight: 600;
+            color: var(--accent);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .unit-card-num {
+            position: absolute;
+            bottom: -10px; right: -5px;
+            font-size: 5rem;
+            font-weight: 900;
+            color: rgba(0,0,0,0.03);
+            line-height: 1;
+        }
+
+        /* ── TABLE ── */
+        .syllabus-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .syllabus-table th, .syllabus-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .syllabus-table th { background: #f1f3f5; font-weight: 600; color: var(--primary); }
+        .syllabus-table tr:last-child td { border-bottom: none; }
+
+        /* ── FOOTER ── */
+        .book-footer {
+            margin-top: 5rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ── MOBILE ── */
+        .menu-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem; left: 1rem;
+            z-index: 1100;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main-content { margin-left: 0; padding: 1.5rem; padding-top: 4rem; }
+            .menu-toggle { display: block; }
+            h1 { font-size: 2.2rem; }
+            .unit-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="book-title">Theory of Sampling</div>
+        <nav class="nav-list">
+            <div class="nav-item"><a class="nav-link active" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a></div>
+            <div class="nav-item"><a class="nav-link" onclick="showSection('preface')"><i class="fas fa-scroll"></i> Preface</a></div>
+            <div class="nav-item"><a class="nav-link" onclick="showSection('syllabus')"><i class="fas fa-list-alt"></i> Syllabus</a></div>
+            <div class="nav-item"><a class="nav-link" onclick="showSection('author')"><i class="fas fa-user-tie"></i> About Author</a></div>
+            <div class="nav-item"><a class="nav-link" href="whiteboard.html" target="_blank"><i class="fas fa-chalkboard"></i> Whiteboard</a></div>
+            <div class="nav-item"><a class="nav-link" href="../index.html"><i class="fas fa-book-open"></i> Back to E-Books Library</a></div>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <span class="course-badge">Course: Theory of Sampling</span>
+            <h1>Theory of Sample Surveys</h1>
+            <div class="author-name">by Prof. O.P. Sheoran</div>
+        </header>
+
+        <section class="page-section active" id="home">
+            <div class="unit-grid">
+                <!-- Unit I / Chapter 1 -->
+                <a class="unit-card c1" href="Chapter1.html">
+                    <div class="unit-icon">📖</div>
+                    <div class="unit-label">Chapter 1</div>
+                    <h3>Basic Concept of Sample Surveys</h3>
+                    <ul class="unit-topics">
+                        <li>Introduction & Fields of Application</li>
+                        <li>Definitions & Preliminaries</li>
+                        <li>Population, Sample, Parameter, Statistic</li>
+                        <li>Estimator, Estimate & Unbiasedness</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">1</span>
+                </a>
+
+                <!-- Chapter 2 -->
+                <a class="unit-card c2" href="Chapter2.html">
+                    <div class="unit-icon">🎲</div>
+                    <div class="unit-label">Chapter 2</div>
+                    <h3>Simple Random Sampling</h3>
+                    <ul class="unit-topics">
+                        <li>SRS with and without replacement</li>
+                        <li>Estimation of Population Mean & Total</li>
+                        <li>Variance of Estimators & its estimation</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">2</span>
+                </a>
+
+                <!-- Chapter 3 -->
+                <a class="unit-card c3" href="Chapter3.html">
+                    <div class="unit-icon">📊</div>
+                    <div class="unit-label">Chapter 3</div>
+                    <h3>Stratified Random Sampling</h3>
+                    <ul class="unit-topics">
+                        <li>Principles of Stratification</li>
+                        <li>Allocation of Sample Size (Proportional, Neyman)</li>
+                        <li>Gain in Precision due to Stratification</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">3</span>
+                </a>
+
+                <!-- Chapter 4 -->
+                <a class="unit-card c4" href="Chapter4.html">
+                    <div class="unit-icon">📐</div>
+                    <div class="unit-label">Chapter 4</div>
+                    <h3>Systematic Sampling</h3>
+                    <ul class="unit-topics">
+                        <li>Linear & Circular Systematic Sampling</li>
+                        <li>Comparison with SRS and Stratified</li>
+                        <li>Estimation of Variance</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">4</span>
+                </a>
+
+                <!-- Chapter 5 -->
+                <a class="unit-card c5" href="Chapter5.html">
+                    <div class="unit-icon">⚖️</div>
+                    <div class="unit-label">Chapter 5</div>
+                    <h3>Varying Probability Sampling</h3>
+                    <ul class="unit-topics">
+                        <li>PPS Sampling with/without replacement</li>
+                        <li>Hansen-Hurwitz Estimator</li>
+                        <li>Horvitz-Thompson Estimator</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">5</span>
+                </a>
+
+                <!-- Chapter 6 -->
+                <a class="unit-card c6" href="Chapter6.html">
+                    <div class="unit-icon">📉</div>
+                    <div class="unit-label">Chapter 6</div>
+                    <h3>Ratio Estimators</h3>
+                    <ul class="unit-topics">
+                        <li>Bias and Mean Square Error</li>
+                        <li>Conditions for Efficiency</li>
+                        <li>Ratio Estimator in Stratified Sampling</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">6</span>
+                </a>
+
+                <!-- Chapter 7 -->
+                <a class="unit-card c7" href="Chapter7.html">
+                    <div class="unit-icon">📈</div>
+                    <div class="unit-label">Chapter 7</div>
+                    <h3>Regression Estimators</h3>
+                    <ul class="unit-topics">
+                        <li>Difference and Regression Estimators</li>
+                        <li>Bias and Variance</li>
+                        <li>Comparison with Ratio and Mean per Unit</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">7</span>
+                </a>
+
+                <!-- Chapter 8 -->
+                <a class="unit-card c8" href="Chapter8.html">
+                    <div class="unit-icon">📦</div>
+                    <div class="unit-label">Chapter 8</div>
+                    <h3>Cluster Sampling</h3>
+                    <ul class="unit-topics">
+                        <li>Equal and Unequal Cluster Sizes</li>
+                        <li>Efficiency of Cluster Sampling</li>
+                        <li>Intra-cluster Correlation</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">8</span>
+                </a>
+
+                <!-- Chapter 9 -->
+                <a class="unit-card c9" href="Chapter9.html">
+                    <div class="unit-icon">🏗️</div>
+                    <div class="unit-label">Chapter 9</div>
+                    <h3>Multi-Stage Sampling</h3>
+                    <ul class="unit-topics">
+                        <li>Two-Stage and Three-Stage Designs</li>
+                        <li>Estimation of Parameters</li>
+                        <li>Optimal Allocation in Multi-Stage</li>
+                    </ul>
+                    <div class="unit-card-footer">Open Chapter <i class="fas fa-arrow-right"></i></div>
+                    <span class="unit-card-num">9</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- PREFACE SECTION -->
+        <section class="page-section" id="preface">
+            <div class="section-card">
+                <h2><i class="fas fa-scroll" style="color:var(--gold);"></i> Preface</h2>
+                <p>This web-book "Theory of Sample Surveys" is designed as a comprehensive resource for students and practitioners of statistics. It covers the fundamental principles and advanced techniques of sampling, from simple random designs to complex multi-stage surveys.</p>
+                <p>The goal is to provide a rigorous mathematical treatment of sampling theory while maintaining a clear, intuitive understanding of the underlying concepts.</p>
+            </div>
+        </section>
+
+        <!-- SYLLABUS SECTION -->
+        <section class="page-section" id="syllabus">
+            <div class="section-card">
+                <h2><i class="fas fa-list-alt" style="color:var(--sage);"></i> Course Syllabus</h2>
+                <table class="syllabus-table">
+                    <thead>
+                        <tr><th>Chapter</th><th>Title</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td>Basic Concepts</td><td>Foundations of survey sampling.</td></tr>
+                        <tr><td>2</td><td>SRS</td><td>The simplest form of probability sampling.</td></tr>
+                        <tr><td>3</td><td>Stratified</td><td>Increasing precision through partitioning.</td></tr>
+                        <tr><td>4</td><td>Systematic</td><td>The convenience of ordered selection.</td></tr>
+                        <tr><td>5</td><td>Varying Prob</td><td>PPS and unequal probability sampling.</td></tr>
+                        <tr><td>6</td><td>Ratio</td><td>Using auxiliary information via ratios.</td></tr>
+                        <tr><td>7</td><td>Regression</td><td>Refining estimates with linear relationships.</td></tr>
+                        <tr><td>8</td><td>Cluster</td><td>Sampling groups of units.</td></tr>
+                        <tr><td>9</td><td>Multi-Stage</td><td>Hierarchical sampling designs.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- AUTHOR SECTION -->
+        <section class="page-section" id="author">
+            <div class="section-card">
+                <h2><i class="fas fa-user-tie" style="color:var(--crimson);"></i> About the Author</h2>
+                <p><strong>Prof. O.P. Sheoran</strong> is a Professor in the Department of Mathematics & Statistics at CCS Haryana Agricultural University, Hisar. He has decades of experience in teaching and research in the field of Statistics.</p>
+            </div>
+        </section>
+
+        <footer class="book-footer">
+            <div>Theory of Sampling · Prof. O.P. Sheoran</div>
+            <div>Department of Mathematics & Statistics · CCS HAU, Hisar</div>
+        </footer>
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const clicked = document.querySelector(`[onclick*="'${id}'"]`);
+            if (clicked) clicked.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

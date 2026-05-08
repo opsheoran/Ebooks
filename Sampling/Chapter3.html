@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 3 – Stratified Random Sampling | Theory of Sampling</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
+            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
+            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
+        
+        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        
+        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
+        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
+        
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
+        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
+        .section-card.active { display: block; }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
+        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
+        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
+        .section-card li { margin-bottom: 8px; }
+        
+        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hinglish-content { display: none; }
+        .hinglish-active .english-content { display: none; }
+        .hinglish-active .hinglish-content { display: block; }
+        
+        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
+        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
+
+        /* QUIZ STYLES */
+        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
+        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
+        .mcq-options li { margin-bottom: 5px; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
+        .toggle-btn:hover { background: var(--navy-light); }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
+        .answer.show { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="book-header">
+        <div class="header-icon"><i class="fas fa-book"></i></div>
+        <div class="header-text">
+            <h1>Chapter 3: Stratified Random Sampling | Theory of Sampling</h1>
+            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <a class="nav-link active" onclick="showTopic('sec3-1')">3.1 Introduction</a>
+        <a class="nav-link" onclick="showTopic('sec3-2')">3.2 Principles of Stratification</a>
+        <a class="nav-link" onclick="showTopic('sec3-3')">3.3 Advantages of Stratification</a>
+        <a class="nav-link" onclick="showTopic('sec3-4')">3.4 Notations</a>
+        <a class="nav-link" onclick="showTopic('sec3-5')">3.5 Estimation of Mean & Var</a>
+        <a class="nav-link" onclick="showTopic('sec3-6')">3.6 Estimation for Proportions</a>
+        <a class="nav-link" onclick="showTopic('sec3-7')">3.7 Allocation of Sample Size</a>
+        <a class="nav-link" onclick="showTopic('sec3-8')">3.8 Relative Precision</a>
+        <a class="nav-link" onclick="showTopic('sec3-9')">3.9 Gain in Precision</a>
+        <a class="nav-link" onclick="showTopic('sec3-10')">3.10 Formation of Strata</a>
+        <a class="nav-link" onclick="showTopic('sec3-11')">3.11 Number of Strata</a>
+        <a class="nav-link" onclick="showTopic('sec3-12')">3.12 Method of Collapsed Strata</a>
+        <a class="nav-link" onclick="showTopic('sec3-13')">3.13 Post-Stratification</a>
+        <a class="nav-link" onclick="showTopic('sec3-14')">3.14 Deep Stratification</a>
+        
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
+        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
+        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
+        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
+        <a class="nav-link" onclick="showTopic('sec3-15')">📝 Exercise (Subjective)</a>
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Back to Index</a>
+    </aside>
+
+    <main class="main-content">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+
+        <!-- SEC 3.1 -->
+        <section id="sec3-1" class="section-card active">
+            <div class="english-content">
+                <h2>3.1 Introduction</h2>
+                <div class="quote">
+                    "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \(\frac{1}{16}\) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
+                </div>
+                <p>Of all the methods of sampling, the procedure most commonly used in surveys is stratified sampling. In stratified sampling, the population of \( N \) units is sub-divided into \( k \) sub-populations called strata, the \( i \)-th sub-population having \( N_i \) units (\( i = 1,2,\ldots,k \)). These sub-populations are non-overlapping so that they comprise the whole population such that</p>
+                <div class="derivation-block">
+                    $$ N_1 + N_2 + \cdots + N_k = N \quad (3.1.1) $$
+                    <div class="explanation">\( \because \) the strata perfectly partition the finite population without any omissions or overlaps.</div>
+                </div>
+                <p>A sample is drawn from each stratum independently, the sample size within the \( i \)-th stratum being \( n_i \) (\( i = 1,2,\ldots,k \)) such that</p>
+                <div class="derivation-block">
+                    $$ n_1 + n_2 + \cdots + n_k = n \quad (3.1.2) $$
+                    <div class="explanation">\( \because \) the total sample is simply the sum of all individual stratum samples.</div>
+                </div>
+                <p>The procedure of taking samples in this way is known as stratified sampling. If the sample is taken randomly from each stratum, the procedure is known as stratified random sampling.</p>
+                <p>The main objective of stratification is to give a better cross-section of the population so as to gain a higher degree of relative precision. To achieve this, the following points are to be examined carefully:</p>
+                <ol type="i">
+                    <li>Formation of strata</li>
+                    <li>Number of strata to be made</li>
+                    <li>Allocation of sample size within each stratum</li>
+                    <li>Analysis of data from a stratified design</li>
+                </ol>
+                <p>We shall discuss the first two points after examining the last two points relating to the theory of stratified sampling.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>3.1 परिचय (Introduction)</h2>
+                <div class="quote">
+                    "महोदय, आपकी अन्यथा सुंदर कविता ("The Vision of Sin") में एक पंक्ति है जो पढ़ती है 'Every moment dies a man, every moment one is born.' जाहिर है, यह सच नहीं हो सकता है और मेरा सुझाव है कि अगले संस्करण में आप इसे 'Every moment dies a man, every moment \(\frac{1}{16}\) is born.' पढ़ें। यहां तक कि यह मूल्य थोड़ा त्रुटिपूर्ण है लेकिन कविता के लिए पर्याप्त रूप से सटीक होना चाहिए।" (लॉर्ड टेनीसन को एक पत्र में) -- <strong>Charles Babbage</strong>
+                </div>
+                <p>Sampling के सभी methods में से, surveys में सबसे अधिक उपयोग की जाने वाली प्रक्रिया (procedure) stratified sampling (स्तरीकृत प्रतिचयन) है। Stratified sampling में, \( N \) units की population को \( k \) sub-populations में sub-divide (विभाजित) किया जाता है जिन्हें strata (स्तर) कहा जाता है, जहाँ \( i \)-th sub-population में \( N_i \) units (\( i = 1,2,\ldots,k \)) होती हैं। ये sub-populations non-overlapping (गैर-अतिव्यापी) होती हैं ताकि वे पूरी population का गठन करें, जैसे कि:</p>
+                <div class="derivation-block">
+                    $$ N_1 + N_2 + \cdots + N_k = N \quad (3.1.1) $$
+                    <div class="explanation">\(\because \) strata बिना किसी चूक या ओवरलैप के finite population को पूरी तरह से विभाजित करते हैं।</div>
+                </div>
+                <p>प्रत्येक stratum से स्वतंत्र रूप से एक sample निकाला जाता है, \( i \)-th stratum के भीतर sample size \( n_i \) (\( i = 1,2,\ldots,k \)) होता है, जैसे कि:</p>
+                <div class="derivation-block">
+                    $$ n_1 + n_2 + \cdots + n_k = n \quad (3.1.2) $$
+                    <div class="explanation">\( \because \) कुल sample सभी व्यक्तिगत stratum samples का योग (sum) है।</div>
+                </div>
+                <p>इस तरह से samples लेने की प्रक्रिया को stratified sampling के रूप में जाना जाता है। यदि प्रत्येक stratum से sample randomly (यादृच्छिक रूप से) लिया जाता है, तो प्रक्रिया को stratified random sampling के रूप में जाना जाता है।</p>
+                <p>Stratification का मुख्य उद्देश्य population का एक बेहतर cross-section देना है ताकि higher degree की relative precision प्राप्त की जा सके। इसे प्राप्त करने के लिए, निम्नलिखित बिंदुओं की सावधानीपूर्वक जांच की जानी चाहिए:</p>
+                <ol type="i">
+                    <li>Strata का निर्माण (Formation of strata)</li>
+                    <li>बनाए जाने वाले strata की संख्या (Number of strata)</li>
+                    <li>प्रत्येक stratum के भीतर sample size का आवंटन (Allocation of sample size)</li>
+                    <li>एक stratified design से data का विश्लेषण (Analysis of data)</li>
+                </ol>
+                <p>हम stratified sampling के सिद्धांत से संबंधित अंतिम दो बिंदुओं की जांच करने के बाद पहले दो बिंदुओं पर चर्चा करेंगे।</p>
+            </div>
+        </section>
+
+        <!-- SEC 3.2 to 3.4 -->
+        
+        <section id="sec3-2" class="section-card">
+            <div class="english-content">
+                <h2>3.2 Principles of Stratification</h2>
+                <p>The principles to be followed in stratifying a population are summarised below:</p>
+                <ol type="i">
+                    <li>The strata should be non-overlapping and should together comprise the whole population.</li>
+                    <li>The stratification of population should be done in such a way that strata are homogeneous within themselves, with respect to the characteristic under study.</li>
+                    <li>In many practical situations when it is difficult to stratify with respect to the characteristic under study, administrative convenience may be considered as the basis for stratification.</li>
+                    <li>If the limit of precision for certain sub-populations is given, it will be better to treat each sub-population as a stratum.</li>
+                </ol>
+            </div>
+            <div class="hinglish-content">
+                <h2>3.2 Principles of Stratification (स्तरीकरण के सिद्धांत)</h2>
+                <p>एक population को stratify (स्तरीकृत) करने में जिन principles (सिद्धांतों) का पालन किया जाना चाहिए, उनका सारांश नीचे दिया गया है:</p>
+                <ol type="i">
+                    <li>Strata non-overlapping (गैर-अतिव्यापी) होने चाहिए और उन्हें एक साथ पूरी population का गठन करना चाहिए।</li>
+                    <li>Population का stratification इस तरह किया जाना चाहिए कि अध्ययन के तहत विशेषता के संबंध में strata अपने आप में homogeneous (सजातीय) हों।</li>
+                    <li>कई व्यावहारिक स्थितियों में जब अध्ययन के तहत विशेषता के संबंध में stratify करना मुश्किल होता है, तो प्रशासनिक सुविधा (administrative convenience) को stratification के आधार के रूप में माना जा सकता है।</li>
+                    <li>यदि कुछ sub-populations के लिए precision की सीमा दी गई है, तो प्रत्येक sub-population को एक stratum मानना बेहतर होगा।</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="sec3-3" class="section-card">
+            <div class="english-content">
+                <h2>3.3 Advantages of Stratification</h2>
+                <p>Stratification serves many useful purposes. The principal ones are the following:</p>
+                <ol type="i">
+                    <li><strong>Administrative Convenience:</strong> The agency conducting the survey work can establish its field offices in various administrative zones with well-defined jurisdiction, thereby leading to better organisation and supervision of field work.</li>
+                    <li><strong>Improving Design:</strong> Stratification by natural characteristics helps in improving the sampling design. For example, in area and yield surveys, there may be different types of sampling problems in plains, deserts and hilly areas which may need different approaches.</li>
+                    <li><strong>Handling Extreme Values:</strong> Stratification is particularly more effective when there are extreme values in the population which can be segregated into separate strata, thereby reducing the variability within strata. Separate estimates obtained for individual stratum can be combined into a precise estimate for the whole population.</li>
+                    <li><strong>Different Designs:</strong> Stratification makes it possible to use different sampling designs in different strata. In many practical situations, the information for stratification is not uniformly available for all units in the population.</li>
+                    <li><strong>Adequate Representation:</strong> Stratification ensures adequate representation to various groups of the population, which may be of some interest or importance.</li>
+                    <li><strong>Better Cross-Section:</strong> Stratification also ensures selection of a better cross-section of the population than that under unstratified population.</li>
+                    <li><strong>Gain in Precision:</strong> Stratification brings a gain in the precision in estimation of a characteristic of a population. If each stratum is homogeneous such that measurement within it vary little from one unit to another, a more precise estimate can be obtained by taking a relatively smaller sample.</li>
+                </ol>
+            </div>
+            <div class="hinglish-content">
+                <h2>3.3 Advantages of Stratification (स्तरीकरण के लाभ)</h2>
+                <p>Stratification कई उपयोगी उद्देश्यों को पूरा करता है। मुख्य निम्नलिखित हैं:</p>
+                <ol type="i">
+                    <li><strong>Administrative Convenience (प्रशासनिक सुविधा):</strong> सर्वेक्षण कार्य करने वाली एजेंसी विभिन्न प्रशासनिक क्षेत्रों में अपने क्षेत्रीय कार्यालय स्थापित कर सकती है, जिससे बेहतर संगठन और पर्यवेक्षण (supervision) हो सकता है।</li>
+                    <li><strong>Improving Design (डिजाइन में सुधार):</strong> प्राकृतिक विशेषताओं द्वारा stratification sampling design को बेहतर बनाने में मदद करता है। उदाहरण के लिए, मैदानी, रेगिस्तानी और पहाड़ी क्षेत्रों में अलग-अलग दृष्टिकोण की आवश्यकता हो सकती है।</li>
+                    <li><strong>Handling Extreme Values (चरम मूल्यों को संभालना):</strong> Stratification विशेष रूप से तब अधिक प्रभावी होता है जब population में चरम मूल्य (extreme values) होते हैं जिन्हें अलग-अलग strata में अलग किया जा सकता है, जिससे variability कम हो जाती है।</li>
+                    <li><strong>Different Designs (विभिन्न डिजाइन):</strong> Stratification विभिन्न strata में विभिन्न sampling designs का उपयोग करना संभव बनाता है।</li>
+                    <li><strong>Adequate Representation (पर्याप्त प्रतिनिधित्व):</strong> Stratification population के विभिन्न समूहों को पर्याप्त प्रतिनिधित्व सुनिश्चित करता है, जो महत्व का हो सकता है।</li>
+                    <li><strong>Better Cross-Section (बेहतर क्रॉस-सेक्शन):</strong> Stratification unstratified population की तुलना में population के बेहतर cross-section का चयन सुनिश्चित करता है।</li>
+                    <li><strong>Gain in Precision (परिशुद्धता में लाभ):</strong> Stratification अनुमान में precision (परिशुद्धता) में लाभ लाता है। यदि प्रत्येक stratum homogeneous है, तो अपेक्षाकृत छोटे sample को लेकर अधिक सटीक अनुमान प्राप्त किया जा सकता है।</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="sec3-4" class="section-card">
+            <div class="english-content">
+                <h2>3.4 Notations</h2>
+                <p>Let \( i \) denote the stratum and \( j \) for the sampling unit within the stratum. The following symbols refer to stratum \( i \):</p>
+                <ul>
+                    <li>\( N_i = \) total number of units</li>
+                    <li>\( n_i = \) number of units in sample</li>
+                    <li>\( W_i = N_i/N \) (stratum weight)</li>
+                    <li>\( f_i = n_i/N_i \) (sampling fraction in the stratum)</li>
+                </ul>
+                <p>Let \( y_{ij} \) be the value of the \( j \)-th unit in the stratum.</p>
+                <div class="derivation-block">
+                    $$ \bar{Y}_i = \sum_{j} y_{ij}/N_i \quad \text{(stratum mean)} $$
+                    $$ \bar{y}_i = \sum_{j} y_{ij}/n_i \quad \text{(sample mean)} $$
+                    $$ S_i^2 = \sum_{j} (y_{ij} - \bar{Y}_i)^2 / (N_i - 1) \quad \text{(stratum variance)} $$
+                </div>
+            </div>
+            <div class="hinglish-content">
+                <h2>3.4 Notations (संकेतन)</h2>
+                <p>मान लीजिए \( i \) stratum को दर्शाता है और \( j \) stratum के भीतर sampling unit को दर्शाता है। निम्नलिखित प्रतीक (symbols) stratum \( i \) को संदर्भित करते हैं:</p>
+                <ul>
+                    <li>\( N_i = \) units की कुल संख्या</li>
+                    <li>\( n_i = \) sample में units की संख्या</li>
+                    <li>\( W_i = N_i/N \) (stratum weight)</li>
+                    <li>\( f_i = n_i/N_i \) (stratum में sampling fraction)</li>
+                </ul>
+                <p>मान लीजिए \( y_{ij} \) stratum में \( j \)-th unit का मूल्य (value) है।</p>
+                <div class="derivation-block">
+                    $$ \bar{Y}_i = \sum_{j} y_{ij}/N_i \quad \text{(stratum mean)} $$
+                    $$ \bar{y}_i = \sum_{j} y_{ij}/n_i \quad \text{(sample mean)} $$
+                    $$ S_i^2 = \sum_{j} (y_{ij} - \bar{Y}_i)^2 / (N_i - 1) \quad \text{(stratum variance)} $$
+                </div>
+            </div>
+        </section>
+
+
+    
+        <section id="sec3-5" class="section-card">
+            <div class="english-content">
+                <h2>3.5 Estimation of the Population Mean and its Variance</h2>
+                <p>Suppose that a population of \( N \) units is divided into \( k \) strata. The population mean per unit can be written as:</p>
+                <div class="derivation-block">
+                    $$ \bar{Y} = \frac{\sum \sum y_{ij}}{N} = \sum \frac{N_i \bar{Y}_i}{N} = \sum W_i \bar{Y}_i $$
+                    <div class="explanation">\( \because \) the overall mean is the weighted average of the individual stratum means, using the stratum weights \( W_i \).</div>
+                </div>
+                <p>An estimator \( \bar{y}_{st} \) (st for stratified) for the population mean \( \bar{Y} \) can be written as:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{st} = \sum \frac{N_i \bar{y}_i}{N} \quad (3.5.1) $$
+                </div>
+                <p>which is fundamentally different from the overall unweighted sample mean \( \bar{y} = \frac{\sum n_i \bar{y}_i}{n} \) (3.5.2).</p>
+
+                <h3><strong>Theorem 3.5.1:</strong></h3>
+                <p>If in every stratum the sample estimator \( \bar{y}_i \) is unbiased and samples are drawn independently in different strata, then \( \bar{y}_{st} \) is an unbiased estimator of the population mean and its sampling variance is given by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{st}) = \sum \frac{N_i^2 V(\bar{y}_i)}{N^2} = \sum W_i^2 V(\bar{y}_i) \quad (3.5.3) $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>We first take the expected value:</p>
+                    $$ E(\bar{y}_{st}) = E\left( \sum \frac{N_i \bar{y}_i}{N} \right) = \sum \frac{N_i E(\bar{y}_i)}{N} $$
+                    <div class="explanation">\( \because \) expectation distributes linearly.</div>
+                    $$ = \sum \frac{N_i \bar{Y}_i}{N} = \bar{Y} \quad (3.5.4) $$
+                    <div class="explanation">\( \because \) each \( \bar{y}_i \) is an unbiased estimator of \( \bar{Y}_i \). This shows that \( \bar{y}_{st} \) is an unbiased estimator.</div>
+                    <p>To obtain the sampling variance, we note that sampling is done independently in each stratum, and therefore the variance of a sum of independent variables is the sum of their variances:</p>
+                    $$ V(\bar{y}_{st}) = V\left( \sum \frac{N_i \bar{y}_i}{N} \right) = \sum \frac{N_i^2 V(\bar{y}_i)}{N^2} = \sum W_i^2 V(\bar{y}_i) \quad (3.5.5) $$
+                    <div class="explanation">\( \because \) the constants \( N_i/N \) are squared when taken outside the variance operator.</div>
+                </div>
+
+                <h3><strong>Theorem 3.5.2:</strong></h3>
+                <p>For stratified random sampling without replacement (wor), the sample estimator \( \bar{y}_{st} \) is unbiased and its sampling variance is given by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{st}) = \sum \frac{N_i (N_i - n_i) S_i^2}{N^2 n_i} = \sum (1 - f_i)\frac{W_i^2 S_i^2}{n_i} \quad (3.5.6) $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Since, in each stratum, a simple random sample is taken, \( \bar{y}_i \) is an unbiased estimator of \( \bar{Y}_i \). Hence, by Theorem 3.5.1, it can be shown that \( \bar{y}_{st} \) is an unbiased estimator of \( \bar{Y} \).</p>
+                    <p>Further, by applying Theorem 2.3.1 to an individual stratum without replacement, we have:</p>
+                    $$ V(\bar{y}_i) = \frac{(N_i - n_i)S_i^2}{N_i n_i} $$
+                    <div class="explanation">\( \because \) this is the standard variance formula for a simple random sample mean without replacement.</div>
+                    <p>Substituting this value into the result of Theorem 3.5.1, we get:</p>
+                    $$ V(\bar{y}_{st}) = \sum \frac{N_i^2}{N^2} \left[ \frac{(N_i - n_i)S_i^2}{N_i n_i} \right] $$
+                    $$ = \sum \frac{N_i (N_i - n_i) S_i^2}{N^2 n_i} = \sum (1 - f_i)\frac{W_i^2 S_i^2}{n_i} $$
+                    <div class="explanation">\( \because \) \( W_i = N_i/N \) and \( f_i = n_i/N_i \), giving us the final expression.</div>
+                </div>
+
+                <p><strong>Corollary 1:</strong> If \( \widehat{Y}_{st} = N \bar{y}_{st} \) is the estimator of the population total \( Y \), then it is unbiased and its sampling variance is given by:</p>
+                <div class="derivation-block">$$ V(\widehat{Y}_{st}) = \sum \frac{N_i (N_i - n_i) S_i^2}{n_i} = \sum N_i^2 (1 - f_i)\frac{S_i^2}{n_i} \quad (3.5.7) $$</div>
+
+                <p><strong>Corollary 2:</strong> If in every stratum \( (n_i / n) = (N_i / N) \), the variance of \( \bar{y}_{st} \) reduces to:</p>
+                <div class="derivation-block">$$ V(\bar{y}_{st}) = \frac{(N - n)}{nN^2} \sum N_i S_i^2 = (1 - f)\frac{\sum W_i S_i^2}{n} \quad (3.5.8) $$</div>
+
+                <p><strong>Corollary 3:</strong> If in every stratum \( n_i / n = N_i / N \), and the variance in all strata has the same value \( S_w^2 \), the result reduces to:</p>
+                <div class="derivation-block">$$ V(\bar{y}_{st}) = \frac{(N - n)S_w^2}{nN} = (1 - f)\frac{S_w^2}{n} \quad (3.5.9) $$</div>
+
+                <p><strong>Corollary 4:</strong> For stratified random sampling with replacement (wr), \( \bar{y}_{st} \) is an unbiased estimator and its sampling variance drops the fpc factor:</p>
+                <div class="derivation-block">$$ V(\bar{y}_{st}) = \sum \frac{N_i^2 S_i^2}{N^2 n_i} = \sum \frac{W_i^2 S_i^2}{n_i} \quad (3.5.10) $$</div>
+
+
+                <h3 style="margin-top: 40px;">Estimation of the Population Proportion</h3>
+                <p><strong>Theorem 3.5.3:</strong> In stratified random sampling without replacement (wor), with sample size \( \sum n_i = n \), an unbiased estimator of the population proportion \( P \) is given by:</p>
+                <div class="derivation-block">
+                    $$ P_{st} = \sum \frac{N_i p_i}{N} = \sum W_i p_i \quad (3.5.11) $$
+                </div>
+                <p>with its exact mathematical variance:</p>
+                <div class="derivation-block">
+                    $$ V(P_{st}) = \sum (1 - f_i)\frac{W_i^2 N_i P_i (1 - P_i)}{(N_i - 1)n_i} \quad (3.5.12) $$
+                    <div class="explanation">\( \because \) where \( p_i \) is the sample estimate of proportion \( P_i \) in the \( i \)-th stratum. The proof directly mirrors Theorem 3.5.2 using proportions instead of means.</div>
+                </div>
+                <p><strong>Corollary 1:</strong> If \( N_i / (N_i - 1) \) can be taken as unity (for large \( N_i \)), we have:</p>
+                <div class="derivation-block">$$ V(P_{st}) = \sum (1 - f_i)\frac{W_i^2 P_i (1 - P_i)}{n_i} \quad (3.5.13) $$</div>
+                <p><strong>Corollary 2:</strong> If stratified random sampling is with replacement (wr), the finite population correction vanishes:</p>
+                <div class="derivation-block">$$ V(P_{st}) = \sum \frac{W_i^2 P_i (1 - P_i)}{n_i} $$</div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>3.5 Estimation of the Population Mean and its Variance (जनसंख्या माध्य और उसके प्रसरण का अनुमान)</h2>
+                <p>मान लीजिए कि \( N \) units की एक आबादी को \( k \) strata में विभाजित किया गया है। प्रति इकाई (per unit) population mean को इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{Y} = \frac{\sum \sum y_{ij}}{N} = \sum \frac{N_i \bar{Y}_i}{N} = \sum W_i \bar{Y}_i $$
+                    <div class="explanation">\( \because \) overall mean, stratum weights \( W_i \) का उपयोग करते हुए, व्यक्तिगत stratum means का भारित औसत (weighted average) है।</div>
+                </div>
+                <p>Population mean \( \bar{Y} \) के लिए एक estimator \( \bar{y}_{st} \) (stratified के लिए st) इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{st} = \sum \frac{N_i \bar{y}_i}{N} \quad (3.5.1) $$
+                </div>
+                <p>जो overall unweighted sample mean \( \bar{y} = \frac{\sum n_i \bar{y}_i}{n} \) (3.5.2) से मौलिक रूप से अलग है।</p>
+
+                <h3><strong>Theorem 3.5.1:</strong></h3>
+                <p>यदि हर stratum में sample estimator \( \bar{y}_i \) unbiased है और विभिन्न strata में स्वतंत्र रूप से samples निकाले जाते हैं, तो \( \bar{y}_{st} \) population mean का एक unbiased estimator है और इसका sampling variance इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{st}) = \sum \frac{N_i^2 V(\bar{y}_i)}{N^2} = \sum W_i^2 V(\bar{y}_i) \quad (3.5.3) $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>हम पहले expected value लेते हैं:</p>
+                    $$ E(\bar{y}_{st}) = E\left( \sum \frac{N_i \bar{y}_i}{N} \right) = \sum \frac{N_i E(\bar{y}_i)}{N} $$
+                    <div class="explanation">\( \because \) expectation रैखिक रूप से (linearly) वितरित होती है।</div>
+                    $$ = \sum \frac{N_i \bar{Y}_i}{N} = \bar{Y} \quad (3.5.4) $$
+                    <div class="explanation">\( \because \) प्रत्येक \( \bar{y}_i \), \( \bar{Y}_i \) का एक unbiased estimator है। यह दर्शाता है कि \( \bar{y}_{st} \) एक unbiased estimator है।</div>
+                    <p>Sampling variance प्राप्त करने के लिए, हम ध्यान देते हैं कि प्रत्येक stratum में sampling स्वतंत्र रूप से (independently) की जाती है, और इसलिए स्वतंत्र चरों के योग का variance उनके variances का योग होता है:</p>
+                    $$ V(\bar{y}_{st}) = V\left( \sum \frac{N_i \bar{y}_i}{N} \right) = \sum \frac{N_i^2 V(\bar{y}_i)}{N^2} = \sum W_i^2 V(\bar{y}_i) \quad (3.5.5) $$
+                    <div class="explanation">\( \because \) variance ऑपरेटर के बाहर ले जाने पर constants \( N_i/N \) का वर्ग (square) हो जाता है।</div>
+                </div>
+
+                <h3><strong>Theorem 3.5.2:</strong></h3>
+                <p>Stratified random sampling without replacement (wor) के लिए, sample estimator \( \bar{y}_{st} \) unbiased है और इसका sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{st}) = \sum \frac{N_i (N_i - n_i) S_i^2}{N^2 n_i} = \sum (1 - f_i)\frac{W_i^2 S_i^2}{n_i} \quad (3.5.6) $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>चूँकि, प्रत्येक stratum में एक simple random sample लिया जाता है, \( \bar{y}_i \), \( \bar{Y}_i \) का एक unbiased estimator है। इसलिए, Theorem 3.5.1 द्वारा, यह दिखाया जा सकता है कि \( \bar{y}_{st} \), \( \bar{Y} \) का एक unbiased estimator है।</p>
+                    <p>आगे, without replacement एक व्यक्तिगत stratum पर Theorem 2.3.1 लागू करने पर, हमारे पास है:</p>
+                    $$ V(\bar{y}_i) = \frac{(N_i - n_i)S_i^2}{N_i n_i} $$
+                    <div class="explanation">\( \because \) यह without replacement एक simple random sample mean के लिए मानक variance सूत्र है।</div>
+                    <p>इस मान को Theorem 3.5.1 के परिणाम में प्रतिस्थापित (substitute) करने पर, हमें मिलता है:</p>
+                    $$ V(\bar{y}_{st}) = \sum \frac{N_i^2}{N^2} \left[ \frac{(N_i - n_i)S_i^2}{N_i n_i} \right] $$
+                    $$ = \sum \frac{N_i (N_i - n_i) S_i^2}{N^2 n_i} = \sum (1 - f_i)\frac{W_i^2 S_i^2}{n_i} $$
+                    <div class="explanation">\( \because \) \( W_i = N_i/N \) और \( f_i = n_i/N_i \), जो हमें अंतिम व्यंजक (expression) देता है।</div>
+                </div>
+
+                <p><strong>Corollary 1:</strong> यदि \( \widehat{Y}_{st} = N \bar{y}_{st} \) population total \( Y \) का estimator है, तो यह unbiased है और इसका sampling variance है:</p>
+                <div class="derivation-block">$$ V(\widehat{Y}_{st}) = \sum \frac{N_i (N_i - n_i) S_i^2}{n_i} = \sum N_i^2 (1 - f_i)\frac{S_i^2}{n_i} \quad (3.5.7) $$</div>
+
+                <p><strong>Corollary 2:</strong> यदि हर stratum में \( (n_i / n) = (N_i / N) \) है, तो \( \bar{y}_{st} \) का variance घटकर हो जाता है:</p>
+                <div class="derivation-block">$$ V(\bar{y}_{st}) = \frac{(N - n)}{nN^2} \sum N_i S_i^2 = (1 - f)\frac{\sum W_i S_i^2}{n} \quad (3.5.8) $$</div>
+
+                <p><strong>Corollary 3:</strong> यदि हर stratum में \( n_i / n = N_i / N \) है, और सभी strata में variance का मान \( S_w^2 \) समान है, तो परिणाम घटकर हो जाता है:</p>
+                <div class="derivation-block">$$ V(\bar{y}_{st}) = \frac{(N - n)S_w^2}{nN} = (1 - f)\frac{S_w^2}{n} \quad (3.5.9) $$</div>
+
+                <p><strong>Corollary 4:</strong> Stratified random sampling with replacement (wr) के लिए, \( \bar{y}_{st} \) एक unbiased estimator है और इसका sampling variance fpc कारक को छोड़ देता है:</p>
+                <div class="derivation-block">$$ V(\bar{y}_{st}) = \sum \frac{N_i^2 S_i^2}{N^2 n_i} = \sum \frac{W_i^2 S_i^2}{n_i} \quad (3.5.10) $$</div>
+
+                <h3 style="margin-top: 40px;">Estimation of the Population Proportion (जनसंख्या अनुपात का अनुमान)</h3>
+                <p><strong>Theorem 3.5.3:</strong> Stratified random sampling without replacement (wor) में, जहाँ sample size \( \sum n_i = n \) है, population proportion \( P \) का एक unbiased estimator इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ P_{st} = \sum \frac{N_i p_i}{N} = \sum W_i p_i \quad (3.5.11) $$
+                </div>
+                <p>और इसका सटीक गणितीय variance है:</p>
+                <div class="derivation-block">
+                    $$ V(P_{st}) = \sum (1 - f_i)\frac{W_i^2 N_i P_i (1 - P_i)}{(N_i - 1)n_i} \quad (3.5.12) $$
+                    <div class="explanation">\( \because \) जहाँ \( p_i \), \( i \)-th stratum में proportion \( P_i \) का sample estimate है। इसका प्रमाण सीधे तौर पर Theorem 3.5.2 को प्रतिध्वनित (mirrors) करता है।</div>
+                </div>
+                <p><strong>Corollary 1:</strong> यदि \( N_i / (N_i - 1) \) को इकाई (unity) के रूप में लिया जा सकता है (बड़े \( N_i \) के लिए), तो हमारे पास है:</p>
+                <div class="derivation-block">$$ V(P_{st}) = \sum (1 - f_i)\frac{W_i^2 P_i (1 - P_i)}{n_i} \quad (3.5.13) $$</div>
+                <p><strong>Corollary 2:</strong> यदि stratified random sampling with replacement (wr) है, तो finite population correction गायब हो जाता है:</p>
+                <div class="derivation-block">$$ V(P_{st}) = \sum \frac{W_i^2 P_i (1 - P_i)}{n_i} $$</div>
+            </div>
+        </section>
+
+        <section id="sec3-6" class="section-card">
+
+              <div class="english-content">
+                  <h2>3.6 Estimate of Variance</h2>
+                  <p>If a simple random sample is taken within each stratum, an unbiased estimator of \( S_i^2 \) is given by:</p>
+                  <div class="derivation-block">
+                      $$ s_i^2 = \frac{\sum_{j} (y_{ij} - \bar{y}_i)^2}{n_i - 1} \quad (3.6.1) $$
+                  </div>
+                  <p>Then, an unbiased estimator of sampling variance of \( \bar{y}_{st} \) can be logically obtained as follows:</p>
+
+                  <p><strong>Theorem 3.6:</strong> With stratified random sampling, wor, an unbiased estimator of the variance of \( \bar{y}_{st} \) is given by:</p>
+                  <div class="derivation-block">
+                      $$ v(\bar{y}_{st}) = \sum \frac{N_i(N_i - n_i)s_i^2}{N^2 n_i} = \sum \frac{W_i^2 s_i^2}{n_i} - \sum \frac{W_i s_i^2}{N} \quad (3.6.2) $$
+                      <div class="explanation">\( \because \) the proof follows obviously by replacing \( S_i^2 \) with its unbiased estimator \( s_i^2 \) directly in the variance formula from Theorem 3.5.2.</div>
+                  </div>
+
+                  <p><strong>Corollary 1:</strong> With stratified random sampling, wor, an unbiased estimator of \( V(\bar{y}_{st}) \) mathematically reduces to:</p>
+                  <div class="derivation-block">$$ v(\bar{y}_{st}) = \sum \frac{W_i^2 s_i^2}{n_i} \quad (3.6.3) $$</div>
+
+                  <p><strong>Corollary 2:</strong> With stratified random sampling, wor, an unbiased estimator of \( V(P_{st}) \) is equivalently given by:</p>
+                  <div class="derivation-block">$$ v(P_{st}) = \sum \frac{(1 - f_i)W_i^2 p_i(1 - p_i)}{n_i - 1} \quad (3.6.4) $$</div>
+              </div>
+
+
+              <div class="hinglish-content">
+                  <h2>3.6 Estimate of Variance (प्रसरण का अनुमान)</h2>
+                  <p>यदि प्रत्येक stratum के भीतर एक simple random sample लिया जाता है, तो \( S_i^2 \) का एक unbiased estimator इस प्रकार दिया जाता है:</p>
+                  <div class="derivation-block">
+                      $$ s_i^2 = \frac{\sum_{j} (y_{ij} - \bar{y}_i)^2}{n_i - 1} \quad (3.6.1) $$
+                  </div>
+                  <p>तब, \( \bar{y}_{st} \) के sampling variance का एक unbiased estimator तार्किक रूप से निम्नानुसार प्राप्त किया जा सकता है:</p>
+
+                  <p><strong>Theorem 3.6:</strong> Stratified random sampling, wor के साथ, \( \bar{y}_{st} \) के variance का एक unbiased estimator है:</p>
+                  <div class="derivation-block">
+                      $$ v(\bar{y}_{st}) = \sum \frac{N_i(N_i - n_i)s_i^2}{N^2 n_i} = \sum \frac{W_i^2 s_i^2}{n_i} - \sum \frac{W_i s_i^2}{N} \quad (3.6.2) $$
+                      <div class="explanation">\( \because \) प्रमाण (proof) स्पष्ट रूप से Theorem 3.5.2 के variance सूत्र में सीधे \( S_i^2 \) को उसके unbiased estimator \( s_i^2 \) से बदलकर प्राप्त होता है।</div>
+                  </div>
+
+                  <p><strong>Corollary 1:</strong> Stratified random sampling, wor के साथ, \( V(\bar{y}_{st}) \) का एक unbiased estimator गणितीय रूप से कम होकर हो जाता है:</p>
+                  <div class="derivation-block">$$ v(\bar{y}_{st}) = \sum \frac{W_i^2 s_i^2}{n_i} \quad (3.6.3) $$</div>
+
+                  <p><strong>Corollary 2:</strong> Stratified random sampling, wor के साथ, \( V(P_{st}) \) का एक unbiased estimator समान रूप से इस प्रकार दिया जाता है:</p>
+                  <div class="derivation-block">$$ v(P_{st}) = \sum \frac{(1 - f_i)W_i^2 p_i(1 - p_i)}{n_i - 1} \quad (3.6.4) $$</div>
+              </div>
+
+</section>
+
+    
+        <section id="sec3-7" class="section-card">
+            <div class="english-content">
+                <h2>3.7 Allocation of Sample Size</h2>
+                <p>The allocation of the total sample size \( n \) to the respective strata is governed by three primary mathematical considerations:</p>
+                <ol type="i">
+                    <li>the total number of units in the stratum (stratum size)</li>
+                    <li>the variability of observations within the stratum</li>
+                    <li>the cost in taking observations per sampling unit in the stratum</li>
+                </ol>
+                <p>A good allocation is one where maximum precision is obtained with minimum resources. The mathematical criterion for allocation is to strictly minimize the budget for a given variance or precisely minimize the variance for a fixed budget. There are four main methods:</p>
+
+                <h3>3.7.1 Equal Allocation</h3>
+                <p>This is a situation of considerable practical interest for reasons of administrative convenience. The total sample size \( n \) is divided equally among all the strata, i.e., for the \( i \)-th stratum:</p>
+                <div class="derivation-block">$$ n_i = n/k \quad (3.7.1) $$</div>
+
+                <h3>3.7.2 Proportional Allocation</h3>
+                <p>Originally proposed by Bowley (1926), this procedure is very common in practice due to its mathematical simplicity. The allocation of a given sample of size \( n \) to different strata is done strictly in proportion to their sizes:</p>
+                <div class="derivation-block">
+                    $$ n_i = n\frac{N_i}{N} \quad \text{or} \quad f_i = f \quad (3.7.2) $$
+                    <div class="explanation">\( \because \) the sampling fraction \( f_i \) is exactly the same across all strata. It yields a self-weighting sample.</div>
+                </div>
+
+                <h3>3.7.3 Neyman Allocation</h3>
+                <p>This allocation is known as minimum variance allocation, discovered by Tschuprow (1923) and rediscovered by Neyman (1934). It assumes that the sampling cost per unit is exactly the same among different strata, and the size of the sample is fixed. Sample sizes are allocated by:</p>
+                <div class="derivation-block">
+                    $$ n_i = n\frac{W_i S_i}{\sum W_i S_i} = n\frac{N_i S_i}{\sum N_i S_i} \quad (3.7.3) $$
+                </div>
+                <p>The exact formula for the minimum variance with fixed \( n \) is obtained by substituting \( n_i \) into Eqn. (3.5.6):</p>
+                <div class="derivation-block">
+                    $$ V_m(\bar{y}_{st}) = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} \quad (3.7.4) $$
+                </div>
+
+                <h3>3.7.4 Optimum Allocation</h3>
+                <p>In this method, \( n_i \) are mathematically determined to minimize \( V(\bar{y}_{st}) \) for a specified cost \( C \), or to minimize \( C \) for a specified \( V \). The cost function is:</p>
+                <div class="derivation-block">$$ C = a + \sum n_i c_i \quad (3.7.5) $$</div>
+                <p>where \( a \) is overhead cost and \( c_i \) is the average cost of surveying one unit in the \( i \)-th stratum. To determine the optimum \( n_i \), we use Lagrange multipliers:</p>
+                <div class="derivation-block">
+                    $$ \Phi = V(\bar{y}_{st}) + \lambda C \quad (3.7.6) $$
+                    <p>Differentiating with respect to \( n_i \):</p>
+                    $$ -\frac{W_i^2 S_i^2}{n_i^2} + \lambda c_i = 0 $$
+                    $$ n_i = \frac{W_i S_i}{\sqrt{\lambda c_i}} \quad (3.7.7) $$
+                    <div class="explanation">\( \because \) summing over all strata yields \( n = \sum \left( \frac{W_i S_i}{\sqrt{\lambda c_i}} \right) \) (3.7.8).</div>
+                    $$ n_i = n \frac{W_i S_i / \sqrt{c_i}}{\sum (W_i S_i / \sqrt{c_i})} = n \frac{N_i S_i / \sqrt{c_i}}{\sum (N_i S_i / \sqrt{c_i})} \quad (3.7.9) $$
+                </div>
+                <p>The total sample size \( n \) required for a specified cost \( C \) is:</p>
+                <div class="derivation-block">$$ n = \frac{(C - a)\sum (W_i S_i / \sqrt{c_i})}{\sum W_i S_i c_i} \quad (3.7.10) $$</div>
+                <p>If Variance \( V \) is fixed, then:</p>
+                <div class="derivation-block">$$ n = \frac{\left( \sum W_i S_i / \sqrt{c_i} \right)\left( \sum W_i S_i c_i \right)}{V + \sum W_i S_i^2} \quad (3.7.11) $$</div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>3.7 Allocation of Sample Size (प्रतिदर्श आकार का आवंटन)</h2>
+                <p>कुल sample size \( n \) का संबंधित strata में आवंटन तीन प्राथमिक गणितीय विचारों (mathematical considerations) द्वारा नियंत्रित होता है:</p>
+                <ol type="i">
+                    <li>stratum में units की कुल संख्या (stratum size)</li>
+                    <li>stratum के भीतर observations की भिन्नता (variability)</li>
+                    <li>stratum में प्रति sampling unit observation लेने की लागत (cost)</li>
+                </ol>
+                <p>एक अच्छा आवंटन वह है जहाँ न्यूनतम संसाधनों के साथ अधिकतम precision प्राप्त होती है। आवंटन के लिए गणितीय मानदंड (criterion) एक दिए गए variance के लिए बजट को सख्ती से कम करना है या एक निश्चित बजट के लिए variance को कम करना है। इसके चार मुख्य तरीके हैं:</p>
+
+                <h3>3.7.1 Equal Allocation (समान आवंटन)</h3>
+                <p>यह प्रशासनिक सुविधा के कारणों के लिए व्यावहारिक रुचि (practical interest) की स्थिति है। कुल sample size \( n \) को सभी strata के बीच समान रूप से विभाजित किया जाता है, यानी, \( i \)-th stratum के लिए:</p>
+                <div class="derivation-block">$$ n_i = n/k \quad (3.7.1) $$</div>
+
+                <h3>3.7.2 Proportional Allocation (आनुपातिक आवंटन)</h3>
+                <p>मूल रूप से Bowley (1926) द्वारा प्रस्तावित, यह प्रक्रिया इसकी गणितीय सादगी के कारण व्यवहार में बहुत आम है। विभिन्न strata को size \( n \) के एक दिए गए sample का आवंटन उनके sizes के सख्त अनुपात (proportion) में किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ n_i = n\frac{N_i}{N} \quad \text{या} \quad f_i = f \quad (3.7.2) $$
+                    <div class="explanation">\( \because \) sampling fraction \( f_i \) सभी strata में बिल्कुल समान है। यह एक self-weighting sample देता है।</div>
+                </div>
+
+                <h3>3.7.3 Neyman Allocation (नेमन आवंटन)</h3>
+                <p>इस आवंटन को minimum variance allocation के रूप में जाना जाता है, जिसे Tschuprow (1923) ने खोजा और Neyman (1934) ने फिर से खोजा। यह मानता है कि विभिन्न strata के बीच प्रति इकाई (per unit) sampling cost बिल्कुल समान है, और sample size निश्चित है। Sample sizes इस प्रकार आवंटित किए जाते हैं:</p>
+                <div class="derivation-block">
+                    $$ n_i = n\frac{W_i S_i}{\sum W_i S_i} = n\frac{N_i S_i}{\sum N_i S_i} \quad (3.7.3) $$
+                </div>
+                <p>निश्चित \( n \) के साथ minimum variance के लिए सटीक सूत्र (formula) \( n_i \) को Eqn. (3.5.6) में प्रतिस्थापित (substitute) करके प्राप्त किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ V_m(\bar{y}_{st}) = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} \quad (3.7.4) $$
+                </div>
+
+                <h3>3.7.4 Optimum Allocation (इष्टतम आवंटन)</h3>
+                <p>इस method में, \( n_i \) को गणितीय रूप से एक निर्दिष्ट लागत \( C \) के लिए \( V(\bar{y}_{st}) \) को कम करने के लिए, या एक निर्दिष्ट \( V \) के लिए \( C \) को कम करने के लिए निर्धारित किया जाता है। Cost function है:</p>
+                <div class="derivation-block">$$ C = a + \sum n_i c_i \quad (3.7.5) $$</div>
+                <p>जहाँ \( a \) overhead cost है और \( c_i \), \( i \)-th stratum में एक unit का सर्वेक्षण करने की औसत लागत है। Optimum \( n_i \) निर्धारित करने के लिए, हम Lagrange multipliers का उपयोग करते हैं:</p>
+                <div class="derivation-block">
+                    $$ \Phi = V(\bar{y}_{st}) + \lambda C \quad (3.7.6) $$
+                    <p>\( n_i \) के संबंध में अवकलन (differentiating) करने पर:</p>
+                    $$ -\frac{W_i^2 S_i^2}{n_i^2} + \lambda c_i = 0 $$
+                    $$ n_i = \frac{W_i S_i}{\sqrt{\lambda c_i}} \quad (3.7.7) $$
+                    <div class="explanation">\( \because \) सभी strata पर जोड़ने से \( n = \sum \left( \frac{W_i S_i}{\sqrt{\lambda c_i}} \right) \) (3.7.8) प्राप्त होता है।</div>
+                    $$ n_i = n \frac{W_i S_i / \sqrt{c_i}}{\sum (W_i S_i / \sqrt{c_i})} = n \frac{N_i S_i / \sqrt{c_i}}{\sum (N_i S_i / \sqrt{c_i})} \quad (3.7.9) $$
+                </div>
+                <p>एक निर्दिष्ट लागत \( C \) के लिए आवश्यक कुल sample size \( n \) है:</p>
+                <div class="derivation-block">$$ n = \frac{(C - a)\sum (W_i S_i / \sqrt{c_i})}{\sum W_i S_i c_i} \quad (3.7.10) $$</div>
+                <p>यदि Variance \( V \) निश्चित है, तो:</p>
+                <div class="derivation-block">$$ n = \frac{\left( \sum W_i S_i / \sqrt{c_i} \right)\left( \sum W_i S_i c_i \right)}{V + \sum W_i S_i^2} \quad (3.7.11) $$</div>
+            </div>
+        </section>
+
+        <section id="sec3-8" class="section-card">
+            <div class="english-content">
+                <h2>3.8 Relative Precision of Stratified Random Sampling with Simple Random Sampling</h2>
+                <p>We shall make a comparative study of the usual estimators under simple random sampling, proportional allocation, and optimum allocations. The variances are denoted by \( V_{SR} \), \( V_{prop} \) and \( V_{opt} \) respectively.</p>
+
+                <h3><strong>Theorem 3.8.1:</strong></h3>
+                <p>If fpc is ignored, mathematically show that:</p>
+                <div class="derivation-block">$$ V_{opt} \leq V_{prop} \leq V_{SR} \quad (3.8.1) $$</div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>When fpc is perfectly ignored, we have:</p>
+                    $$ V_{SR} = \frac{S^2}{n}, \quad V_{prop} = \frac{\sum W_i S_i^2}{n}, \quad V_{opt} = \frac{(\sum W_i S_i)^2}{n} $$
+                    <p>From the standard algebraic decomposition of total sum of squares:</p>
+                    $$ (N-1)S^2 = \sum (N_i - 1)S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 $$
+                    <p>Since \( 1/N_i \) and \( 1/N \) are negligible, \( NS^2 \approx \sum N_i S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 \).</p>
+                    <p>Hence, dividing by \( nN \):</p>
+                    $$ V_{SR} = \frac{S^2}{n} = \frac{1}{n}\sum W_i S_i^2 + \frac{1}{n}\sum W_i(\bar{Y}_i - \bar{Y})^2 $$
+                    $$ = V_{prop} + \frac{\sum W_i(\bar{Y}_i - \bar{Y})^2}{n} \quad (3.8.2) $$
+                    <div class="explanation">\( \because \) the second term is a sum of squares, it is strictly positive. Thus \( V_{SR} - V_{prop} \geq 0 \), meaning proportional allocation is mathematically superior.</div>
+                    
+                    <p>Similarly, for optimum vs proportional:</p>
+                    $$ V_{prop} - V_{opt} = \frac{\sum W_i S_i^2}{n} - \frac{(\sum W_i S_i)^2}{n} $$
+                    $$ = \frac{1}{n} \sum W_i(S_i - \bar{S})^2 \quad (3.8.3) $$
+                    <div class="explanation">\( \because \) this is the mathematical variance of the stratum standard deviations \( S_i \) around their weighted mean \( \bar{S} = \sum W_i S_i \). It is strictly positive.</div>
+                    <p>Hence, \( V_{opt} \leq V_{prop} \leq V_{SR} \).</p>
+                </div>
+
+                
+                <h3>Example 3.1</h3>
+                <p>2000 tech companies were stratified according to their sizes (number of employees). The number of companies (\( N_i \)), mean annual revenue (\( \bar{Y}_i \)) in millions, and s.d. (\( S_i \)) are mathematically grouped below:</p>
+                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Stratum</th><th>\( N_i \)</th><th>\( \bar{Y}_i \)</th><th>\( S_i \)</th><th>\( W_i \)</th><th>\( W_i S_i \)</th><th>\( n_i \) (Prop)</th><th>\( n_i \) (Opt)</th></tr>
+                    <tr><td>1</td><td>394</td><td>5.4</td><td>8.3</td><td>0.1970</td><td>1.64</td><td>40</td><td>19</td></tr>
+                    <tr><td>2</td><td>461</td><td>16.3</td><td>13.3</td><td>0.2305</td><td>3.07</td><td>46</td><td>36</td></tr>
+                    <tr><td>3</td><td>381</td><td>24.3</td><td>15.1</td><td>0.1905</td><td>2.88</td><td>38</td><td>34</td></tr>
+                    <tr><td>4</td><td>334</td><td>34.5</td><td>19.8</td><td>0.1670</td><td>3.31</td><td>33</td><td>39</td></tr>
+                    <tr><td>5</td><td>169</td><td>42.1</td><td>24.5</td><td>0.0845</td><td>2.07</td><td>17</td><td>24</td></tr>
+                    <tr><td>6</td><td>113</td><td>50.1</td><td>26.0</td><td>0.0565</td><td>1.47</td><td>11</td><td>17</td></tr>
+                    <tr><td>7</td><td>148</td><td>63.8</td><td>35.2</td><td>0.0740</td><td>2.61</td><td>15</td><td>31</td></tr>
+                    <tr style="font-weight: bold; background: #f9f9f9;"><td>Total</td><td>2000</td><td>-</td><td>-</td><td>1.0000</td><td>17.05</td><td>200</td><td>200</td></tr>
+                </table>
+                <div class="derivation-block">
+                    <p><strong>Proportional Allocation:</strong> \( V(\bar{y}_{prop})_{wor} = \frac{N-n}{nN}\sum W_i S_i^2 = 1.5492 \)</p>
+                    <p><strong>Optimum Allocation:</strong> \( V(\bar{y}_{opt})_{wor} = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} = 1.2813 \)</p>
+                    <p><strong>Simple Random Sampling:</strong> \( V(\bar{y}_{SR})_{wor} = 3.0420 \)</p>
+                    <p>Relative precision of proportional = \( 3.0420 / 1.5492 = 1.9636 \)</p>
+                    <p>Relative precision of optimum = \( 3.0420 / 1.2813 = 2.3742 \)</p>
+                    <div class="explanation">\( \because \) proportional and optimum allocations significantly reduce the variance compared to unstratified simple random sampling.</div>
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>3.8 Relative Precision of Stratified Random Sampling with Simple Random Sampling</h2>
+                <p>हम simple random sampling, proportional allocation, और optimum allocation के तहत सामान्य estimators का तुलनात्मक अध्ययन (comparative study) करेंगे। Variances को क्रमशः \( V_{SR} \), \( V_{prop} \) और \( V_{opt} \) द्वारा दर्शाया गया है।</p>
+
+                <h3><strong>Theorem 3.8.1:</strong></h3>
+                <p>यदि fpc को अनदेखा किया जाता है, तो गणितीय रूप से दिखाएं कि:</p>
+                <div class="derivation-block">$$ V_{opt} \leq V_{prop} \leq V_{SR} \quad (3.8.1) $$</div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>जब fpc को पूरी तरह से अनदेखा कर दिया जाता है, तो हमारे पास है:</p>
+                    $$ V_{SR} = \frac{S^2}{n}, \quad V_{prop} = \frac{\sum W_i S_i^2}{n}, \quad V_{opt} = \frac{(\sum W_i S_i)^2}{n} $$
+                    <p>Total sum of squares के मानक बीजीय अपघटन (algebraic decomposition) से:</p>
+                    $$ (N-1)S^2 = \sum (N_i - 1)S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 $$
+                    <p>चूंकि \( 1/N_i \) और \( 1/N \) नगण्य (negligible) हैं, \( NS^2 \approx \sum N_i S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 \)।</p>
+                    <p>इसलिए, \( nN \) से भाग देने पर:</p>
+                    $$ V_{SR} = \frac{S^2}{n} = \frac{1}{n}\sum W_i S_i^2 + \frac{1}{n}\sum W_i(\bar{Y}_i - \bar{Y})^2 $$
+                    $$ = V_{prop} + \frac{\sum W_i(\bar{Y}_i - \bar{Y})^2}{n} \quad (3.8.2) $$
+                    <div class="explanation">\( \because \) दूसरा term squares का sum है, यह पूरी तरह से positive है। इस प्रकार \( V_{SR} - V_{prop} \geq 0 \), जिसका अर्थ है कि proportional allocation गणितीय रूप से बेहतर है।</div>
+                    
+                    <p>इसी तरह, optimum vs proportional के लिए:</p>
+                    $$ V_{prop} - V_{opt} = \frac{\sum W_i S_i^2}{n} - \frac{(\sum W_i S_i)^2}{n} $$
+                    $$ = \frac{1}{n} \sum W_i(S_i - \bar{S})^2 \quad (3.8.3) $$
+                    <div class="explanation">\( \because \) यह उनके weighted mean \( \bar{S} = \sum W_i S_i \) के चारों ओर stratum standard deviations \( S_i \) का गणितीय variance है। यह पूरी तरह से positive है।</div>
+                    <p>इसलिए, \( V_{opt} \leq V_{prop} \leq V_{SR} \)।</p>
+                </div>
+
+                
+                <h3>उदाहरण 3.1 (Example 3.1)</h3>
+                <p>2000 टेक कंपनियों (tech companies) को उनके आकार (कर्मचारियों की संख्या) के अनुसार stratify किया गया था। कंपनियों की संख्या (\( N_i \)), लाखों में औसत वार्षिक राजस्व (mean annual revenue \( \bar{Y}_i \)), और s.d. (\( S_i \)) को गणितीय रूप से नीचे समूहीकृत (grouped) किया गया है:</p>
+                <div class="derivation-block">
+                    <p><strong>Proportional Allocation:</strong> \( V(\bar{y}_{prop})_{wor} = \frac{N-n}{nN}\sum W_i S_i^2 = 1.5492 \)</p>
+                    <p><strong>Optimum Allocation:</strong> \( V(\bar{y}_{opt})_{wor} = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} = 1.2813 \)</p>
+                    <p><strong>Simple Random Sampling:</strong> \( V(\bar{y}_{SR})_{wor} = 3.0420 \)</p>
+                    <p>Proportional की relative precision = \( 3.0420 / 1.5492 = 1.9636 \)</p>
+                    <p>Optimum की relative precision = \( 3.0420 / 1.2813 = 2.3742 \)</p>
+                    <div class="explanation">\( \because \) proportional और optimum allocations unstratified simple random sampling की तुलना में variance को काफी कम कर देते हैं।</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec3-9" class="section-card">
+
+              <div class="english-content">
+                  <h2>3.9 Estimation of Gain in Precision due to Stratification</h2>
+                  <p>It is sometimes of interest to mathematically examine from a survey how useful the mode of stratification has been. What is available is only a stratified sample, and the exact problem is to estimate the gain in precision purely due to stratification.</p>
+                  <p>An unbiased estimator of \( V(\bar{y}_{SR}) \) based strictly on a stratified sample is given by:</p>
+                  <div class="derivation-block">
+                      $$ v(\bar{y}_{SR}) = \frac{N-n}{n(N-1)}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 - \frac{1}{N}\sum W_i(1-W_i)s_i^2/n_i \right] \quad (3.9.1) $$
+                  </div>
+                  <p>The estimate of the relative gain in precision due to stratification is thus logically obtained by:</p>
+                  <div class="derivation-block">
+                      $$ \frac{v(\bar{y}_{SR}) - v(\bar{y}_{st})}{v(\bar{y}_{st})} \quad (3.9.2) $$
+                  </div>
+                  <p>If the sample allocation is substantially large enough in each stratum (i.e., \( n_i > 50 \)), the relation (3.9.1) gracefully reduces to:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_{SR}) = \frac{N-n}{nN}\left[ \sum W_i s_i^2 + \sum W_i \bar{y}_i^2 - \left(\sum W_i \bar{y}_i\right)^2 \right] \quad (3.9.3) $$
+                  </div>
+
+                  <h3 style="margin-top: 40px;">Example 3.3</h3>
+                  <p>The number of high-capacity solar panels installed in selected districts across three geographical strata of a specific state is given below:</p>
+                  <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
+                      <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Stratum</th><th>Total Districts (\( N_i \))</th><th>Selected (\( n_i \))</th><th>Solar panels in selected districts (\( y_{ij} \))</th></tr>
+                      <tr><td>1</td><td>441</td><td>11</td><td>41, 116, 19, 15, 144, 159, 212, 57, 28, 119, 76</td></tr>
+                      <tr><td>2</td><td>405</td><td>12</td><td>39, 70, 38, 37, 161, 38, 27, 119, 36, 128, 30, 208</td></tr>
+                      <tr><td>3</td><td>103</td><td>7</td><td>252, 385, 192, 296, 115, 159, 120</td></tr>
+                  </table>
+                  <p>Mathematically estimate the total number of solar panels along with its exact standard error. Also, estimate the gain in precision purely due to stratification.</p>
+                  <div class="derivation-block">
+                      <p>An unbiased estimate of the total number of solar panels is given directly by:</p>
+                      $$ \widehat{Y}_{st} = \sum N_i \bar{y}_i = 87,376.54 $$
+                      <div class="explanation">\( \because \) calculating the weighted sum of sample means estimates the total population.</div>
+                      <p>An estimate of the variance of \( \widehat{Y}_{st} \) is derived by summing the scaled individual variances:</p>
+                      $$ v(\widehat{Y}_{st}) = \sum N_i(N_i - n_i)\frac{s_i^2}{n_i} = 153,491,126 $$
+                      <p>Thus, the estimated standard error is \( \sqrt{153,491,126} \approx 12,389 \).</p>
+                      <p>To calculate the gain in precision, we compute \( v(\widehat{Y}_{SR}) \) using the collapsed formula (3.9.1) ignoring the negligible correction term:</p>
+                      $$ v(\widehat{Y}_{SR}) \approx \frac{N^2}{n}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 \right] = 239,026,380 $$
+                      <p>Relative gain in precision = \( \frac{239,026,380 - 153,491,126}{153,491,126} \times 100 \approx 55.72\% \)</p>
+                      <div class="explanation">\( \because \) dividing the difference in variance by the stratified variance yields the precise percentage gain.</div>
+                  </div>
+              </div>
+
+
+              <div class="hinglish-content">
+                  <h2>3.9 Estimation of Gain in Precision due to Stratification (स्तरीकरण के कारण परिशुद्धता में लाभ का अनुमान)</h2>
+                  <p>कभी-कभी एक सर्वेक्षण (survey) से गणितीय रूप से यह जांचना दिलचस्प होता है कि stratification का तरीका कितना उपयोगी रहा है। जो उपलब्ध है वह केवल एक stratified sample है, और सटीक समस्या stratification के कारण precision (परिशुद्धता) में लाभ का अनुमान लगाना है।</p>
+                  <p>सख्ती से एक stratified sample पर आधारित \( V(\bar{y}_{SR}) \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                  <div class="derivation-block">
+                      $$ v(\bar{y}_{SR}) = \frac{N-n}{n(N-1)}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 - \frac{1}{N}\sum W_i(1-W_i)s_i^2/n_i \right] \quad (3.9.1) $$
+                  </div>
+                  <p>इस प्रकार stratification के कारण precision में relative gain का अनुमान तार्किक (logically) रूप से प्राप्त किया जाता है:</p>
+                  <div class="derivation-block">
+                      $$ \frac{v(\bar{y}_{SR}) - v(\bar{y}_{st})}{v(\bar{y}_{st})} \quad (3.9.2) $$
+                  </div>
+                  <p>यदि sample allocation प्रत्येक stratum में पर्याप्त रूप से बड़ा है (यानी, \( n_i > 50 \)), तो संबंध (3.9.1) सरलता से (gracefully) घटकर हो जाता है:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_{SR}) = \frac{N-n}{nN}\left[ \sum W_i s_i^2 + \sum W_i \bar{y}_i^2 - \left(\sum W_i \bar{y}_i\right)^2 \right] \quad (3.9.3) $$
+                  </div>
+
+                  <h3 style="margin-top: 40px;">उदाहरण 3.3 (Example 3.3)</h3>
+                  <p>एक विशिष्ट राज्य के तीन भौगोलिक (geographical) strata में चयनित जिलों में स्थापित high-capacity solar panels की संख्या नीचे दी गई है (अंग्रेजी अनुभाग में तालिका देखें):</p>
+                  <p>गणितीय रूप से solar panels की कुल संख्या के साथ-साथ इसकी सटीक standard error का अनुमान लगाएँ। इसके अलावा, विशुद्ध रूप से stratification के कारण precision में लाभ (gain in precision) का अनुमान लगाएँ।</p>
+                  <div class="derivation-block">
+                      <p>Solar panels की कुल संख्या का एक unbiased estimate सीधे इस प्रकार दिया जाता है:</p>
+                      $$ \widehat{Y}_{st} = \sum N_i \bar{y}_i = 87,376.54 $$
+                      <div class="explanation">\( \because \) sample means के weighted sum की गणना करने से कुल population का अनुमान लगता है।</div>
+                      <p>\( \widehat{Y}_{st} \) के variance का अनुमान scaled व्यक्तिगत variances को जोड़कर प्राप्त किया जाता है:</p>
+                      $$ v(\widehat{Y}_{st}) = \sum N_i(N_i - n_i)\frac{s_i^2}{n_i} = 153,491,126 $$
+                      <p>इस प्रकार, estimated standard error \( \sqrt{153,491,126} \approx 12,389 \) है।</p>
+                      <p>Precision में लाभ की गणना करने के लिए, हम नगण्य (negligible) सुधार पद (correction term) को अनदेखा करते हुए collapsed सूत्र (3.9.1) का उपयोग करके \( v(\widehat{Y}_{SR}) \) की गणना करते हैं:</p>
+                      $$ v(\widehat{Y}_{SR}) \approx \frac{N^2}{n}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 \right] = 239,026,380 $$
+                      <p>Precision में Relative gain = \( \frac{239,026,380 - 153,491,126}{153,491,126} \times 100 \approx 55.72\% \)</p>
+                      <div class="explanation">\( \because \) variance में अंतर को stratified variance से भाग देने पर सटीक percentage gain प्राप्त होता है।</div>
+                  </div>
+              </div>
+
+</section>
+
+    
+        <section id="sec3-10" class="section-card">
+            <div class="english-content">
+                <h2>3.10 Formation of Strata</h2>
+                <p>The problem of formation of strata has been discussed extensively by experts like Dalenius, Gurney, and Mahalanobis. In order to form \( k \) strata, the range of main variates under study is strictly subdivided at points \( y_1, y_2, \ldots, y_{k-1} \) such that \( a \leq y_1 < y_2 < \cdots < y_{k-1} < b \). The variance of \( \bar{y}_{st} \) (with proportional allocation) is given by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{st}) = \frac{1}{n}\sum W_i S_i^2 - \frac{1}{N}\sum W_i S_i^2 \quad (3.10.1) $$
+                </div>
+                <p>The main purpose of stratification is to mathematically increase precision, therefore \( V(\bar{y}_{st}) \) must be minimized. Assuming all points except \( y_i \) are fixed, the optimum stratification points are found where:</p>
+                <div class="derivation-block">
+                    $$ y_i = \frac{\bar{Y}_i + \bar{Y}_{i+1}}{2} \quad (3.10.2) $$
+                    <div class="explanation">\( \because \) the best point \( y_i \) separating two strata is exactly the average of their two means.</div>
+                </div>
+                
+                <h3>Approximate Solutions for Practical Application</h3>
+                <p>Since the exact iterative procedures are computationally heavy, some approximate mathematical rules are used:</p>
+                <ol type="i">
+                    <li><strong>Equalization of \( W_i S_i \):</strong> Suggested by Dalenius and Gurney (1951), it leads to optimum stratification with equal allocation, but involves tedious calculation of \( S_i \).</li>
+                    <li><strong>Equalization of Strata Totals:</strong> Proposed by Mahalanobis (1952), making strata with the exact same aggregate size \( W_i \bar{Y}_i \).</li>
+                    <li><strong>Equalization of \( W_i R_i \):</strong> Suggested by Ekman (1959), equating the product of weight and range (\( R_i \)) of the variate in the \( i \)-th stratum.</li>
+                    <li><strong>Equalization of cumulatives of \( \sqrt{f(y)} \):</strong> Dalenius and Hodges (1959) suggested construction of strata by equalization of the cumulative of the square root of the frequency function.</li>
+                </ol>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>3.10 Formation of Strata (स्तरों का निर्माण)</h2>
+                <p>Strata के निर्माण की समस्या पर Dalenius, Gurney, और Mahalanobis जैसे विशेषज्ञों द्वारा बड़े पैमाने पर चर्चा की गई है। \( k \) strata बनाने के लिए, अध्ययन के तहत मुख्य चर (variates) की सीमा को \( y_1, y_2, \ldots, y_{k-1} \) बिंदुओं पर सख्ती से विभाजित किया जाता है ताकि \( a \leq y_1 < y_2 < \cdots < y_{k-1} < b \)। \( \bar{y}_{st} \) का variance (proportional allocation के साथ) है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{st}) = \frac{1}{n}\sum W_i S_i^2 - \frac{1}{N}\sum W_i S_i^2 \quad (3.10.1) $$
+                </div>
+                <p>Stratification का मुख्य उद्देश्य precision को गणितीय रूप से बढ़ाना है, इसलिए \( V(\bar{y}_{st}) \) को कम किया जाना चाहिए। यह मानते हुए कि \( y_i \) को छोड़कर सभी बिंदु निश्चित हैं, इष्टतम (optimum) stratification बिंदु वहां पाए जाते हैं जहां:</p>
+                <div class="derivation-block">
+                    $$ y_i = \frac{\bar{Y}_i + \bar{Y}_{i+1}}{2} \quad (3.10.2) $$
+                    <div class="explanation">\( \because \) दो strata को अलग करने वाला सबसे अच्छा बिंदु \( y_i \) ठीक उनके दो means का औसत (average) है।</div>
+                </div>
+                
+                <h3>व्यावहारिक अनुप्रयोग के लिए अनुमानित समाधान (Approximate Solutions for Practical Application)</h3>
+                <p>चूंकि सटीक पुनरावृत्त प्रक्रियाएं (iterative procedures) कम्प्यूटेशनल रूप से भारी हैं, कुछ अनुमानित गणितीय नियमों का उपयोग किया जाता है:</p>
+                <ol type="i">
+                    <li><strong>\( W_i S_i \) का समीकरण (Equalization):</strong> Dalenius और Gurney (1951) द्वारा सुझाया गया।</li>
+                    <li><strong>Strata Totals का समीकरण:</strong> Mahalanobis (1952) द्वारा प्रस्तावित, बिल्कुल समान कुल आकार \( W_i \bar{Y}_i \) वाले strata बनाना।</li>
+                    <li><strong>\( W_i R_i \) का समीकरण:</strong> Ekman (1959) द्वारा सुझाया गया।</li>
+                    <li><strong>\( \sqrt{f(y)} \) के cumulatives का समीकरण:</strong> Dalenius और Hodges (1959) द्वारा सुझाया गया।</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="sec3-11" class="section-card">
+            <div class="english-content">
+                <h2>3.11 Determination of Number of Strata</h2>
+                <p>It can be shown easily that stratification mathematically increases efficiency if the number of strata \( k \) is increased. However, multiplication of strata beyond a reasonable number is not profitable because it adversely affects the cost of the survey. Dalenius (1953) conjectured the ratio of variances for \( k \) vs \( k-1 \) optimum strata as:</p>
+                <div class="derivation-block">
+                    $$ \frac{V_k(\bar{y}_{st})}{V_{k-1}(\bar{y}_{st})} = \frac{(k-1)^2}{k^2} \quad (3.11.1) $$
+                </div>
+                <p>For determination of the exact optimum number of strata, the cost function is defined as \( C = a + k c_1 + n c_2 \). Minimizing variance given this cost function mathematically yields the optimum values of \( k \) and \( n \):</p>
+                <div class="derivation-block">
+                    $$ k = \sqrt{\frac{2(C-a)}{3c_1}}, \quad n = \frac{C-a}{3c_2} \quad (3.11.4) $$
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>3.11 Determination of Number of Strata (स्तरों की संख्या का निर्धारण)</h2>
+                <p>यह आसानी से दिखाया जा सकता है कि यदि strata की संख्या \( k \) बढ़ा दी जाए तो stratification गणितीय रूप से efficiency बढ़ाता है। हालाँकि, एक उचित संख्या से परे strata का गुणा करना लाभदायक नहीं है क्योंकि यह survey की लागत को प्रतिकूल रूप से प्रभावित करता है। Dalenius (1953) ने \( k \) बनाम \( k-1 \) optimum strata के लिए variances का अनुपात इस प्रकार अनुमानित किया:</p>
+                <div class="derivation-block">
+                    $$ \frac{V_k(\bar{y}_{st})}{V_{k-1}(\bar{y}_{st})} = \frac{(k-1)^2}{k^2} \quad (3.11.1) $$
+                </div>
+                <p>Strata की सटीक इष्टतम संख्या के निर्धारण के लिए, cost function \( C = a + k c_1 + n c_2 \) के रूप में परिभाषित किया गया है। इस cost function को देखते हुए variance को कम करने से \( k \) और \( n \) के optimum मान गणितीय रूप से प्राप्त होते हैं:</p>
+                <div class="derivation-block">
+                    $$ k = \sqrt{\frac{2(C-a)}{3c_1}}, \quad n = \frac{C-a}{3c_2} \quad (3.11.4) $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec3-12" class="section-card">
+            <div class="english-content">
+                <h2>3.12 Method of Collapsed Strata</h2>
+                <p>Sometimes the population is so heterogeneous that stratification is carried to the extreme point where only exactly one unit is selected from each stratum (\( n_i = 1 \)). In such cases, it is mathematically impossible to estimate the variance within that stratum since \( n_i - 1 = 0 \).</p>
+                <p>An approximate estimate is obtained by logically grouping the strata in pairs whose true means do not differ much. This is called the technique of <strong>collapsed strata</strong>. The quantity used as an estimate overestimates the true variance, but it is reliable if the pairing is arranged so that the paired strata are equal in size.</p>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>3.12 Method of Collapsed Strata (ढहे हुए स्तरों की विधि)</h2>
+                <p>कभी-कभी population इतनी heterogeneous (विषम) होती है कि stratification को उस चरम बिंदु तक ले जाया जाता है जहाँ प्रत्येक stratum से ठीक एक unit (\( n_i = 1 \)) का चयन किया जाता है। ऐसे मामलों में, उस stratum के भीतर variance का अनुमान लगाना गणितीय रूप से असंभव है क्योंकि \( n_i - 1 = 0 \)।</p>
+                <p>एक अनुमानित (approximate) अनुमान strata को तार्किक रूप से उन जोड़ियों (pairs) में समूहीकृत करके प्राप्त किया जाता है जिनके true means ज्यादा भिन्न नहीं होते हैं। इसे <strong>collapsed strata</strong> की तकनीक कहा जाता है। अनुमान के रूप में उपयोग की जाने वाली मात्रा true variance को overestimate करती है, लेकिन यह विश्वसनीय है यदि जोड़ी को इस तरह से व्यवस्थित किया जाता है कि paired strata आकार में समान हों।</p>
+            </div>
+        </section>
+
+        
+        <section id="sec3-13" class="section-card">
+
+              <div class="english-content">
+                  <h2>3.13 Post-Stratification</h2>
+                  <p>In classical stratified sampling, it is presumed that the stratum sizes in the sampling frame are perfectly available in advance. However, there are instances where this is not possible (e.g., age groups in a general voter list). The technique of <strong>post-stratification</strong> consists in mathematically classifying the population and the selected sample into a given number of strata <em>after</em> the random selection of the sample.</p>
+                  <p>Let a simple random sample of size \( n \) be drawn from a population of size \( N \). After the sample is drawn, the \( n \) units are classified into \( k \) strata such that \( n_i \) units fall in the \( i \)-th stratum (\( \sum n_i = n \)). Here, \( n_i \) is a random variable. The unbiased estimator of the population mean \( \bar{Y} \) is given by the weighted mean:</p>
+                  <div class="derivation-block">
+                      $$ \bar{y}_w = \sum W_i \bar{y}_i \quad (3.13.1) $$
+                  </div>
+                  <p>Assuming that \( n_i > 0 \) for all \( i \), we have:</p>
+                  <div class="derivation-block">
+                      $$ E(\bar{y}_w) = \sum W_i E(\bar{y}_i) = \sum W_i \bar{Y}_i = \bar{Y} \quad (3.13.2) $$
+                      <div class="explanation">\( \because \) the expected value of the sample mean within the stratum is precisely the stratum mean.</div>
+                  </div>
+                  <p>Let us further suppose that the sample size is so large that none of the \( n_i \)'s is zero. If \( n_i \) are fixed, then we have:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_w | n_1, \ldots, n_k) = \sum \left( \frac{1}{n_i} - \frac{1}{N_i} \right)W_i^2 S_i^2 \quad (3.13.3) $$
+                  </div>
+                  <p>Using the conditional variance formula, we have:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_w) = E[V(\bar{y}_w | n_1, \dots, n_k)] + V[E(\bar{y}_w | n_1, \dots, n_k)] $$
+                      $$ = E[V(\bar{y}_w | n_1, \dots, n_k)] $$
+                      <div class="explanation">\( \because \) the second term is the variance of a constant \( \bar{Y} \), which is exactly zero.</div>
+                      $$ = E \left[ \sum \left( \frac{1}{n_i} - \frac{1}{N_i} \right)W_i^2 S_i^2 \right] = \sum \left[ E\left(\frac{1}{n_i}\right) - \frac{1}{N_i} \right] W_i^2 S_i^2 \quad (3.13.4) $$
+                  </div>
+                  <p>An exact expression for relation (3.13.4) cannot be derived algebraically. However, for large \( n \) and \( N \), Stephan (1945) has shown mathematically that:</p>
+                  <div class="derivation-block">
+                      $$ E\left(\frac{1}{n_i}\right) = \frac{1}{n W_i} + \frac{1 - W_i}{n^2 W_i^2} \quad (3.13.5) $$
+                  </div>
+                  <p>Substituting this value into relation (3.13.4), we get:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_w) = \sum \frac{(1-f_i)W_i S_i^2}{n} + \frac{1}{n^2}\sum (1-W_i)S_i^2 \quad (3.13.6) $$
+                      <div class="explanation">\( \because \) the first term is exactly the variance under proportional allocation, and the second term is a small statistical adjustment due to post-stratification.</div>
+                  </div>
+                  <p>Hence post-stratification is almost precisely as mathematically efficient as proportional stratified sampling for large samples.</p>
+              </div>
+
+
+              <div class="hinglish-content">
+                  <h2>3.13 Post-Stratification (उत्तर-स्तरीकरण)</h2>
+                  <p>शास्त्रीय (classical) stratified sampling में, यह माना जाता है कि sampling frame में stratum sizes पहले से पूरी तरह से उपलब्ध हैं। हालाँकि, ऐसे उदाहरण हैं जहाँ यह संभव नहीं है। <strong>Post-stratification</strong> की तकनीक में sample के random चयन के <em>बाद</em> population और selected sample को दिए गए strata की संख्या में गणितीय रूप से वर्गीकृत करना शामिल है।</p>
+                  <p>मान लीजिए कि size \( N \) की population से size \( n \) का एक simple random sample निकाला जाता है। Sample निकाले जाने के बाद, \( n \) units को \( k \) strata में इस प्रकार वर्गीकृत किया जाता है कि \( i \)-th stratum में \( n_i \) units आती हैं। यहाँ \( n_i \) एक random variable है। Population mean \( \bar{Y} \) का unbiased estimator है:</p>
+                  <div class="derivation-block">
+                      $$ \bar{y}_w = \sum W_i \bar{y}_i \quad (3.13.1) $$
+                  </div>
+                  <p>यह मानते हुए कि सभी \( i \) के लिए \( n_i > 0 \) है, हमारे पास है:</p>
+                  <div class="derivation-block">
+                      $$ E(\bar{y}_w) = \sum W_i E(\bar{y}_i) = \sum W_i \bar{Y}_i = \bar{Y} \quad (3.13.2) $$
+                      <div class="explanation">\( \because \) stratum के भीतर sample mean का expected value ठीक stratum mean होता है।</div>
+                  </div>
+                  <p>मान लीजिए कि sample size इतना बड़ा है कि कोई भी \( n_i \), शून्य नहीं है। यदि \( n_i \) निश्चित (fixed) हैं, तो:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_w | n_1, \ldots, n_k) = \sum \left( \frac{1}{n_i} - \frac{1}{N_i} \right)W_i^2 S_i^2 \quad (3.13.3) $$
+                  </div>
+                  <p>Conditional variance सूत्र का उपयोग करते हुए, हमारे पास है:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_w) = E[V(\bar{y}_w | n_1, \dots, n_k)] + V[E(\bar{y}_w | n_1, \dots, n_k)] $$
+                      $$ = E[V(\bar{y}_w | n_1, \dots, n_k)] $$
+                      <div class="explanation">\( \because \) दूसरा term एक constant \( \bar{Y} \) का variance है, जो शून्य है।</div>
+                      $$ = \sum \left[ E\left(\frac{1}{n_i}\right) - \frac{1}{N_i} \right] W_i^2 S_i^2 \quad (3.13.4) $$
+                  </div>
+                  <p>बड़े \( n \) और \( N \) के लिए, Stephan (1945) ने गणितीय रूप से दिखाया है कि:</p>
+                  <div class="derivation-block">
+                      $$ E\left(\frac{1}{n_i}\right) = \frac{1}{n W_i} + \frac{1 - W_i}{n^2 W_i^2} \quad (3.13.5) $$
+                  </div>
+                  <p>इस मान को प्रतिस्थापित करने पर, हमें मिलता है:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}_w) = \sum \frac{(1-f_i)W_i S_i^2}{n} + \frac{1}{n^2}\sum (1-W_i)S_i^2 \quad (3.13.6) $$
+                      <div class="explanation">\( \because \) पहला term बिल्कुल proportional allocation के तहत variance है, और दूसरा term post-stratification के कारण एक छोटा सांख्यिकीय समायोजन है।</div>
+                  </div>
+                  <p>इसलिए post-stratification बड़े samples के लिए आनुपातिक (proportional) stratified sampling के रूप में लगभग सटीक रूप से गणितीय रूप से कुशल (efficient) है।</p>
+              </div>
+
+</section>
+
+        <section id="sec3-14" class="section-card">
+            <div class="english-content">
+                <h2>3.14 Deep Stratification</h2>
+                <p>When there are two alternative criteria of stratification, an obvious choice is two-way stratification yielding \( k \) rows and \( k' \) columns, forming \( kk' \) strata. If \( n < kk' \), Bryant, Hartley, and Jessen (1960) developed a technique to sample using a Latin Square-like approach to maintain proportional allocation across both margins.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>3.14 Deep Stratification (गहरा स्तरीकरण)</h2>
+                <p>जब stratification के दो वैकल्पिक मानदंड होते हैं, तो एक स्पष्ट विकल्प two-way stratification है जिससे \( k \) पंक्तियाँ (rows) और \( k' \) स्तंभ (columns) बनते हैं, जो \( kk' \) strata बनाते हैं। यदि \( n < kk' \) है, तो Bryant, Hartley, और Jessen (1960) ने दोनों मार्जिन में आनुपातिक आवंटन (proportional allocation) बनाए रखने के लिए लैटिन स्क्वायर-जैसे दृष्टिकोण का उपयोग करके sample करने की एक तकनीक विकसित की।</p>
+            </div>
+        </section>
+
+
+        <section id="sec3-ref" class="section-card">
+            <div class="english-content">
+                <h2>References</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Neyman, J. (1934). On the two different aspects of the representative method. <em>J.R. Statist. Soc.</em>, 97, 558-625.</li>
+                    <li>Tschuprow, A. A. (1923). On the mathematical expectation of the moments of frequency distributions in the case of correlated observations. <em>Metron</em>, 2, 461-493.</li>
+                    <li>Dalenius, T. (1950). The problem of optimum stratification. <em>Skand. Aktuarietidskr.</em>, 33, 203-213.</li>
+                    <li>Cochran, W. G. (1961). Comparison of methods for determining stratum boundaries. <em>Bull. Int. Statist. Inst.</em>, 38(2), 345-358.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>References (संदर्भ)</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Neyman, J. (1934). On the two different aspects of the representative method. <em>J.R. Statist. Soc.</em>, 97, 558-625.</li>
+                    <li>Tschuprow, A. A. (1923). On the mathematical expectation of the moments of frequency distributions in the case of correlated observations. <em>Metron</em>, 2, 461-493.</li>
+                    <li>Dalenius, T. (1950). The problem of optimum stratification. <em>Skand. Aktuarietidskr.</em>, 33, 203-213.</li>
+                    <li>Cochran, W. G. (1961). Comparison of methods for determining stratum boundaries. <em>Bull. Int. Statist. Inst.</em>, 38(2), 345-358.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec3-15" class="section-card">
+            <div class="english-content">
+                <h2>Exercise (Subjective)</h2>
+                <ol>
+                    <li>A population is divided into 2 strata of sizes \( N_1 \) and \( N_2 \). Let \( \phi = [n_1/n_2]/[n_1'/n_2'] \), where \( n_1, n_2 \) is a general allocation and \( n_1', n_2' \) is the optimum allocation. Show mathematically that the relative precision is given by \( RP = \phi(N_1 U + N_2)^2 / (\phi N_1 U + N_2)(N_1 U + \phi N_2) \) where \( U = S_1 / S_2 \).</li>
+                    <li>Prove rigorously that \( V_{SR} = V_{prop} + \frac{N-n}{nN(N-1)}\left[ \sum N_i(\bar{Y}_i - \bar{Y})^2 - \sum (N - N_i)S_i^2 \right] \).</li>
+                    <li>The variate \( x \) follows an exponential distribution \( \lambda e^{-\lambda x} dx \). The population is strictly divided into 2 strata at a point \( x_0 \). Derive \( V(\bar{x}_{st}) \) and mathematically find the optimum \( x_0 \).</li>
+                    <li>For a normal population \( (0,1) \), show that if the distribution is truncated at \( y_1 \) and \( y_2 \), the variance \( S^2 \) is \( 1 - \frac{y_1 f(y_1) - y_2 f(y_2) - [f(y_1) - f(y_2)]^2}{w} \).</li>
+                    <li>A population is divided into 2 strata. Assuming \( N_1 = N_2 \) and fpc can be ignored, compute the relative increases in precision by using proportional allocation when \( c_2/c_1 = 1 \) and \( 2 \).</li>
+                    <li>Estimate the total wheat acreage of a district and the mean acreage per farm given a random sample drawn from size groups 1-5 and 6-20. What are the exact standard errors of the estimates?</li>
+                    <li>Using size classes as strata, calculate and compare the mathematical efficiencies of Proportional allocation, Allocation proportional to total output, and Optimum allocation for a sample of 3000 industrial factories.</li>
+                    <li>Treating three separate community districts as strata, allocate a sample of 2000 persons mathematically to estimate the proportion of literate individuals under optimum conditions.</li>
+                </ol>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
+                <ol>
+                    <li>एक population को \( N_1 \) और \( N_2 \) आकार के 2 strata में विभाजित किया गया है। मान लीजिए \( \phi = [n_1/n_2]/[n_1'/n_2'] \), जहाँ \( n_1, n_2 \) एक सामान्य आवंटन (general allocation) है और \( n_1', n_2' \) इष्टतम आवंटन (optimum allocation) है। गणितीय रूप से दिखाएं कि relative precision \( RP = \phi(N_1 U + N_2)^2 / (\phi N_1 U + N_2)(N_1 U + \phi N_2) \) द्वारा दी गई है जहाँ \( U = S_1 / S_2 \)।</li>
+                    <li>कठोरता से सिद्ध करें कि \( V_{SR} = V_{prop} + \frac{N-n}{nN(N-1)}\left[ \sum N_i(\bar{Y}_i - \bar{Y})^2 - \sum (N - N_i)S_i^2 \right] \)।</li>
+                    <li>Variate \( x \) एक exponential distribution \( \lambda e^{-\lambda x} dx \) का पालन करता है। Population को बिंदु \( x_0 \) पर कड़ाई से 2 strata में विभाजित किया गया है। \( V(\bar{x}_{st}) \) प्राप्त करें और गणितीय रूप से इष्टतम \( x_0 \) खोजें।</li>
+                    <li>एक normal population \( (0,1) \) के लिए, दिखाएं कि यदि distribution \( y_1 \) और \( y_2 \) पर काटा (truncated) जाता है, तो variance \( S^2 \), \( 1 - \frac{y_1 f(y_1) - y_2 f(y_2) - [f(y_1) - f(y_2)]^2}{w} \) है।</li>
+                    <li>एक population को 2 strata में विभाजित किया गया है। यह मानते हुए कि \( N_1 = N_2 \) और fpc को अनदेखा किया जा सकता है, proportional allocation का उपयोग करके precision में relative वृद्धि की गणना करें जब \( c_2/c_1 = 1 \) और \( 2 \) हो।</li>
+                    <li>Size groups 1-5 और 6-20 से निकाले गए random sample को देखते हुए एक जिले के कुल गेहूं के रकबे (wheat acreage) और प्रति खेत औसत रकबे का अनुमान लगाएं। अनुमानों की सटीक standard errors क्या हैं?</li>
+                    <li>Size classes को strata के रूप में उपयोग करते हुए, 3000 औद्योगिक कारखानों (industrial factories) के sample के लिए Proportional allocation, Allocation proportional to total output, और Optimum allocation की गणितीय दक्षताओं (efficiencies) की गणना और तुलना करें।</li>
+                    <li>तीन अलग-अलग सामुदायिक जिलों (community districts) को strata मानते हुए, इष्टतम परिस्थितियों में साक्षर (literate) व्यक्तियों के proportion का अनुमान लगाने के लिए 2000 व्यक्तियों के sample को गणितीय रूप से आवंटित (allocate) करें।</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- QUIZZES -->
+        <!-- QUIZZES SECTION -->
+        <section id="quiz-mcq" class="section-card">
+            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+            
+            <div class="question-box">
+                <div class="question">1. The primary objective of stratified random sampling is to: <br> (स्तरीकृत यादृच्छिक प्रतिचयन का प्राथमिक उद्देश्य है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Increase the sampling error</li>
+                    <li>b) Maximize variation within strata</li>
+                    <li>c) Divide a heterogeneous population into homogeneous sub-populations to improve precision</li>
+                    <li>d) Select the easiest units available</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
+                <div id="mcq1" class="answer"><strong>Correct Answer:</strong> c) Divide a heterogeneous population into homogeneous sub-populations to improve precision <br> <em>Explanation:</em> By ensuring each stratum is internally homogeneous, the overall variance is drastically reduced because only the 'within-stratum' variance contributes to the sampling error.</div>
+            </div>
+            
+            <div class="question-box">
+                <div class="question">2. In stratified sampling, the estimator of the population mean \( \bar{y}_{st} \) is an unbiased estimator if: <br> (स्तरीकृत प्रतिचयन में, जनसंख्या माध्य का अनुमानक \( \bar{y}_{st} \) एक निष्पक्ष अनुमानक है यदि:)</div>
+                <ul class="mcq-options">
+                    <li>a) The sample is drawn independently from each stratum</li>
+                    <li>b) The sample mean within each stratum is an unbiased estimator of the stratum mean</li>
+                    <li>c) Proportional allocation is strictly used</li>
+                    <li>d) Both (a) and (b)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer</button>
+                <div id="mcq2" class="answer"><strong>Correct Answer:</strong> d) Both (a) and (b) <br> <em>Explanation:</em> Theorem 3.2.1 proves that as long as the samples are drawn independently and \( E(\bar{y}_h) = \bar{Y}_h \), the weighted sum \( \bar{y}_{st} \) perfectly estimates \( \bar{Y} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. Under proportional allocation, the sampling fraction \( f_h = n_h / N_h \) across all strata is: <br> (आनुपातिक आवंटन के तहत, सभी स्तरों पर प्रतिचयन अंश \( f_h = n_h / N_h \) है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Proportional to the stratum variance</li>
+                    <li>b) Constant (equal to \( n/N \))</li>
+                    <li>c) Inversely proportional to stratum cost</li>
+                    <li>d) Completely random</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer</button>
+                <div id="mcq3" class="answer"><strong>Correct Answer:</strong> b) Constant (equal to \( n/N \)) <br> <em>Explanation:</em> Proportional allocation dictates that \( n_h / n = N_h / N \), making the fraction of units drawn from every stratum mathematically identical.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. Neyman optimum allocation determines the sample size \( n_h \) for a stratum based on both its size \( N_h \) and its: <br> (नेमैन इष्टतम आवंटन किसी स्तर के लिए प्रतिदर्श आकार \( n_h \) को उसके आकार \( N_h \) और उसके किस आधार पर निर्धारित करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Cost per unit</li>
+                    <li>b) Standard deviation \( S_h \)</li>
+                    <li>c) Geographical location</li>
+                    <li>d) Population proportion</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer</button>
+                <div id="mcq4" class="answer"><strong>Correct Answer:</strong> b) Standard deviation \( S_h \) <br> <em>Explanation:</em> Neyman allocation minimizes variance by taking larger samples from larger strata AND from highly variable strata (\( n_h \propto N_h S_h \)).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. For a given total cost \( C = c_0 + \sum c_h n_h \), optimum allocation assigns a larger sample size to a stratum if: <br> (किसी दिए गए कुल लागत \( C = c_0 + \sum c_h n_h \) के लिए, इष्टतम आवंटन एक स्तर को एक बड़ा प्रतिदर्श आकार प्रदान करता है यदि:)</div>
+                <ul class="mcq-options">
+                    <li>a) The stratum is extremely uniform (low \( S_h \))</li>
+                    <li>b) The stratum is extremely costly to survey (high \( c_h \))</li>
+                    <li>c) The stratum is highly variable (high \( S_h \)) and cheaper to survey (low \( c_h \))</li>
+                    <li>d) The stratum has a low population \( N_h \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer</button>
+                <div id="mcq5" class="answer"><strong>Correct Answer:</strong> c) The stratum is highly variable (high \( S_h \)) and cheaper to survey (low \( c_h \)) <br> <em>Explanation:</em> Mathematically, \( n_h \propto N_h S_h / \sqrt{c_h} \). You sample heavily where there is a lot of unknown variation and where it is economically cheap to do so.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. If the variance within all strata \( S_h^2 \) are exactly equal, Neyman allocation natively reduces strictly to: <br> (यदि सभी स्तरों \( S_h^2 \) के भीतर प्रसरण बिल्कुल समान हैं, तो नेमैन आवंटन मूल रूप से कड़ाई से कम हो जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Optimum cost allocation</li>
+                    <li>b) Proportional allocation</li>
+                    <li>c) Simple random sampling</li>
+                    <li>d) Cluster allocation</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer</button>
+                <div id="mcq6" class="answer"><strong>Correct Answer:</strong> b) Proportional allocation <br> <em>Explanation:</em> If \( S_h \) is a constant for all \( h \), it cancels out of the Neyman formula \( n_h = n \frac{N_h S_h}{\sum N_h S_h} \), leaving \( n_h = n \frac{N_h}{N} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The method of collapsed strata is primarily utilized to analytically estimate variance when: <br> (कोलैप्स्ड स्ट्राटा की विधि का उपयोग मुख्य रूप से विश्लेषणात्मक रूप से प्रसरण का अनुमान लगाने के लिए किया जाता है जब:)</div>
+                <ul class="mcq-options">
+                    <li>a) Strata are too large</li>
+                    <li>b) Only one unit (\( n_h = 1 \)) is selected per stratum</li>
+                    <li>c) Proportional allocation fails</li>
+                    <li>d) Deep stratification is impossible</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer</button>
+                <div id="mcq7" class="answer"><strong>Correct Answer:</strong> b) Only one unit (\( n_h = 1 \)) is selected per stratum <br> <em>Explanation:</em> If only 1 unit is drawn, you cannot compute a within-stratum variance. To fix this, adjacent strata are artificially "collapsed" together to simulate a variance calculation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In post-stratification, the strata are formed mathematically: <br> (उत्तर-स्तरीकरण में, स्तर गणितीय रूप से बनते हैं:)</div>
+                <ul class="mcq-options">
+                    <li>a) Before drawing the sample</li>
+                    <li>b) By dividing the sample into clusters randomly</li>
+                    <li>c) After the simple random sample is fully drawn</li>
+                    <li>d) By discarding outlier data</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer</button>
+                <div id="mcq8" class="answer"><strong>Correct Answer:</strong> c) After the simple random sample is fully drawn <br> <em>Explanation:</em> The survey is conducted via SRS, and then the returned sample data is later explicitly categorized into demographic strata for weighted estimation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. Post-stratification achieves nearly the same mathematical precision as proportional stratified sampling, provided that the sample size in each stratum is: <br> (उत्तर-स्तरीकरण आनुपातिक स्तरीकृत प्रतिचयन के लगभग समान गणितीय सटीकता प्राप्त करता है, बशर्ते कि प्रत्येक स्तर में प्रतिदर्श आकार हो:)</div>
+                <ul class="mcq-options">
+                    <li>a) Exactly 1</li>
+                    <li>b) Less than 5</li>
+                    <li>c) Reasonably large (e.g., > 20)</li>
+                    <li>d) Completely equal across all strata</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer</button>
+                <div id="mcq9" class="answer"><strong>Correct Answer:</strong> c) Reasonably large (e.g., > 20) <br> <em>Explanation:</em> If the post-stratum samples are sufficiently large, the random variations in the exact stratum counts average out, mirroring proportional allocation precision.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. Deep stratification structurally allows a population to be stratified simultaneously by: <br> (गहरा स्तरीकरण संरचनात्मक रूप से एक जनसंख्या को एक साथ किसके द्वारा स्तरीकृत करने की अनुमति देता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Multiple different geographical or demographic characteristics</li>
+                    <li>b) Only a single strict characteristic</li>
+                    <li>c) Completely random clustering</li>
+                    <li>d) Infinite layers</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer</button>
+                <div id="mcq10" class="answer"><strong>Correct Answer:</strong> a) Multiple different geographical or demographic characteristics <br> <em>Explanation:</em> Deep stratification involves creating a multi-way grid (e.g., classifying by Age AND Income AND Region) to form highly specific cross-strata.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. Dalenius (1950) established theoretical equations to determine the exact optimum: <br> (डेलेनियस (1950) ने सटीक इष्टतम निर्धारित करने के लिए सैद्धांतिक समीकरण स्थापित किए:)</div>
+                <ul class="mcq-options">
+                    <li>a) Cost of a sample survey</li>
+                    <li>b) Boundaries of strata points (\( y_h \))</li>
+                    <li>c) Collapse of single-unit strata</li>
+                    <li>d) Total population limit</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer</button>
+                <div id="mcq11" class="answer"><strong>Correct Answer:</strong> b) Boundaries of strata points (\( y_h \)) <br> <em>Explanation:</em> Dalenius pioneered the mathematical calculus to identify precisely where to cut a continuous distribution (like income) to form the most homogeneous strata possible.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. Under optimum stratification with proportional allocation, the ideal stratum boundaries should natively be established so that: <br> (आनुपातिक आवंटन के साथ इष्टतम स्तरीकरण के तहत, आदर्श स्तर की सीमाएं मूल रूप से स्थापित की जानी चाहिए ताकि:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( W_h S_h \) is constant</li>
+                    <li>b) \( W_h \) is constant</li>
+                    <li>c) \( N_h \) is zero</li>
+                    <li>d) All data points are equal</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer</button>
+                <div id="mcq12" class="answer"><strong>Correct Answer:</strong> b) \( W_h \) is constant <br> <em>Explanation:</em> For proportional allocation, the optimal cut points occur when the total population weight (or frequency) within each stratum is exactly equal.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The approximate rule for determining strata boundaries proposed by Dalenius and Hodges relies on equalizing the intervals of the cumulative square root of the: <br> (डेलेनियस और होजेस द्वारा प्रस्तावित स्तर की सीमाओं को निर्धारित करने का अनुमानित नियम संचयी वर्गमूल के अंतराल को समान करने पर निर्भर करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Frequency \( f(y) \)</li>
+                    <li>b) Variance \( S_y^2 \)</li>
+                    <li>c) Cost \( c_h \)</li>
+                    <li>d) Population \( N \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer</button>
+                <div id="mcq13" class="answer"><strong>Correct Answer:</strong> a) Frequency \( f(y) \) <br> <em>Explanation:</em> The cumulative \( \sqrt{f(y)} \) rule allows researchers to quickly find near-optimal cut-points for Neyman allocation by slicing the integrated square-root frequency curve evenly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. What occurs if the calculated optimum allocation \( n_h \) for a stratum mathematically exceeds its total population \( N_h \)? <br> (क्या होता है यदि किसी स्तर के लिए गणना की गई इष्टतम आवंटन \( n_h \) गणितीय रूप से उसकी कुल जनसंख्या \( N_h \) से अधिक हो जाती है?)</div>
+                <ul class="mcq-options">
+                    <li>a) The survey fails completely</li>
+                    <li>b) You sample \( n_h = N_h \) (a 100% census of that stratum) and redistribute the extra sample size to the other strata</li>
+                    <li>c) You stop sampling</li>
+                    <li>d) You ignore the fpc</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer</button>
+                <div id="mcq14" class="answer"><strong>Correct Answer:</strong> b) You sample \( n_h = N_h \) (a 100% census of that stratum) and redistribute the extra sample size to the other strata <br> <em>Explanation:</em> You physically cannot sample more units than exist. You census that specific extreme stratum and recalculate Neyman allocation for the remaining strata.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. In stratified sampling for proportions, the formula for the variance under proportional allocation simplifies heavily to: <br> (अनुपातों के लिए स्तरीकृत प्रतिचयन में, आनुपातिक आवंटन के तहत प्रसरण का सूत्र भारी रूप से सरल हो जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( (1-f) \sum W_h P_h Q_h / n \)</li>
+                    <li>b) \( \sum P_h / n \)</li>
+                    <li>c) \( (1-f) \sum W_h / n \)</li>
+                    <li>d) \( P \times Q \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer</button>
+                <div id="mcq15" class="answer"><strong>Correct Answer:</strong> a) \( (1-f) \sum W_h P_h Q_h / n \) <br> <em>Explanation:</em> Because \( n_h = n W_h \), the weights mathematically cancel across the denominator, leaving a neat weighted sum of the boolean variances \( P_h Q_h \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Which allocation strategy mathematically guarantees that the stratified variance \( V_{opt} \) will always be less than or equal to the proportional variance \( V_{prop} \)? <br> (कौन सी आवंटन रणनीति गणितीय रूप से गारंटी देती है कि स्तरीकृत प्रसरण \( V_{opt} \) हमेशा आनुपातिक प्रसरण \( V_{prop} \) के बराबर या उससे कम होगा?)</div>
+                <ul class="mcq-options">
+                    <li>a) Neyman (Optimum) Allocation</li>
+                    <li>b) Equal Allocation</li>
+                    <li>c) Purposive Allocation</li>
+                    <li>d) None</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer</button>
+                <div id="mcq16" class="answer"><strong>Correct Answer:</strong> a) Neyman (Optimum) Allocation <br> <em>Explanation:</em> Theorem 3.4.1 definitively proves that \( V_{prop} - V_{opt} \geq 0 \), confirming that shifting samples toward highly variable strata strictly improves precision over flat proportional cuts.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In the context of variance estimation, if an estimated variance \( v(\bar{y}_{st}) \) results in a negative value, it is usually because: <br> (प्रसरण अनुमान के संदर्भ में, यदि अनुमानित प्रसरण \( v(\bar{y}_{st}) \) का परिणाम नकारात्मक मूल्य होता है, तो यह आमतौर पर इसलिए होता है क्योंकि:)</div>
+                <ul class="mcq-options">
+                    <li>a) Strata are completely uniform</li>
+                    <li>b) An unbiased estimator for a non-linear combination (like in collapsed strata) generated an artifactual negative</li>
+                    <li>c) The sample size is infinite</li>
+                    <li>d) Standard deviation is zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer</button>
+                <div id="mcq17" class="answer"><strong>Correct Answer:</strong> b) An unbiased estimator for a non-linear combination (like in collapsed strata) generated an artifactual negative <br> <em>Explanation:</em> Certain unbiased mathematical estimators of variance terms can yield negative outputs due to random fluctuation, requiring truncation to zero or alternative formulas.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The number of strata \( k \) should generally not be increased indefinitely because: <br> (स्तरों की संख्या \( k \) को आम तौर पर अनिश्चित काल तक नहीं बढ़ाया जाना चाहिए क्योंकि:)</div>
+                <ul class="mcq-options">
+                    <li>a) It becomes impossible to draw 1 unit per stratum</li>
+                    <li>b) The marginal reduction in variance becomes negligible while operational costs skyrocket</li>
+                    <li>c) Variance actually begins to explicitly increase infinitely</li>
+                    <li>d) Neyman allocation stops working</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer</button>
+                <div id="mcq18" class="answer"><strong>Correct Answer:</strong> b) The marginal reduction in variance becomes negligible while operational costs skyrocket <br> <em>Explanation:</em> As shown in Section 3.11, the variance reduction scales with \( 1/k^2 \). After \( k=5 \) or \( 6 \), adding more strata provides virtually zero statistical benefit.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. In double sampling for stratification, the first large sample is exclusively used to: <br> (स्तरीकरण के लिए दोहरे प्रतिचयन में, पहले बड़े प्रतिदर्श का उपयोग विशेष रूप से किसलिए किया जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Calculate the final population mean</li>
+                    <li>b) Estimate the strata weights \( W_h \) which are unknown in the population</li>
+                    <li>c) Replace the main survey entirely</li>
+                    <li>d) Calculate the standard error of the mean</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer</button>
+                <div id="mcq19" class="answer"><strong>Correct Answer:</strong> b) Estimate the strata weights \( W_h \) which are unknown in the population <br> <em>Explanation:</em> If the demographic frame isn't known (e.g., how many people are in a specific income bracket), a cheap, massive first survey estimates \( W_h \), followed by a rigorous, smaller sub-sample.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The standard error of the stratified sample mean \( \bar{y}_{st} \) is mathematically computed by: <br> (स्तरीकृत प्रतिदर्श माध्य \( \bar{y}_{st} \) की मानक त्रुटि की गणितीय रूप से गणना किसके द्वारा की जाती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Adding all standard deviations together</li>
+                    <li>b) Taking the square root of the sum of the weighted stratum variances</li>
+                    <li>c) Multiplying the variances by \( N \)</li>
+                    <li>d) Ignoring the weights \( W_h \) entirely</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
+                <div id="mcq20" class="answer"><strong>Correct Answer:</strong> b) Taking the square root of the sum of the weighted stratum variances <br> <em>Explanation:</em> Since the strata are independent, you simply sum their mathematically scaled variances \( W_h^2 V(\bar{y}_h) \) and take the square root.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-fib" class="section-card">
+            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+
+            <div class="question-box">
+                <div class="question">1. Stratification aims to structurally maximize the variation ____________ strata and natively minimize the variation ____________ strata. <br> (स्तरीकरण का उद्देश्य संरचनात्मक रूप से स्तरों के ____________ भिन्नता को अधिकतम करना और मूल रूप से स्तरों के ____________ भिन्नता को कम करना है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
+                <div id="fib1" class="answer"><strong>Answer:</strong> between (बीच), within (भीतर) <br> <em>Explanation:</em> If all the diverse elements are perfectly separated into completely homogeneous groups, the internal 'within' variance drops to zero, yielding perfect precision.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. The overall population mean \( \bar{Y} \) is mathematically identical to the ____________ sum of the true stratum means \( \bar{Y}_h \). <br> (समग्र जनसंख्या माध्य \( \bar{Y} \) गणितीय रूप से सत्य स्तर के माध्यों \( \bar{Y}_h \) के ____________ योग के समान है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer</button>
+                <div id="fib2" class="answer"><strong>Answer:</strong> weighted (भारित) <br> <em>Explanation:</em> Specifically, \( \bar{Y} = \sum W_h \bar{Y}_h \), where the weight \( W_h = N_h/N \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. Under proportional allocation, the size of the sample drawn from each stratum \( n_h \) is strictly proportional to the ____________ of that stratum. <br> (आनुपातिक आवंटन के तहत, प्रत्येक स्तर \( n_h \) से निकाले गए प्रतिदर्श का आकार सख्ती से उस स्तर के ____________ के आनुपातिक होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer</button>
+                <div id="fib3" class="answer"><strong>Answer:</strong> size / population (\( N_h \)) / आकार / जनसंख्या <br> <em>Explanation:</em> Proportional allocation ignores internal variance and strictly bases representation entirely on the sheer number of elements inside the stratum.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. Neyman allocation explicitly requires prior knowledge of the ____________ within each stratum. <br> (नेमैन आवंटन को स्पष्ट रूप से प्रत्येक स्तर के भीतर ____________ के पूर्व ज्ञान की आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer</button>
+                <div id="fib4" class="answer"><strong>Answer:</strong> variance / standard deviation (\( S_h \)) / प्रसरण / मानक विचलन <br> <em>Explanation:</em> Without an estimate of \( S_h \) (usually gained from past censuses or pilot surveys), you cannot mathematically calculate the Neyman distribution.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. According to optimum allocation, you should survey heavily in strata where the data collection cost \( c_h \) is inherently ____________. <br> (इष्टतम आवंटन के अनुसार, आपको उन स्तरों में भारी सर्वेक्षण करना चाहिए जहाँ डेटा संग्रह लागत \( c_h \) स्वाभाविक रूप से ____________ है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer</button>
+                <div id="fib5" class="answer"><strong>Answer:</strong> low / cheaper (कम / सस्ती) <br> <em>Explanation:</em> Because \( n_h \) is inversely proportional to \( \sqrt{c_h} \), cheaper strata get aggressively higher representation to maximize statistical bang-for-buck.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. If proportional allocation is utilized, the estimator \( \bar{y}_{st} \) simplifies mathematically back into the simple ____________ mean \( \bar{y} \). <br> (यदि आनुपातिक आवंटन का उपयोग किया जाता है, तो अनुमानक \( \bar{y}_{st} \) गणितीय रूप से सरल ____________ माध्य \( \bar{y} \) में वापस सरल हो जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer</button>
+                <div id="fib6" class="answer"><strong>Answer:</strong> arithmetic (अंकगणितीय) <br> <em>Explanation:</em> The weights \( W_h \) and sampling fractions \( n_h/n \) cancel out flawlessly, generating a perfectly self-weighting sample.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The method of ____________ strata is a mathematical trick used to estimate variance when \( n_h = 1 \). <br> (____________ स्तरीकरण की विधि एक गणितीय चाल है जिसका उपयोग प्रसरण का अनुमान लगाने के लिए किया जाता है जब \( n_h = 1 \) होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer</button>
+                <div id="fib7" class="answer"><strong>Answer:</strong> collapsed (कोलैप्स्ड) <br> <em>Explanation:</em> You cannot calculate a variance from a single data point. Collapsing pairs two similar strata together artificially to simulate a variance spread.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In post-stratification, the sample is heavily stratified ____________ the survey data has been physically collected. <br> (उत्तर-स्तरीकरण में, सर्वेक्षण डेटा भौतिक रूप से एकत्र किए जाने के ____________ प्रतिदर्श को भारी रूप से स्तरीकृत किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer</button>
+                <div id="fib8" class="answer"><strong>Answer:</strong> after (बाद) <br> <em>Explanation:</em> You perform a blind SRS first, and only classify the respondents into strata (like gender or age group) during the data analysis phase.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. Deep stratification explicitly forms a matrix of intersecting ____________ to classify highly specific sub-populations. <br> (गहरा स्तरीकरण अत्यधिक विशिष्ट उप-जनसंख्या को वर्गीकृत करने के लिए स्पष्ट रूप से प्रतिच्छेद करने वाले ____________ का एक मैट्रिक्स बनाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer</button>
+                <div id="fib9" class="answer"><strong>Answer:</strong> characteristics / criteria (विशेषताओं / मानदंडों) <br> <em>Explanation:</em> Instead of just "Region", deep stratification uses "Region \(\times\) Income \(\times\) Age" to build a complex multi-way classification grid.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. To natively determine the optimum strata boundaries \( y_h \), Dalenius proved that the exact value of \( \bar{Y}_h + \bar{Y}_{h+1} \) must strictly equal ____________. <br> (इष्टतम स्तर की सीमाओं \( y_h \) को मूल रूप से निर्धारित करने के लिए, डेलेनियस ने साबित किया कि \( \bar{Y}_h + \bar{Y}_{h+1} \) का सटीक मान कड़ाई से ____________ के बराबर होना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer</button>
+                <div id="fib10" class="answer"><strong>Answer:</strong> \( 2y_h \) <br> <em>Explanation:</em> The theoretical boundary point must be situated precisely exactly halfway between the mathematical means of the two adjacent strata.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. For rapid empirical boundary setting, the cumulative ____________ rule by Dalenius and Hodges is widely utilized. <br> (तेजी से अनुभवजन्य सीमा निर्धारण के लिए, डेलेनियस और होजेस द्वारा संचयी ____________ नियम का व्यापक रूप से उपयोग किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer</button>
+                <div id="fib11" class="answer"><strong>Answer:</strong> \( \sqrt{f} \) (square root of frequency) (आवृत्ति का वर्गमूल) <br> <em>Explanation:</em> By taking the square root of the frequency counts and making the intervals equal, it powerfully simulates true Neyman boundary conditions.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. If a stratum boundary is constructed poorly, increasing the number of strata \( k \) could severely ____________ the precision. <br> (यदि किसी स्तर की सीमा खराब तरीके से बनाई गई है, तो स्तरों की संख्या \( k \) बढ़ाने से सटीकता गंभीर रूप से ____________ हो सकती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer</button>
+                <div id="fib12" class="answer"><strong>Answer:</strong> decrease / harm (कम / खराब) <br> <em>Explanation:</em> Arbitrary or misguided cuts can trap massive amounts of variation inside a single stratum, actively destroying the entire purpose of stratification.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The precision of proportional allocation structurally equals Neyman allocation if the variances \( S_h^2 \) are entirely ____________ across all strata. <br> (आनुपातिक आवंटन की सटीकता संरचनात्मक रूप से नेमैन आवंटन के बराबर होती है यदि सभी स्तरों में प्रसरण \( S_h^2 \) पूरी तरह से ____________ होते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer</button>
+                <div id="fib13" class="answer"><strong>Answer:</strong> constant / equal (निरंतर / समान) <br> <em>Explanation:</em> If every stratum is exactly as variable as the others, there is mathematically zero advantage to shifting the sample weights away from proportional levels.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. When estimating proportions, the maximum standard variance inside a stratum happens aggressively when \( P_h \) equals exactly ____________. <br> (अनुपातों का अनुमान लगाते समय, किसी स्तर के भीतर अधिकतम मानक प्रसरण आक्रामक रूप से तब होता है जब \( P_h \) बिल्कुल ____________ के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer</button>
+                <div id="fib14" class="answer"><strong>Answer:</strong> 0.5 (or 50%) <br> <em>Explanation:</em> The boolean variance curve \( P(1-P) \) crests identically at 0.5 (variance = 0.25).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. To estimate total cost including fixed overheads, the linear function is formulated cleanly as \( C = c_0 + \) ____________. <br> (निश्चित ओवरहेड्स सहित कुल लागत का अनुमान लगाने के लिए, रैखिक फलन को स्पष्ट रूप से \( C = c_0 + \) ____________ के रूप में तैयार किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer</button>
+                <div id="fib15" class="answer"><strong>Answer:</strong> \( \sum c_h n_h \) <br> <em>Explanation:</em> You must add the distinct individual cost to sample a unit in stratum \( h \) multiplied by the exact number of units surveyed there.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The total population variation \( (N-1)S^2 \) natively splits into two massive components: Variation within strata and Variation ____________ strata. <br> (कुल जनसंख्या भिन्नता \( (N-1)S^2 \) मूल रूप से दो विशाल घटकों में विभाजित होती है: स्तरों के भीतर भिन्नता और ____________ स्तरों की भिन्नता।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer</button>
+                <div id="fib16" class="answer"><strong>Answer:</strong> between (बीच) <br> <em>Explanation:</em> The bedrock theorem of ANOVA states that Total Variance = Within Variance + Between Variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In stratified sampling, the sample drawn from Stratum A is mathematically completely ____________ of the sample drawn from Stratum B. <br> (स्तरीकृत प्रतिचयन में, स्ट्रेटम ए से निकाला गया प्रतिदर्श गणितीय रूप से स्ट्रेटम बी से निकाले गए प्रतिदर्श से पूरी तरह से ____________ है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer</button>
+                <div id="fib17" class="answer"><strong>Answer:</strong> independent (स्वतंत्र) <br> <em>Explanation:</em> This structural independence guarantees that the covariance between the different stratum estimates is rigidly zero, simplifying the variance addition perfectly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The variance reduction achieved by adding strata practically stops offering any real statistical benefit after approximately ____________ strata. <br> (स्तर जोड़कर प्राप्त की गई प्रसरण कमी व्यावहारिक रूप से लगभग ____________ स्तरों के बाद कोई वास्तविक सांख्यिकीय लाभ देना बंद कर देती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer</button>
+                <div id="fib18" class="answer"><strong>Answer:</strong> 6 (छह) <br> <em>Explanation:</em> Because the variance decreases proportionally to \( 1/k^2 \), going from 1 to 6 strata kills almost all the error. Going from 6 to 100 is virtually useless.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If you calculate an optimum allocation that mathematically requires surveying 120 people in a stratum that only possesses 100 people, it is known as an ____________ allocation. <br> (यदि आप एक इष्टतम आवंटन की गणना करते हैं जिसमें गणितीय रूप से केवल 100 लोगों वाले स्तर में 120 लोगों का सर्वेक्षण करने की आवश्यकता होती है, तो इसे ____________ आवंटन के रूप में जाना जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer</button>
+                <div id="fib19" class="answer"><strong>Answer:</strong> over-sampled / impossible (अति-प्रतिदर्शित / असंभव) <br> <em>Explanation:</em> You must halt, execute a 100% census (\( n_h = N_h \)) on that stratum, and rigorously recalculate the remaining allocation weights.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. By dividing a heterogeneous population into highly identical sub-groups, stratification allows researchers to drastically shrink the overall ____________ Error. <br> (एक विषम जनसंख्या को अत्यधिक समान उप-समूहों में विभाजित करके, स्तरीकरण शोधकर्ताओं को समग्र ____________ त्रुटि को भारी रूप से कम करने की अनुमति देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
+                <div id="fib20" class="answer"><strong>Answer:</strong> Sampling / Standard (प्रतिचयन / मानक) <br> <em>Explanation:</em> Because precision is governed only by the variance *within* the groups, removing the vast macro-differences from the equation slaughters the sampling error.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-tf" class="section-card">
+            <h2>✅ True or False (सही या गलत)</h2>
+
+            <div class="question-box">
+                <div class="question">1. Stratification completely eliminates all non-sampling errors from the survey. <br> (स्तरीकरण सर्वेक्षण से सभी गैर-प्रतिचयन त्रुटियों को पूरी तरह से समाप्त कर देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
+                <div id="tf1" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Stratification only attacks statistical sampling variance. Non-sampling errors (lying, bad measuring equipment) operate entirely independently of the sampling design.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. In stratified sampling, the sum of the stratum weights \( \sum W_h \) mathematically always equals exactly 1. <br> (स्तरीकृत प्रतिचयन में, स्तर भार \( \sum W_h \) का योग गणितीय रूप से हमेशा 1 के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer</button>
+                <div id="tf2" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Because \( W_h = N_h / N \), summing all the sub-population fractions naturally reconstitutes the entire 100% whole.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. Proportional allocation strictly ignores the internal variance of the strata when determining the optimal sample size for each group. <br> (आनुपातिक आवंटन प्रत्येक समूह के लिए इष्टतम प्रतिदर्श आकार निर्धारित करते समय स्तरों के आंतरिक प्रसरण को कड़ाई से अनदेखा करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer</button>
+                <div id="tf3" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> It bases the allocation entirely on the sheer mass (population size) of the stratum, blindly assuming all variances are perfectly equal.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. Neyman allocation guarantees that the total survey cost will be flawlessly minimized under all circumstances. <br> (नेमैन आवंटन गारंटी देता है कि सभी परिस्थितियों में कुल सर्वेक्षण लागत त्रुटिहीन रूप से कम हो जाएगी।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer</button>
+                <div id="tf4" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Neyman allocation explicitly assumes that the cost to survey a unit is perfectly equal across *all* strata (\( c_h = c \)). Only true "Optimum Allocation" integrates variable costs.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. The variance of the stratified estimator \( V(\bar{y}_{st}) \) structurally evaluates to zero if every stratum is perfectly homogeneous internally. <br> (स्तरीकृत अनुमानक \( V(\bar{y}_{st}) \) का प्रसरण संरचनात्मक रूप से शून्य का मूल्यांकन करता है यदि प्रत्येक स्तर आंतरिक रूप से पूरी तरह से सजातीय है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer</button>
+                <div id="tf5" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If every element inside a stratum is a perfect clone of each other, \( S_h^2 = 0 \). Because only within-stratum variance matters, the entire sampling error vanishes utterly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. Stratified random sampling rigidly demands that samples must be drawn WITH replacement in every stratum. <br> (स्तरीकृत यादृच्छिक प्रतिचयन कठोरता से मांग करता है कि हर स्तर में प्रतिस्थापन के साथ प्रतिदर्श निकाले जाने चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show/Hide Answer</button>
+                <div id="tf6" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is routinely executed Without Replacement (WOR), seamlessly utilizing the finite population correction factor \( (1-f_h) \) to further crush the variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The method of Collapsed Strata mathematically produces an exact, perfectly unbiased estimate of the variance. <br> (कोलैप्स्ड स्ट्राटा की विधि गणितीय रूप से प्रसरण का एक सटीक, पूरी तरह से निष्पक्ष अनुमान उत्पन्न करती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer</button>
+                <div id="tf7" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is a structural approximation. By blending two distinct strata, it artificially inflates the variance, resulting natively in an *overestimate* of the true sampling error.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. Post-stratification evaluates the survey data identically to proportional allocation, mathematically assuming the sample size in each post-stratum is large enough. <br> (उत्तर-स्तरीकरण सर्वेक्षण डेटा का आनुपातिक आवंटन के समान ही मूल्यांकन करता है, गणितीय रूप से यह मानते हुए कि प्रत्येक उत्तर-स्तर में प्रतिदर्श आकार काफी बड़ा है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer</button>
+                <div id="tf8" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The theoretical precision rigorously converges to proportional stratified sampling because large random samples will organically stratify themselves proportionally.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. Deep Stratification is violently destructive to variance estimation because it creates far too many sub-strata matrices to track effectively. <br> (गहरा स्तरीकरण प्रसरण अनुमान के लिए हिंसक रूप से विनाशकारी है क्योंकि यह प्रभावी ढंग से ट्रैक करने के लिए बहुत सारे उप-स्तर मैट्रिसेस बनाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer</button>
+                <div id="tf9" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Deep Stratification is incredibly useful for aggressively controlling multiple variables simultaneously. The math handles the cross-grid weights flawlessly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. According to Dalenius, the absolute mathematical boundaries for optimum strata cleanly exist exactly at the halfway mark between the strata means. <br> (डेलेनियस के अनुसार, इष्टतम स्तर के लिए पूर्ण गणितीय सीमाएँ स्तर के माध्यों के बीच ठीक आधे रास्ते पर स्पष्ट रूप से मौजूद हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer</button>
+                <div id="tf10" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Calculus derivations mandate that to perfectly trap the variance, the cut point must structurally equal \( ( \bar{Y}_h + \bar{Y}_{h+1} ) / 2 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. The Cumulative \( \sqrt{f} \) rule safely generates precise strata boundaries even if the population distribution is wildly non-normal. <br> (संचयी \( \sqrt{f} \) नियम सुरक्षित रूप से सटीक स्तर की सीमाएँ उत्पन्न करता है, भले ही जनसंख्या वितरण बेतहाशा गैर-सामान्य हो।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer</button>
+                <div id="tf11" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> It is a highly robust empirical algorithm specifically designed to approximate Neyman boundaries cleanly across highly skewed continuous distributions (like wealth or farm sizes).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. If a stratum boundary is completely botched, stratified sampling can structurally become less efficient than blind simple random sampling. <br> (यदि किसी स्तर की सीमा पूरी तरह से खराब हो गई है, तो स्तरीकृत प्रतिचयन संरचनात्मक रूप से अंधा सरल यादृच्छिक प्रतिचयन की तुलना में कम कुशल हो सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer</button>
+                <div id="tf12" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If you accidentally group highly dissimilar items together, the internal variance explodes. Shifting weights into these poorly cut strata destroys the precision aggressively.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. Proportional allocation inherently requires a complex pilot survey to pre-determine the exact statistical variances of every stratum. <br> (आनुपातिक आवंटन में प्रत्येक स्तर के सटीक सांख्यिकीय प्रसरण को पूर्व-निर्धारित करने के लिए एक जटिल पायलट सर्वेक्षण की आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer</button>
+                <div id="tf13" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The massive advantage of proportional allocation is that it strictly requires ONLY the demographic population counts (\( N_h \)), completely bypassing the need to know the variances.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. In optimal allocation, if a specific demographic stratum is astronomically expensive to survey, it mathematically demands a larger sample size. <br> (इष्टतम आवंटन में, यदि किसी विशिष्ट जनसांख्यिकीय स्तर का सर्वेक्षण करना खगोलीय रूप से महंगा है, तो यह गणितीय रूप से एक बड़े प्रतिदर्श आकार की मांग करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer</button>
+                <div id="tf14" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It explicitly demands a *smaller* sample size. Because \( n_h \) is proportional to \( 1/\sqrt{c_h} \), high costs aggressively choke off the allocation to protect the budget.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. The fundamental equation \( V(\bar{y}_{st}) = \sum W_h^2 V(\bar{y}_h) \) flawlessly depends on the sample inside Stratum A being completely independent of the sample inside Stratum B. <br> (मूल समीकरण \( V(\bar{y}_{st}) = \sum W_h^2 V(\bar{y}_h) \) त्रुटिहीन रूप से स्ट्रेटम ए के अंदर के प्रतिदर्श के स्ट्रेटम बी के अंदर के प्रतिदर्श से पूरी तरह स्वतंत्र होने पर निर्भर करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer</button>
+                <div id="tf15" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If the samples were correlated, you would natively have to add messy covariance terms. Independence smoothly slaughters all the covariance terms, leaving pure addition.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Stratified sampling mathematically guarantees a variance that is exactly equal to the total variance of the population minus the variance within the strata. <br> (स्तरीकृत प्रतिचयन गणितीय रूप से एक ऐसे प्रसरण की गारंटी देता है जो जनसंख्या के कुल प्रसरण से स्तरों के भीतर के प्रसरण को घटाकर बिल्कुल बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer</button>
+                <div id="tf16" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It guarantees a variance tied exclusively to the variance *within* the strata. It eliminates the variance *between* the strata from the error completely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In Double Sampling for stratification, a cheap, colossal first sample is rapidly deployed to empirically estimate the unknown stratum weights \( W_h \). <br> (स्तरीकरण के लिए दोहरे प्रतिचयन में, अज्ञात स्तर के भार \( W_h \) का अनुभवजन्य रूप से अनुमान लगाने के लिए एक सस्ता, विशाल पहला प्रतिदर्श तेजी से तैनात किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer</button>
+                <div id="tf17" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If the census data is missing or totally outdated, this is the only logical mathematical bridge to safely enable highly precise stratified sampling later.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. Adding 500 new distinct strata to a survey design will guarantee a massive, linear explosion in the overall statistical precision. <br> (सर्वेक्षण डिज़ाइन में 500 नए विशिष्ट स्तरों को जोड़ने से समग्र सांख्यिकीय सटीकता में बड़े पैमाने पर, रैखिक विस्फोट की गारंटी होगी।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer</button>
+                <div id="tf18" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> As mapped out in Section 3.11, the variance reduction aggressively plateaus. After about 6 strata, adding more becomes a completely useless mathematical exercise.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If Neyman allocation tells you to sample 150 farmers from a specific region that only contains 90 farmers, you must simply alter the mathematics and sample exactly 90. <br> (यदि नेमैन आवंटन आपको एक विशिष्ट क्षेत्र से 150 किसानों का सर्वेक्षण करने के लिए कहता है जिसमें केवल 90 किसान हैं, तो आपको बस गणित में परिवर्तन करना होगा और बिल्कुल 90 का सर्वेक्षण करना होगा।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer</button>
+                <div id="tf19" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> You execute a 100% complete census (\( n_h = N_h \)) on that stratum. The variance for that stratum drops to zero, and the remaining sample is smartly re-allocated.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. By splitting the population into violently distinct, non-overlapping strata, the fundamental statistical error \( V(\bar{y}_{st}) \) drops securely because the massive differences between those strata no longer pollute the uncertainty. <br> (जनसंख्या को हिंसक रूप से भिन्न, गैर-अतिव्यापी स्तरों में विभाजित करके, मौलिक सांख्यिकीय त्रुटि \( V(\bar{y}_{st}) \) सुरक्षित रूप से गिर जाती है क्योंकि उन स्तरों के बीच बड़े पैमाने पर अंतर अब अनिश्चितता को प्रदूषित नहीं करते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
+                <div id="tf20" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This is the absolute core genius of stratification. By explicitly controlling the macro-differences, only the tiny micro-differences inside the groups can generate error.</div>
+            </div>
+
+        </section>
+        
+        <script>
+        function showTopic(topicId) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            var elem = document.getElementById(topicId);
+            if (elem) {
+                elem.classList.add('active');
+            }
+            
+            var activeLink = document.querySelector(`.nav-link[onclick*="${topicId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            if(window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('hinglish-active');
+            var btn = document.querySelector('.lang-toggle-btn');
+            if (document.body.classList.contains('hinglish-active')) {
+                btn.textContent = 'Switch to English';
+            } else {
+                btn.textContent = 'Switch to Hinglish';
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv) {
+                answerDiv.classList.toggle('show');
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 2 – Simple Random Sampling | Theory of Sampling</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
+            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
+            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
+        
+        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        
+        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
+        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
+        
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
+        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
+        .section-card.active { display: block; }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
+        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
+        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
+        .section-card li { margin-bottom: 8px; }
+        
+        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hinglish-content { display: none; }
+        .hinglish-active .english-content { display: none; }
+        .hinglish-active .hinglish-content { display: block; }
+        
+        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
+        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
+
+        /* QUIZ STYLES */
+        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
+        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
+        .mcq-options li { margin-bottom: 5px; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
+        .toggle-btn:hover { background: var(--navy-light); }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
+        .answer.show { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="book-header">
+        <div class="header-icon"><i class="fas fa-book"></i></div>
+        <div class="header-text">
+            <h1>Chapter 2: Simple Random Sampling | Theory of Sampling</h1>
+            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <a class="nav-link active" onclick="showTopic('sec2-1')">2.1 Simple Random Sampling</a>
+        <a class="nav-link" onclick="showTopic('sec2-2')">2.2 Procedures of Selecting</a>
+        <a class="nav-link" onclick="showTopic('sec2-3')">2.3 Estimation of Parameters</a>
+        <a class="nav-link" onclick="showTopic('sec2-4')">2.4 Estimation of Proportion</a>
+        <a class="nav-link" onclick="showTopic('sec2-5')">2.5 Combination of Estimators</a>
+        <a class="nav-link" onclick="showTopic('sec2-6')">2.6 Confidence Limits</a>
+        <a class="nav-link" onclick="showTopic('sec2-7')">2.7 Estimation of Sample Size</a>
+        
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
+        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
+        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
+        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
+        <a class="nav-link" onclick="showTopic('sec2-8')">📝 Exercise (Subjective)</a>
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Back to Index</a>
+    </aside>
+
+    <main class="main-content">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+
+    
+        <section id="sec2-1" class="section-card active">
+            <div class="english-content">
+                <h2>2.1 Simple Random Sampling</h2>
+                <p>The simplest and most common method of sampling is simple random sampling. In this method, the sample is drawn unit by unit, with an equal probability of selection for each unit at every draw. Therefore, simple random sampling is defined as a method of selecting \( n \) units out of a population of size \( N \) by giving equal probability to all units.</p>
+                <p>Alternatively, it is a sampling procedure in which all possible combinations of \( n \) units that may be formed from the population of \( N \) units have the exact same probability of selection. It is also sometimes referred to as <em>unrestricted random sampling</em>.</p>
+                
+                <ul>
+                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> If a unit is selected, its data is recorded, and then it is immediately returned to the population before the next drawing is made. If this procedure is repeated \( n \) times, it gives rise to a simple random sample of \( n \) units with replacement.</li>
+                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> If this procedure is repeated until \( n \) distinct units are selected, and all repetitions are ignored (or units are not returned), it is called simple random sampling without replacement.</li>
+                </ul>
+
+                <p><strong>Theorem 2.1.1:</strong> The probability that a specified unit of the population is selected at any given draw is strictly equal to the probability of its being selected at the first draw.</p>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>The probability that the specified unit is selected at the \( r \)-th draw is clearly the mathematical product of:</p>
+                    <ol type="a">
+                        <li>The probability that the specified unit is <em>not</em> selected in any of the previous \( (r - 1) \) draws, and</li>
+                        <li>The probability that it <em>is</em> selected at the \( r \)-th draw, conditional upon it not being selected in the previous \( (r - 1) \) draws.</li>
+                    </ol>
+                    <p>The probability under (a) is given by:</p>
+                    $$ P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1} \cdots \frac{N - r + 1}{N - r + 2} = \frac{N - r + 1}{N} $$
+                    <div class="explanation">\( \because \) at each step, one less unselected unit is available, and these probabilities compound multiplicatively. The intermediate terms elegantly cancel out.</div>
+                    <p>The probability under (b) is given by:</p>
+                    $$ P(\text{Selected at } r \mid \text{Not selected prior}) = \frac{1}{N - r + 1} $$
+                    <div class="explanation">\( \because \) there is exactly 1 specified unit remaining among the \( N - r + 1 \) total available units.</div>
+                    <p>Hence, the required probability is their product:</p>
+                    $$ P(\text{Selected at } r) = \frac{N - r + 1}{N} \times \frac{1}{N - r + 1} = \frac{1}{N} $$
+                    <div class="explanation">\( \because \) the term \( (N - r + 1) \) cancels out, demonstrating that the probability \( 1/N \) is completely independent of the draw number \( r \).</div>
+                </div>
+
+                <p><strong>Theorem 2.1.2:</strong> The probability of a specified unit being included in the final sample is equal to \( n/N \).</p>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Let \( n \) denote the sample size. Since the specified unit may be included in the sample at <em>any</em> of the \( n \) draws, the probability that a specified unit is included in the sample is the sum of the probabilities of \( n \) mutually exclusive events (i.e., it is included at the 1st draw, OR 2nd draw, ..., OR \( n \)-th draw).</p>
+                    $$ P(\text{Included}) = P(\text{Draw } 1) + P(\text{Draw } 2) + \ldots + P(\text{Draw } n) $$
+                    <div class="explanation">\( \because \) the events are mutually exclusive (it can only be drawn for the first time once), we sum their probabilities.</div>
+                    <p>As rigorously proven in Theorem 2.1.1, the probability of each individual case is \( 1/N \).</p>
+                    $$ P(\text{Included}) = \underbrace{\frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N}}_{n \text{ times}} = \frac{n}{N} $$
+                </div>
+
+                <p><strong>Corollary 1:</strong> The probability of selecting a specified sample of \( n \) units, ignoring the order of selection, is \( 1 / \binom{N}{n} \).</p>
+                <p><strong>Corollary 2:</strong> If, in a population of \( N \) units, \( m \) units are deleted and \( m' \) units are added, the probability of selection of any unit at a specified draw becomes \( (N - m + m')^{-1} \).</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>2.1 Simple Random Sampling (सरल यादृच्छिक प्रतिचयन)</h2>
+                <p>Sampling का सबसे सरल और आम method simple random sampling है। इस method में, sample को unit by unit निकाला जाता है, और प्रत्येक draw में प्रत्येक unit के selection की probability (प्रायिकता) समान (equal) होती है। इसलिए, simple random sampling, size \( N \) की population में से \( n \) units को select करने का एक method है जिसमें सभी units को समान probability दी जाती है।</p>
+                <p>या यह एक ऐसा sampling procedure है जिसमें \( N \) units की population से बनने वाले \( n \) units के सभी possible combinations के selection की probability समान होती है। इसे कभी-कभी <em>unrestricted random sampling</em> भी कहा जाता है।</p>
+                
+                <ul>
+                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> यदि एक unit को select करके नोट किया जाता है और अगला draw निकालने से पहले उसे वापस population में लौटा दिया जाता है और यह procedure \( n \) बार दोहराई जाती है, तो यह \( n \) units का SRSWR देता है।</li>
+                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> यदि इस procedure को तब तक दोहराया जाता है जब तक कि \( n \) distinct (विशिष्ट) units select न हो जाएं और सभी repetitions को ignore कर दिया जाए, तो इसे SRSWOR कहा जाता है।</li>
+                </ul>
+
+                <p><strong>Theorem 2.1.1:</strong> यह probability कि population की एक specified unit किसी भी दिए गए draw में select होती है, उसके पहले draw में select होने की probability के बराबर होती है।</p>
+                <div class="derivation-block">
+                    <p><strong>Proof:</strong> यह probability कि specified unit \( r \)-वें draw में select होती है, स्पष्ट रूप से निम्नलिखित का product (गुणनफल) है:</p>
+                    <ol type="a">
+                        <li>इस probability कि specified unit पिछले \( (r - 1) \) draws में select नहीं होती है, और</li>
+                        <li>इस probability कि यह \( r \)-वें draw में इस शर्त के साथ select होती है कि यह पिछले \( (r - 1) \) draws में select नहीं हुई थी।</li>
+                    </ol>
+                    <p>(a) के अंतर्गत probability है:</p>
+                    $$ \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1}\cdots\frac{N - r + 1}{N - r + 2} = \frac{N - r + 1}{N} $$
+                    <div class="explanation">\( \because \) intermediate terms एक दूसरे को रद्द (cancel) कर देते हैं।</div>
+                    <p>(b) के अंतर्गत probability \( \frac{1}{N - r + 1} \) है।</p>
+                    <p>इसलिए आवश्यक (required) probability है:</p>
+                    $$ \frac{N - r + 1}{N} \times \frac{1}{N - r + 1} = \frac{1}{N} $$
+                    <div class="explanation">\( \because \) यह term \( r \), यानी draw number से स्वतंत्र (independent) है।</div>
+                </div>
+
+                <p><strong>Theorem 2.1.2:</strong> Sample में एक specified unit के शामिल होने की probability \( n/N \) के बराबर होती है।</p>
+                <div class="derivation-block">
+                    <p><strong>Proof:</strong> मान लीजिए \( n \) sample size को दर्शाता है। चूँकि specified unit \( n \) draws में से किसी में भी sample में शामिल की जा सकती है, इसलिए यह \( n \) mutually exclusive (परस्पर अनन्य) events का sum (योग) है।</p>
+                    <p>Theorem 2.1.1 के अनुसार, प्रत्येक case की probability \( 1/N \) है।</p>
+                    $$ \text{Required Probability} = \underbrace{\frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N}}_{n \text{ बार}} = \frac{n}{N} $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec2-2" class="section-card">
+            <div class="english-content">
+                <h2>2.2 Procedures of Selecting a Random Sample</h2>
+                <p>Because the mathematical theory of sampling relies heavily on the strict assumption of random sampling, the actual technique used to select the sample is of paramount significance. Several robust procedures are utilized in practice:</p>
+                
+                <h3>2.2.1 Lottery Method</h3>
+                <p>In practice, a ticket or chit may be uniquely associated with each unit of the population. Thus, every single sampling unit is given an identification mark from 1 to \( N \). The procedure of selecting an individual is conceptually simple. All the tickets are placed in a container, drum, or metallic spherical device where thorough, unbiased mixing or reshuffling is conducted before each draw. Draws continue until a sample of the required size \( n \) is achieved.</p>
+                <p>However, this procedure of physically numbering tickets and selecting them becomes incredibly cumbersome and impractical when the population size is massively large. Achieving a genuinely thorough shuffle in a physical drum is difficult. Furthermore, human bias and subconscious prejudice may easily creep into the selection process.</p>
+
+                <h3>2.2.2 Use of Random Number Tables</h3>
+                <p>A random number table is a meticulously generated arrangement of digits (0 to 9), in either a linear or rectangular pattern. It is constructed so that every digit appears completely independent of the others. Prominent tables include:</p>
+                <ol>
+                    <li>Tippett's random number tables</li>
+                    <li>Fisher and Yates tables</li>
+                    <li>Kendall and Smith tables</li>
+                    <li>A Million Random Digits (RAND Corporation)</li>
+                </ol>
+                <p>To mathematically ascertain whether these digits are truly random, rigorous tests such as the Frequency test, Serial test, Gap test, and Poker test are applied.</p>
+
+                <p>The simplest way of selecting a sample using these tables is picking a random number from 1 to \( N \) and selecting the corresponding unit. However, this involves a high rejection rate for numbers greater than \( N \). Therefore, improved mathematical approaches are used:</p>
+
+                <h4>1. Remainder Approach</h4>
+                <p>Let \( N \) be an \( r \)-digit number, and let its highest \( r \)-digit multiple be \( N' \). A random number \( k \) is selected from 1 to \( N' \). The unit selected is the one whose serial number matches the <strong>remainder</strong> obtained when dividing \( k \) by \( N \). If the remainder is exactly zero, the very last unit (\( N \)) is selected.</p>
+                <div class="derivation-block">
+                    <p><strong>Example:</strong> Let \( N = 125 \) (instead of 123). The highest 3-digit multiple is \( 125 \times 7 = 875 \). We select a random number between 001 and 875. Suppose the random number picked is 314. Dividing 314 by 125 gives a remainder of 64. Hence, the unit with serial number 64 is decisively selected.</p>
+                </div>
+
+                <h4>2. Quotient Approach</h4>
+                <p>Let \( N \) be an \( r \)-digit number, and let its highest multiple be \( N' \) such that \( N'/N = q \). A random number \( k \) is chosen between 0 and \( N' - 1 \). We divide \( k \) by \( q \) to obtain the quotient \( r \), and select the unit bearing the serial number \( (r + 1) \).</p>
+                <div class="derivation-block">
+                    <p><strong>Example:</strong> Let \( N = 15 \) (instead of 16), making \( N' = 90 \) and \( q = 90/15 = 6 \). We pick a random number between 0 and 89. Suppose we pick 73. Dividing 73 by 6 yields a quotient of 12. Hence, unit number \( 12 + 1 = 13 \) is selected.</p>
+                </div>
+
+                <h4>3. Independent Choice of Digits</h4>
+                <p>This method involves the separate selection of digits to form a complete random number. It minimizes the reading of long strings but still requires rejecting numbers \( \geq N \).</p>
+
+                <p><strong>Example 2.2 (Corporate Branches):</strong> Consider 8 corporate branches having 110, 650, 890, 420, 1200, 750, 480, and 230 employees respectively. We need to draw a random sample of 10 employees. Instead of numbering every single employee 1 to 4730, we assign cumulative serial numbers to the branches: 110, 760, 1650, 2070, 3270, 4020, 4500, 4730. When a 4-digit random number is drawn (e.g., 2015), it falls into the 4th branch (range 1651 to 2070). Thus, employee number 365 inside the 4th branch is selected. This brilliantly avoids unnecessary numbering across the whole corporation.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>2.2 Procedures of Selecting a Random Sample (यादृच्छिक प्रतिदर्श चुनने की प्रक्रियाएं)</h2>
+                <p>चूँकि sampling की theory पूरी तरह random sampling की मान्यता (assumption) पर आधारित है, इसलिए sample चुनने के लिए उपयोग की जाने वाली तकनीक का बहुत महत्व है। व्यवहार में कई प्रक्रियाएं उपयोग की जाती हैं:</p>
+                
+                <h3>2.2.1 Lottery Method (लॉटरी विधि)</h3>
+                <p>व्यवहार में, population की प्रत्येक unit के साथ एक ticket या chit जुड़ी हो सकती है। इस प्रकार, प्रत्येक sampling unit का 1 से \( N \) तक अपना पहचान चिह्न (identification mark) होता है। एक individual को select करने की प्रक्रिया वैचारिक रूप से सरल है। सभी tickets को एक drum या container में रखा जाता है, जिसमें प्रत्येक draw से पहले अच्छी तरह से mixing की जाती है।</p>
+                <p>हालाँकि, जब population size बहुत बड़ा होता है, तो tickets पर number देने की यह प्रक्रिया बोझिल (cumbersome) हो जाती है। इसके अलावा, इस method में मानवीय पूर्वाग्रह (human bias) भी आसानी से आ सकता है।</p>
+
+                <h3>2.2.2 Use of Random Number Tables (यादृच्छिक संख्या तालिकाओं का उपयोग)</h3>
+                <p>Random number table अंकों (digits 0 से 9) की एक सावधानीपूर्वक तैयार की गई व्यवस्था है। यह इस तरह बनाई जाती है कि सभी numbers एक-दूसरे से independent दिखाई देते हैं। प्रमुख tables हैं:</p>
+                <ol>
+                    <li>Tippett's random number tables</li>
+                    <li>Fisher and Yates tables</li>
+                    <li>Kendall and Smith tables</li>
+                </ol>
+                <p>इन numbers की randomness को verify करने के लिए Frequency test, Serial test, Gap test, और Poker test लागू किए जाते हैं।</p>
+
+                <h4>1. Remainder Approach (शेषफल दृष्टिकोण)</h4>
+                <p>मान लीजिए \( N \) एक \( r \)-digit की number है और इसका highest multiple (सबसे बड़ा गुणज) \( N' \) है। 1 से \( N' \) के बीच एक random number \( k \) चुना जाता है। \( k \) को \( N \) से divide करने पर प्राप्त remainder (शेषफल) के बराबर serial number वाली unit को select किया जाता है। यदि remainder शून्य है, तो अंतिम unit (\( N \)) select की जाती है।</p>
+                <div class="derivation-block">
+                    <p><strong>उदाहरण:</strong> मान लीजिए \( N = 125 \)। 125 का सबसे बड़ा 3-digit multiple 875 है। मान लीजिए selected random number 314 है। 314 को 125 से divide करने पर, remainder 64 आता है। इसलिए, sample में serial number 64 वाली unit को select किया जाता है।</p>
+                </div>
+
+                <h4>2. Quotient Approach (भागफल दृष्टिकोण)</h4>
+                <p>मान लीजिए \( N \) एक \( r \)-digit की number है और इसका highest multiple \( N' \) इस प्रकार है कि \( N'/N = q \)। 0 से \( N' - 1 \) तक एक random number \( k \) चुना जाता है। \( k \) को \( q \) से divide करने पर प्राप्त quotient (भागफल) \( r \) में 1 जोड़कर unit select की जाती है।</p>
+
+                <h4>3. Independent Choice of Digits (अंकों का स्वतंत्र चुनाव)</h4>
+                <p>इस method में दो random numbers का selection शामिल है जिन्हें मिलाकर एक random number बनाई जाती है।</p>
+
+                <p><strong>उदाहरण 2.2 (कॉर्पोरेट शाखाएँ):</strong> 8 कॉर्पोरेट शाखाओं (branches) पर विचार करें जिनमें क्रमशः 110, 650, 890, 420, 1200, 750, 480, और 230 कर्मचारी हैं। हमें 10 कर्मचारियों का sample लेना है। सभी 4730 कर्मचारियों को नंबर देने के बजाय, हम संचयी (cumulative) नंबर बनाते हैं: 110, 760, 1650, 2070, 3270, 4020, 4500, 4730। यदि random number 2015 आता है, तो यह चौथी शाखा (range 1651-2070) में गिरता है, जिससे अनावश्यक numbering से बचा जा सकता है।</p>
+            </div>
+        </section>
+
+    
+        <section id="sec2-3" class="section-card">
+            <div class="english-content">
+                <h2>2.3 Estimation of Population Parameters</h2>
+                <p>Let us assume that each unit \( u_i \) in the population is strictly associated with a variate value \( y_i \), for the characteristic \( y \). For the mathematical parameters, let us explicitly designate:</p>
+                <ul>
+                    <li>The population total, \( Y = \sum_{i=1}^N y_i \)</li>
+                    <li>The population mean, \( \bar{Y} = \frac{1}{N}\sum_{i=1}^N y_i \)</li>
+                    <li>The population variance, \( \sigma^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 \)</li>
+                </ul>
+
+                <p>Let the \( n \) units randomly drawn into the sample be \( u_1, u_2, \ldots, u_n \), with corresponding variate values \( y_1, y_2, \ldots, y_n \). The estimators of the population total and population mean are mathematically given by:</p>
+                <div class="derivation-block">
+                    $$ \widehat{Y} = \frac{N}{n}\sum_{i=1}^n y_i = N\bar{y} $$
+                    $$ \text{and} \quad \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i $$
+                </div>
+                <p>The scalar factor \( N/n \) by which the sample total is multiplied is technically called the <em>expansion</em>, <em>raising</em>, or <em>inflation factor</em>. Its inverse \( n/N \) is fundamentally known as the <em>sampling fraction</em>, denoted by the letter \( f \) throughout this text.</p>
+
+                <h3><strong>Theorem 2.3.1:</strong></h3>
+                <p>In simple random sampling without replacement (SRSWOR), the sample mean \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \), and its exact sampling variance is given by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \left( 1 - \frac{n}{N} \right)\frac{S^2}{n} = (1 - f)\frac{S^2}{n} \quad (2.3.1) $$
+                    <p>where \( S^2 = \frac{N}{N-1}\sigma^2 \).</p>
+                </div>
+
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>First, we prove unbiasedness. By definition of expected value over the sample space:</p>
+                    $$ E(\bar{y}) = E\left( \frac{1}{n}\sum_{i=1}^n y_i \right) = \frac{1}{n}\sum_{i=1}^n E(y_i) $$
+                    <div class="explanation">\( \because \) expectation is a linear operator, we can bring the expectation inside the finite sum.</div>
+                    <p>Since the probability of any specified unit being selected at any given draw is exactly \( 1/N \):</p>
+                    $$ E(y_i) = \sum_{i=1}^N P_i y_i = \frac{1}{N}\sum_{i=1}^N y_i = \bar{Y} $$
+                    <div class="explanation">\( \because \) the expected value of a single draw is simply the population mean.</div>
+                    $$ \therefore E(\bar{y}) = \frac{1}{n} \sum_{i=1}^n \bar{Y} = \frac{1}{n} (n\bar{Y}) = \bar{Y} $$
+                    <div class="explanation">\( \because \) summing the constant \( \bar{Y} \) exactly \( n \) times yields \( n\bar{Y} \). Thus, the sample mean is strictly unbiased.</div>
+
+                    <p>Next, we derive the variance of \( \bar{y} \):</p>
+                    $$ V(\bar{y}) = E(\bar{y} - \bar{Y})^2 = E\left[ \frac{1}{n}\sum_{i=1}^n (y_i - \bar{Y}) \right]^2 $$
+                    <div class="explanation">\( \because \) variance is the expected squared deviation of the estimator from its mean.</div>
+                    $$ = \frac{1}{n^2} E\left[ \sum_{i=1}^n (y_i - \bar{Y})^2 + 2\sum_{i \neq j} (y_i - \bar{Y})(y_j - \bar{Y}) \right] $$
+                    <div class="explanation">\( \because \) expanding the square of a sum yields the sum of squares plus the sum of all cross-products.</div>
+                    <p>We evaluate the two expectation terms separately. First, the variance component:</p>
+                    $$ E(y_i - \bar{Y})^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 = \sigma^2 $$
+                    <div class="explanation">\( \because \) the expected squared deviation for a single draw is exactly the population variance \( \sigma^2 \).</div>
+                    <p>Second, the covariance component for SRSWOR. Since draws are without replacement, the probability of drawing unit \( i \) and unit \( j \) is \( \frac{1}{N(N-1)} \):</p>
+                    $$ E(y_i - \bar{Y})(y_j - \bar{Y}) = \frac{1}{N(N-1)}\sum_{i \neq j} (y_i - \bar{Y})(y_j - \bar{Y}) $$
+                    $$ = \frac{1}{N(N-1)}\left[ \left( \sum_{i=1}^N (y_i - \bar{Y}) \right)^2 - \sum_{i=1}^N (y_i - \bar{Y})^2 \right] $$
+                    <div class="explanation">\( \because \) the sum of cross-products is the square of the sum minus the sum of the squares.</div>
+                    $$ = \frac{1}{N(N-1)} \left[ 0 - N\sigma^2 \right] = -\frac{\sigma^2}{N-1} $$
+                    <div class="explanation">\( \because \) the sum of deviations from the mean is identically zero. This negative covariance directly reflects that sampling without replacement depletes the population.</div>
+                    <p>Substituting these back into the variance equation:</p>
+                    $$ V(\bar{y}) = \frac{1}{n^2} \left\{ n\sigma^2 + n(n-1)\left( -\frac{\sigma^2}{N-1} \right) \right\} $$
+                    <div class="explanation">\( \because \) there are exactly \( n \) squared terms and \( n(n-1) \) cross-product terms in the expansion.</div>
+                    $$ = \frac{1}{n^2} \left\{ \frac{n(N-1)\sigma^2 - n(n-1)\sigma^2}{N-1} \right\} = \frac{N-n}{N-1} \frac{\sigma^2}{n} $$
+                    $$ = \left( 1 - \frac{n}{N} \right) \frac{S^2}{n} $$
+                    <div class="explanation">\( \because \) we substitute \( S^2 = \frac{N}{N-1}\sigma^2 \) and factor out \( 1 - \frac{n}{N} \). This completes the proof.</div>
+                </div>
+
+                <p><strong>Corollary 1:</strong> In SRSWOR, the standard error of \( \bar{y} \) is:</p>
+                <div class="derivation-block">$$ S_{\bar{y}} = S\sqrt{\frac{N-n}{nN}} = S\sqrt{\frac{1-f}{n}} \quad (2.3.2) $$</div>
+
+                <p><strong>Corollary 2:</strong> In SRSWOR, the variance of \( \widehat{Y} = N\bar{y} \), as an estimator of the population total \( Y \), is obtained as:</p>
+                <div class="derivation-block">$$ V(\widehat{Y}) = E(\widehat{Y} - Y)^2 = (1-f)\frac{N^2 S^2}{n} \quad (2.3.3) $$</div>
+
+                <p><strong>Corollary 3:</strong> In SRSWOR, the standard error of \( \widehat{Y} \) is:</p>
+                <div class="derivation-block">$$ S_{\widehat{Y}} = NS\sqrt{\frac{1-f}{n}} \quad (2.3.4) $$</div>
+
+                <p>If sampling is with replacement (SRSWR), the term \( (N-n)/N \) (known as the finite population correction, fpc) vanishes because the population effectively acts as if it is infinite.</p>
+
+                <p><strong>Corollary 4:</strong> In SRSWR, the variance and standard error of \( \bar{y} \) can be written strictly as:</p>
+                <div class="derivation-block">$$ V(\bar{y}) = \frac{\sigma^2}{n}, \quad \sigma_{\bar{y}} = \frac{\sigma}{\sqrt{n}} \quad (2.3.5a) $$</div>
+
+                <p><strong>Corollary 5:</strong> In SRSWR, the variance and standard error of \( \widehat{Y} \) are:</p>
+                <div class="derivation-block">$$ V(\widehat{Y}) = \frac{N^2 \sigma^2}{n}, \quad \sigma_{\widehat{Y}} = \frac{N\sigma}{\sqrt{n}} \quad (2.3.5b) $$</div>
+
+                <h3><strong>Theorem 2.3.2:</strong></h3>
+                <p>In simple random sampling, the sample variance:</p>
+                <div class="derivation-block">$$ s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1} \quad (2.3.6) $$</div>
+                <p>is a mathematically unbiased estimator of the population mean square \( S^2 = \frac{N}{N-1}\sigma^2 \).</p>
+
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>We may algebraically expand the numerator of \( s^2 \) by cleverly adding and subtracting \( \bar{Y} \):</p>
+                    $$ s^2 = \frac{\sum_{i=1}^n [(y_i - \bar{Y}) - (\bar{y} - \bar{Y})]^2}{n-1} $$
+                    $$ = \frac{\sum_{i=1}^n (y_i - \bar{Y})^2 - n(\bar{y} - \bar{Y})^2}{n-1} $$
+                    <div class="explanation">\( \because \) the cross term \( -2(\bar{y} - \bar{Y})\sum(y_i - \bar{Y}) \) perfectly evaluates to \( -2n(\bar{y} - \bar{Y})^2 \), which combines with the positive term to yield the simplified numerator.</div>
+                    
+                    <p>Taking expectations on both sides:</p>
+                    $$ E(s^2) = \frac{\sum_{i=1}^n E(y_i - \bar{Y})^2 - nE(\bar{y} - \bar{Y})^2}{n-1} $$
+                    <div class="explanation">\( \because \) expectation distributes linearly.</div>
+                    
+                    <p>We know \( E(y_i - \bar{Y})^2 = \sigma^2 = \frac{N-1}{N}S^2 \) and \( E(\bar{y} - \bar{Y})^2 = V(\bar{y}) = \frac{N-n}{Nn}S^2 \). Substituting these:</p>
+                    $$ E(s^2) = \frac{ n \left( \frac{N-1}{N}S^2 \right) - n \left( \frac{N-n}{Nn}S^2 \right) }{n-1} $$
+                    $$ = \frac{ S^2 \left[ \frac{n(N-1)}{N} - \frac{N-n}{N} \right] }{n-1} = \frac{ S^2 \left[ \frac{nN - n - N + n}{N} \right] }{n-1} $$
+                    $$ = \frac{ S^2 \frac{N(n-1)}{N} }{n-1} = S^2 $$
+                    <div class="explanation">\( \because \) the algebraic terms beautifully simplify to cancel \( (n-1) \) and \( N \), proving that \( s^2 \) is precisely an unbiased estimator of \( S^2 \).</div>
+                </div>
+
+                <p><strong>Corollary 1:</strong> An unbiased estimator of the variance of \( \bar{y} \) in SRSWOR is:</p>
+                <div class="derivation-block">$$ v(\bar{y}) = (1-f)\frac{s^2}{n} \quad (2.3.7) $$</div>
+
+                <p><strong>Corollary 2:</strong> An unbiased estimator of the variance of \( \widehat{Y} \) in SRSWOR is:</p>
+                <div class="derivation-block">$$ v(\widehat{Y}) = (1-f)N^2 \frac{s^2}{n} \quad (2.3.8) $$</div>
+
+                <p><strong>Corollary 3 & 4:</strong> In SRSWR, the unbiased estimators for the variance of the mean and total drop the \( (1-f) \) term, becoming \( s^2/n \) and \( N^2 s^2/n \) respectively.</p>
+
+                <h3>Example 2.3</h3>
+                <p>A random sample of \( n = 2 \) households was drawn from a small colony of \( N = 5 \) households having weekly grocery expenditures (in rupees) as follows:</p>
+                <table style="width: 50%; margin: 15px 0; border-collapse: collapse; text-align: center;">
+                    <tr style="border-bottom: 1px solid var(--border); background: #eee;"><th>Household</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+                    <tr><td>Expenditure (in Rs.)</td><td>150</td><td>145</td><td>160</td><td>158</td><td>152</td></tr>
+                </table>
+                <p>(i) Calculate population mean \( \bar{Y} \), variance (\( \sigma^2 \)) and mean square error (\( S^2 \)).</p>
+                <div class="derivation-block">
+                    <p>Population Mean \( \bar{Y} = (150 + 145 + 160 + 158 + 152) / 5 = 153.00 \)</p>
+                    <p>Population Variance \( \sigma^2 = [(150-153)^2 + (145-153)^2 + \ldots + (152-153)^2] / 5 = [9 + 64 + 49 + 25 + 1] / 5 = 29.60 \)</p>
+                    <p>Mean Square Error \( S^2 = \frac{N}{N-1}\sigma^2 = \frac{5}{4} \times 29.60 = 37.00 \)</p>
+                </div>
+
+                <p>(ii) Enumerate all possible samples of size 2 by the <strong>with replacement</strong> method and empirically show that the sample mean and sample variance are unbiased estimators.</p>
+                <p>There are \( 5^2 = 25 \) possible samples. Each has a probability of \( 1/25 \).</p>
+                <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
+                    <tr style="background: #f9f9f9;"><th>S.No</th><th>Units</th><th>Prob</th><th>\( y_1 \)</th><th>\( y_2 \)</th><th>\( \bar{y} \)</th><th>\( \bar{y} - \bar{Y} \)</th><th>\( (y_1-y_2)^2 / 4 \)</th></tr>
+                    <tr><td>1</td><td>1,1</td><td>1/25</td><td>150</td><td>150</td><td>150.0</td><td>-3.0</td><td>0.00</td></tr>
+<tr><td>2</td><td>1,2</td><td>1/25</td><td>150</td><td>145</td><td>147.5</td><td>-5.5</td><td>6.25</td></tr>
+<tr><td>3</td><td>1,3</td><td>1/25</td><td>150</td><td>160</td><td>155.0</td><td>2.0</td><td>25.00</td></tr>
+<tr><td>4</td><td>1,4</td><td>1/25</td><td>150</td><td>158</td><td>154.0</td><td>1.0</td><td>16.00</td></tr>
+<tr><td>5</td><td>1,5</td><td>1/25</td><td>150</td><td>152</td><td>151.0</td><td>-2.0</td><td>1.00</td></tr>
+<tr><td>6</td><td>2,1</td><td>1/25</td><td>145</td><td>150</td><td>147.5</td><td>-5.5</td><td>6.25</td></tr>
+<tr><td>7</td><td>2,2</td><td>1/25</td><td>145</td><td>145</td><td>145.0</td><td>-8.0</td><td>0.00</td></tr>
+<tr><td>8</td><td>2,3</td><td>1/25</td><td>145</td><td>160</td><td>152.5</td><td>-0.5</td><td>56.25</td></tr>
+<tr><td>9</td><td>2,4</td><td>1/25</td><td>145</td><td>158</td><td>151.5</td><td>-1.5</td><td>42.25</td></tr>
+<tr><td>10</td><td>2,5</td><td>1/25</td><td>145</td><td>152</td><td>148.5</td><td>-4.5</td><td>12.25</td></tr>
+<tr><td>11</td><td>3,1</td><td>1/25</td><td>160</td><td>150</td><td>155.0</td><td>2.0</td><td>25.00</td></tr>
+<tr><td>12</td><td>3,2</td><td>1/25</td><td>160</td><td>145</td><td>152.5</td><td>-0.5</td><td>56.25</td></tr>
+<tr><td>13</td><td>3,3</td><td>1/25</td><td>160</td><td>160</td><td>160.0</td><td>7.0</td><td>0.00</td></tr>
+<tr><td>14</td><td>3,4</td><td>1/25</td><td>160</td><td>158</td><td>159.0</td><td>6.0</td><td>1.00</td></tr>
+<tr><td>15</td><td>3,5</td><td>1/25</td><td>160</td><td>152</td><td>156.0</td><td>3.0</td><td>16.00</td></tr>
+<tr><td>16</td><td>4,1</td><td>1/25</td><td>158</td><td>150</td><td>154.0</td><td>1.0</td><td>16.00</td></tr>
+<tr><td>17</td><td>4,2</td><td>1/25</td><td>158</td><td>145</td><td>151.5</td><td>-1.5</td><td>42.25</td></tr>
+<tr><td>18</td><td>4,3</td><td>1/25</td><td>158</td><td>160</td><td>159.0</td><td>6.0</td><td>1.00</td></tr>
+<tr><td>19</td><td>4,4</td><td>1/25</td><td>158</td><td>158</td><td>158.0</td><td>5.0</td><td>0.00</td></tr>
+<tr><td>20</td><td>4,5</td><td>1/25</td><td>158</td><td>152</td><td>155.0</td><td>2.0</td><td>9.00</td></tr>
+<tr><td>21</td><td>5,1</td><td>1/25</td><td>152</td><td>150</td><td>151.0</td><td>-2.0</td><td>1.00</td></tr>
+<tr><td>22</td><td>5,2</td><td>1/25</td><td>152</td><td>145</td><td>148.5</td><td>-4.5</td><td>12.25</td></tr>
+<tr><td>23</td><td>5,3</td><td>1/25</td><td>152</td><td>160</td><td>156.0</td><td>3.0</td><td>16.00</td></tr>
+<tr><td>24</td><td>5,4</td><td>1/25</td><td>152</td><td>158</td><td>155.0</td><td>2.0</td><td>9.00</td></tr>
+<tr><td>25</td><td>5,5</td><td>1/25</td><td>152</td><td>152</td><td>152.0</td><td>-1.0</td><td>0.00</td></tr>
+                </table>
+                <p>The average of \( \bar{y} \) across all 25 samples is exactly 153.0, perfectly matching the population mean, proving unbiasedness. The average of the estimated variance \( v(\bar{y}) = (y_1-y_2)^2 / 4 \) is exactly \( 14.80 \) which equals \( \sigma^2 / 2 \), proving the estimator is unbiased.</p>
+
+                <p>(iii) Enumerate all possible samples of size 2 by the <strong>without replacement</strong> method.</p>
+                <p>There are \( \binom{5}{2} = 10 \) possible samples. Each has a probability of \( 1/10 \).</p>
+                <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
+                    <tr style="background: #f9f9f9;"><th>S.No</th><th>Units</th><th>Prob</th><th>\( y_1 \)</th><th>\( y_2 \)</th><th>\( \bar{y} \)</th><th>\( \bar{y} - \bar{Y} \)</th><th>\( 3(y_1-y_2)^2 / 20 \)</th></tr>
+                    <tr><td>1</td><td>1,2</td><td>1/10</td><td>150</td><td>145</td><td>147.5</td><td>-5.5</td><td>3.75</td></tr>
+<tr><td>2</td><td>1,3</td><td>1/10</td><td>150</td><td>160</td><td>155.0</td><td>2.0</td><td>15.00</td></tr>
+<tr><td>3</td><td>1,4</td><td>1/10</td><td>150</td><td>158</td><td>154.0</td><td>1.0</td><td>9.60</td></tr>
+<tr><td>4</td><td>1,5</td><td>1/10</td><td>150</td><td>152</td><td>151.0</td><td>-2.0</td><td>0.60</td></tr>
+<tr><td>5</td><td>2,3</td><td>1/10</td><td>145</td><td>160</td><td>152.5</td><td>-0.5</td><td>33.75</td></tr>
+<tr><td>6</td><td>2,4</td><td>1/10</td><td>145</td><td>158</td><td>151.5</td><td>-1.5</td><td>25.35</td></tr>
+<tr><td>7</td><td>2,5</td><td>1/10</td><td>145</td><td>152</td><td>148.5</td><td>-4.5</td><td>7.35</td></tr>
+<tr><td>8</td><td>3,4</td><td>1/10</td><td>160</td><td>158</td><td>159.0</td><td>6.0</td><td>0.60</td></tr>
+<tr><td>9</td><td>3,5</td><td>1/10</td><td>160</td><td>152</td><td>156.0</td><td>3.0</td><td>9.60</td></tr>
+<tr><td>10</td><td>4,5</td><td>1/10</td><td>158</td><td>152</td><td>155.0</td><td>2.0</td><td>5.40</td></tr>
+                </table>
+                <p>Again, the average of \( \bar{y} \) is exactly 153.0. The average of \( v(\bar{y}) = \frac{1-f}{n}s^2 = \frac{3}{10}s^2 = \frac{3(y_1-y_2)^2}{20} \) is exactly 11.10, which strictly equals \( \frac{1-f}{n}S^2 = \frac{3}{10}(37.0) = 11.10 \). Thus, unbiasedness is conclusively proven.</p>
+            </div>
+            
+            
+              <div class="hinglish-content">
+                  <h2>2.3 Estimation of Population Parameters (जनसंख्या मापदंडों का अनुमान)</h2>
+                  <p>मान लीजिए कि population में प्रत्येक unit \( u_i \) सख्ती से character \( y \) के लिए एक variate value \( y_i \) से जुड़ी है। Mathematical parameters के लिए, मान लें:</p>
+                  <ul>
+                      <li>Population total (कुल जनसंख्या), \( Y = \sum_{i=1}^N y_i \)</li>
+                      <li>Population mean (जनसंख्या माध्य), \( \bar{Y} = \frac{1}{N}\sum_{i=1}^N y_i \)</li>
+                      <li>Population variance (जनसंख्या प्रसरण), \( \sigma^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 \)</li>
+                  </ul>
+
+                  <p>मान लीजिए sample में randomly निकाले गए \( n \) units क्रमशः \( y_1, y_2, \ldots, y_n \) variate values के साथ \( u_1, u_2, \ldots, u_n \) हैं। Population total और population mean के estimators गणितीय रूप से इस प्रकार दिए गए हैं:</p>
+                  <div class="derivation-block">
+                      $$ \widehat{Y} = \frac{N}{n}\sum_{i=1}^n y_i = N\bar{y} $$
+                      $$ \text{और} \quad \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i $$
+                  </div>
+                  <p>Scalar factor \( N/n \) जिससे sample total को गुणा किया जाता है, तकनीकी रूप से <em>expansion</em>, <em>raising</em>, या <em>inflation factor</em> कहलाता है। इसके inverse \( n/N \) को मौलिक रूप से <em>sampling fraction</em> कहा जाता है, जिसे इस पूरे पाठ में \( f \) अक्षर द्वारा दर्शाया गया है।</p>
+
+                  <h3><strong>Theorem 2.3.1:</strong></h3>
+                  <p>Simple random sampling without replacement (SRSWOR) में, sample mean \( \bar{y} \), \( \bar{Y} \) का एक unbiased (निष्पक्ष) estimator है, और इसका सटीक sampling variance इस प्रकार दिया गया है:</p>
+                  <div class="derivation-block">
+                      $$ V(\bar{y}) = \left( 1 - \frac{n}{N} \right)\frac{S^2}{n} = (1 - f)\frac{S^2}{n} \quad (2.3.1) $$
+                      <p>जहाँ \( S^2 = \frac{N}{N-1}\sigma^2 \)।</p>
+                  </div>
+
+                  <p><em>Proof:</em></p>
+                  <div class="derivation-block">
+                      <p>सबसे पहले, हम unbiasedness सिद्ध करते हैं। Sample space पर expected value की परिभाषा के अनुसार:</p>
+                      $$ E(\bar{y}) = E\left( \frac{1}{n}\sum_{i=1}^n y_i \right) = \frac{1}{n}\sum_{i=1}^n E(y_i) $$
+                      <div class="explanation">\( \because \) expectation एक linear ऑपरेटर है, हम expectation को finite sum के अंदर ला सकते हैं।</div>
+                      <p>चूंकि किसी भी दिए गए draw पर किसी निर्दिष्ट unit के select होने की probability बिल्कुल \( 1/N \) है:</p>
+                      $$ E(y_i) = \sum_{i=1}^N P_i y_i = \frac{1}{N}\sum_{i=1}^N y_i = \bar{Y} $$
+                      <div class="explanation">\( \because \) एक single draw की expected value केवल population mean होती है।</div>
+                      $$ \therefore E(\bar{y}) = \frac{1}{n} \sum_{i=1}^n \bar{Y} = \frac{1}{n} (n\bar{Y}) = \bar{Y} $$
+                      <div class="explanation">\( \because \) constant \( \bar{Y} \) को बिल्कुल \( n \) बार जोड़ने पर \( n\bar{Y} \) प्राप्त होता है। इस प्रकार, sample mean सख्ती से unbiased है।</div>
+
+                      <p>इसके बाद, हम \( \bar{y} \) का variance निकालते हैं:</p>
+                      $$ V(\bar{y}) = E(\bar{y} - \bar{Y})^2 = E\left[ \frac{1}{n}\sum_{i=1}^n (y_i - \bar{Y}) \right]^2 $$
+                      <div class="explanation">\( \because \) variance estimator का अपने mean से expected squared deviation है।</div>
+                      $$ = \frac{1}{n^2} E\left[ \sum_{i=1}^n (y_i - \bar{Y})^2 + 2\sum_{i \neq j} (y_i - \bar{Y})(y_j - \bar{Y}) \right] $$
+                      <div class="explanation">\( \because \) एक sum के square का विस्तार करने पर squares का sum प्लस सभी cross-products का sum प्राप्त होता है।</div>
+                      <p>हम दोनों expectation terms का अलग-अलग मूल्यांकन करते हैं। सबसे पहले, variance component:</p>
+                      $$ E(y_i - \bar{Y})^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 = \sigma^2 $$
+                      <div class="explanation">\( \because \) एक single draw के लिए expected squared deviation बिल्कुल population variance \( \sigma^2 \) है।</div>
+                      <p>दूसरा, SRSWOR के लिए covariance component। चूंकि draws replacement के बिना हैं, unit \( i \) और unit \( j \) को खींचने की probability \( \frac{1}{N(N-1)} \) है:</p>
+                      $$ E(y_i - \bar{Y})(y_j - \bar{Y}) = \frac{1}{N(N-1)}\sum_{i \neq j} (y_i - \bar{Y})(y_j - \bar{Y}) $$
+                      $$ = \frac{1}{N(N-1)}\left[ \left( \sum_{i=1}^N (y_i - \bar{Y}) \right)^2 - \sum_{i=1}^N (y_i - \bar{Y})^2 \right] $$
+                      <div class="explanation">\( \because \) cross-products का sum, sum के square माइनस squares के sum के बराबर होता है।</div>
+                      $$ = \frac{1}{N(N-1)} \left[ 0 - N\sigma^2 \right] = -\frac{\sigma^2}{N-1} $$
+                      <div class="explanation">\( \because \) mean से deviations का sum समान रूप से शून्य है। यह negative covariance सीधे तौर पर दर्शाता है कि बिना replacement के sampling करने से population कम (deplete) हो जाती है।</div>
+                      <p>इन्हें वापस variance समीकरण में प्रतिस्थापित करने पर:</p>
+                      $$ V(\bar{y}) = \frac{1}{n^2} \left\{ n\sigma^2 + n(n-1)\left( -\frac{\sigma^2}{N-1} \right) \right\} $$
+                      <div class="explanation">\( \because \) विस्तार में बिल्कुल \( n \) squared terms और \( n(n-1) \) cross-product terms हैं।</div>
+                      $$ = \frac{1}{n^2} \left\{ \frac{n(N-1)\sigma^2 - n(n-1)\sigma^2}{N-1} \right\} = \frac{N-n}{N-1} \frac{\sigma^2}{n} $$
+                      $$ = \left( 1 - \frac{n}{N} \right) \frac{S^2}{n} $$
+                      <div class="explanation">\( \because \) हम \( S^2 = \frac{N}{N-1}\sigma^2 \) को प्रतिस्थापित करते हैं और \( 1 - \frac{n}{N} \) को बाहर निकालते हैं। यह proof को पूरा करता है।</div>
+                  </div>
+
+                  <p><strong>Corollary 1:</strong> SRSWOR में, \( \bar{y} \) का standard error है:</p>
+                  <div class="derivation-block">$$ S_{\bar{y}} = S\sqrt{\frac{N-n}{nN}} = S\sqrt{\frac{1-f}{n}} \quad (2.3.2) $$</div>
+
+                  <p><strong>Corollary 2:</strong> SRSWOR में, population total \( Y \) के एक estimator के रूप में \( \widehat{Y} = N\bar{y} \) का variance इस प्रकार प्राप्त होता है:</p>
+                  <div class="derivation-block">$$ V(\widehat{Y}) = E(\widehat{Y} - Y)^2 = (1-f)\frac{N^2 S^2}{n} \quad (2.3.3) $$</div>
+
+                  <p><strong>Corollary 3:</strong> SRSWOR में, \( \widehat{Y} \) का standard error है:</p>
+                  <div class="derivation-block">$$ S_{\widehat{Y}} = NS\sqrt{\frac{1-f}{n}} \quad (2.3.4) $$</div>
+
+                  <p>यदि sampling replacement (SRSWR) के साथ है, तो term \( (N-n)/N \) (जिसे finite population correction, fpc के रूप में जाना जाता है) गायब हो जाता है क्योंकि population प्रभावी रूप से ऐसे काम करती है जैसे कि वह infinite (अनंत) हो।</p>
+
+                  <p><strong>Corollary 4:</strong> SRSWR में, \( \bar{y} \) का variance और standard error सख्ती से इस प्रकार लिखा जा सकता है:</p>
+                  <div class="derivation-block">$$ V(\bar{y}) = \frac{\sigma^2}{n}, \quad \sigma_{\bar{y}} = \frac{\sigma}{\sqrt{n}} \quad (2.3.5a) $$</div>
+
+                  <p><strong>Corollary 5:</strong> SRSWR में, \( \widehat{Y} \) का variance और standard error हैं:</p>
+                  <div class="derivation-block">$$ V(\widehat{Y}) = \frac{N^2 \sigma^2}{n}, \quad \sigma_{\widehat{Y}} = \frac{N\sigma}{\sqrt{n}} \quad (2.3.5b) $$</div>
+
+                  <h3><strong>Theorem 2.3.2:</strong></h3>
+                  <p>Simple random sampling में, sample variance:</p>
+                  <div class="derivation-block">$$ s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1} \quad (2.3.6) $$</div>
+                  <p>population mean square \( S^2 = \frac{N}{N-1}\sigma^2 \) का एक गणितीय रूप से unbiased estimator है।</p>
+
+                  <p><em>Proof:</em></p>
+                  <div class="derivation-block">
+                      <p>हम चतुराई से \( \bar{Y} \) को जोड़कर और घटाकर \( s^2 \) के numerator का बीजीय विस्तार (algebraically expand) कर सकते हैं:</p>
+                      $$ s^2 = \frac{\sum_{i=1}^n [(y_i - \bar{Y}) - (\bar{y} - \bar{Y})]^2}{n-1} $$
+                      $$ = \frac{\sum_{i=1}^n (y_i - \bar{Y})^2 - n(\bar{y} - \bar{Y})^2}{n-1} $$
+                      <div class="explanation">\( \because \) cross term \( -2(\bar{y} - \bar{Y})\sum(y_i - \bar{Y}) \) पूरी तरह से \( -2n(\bar{y} - \bar{Y})^2 \) का मूल्यांकन करता है, जो सरल (simplified) numerator प्राप्त करने के लिए positive term के साथ जुड़ता है।</div>
+                      
+                      <p>दोनों ओर expectations लेने पर:</p>
+                      $$ E(s^2) = \frac{\sum_{i=1}^n E(y_i - \bar{Y})^2 - nE(\bar{y} - \bar{Y})^2}{n-1} $$
+                      <div class="explanation">\( \because \) expectation linearly रूप से वितरित होता है।</div>
+                      
+                      <p>हम जानते हैं कि \( E(y_i - \bar{Y})^2 = \sigma^2 = \frac{N-1}{N}S^2 \) और \( E(\bar{y} - \bar{Y})^2 = V(\bar{y}) = \frac{N-n}{Nn}S^2 \)। इन्हें प्रतिस्थापित करने पर:</p>
+                      $$ E(s^2) = \frac{ n \left( \frac{N-1}{N}S^2 \right) - n \left( \frac{N-n}{Nn}S^2 \right) }{n-1} $$
+                      $$ = \frac{ S^2 \left[ \frac{n(N-1)}{N} - \frac{N-n}{N} \right] }{n-1} = \frac{ S^2 \left[ \frac{nN - n - N + n}{N} \right] }{n-1} $$
+                      $$ = \frac{ S^2 \frac{N(n-1)}{N} }{n-1} = S^2 $$
+                      <div class="explanation">\( \because \) algebraic terms खूबसूरती से सरल होकर \( (n-1) \) और \( N \) को cancel कर देते हैं, जिससे यह सिद्ध होता है कि \( s^2 \) ठीक \( S^2 \) का एक unbiased estimator है।</div>
+                  </div>
+
+                  <p><strong>Corollary 1:</strong> SRSWOR में \( \bar{y} \) के variance का एक unbiased estimator है:</p>
+                  <div class="derivation-block">$$ v(\bar{y}) = (1-f)\frac{s^2}{n} \quad (2.3.7) $$</div>
+
+                  <p><strong>Corollary 2:</strong> SRSWOR में \( \widehat{Y} \) के variance का एक unbiased estimator है:</p>
+                  <div class="derivation-block">$$ v(\widehat{Y}) = (1-f)N^2 \frac{s^2}{n} \quad (2.3.8) $$</div>
+
+                  <p><strong>Corollary 3 & 4:</strong> SRSWR में, mean और total के variance के लिए unbiased estimators \( (1-f) \) term को हटा देते हैं, और क्रमशः \( s^2/n \) और \( N^2 s^2/n \) बन जाते हैं।</p>
+
+                  <h3>उदाहरण 2.3 (Example 2.3)</h3>
+                  <p>\( N = 5 \) घरों (households) की एक छोटी कॉलोनी से \( n = 2 \) घरों का एक random sample निकाला गया, जिनका साप्ताहिक किराना खर्च (रुपये में) इस प्रकार था:</p>
+                  <table style="width: 50%; margin: 15px 0; border-collapse: collapse; text-align: center;">
+                      <tr style="border-bottom: 1px solid var(--border); background: #eee;"><th>Household</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+                      <tr><td>Expenditure (in Rs.)</td><td>150</td><td>145</td><td>160</td><td>158</td><td>152</td></tr>
+                  </table>
+                  <p>(i) Population mean \( \bar{Y} \), variance (\( \sigma^2 \)) और mean square error (\( S^2 \)) की गणना करें।</p>
+                  <div class="derivation-block">
+                      <p>Population Mean \( \bar{Y} = (150 + 145 + 160 + 158 + 152) / 5 = 153.00 \)</p>
+                      <p>Population Variance \( \sigma^2 = [(150-153)^2 + (145-153)^2 + \ldots + (152-153)^2] / 5 = [9 + 64 + 49 + 25 + 1] / 5 = 29.60 \)</p>
+                      <p>Mean Square Error \( S^2 = \frac{N}{N-1}\sigma^2 = \frac{5}{4} \times 29.60 = 37.00 \)</p>
+                  </div>
+
+                  <p>(ii) <strong>With replacement</strong> (प्रतिस्थापन के साथ) विधि द्वारा size 2 के सभी संभावित samples की गणना करें और अनुभवजन्य (empirically) रूप से दिखाएं कि sample mean और sample variance unbiased estimators हैं।</p>
+                  <p>\( 5^2 = 25 \) संभावित samples हैं। प्रत्येक की probability \( 1/25 \) है।</p>
+                  <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
+                      <tr style="background: #f9f9f9;"><th>S.No</th><th>Units</th><th>Prob</th><th>\( y_1 \)</th><th>\( y_2 \)</th><th>\( \bar{y} \)</th><th>\( \bar{y} - \bar{Y} \)</th><th>\( (y_1-y_2)^2 / 4 \)</th></tr>
+                      
+<tr><td>1</td><td>1,1</td><td>1/25</td><td>150</td><td>150</td><td>150.0</td><td>-3.0</td><td>0.00</td></tr>
+<tr><td>2</td><td>1,2</td><td>1/25</td><td>150</td><td>145</td><td>147.5</td><td>-5.5</td><td>6.25</td></tr>
+<tr><td>3</td><td>1,3</td><td>1/25</td><td>150</td><td>160</td><td>155.0</td><td>2.0</td><td>25.00</td></tr>
+<tr><td>4</td><td>1,4</td><td>1/25</td><td>150</td><td>158</td><td>154.0</td><td>1.0</td><td>16.00</td></tr>
+<tr><td>5</td><td>1,5</td><td>1/25</td><td>150</td><td>152</td><td>151.0</td><td>-2.0</td><td>1.00</td></tr>
+<tr><td>6</td><td>2,1</td><td>1/25</td><td>145</td><td>150</td><td>147.5</td><td>-5.5</td><td>6.25</td></tr>
+<tr><td>7</td><td>2,2</td><td>1/25</td><td>145</td><td>145</td><td>145.0</td><td>-8.0</td><td>0.00</td></tr>
+<tr><td>8</td><td>2,3</td><td>1/25</td><td>145</td><td>160</td><td>152.5</td><td>-0.5</td><td>56.25</td></tr>
+<tr><td>9</td><td>2,4</td><td>1/25</td><td>145</td><td>158</td><td>151.5</td><td>-1.5</td><td>42.25</td></tr>
+<tr><td>10</td><td>2,5</td><td>1/25</td><td>145</td><td>152</td><td>148.5</td><td>-4.5</td><td>12.25</td></tr>
+<tr><td>11</td><td>3,1</td><td>1/25</td><td>160</td><td>150</td><td>155.0</td><td>2.0</td><td>25.00</td></tr>
+<tr><td>12</td><td>3,2</td><td>1/25</td><td>160</td><td>145</td><td>152.5</td><td>-0.5</td><td>56.25</td></tr>
+<tr><td>13</td><td>3,3</td><td>1/25</td><td>160</td><td>160</td><td>160.0</td><td>7.0</td><td>0.00</td></tr>
+<tr><td>14</td><td>3,4</td><td>1/25</td><td>160</td><td>158</td><td>159.0</td><td>6.0</td><td>1.00</td></tr>
+<tr><td>15</td><td>3,5</td><td>1/25</td><td>160</td><td>152</td><td>156.0</td><td>3.0</td><td>16.00</td></tr>
+<tr><td>16</td><td>4,1</td><td>1/25</td><td>158</td><td>150</td><td>154.0</td><td>1.0</td><td>16.00</td></tr>
+<tr><td>17</td><td>4,2</td><td>1/25</td><td>158</td><td>145</td><td>151.5</td><td>-1.5</td><td>42.25</td></tr>
+<tr><td>18</td><td>4,3</td><td>1/25</td><td>158</td><td>160</td><td>159.0</td><td>6.0</td><td>1.00</td></tr>
+<tr><td>19</td><td>4,4</td><td>1/25</td><td>158</td><td>158</td><td>158.0</td><td>5.0</td><td>0.00</td></tr>
+<tr><td>20</td><td>4,5</td><td>1/25</td><td>158</td><td>152</td><td>155.0</td><td>2.0</td><td>9.00</td></tr>
+<tr><td>21</td><td>5,1</td><td>1/25</td><td>152</td><td>150</td><td>151.0</td><td>-2.0</td><td>1.00</td></tr>
+<tr><td>22</td><td>5,2</td><td>1/25</td><td>152</td><td>145</td><td>148.5</td><td>-4.5</td><td>12.25</td></tr>
+<tr><td>23</td><td>5,3</td><td>1/25</td><td>152</td><td>160</td><td>156.0</td><td>3.0</td><td>16.00</td></tr>
+<tr><td>24</td><td>5,4</td><td>1/25</td><td>152</td><td>158</td><td>155.0</td><td>2.0</td><td>9.00</td></tr>
+<tr><td>25</td><td>5,5</td><td>1/25</td><td>152</td><td>152</td><td>152.0</td><td>-1.0</td><td>0.00</td></tr>
+
+                  </table>
+                  <p>सभी 25 samples में \( \bar{y} \) का average ठीक 153.0 है, जो population mean से पूरी तरह मेल खाता है, जिससे unbiasedness साबित होती है। अनुमानित variance \( v(\bar{y}) = (y_1-y_2)^2 / 4 \) का average ठीक \( 14.80 \) है जो \( \sigma^2 / 2 \) के बराबर है, यह साबित करता है कि estimator unbiased है।</p>
+
+                  <p>(iii) <strong>Without replacement</strong> (प्रतिस्थापन के बिना) विधि द्वारा size 2 के सभी संभावित samples की गणना करें।</p>
+                  <p>\( \binom{5}{2} = 10 \) संभावित samples हैं। प्रत्येक की probability \( 1/10 \) है।</p>
+                  <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
+                      <tr style="background: #f9f9f9;"><th>S.No</th><th>Units</th><th>Prob</th><th>\( y_1 \)</th><th>\( y_2 \)</th><th>\( \bar{y} \)</th><th>\( \bar{y} - \bar{Y} \)</th><th>\( 3(y_1-y_2)^2 / 20 \)</th></tr>
+                      
+<tr><td>1</td><td>1,2</td><td>1/10</td><td>150</td><td>145</td><td>147.5</td><td>-5.5</td><td>3.75</td></tr>
+<tr><td>2</td><td>1,3</td><td>1/10</td><td>150</td><td>160</td><td>155.0</td><td>2.0</td><td>15.00</td></tr>
+<tr><td>3</td><td>1,4</td><td>1/10</td><td>150</td><td>158</td><td>154.0</td><td>1.0</td><td>9.60</td></tr>
+<tr><td>4</td><td>1,5</td><td>1/10</td><td>150</td><td>152</td><td>151.0</td><td>-2.0</td><td>0.60</td></tr>
+<tr><td>5</td><td>2,3</td><td>1/10</td><td>145</td><td>160</td><td>152.5</td><td>-0.5</td><td>33.75</td></tr>
+<tr><td>6</td><td>2,4</td><td>1/10</td><td>145</td><td>158</td><td>151.5</td><td>-1.5</td><td>25.35</td></tr>
+<tr><td>7</td><td>2,5</td><td>1/10</td><td>145</td><td>152</td><td>148.5</td><td>-4.5</td><td>7.35</td></tr>
+<tr><td>8</td><td>3,4</td><td>1/10</td><td>160</td><td>158</td><td>159.0</td><td>6.0</td><td>0.60</td></tr>
+<tr><td>9</td><td>3,5</td><td>1/10</td><td>160</td><td>152</td><td>156.0</td><td>3.0</td><td>9.60</td></tr>
+<tr><td>10</td><td>4,5</td><td>1/10</td><td>158</td><td>152</td><td>155.0</td><td>2.0</td><td>5.40</td></tr>
+
+                  </table>
+                  <p>फिर से, \( \bar{y} \) का average ठीक 153.0 है। \( v(\bar{y}) = \frac{1-f}{n}s^2 = \frac{3}{10}s^2 = \frac{3(y_1-y_2)^2}{20} \) का average ठीक 11.10 है, जो सख्ती से \( \frac{1-f}{n}S^2 = \frac{3}{10}(37.0) = 11.10 \) के बराबर है। इस प्रकार, unbiasedness निर्णायक रूप से सिद्ध होती है।</p>
+              </div>
+</section>
+
+    
+        <section id="sec2-4" class="section-card">
+            <div class="english-content">
+                <h2>2.4 Estimation of Population Proportion</h2>
+                <p>Sometimes, the units in the population are fundamentally classified into exactly two groups: (i) possessing a particular characteristic, and (ii) not possessing that characteristic. For instance, a crop field may be irrigated or not irrigated. If it is irrigated, we assign a variate value \( y_i = 1 \). If not, \( y_i = 0 \). Let the total number of irrigated fields out of \( N \) be \( N_1 \).</p>
+                <div class="derivation-block">
+                    $$ \sum_{i=1}^N y_i = N_1 $$
+                    <div class="explanation">\( \because \) summing 1s precisely counts the total units possessing the characteristic.</div>
+                    $$ P = \frac{\sum y_i}{N} = \frac{N_1}{N} = \text{proportion of irrigated fields} $$
+                    <div class="explanation">\( \because \) dividing the total count by \( N \) mathematically yields the population proportion.</div>
+                    <p>Since \( y_i \) only takes values 0 or 1, squaring it leaves it unchanged (\( y_i^2 = y_i \)), hence:</p>
+                    $$ \sum_{i=1}^N y_i^2 = N_1 = NP $$
+                </div>
+                <p>If \( n_1 \) units out of a random sample of size \( n \) possess the characteristic, the sample proportion is \( p = n_1/n \). Hence, an unbiased estimator of \( P \) is:</p>
+                <div class="derivation-block">
+                    $$ \widehat{P} = \frac{n_1}{n} = p \quad (2.4.1) $$
+                </div>
+
+                <h3><strong>Theorem 2.4.1:</strong></h3>
+                <p>In sampling without replacement (SRSWOR), the variance of \( p \) is given by:</p>
+                <div class="derivation-block">
+                    $$ V(p) = \frac{N-n}{n(N-1)}PQ = (1-f)\frac{N}{N-1}\frac{PQ}{n} \quad (2.4.2) $$
+                    <p>where \( Q = 1 - P \).</p>
+                </div>
+
+                <p><strong>Corollary 1:</strong> In sampling with replacement (SRSWR), the variance of \( p \) simplifies to:</p>
+                <div class="derivation-block">$$ V(p) = \frac{PQ}{n} \quad (2.4.3) $$</div>
+
+                <p><strong>Corollary 2:</strong> The variance of \( N_1 = Np \), the estimated total number of units with the characteristic, is:</p>
+                <div class="derivation-block">$$ V(N_1) = \frac{N^2(N-n)PQ}{n(N-1)} \quad (2.4.4) $$</div>
+
+                <h3><strong>Theorem 2.4.2:</strong></h3>
+                <p>In sampling without replacement (SRSWOR), an unbiased estimator of \( V(p) \) is given by:</p>
+                <div class="derivation-block">$$ v(p) = (1-f)\frac{pq}{n-1} \quad (2.4.5) $$</div>
+
+                <p><strong>Corollary 1 & 2:</strong> In SRSWR, \( v(p) = \frac{pq}{n-1} \) (2.4.6). The estimated variance for the total \( N_1 \) is \( v(N_1) = \frac{N(N-n)pq}{n-1} \) (2.4.7).</p>
+
+                <p><strong>Corollary 3:</strong> The coefficient of variation of \( p \) is given by:</p>
+                <div class="derivation-block">$$ CV = \frac{\sqrt{PQ/n}}{P} = \sqrt{\frac{Q}{nP}} \quad (2.4.8) $$</div>
+
+                <h3>Example 2.4</h3>
+                <p>A corporate directory of \( N = 5000 \) employees was examined to measure the accuracy of listed home addresses. A random sample of \( n = 400 \) names was drawn, which revealed that 60 employees had incorrect addresses. Estimate the total number of employees with wrong addresses and estimate the standard error.</p>
+                <div class="derivation-block">
+                    <p>Given: \( N = 5000, n = 400, n_1 = 60 \)</p>
+                    <p>Sample proportion \( p = 60/400 = 0.15 \). Therefore, \( q = 0.85 \).</p>
+                    <p>Estimated total \( \widehat{N}_1 = Np = 5000 \times 0.15 = 750 \).</p>
+                    <p>(i) Using SRSWR (With Replacement):</p>
+                    $$ S_{\widehat{N}_1} = N\sqrt{\frac{pq}{n-1}} = 5000\sqrt{\frac{(0.15)(0.85)}{399}} \approx 89.4 $$
+                    <p>(ii) Using SRSWOR (Without Replacement):</p>
+                    $$ S_{\widehat{N}_1} = N\sqrt{(1-f)\frac{pq}{n-1}} = 5000\sqrt{\left(1 - \frac{400}{5000}\right)\frac{(0.15)(0.85)}{399}} \approx 85.7 $$
+                </div>
+            </div>
+
+            
+              <div class="hinglish-content">
+                  <h2>2.4 Estimation of Population Proportion (जनसंख्या अनुपात का अनुमान)</h2>
+                  <p>कभी-कभी, population की units को मौलिक रूप से ठीक दो समूहों (groups) में वर्गीकृत किया जाता है: (i) जिनमें एक विशेष विशेषता (characteristic) होती है, और (ii) जिनमें वह विशेषता नहीं होती है। उदाहरण के लिए, एक फसल का खेत सिंचित (irrigated) हो सकता है या नहीं। यदि यह सिंचित है, तो हम एक variate value \( y_i = 1 \) निर्दिष्ट करते हैं। यदि नहीं, तो \( y_i = 0 \)। मान लीजिए \( N \) में से सिंचित खेतों की कुल संख्या \( N_1 \) है।</p>
+                  <div class="derivation-block">
+                      $$ \sum_{i=1}^N y_i = N_1 $$
+                      <div class="explanation">\( \because \) 1 को जोड़ने पर सटीक रूप से characteristic वाली units की कुल संख्या मिलती है।</div>
+                      $$ P = \frac{\sum y_i}{N} = \frac{N_1}{N} = \text{सिंचित खेतों का अनुपात (proportion of irrigated fields)} $$
+                      <div class="explanation">\( \because \) कुल गिनती को \( N \) से भाग देने पर गणितीय रूप से population proportion प्राप्त होता है।</div>
+                      <p>चूंकि \( y_i \) केवल 0 या 1 value लेता है, इसका वर्ग करने पर यह अपरिवर्तित (unchanged) रहता है (\( y_i^2 = y_i \)), इसलिए:</p>
+                      $$ \sum_{i=1}^N y_i^2 = N_1 = NP $$
+                  </div>
+                  <p>यदि size \( n \) के random sample में से \( n_1 \) units में विशेषता है, तो sample proportion \( p = n_1/n \) है। इसलिए, \( P \) का एक unbiased estimator है:</p>
+                  <div class="derivation-block">
+                      $$ \widehat{P} = \frac{n_1}{n} = p \quad (2.4.1) $$
+                  </div>
+
+                  <h3><strong>Theorem 2.4.1:</strong></h3>
+                  <p>Sampling without replacement (SRSWOR) में, \( p \) का variance इस प्रकार दिया गया है:</p>
+                  <div class="derivation-block">
+                      $$ V(p) = \frac{N-n}{n(N-1)}PQ = (1-f)\frac{N}{N-1}\frac{PQ}{n} \quad (2.4.2) $$
+                      <p>जहाँ \( Q = 1 - P \)।</p>
+                  </div>
+
+                  <p><strong>Corollary 1:</strong> Sampling with replacement (SRSWR) में, \( p \) का variance सरल होकर बन जाता है:</p>
+                  <div class="derivation-block">$$ V(p) = \frac{PQ}{n} \quad (2.4.3) $$</div>
+
+                  <p><strong>Corollary 2:</strong> \( N_1 = Np \), विशेषता वाली इकाइयों की अनुमानित कुल संख्या (estimated total number), का variance है:</p>
+                  <div class="derivation-block">$$ V(N_1) = \frac{N^2(N-n)PQ}{n(N-1)} \quad (2.4.4) $$</div>
+
+                  <h3><strong>Theorem 2.4.2:</strong></h3>
+                  <p>Sampling without replacement (SRSWOR) में, \( V(p) \) का unbiased estimator इस प्रकार दिया गया है:</p>
+                  <div class="derivation-block">$$ v(p) = (1-f)\frac{pq}{n-1} \quad (2.4.5) $$</div>
+
+                  <p><strong>Corollary 1 & 2:</strong> SRSWR में, \( v(p) = \frac{pq}{n-1} \) (2.4.6)। कुल \( N_1 \) के लिए अनुमानित variance \( v(N_1) = \frac{N(N-n)pq}{n-1} \) (2.4.7) है।</p>
+
+                  <p><strong>Corollary 3:</strong> \( p \) के variation का गुणांक (coefficient of variation) इस प्रकार दिया गया है:</p>
+                  <div class="derivation-block">$$ CV = \frac{\sqrt{PQ/n}}{P} = \sqrt{\frac{Q}{nP}} \quad (2.4.8) $$</div>
+
+                  <h3>उदाहरण 2.4 (Example 2.4)</h3>
+                  <p>\( N = 5000 \) कर्मचारियों (employees) की एक कॉर्पोरेट निर्देशिका (directory) की जाँच की गई ताकि सूचीबद्ध घर के पते की सटीकता को मापा जा सके। \( n = 400 \) नामों का एक random sample निकाला गया, जिससे पता चला कि 60 कर्मचारियों के पते (addresses) गलत थे। गलत पते वाले कर्मचारियों की कुल संख्या का अनुमान लगाएँ और standard error का अनुमान लगाएँ।</p>
+                  <div class="derivation-block">
+                      <p>दिया है: \( N = 5000, n = 400, n_1 = 60 \)</p>
+                      <p>Sample proportion \( p = 60/400 = 0.15 \)। इसलिए, \( q = 0.85 \)।</p>
+                      <p>अनुमानित कुल (Estimated total) \( \widehat{N}_1 = Np = 5000 \times 0.15 = 750 \)।</p>
+                      <p>(i) SRSWR (With Replacement) का उपयोग करके:</p>
+                      $$ S_{\widehat{N}_1} = N\sqrt{\frac{pq}{n-1}} = 5000\sqrt{\frac{(0.15)(0.85)}{399}} \approx 89.4 $$
+                      <p>(ii) SRSWOR (Without Replacement) का उपयोग करके:</p>
+                      $$ S_{\widehat{N}_1} = N\sqrt{(1-f)\frac{pq}{n-1}} = 5000\sqrt{\left(1 - \frac{400}{5000}\right)\frac{(0.15)(0.85)}{399}} \approx 85.7 $$
+                  </div>
+              </div>
+</section>
+
+        <section id="sec2-5" class="section-card">
+            <div class="english-content">
+                <h2>2.5 Combination of Unbiased Estimators</h2>
+                <p>There are practical scenarios where estimates derived from multiple independent samples must be mathematically pooled to formulate a superior combined estimate. If \( t_1, t_2, \ldots, t_m \) are mutually independent, unbiased estimators of a parameter \( \theta \), then their arithmetic pooled estimator:</p>
+                <div class="derivation-block">
+                    $$ T = \frac{\sum_{i=1}^m t_i}{m} \quad (2.5.1) $$
+                </div>
+                <p>is naturally also an unbiased estimator of \( \theta \). Its exact variance is given by:</p>
+                <div class="derivation-block">
+                    $$ V(T) = \frac{\sum_{i=1}^m V(t_i)}{m^2} \quad (2.5.2) $$
+                    <div class="explanation">\( \because \) the variance of a sum of independent variables is the sum of their variances, and the constant \( 1/m \) is squared when pulled out.</div>
+                </div>
+                
+                <h3>2.5.1 Simple Random Sampling for Variables</h3>
+                <p>Suppose \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) are sample means from independently drawn samples of sizes \( n_1, n_2, \ldots, n_m \). We can pool them by taking:</p>
+                <ol>
+                    <li>The Arithmetic Mean: \( \bar{y}' = \frac{\sum \bar{y}_i}{m} \) (2.5.4)</li>
+                    <li>The Weighted Mean: \( \bar{y}'' = \frac{\sum n_i \bar{y}_i}{n} \) (2.5.5), where \( n = \sum n_i \).</li>
+                </ol>
+                <p>The weighted mean is mathematically proven to be more efficient than the arithmetic mean because it appropriately gives higher influence to estimates derived from larger, inherently more reliable samples.</p>
+
+                <h3>2.5.2 Simple Random Sampling for Attributes</h3>
+                <p>Similarly, if \( p_1, p_2, \ldots, p_m \) are independent sample proportions, we can pool them identically using either an arithmetic mean \( p' \) or a more efficient weighted mean \( p'' \).</p>
+            </div>
+            
+            
+              <div class="hinglish-content">
+                  <h2>2.5 Combination of Unbiased Estimators (निष्पक्ष आकलकों का संयोजन)</h2>
+                  <p>व्यावहारिक परिदृश्यों (scenarios) में, कई स्वतंत्र samples से प्राप्त अनुमानों को गणितीय रूप से मिलाकर (pooled) एक बेहतर combined estimate बनाना पड़ता है। यदि \( t_1, t_2, \ldots, t_m \) parameter \( \theta \) के mutually independent, unbiased estimators हैं, तो उनका arithmetic pooled estimator:</p>
+                  <div class="derivation-block">
+                      $$ T = \frac{\sum_{i=1}^m t_i}{m} \quad (2.5.1) $$
+                  </div>
+                  <p>स्वाभाविक रूप से \( \theta \) का एक unbiased estimator भी होता है। इसका सटीक variance इस प्रकार दिया गया है:</p>
+                  <div class="derivation-block">
+                      $$ V(T) = \frac{\sum_{i=1}^m V(t_i)}{m^2} \quad (2.5.2) $$
+                      <div class="explanation">\( \because \) स्वतंत्र चरों (independent variables) के योग का variance उनके variances का योग होता है, और constant \( 1/m \) को बाहर निकालने पर उसका वर्ग (square) हो जाता है।</div>
+                  </div>
+
+                  <h3>2.5.1 Simple Random Sampling for Variables</h3>
+                  <p>मान लीजिए \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) स्वतंत्र रूप से निकाले गए sizes \( n_1, n_2, \ldots, n_m \) के samples से sample means हैं। हम निम्नलिखित लेकर उन्हें pool कर सकते हैं:</p>
+                  <ol>
+                      <li>Arithmetic Mean (अंकगणितीय माध्य): \( \bar{y}' = \frac{\sum \bar{y}_i}{m} \) (2.5.4)</li>
+                      <li>Weighted Mean (भारित माध्य): \( \bar{y}'' = \frac{\sum n_i \bar{y}_i}{n} \) (2.5.5), जहाँ \( n = \sum n_i \)।</li>
+                  </ol>
+                  <p>Weighted mean गणितीय रूप से arithmetic mean की तुलना में अधिक कुशल (efficient) साबित होता है क्योंकि यह बड़े, स्वाभाविक रूप से अधिक विश्वसनीय samples से प्राप्त अनुमानों को उचित रूप से अधिक प्रभाव (influence) देता है।</p>
+
+                  <h3>2.5.2 Simple Random Sampling for Attributes</h3>
+                  <p>इसी तरह, यदि \( p_1, p_2, \ldots, p_m \) स्वतंत्र sample proportions हैं, तो हम एक arithmetic mean \( p' \) या एक अधिक कुशल weighted mean \( p'' \) का उपयोग करके उन्हें समान रूप से pool कर सकते हैं।</p>
+              </div>
+</section>
+
+        <section id="sec2-6" class="section-card">
+            <div class="english-content">
+                <h2>2.6 Confidence Limits</h2>
+                <p>To draw statistically authoritative conclusions about the population parameter, we construct <em>confidence limits</em> around our sample estimate. Assuming the sample size is sufficiently large, the Central Limit Theorem dictates that the sample mean \( \bar{y} \) is normally distributed around the true mean \( \bar{Y} \) with variance \( V(\bar{y}) \). Hence, the \( 100(1 - \alpha)\% \) confidence limits for the population mean are rigorously defined as:</p>
+                <div class="derivation-block">
+                    $$ \bar{y} \pm t(\alpha) S_{\bar{y}} $$
+                    <div class="explanation">\( \because \) the normal deviate \( t(\alpha) \) correctly scales the standard error to envelop the desired probability area under the normal curve.</div>
+                </div>
+
+                <h3>Example 2.5</h3>
+                <p>A simple random sample of 80 agricultural plots was rigorously selected from a total population of 800 plots to estimate crop yield. The sample mean yield was 620 kg with a sample variance \( s^2 = 144.5 \). Estimate the total crop yield and set up the 95% confidence limits.</p>
+                <div class="derivation-block">
+                    <p>Given: \( N = 800, n = 80, \bar{y} = 620, s^2 = 144.5 \)</p>
+                    <p>Estimated total yield \( \widehat{Y} = N\bar{y} = 800 \times 620 = 496,000 \text{ kg} \).</p>
+                    <p>The standard error of \( \widehat{Y} \) is:</p>
+                    $$ S_{\widehat{Y}} = N\sqrt{(1-f)\frac{s^2}{n}} = 800\sqrt{\left(1 - \frac{80}{800}\right)\frac{144.5}{80}} $$
+                    <div class="explanation">\( \because \) we actively apply the finite population correction since sampling is naturally without replacement.</div>
+                    $$ = 800\sqrt{(0.9)(1.80625)} = 800\sqrt{1.6256} \approx 800 \times 1.275 = 1020 $$
+                    <p>For 95% confidence, the standard normal variate \( t(\alpha) = 1.96 \). The limits are:</p>
+                    $$ 496,000 \pm 1.96 \times 1020 \Rightarrow 496,000 \pm 1999.2 $$
+                    <p>Confidence limits: \( (494,000.8 \text{ to } 497,999.2) \text{ kg} \).</p>
+                </div>
+            </div>
+
+            
+              <div class="hinglish-content">
+                  <h2>2.6 Confidence Limits (विश्वास सीमाएँ)</h2>
+                  <p>Population parameter के बारे में सांख्यिकीय रूप से आधिकारिक निष्कर्ष (authoritative conclusions) निकालने के लिए, हम अपने sample estimate के चारों ओर <em>confidence limits</em> बनाते हैं। यह मानते हुए कि sample size काफी बड़ा है, Central Limit Theorem निर्देश देता है कि sample mean \( \bar{y} \), true mean \( \bar{Y} \) के चारों ओर variance \( V(\bar{y}) \) के साथ normally distributed है। इसलिए, population mean के लिए \( 100(1 - \alpha)\% \) confidence limits को कड़ाई से इस प्रकार परिभाषित किया गया है:</p>
+                  <div class="derivation-block">
+                      $$ \bar{y} \pm t(\alpha) S_{\bar{y}} $$
+                      <div class="explanation">\( \because \) normal deviate \( t(\alpha) \) सही ढंग से standard error को scale करता है ताकि normal curve के तहत वांछित probability area को कवर किया जा सके।</div>
+                  </div>
+
+                  <h3>उदाहरण 2.5 (Example 2.5)</h3>
+                  <p>फसल की उपज (crop yield) का अनुमान लगाने के लिए कुल 800 भूखंडों (plots) की आबादी से 80 कृषि भूखंडों का एक simple random sample सख्ती से चुना गया। Sample mean yield 620 kg था और sample variance \( s^2 = 144.5 \) था। कुल फसल की उपज का अनुमान लगाएं और 95% confidence limits निर्धारित करें।</p>
+                  <div class="derivation-block">
+                      <p>दिया है: \( N = 800, n = 80, \bar{y} = 620, s^2 = 144.5 \)</p>
+                      <p>अनुमानित कुल उपज (Estimated total yield) \( \widehat{Y} = N\bar{y} = 800 \times 620 = 496,000 \text{ kg} \)।</p>
+                      <p>\( \widehat{Y} \) की standard error है:</p>
+                      $$ S_{\widehat{Y}} = N\sqrt{(1-f)\frac{s^2}{n}} = 800\sqrt{\left(1 - \frac{80}{800}\right)\frac{144.5}{80}} $$
+                      <div class="explanation">\( \because \) हम सक्रिय रूप से finite population correction लागू करते हैं क्योंकि sampling स्वाभाविक रूप से without replacement है।</div>
+                      $$ = 800\sqrt{(0.9)(1.80625)} = 800\sqrt{1.6256} \approx 800 \times 1.275 = 1020 $$
+                      <p>95% confidence के लिए, standard normal variate \( t(\alpha) = 1.96 \)। Limits हैं:</p>
+                      $$ 496,000 \pm 1.96 \times 1020 \Rightarrow 496,000 \pm 1999.2 $$
+                      <p>Confidence limits: \( (494,000.8 \text{ से } 497,999.2) \text{ kg} \)।</p>
+                  </div>
+              </div>
+</section>
+
+        <section id="sec2-7" class="section-card">
+            <div class="english-content">
+                <h2>2.7 Estimation of Sample Size</h2>
+                <p>During the critical planning phase of a sample survey, determining the exact optimal sample size is the most vital mathematical problem. This is achieved by explicitly specifying the tolerable margin of error and the desired level of statistical confidence.</p>
+                <p>Let the maximum permissible marginal error in our estimate be \( e \). Assuming the sample mean is normally distributed, we set:</p>
+                <div class="derivation-block">
+                    $$ e = t(\alpha)\sqrt{\frac{(N-n)S^2}{Nn}} \quad (2.7.4) $$
+                </div>
+                <p>Solving this algebraic equation for \( n \) gracefully yields the exact required sample size:</p>
+                <div class="derivation-block">
+                    $$ n = \frac{t^2 S^2 / e^2}{1 + t^2 S^2 / (N e^2)} \quad (2.7.5) $$
+                </div>
+                <p>To compute this in practice, we first calculate the uncorrected sample size \( n_0 \) (assuming an infinite population):</p>
+                <div class="derivation-block">
+                    $$ n_0 = \frac{t^2 S^2}{e^2} \quad (2.7.6) $$
+                </div>
+                <p>Then we apply the finite population adjustment to find the true, final \( n \):</p>
+                <div class="derivation-block">
+                    $$ n = \frac{n_0}{1 + n_0/N} \quad (2.7.7) $$
+                    <div class="explanation">\( \because \) substituting \( n_0 \) into the algebraic structure inherently accounts for the depletion of the finite population during sampling.</div>
+                </div>
+
+                <h3>Example 2.7</h3>
+                <p>A statistical study was planned for a population of \( N = 800 \) units. A pilot count revealed \( \bar{Y} = 65 \) and \( S^2 = 55.2 \). How many sampling units must be rigorously selected to estimate \( \bar{Y} \) with a permissible marginal error of 10% and a 95% confidence coefficient, assuming sampling without replacement?</p>
+                <div class="derivation-block">
+                    <p>Permissible error \( e = 10\% \text{ of } 65 = 6.5 \).</p>
+                    <p>For 95% confidence, \( t = 1.96 \).</p>
+                    <p>First, ignoring the finite population correction (fpc):</p>
+                    $$ n_0 = \frac{(1.96)^2 \times 55.2}{(6.5)^2} = \frac{3.8416 \times 55.2}{42.25} \approx 5.02 $$
+                    <p>Since sampling is without replacement, we strictly apply the fpc:</p>
+                    $$ n = \frac{5.02}{1 + 5.02/800} = \frac{5.02}{1.006275} \approx 4.99 $$
+                    <div class="explanation">\( \because \) the population is fairly large relative to the variance, the fpc only slightly reduces the required sample size to 5 units.</div>
+                </div>
+
+                <h3>Example 2.8 (Proportions)</h3>
+                <p>In a registered population of 6000 voters, 40 percent historically returned to the polls. Calculate the exact sample size required to estimate this proportion with a tight marginal error of 5% at a 95% confidence level, using sampling without replacement.</p>
+                <div class="derivation-block">
+                    <p>Given: \( P = 0.40, e = 0.05, t = 1.96, N = 6000 \).</p>
+                    <p>First, calculating \( n_0 \):</p>
+                    $$ n_0 = \frac{t^2 P(1-P)}{e^2} = \frac{(1.96)^2 (0.40)(0.60)}{(0.05)^2} = \frac{3.8416 \times 0.24}{0.0025} \approx 368.8 $$
+                    <p>Applying the finite population correction:</p>
+                    $$ n = \frac{n_0}{1 + n_0/N} = \frac{368.8}{1 + 368.8/6000} = \frac{368.8}{1.0614} \approx 347.5 $$
+                    <div class="explanation">\( \because \) applying the rigorous fpc legitimately saves the surveyor from unnecessarily sampling 21 extra voters. We must sample 348 voters.</div>
+                </div>
+            </div>
+
+            
+              <div class="hinglish-content">
+                  <h2>2.7 Estimation of Sample Size (प्रतिदर्श आकार का अनुमान)</h2>
+                  <p>एक sample survey के महत्वपूर्ण नियोजन चरण (planning phase) के दौरान, सटीक इष्टतम (exact optimal) sample size निर्धारित करना सबसे महत्वपूर्ण गणितीय समस्या है। यह स्वीकार्य margin of error और सांख्यिकीय विश्वास (statistical confidence) के वांछित स्तर को स्पष्ट रूप से निर्दिष्ट करके प्राप्त किया जाता है।</p>
+                  <p>मान लीजिए हमारे अनुमान में अधिकतम स्वीकार्य सीमांत त्रुटि (maximum permissible marginal error) \( e \) है। यह मानते हुए कि sample mean normally distributed है, हम निर्धारित करते हैं:</p>
+                  <div class="derivation-block">
+                      $$ e = t(\alpha)\sqrt{\frac{(N-n)S^2}{Nn}} \quad (2.7.4) $$
+                  </div>
+                  <p>\( n \) के लिए इस बीजीय समीकरण (algebraic equation) को हल करने पर हमें ठीक आवश्यक sample size प्राप्त होता है:</p>
+                  <div class="derivation-block">
+                      $$ n = \frac{t^2 S^2 / e^2}{1 + t^2 S^2 / (N e^2)} \quad (2.7.5) $$
+                  </div>
+                  <p>व्यवहार में इसकी गणना करने के लिए, हम पहले uncorrected sample size \( n_0 \) (एक infinite population मानकर) की गणना करते हैं:</p>
+                  <div class="derivation-block">
+                      $$ n_0 = \frac{t^2 S^2}{e^2} \quad (2.7.6) $$
+                  </div>
+                  <p>फिर हम सही, अंतिम \( n \) खोजने के लिए finite population adjustment लागू करते हैं:</p>
+                  <div class="derivation-block">
+                      $$ n = \frac{n_0}{1 + n_0/N} \quad (2.7.7) $$
+                      <div class="explanation">\( \because \) algebraic structure में \( n_0 \) को प्रतिस्थापित करने पर sampling के दौरान finite population की कमी (depletion) को स्वाभाविक रूप से ध्यान में रखा जाता है।</div>
+                  </div>
+
+                  <h3>उदाहरण 2.7 (Example 2.7)</h3>
+                  <p>\( N = 800 \) units की एक आबादी के लिए एक सांख्यिकीय अध्ययन की योजना बनाई गई थी। एक प्रायोगिक (pilot) गणना से पता चला कि \( \bar{Y} = 65 \) और \( S^2 = 55.2 \) है। \( \bar{Y} \) का अनुमान 10% की स्वीकार्य सीमांत त्रुटि (permissible marginal error) और 95% confidence coefficient के साथ लगाने के लिए (sampling without replacement मानकर) कितने sampling units को कड़ाई से चुना जाना चाहिए?</p>
+                  <div class="derivation-block">
+                      <p>स्वीकार्य त्रुटि (Permissible error) \( e = 65 \text{ का } 10\% = 6.5 \)।</p>
+                      <p>95% confidence के लिए, \( t = 1.96 \)।</p>
+                      <p>सबसे पहले, finite population correction (fpc) को अनदेखा करते हुए:</p>
+                      $$ n_0 = \frac{(1.96)^2 \times 55.2}{(6.5)^2} = \frac{3.8416 \times 55.2}{42.25} \approx 5.02 $$
+                      <p>चूंकि sampling without replacement है, हम सख्ती से fpc लागू करते हैं:</p>
+                      $$ n = \frac{5.02}{1 + 5.02/800} = \frac{5.02}{1.006275} \approx 4.99 $$
+                      <div class="explanation">\( \because \) variance के सापेक्ष population काफी बड़ी है, fpc केवल आवश्यक sample size को थोड़ा कम करके 5 units कर देता है।</div>
+                  </div>
+
+                  <h3>उदाहरण 2.8 (Example 2.8 - Proportions)</h3>
+                  <p>6000 मतदाताओं (voters) की एक पंजीकृत आबादी (registered population) में, 40 प्रतिशत ऐतिहासिक रूप से मतदान के लिए लौटे। sampling without replacement का उपयोग करके, 95% confidence level पर 5% की सख्त सीमांत त्रुटि (tight marginal error) के साथ इस अनुपात का अनुमान लगाने के लिए आवश्यक सटीक sample size की गणना करें।</p>
+                  <div class="derivation-block">
+                      <p>दिया है: \( P = 0.40, e = 0.05, t = 1.96, N = 6000 \)।</p>
+                      <p>सबसे पहले, \( n_0 \) की गणना:</p>
+                      $$ n_0 = \frac{t^2 P(1-P)}{e^2} = \frac{(1.96)^2 (0.40)(0.60)}{(0.05)^2} = \frac{3.8416 \times 0.24}{0.0025} \approx 368.8 $$
+                      <p>finite population correction लागू करने पर:</p>
+                      $$ n = \frac{n_0}{1 + n_0/N} = \frac{368.8}{1 + 368.8/6000} = \frac{368.8}{1.0614} \approx 347.5 $$
+                      <div class="explanation">\( \because \) कठोर fpc को लागू करने से सर्वेक्षक कानूनी रूप से अनावश्यक रूप से 21 अतिरिक्त मतदाताओं का sample लेने से बच जाता है। हमें 348 मतदाताओं का sample लेना चाहिए।</div>
+                  </div>
+              </div>
+</section>
+
+        <section id="sec2-ref" class="section-card">
+            <div class="english-content">
+                <h2>References</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Sukhatme, P. V. (1954). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
+                    <li>Yates, F. (1960). <em>Sampling Methods for Censuses and Surveys</em>. Charles Griffin & Co.</li>
+                    <li>Des Raj (1968). <em>Sampling Theory</em>. McGraw-Hill.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>References (संदर्भ)</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Sukhatme, P. V. (1954). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
+                    <li>Yates, F. (1960). <em>Sampling Methods for Censuses and Surveys</em>. Charles Griffin & Co.</li>
+                    <li>Des Raj (1968). <em>Sampling Theory</em>. McGraw-Hill.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec2-8" class="section-card">
+            <div class="english-content">
+                <h2>Exercise (Subjective)</h2>
+                <ol>
+                    <li>Suppose, in a registry of \( N \) warehouses serially numbered, \( m \) warehouses have been permanently closed and \( k \) newly built warehouses have been added, making the total \( (N - m + k) \). Detail a mathematically simple procedure for selecting one warehouse with strictly equal probability without completely renumbering the original list.</li>
+                    <li>With the help of rigorous random number tables, draw random samples, each of size 5, from a Normal population where \( \mu = 10 \) and \( \sigma = 3 \).</li>
+                    <li>The following procedural algorithm is proposed for crop-cutting experiments on wheat fields: "Against the name of each village, select three random numbers smaller than the highest agricultural survey number. If the selected number doesn't grow wheat, select the next sequential number." Prove mathematically that this algorithm heavily violates the Principle of Validity by granting unequal inclusion probabilities.</li>
+                    <li>A population contains \( N \) units, and the variate value of one specific unit is perfectly known to be \( y_0 \). A random sample without replacement is drawn from the remaining \( (N-1) \) units. Rigorously prove that the estimator \( \bar{y} + (N-1)y_0 \) has a strictly smaller variance than \( N\bar{y} \) based on a standard sample of size \( n \).</li>
+                    <li>Define simple random sampling. Prove that the sample mean is a consistent and strictly unbiased estimator. Provide the exact formula for the variance of the sample mean.</li>
+                    <li>Derive the complex mathematical expression for the variance of a simple random sample drawn without replacement from a finite population containing \( M_1 \) blue spheres and \( M_2 \) white spheres.</li>
+                    <li>The crop yields in quintals for orange orchards across 100 villages are provided. Calculate the unbiased estimate of the population variance and the standard error of the mean.</li>
+                    <li>Material required for the construction of 8000 residential buildings was issued over a span of 6 months. You are legally required to verify the consumption rates using sampling. Design a statistically robust survey.</li>
+                    <li>The frequency distribution of 350 towns in a province, grouped by their electricity consumption density, is provided. Determine the optimal sample size required to estimate the provincial mean consumption within an absolute error of 5%, relying on a 99% confidence coefficient.</li>
+                </ol>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
+                <ol>
+                    <li>मान लीजिए, \( N \) गोदामों (warehouses) की सूची में, \( m \) गोदाम स्थायी रूप से बंद हो गए हैं और \( k \) नए गोदाम जोड़े गए हैं। पूरी सूची को फिर से नंबर दिए बिना, समान प्रायिकता (equal probability) के साथ एक गोदाम चुनने की सरल प्रक्रिया का विवरण दें।</li>
+                    <li>Random number tables की मदद से, Normal population (\( \mu = 10 \), \( \sigma = 3 \)) से 5 आकार के random samples निकालें।</li>
+                    <li>गेहूं के खेतों (wheat fields) के लिए प्रस्तावित इस एल्गोरिथ्म को देखें: "गाँव के नाम के आगे सबसे बड़े सर्वे नंबर से छोटे तीन random numbers चुनें। यदि उस नंबर पर गेहूं नहीं उगता, तो अगला नंबर चुनें।" गणितीय रूप से सिद्ध करें कि यह एल्गोरिथ्म असमान प्रायिकता देकर Validity के सिद्धांत (Principle of Validity) का भारी उल्लंघन करता है।</li>
+                    <li>एक आबादी में \( N \) units हैं, और एक विशिष्ट unit की value \( y_0 \) ज्ञात है। सिद्ध करें कि शेष \( (N-1) \) units से निकाले गए sample पर आधारित estimator \( \bar{y} + (N-1)y_0 \), मानक estimator \( N\bar{y} \) की तुलना में कम variance रखता है।</li>
+                    <li>Simple random sampling को परिभाषित करें। सिद्ध करें कि sample mean एक consistent और unbiased estimator है।</li>
+                    <li>\( M_1 \) नीले (blue) और \( M_2 \) सफेद (white) गोले (spheres) वाली एक सीमित आबादी से SRSWOR द्वारा निकाले गए sample के variance के लिए गणितीय व्यंजक (expression) प्राप्त करें।</li>
+                    <li>100 गांवों में संतरे (orange) के बागों की उपज (yield) दी गई है। Population variance का निष्पक्ष अनुमान (unbiased estimate) और mean का standard error निकालें।</li>
+                    <li>6 महीनों में 8000 आवासीय भवनों (residential buildings) के निर्माण के लिए सामग्री जारी की गई। खपत दरों (consumption rates) को सत्यापित करने के लिए एक सांख्यिकीय रूप से मजबूत survey डिज़ाइन करें।</li>
+                    <li>एक प्रांत के 350 कस्बों (towns) की बिजली खपत (electricity consumption) वितरण दिया गया है। 99% confidence के साथ 5% error के भीतर औसत खपत का अनुमान लगाने के लिए optimal sample size निर्धारित करें।</li>
+                </ol>
+            </div>
+        </section>
+
+    
+        <!-- MULTIPLE CHOICE QUESTIONS (MCQ) -->
+        <!-- QUIZZES SECTION -->
+        <section id="quiz-mcq" class="section-card">
+            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+            
+            <div class="question-box">
+                <div class="question">1. In simple random sampling without replacement (WOR), what is the probability of selecting any specific sample of size \(n\) from a population of size \(N\)? <br> (प्रतिस्थापन के बिना सरल यादृच्छिक प्रतिचयन (WOR) में, \(N\) आकार की जनसंख्या से \(n\) आकार के किसी विशिष्ट प्रतिदर्श को चुनने की प्रायिकता क्या है?)</div>
+                <ul class="mcq-options">
+                    <li>a) \( 1 / N^n \)</li>
+                    <li>b) \( 1 / \binom{N}{n} \)</li>
+                    <li>c) \( n / N \)</li>
+                    <li>d) \( 1 / n! \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
+                <div id="mcq1" class="answer"><strong>Correct Answer:</strong> b) \( 1 / \binom{N}{n} \) <br> <em>Explanation:</em> There are exactly \( \binom{N}{n} \) total possible distinct samples of size \( n \), and each has an identical \( 1/\binom{N}{n} \) probability of being drawn.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. The finite population correction (fpc) factor is mathematically defined as: <br> (सीमित जनसंख्या सुधार (fpc) कारक को गणितीय रूप से इस प्रकार परिभाषित किया गया है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( (N - n) / N \)</li>
+                    <li>b) \( N / (N - n) \)</li>
+                    <li>c) \( n / N \)</li>
+                    <li>d) \( 1 - (N/n) \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer</button>
+                <div id="mcq2" class="answer"><strong>Correct Answer:</strong> a) \( (N - n) / N \) <br> <em>Explanation:</em> The fpc, or \( (1 - f) \), accounts for the fact that sampling a large fraction of the population reduces the sampling variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. In simple random sampling WR, the variance of the sample mean \( \bar{y} \) is explicitly given by: <br> (प्रतिस्थापन के साथ सरल यादृच्छिक प्रतिचयन में, प्रतिदर्श माध्य \( \bar{y} \) का प्रसरण स्पष्ट रूप से दिया गया है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \frac{1-f}{n}S^2 \)</li>
+                    <li>b) \( \frac{S^2}{n} \)</li>
+                    <li>c) \( \frac{\sigma^2}{n} \)</li>
+                    <li>d) \( \frac{S^2}{N} \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer</button>
+                <div id="mcq3" class="answer"><strong>Correct Answer:</strong> c) \( \frac{\sigma^2}{n} \) <br> <em>Explanation:</em> For sampling *with replacement* (WR), the population behaves identically to an infinite population, so the variance utilizes \( \sigma^2 \), without the fpc.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The probability of drawing a specific unit at the \( r \)-th draw in simple random sampling WOR is always exactly: <br> (WOR सरल यादृच्छिक प्रतिचयन में \( r \)-वें ड्रा पर किसी विशिष्ट इकाई को खींचने की प्रायिकता हमेशा बिल्कुल होती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( 1 / (N - r) \)</li>
+                    <li>b) \( 1 / N \)</li>
+                    <li>c) \( 1 / (N - r + 1) \)</li>
+                    <li>d) \( r / N \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer</button>
+                <div id="mcq4" class="answer"><strong>Correct Answer:</strong> b) \( 1 / N \) <br> <em>Explanation:</em> Despite the shrinking pool of available units, the unconditional marginal probability of selecting any specific unit at *any* given draw remains solidly \( 1/N \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. Which parameter represents the population mean square mathematically? <br> (कौन सा पैरामीटर गणितीय रूप से जनसंख्या माध्य वर्ग का प्रतिनिधित्व करता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \sigma^2 \)</li>
+                    <li>b) \( S^2 \)</li>
+                    <li>c) \( s^2 \)</li>
+                    <li>d) \( \bar{Y} \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer</button>
+                <div id="mcq5" class="answer"><strong>Correct Answer:</strong> b) \( S^2 \) <br> <em>Explanation:</em> The population mean square is formally defined as \( S^2 = \frac{1}{N-1} \sum (y_i - \bar{Y})^2 \), which acts directly as the unbiased estimator benchmark.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. To estimate the sample size required for estimating a population proportion \( P \) with a specified absolute margin of error \( d \), the formula (ignoring fpc) heavily relies on: <br> (एक निर्दिष्ट पूर्ण त्रुटि मार्जिन \( d \) के साथ जनसंख्या अनुपात \( P \) का अनुमान लगाने के लिए आवश्यक प्रतिदर्श आकार का अनुमान लगाने के लिए, सूत्र (fpc को अनदेखा करते हुए) भारी रूप से किस पर निर्भर करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( PQ / d^2 \)</li>
+                    <li>b) \( P^2 / d \)</li>
+                    <li>c) \( t^2PQ / d^2 \)</li>
+                    <li>d) \( tPQ / d \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer</button>
+                <div id="mcq6" class="answer"><strong>Correct Answer:</strong> c) \( t^2PQ / d^2 \) <br> <em>Explanation:</em> Setting the bound \( d = t \sqrt{PQ/n} \) and solving for \( n \) mathematically cleanly yields \( n = t^2PQ/d^2 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The sample mean square \( s^2 \) rigorously acts as an unbiased estimator of: <br> (प्रतिदर्श माध्य वर्ग \( s^2 \) कठोरता से किसके निष्पक्ष अनुमानक के रूप में कार्य करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \sigma^2 \) in WOR</li>
+                    <li>b) \( S^2 \) in WOR</li>
+                    <li>c) The population total</li>
+                    <li>d) The margin of error</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer</button>
+                <div id="mcq7" class="answer"><strong>Correct Answer:</strong> b) \( S^2 \) in WOR <br> <em>Explanation:</em> Theorem 2.3.2 strictly proves that \( E(s^2) = S^2 \) unconditionally in Simple Random Sampling Without Replacement.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. A population consists of elements holding binary boolean values (1 or 0). The population variance \( \sigma^2 \) of this proportion structurally evaluates to: <br> (एक जनसंख्या में बाइनरी बूलियन मान (1 या 0) रखने वाले तत्व होते हैं। इस अनुपात का जनसंख्या प्रसरण \( \sigma^2 \) संरचनात्मक रूप से मूल्यांकित होता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( P^2 \)</li>
+                    <li>b) \( PQ \)</li>
+                    <li>c) \( NPQ \)</li>
+                    <li>d) \( P/Q \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer</button>
+                <div id="mcq8" class="answer"><strong>Correct Answer:</strong> b) \( PQ \) <br> <em>Explanation:</em> The variance of a binary Bernoulli distribution natively collapses down entirely into \( P \times (1-P) = PQ \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. When calculating the limits of confidence for a sample mean, the normal deviate \( t \) perfectly corresponds to the: <br> (प्रतिदर्श माध्य के लिए विश्वास की सीमाओं की गणना करते समय, सामान्य विचलन \( t \) पूरी तरह से मेल खाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Population size</li>
+                    <li>b) Variance ratio</li>
+                    <li>c) Confidence coefficient</li>
+                    <li>d) Student's t-test statistic</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer</button>
+                <div id="mcq9" class="answer"><strong>Correct Answer:</strong> c) Confidence coefficient <br> <em>Explanation:</em> For example, \( t=1.96 \) matches exactly with a 95% confidence interval bound under the standard normal distribution curve.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. The sample proportion \( p \) provides an unbiased mathematical estimate of the true population proportion \( P \). Its variance in SRS WOR is: <br> (प्रतिदर्श अनुपात \( p \) सत्य जनसंख्या अनुपात \( P \) का निष्पक्ष गणितीय अनुमान प्रदान करता है। SRS WOR में इसका प्रसरण है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( (1-f)\frac{PQ}{n-1} \)</li>
+                    <li>b) \( \frac{PQ}{n} \)</li>
+                    <li>c) \( (1-f)\frac{NPQ}{(N-1)n} \)</li>
+                    <li>d) \( \frac{PQ}{N} \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer</button>
+                <div id="mcq10" class="answer"><strong>Correct Answer:</strong> c) \( (1-f)\frac{NPQ}{(N-1)n} \) <br> <em>Explanation:</em> Theorem 2.4.1 details that because \( S^2 = \frac{N}{N-1}PQ \), the variance formulation inherits the \( \frac{N}{N-1} \) multiplier organically.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. In simple random sampling WOR, if the sampling fraction \( f \) exceeds 5%, standard practice severely dictates that: <br> (सरल यादृच्छिक प्रतिचयन WOR में, यदि प्रतिचयन अंश \( f \) 5% से अधिक है, तो मानक अभ्यास गंभीर रूप से निर्देशित करता है कि:)</div>
+                <ul class="mcq-options">
+                    <li>a) The sample is invalid</li>
+                    <li>b) The fpc \( (1-f) \) must not be ignored</li>
+                    <li>c) A census must be used</li>
+                    <li>d) The variance becomes zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer</button>
+                <div id="mcq11" class="answer"><strong>Correct Answer:</strong> b) The fpc \( (1-f) \) must not be ignored <br> <em>Explanation:</em> Ignoring the fpc heavily overestimates the sampling error. It should only be safely dropped if \( n \) is a tiny sliver (\(< 5\%\)) of \( N \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. If a pilot survey is completely unavailable, the population variance \( S^2 \) required for sample size estimation can structurally be guessed by assuming a normal distribution and dividing the full range by: <br> (यदि पायलट सर्वेक्षण पूरी तरह से अनुपलब्ध है, तो प्रतिदर्श आकार के अनुमान के लिए आवश्यक जनसंख्या प्रसरण \( S^2 \) का संरचनात्मक रूप से सामान्य वितरण मानकर और पूरी सीमा को किससे विभाजित करके अनुमान लगाया जा सकता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) 2</li>
+                    <li>b) 4</li>
+                    <li>c) 6</li>
+                    <li>d) 10</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer</button>
+                <div id="mcq12" class="answer"><strong>Correct Answer:</strong> c) 6 <br> <em>Explanation:</em> In a roughly normal distribution, virtually 99.7% of all data rigidly falls within exactly \( \pm 3 \sigma \) (a total range of \( 6\sigma \)). Thus \( S \approx \text{Range}/6 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The exact mathematical covariance between the sample mean \( \bar{y} \) and the sample variance \( s^2 \) evaluates securely to zero if the population distribution is perfectly: <br> (प्रतिदर्श माध्य \( \bar{y} \) और प्रतिदर्श प्रसरण \( s^2 \) के बीच सटीक गणितीय सहप्रसरण सुरक्षित रूप से शून्य का मूल्यांकन करता है यदि जनसंख्या वितरण पूरी तरह से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Bimodal</li>
+                    <li>b) Uniform</li>
+                    <li>c) Symmetric (Normal)</li>
+                    <li>d) Exponential</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer</button>
+                <div id="mcq13" class="answer"><strong>Correct Answer:</strong> c) Symmetric (Normal) <br> <em>Explanation:</em> If the underlying distribution is completely symmetric, the third central moment \( \mu_3 \) equals zero, causing the covariance \( \text{Cov}(\bar{y}, s^2) \) to mathematically cleanly vanish.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. When two statistically independent estimates \( t_1 \) and \( t_2 \) are linearly combined via \( w_1t_1 + w_2t_2 \), the optimal weights \( w_1 \) and \( w_2 \) that cleanly minimize variance are strictly proportional to: <br> (जब दो सांख्यिकीय रूप से स्वतंत्र अनुमानों \( t_1 \) और \( t_2 \) को रैखिक रूप से \( w_1t_1 + w_2t_2 \) के माध्यम से संयोजित किया जाता है, तो प्रसरण को स्पष्ट रूप से कम करने वाले इष्टतम भार \( w_1 \) और \( w_2 \) कड़ाई से किसके समानुपाती होते हैं?)</div>
+                <ul class="mcq-options">
+                    <li>a) The variances \( V(t_1) \) and \( V(t_2) \)</li>
+                    <li>b) The inverses of their variances \( 1/V(t_1) \) and \( 1/V(t_2) \)</li>
+                    <li>c) The sample sizes</li>
+                    <li>d) The population means</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer</button>
+                <div id="mcq14" class="answer"><strong>Correct Answer:</strong> b) The inverses of their variances \( 1/V(t_1) \) and \( 1/V(t_2) \) <br> <em>Explanation:</em> To aggressively minimize the combined error, you mathematically assign the heaviest weight to the estimate with the smallest variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. To estimate a total \( Y \), the sample mean \( \bar{y} \) is aggressively multiplied by: <br> (कुल \( Y \) का अनुमान लगाने के लिए, प्रतिदर्श माध्य \( \bar{y} \) को आक्रामक रूप से किससे गुणा किया जाता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) \( n \)</li>
+                    <li>b) \( N \)</li>
+                    <li>c) \( 1/N \)</li>
+                    <li>d) \( S^2 \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer</button>
+                <div id="mcq15" class="answer"><strong>Correct Answer:</strong> b) \( N \) <br> <em>Explanation:</em> If the average of the sample perfectly estimates the average of the population, then multiplying it strictly by the total number of units \( N \) logically estimates the entire aggregate sum.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Simple random sampling structurally ensures that every subset of size \( n \) has an ____________ probability of selection. <br> (सरल यादृच्छिक प्रतिचयन संरचनात्मक रूप से यह सुनिश्चित करता है कि आकार \( n \) के प्रत्येक उपसमूह के चयन की ____________ प्रायिकता हो।)</div>
+                <ul class="mcq-options">
+                    <li>a) Unknown</li>
+                    <li>b) Equal</li>
+                    <li>c) Increasing</li>
+                    <li>d) Unequal</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer</button>
+                <div id="mcq16" class="answer"><strong>Correct Answer:</strong> b) Equal <br> <em>Explanation:</em> This is the absolute foundational definition of SRS. The lack of any structural preference prevents sampling bias completely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In simple random sampling WR, if an element is selected twice, it is practically: <br> (प्रतिस्थापन के साथ सरल यादृच्छिक प्रतिचयन में, यदि किसी तत्व को दो बार चुना जाता है, तो यह व्यावहारिक रूप से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Ignored the second time</li>
+                    <li>b) Counted as two separate, valid observations</li>
+                    <li>c) Deleted from the population</li>
+                    <li>d) Considered an error</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer</button>
+                <div id="mcq17" class="answer"><strong>Correct Answer:</strong> b) Counted as two separate, valid observations <br> <em>Explanation:</em> WR sampling mathematically models an infinite population, meaning pulling the same unit again is perfectly valid data reflecting its presence in the probability pool.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. Under simple random sampling WOR, the expectation of the product of two distinct drawn elements \( E(y_i y_j) \) equates natively to: <br> (सरल यादृच्छिक प्रतिचयन WOR के तहत, दो अलग-अलग खींचे गए तत्वों \( E(y_i y_j) \) के गुणनफल की अपेक्षा मूल रूप से किसके बराबर है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \bar{Y}^2 \)</li>
+                    <li>b) \( \frac{1}{N(N-1)} \sum_{i \neq j} y_i y_j \)</li>
+                    <li>c) \( S^2 \)</li>
+                    <li>d) \( 0 \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer</button>
+                <div id="mcq18" class="answer"><strong>Correct Answer:</strong> b) \( \frac{1}{N(N-1)} \sum_{i \neq j} y_i y_j \) <br> <em>Explanation:</em> There are exactly \( N(N-1) \) possible ordered pairs to draw without replacement, generating this precise conditional expectation natively.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If the variance of the sample proportion is calculated via \( V(p) = \frac{N-n}{N-1} \frac{PQ}{n} \), this rigidly indicates the sampling occurred: <br> (यदि प्रतिदर्श अनुपात के प्रसरण की गणना \( V(p) = \frac{N-n}{N-1} \frac{PQ}{n} \) के माध्यम से की जाती है, तो यह कठोरता से इंगित करता है कि प्रतिचयन हुआ है:)</div>
+                <ul class="mcq-options">
+                    <li>a) With Replacement (WR)</li>
+                    <li>b) Without Replacement (WOR)</li>
+                    <li>c) Using Clusters</li>
+                    <li>d) Through non-probability means</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer</button>
+                <div id="mcq19" class="answer"><strong>Correct Answer:</strong> b) Without Replacement (WOR) <br> <em>Explanation:</em> The explicit presence of the finite population multiplier securely confirms that elements were removed as they were sampled.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The primary purpose of utilizing the "Random Number Tables" is to: <br> ("यादृच्छिक संख्या तालिकाओं" का उपयोग करने का प्राथमिक उद्देश्य क्या है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Make the math harder</li>
+                    <li>b) Inject a physical, completely unbiased mechanism of element selection</li>
+                    <li>c) Sort the population alphabetically</li>
+                    <li>d) Calculate the standard error instantly</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
+                <div id="mcq20" class="answer"><strong>Correct Answer:</strong> b) Inject a physical, completely unbiased mechanism of element selection <br> <em>Explanation:</em> True simple random sampling requires an external, perfectly uniform randomization source, preventing any subconscious human pattern-making or bias.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-fib" class="section-card">
+            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+
+            <div class="question-box">
+                <div class="question">1. In simple random sampling WOR, once a unit is selected, it is strictly ____________ from the remaining population pool. <br> (सरल यादृच्छिक प्रतिचयन WOR में, एक बार किसी इकाई का चयन हो जाने के बाद, उसे शेष जनसंख्या पूल से कड़ाई से ____________ कर दिया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
+                <div id="fib1" class="answer"><strong>Answer:</strong> removed / excluded (हटा / बाहर) <br> <em>Explanation:</em> Without Replacement explicitly bars the same element from ever entering the survey twice.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. The parameter \( S^2 \) fundamentally represents the ____________ mean square. <br> (पैरामीटर \( S^2 \) मौलिक रूप से ____________ माध्य वर्ग का प्रतिनिधित्व करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer</button>
+                <div id="fib2" class="answer"><strong>Answer:</strong> population (जनसंख्या) <br> <em>Explanation:</em> It measures the absolute baseline variation across the entire defined universe of \( N \) units.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. Because \( \bar{y} \) mathematically targets the exact center of mass of the population upon repeated sampling, it is hailed as an ____________ estimator. <br> (चूँकि \( \bar{y} \) गणितीय रूप से बार-बार प्रतिचयन करने पर जनसंख्या के द्रव्यमान के सटीक केंद्र को लक्षित करता है, इसलिए इसे एक ____________ अनुमानक के रूप में सराहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer</button>
+                <div id="fib3" class="answer"><strong>Answer:</strong> unbiased (निष्पक्ष) <br> <em>Explanation:</em> The theoretical average of all possible sample means rigorously equals \( \bar{Y} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The expression \( \frac{N-n}{N} \) is technically termed the ____________ population correction factor. <br> (व्यंजक \( \frac{N-n}{N} \) को तकनीकी रूप से ____________ जनसंख्या सुधार कारक कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer</button>
+                <div id="fib4" class="answer"><strong>Answer:</strong> finite (सीमित) <br> <em>Explanation:</em> It corrects the infinite-population variance formula by acknowledging the pool of units is actually finite and depleting.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. If the sample size \( n \) climbs perfectly to equal \( N \), the sampling variance flawlessly drops to ____________. <br> (यदि प्रतिदर्श आकार \( n \) पूरी तरह से \( N \) के बराबर हो जाता है, तो प्रतिचयन प्रसरण निर्दोष रूप से ____________ तक गिर जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer</button>
+                <div id="fib5" class="answer"><strong>Answer:</strong> 0 (zero / शून्य) <br> <em>Explanation:</em> If you survey everybody (a census), there is absolutely no statistical uncertainty left regarding the estimate.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. If sampling WITH replacement is utilized, the total number of possible samples is fiercely elevated to ____________. <br> (यदि प्रतिस्थापन के साथ प्रतिचयन का उपयोग किया जाता है, तो संभावित प्रतिदर्शों की कुल संख्या को तीव्रता से बढ़ाकर ____________ कर दिया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer</button>
+                <div id="fib6" class="answer"><strong>Answer:</strong> \( N^n \) <br> <em>Explanation:</em> At every single of the \( n \) draws, there are exactly \( N \) choices independently available.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The formula for the sample variance \( s^2 \) actively divides by \( (n-1) \) rather than \( n \) to perfectly prevent ____________. <br> (प्रतिदर्श प्रसरण \( s^2 \) का सूत्र सक्रिय रूप से \( n \) के बजाय \( (n-1) \) से विभाजित होता है ताकि ____________ को पूरी तरह से रोका जा सके।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer</button>
+                <div id="fib7" class="answer"><strong>Answer:</strong> bias (पूर्वाग्रह) <br> <em>Explanation:</em> Dividing by \( n \) natively generates an underestimate of \( S^2 \). Using \( n-1 \) strictly corrects this scaling.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In estimating proportions, the population variance heavily collapses into the streamlined boolean form ____________. <br> (अनुपातों का अनुमान लगाने में, जनसंख्या प्रसरण भारी रूप से सुव्यवस्थित बूलियन रूप ____________ में गिर जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer</button>
+                <div id="fib8" class="answer"><strong>Answer:</strong> \( PQ \) <br> <em>Explanation:</em> Because values are 1 or 0, the sum of squares factors natively into \( P \times (1-P) \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. The sample proportion \( p \) structurally matches the mathematical properties of a binomial ____________ divided by \( n \). <br> (प्रतिदर्श अनुपात \( p \) संरचनात्मक रूप से \( n \) द्वारा विभाजित द्विपद ____________ के गणितीय गुणों से मेल खाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer</button>
+                <div id="fib9" class="answer"><strong>Answer:</strong> distribution / count (वितरण / गणना) <br> <em>Explanation:</em> The number of "successes" \( a \) operates via a binomial or hypergeometric logic, meaning \( p = a/n \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. To construct a 95% confidence interval cleanly, the standard normal deviate multiplier \( t \) is set strictly to ____________. <br> (95% विश्वास अंतराल का स्पष्ट रूप से निर्माण करने के लिए, मानक सामान्य विचलन गुणक \( t \) को कड़ाई से ____________ पर सेट किया गया है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer</button>
+                <div id="fib10" class="answer"><strong>Answer:</strong> 1.96 <br> <em>Explanation:</em> Assuming a normal distribution, roughly 95% of the data perfectly resides within 1.96 standard errors of the mean.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A primary consequence of sampling WITH replacement is that an individual element can theoretically appear in the dataset ____________ times. <br> (प्रतिस्थापन के साथ प्रतिचयन का एक प्राथमिक परिणाम यह है कि एक व्यक्तिगत तत्व सैद्धांतिक रूप से डेटासेट में ____________ बार प्रकट हो सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer</button>
+                <div id="fib11" class="answer"><strong>Answer:</strong> multiple / \( n \) (एकाधिक / \( n \)) <br> <em>Explanation:</em> Because it is thrown back into the pool, it mathematically retains an equal chance of being blindly drawn again.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. The mathematical variance of the sample mean \( \bar{y} \) explicitly ____________ as the overall population variance \( S^2 \) increases. <br> (प्रतिदर्श माध्य \( \bar{y} \) का गणितीय प्रसरण स्पष्ट रूप से ____________ होता है क्योंकि समग्र जनसंख्या प्रसरण \( S^2 \) बढ़ता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer</button>
+                <div id="fib12" class="answer"><strong>Answer:</strong> increases (बढ़ता) <br> <em>Explanation:</em> A widely scattered, chaotic population natively produces widely scattered, chaotic sample estimates.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. To calculate the absolute lowest possible combined variance from two independent estimates, one must aggressively weight them ____________ to their individual variances. <br> (दो स्वतंत्र अनुमानों से पूर्ण न्यूनतम संभव संयुक्त प्रसरण की गणना करने के लिए, किसी को उन्हें अपने व्यक्तिगत प्रसरणों के लिए आक्रामक रूप से ____________ को तौलना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer</button>
+                <div id="fib13" class="answer"><strong>Answer:</strong> inversely proportional (व्युत्क्रमानुपाती) <br> <em>Explanation:</em> The worse (larger) a component's variance is, the less severely you trust it in the final fusion.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. If the survey planner rigorously desires to halve the margin of error \( d \), they must effectively ____________ the sample size \( n \). <br> (यदि सर्वेक्षण योजनाकार मार्जिन ऑफ़ एरर \( d \) को आधा करना चाहता है, तो उन्हें प्रभावी रूप से प्रतिदर्श आकार \( n \) को ____________ करना होगा।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer</button>
+                <div id="fib14" class="answer"><strong>Answer:</strong> quadruple (multiply by 4) / चौगुना <br> <em>Explanation:</em> Because \( n = t^2 S^2 / d^2 \), making the denominator twice as small dynamically blows up \( n \) by a factor of exactly \( 2^2 = 4 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. An estimator \( t \) acts as an unbiased estimator of \( \theta \) if and only if the absolute expectation \( E(t) \) perfectly evaluates to ____________. <br> (एक अनुमानक \( t \), \( \theta \) के निष्पक्ष अनुमानक के रूप में कार्य करता है यदि और केवल यदि पूर्ण अपेक्षा \( E(t) \) का पूर्ण मूल्यांकन ____________ होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer</button>
+                <div id="fib15" class="answer"><strong>Answer:</strong> \( \theta \) <br> <em>Explanation:</em> This explicitly guarantees the tool centers perfectly on the absolute target with zero structural tilt.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The expected value \( E(y_i) \) of any single random draw entirely equals the population ____________. <br> (किसी एक यादृच्छिक ड्रा का अपेक्षित मान \( E(y_i) \) पूरी तरह से जनसंख्या ____________ के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer</button>
+                <div id="fib16" class="answer"><strong>Answer:</strong> mean (\( \bar{Y} \)) / माध्य <br> <em>Explanation:</em> Because the draw is completely unweighted, every unit pulls evenly, centering the expectation natively on the average.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In SRS WOR, evaluating \( E(y_i y_j) \) for \( i \neq j \) requires aggregating the cross products over precisely ____________ total possible combinations. <br> (SRS WOR में, \( i \neq j \) के लिए \( E(y_i y_j) \) का मूल्यांकन करने के लिए ठीक ____________ कुल संभावित संयोजनों पर क्रॉस उत्पादों को एकत्रित करने की आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer</button>
+                <div id="fib17" class="answer"><strong>Answer:</strong> \( N(N-1) \) <br> <em>Explanation:</em> There are \( N \) choices for the first slot and firmly \( (N-1) \) remaining choices for the second.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. Estimating the true population variance \( S^2 \) without a pilot survey heavily relies on guessing the population's ____________ and dividing by 6. <br> (पायलट सर्वेक्षण के बिना वास्तविक जनसंख्या प्रसरण \( S^2 \) का अनुमान लगाना भारी रूप से जनसंख्या के ____________ का अनुमान लगाने और 6 से विभाजित करने पर निर्भर करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer</button>
+                <div id="fib18" class="answer"><strong>Answer:</strong> range (सीमा) <br> <em>Explanation:</em> Utilizing the properties of the normal distribution, the entire spread generally covers roughly \( 6\sigma \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If \( n \) is exceedingly small relative to \( N \), the finite population correction aggressively converges towards ____________. <br> (यदि \( N \) के सापेक्ष \( n \) अत्यधिक छोटा है, तो सीमित जनसंख्या सुधार आक्रामक रूप से ____________ की ओर अभिसरण करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer</button>
+                <div id="fib19" class="answer"><strong>Answer:</strong> 1 (एक) <br> <em>Explanation:</em> If \( n/N \approx 0 \), then \( (1 - n/N) \approx 1 \), making SRS WOR behave virtually identically to SRS WR.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The standard error of the sample mean \( \bar{y} \) provides a crisp, objective measure of the estimator's overall ____________. <br> (प्रतिदर्श माध्य \( \bar{y} \) की मानक त्रुटि अनुमानक की समग्र ____________ का एक स्पष्ट, वस्तुनिष्ठ उपाय प्रदान करती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
+                <div id="fib20" class="answer"><strong>Answer:</strong> precision (सटीकता) <br> <em>Explanation:</em> A smaller standard error guarantees the estimates are tightly clustered together, providing massive statistical confidence.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-tf" class="section-card">
+            <h2>✅ True or False (सही या गलत)</h2>
+
+            <div class="question-box">
+                <div class="question">1. Simple Random Sampling guarantees that every single element in the population has exactly the same probability of being chosen. <br> (सरल यादृच्छिक प्रतिचयन गारंटी देता है कि जनसंख्या में प्रत्येक तत्व के चुने जाने की प्रायिकता बिल्कुल समान है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
+                <div id="tf1" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This uniformity of selection probability (\( 1/N \) on the first draw) is the defining structural property of the method.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. The finite population correction (fpc) mathematically inflates the variance to account for smaller populations. <br> (सीमित जनसंख्या सुधार (fpc) छोटी आबादी को ध्यान में रखने के लिए गणितीय रूप से प्रसरण को बढ़ाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer</button>
+                <div id="tf2" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It *deflates* or reduces the variance. Because you are surveying a massive fraction of the whole, there is strictly less uncertainty left.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. Sampling WITH replacement (WR) generally produces a higher expected variance than sampling WITHOUT replacement (WOR) for the exact same sample size \( n \). <br> (प्रतिस्थापन के साथ प्रतिचयन (WR) आमतौर पर बिल्कुल समान प्रतिदर्श आकार \( n \) के लिए प्रतिस्थापन के बिना (WOR) प्रतिचयन की तुलना में उच्च अपेक्षित प्रसरण उत्पन्न करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer</button>
+                <div id="tf3" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Because WR can waste draws explicitly analyzing identical elements over and over, it is structurally less efficient than WOR which constantly discovers fresh data.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The expectation \( E(s^2) \) explicitly equals the population variance \( \sigma^2 \) in sampling without replacement. <br> (अपेक्षा \( E(s^2) \) प्रतिस्थापन के बिना प्रतिचयन में जनसंख्या प्रसरण \( \sigma^2 \) के स्पष्ट रूप से बराबर होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer</button>
+                <div id="tf4" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It equals the population mean square \( S^2 \) (which divides by \( N-1 \)), not \( \sigma^2 \) (which natively divides by \( N \)).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. If the required absolute error margin \( d \) drops from 4 to 2, the optimally required sample size will perfectly quadruple. <br> (यदि आवश्यक पूर्ण त्रुटि मार्जिन \( d \), 4 से गिरकर 2 हो जाता है, तो इष्टतम रूप से आवश्यक प्रतिदर्श आकार पूरी तरह से चौगुना हो जाएगा।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer</button>
+                <div id="tf5" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Because sample size scales cleanly with \( 1/d^2 \), cutting the error threshold rigorously in half blows up the sample requirement by exactly \( 2^2 = 4 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. The sample proportion \( p \) is a strongly biased estimator of the true population proportion \( P \) in small samples. <br> (प्रतिदर्श अनुपात \( p \) छोटे नमूनों में वास्तविक जनसंख्या अनुपात \( P \) का एक दृढ़ता से पक्षपाती अनुमानक है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show/Hide Answer</button>
+                <div id="tf6" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is perfectly unbiased for any sample size \( n \). The expectation \( E(p) \) mathematically evaluates safely and rigorously to \( P \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. A pilot survey's absolute primary mathematical purpose is to establish the true final population parameters. <br> (एक पायलट सर्वेक्षण का पूर्ण प्राथमिक गणितीय उद्देश्य वास्तविक अंतिम जनसंख्या मापदंडों को स्थापित करना है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer</button>
+                <div id="tf7" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is designed to rough-estimate unknown variances (like \( S^2 \)) and refine survey logistics, not to act as the massive finalized official study.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In a symmetric, perfectly normal population distribution, the sample mean and sample variance are completely uncorrelated. <br> (एक सममित, पूरी तरह से सामान्य जनसंख्या वितरण में, प्रतिदर्श माध्य और प्रतिदर्श प्रसरण पूरी तरह से असंबंधित होते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer</button>
+                <div id="tf8" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The theoretical covariance \( \text{Cov}(\bar{y}, s^2) \) relies strictly on the third central moment (\( \mu_3 \)), which is exactly zero for symmetrical normal curves.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. Drawing a random sample natively relies on the personal, highly subjective judgment of the trained field investigator. <br> (यादृच्छिक प्रतिदर्श आहरित करना मूल रूप से प्रशिक्षित क्षेत्रीय अन्वेषक के व्यक्तिगत, अत्यधिक व्यक्तिपरक निर्णय पर निर्भर करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer</button>
+                <div id="tf9" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> That defines Non-Probability/Purposive sampling. Random sampling aggressively strips human choice out entirely by using random numbers.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. The fundamental expectation operator \( E \) operates strictly in a linear fashion across summed random variables. <br> (मौलिक अपेक्षा ऑपरेटर \( E \) कुल यादृच्छिक चरों में कड़ाई से रैखिक रूप से संचालित होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer</button>
+                <div id="tf10" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> \( E(ax+by) \) perfectly equals \( aE(x) + bE(y) \), making it incredibly clean to work with algebraically.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. If sampling WITH replacement, the number of distinct possible samples generated equals exactly \( \binom{N}{n} \). <br> (यदि प्रतिस्थापन के साथ प्रतिचयन किया जाता है, तो उत्पन्न होने वाले विशिष्ट संभावित प्रतिदर्शों की संख्या बिल्कुल \( \binom{N}{n} \) के बराबर होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer</button>
+                <div id="tf11" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> That is the formula for strictly Without Replacement (WOR). With Replacement structurally yields \( N^n \) possible trajectories.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. To cleanly estimate the population total, one heavily multiplies the sample mean strictly by the known population size \( N \). <br> (जनसंख्या के कुल योग का स्पष्ट रूप से अनुमान लगाने के लिए, किसी ज्ञात जनसंख्या आकार \( N \) द्वारा प्रतिदर्श माध्य को भारी रूप से गुणा किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer</button>
+                <div id="tf12" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Since \( \bar{y} \) mathematically estimates the average element, scaling it out by all \( N \) elements naturally projects the massive total \( Y \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. In binary proportion logic (1 or 0), the sample variance flawlessly computes exactly as \( p \times q \). <br> (बाइनरी अनुपात तर्क (1 या 0) में, प्रतिदर्श प्रसरण त्रुटिहीन रूप से \( p \times q \) के रूप में गणना करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer</button>
+                <div id="tf13" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> To be completely unbiased, it technically computes as \( \frac{n}{n-1}pq \), aggressively adjusting for the slight finite sample deflation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. Combining two independent estimates optimally demands weighting them proportionally to their absolute variances. <br> (दो स्वतंत्र अनुमानों को इष्टतम रूप से संयोजित करने के लिए उन्हें उनके पूर्ण प्रसरणों के आनुपातिक रूप से तौलना आवश्यक है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer</button>
+                <div id="tf14" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> They must be weighted natively *inversely* proportional to their variances (\( 1/V \)) so that the worst estimate inherently gets the lowest weight.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. Assuming a perfectly normal distribution is heavily critical when explicitly mapping standard errors to robust 95% confidence intervals. <br> (मानक त्रुटियों को मजबूत 95% विश्वास अंतरालों पर स्पष्ट रूप से मैप करते समय पूरी तरह से सामान्य वितरण को मानना अत्यधिक महत्वपूर्ण है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer</button>
+                <div id="tf15" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The 1.96 multiplier relies directly on the rigid geometric shape of the standard normal Gaussian curve.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The finite population correction is safely ignored and discarded completely if \( n/N \) exceeds 20%. <br> (सीमित जनसंख्या सुधार को सुरक्षित रूप से अनदेखा कर दिया जाता है और यदि \( n/N \) 20% से अधिक है तो उसे पूरी तरह से छोड़ दिया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer</button>
+                <div id="tf16" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is the exact opposite. If \( n/N \) climbs above 5%, the fpc becomes aggressively critical. Discarding it will brutally overestimate the error.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. Simple random sampling explicitly provides absolutely no built-in mathematical safeguard against drawing an "unlucky", completely non-representative sample. <br> (सरल यादृच्छिक प्रतिचयन स्पष्ट रूप से एक "अभागे", पूरी तरह से गैर-प्रतिनिधि प्रतिदर्श को खींचने के खिलाफ बिल्कुल कोई अंतर्निहित गणितीय सुरक्षा प्रदान नहीं करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer</button>
+                <div id="tf17" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> It is purely blind chance. While an outlier is incredibly unlikely in massive samples, SRS structurally permits the possibility of drawing purely extreme units.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. Under SRS, an estimator is unconditionally unbiased mathematically if and only if its native Mean Square Error strictly equals zero. <br> (SRS के तहत, एक अनुमानक बिना शर्त गणितीय रूप से निष्पक्ष होता है यदि और केवल यदि इसकी मूल माध्य वर्ग त्रुटि कड़ाई से शून्य के बराबर होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer</button>
+                <div id="tf18" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> An unbiased estimator merely requires \( B(t) = 0 \). The MSE can still be massive if the base variance \( V(t) \) is high.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If the population variance \( S^2 \) is huge, structurally requiring a massive sample size, stratified sampling is aggressively recommended to cut costs. <br> (यदि जनसंख्या प्रसरण \( S^2 \) बहुत बड़ा है, जिसके लिए संरचनात्मक रूप से एक बड़े प्रतिदर्श आकार की आवश्यकता है, तो लागत में कटौती करने के लिए स्तरीकृत प्रतिचयन की आक्रामक रूप से सिफारिश की जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer</button>
+                <div id="tf19" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Stratification natively controls high global variance by breaking it into highly uniform local groups, collapsing the needed sample size aggressively.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. For simple attribute proportions, the mathematical boundary \( PQ \) strictly maximizes precisely when \( P = 0.5 \). <br> (सरल विशेषता अनुपातों के लिए, गणितीय सीमा \( PQ \) कड़ाई से अधिकतम तब होती है जब \( P = 0.5 \) होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
+                <div id="tf20" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The quadratic \( P(1-P) \) hits its apex directly at 0.5, meaning an even 50/50 split natively generates the absolute highest possible statistical uncertainty.</div>
+            </div>
+
+        </section>
+        
+        <script>
+        function showTopic(topicId) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            var elem = document.getElementById(topicId);
+            if (elem) {
+                elem.classList.add('active');
+            }
+            
+            var activeLink = document.querySelector(`.nav-link[onclick*="${topicId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            if(window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('hinglish-active');
+            var btn = document.querySelector('.lang-toggle-btn');
+            if (document.body.classList.contains('hinglish-active')) {
+                btn.textContent = 'Switch to English';
+            } else {
+                btn.textContent = 'Switch to Hinglish';
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv) {
+                answerDiv.classList.toggle('show');
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4 – Systematic Random Sampling | Theory of Sampling</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
+            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
+            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
+        
+        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        
+        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
+        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
+        
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
+        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
+        .section-card.active { display: block; }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
+        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
+        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
+        .section-card li { margin-bottom: 8px; }
+        
+        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hinglish-content { display: none; }
+        .hinglish-active .english-content { display: none; }
+        .hinglish-active .hinglish-content { display: block; }
+        
+        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
+        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
+
+        /* QUIZ STYLES */
+        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
+        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
+        .mcq-options li { margin-bottom: 5px; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
+        .toggle-btn:hover { background: var(--navy-light); }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
+        .answer.show { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="book-header">
+        <div class="header-icon"><i class="fas fa-book"></i></div>
+        <div class="header-text">
+            <h1>Chapter 4: Systematic Random Sampling | Theory of Sampling</h1>
+            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <a class="nav-link active" onclick="showTopic('sec4-1')">4.1 Introduction</a>
+        <a class="nav-link" onclick="showTopic('sec4-2')">4.2 Selection Procedures</a>
+        <a class="nav-link" onclick="showTopic('sec4-3')">4.3 Adv & Disadvantages</a>
+        <a class="nav-link" onclick="showTopic('sec4-4')">4.4 Estimation of Mean</a>
+        <a class="nav-link" onclick="showTopic('sec4-5')">4.5 Comp. with Random</a>
+        <a class="nav-link" onclick="showTopic('sec4-6')">4.6 Comp. with Stratified</a>
+        <a class="nav-link" onclick="showTopic('sec4-7')">4.7 Estimation of Var</a>
+        <a class="nav-link" onclick="showTopic('sec4-8')">4.8 Interpenetrating</a>
+        <a class="nav-link" onclick="showTopic('sec4-9')">4.9 New Systematic</a>
+        <a class="nav-link" onclick="showTopic('sec4-10')">4.10 Specified Pops</a>
+        <a class="nav-link" onclick="showTopic('sec4-11')">4.11 Two-Dimensional</a>
+        
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
+        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
+        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
+        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
+        <a class="nav-link" onclick="showTopic('sec4-12')">📝 Exercise (Subjective)</a>
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Back to Index</a>
+    </aside>
+
+    <main class="main-content">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+
+        <section id="sec4-1" class="section-card active">
+            <div class="english-content">
+                <h2>4.1 Introduction</h2>
+                <p>In the previous chapters, we have discussed those sampling techniques where sampling units were selected completely randomly. Now we shall formally discuss a distinct sampling technique which has the remarkably nice feature of selecting the whole sample with strictly just one random start. A sampling technique in which only the first unit is selected with the help of random numbers and the rest subsequently get selected automatically according to some pre-designed mathematical pattern is strictly known as <strong>systematic random sampling</strong>. Systematic random sampling is also frequently referred to briefly as <strong>systematic sampling</strong>.</p>
+                <p>Suppose \( N \) units of the population are linearly numbered from 1 to \( N \) in some deliberate order. Let \( N = nk \), where \( n \) is the specified sample size and \( k \) is an integer. A random number less than or exactly equal to \( k \) is selected, and every \( k \)-th unit thereafter is drawn. The resultant sample is called <strong>every \( k \)-th systematic sample</strong> and such a procedure is technically termed <strong>linear systematic sampling</strong>.</p>
+                <p>If \( N \neq nk \), and every \( k \)-th unit is continuously included in a circular manner till the whole list is definitively exhausted, it will be strictly called <strong>circular systematic sampling</strong>.</p>
+                <p>Systematic sampling is beautifully simple and relatively foolproof. Apart from its operational simplicity, this procedure, in many practical situations, provides parameter estimates that are mathematically more efficient than simple random sampling and is thus widely used in various types of field surveys. Systematic sampling has been rigorously discussed at length by Madow and Madow (1944), Madow (1949, 1953) and others. Its operational applications in different fields have been comprehensively demonstrated by Finney (1948) and Sukhatme et al. (1958). Singh et al. (1968) have suggested a mathematically modified systematic sampling procedure and its suitability has been practically illustrated by its application to a large-scale survey for estimating milk yield.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>4.1 परिचय (Introduction)</h2>
+                <p>पिछले अध्यायों (chapters) में हमने उन sampling techniques पर चर्चा की है जहाँ sampling units को पूरी तरह से randomly (यादृच्छिक रूप से) चुना गया था। अब हम औपचारिक रूप से एक विशिष्ट sampling technique पर चर्चा करेंगे जिसमें सिर्फ एक random start के साथ पूरे sample को select करने की एक उल्लेखनीय रूप से अच्छी विशेषता (remarkably nice feature) है। एक sampling technique जिसमें केवल पहली unit को random numbers की मदद से select किया जाता है और बाकी units किसी पूर्व-निर्धारित गणितीय पैटर्न (pre-designed mathematical pattern) के अनुसार स्वचालित रूप से (automatically) select हो जाती हैं, सख्ती से <strong>systematic random sampling</strong> (व्यवस्थित यादृच्छिक प्रतिचयन) कहलाती है। Systematic random sampling को अक्सर संक्षेप (briefly) में <strong>systematic sampling</strong> भी कहा जाता है।</p>
+                <p>मान लीजिए कि population की \( N \) units को किसी जानबूझकर किए गए क्रम (deliberate order) में 1 से \( N \) तक linearly number दिया गया है। मान लीजिए \( N = nk \), जहाँ \( n \) निर्दिष्ट sample size है और \( k \) एक पूर्णांक (integer) है। \( k \) से कम या उसके ठीक बराबर एक random number select किया जाता है, और उसके बाद हर \( k \)-वीं unit निकाली जाती है। परिणामी sample (resultant sample) को <strong>every \( k \)-th systematic sample</strong> कहा जाता है और ऐसी procedure को तकनीकी रूप से <strong>linear systematic sampling</strong> (रैखिक व्यवस्थित प्रतिचयन) कहा जाता है।</p>
+                <p>यदि \( N \neq nk \) है, और हर \( k \)-वीं unit को एक गोलाकार तरीके (circular manner) से तब तक शामिल किया जाता है जब तक कि पूरी list निश्चित रूप से समाप्त (definitively exhausted) न हो जाए, तो इसे सख्ती से <strong>circular systematic sampling</strong> (वृत्ताकार व्यवस्थित प्रतिचयन) कहा जाएगा।</p>
+                <p>Systematic sampling खूबसूरती से सरल और अपेक्षाकृत अचूक (foolproof) है। इसकी परिचालन सरलता (operational simplicity) के अलावा, यह procedure कई व्यावहारिक स्थितियों में, simple random sampling की तुलना में अधिक कुशल (efficient) parameter estimates प्रदान करती है और इसलिए विभिन्न प्रकार के field surveys में व्यापक रूप से उपयोग की जाती है।</p>
+            </div>
+        </section>
+
+        <section id="sec4-2" class="section-card">
+            <div class="english-content">
+                <h2>4.2 Sample Selection Procedures</h2>
+                <p>Systematic sampling is a highly commonly used technique if a totally complete and up-to-date sampling frame is strictly made available. We shall first comprehensively discuss these sample selection procedures before we evaluate their inherent advantages and disadvantages.</p>
+
+                <h3>4.2.1 Linear Systematic Sampling</h3>
+                <p>As mentioned above, a vastly common procedure is the linear systematic sampling scheme. We suppose that the population is linearly ordered in some distinct way such that units can be referred to by serial number, without any ambiguity. Further, let \( N \) be exactly expressible in the algebraic form \( N = nk \) and let the selected random number be \( i \ (\leq k) \), with \( k \) being mathematically called the <strong>sampling interval</strong>. In this strict procedure, the sample decisively comprises the units \( i, i + k, i + 2k, \ldots, i + (n - 1)k \). The technique will mathematically generate \( k \) systematic samples with perfectly equal probability.</p>
+
+                <p>Another practical situation arises if \( N \) is not expressible in the strict form \( N = nk \). In this case, the present sampling scheme will unavoidably give rise to samples of unequal size, as \( k \) is taken as the integer strictly nearest to \( N/n \). Then a random number is chosen from 1 to \( k \) and every \( k \)-th unit is sequentially drawn into the sample. Under this specific condition, the sample size is not necessarily exactly \( n \) and in some cases it may be \( (n - 1) \). For example, if \( N = 11 \), \( n = 4 \), then the value of \( k \) is 3 and the possible samples are exactly \( (1,4,7,10) \); \( (2,5,8,11) \) and \( (3,6,9) \), which are unfortunately not of the same exact size. We shall discuss a mathematical improvement over it in the next section.</p>
+
+                <h3>4.2.2 Circular Systematic Sampling</h3>
+                <p>To mathematically overcome the difficulty of varying sample size under the specific situation \( N \neq nk \), the procedure is modified slightly by which a sample of strictly constant size is always obtained. The procedure consists in selecting a unit, by a random start, from 1 to \( N \) and then thereafter consecutively selecting every \( k \)-th unit, \( k \) being an integer nearest to \( N/n \), in a strictly circular manner, until a sample of exactly \( n \) units is obtained. This technique is generally known mathematically as <strong>circular systematic sampling</strong>. Suppose that a unit with random number \( i \) is selected. The sample will then precisely consist of the units corresponding to the serial numbers:</p>
+                <div class="derivation-block">
+                    $$ i + jk \quad \text{if } i + jk \leq N $$
+                    $$ i + jk - N \quad \text{if } i + jk > N $$
+                    <p>for \( j = 0, 1, \ldots, (n - 1) \).</p>
+                </div>
+                <p>It can be easily mathematically verified that every unit has got a strictly equal probability of selection \( (1/N) \) in this robust method.</p>
+                <p>As a mathematical illustration, let \( N = 11 \), and \( n = 4 \). Then strictly \( k = 3 \). The possible samples are, therefore:</p>
+                <p>\( (1,4,7,10) \); \( (2,5,8,11) \); \( (3,6,9,1) \); \( (4,7,10,2) \); \( (5,8,11,3) \); \( (6,9,1,4) \); \( (7,10,2,5) \); \( (8,11,3,6) \); \( (9,1,4,7) \); \( (10,2,5,8) \); and \( (11,3,6,9) \).</p>
+                <p>Further, it will be seen that systematic sampling has the mathematical drawback of not yielding an unbiased estimate of sampling variance with a single sample. To overcome this difficulty, a new systematic sampling procedure has been ingeniously suggested by Singh and Singh (1977), which we shall mathematically explain in Section 4.9 of this chapter.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>4.2 Sample Selection Procedures (प्रतिदर्श चयन की प्रक्रियाएं)</h2>
+                <p>Systematic sampling एक अत्यधिक आमतौर पर इस्तेमाल की जाने वाली technique है यदि एक पूरी तरह से complete और up-to-date sampling frame सख्ती से उपलब्ध कराया जाता है। हम पहले इन sample selection procedures पर व्यापक रूप से (comprehensively) चर्चा करेंगे इससे पहले कि हम उनके अंतर्निहित (inherent) फायदों और नुकसानों का मूल्यांकन करें।</p>
+
+                <h3>4.2.1 Linear Systematic Sampling (रैखिक व्यवस्थित प्रतिचयन)</h3>
+                <p>जैसा कि ऊपर उल्लेख किया गया है, एक बहुत ही सामान्य procedure linear systematic sampling scheme है। हम मानते हैं कि population किसी विशिष्ट (distinct) तरीके से रैखिक रूप से क्रमित (linearly ordered) है ताकि units को बिना किसी अस्पष्टता के serial number द्वारा संदर्भित किया जा सके। इसके अलावा, मान लीजिए \( N \) को बीजीय रूप (algebraic form) \( N = nk \) में बिल्कुल व्यक्त किया जा सकता है और मान लीजिए कि selected random number \( i \ (\leq k) \) है, जहाँ \( k \) को गणितीय रूप से <strong>sampling interval</strong> कहा जाता है। इस सख्त procedure में, sample में निर्णायक (decisively) रूप से units \( i, i + k, i + 2k, \ldots, i + (n - 1)k \) शामिल होती हैं। यह technique पूरी तरह से समान probability के साथ \( k \) systematic samples गणितीय रूप से उत्पन्न करेगी।</p>
+
+                <p>एक और व्यावहारिक स्थिति तब उत्पन्न होती है यदि \( N \), \( N = nk \) के सख्त रूप में expressible नहीं है। इस मामले में, वर्तमान sampling scheme अनिवार्य रूप से असमान आकार के samples को जन्म देगी, क्योंकि \( k \) को \( N/n \) के निकटतम पूर्णांक के रूप में लिया जाता है। फिर 1 से \( k \) तक एक random number चुना जाता है और हर \( k \)-वीं unit को क्रमिक रूप से sample में निकाला जाता है। इस विशिष्ट स्थिति (specific condition) के तहत, sample size जरूरी नहीं कि बिल्कुल \( n \) हो और कुछ मामलों में यह \( (n - 1) \) हो सकता है। उदाहरण के लिए, यदि \( N = 11 \), \( n = 4 \) है, तो \( k \) का मान 3 है और possible samples बिल्कुल \( (1,4,7,10) \); \( (2,5,8,11) \) और \( (3,6,9) \) हैं, जो दुर्भाग्य से एक ही सटीक आकार के नहीं हैं।</p>
+
+                <h3>4.2.2 Circular Systematic Sampling (वृत्ताकार व्यवस्थित प्रतिचयन)</h3>
+                <p>विशिष्ट स्थिति \( N \neq nk \) के तहत अलग-अलग sample size की कठिनाई को गणितीय रूप से दूर करने के लिए, procedure को थोड़ा modify किया जाता है जिसके द्वारा हमेशा सख्ती से एक constant size का sample प्राप्त होता है। इस procedure में एक random start द्वारा 1 से \( N \) तक एक unit को select करना और उसके बाद लगातार हर \( k \)-वीं unit को select करना शामिल है, जहाँ \( k \), \( N/n \) के निकटतम पूर्णांक है, एक कड़ाई से गोलाकार तरीके (strictly circular manner) में, जब तक कि बिल्कुल \( n \) units का sample प्राप्त न हो जाए। इस technique को आमतौर पर गणितीय रूप से <strong>circular systematic sampling</strong> के रूप में जाना जाता है। मान लीजिए कि random number \( i \) वाली एक unit select की गई है। तब sample में ठीक (precisely) serial numbers के अनुरूप units शामिल होंगी:</p>
+                <div class="derivation-block">
+                    $$ i + jk \quad \text{if } i + jk \leq N $$
+                    $$ i + jk - N \quad \text{if } i + jk > N $$
+                    <p>\( j = 0, 1, \ldots, (n - 1) \) के लिए।</p>
+                </div>
+                <p>यह आसानी से गणितीय रूप से verify किया जा सकता है कि इस मजबूत (robust) method में प्रत्येक unit के selection की probability \( (1/N) \) पूरी तरह से समान है।</p>
+            </div>
+        </section>
+
+    
+        
+        <section id="sec4-3" class="section-card">
+            <div class="english-content">
+                <h2>4.3 Advantages and Disadvantages</h2>
+                <p>The main mathematical advantage of systematic sampling is its absolute simplicity of selection, operational convenience and the remarkably even spread of the sample over the entire population. It has, therefore, been found practically very useful in forest surveys for mathematically estimating the volume of timber, in fisheries for estimating the total catch of fish, in milk yield surveys for rigorous estimation of the lactation yield, etc. Another profound advantage is that, except for populations heavily laden with periodicities, systematic sampling mathematically provides an efficient estimate as compared to alternative designs. Sometimes systematic sampling variances are vastly smaller than the variances for random selection of units within strata.</p>
+                <p>In case of unforeseen periodicity in the population, systematic sampling has to be used with considerable mathematical care. If, for a periodic population, the sampling interval is exactly an odd multiple of half the period of the mathematical cycle, systematic sampling flawlessly provides zero variance. When the sampling interval is a simple integer multiple of the period of the cycle, systematic sampling is unfortunately no better mathematically than selecting one single unit at random. A serious disadvantage of systematic sampling lies inherently in its use with populations having unforeseen periodicity which may substantially contribute a devastating bias to the estimate of the population mean value. Another fundamental disadvantage concerns the theoretical drawback of mathematically estimating the sampling variance of estimators with a single systematic sample.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>4.3 Advantages and Disadvantages (लाभ और हानियां)</h2>
+                <p>Systematic sampling का मुख्य गणितीय लाभ इसके चयन (selection) की पूर्ण सरलता, परिचालन सुविधा (operational convenience) और पूरी population पर sample का उल्लेखनीय रूप से समान फैलाव (even spread) है। इसलिए, लकड़ी (timber) की मात्रा का गणितीय रूप से अनुमान लगाने के लिए वन सर्वेक्षणों (forest surveys) में, मछली की कुल पकड़ का अनुमान लगाने के लिए मत्स्य पालन (fisheries) में, स्तनपान उपज (lactation yield) के कठोर अनुमान के लिए दूध की उपज सर्वेक्षणों (milk yield surveys) में, इसे व्यावहारिक रूप से बहुत उपयोगी पाया गया है। एक और गहरा (profound) फायदा यह है कि, periodicities (आवधिकता) से भरी हुई populations को छोड़कर, systematic sampling वैकल्पिक डिज़ाइनों (alternative designs) की तुलना में गणितीय रूप से एक efficient estimate प्रदान करती है। कभी-कभी systematic sampling variances, strata के भीतर units के random selection के लिए variances से काफी छोटे होते हैं।</p>
+                <p>Population में unforeseen periodicity (अप्रत्याशित आवधिकता) के मामले में, systematic sampling का उपयोग काफी गणितीय सावधानी (mathematical care) के साथ किया जाना चाहिए। यदि, एक periodic population के लिए, sampling interval गणितीय चक्र (mathematical cycle) की आधी अवधि का ठीक एक विषम गुणज (odd multiple) है, तो systematic sampling दोषरहित (flawlessly) रूप से शून्य variance (zero variance) प्रदान करती है। जब sampling interval चक्र की अवधि का एक सरल पूर्णांक गुणज (simple integer multiple) होता है, तो systematic sampling दुर्भाग्य से गणितीय रूप से यादृच्छिक रूप से (randomly) एक इकाई को चुनने से बेहतर नहीं होती है। Systematic sampling का एक गंभीर नुकसान (serious disadvantage) अंतर्निहित रूप से unforeseen periodicity वाले populations के साथ इसके उपयोग में निहित है जो population mean value के estimate में काफी विनाशकारी bias (पूर्वाग्रह) का योगदान दे सकता है। एक और मूलभूत नुकसान (fundamental disadvantage) एक एकल (single) systematic sample के साथ estimators के sampling variance का गणितीय रूप से अनुमान लगाने की सैद्धांतिक कमी (theoretical drawback) से संबंधित है.</p>
+            </div>
+        </section>
+
+        <section id="sec4-4" class="section-card">
+            <div class="english-content">
+                <h2>4.4 Estimation of Mean and its Sampling Variance</h2>
+                <p>Let \( y_{ij} \) denote the \( j \)-th member of the \( i \)-th systematic sample, (\( j = 1, 2, \ldots n \); \( i = 1, 2, \ldots, k \)). The mean of the \( i \)-th sample may be distinctly denoted by \( \bar{y}_i \). We have to consider the mathematical problem of accurately estimating the population mean under two entirely different situations: (i) when \( N = nk \) and (ii) when \( N \neq nk \). First we shall thoroughly discuss the situation when \( N = nk \).</p>
+
+                <h3><strong>Theorem 4.4.1:</strong></h3>
+                <p>In systematic sampling with interval \( k \), the sample mean \( \bar{y}_{sy} \) is an unbiased estimator of the population mean \( \bar{Y} \). Its exact sampling variance is mathematically given by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_c^2}{k} \quad (4.4.1) $$
+                    <p>where \( S_c^2 \) explicitly denotes the mean square between the column means in the population (\( c \) stands for column).</p>
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Since the probability of strictly selecting the \( i \)-th systematic sample is exactly \( 1/k \), we mathematically have:</p>
+                    $$ E(\bar{y}_{sy}) = \sum_{i = 1}^k \frac{\bar{y}_i}{k} = \frac{\sum_i \sum_j y_{ij}}{nk} = \bar{Y} $$
+                    <div class="explanation">\( \because \) the expected value is simply the sum of all sample means divided by the number of possible samples \( k \), which precisely evaluates to the overall population mean.</div>
+                    <p>Hence, \( \bar{y}_{sy} \) is a mathematically unbiased estimator.</p>
+                    <p>If the \( i \)-th sample is strictly considered the \( i \)-th column, the total sum of squares specifically due to column means is elegantly given by:</p>
+                    $$ \sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = (k - 1)S_c^2 $$
+                    <div class="explanation">\( \because \) this follows the standard algebraic definition of sum of squares for \( k \) columns.</div>
+                    <p>Hence, the variance of the sample means \( \bar{y}_{sy} \) is derived directly as:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{E(\bar{y}_i - \bar{Y})^2}{k} = \frac{(k - 1)S_c^2}{k} $$
+                    <div class="explanation">\( \because \) variance is the expected squared deviation of the sample mean from the population mean.</div>
+                </div>
+                <p>It should absolutely not be inferred from the above formula that the variance of systematic sample mean will continuously decrease if the sample size is indiscriminately increased. This makes the strict mathematical point clear that systematic sampling is a delicate device and should be carefully used.</p>
+
+                <h3><strong>Theorem 4.4.2:</strong></h3>
+                <p>The sampling variance of sample mean \( \bar{y}_{sy} \) is alternatively mathematically given by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(N - 1)S^2}{N} - \frac{(n - 1)S_w^2}{n} = \sigma^2 - \sigma_w^2 \quad (4.4.2) $$
+                    <p>where \( S_w^2 = \frac{\sum_i \sum_j (y_{ij} - \bar{y}_i)^2}{k(n - 1)} \), with \( (n - 1)S_w^2 = n\sigma_w^2 \), and \( \sigma^2 \) has its usual fundamental meaning.</p>
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>We know algebraically that the total sum of squares (TSS) is rigidly given by:</p>
+                    $$ TSS = (N - 1)S^2 = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2 + n\sum_i (\bar{y}_i - \bar{Y})^2 $$
+                    <div class="explanation">\( \because \) the total sum of squares partitions perfectly into the sum of squares within samples and the sum of squares between samples.</div>
+                    <p>Also, we strictly know that the variance of \( \bar{y}_{sy} \) is:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{\sum_i (\bar{y}_i - \bar{Y})^2}{k} $$
+                    <p>And from the partition:</p>
+                    $$ (N - 1)S^2 = k(n - 1)S_w^2 + nkV(\bar{y}_{sy}) $$
+                    <div class="explanation">\( \because \) substituting the definitions of \( S_w^2 \) and \( V(\bar{y}_{sy}) \) into the TSS equation.</div>
+                    <p>Hence, rearranging terms algebraically:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{(N - 1)S^2}{nk} - \frac{k(n - 1)S_w^2}{nk} = \frac{(N - 1)S^2}{N} - \frac{(n - 1)S_w^2}{n} = \sigma^2 - \sigma_w^2 $$
+                    <div class="explanation">\( \because \) dividing through by \( nk \) (which equals \( N \)) isolates the variance term.</div>
+                </div>
+                <p>Since \( \sigma^2 \) is strictly fixed for a given population, it is obvious from this powerful result that in order to mathematically reduce \( V(\bar{y}_{sy}) \) it is absolutely necessary to increase the within-sample variation \( \sigma_w^2 \).</p>
+
+                <h3><strong>Theorem 4.4.3:</strong> Intra-class Correlation</h3>
+                <p>In systematic sampling show mathematically that:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
+                    <p>where \( \rho_w \) is the intra-class correlation coefficient strictly between pairs of units in the same systematic sample.</p>
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{1}{k}\sum_{r = 1}^k (\bar{y}_r - \bar{Y})^2 = \frac{1}{k}\sum_{r = 1}^k \left[ \frac{1}{n}\sum_{j = 0}^{n - 1} y_{r + jk} - \bar{Y} \right]^2 $$
+                    $$ = \frac{1}{n^2 k}\sum_{r = 1}^k \left[ \sum_{i = 1}^n (y_{ri} - \bar{Y}) \right]^2 $$
+                    $$ = \frac{1}{n^2 k}\sum_{r = 1}^k \left[ \sum(y_{ri} - \bar{Y})^2 + \sum_{i \neq j} (y_{ri} - \bar{Y})(y_{rj} - \bar{Y}) \right] $$
+                    <div class="explanation">\( \because \) expanding the square of the sum cleanly yields the sum of squares plus the sum of cross-products.</div>
+                    $$ = \frac{\sum (y_i - \bar{Y})^2}{nN} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} $$
+                    $$ = \frac{N\sigma^2}{nN} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} = \frac{\sigma^2}{n} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} \quad \text{--- (1)} $$
+                    <p>Now we mathematically know that \( \rho_{xy}\sigma_x \sigma_y = Cov(x,y) \). For intra-class correlation strictly within \( k \) samples of size \( n \), the sum of cross products is exactly \( N(n - 1)\rho_w \sigma^2 \).</p>
+                    <div class="explanation">\( \because \) by definition, \( N(n - 1)\rho_w \sigma^2 = \sum\sum(y_{ri} - \bar{Y})(y_{rj} - \bar{Y}) \).</div>
+                    <p>Substitute this back into equation (1):</p>
+                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n} + \frac{N(n - 1)\rho_w \sigma^2}{nN} = \frac{\sigma^2}{n} + \frac{(n - 1)\rho_w \sigma^2}{n} $$
+                    $$ = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
+                    <div class="explanation">\( \because \) factoring out \( \sigma^2/n \) completes the elegant proof.</div>
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>4.4 Estimation of Mean and its Sampling Variance (माध्य और उसके प्रतिचयन प्रसरण का अनुमान)</h2>
+                <p>मान लीजिए \( y_{ij} \), \( i \)-वें systematic sample के \( j \)-वें सदस्य (member) को दर्शाता है, (\( j = 1, 2, \ldots n \); \( i = 1, 2, \ldots, k \))। \( i \)-वें sample के mean को स्पष्ट रूप से \( \bar{y}_i \) द्वारा दर्शाया जा सकता है। हमें दो पूरी तरह से अलग स्थितियों (entirely different situations) के तहत population mean का सटीक अनुमान लगाने की गणितीय समस्या पर विचार करना होगा: (i) जब \( N = nk \) और (ii) जब \( N \neq nk \)। पहले हम उस स्थिति पर पूरी तरह से चर्चा करेंगे जब \( N = nk \) हो।</p>
+
+                <h3><strong>Theorem 4.4.1:</strong></h3>
+                <p>Interval \( k \) के साथ systematic sampling में, sample mean \( \bar{y}_{sy} \) population mean \( \bar{Y} \) का एक unbiased estimator है। इसका सटीक sampling variance गणितीय रूप से इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_c^2}{k} \quad (4.4.1) $$
+                    <p>जहाँ \( S_c^2 \) स्पष्ट रूप से population में column means के बीच mean square को दर्शाता है (\( c \), column के लिए है)।</p>
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>चूँकि \( i \)-वें systematic sample को सख्ती से select करने की probability बिल्कुल \( 1/k \) है, हमारे पास गणितीय रूप से है:</p>
+                    $$ E(\bar{y}_{sy}) = \sum_{i = 1}^k \frac{\bar{y}_i}{k} = \frac{\sum_i \sum_j y_{ij}}{nk} = \bar{Y} $$
+                    <div class="explanation">\( \because \) expected value केवल सभी sample means का sum है जिसे possible samples \( k \) की संख्या से विभाजित (divided) किया गया है, जो ठीक overall population mean का मूल्यांकन (evaluates) करता है।</div>
+                    <p>अतः, \( \bar{y}_{sy} \) एक गणितीय रूप से unbiased estimator है।</p>
+                    <p>यदि \( i \)-वें sample को सख्ती से \( i \)-वां column माना जाता है, तो विशेष रूप से column means के कारण squares का total sum इस प्रकार दिया जाता है:</p>
+                    $$ \sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = (k - 1)S_c^2 $$
+                    <div class="explanation">\( \because \) यह \( k \) columns के लिए sum of squares की मानक बीजीय (algebraic) परिभाषा का पालन करता है।</div>
+                    <p>अतः, sample means \( \bar{y}_{sy} \) का variance सीधे इस प्रकार प्राप्त होता है:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{E(\bar{y}_i - \bar{Y})^2}{k} = \frac{(k - 1)S_c^2}{k} $$
+                    <div class="explanation">\( \because \) variance, population mean से sample mean का expected squared deviation है।</div>
+                </div>
+                <p>उपरोक्त सूत्र से यह बिल्कुल निष्कर्ष (inferred) नहीं निकाला जाना चाहिए कि यदि sample size को अंधाधुंध (indiscriminately) बढ़ाया जाता है तो systematic sample mean का variance लगातार कम हो जाएगा। यह सख्त गणितीय बिंदु स्पष्ट करता है कि systematic sampling एक नाजुक उपकरण (delicate device) है और इसका उपयोग सावधानी से किया जाना चाहिए।</p>
+
+                <h3><strong>Theorem 4.4.2:</strong></h3>
+                <p>Sample mean \( \bar{y}_{sy} \) का sampling variance वैकल्पिक रूप से गणितीय रूप से इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(N - 1)S^2}{N} - \frac{(n - 1)S_w^2}{n} = \sigma^2 - \sigma_w^2 \quad (4.4.2) $$
+                    <p>जहाँ \( S_w^2 = \frac{\sum_i \sum_j (y_{ij} - \bar{y}_i)^2}{k(n - 1)} \), \( (n - 1)S_w^2 = n\sigma_w^2 \) के साथ, और \( \sigma^2 \) का अपना सामान्य मौलिक (fundamental) अर्थ है।</p>
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>हम बीजगणितीय रूप से (algebraically) जानते हैं कि total sum of squares (TSS) कठोरता से इस प्रकार दिया गया है:</p>
+                    $$ TSS = (N - 1)S^2 = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2 + n\sum_i (\bar{y}_i - \bar{Y})^2 $$
+                    <div class="explanation">\( \because \) total sum of squares पूरी तरह से samples के भीतर sum of squares और samples के बीच sum of squares में विभाजित हो जाता है।</div>
+                    <p>साथ ही, हम सख्ती से जानते हैं कि \( \bar{y}_{sy} \) का variance है:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{\sum_i (\bar{y}_i - \bar{Y})^2}{k} $$
+                    <p>और विभाजन (partition) से:</p>
+                    $$ (N - 1)S^2 = k(n - 1)S_w^2 + nkV(\bar{y}_{sy}) $$
+                    <div class="explanation">\( \because \) TSS समीकरण में \( S_w^2 \) और \( V(\bar{y}_{sy}) \) की परिभाषाओं को प्रतिस्थापित करना।</div>
+                    <p>अतः, terms को बीजगणितीय रूप से पुनर्व्यवस्थित (rearranging) करने पर:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{(N - 1)S^2}{nk} - \frac{k(n - 1)S_w^2}{nk} = \frac{(N - 1)S^2}{N} - \frac{(n - 1)S_w^2}{n} = \sigma^2 - \sigma_w^2 $$
+                    <div class="explanation">\( \because \) \( nk \) (जो \( N \) के बराबर है) से भाग देने पर variance term अलग (isolates) हो जाता है।</div>
+                </div>
+                <p>चूँकि \( \sigma^2 \) दी गई population के लिए सख्ती से fixed है, यह इस शक्तिशाली परिणाम (powerful result) से स्पष्ट है कि गणितीय रूप से \( V(\bar{y}_{sy}) \) को कम करने के लिए within-sample variation \( \sigma_w^2 \) को बढ़ाना नितांत आवश्यक है।</p>
+
+                <h3><strong>Theorem 4.4.3:</strong> Intra-class Correlation</h3>
+                <p>Systematic sampling में गणितीय रूप से दिखाएं कि:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
+                    <p>जहाँ \( \rho_w \) एक ही systematic sample में इकाइयों के जोड़े के बीच कड़ाई से intra-class correlation coefficient है।</p>
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{1}{k}\sum_{r = 1}^k (\bar{y}_r - \bar{Y})^2 = \frac{1}{k}\sum_{r = 1}^k \left[ \frac{1}{n}\sum_{j = 0}^{n - 1} y_{r + jk} - \bar{Y} \right]^2 $$
+                    $$ = \frac{1}{n^2 k}\sum_{r = 1}^k \left[ \sum_{i = 1}^n (y_{ri} - \bar{Y}) \right]^2 $$
+                    $$ = \frac{1}{n^2 k}\sum_{r = 1}^k \left[ \sum(y_{ri} - \bar{Y})^2 + \sum_{i \neq j} (y_{ri} - \bar{Y})(y_{rj} - \bar{Y}) \right] $$
+                    <div class="explanation">\( \because \) sum के square का विस्तार करने पर squares का sum प्लस cross-products का sum प्राप्त होता है।</div>
+                    $$ = \frac{\sum (y_i - \bar{Y})^2}{nN} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} $$
+                    $$ = \frac{N\sigma^2}{nN} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} = \frac{\sigma^2}{n} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} \quad \text{--- (1)} $$
+                    <p>अब हम गणितीय रूप से जानते हैं कि \( \rho_{xy}\sigma_x \sigma_y = Cov(x,y) \)। Size \( n \) के \( k \) samples के भीतर intra-class correlation के लिए, cross products का sum बिल्कुल \( N(n - 1)\rho_w \sigma^2 \) है।</p>
+                    <div class="explanation">\( \because \) परिभाषा के अनुसार, \( N(n - 1)\rho_w \sigma^2 = \sum\sum(y_{ri} - \bar{Y})(y_{rj} - \bar{Y}) \)।</div>
+                    <p>इसे समीकरण (1) में वापस प्रतिस्थापित करने पर:</p>
+                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n} + \frac{N(n - 1)\rho_w \sigma^2}{nN} = \frac{\sigma^2}{n} + \frac{(n - 1)\rho_w \sigma^2}{n} $$
+                    $$ = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
+                    <div class="explanation">\( \because \) \( \sigma^2/n \) को बाहर निकालने (factoring out) से सुरुचिपूर्ण प्रमाण (elegant proof) पूरा हो जाता है।</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="sec4-5" class="section-card">
+            <div class="english-content">
+                <h2>4.5 Comparison of Systematic with Random Sampling</h2>
+                <p>The relative mathematical efficiency of systematic sampling in comparison with simple random sampling can be deeply studied by considering the intra-class correlation coefficient \( \rho_w \). We derived:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(nk - 1)S^2[1 + (n - 1)\rho_w]}{nk} \quad (4.5.1) $$
+                </div>
+                <p>From relation (4.5.1) it can be mathematically seen that a positive correlation between units in the same sample inflates the sampling variance of the estimate. The increase is quite significant even for a small positive correlation strictly because of the multiplier term \( (n - 1) \). Since \( S^2 \) is rigorously fixed for a given population, it is perfectly clear from the above relation that an arrangement with the largest possible negative value of \( \rho_w \) should be intensely preferred. This again leads to the same profound conclusion that the units within the same systematic sample should be as highly heterogeneous as possible with respect to the characteristic under study.</p>
+
+                <p>Since \( V_{sy} \) is never mathematically less than zero, \( \rho_w \) cannot be less than \( -1/(n - 1) \). Thus the absolute minimum value of \( \rho_w \) is \( -1/(n - 1) \) and strictly in this case \( V_{sy} = 0 \).</p>
+
+                <p>The relative precision of systematic sample mean compared directly with simple random mean is mathematically given by:</p>
+                <div class="derivation-block">
+                    $$ \frac{V_{sr}}{V_{sy}} = \frac{N - 1}{N - n}[1 + \rho_w(n - 1)] \quad (4.5.3) $$
+                </div>
+                <p>It can be definitively seen that the relative precision highly depends on the true value of \( \rho_w \):</p>
+                <ul>
+                    <li>For \( \rho_w = -1/(N - 1) \), the two methods yield estimates of exactly equal precision.</li>
+                    <li>For \( \rho_w < -1/(N - 1) \), the estimate based on systematic sample is strictly more precise.</li>
+                    <li>For \( \rho_w > -1/(N - 1) \), it mathematically reverses.</li>
+                </ul>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>4.5 Comparison of Systematic with Random Sampling (यादृच्छिक प्रतिचयन के साथ व्यवस्थित की तुलना)</h2>
+                <p>Simple random sampling की तुलना में systematic sampling की relative mathematical efficiency का गहराई से अध्ययन intra-class correlation coefficient \( \rho_w \) पर विचार करके किया जा सकता है। हमने प्राप्त किया:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(nk - 1)S^2[1 + (n - 1)\rho_w]}{nk} \quad (4.5.1) $$
+                </div>
+                <p>Relation (4.5.1) से गणितीय रूप से यह देखा जा सकता है कि एक ही sample में units के बीच एक positive correlation estimate के sampling variance को बढ़ा (inflates) देता है। गुणक (multiplier) term \( (n - 1) \) के कारण छोटे positive correlation के लिए भी यह वृद्धि काफी महत्वपूर्ण (significant) है। चूँकि \( S^2 \) एक दी गई population के लिए कठोरता (rigorously) से fixed है, उपरोक्त संबंध से यह पूरी तरह से स्पष्ट है कि \( \rho_w \) की अधिकतम संभव नकारात्मक (negative) value वाली व्यवस्था (arrangement) को अत्यधिक प्राथमिकता दी जानी चाहिए। यह फिर से उसी गहरे निष्कर्ष (profound conclusion) पर ले जाता है कि एक ही systematic sample के भीतर units अध्ययन किए जा रहे characteristic के संबंध में यथासंभव अत्यधिक विषम (highly heterogeneous) होनी चाहिए।</p>
+
+                <p>चूँकि \( V_{sy} \) कभी गणितीय रूप से शून्य से कम नहीं होता है, \( \rho_w \), \( -1/(n - 1) \) से कम नहीं हो सकता है। इस प्रकार \( \rho_w \) का पूर्ण न्यूनतम मान (absolute minimum value) \( -1/(n - 1) \) है और सख्ती से इस मामले में \( V_{sy} = 0 \) है।</p>
+
+                <p>Simple random mean के साथ सीधे systematic sample mean की relative precision गणितीय रूप से इस प्रकार दी गई है:</p>
+                <div class="derivation-block">
+                    $$ \frac{V_{sr}}{V_{sy}} = \frac{N - 1}{N - n}[1 + \rho_w(n - 1)] \quad (4.5.3) $$
+                </div>
+                <p>यह निश्चित रूप से देखा जा सकता है कि relative precision \( \rho_w \) के वास्तविक मान पर अत्यधिक निर्भर करती है:</p>
+                <ul>
+                    <li>\( \rho_w = -1/(N - 1) \) के लिए, दोनों methods बिल्कुल समान precision के estimates देते हैं।</li>
+                    <li>\( \rho_w < -1/(N - 1) \) के लिए, systematic sample पर आधारित estimate सख्ती से अधिक precise है।</li>
+                    <li>\( \rho_w > -1/(N - 1) \) के लिए, यह गणितीय रूप से उलट (reverses) जाता है।</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec4-6" class="section-card">
+            <div class="english-content">
+                <h2>4.6 Comparison of Systematic with Stratified Random Sampling</h2>
+                <p>Let us mathematically suppose that the population of \( N = nk \) units is formally divided into \( n \) strata corresponding to \( n \) rows of a schematic diagram, and that exactly one unit is drawn randomly from each stratum, thus giving a fully stratified sample of size \( n \). Then the mean of the \( j \)-th stratum is mathematically defined as:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{\cdot j} = \frac{1}{k}\sum_{i = 1}^k y_{ij}, \quad (j = 1, 2, \ldots, n) \quad (4.6.1) $$
+                </div>
+                <p>Similarly, the stratum mean square of the units strictly within the \( j \)-th stratum (row) is elegantly defined by:</p>
+                <div class="derivation-block">
+                    $$ S_{\cdot j}^2 = \frac{\sum_{i = 1}^k (y_{ij} - \bar{y}_{\cdot j})^2}{k - 1}, \quad (j = 1, 2, \ldots, n) \quad (4.6.2) $$
+                </div>
+                <p>Hence, the pooled mean square structurally between units within the stratum is rigorously defined by:</p>
+                <div class="derivation-block">
+                    $$ S_{wst}^2 = \frac{\sum_j \sum_i (y_{ij} - \bar{y}_{\cdot j})^2}{n(k - 1)} = \frac{1}{n}\sum_j S_{\cdot j}^2 \quad (4.6.3) $$
+                </div>
+                <p>Clearly, the mathematical variance of the mean of this stratified sample will be securely given by:</p>
+                <div class="derivation-block">
+                    $$ V_{st}(\bar{y}) = \frac{(k - 1)S_{wst}^2}{nk} = (1 - f)\frac{S_{wst}^2}{n} \quad (4.6.4) $$
+                </div>
+                <p>Now we shall mathematically express the variance of the systematic sample in a suitable algebraic form for a comparative study. Equation (4.4.1) can be rigorously rewritten as:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_{wst}^2[1 + (n - 1)\rho_{wst}]}{nk} \quad (4.6.5) $$
+                    <p>where \( \rho_{wst} \) is a non-circular serial correlation coefficient distinctly defined by:</p>
+                    $$ \rho_{wst} = \frac{\sum_j \sum_{j' \neq j} [(\bar{y}_{\cdot j} - \bar{Y})(\bar{y}_{\cdot j'} - \bar{Y})]}{(n - 1)n(k - 1)S_{wst}^2} \quad (4.6.6) $$
+                </div>
+                <p>Comparing relations (4.6.4) and (4.6.5), we clearly get the mathematical relative precision:</p>
+                <div class="derivation-block">
+                    $$ R.P. = \frac{V_{st}}{V_{sy}} = [1 + (n - 1)\rho_{wst}]^{-1} \quad (4.6.7) $$
+                </div>
+                <p>Thus we explicitly see that the relative precision of systematic sampling securely over stratified random sampling mathematically depends upon the values of \( \rho_{wst} \). If \( \rho_{wst} \) is firmly positive then stratified random sampling will unequivocally provide a better, more robust estimate of \( \bar{Y} \). However, if \( \rho_{wst} = 0 \), it may be mathematically concluded that both systematic sampling and stratified random sampling are equally good.</p>
+
+                <h3 style="margin-top: 40px;">Example 4.1</h3>
+                <p>Given below are the daily milk yield (in litres) records of the first lactation of a specific high-yield cow maintained at a large-scale Government Cattle Farm. The milk yields of the first five days were strictly not recorded, being the colostrum period.</p>
+                
+                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Day</th><th>1-10</th><th>11-20</th><th>21-30</th><th>31-40</th><th>41-50</th><th>51-60</th><th>61-70</th><th>71-80</th><th>81-90</th></tr>
+                    <tr><td><strong>Yield</strong></td><td>10,11,14,10,14,9,10,8,11,10</td><td>6,9,8,7,9,10,11,11,13,12</td><td>12,10,11,11,14,15,12,17,18,16</td><td>13,14,14,15,16,16,16,13,16,17</td><td>14,16,15,14,14,15,17,15,16,17</td><td>25,22,23,19,18,16,22,21,21,23</td><td>21,19,19,19,19,19,19,19,19,19</td><td>18,19,21,20,17,16,18,18,18,22</td><td>22,22,20,20,20,18,20,21,21,20</td></tr>
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Day</th><th>91-100</th><th>101-110</th><th>111-120</th><th>121-130</th><th>131-140</th><th>141-150</th><th>151-160</th><th>161-170</th><th>171-180</th></tr>
+                    <tr><td><strong>Yield</strong></td><td>18,21,22,22,20,21,21,21,21,21</td><td>19,20,21,20,21,20,21,20,21,20</td><td>19,21,18,21,20,22,21,21,21,16</td><td>19,15,15,16,19,12,16,14,15,17</td><td>16,20,15,19,16,16,20,20,18,21</td><td>22,22,21,22,21,21,21,18,20,17</td><td>20,20,21,21,21,20,20,16,16,15</td><td>18,19,18,20,19,18,16,14,14,13</td><td>16,16,16,18,16,15,16,18,18,15</td></tr>
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Day</th><th>181-190</th><th>191-200</th><th>201-203</th><th colspan="6"></th></tr>
+                    <tr><td><strong>Yield</strong></td><td>18,16,17,18,17,16,13,14,13,12</td><td>16,10,13,8,8,6,8,9,4,5</td><td>6,6,4</td><td colspan="6"></td></tr>
+                </table>
+
+                <p>Mathematically find the efficiency of systematic sampling with exactly 7 and 14 days' interval of recording, with respect to corresponding simple random sampling, in estimating the true lactation yield of the cow.</p>
+                <div class="derivation-block">
+                    <p>Total \( N = 203 \) days.</p>
+                    <p><strong>(i) For \( k = 7 \):</strong> We have \( n = 29 \). The population mean is \( \bar{Y} = 3370 / 203 \approx 16.6 \).</p>
+                    <p>Taking a rigid random start \( i = 5 \), we obtain the 5th systematic sample. The mathematically unbiased estimate of the total milk yield is calculated as:</p>
+                    $$ \widehat{Y}_{sy} = k \times \sum_{j=1}^n y_{5+j(7)} = 7 \times 486 = 3402 \text{ litres} $$
+                    <p>The exact variance of systematic sampling for the population total estimate is thoroughly derived as:</p>
+                    $$ V(\widehat{Y}_{sy}) = \frac{N^2}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{203^2}{7}[16.45^2 + 17.07^2 + \ldots + 16.03^2] - \frac{3370^2}{7} = 5192 $$
+                    <p>The comparative variance of the simple random sample estimate of total milk yield is strictly calculated by:</p>
+                    $$ V(\widehat{Y}_{sr}) = N^2(1 - f)\frac{S^2}{n} = (203)^2\left( 1 - \frac{7}{203} \right) \times \frac{3865.72}{28} = 23194.33 $$
+                    <p>Thus, the relative mathematical precision of systematic sampling overwhelmingly over simple random sampling will forcefully be:</p>
+                    $$ \frac{23194.33}{5192} \times 100 = 446.73\% $$
+                    
+                    <p><strong>(ii) For \( k = 14 \):</strong> We similarly have \( n = 15 \) or \( 14 \). Taking random start \( i = 10 \), the total estimate is:</p>
+                    $$ \widehat{Y}_{sy} = 14 \times 246 = 3444 \text{ litres} $$
+                    <p>Its mathematical variance evaluates strictly to:</p>
+                    $$ V(\widehat{Y}_{sy}) = \frac{N^2}{k}\sum_{i = 1}^k \bar{y}_i^2 - \bar{Y}^2 = 14 \times \frac{812028}{14} - (2270)^2 = 11492 $$
+                    <p>The corresponding Simple Random Sample variance evaluates firmly to \( 52187.26 \). Thus, precision is:</p>
+                    $$ \frac{52187.26}{11492} \times 100 = 454.12\% $$
+                    <div class="explanation">\( \because \) the highly systematic pattern accurately catches the cyclic nature of the lactation, yielding a massively superior variance reduction compared to SRS.</div>
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>4.6 Comparison of Systematic with Stratified Random Sampling (स्तरीकृत यादृच्छिक प्रतिचयन के साथ व्यवस्थित की तुलना)</h2>
+                <p>आइए हम गणितीय रूप से मान लें कि \( N = nk \) units की population को schematic diagram की \( n \) rows के अनुरूप \( n \) strata में औपचारिक रूप से विभाजित किया गया है, और प्रत्येक stratum से बिल्कुल एक unit randomly निकाली जाती है, इस प्रकार size \( n \) का पूरी तरह से stratified sample प्राप्त होता है। तब \( j \)-वें stratum का mean गणितीय रूप से इस प्रकार परिभाषित है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{\cdot j} = \frac{1}{k}\sum_{i = 1}^k y_{ij}, \quad (j = 1, 2, \ldots, n) \quad (4.6.1) $$
+                </div>
+                <p>इसी तरह, \( j \)-वें stratum (row) के भीतर units का stratum mean square शानदार ढंग से (elegantly) इस प्रकार परिभाषित किया गया है:</p>
+                <div class="derivation-block">
+                    $$ S_{\cdot j}^2 = \frac{\sum_{i = 1}^k (y_{ij} - \bar{y}_{\cdot j})^2}{k - 1}, \quad (j = 1, 2, \ldots, n) \quad (4.6.2) $$
+                </div>
+                <p>अतः, stratum के भीतर units के बीच pooled mean square संरचनात्मक (structurally) रूप से इस प्रकार परिभाषित किया गया है:</p>
+                <div class="derivation-block">
+                    $$ S_{wst}^2 = \frac{\sum_j \sum_i (y_{ij} - \bar{y}_{\cdot j})^2}{n(k - 1)} = \frac{1}{n}\sum_j S_{\cdot j}^2 \quad (4.6.3) $$
+                </div>
+                <p>स्पष्ट रूप से, इस stratified sample के mean का गणितीय variance सुरक्षित (securely) रूप से दिया जाएगा:</p>
+                <div class="derivation-block">
+                    $$ V_{st}(\bar{y}) = \frac{(k - 1)S_{wst}^2}{nk} = (1 - f)\frac{S_{wst}^2}{n} \quad (4.6.4) $$
+                </div>
+                <p>अब हम एक तुलनात्मक अध्ययन (comparative study) के लिए एक उपयुक्त बीजीय रूप में systematic sample के variance को गणितीय रूप से व्यक्त करेंगे। Equation (4.4.1) को सख्ती से इस प्रकार फिर से लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_{wst}^2[1 + (n - 1)\rho_{wst}]}{nk} \quad (4.6.5) $$
+                    <p>जहाँ \( \rho_{wst} \) एक non-circular serial correlation coefficient है जिसे विशिष्ट (distinctly) रूप से इस प्रकार परिभाषित किया गया है:</p>
+                    $$ \rho_{wst} = \frac{\sum_j \sum_{j' \neq j} [(\bar{y}_{\cdot j} - \bar{Y})(\bar{y}_{\cdot j'} - \bar{Y})]}{(n - 1)n(k - 1)S_{wst}^2} \quad (4.6.6) $$
+                </div>
+                <p>Relations (4.6.4) और (4.6.5) की तुलना करने पर, हमें स्पष्ट रूप से गणितीय relative precision प्राप्त होती है:</p>
+                <div class="derivation-block">
+                    $$ R.P. = \frac{V_{st}}{V_{sy}} = [1 + (n - 1)\rho_{wst}]^{-1} \quad (4.6.7) $$
+                </div>
+                <p>इस प्रकार हम स्पष्ट रूप से देखते हैं कि stratified random sampling की तुलना में systematic sampling की relative precision गणितीय रूप से \( \rho_{wst} \) के values पर निर्भर करती है। यदि \( \rho_{wst} \) दृढ़ता (firmly) से positive है तो stratified random sampling निश्चित (unequivocally) रूप से \( \bar{Y} \) का एक बेहतर, अधिक मजबूत (robust) estimate प्रदान करेगी। हालाँकि, यदि \( \rho_{wst} = 0 \) है, तो यह गणितीय रूप से निष्कर्ष निकाला जा सकता है कि systematic sampling और stratified random sampling दोनों समान रूप से अच्छे हैं।</p>
+
+                <h3 style="margin-top: 40px;">उदाहरण 4.1 (Example 4.1)</h3>
+                <p>एक बड़े पैमाने पर (large-scale) सरकारी मवेशी फार्म (Government Cattle Farm) में रखी गई एक विशिष्ट उच्च उपज देने वाली (high-yield) गाय के पहले स्तनपान (first lactation) के दैनिक दूध की उपज (लीटर में) के रिकॉर्ड नीचे दिए गए हैं (अंग्रेजी अनुभाग में तालिका देखें)। पहले पांच दिनों की दूध की उपज सख्ती से दर्ज नहीं की गई थी, क्योंकि यह कोलोस्ट्रम अवधि (colostrum period) थी।</p>
+
+                <p>गाय की सही (true) स्तनपान उपज का अनुमान लगाने में, corresponding simple random sampling के संबंध में, रिकॉर्डिंग के ठीक 7 और 14 दिनों के interval के साथ systematic sampling की गणितीय efficiency ज्ञात कीजिए।</p>
+                <div class="derivation-block">
+                    <p>कुल \( N = 203 \) दिन।</p>
+                    <p><strong>(i) \( k = 7 \) के लिए:</strong> हमारे पास \( n = 29 \) है। Population mean \( \bar{Y} = 3370 / 203 \approx 16.6 \) है।</p>
+                    <p>एक कठोर (rigid) random start \( i = 5 \) लेते हुए, हम 5-वां systematic sample प्राप्त करते हैं। Total milk yield का गणितीय रूप से unbiased estimate इस प्रकार कैलकुलेट किया जाता है:</p>
+                    $$ \widehat{Y}_{sy} = k \times \sum_{j=1}^n y_{5+j(7)} = 7 \times 486 = 3402 \text{ लीटर} $$
+                    <p>Population total estimate के लिए systematic sampling का सटीक variance पूरी तरह से (thoroughly) इस प्रकार व्युत्पन्न (derived) किया गया है:</p>
+                    $$ V(\widehat{Y}_{sy}) = \frac{N^2}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{203^2}{7}[16.45^2 + 17.07^2 + \ldots + 16.03^2] - \frac{3370^2}{7} = 5192 $$
+                    <p>Total milk yield के simple random sample estimate का तुलनात्मक (comparative) variance कड़ाई से इस प्रकार कैलकुलेट किया जाता है:</p>
+                    $$ V(\widehat{Y}_{sr}) = N^2(1 - f)\frac{S^2}{n} = (203)^2\left( 1 - \frac{7}{203} \right) \times \frac{3865.72}{28} = 23194.33 $$
+                    <p>इस प्रकार, simple random sampling की तुलना में systematic sampling की relative mathematical precision भारी (overwhelmingly) रूप से होगी:</p>
+                    $$ \frac{23194.33}{5192} \times 100 = 446.73\% $$
+                    
+                    <p><strong>(ii) \( k = 14 \) के लिए:</strong> इसी तरह हमारे पास \( n = 15 \) या \( 14 \) है। Random start \( i = 10 \) लेते हुए, कुल estimate है:</p>
+                    $$ \widehat{Y}_{sy} = 14 \times 246 = 3444 \text{ लीटर} $$
+                    <p>इसका गणितीय variance सख्ती से इतना मूल्यांकित (evaluates) होता है:</p>
+                    $$ V(\widehat{Y}_{sy}) = \frac{N^2}{k}\sum_{i = 1}^k \bar{y}_i^2 - \bar{Y}^2 = 14 \times \frac{812028}{14} - (2270)^2 = 11492 $$
+                    <p>Corresponding Simple Random Sample variance दृढ़ता (firmly) से \( 52187.26 \) मूल्यांकित होता है। इस प्रकार, precision है:</p>
+                    $$ \frac{52187.26}{11492} \times 100 = 454.12\% $$
+                    <div class="explanation">\( \because \) अत्यधिक व्यवस्थित (systematic) पैटर्न स्तनपान (lactation) की चक्रीय प्रकृति (cyclic nature) को सटीक रूप से पकड़ता है, जिससे SRS की तुलना में बड़े पैमाने पर बेहतर variance में कमी (reduction) प्राप्त होती है।</div>
+                </div>
+            </div>
+        </section>
+
+<section id="sec4-7" class="section-card">
+            <div class="english-content">
+                <h2>4.7 Estimation of Variance</h2>
+                <p>An unbiased estimate of the variance is strictly not available for a systematic sample with exactly one random start because a systematic sample is mathematically regarded as a simple random sample of just one unit (cluster). However, some biased mathematical estimators are possible on the basis of a single systematic sample. If two or more systematic samples are available, an unbiased estimate of the variance of the estimated mean can be rigorously mathematically made.</p>
+
+                <p>Suppose \( m \) independent systematic samples are completely available, each of size \( n \). Then, an unbiased estimate of the variance is given by:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{sy}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y}_{sy})^2}{m(m - 1)} \quad (4.7.1) $$
+                    <p>where \( \bar{y}_{sy} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \).</p>
+                </div>
+
+                <p>An approximate and biased estimate of the variance of a systematic sample mean is given mathematically by:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{n} \times S_{wc}^2 \quad (4.7.2) $$
+                    <p>where \( S_{wc}^2 = \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \).</p>
+                </div>
+
+                <p>Another approximate and biased estimate of variance of a systematic sample mean is given by:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{N} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \quad (4.7.3) $$
+                </div>
+                <p>These estimators, given by relations (4.7.2) and (4.7.3), are biased and should be used with extreme caution otherwise they may provide misleading results in practice. It is, therefore, mathematically desirable to get an idea of the bias in a specific case by comparing it directly with the sampling variance obtained by using the entire data. These estimators are explicitly based on the results given by Cochran (1946) and Yates (1948).</p>
+
+                <h3 style="margin-top:40px;">Example 4.2</h3>
+                <p>In an experimental agricultural census carried out by I.A.S.R.I., New Delhi, in the Loni block of Meerut District in U.P. (India) during 1967-68, two villages of the block were randomly selected. Out of exactly 225 agricultural holdings in two villages, namely Panch-lok and Agrola, strictly 45 holdings were selected by systematic sampling (with an exact sampling interval of \( k = 5 \)). The total arable land (in kacha bigha, where 5 kacha bigha = 1 acre) for the 45 selected holdings are mathematically documented below:</p>
+
+                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.85em;">
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th></tr>
+                    <tr><td><strong>Yield</strong></td><td>60</td><td>50</td><td>14</td><td>10</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>150</td><td>150</td><td>100</td><td>20</td><td>0</td></tr>
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th></tr>
+                    <tr><td><strong>Yield</strong></td><td>25</td><td>192</td><td>25</td><td>0</td><td>13</td><td>0</td><td>0</td><td>50</td><td>0</td><td>10</td><td>0</td><td>0</td><td>0</td><td>85</td><td>30</td></tr>
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>31</th><th>32</th><th>33</th><th>34</th><th>35</th><th>36</th><th>37</th><th>38</th><th>39</th><th>40</th><th>41</th><th>42</th><th>43</th><th>44</th><th>45</th></tr>
+                    <tr><td><strong>Yield</strong></td><td>30</td><td>70</td><td>30</td><td>35</td><td>0</td><td>30</td><td>0</td><td>0</td><td>10</td><td>0</td><td>20</td><td>70</td><td>16</td><td>15</td><td>35</td></tr>
+                </table>
+
+                <p>Estimate mathematically the total arable land in the two villages and explicitly calculate the approximate standard error of the estimate.</p>
+                <div class="derivation-block">
+                    <p>An unbiased estimate of the total arable land is explicitly given by:</p>
+                    $$ \widehat{Y} = \frac{N}{n}\sum_{i = 1}^n y_i = 225 \times \frac{1348}{45} = 6740 \text{ kacha bigha} $$
+                    <p>An estimate of the variance of \( \widehat{Y} \) is mathematically calculated by expanding relation (4.7.2):</p>
+                    $$ v(\widehat{Y}) = \frac{N^2(1 - f)}{n} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} $$
+                    $$ = \frac{225^2 \times (1 - 45/225)}{45} \times \frac{116845}{2 \times (45 - 1)} $$
+                    $$ = \frac{225^2 \times (4/5)}{45} \times \frac{116845}{88} = \frac{40500}{45} \times 1327.78 = 11,950,031.25 $$
+                    <div class="explanation">\( \because \) calculating successive differences allows an approximate variance estimation without needing a full independent second sample, though it is inherently biased.</div>
+                    <p>Hence, the strictly estimated standard error of \( \widehat{Y} \) is \( \sqrt{11,950,031.25} = 3456.88 \).</p>
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>4.7 Estimation of Variance (प्रसरण का अनुमान)</h2>
+                <p>बिल्कुल एक random start वाले systematic sample के लिए variance का एक unbiased estimate सख्ती से उपलब्ध नहीं है क्योंकि एक systematic sample को गणितीय रूप से केवल एक इकाई (cluster) का simple random sample माना जाता है। हालाँकि, एकल (single) systematic sample के आधार पर कुछ biased mathematical estimators संभव हैं। यदि दो या दो से अधिक systematic samples उपलब्ध हैं, तो estimated mean के variance का एक unbiased estimate कठोरता से गणितीय रूप से बनाया जा सकता है।</p>
+
+                <p>मान लीजिए \( m \) independent systematic samples पूरी तरह से उपलब्ध हैं, जिनमें से प्रत्येक का size \( n \) है। तब, variance का एक unbiased estimate इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{sy}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y}_{sy})^2}{m(m - 1)} \quad (4.7.1) $$
+                    <p>जहाँ \( \bar{y}_{sy} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \)।</p>
+                </div>
+
+                <p>एक systematic sample mean के variance का एक अनुमानित (approximate) और biased estimate गणितीय रूप से इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{n} \times S_{wc}^2 \quad (4.7.2) $$
+                    <p>जहाँ \( S_{wc}^2 = \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \)।</p>
+                </div>
+
+                <p>एक systematic sample mean के variance का एक और अनुमानित और biased estimate इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{N} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \quad (4.7.3) $$
+                </div>
+                <p>Relations (4.7.2) और (4.7.3) द्वारा दिए गए ये estimators biased हैं और इनका उपयोग अत्यधिक सावधानी (extreme caution) के साथ किया जाना चाहिए अन्यथा वे व्यवहार (practice) में भ्रामक (misleading) परिणाम प्रदान कर सकते हैं। इसलिए, संपूर्ण data का उपयोग करके प्राप्त sampling variance के साथ इसकी सीधे तुलना करके एक विशिष्ट मामले में bias का विचार प्राप्त करना गणितीय रूप से वांछनीय (desirable) है। ये estimators स्पष्ट रूप से Cochran (1946) और Yates (1948) द्वारा दिए गए परिणामों पर आधारित हैं।</p>
+
+                <h3 style="margin-top:40px;">उदाहरण 4.2 (Example 4.2)</h3>
+                <p>1967-68 के दौरान यूपी (भारत) के मेरठ जिले के लोनी ब्लॉक में I.A.S.R.I., नई दिल्ली द्वारा की गई एक प्रायोगिक कृषि जनगणना (experimental agricultural census) में, ब्लॉक के दो गाँवों को randomly select किया गया था। दो गाँवों, अर्थात् पंच-लोक और अग्रोला में ठीक 225 जोतों (holdings) में से, कड़ाई से 45 जोतों को systematic sampling (\( k = 5 \) के एक सटीक sampling interval के साथ) द्वारा select किया गया था। 45 selected जोतों के लिए कुल कृषि योग्य भूमि (कच्चा बीघा में, जहाँ 5 कच्चा बीघा = 1 एकड़) को गणितीय रूप से नीचे प्रलेखित (documented) किया गया है (अंग्रेजी अनुभाग में तालिका देखें)।</p>
+
+                <p>दो गाँवों में कुल कृषि योग्य भूमि का गणितीय रूप से अनुमान लगाएँ और estimate की अनुमानित standard error की स्पष्ट रूप से गणना करें।</p>
+                <div class="derivation-block">
+                    <p>Total arable land का एक unbiased estimate स्पष्ट रूप से इस प्रकार दिया गया है:</p>
+                    $$ \widehat{Y} = \frac{N}{n}\sum_{i = 1}^n y_i = 225 \times \frac{1348}{45} = 6740 \text{ कच्चा बीघा} $$
+                    <p>\( \widehat{Y} \) के variance के एक estimate की गणना गणितीय रूप से relation (4.7.2) का विस्तार करके की जाती है:</p>
+                    $$ v(\widehat{Y}) = \frac{N^2(1 - f)}{n} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} $$
+                    $$ = \frac{225^2 \times (1 - 45/225)}{45} \times \frac{116845}{2 \times (45 - 1)} $$
+                    $$ = \frac{225^2 \times (4/5)}{45} \times \frac{116845}{88} = \frac{40500}{45} \times 1327.78 = 11,950,031.25 $$
+                    <div class="explanation">\( \because \) क्रमिक अंतर (successive differences) की गणना करने से पूरी तरह से स्वतंत्र दूसरे sample की आवश्यकता के बिना एक approximate variance estimation की अनुमति मिलती है, हालांकि यह स्वाभाविक रूप से (inherently) biased है।</div>
+                    <p>अतः, \( \widehat{Y} \) की कड़ाई से estimated standard error \( \sqrt{11,950,031.25} = 3456.88 \) है।</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec4-8" class="section-card">
+            <div class="english-content">
+                <h2>4.8 Interpenetrating Systematic Sampling</h2>
+                <p>If it is essential to have a mathematically rigorous estimate of the sampling variance, it can be done by taking systematic sub-samples with completely independent random starts, each containing exactly \( n/m \) units to strictly keep the total sample size the same. Let \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) be estimates based on \( m \) independent systematic sub-samples. An unbiased estimator of the population mean is the pooled mean structurally given by:</p>
+                <div class="derivation-block">
+                    $$ \bar{y} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \quad (4.8.1) $$
+                </div>
+                <p>Then, an unbiased estimate of the exact mathematical variance of \( \bar{y} \) is:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2}{m(m - 1)} \quad (4.8.2) $$
+                </div>
+                <p>In case of \( m \) systematic sub-samples of \( n/m (= n') \) units, each strictly with random starts from 1 to \( mk (= k') \), the exact variance and estimated variance of the pooled mean \( \bar{y} \) are given mathematically by:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \frac{(k' - m)}{k'm(k' - 1)}\sum_{i = 1}^{k'} (\bar{y}_i - \bar{Y})^2 \quad (4.8.3) $$
+                    <p>where \( \bar{y}_i \) is the \( i \)-th sample mean (\( i = 1, \ldots, k' \)) and</p>
+                    $$ v(\bar{y}) = \frac{(k' - m)}{k'm(m - 1)}\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2 \quad (4.8.4) $$
+                </div>
+                <p>Though these exact variance estimators are unbiased, they are drastically less precise if \( m \) is small. Similarly, if \( m \) is mathematically increased by decreasing the sub-sample size, the combined estimator of the population mean is highly likely to be less efficient. Hence, a statistician has to explicitly arrive at a firm decision between the desire of getting a good estimate of variance versus a good estimate of the population mean.</p>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>4.8 Interpenetrating Systematic Sampling (अंतर-प्रवेशी व्यवस्थित प्रतिचयन)</h2>
+                <p>यदि sampling variance का एक गणितीय रूप से कठोर (rigorous) estimate होना आवश्यक है, तो इसे पूरी तरह से independent random starts के साथ systematic sub-samples लेकर किया जा सकता है, जिसमें कुल sample size को समान रखने के लिए कड़ाई से ठीक \( n/m \) units शामिल हों। मान लीजिए कि \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \), \( m \) independent systematic sub-samples पर आधारित estimates हैं। Population mean का एक unbiased estimator pooled mean है जो संरचनात्मक रूप से (structurally) इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \quad (4.8.1) $$
+                </div>
+                <p>तब, \( \bar{y} \) के सटीक गणितीय variance का एक unbiased estimate है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2}{m(m - 1)} \quad (4.8.2) $$
+                </div>
+                <p>\( n/m (= n') \) units के \( m \) systematic sub-samples के मामले में, प्रत्येक सख्ती से 1 से \( mk (= k') \) तक random starts के साथ, pooled mean \( \bar{y} \) का सटीक variance और estimated variance गणितीय रूप से इसके द्वारा दिए गए हैं:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \frac{(k' - m)}{k'm(k' - 1)}\sum_{i = 1}^{k'} (\bar{y}_i - \bar{Y})^2 \quad (4.8.3) $$
+                    <p>जहाँ \( \bar{y}_i \), \( i \)-वां sample mean है (\( i = 1, \ldots, k' \)) और</p>
+                    $$ v(\bar{y}) = \frac{(k' - m)}{k'm(m - 1)}\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2 \quad (4.8.4) $$
+                </div>
+                <p>यद्यपि ये सटीक variance estimators unbiased हैं, यदि \( m \) छोटा है तो वे भारी (drastically) रूप से कम precise (सटीक) होते हैं। इसी तरह, यदि sub-sample size कम करके \( m \) को गणितीय रूप से बढ़ाया जाता है, तो population mean का combined estimator कम efficient होने की अत्यधिक संभावना है। इसलिए, एक सांख्यिकीविद् (statistician) को variance का अच्छा estimate प्राप्त करने की इच्छा बनाम population mean का अच्छा estimate प्राप्त करने के बीच एक दृढ़ निर्णय (firm decision) पर स्पष्ट रूप से पहुंचना होता है।</p>
+            </div>
+        </section>
+
+        <section id="sec4-9" class="section-card">
+            <div class="english-content">
+                <h2>4.9 New Systematic Sampling</h2>
+                <p>As pointed out rigorously in the previous section, systematic sampling universally suffers from the mathematical drawback of not being able to elegantly provide an unbiased estimator of sampling variance strictly on the basis of a single sample. One statistically possible way of getting an unbiased variance estimator is to precisely use interpenetrating systematic sampling, but this frustratingly results in loss in precision and operational simplicity. Singh and Singh (1977) have expertly suggested a mathematically robust <strong>new systematic sampling procedure</strong> which beautifully provides an unbiased variance estimator. In this advanced section, we shall discuss briefly the specific mathematical outlines of the main results.</p>
+                <p>Suppose a population strictly consists of \( N \) distinct units and a specific sample of size \( n \) is to be drawn from it. Let \( u \ (\leq n) \) and \( d \) be two predetermined integers which are rigorously chosen in such a mathematical way that (i) every sample contains definitively distinct units, and (ii) the inclusion probability for each pair of units is mathematically non-zero. Starting with a single random number \( r \ (\leq N) \), we strictly select \( u \) units continuously, and thereafter the mathematically remaining \( n - u (= v) \) units with interval \( d \) such that \( d \leq u \) and \( u + vd \leq N \). With these severe restrictions, a sample of strictly desired sample size \( n \) can be perfectly drawn in two or more phases by this complex sampling scheme.</p>
+                <p>The sample space corresponding to the selection procedure rigidly contains \( N \) possible samples, and the specific sample point mathematically corresponding to the random number \( r \) is uniquely given by \( s_r = \{s', s''\} \) where \( s' \) consists of the exact unit indices \( r + m \), (\( m = 0, 1, \ldots, u - 1 \)) and \( s'' \) consists of the unit indices \( r + u - 1 + m'd \), (\( m' = 1, 2, \ldots, v \)).</p>
+                <div class="derivation-block">
+                    <p>The inclusion probabilities for individual units and pairwise units are mathematically given by \( \pi_i \) and \( \pi_{ij} \), which are known precisely under the new systematic sampling procedure. Hence, the Horvitz-Thompson estimator of the population mean dramatically simplifies to:</p>
+                    $$ \bar{y}_{nsy} = \frac{1}{n}\sum_{i \in s} y_i = \frac{1}{N}\sum_{i = 1}^N y_i \quad (4.9.3) $$
+                    <p>The sampling variance of the estimator \( \bar{y}_{nsy} \) in the Yates-Grundy form strictly reduces mathematically to:</p>
+                    $$ V(\bar{y}_{nsy}) = \frac{1}{2}\sum_i \sum_j \frac{(\pi_i \pi_j - \pi_{ij})}{\pi_{ij}}\left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \quad (4.9.4) $$
+                    <p>which can be elegantly rewritten as:</p>
+                    $$ V(\bar{y}_{nsy}) = \frac{N - n}{N}S^2 - \frac{n - 1}{n}S_{wnsy}^2 \quad (4.9.5) $$
+                    <p>where \( S_{wnsy}^2 = \frac{\sum_{i = 1}^N (y_i - \bar{y})^2}{N(n - 1)} \).</p>
+                    <p>An exact unbiased estimator of \( V(\bar{y}_{nsy}) \) can mathematically be obtained rigorously by:</p>
+                    $$ v(\bar{y}_{nsy}) = \frac{1}{2}\sum_{i \in s} \sum_{j \in s, j > i} \left( \frac{1}{\pi_{ij}} - \frac{1}{n^2} \right)(y_i - y_j)^2 \quad (4.9.6) $$
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>4.9 New Systematic Sampling* (नया व्यवस्थित प्रतिचयन*)</h2>
+                <p>जैसा कि पिछले section में कठोरता (rigorously) से बताया गया है, systematic sampling सार्वभौमिक (universally) रूप से एकल sample के आधार पर कड़ाई से sampling variance का एक unbiased estimator सुरुचिपूर्ण (elegantly) ढंग से प्रदान करने में सक्षम न होने की गणितीय कमी से ग्रस्त है। Unbiased variance estimator प्राप्त करने का एक सांख्यिकीय (statistically) रूप से संभव तरीका interpenetrating systematic sampling का सटीक उपयोग करना है, लेकिन इसके परिणामस्वरूप निराशाजनक रूप से precision और परिचालन सरलता (operational simplicity) में कमी आती है। Singh और Singh (1977) ने विशेषज्ञ रूप से एक गणितीय रूप से मजबूत (robust) <strong>नई systematic sampling procedure</strong> का सुझाव दिया है जो खूबसूरती से एक unbiased variance estimator प्रदान करती है। इस उन्नत (advanced) section में, हम मुख्य परिणामों के विशिष्ट गणितीय रूपरेखा (outlines) पर संक्षेप में चर्चा करेंगे।</p>
+                <p>मान लीजिए कि एक population में सख्ती से \( N \) distinct units हैं और उसमें से size \( n \) का एक विशिष्ट sample निकाला जाना है। मान लीजिए \( u \ (\leq n) \) और \( d \) दो पूर्वनिर्धारित (predetermined) पूर्णांक (integers) हैं जिन्हें इस तरह से गणितीय तरीके से कठोरता से चुना जाता है कि (i) प्रत्येक sample में निश्चित रूप से distinct units हों, और (ii) units के प्रत्येक pair के लिए inclusion probability गणितीय रूप से गैर-शून्य (non-zero) हो। एक single random number \( r \ (\leq N) \) से शुरू करके, हम लगातार \( u \) units सख्ती से select करते हैं, और उसके बाद गणितीय रूप से शेष \( n - u (= v) \) units को interval \( d \) के साथ इस प्रकार select करते हैं कि \( d \leq u \) और \( u + vd \leq N \) हो। इन गंभीर प्रतिबंधों (severe restrictions) के साथ, इस जटिल sampling scheme द्वारा दो या अधिक चरणों (phases) में कड़ाई से वांछित sample size \( n \) का एक sample पूरी तरह से निकाला जा सकता है।</p>
+                <div class="derivation-block">
+                    <p>Individual units और pairwise units के लिए inclusion probabilities गणितीय रूप से \( \pi_i \) और \( \pi_{ij} \) द्वारा दी जाती हैं, जो नई systematic sampling procedure के तहत सटीक रूप से ज्ञात हैं। इसलिए, population mean का Horvitz-Thompson estimator नाटकीय रूप से (dramatically) सरल होकर यह हो जाता है:</p>
+                    $$ \bar{y}_{nsy} = \frac{1}{n}\sum_{i \in s} y_i = \frac{1}{N}\sum_{i = 1}^N y_i \quad (4.9.3) $$
+                    <p>Yates-Grundy रूप में estimator \( \bar{y}_{nsy} \) का sampling variance सख्ती से गणितीय रूप से कम होकर यह हो जाता है:</p>
+                    $$ V(\bar{y}_{nsy}) = \frac{1}{2}\sum_i \sum_j \frac{(\pi_i \pi_j - \pi_{ij})}{\pi_{ij}}\left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \quad (4.9.4) $$
+                    <p>जिसे सुरुचिपूर्ण ढंग से इस प्रकार फिर से लिखा जा सकता है:</p>
+                    $$ V(\bar{y}_{nsy}) = \frac{N - n}{N}S^2 - \frac{n - 1}{n}S_{wnsy}^2 \quad (4.9.5) $$
+                    <p>जहाँ \( S_{wnsy}^2 = \frac{\sum_{i = 1}^N (y_i - \bar{y})^2}{N(n - 1)} \) है।</p>
+                    <p>\( V(\bar{y}_{nsy}) \) का एक सटीक unbiased estimator गणितीय रूप से कठोरता से इसके द्वारा प्राप्त किया जा सकता है:</p>
+                    $$ v(\bar{y}_{nsy}) = \frac{1}{2}\sum_{i \in s} \sum_{j \in s, j > i} \left( \frac{1}{\pi_{ij}} - \frac{1}{n^2} \right)(y_i - y_j)^2 \quad (4.9.6) $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec4-10" class="section-card">
+            <div class="english-content">
+                <h2>4.10 Comparison for Specified Populations</h2>
+                <p>The mathematical performance of systematic sampling fundamentally in relation to stratified or simple random sampling depends very deeply on the specific nature of the population in which the characteristic under study has some mathematically simple trend in terms of units alone. Some major mathematical trends are discussed robustly here as under.</p>
+
+                <h3>4.10.1 Populations with Linear Trend</h3>
+                <p>Suppose the values of the population units increase perfectly in accordance with a strict linear model such that:</p>
+                <div class="derivation-block">
+                    $$ y_i = a + bi $$
+                    <p>where \( a \) and \( b \) are mathematical constants and \( i \) goes from 1 to \( N \).</p>
+                    <p>Hence, the population mean and variance algebraically evaluate to:</p>
+                    $$ \bar{Y} = \frac{\sum_{i = 1}^N (a + bi)}{N} = a + \frac{b(N + 1)}{2} $$
+                    $$ S^2 = \frac{\sum_{i = 1}^N (y_i - \bar{Y})^2}{N - 1} = \frac{b^2\sum_{i = 1}^N [i - (N + 1)/2]^2}{N - 1} = \frac{b^2 N(N + 1)}{12} $$
+                    <div class="explanation">\( \because \) the sum of squares of integers centers algebraically into this formula.</div>
+                    <p>Therefore, the variance for simple random sampling is:</p>
+                    $$ V_{sr} = \frac{N - n}{Nn}S^2 = \frac{(nk - 1)b^2}{12} \times \frac{k - 1}{nk} = \frac{(k - 1)(nk + 1)b^2}{12} \quad (4.10.1) $$
+                    <p>Similarly, finding variance firmly within strata requires us to put \( k \) for \( N \):</p>
+                    $$ V_{st} = \frac{N - n}{Nn}S_w^2 = \frac{nk - 1}{nk} \times \frac{(k - 1)k(k + 1)b^2}{12n} = \frac{(k - 1)(k + 1)b^2}{12n} \quad (4.10.2) $$
+                    <p>For systematic sampling, the mathematical values evaluate rigidly as:</p>
+                    $$ V_{sy} = \frac{1}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{b^2}{k}\sum_{i = 1}^k \left[ i - \frac{k + 1}{2} \right]^2 = \frac{b^2 k(k + 1)(k - 1)}{12k} = \frac{(k - 1)(k + 1)b^2}{12} \quad (4.10.3) $$
+                    <div class="explanation">\( \because \) mathematically replacing the summation with standard algebra gives this elegant reduction.</div>
+                    <p>Which beautifully proves:</p>
+                    $$ V_{st} : V_{sy} : V_{sr} = \left[ \frac{k + 1}{n} : k + 1 : nk + 1 \right] \approx \frac{1}{n} : 1 : n \approx 1 : n : n^2 \quad (4.10.4) $$
+                </div>
+                <p>It is mathematically seen that the variance of a stratified sample is uniquely only \( 1/n \)-th of the variance of a systematic sample in a population perfectly with linear trend. Hence, stratified sampling is mathematically the most efficient of all the strict methods for eliminating the effect of linear trend.</p>
+
+                <h3>4.10.2 Populations with Periodic Variations</h3>
+                <p>Suppose the population heavily consists of a periodic trend which is mathematically represented by a sine function:</p>
+                <div class="derivation-block">
+                    $$ y_i = \sin\left( \frac{\pi i}{n} \right) + \theta_i $$
+                </div>
+                <p>where \( i \) varies from 0 to an integral multiple of \( 2\pi \). A 5% systematic sample from such a population will disastrously consist of sampling units exactly drawn from the same relative position of each mathematical cycle. Thus, making systematic sampling the most precise of all sampling methods ONLY if \( k \) is an odd multiple of the half period. If it coincides with the cycle, precision completely vanishes.</p>
+                
+                <h3>4.10.3 Natural Populations and 4.10.4 Auto-correlated</h3>
+                <p>Systematic sampling is practically operationally convenient in forest areas. In <strong>Auto-correlated populations</strong>, units close together are heavily alike. Madow and Madow (1944) mathematically showed that if the correlogram is fundamentally concave upwards (\( \delta_d = \rho_d + \rho_{d + 2} - 2\rho_{d + 1} \geq 0 \)), then strictly \( E(V_{sy}) \leq E(V_{st}) \), making systematic sampling undeniably superior.</p>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>4.10 Comparison for Specified Populations (निर्दिष्ट जनसंख्याओं के लिए तुलना)</h2>
+                <p>Stratified या simple random sampling के संबंध में systematic sampling का गणितीय प्रदर्शन मौलिक रूप से population की विशिष्ट प्रकृति पर बहुत गहराई से निर्भर करता है जिसमें अध्ययन किए जा रहे characteristic का केवल units के संदर्भ में कुछ गणितीय रूप से सरल रुझान (simple trend) होता है। कुछ प्रमुख गणितीय रुझानों (trends) पर यहाँ मजबूती से (robustly) चर्चा की गई है।</p>
+
+                <h3>4.10.1 Populations with Linear Trend (रैखिक प्रवृत्ति वाली जनसंख्याएं)</h3>
+                <p>मान लीजिए population units के values पूरी तरह से एक सख्त linear model के अनुसार बढ़ते हैं जैसे कि:</p>
+                <div class="derivation-block">
+                    $$ y_i = a + bi $$
+                    <p>जहाँ \( a \) और \( b \) गणितीय constants हैं और \( i \), 1 से \( N \) तक जाता है।</p>
+                    <p>अतः, population mean और variance बीजीय (algebraically) रूप से मूल्यांकन (evaluate) करते हैं:</p>
+                    $$ \bar{Y} = \frac{\sum_{i = 1}^N (a + bi)}{N} = a + \frac{b(N + 1)}{2} $$
+                    $$ S^2 = \frac{\sum_{i = 1}^N (y_i - \bar{Y})^2}{N - 1} = \frac{b^2\sum_{i = 1}^N [i - (N + 1)/2]^2}{N - 1} = \frac{b^2 N(N + 1)}{12} $$
+                    <div class="explanation">\( \because \) पूर्णांकों (integers) के squares का sum बीजीय रूप से इस सूत्र (formula) में केंद्रित होता है।</div>
+                    <p>इसलिए, simple random sampling के लिए variance है:</p>
+                    $$ V_{sr} = \frac{N - n}{Nn}S^2 = \frac{(nk - 1)b^2}{12} \times \frac{k - 1}{nk} = \frac{(k - 1)(nk + 1)b^2}{12} \quad (4.10.1) $$
+                    <p>इसी तरह, strata के भीतर variance दृढ़ता (firmly) से खोजने के लिए हमें \( N \) के लिए \( k \) रखने की आवश्यकता है:</p>
+                    $$ V_{st} = \frac{N - n}{Nn}S_w^2 = \frac{nk - 1}{nk} \times \frac{(k - 1)k(k + 1)b^2}{12n} = \frac{(k - 1)(k + 1)b^2}{12n} \quad (4.10.2) $$
+                    <p>Systematic sampling के लिए, गणितीय मान कठोरता (rigidly) से मूल्यांकन करते हैं:</p>
+                    $$ V_{sy} = \frac{1}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{b^2}{k}\sum_{i = 1}^k \left[ i - \frac{k + 1}{2} \right]^2 = \frac{b^2 k(k + 1)(k - 1)}{12k} = \frac{(k - 1)(k + 1)b^2}{12} \quad (4.10.3) $$
+                    <div class="explanation">\( \because \) summation को मानक बीजगणित (standard algebra) से गणितीय रूप से बदलने पर यह सुरुचिपूर्ण (elegant) कमी (reduction) मिलती है।</div>
+                    <p>जो खूबसूरती से साबित करता है:</p>
+                    $$ V_{st} : V_{sy} : V_{sr} = \left[ \frac{k + 1}{n} : k + 1 : nk + 1 \right] \approx \frac{1}{n} : 1 : n \approx 1 : n : n^2 \quad (4.10.4) $$
+                </div>
+                <p>यह गणितीय रूप से देखा गया है कि एक stratified sample का variance पूरी तरह से linear trend वाली population में systematic sample के variance का विशिष्ट रूप से (uniquely) केवल \( 1/n \)-वां हिस्सा है। इसलिए, linear trend के प्रभाव को खत्म करने के लिए stratified sampling सभी सख्त methods में से गणितीय रूप से सबसे efficient है।</p>
+
+                <h3>4.10.2 Populations with Periodic Variations (आवधिक भिन्नता वाली जनसंख्याएं)</h3>
+                <p>मान लीजिए population में भारी रूप से एक periodic trend शामिल है जिसे गणितीय रूप से sine function द्वारा दर्शाया गया है:</p>
+                <div class="derivation-block">
+                    $$ y_i = \sin\left( \frac{\pi i}{n} \right) + \theta_i $$
+                </div>
+                <p>जहाँ \( i \), 0 से \( 2\pi \) के एक पूर्णांक गुणज (integral multiple) तक बदलता है। ऐसी population से एक 5% systematic sample विनाशकारी रूप से (disastrously) प्रत्येक गणितीय चक्र (mathematical cycle) के बिल्कुल समान सापेक्ष (relative) स्थिति से खींची गई sampling units से मिलकर बनेगा। इस प्रकार, systematic sampling को सभी sampling methods में से सबसे सटीक तभी बनाया जा सकता है जब \( k \) आधी अवधि (half period) का एक विषम गुणज (odd multiple) हो। यदि यह चक्र के साथ मेल खाता है (coincides), तो precision पूरी तरह से गायब (vanishes) हो जाती है।</p>
+            </div>
+        </section>
+
+        <section id="sec4-11" class="section-card">
+            <div class="english-content">
+                <h2>4.11 Two-Dimensional Systematic Sampling</h2>
+                <p>So far we have rigorously mathematically discussed one-dimensional systematic sampling in which the population units are supposed to be serially ordered squarely on a line. There are many situations where the population units are naturally arranged firmly on an area or a plane instead of a line. A strict systematic sampling procedure for such a situation is known mathematically as plane systematic or <strong>two-dimensional systematic sampling</strong>. The simplest mathematical extension of a linear systematic sample to the two-dimensional plane is popularly known as a <em>squared grid</em> or <em>aligned sample</em>. </p>
+                <p>Let us rigorously assume that the population consists of exactly \( N \) square grid areas of perfectly equal size and a sample of \( n \) grid areas is to be reliably taken. We assume that the grids are perfectly arranged in \( l \times m (= nk = N) \) form of cells. The simplest mathematical way is to select a precise pair of random numbers \( (i,j) \) such that \( i \leq r \), \( j \leq s \). Thus, the random location of a grid in the cell is determined uniquely.</p>
+                <p>An alternative procedure creates an <strong>unaligned sample</strong>, which mathematically selects \( r \) independent random numbers for rows, and \( s \) for columns. Extensive mathematical investigations have proven that an unaligned pattern is structurally superior both to a standard square grid and a completely stratified random sample.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>4.11 Two-Dimensional Systematic Sampling (द्वि-आयामी व्यवस्थित प्रतिचयन)</h2>
+                <p>अब तक हमने कठोरता से (rigorously) गणितीय रूप से one-dimensional systematic sampling पर चर्चा की है जिसमें population units को एक रेखा (line) पर चौकोर (squarely) रूप से क्रमिक रूप से व्यवस्थित माना जाता है। कई ऐसी स्थितियाँ होती हैं जहाँ population units स्वाभाविक रूप से एक रेखा के बजाय एक क्षेत्र (area) या समतल (plane) पर मजबूती से (firmly) व्यवस्थित होती हैं। ऐसी स्थिति के लिए एक सख्त systematic sampling procedure को गणितीय रूप से plane systematic या <strong>two-dimensional systematic sampling</strong> के रूप में जाना जाता है। Two-dimensional plane में एक linear systematic sample का सबसे सरल गणितीय विस्तार (extension) लोकप्रिय रूप से <em>squared grid</em> या <em>aligned sample</em> के रूप में जाना जाता है।</p>
+                <p>आइए हम कठोरता से मान लें कि population में पूरी तरह से समान आकार के बिल्कुल \( N \) वर्गाकार (square) ग्रिड क्षेत्र (grid areas) शामिल हैं और \( n \) ग्रिड क्षेत्रों का एक sample मज़बूती से (reliably) लिया जाना है। हम मानते हैं कि ग्रिड्स को कोशिकाओं (cells) के \( l \times m (= nk = N) \) रूप में पूरी तरह से व्यवस्थित किया गया है। सबसे सरल गणितीय तरीका random numbers \( (i,j) \) की एक सटीक जोड़ी (precise pair) का चयन करना है जैसे कि \( i \leq r \), \( j \leq s \)। इस प्रकार, सेल में एक ग्रिड का random location विशिष्ट रूप से (uniquely) निर्धारित किया जाता है।</p>
+                <p>एक वैकल्पिक procedure एक <strong>unaligned sample</strong> बनाती है, जो गणितीय रूप से rows के लिए \( r \) स्वतंत्र random numbers और columns के लिए \( s \) select करती है। व्यापक गणितीय जांच (investigations) से यह सिद्ध हुआ है कि एक unaligned pattern संरचनात्मक रूप से (structurally) एक मानक square grid और एक पूरी तरह से stratified random sample दोनों से बेहतर है।</p>
+            </div>
+        </section>
+
+        <section id="sec4-ref" class="section-card">
+            <div class="english-content">
+                <h2>References</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Madow, W. G., & Madow, L. H. (1944). On the theory of systematic sampling, I. <em>Ann. Math. Statist.</em>, 15, 1-24.</li>
+                    <li>Madow, W. G. (1949). On the theory of systematic sampling, II. <em>Ann. Math. Statist.</em>, 20, 333-354.</li>
+                    <li>Cochran, W. G. (1946). Relative accuracy of systematic and stratified random samples for a certain class of populations. <em>Ann. Math. Statist.</em>, 17, 164-177.</li>
+                    <li>Yates, F. (1948). Systematic sampling. <em>Philosophical Transactions of the Royal Society of London</em>, 241, 345-377.</li>
+                    <li>Mahalanobis, P. C. (1944). On large-scale sample surveys. <em>Philosophical Transactions of the Royal Society of London</em>, 231(B), 329-451.</li>
+                    <li>Quenouille, M. H. (1949). Problems in plane sampling. <em>Ann. Math. Statist.</em>, 20, 355-375.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>References (संदर्भ)</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Madow, W. G., & Madow, L. H. (1944). On the theory of systematic sampling, I. <em>Ann. Math. Statist.</em>, 15, 1-24.</li>
+                    <li>Madow, W. G. (1949). On the theory of systematic sampling, II. <em>Ann. Math. Statist.</em>, 20, 333-354.</li>
+                    <li>Cochran, W. G. (1946). Relative accuracy of systematic and stratified random samples for a certain class of populations. <em>Ann. Math. Statist.</em>, 17, 164-177.</li>
+                    <li>Yates, F. (1948). Systematic sampling. <em>Philosophical Transactions of the Royal Society of London</em>, 241, 345-377.</li>
+                    <li>Mahalanobis, P. C. (1944). On large-scale sample surveys. <em>Philosophical Transactions of the Royal Society of London</em>, 231(B), 329-451.</li>
+                    <li>Quenouille, M. H. (1949). Problems in plane sampling. <em>Ann. Math. Statist.</em>, 20, 355-375.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec4-12" class="section-card">
+            <div class="english-content">
+                <h2>Exercise (Subjective)</h2>
+                <ol>
+                    <li>What is systematic sampling mathematically? Give the exact strict circumstances under which it is to be logically preferred to simple random sampling. Explain comprehensively how you will estimate the variance of a systematic sample with a single mathematical random start.</li>
+                    <li>Describe rigorously 'linear' and 'circular' systematic sampling mathematical procedures and strictly discuss their inherent advantages and disadvantages. In a strictly finite population of exact size \( N \), show mathematically that systematic sampling will be robustly more efficient than random sampling with equal probability, wor, if the mathematical intra-class correlation coefficient is strictly \( \rho < -\frac{1}{N - 1} \).</li>
+                    <li>Discuss the absolute situations under which systematic samples are definitively preferred to other alternative types of samples in massive censuses and field surveys. Show mathematically that a systematic sample mean is a far more efficient estimator of the population mean than a simple random mean, but mathematically less efficient than a stratified random sample mean in a population burdened with a strict linear trend.</li>
+                    <li>Describe precisely the rigorous mathematical procedure of drawing a systematic sample of exactly \( n \) units from a population of strictly \( N \) units, where \( N \) is unfortunately not necessarily a clean multiple of \( n \). (i) How would you mathematically estimate the true mean of a characteristic in the population and thoroughly examine its strict unbiasedness? (ii) How would you effectively mathematically combine the independent estimates from exactly three systematic samples of size \( n \) into a single flawless pooled estimate which is perfectly unbiased and firmly estimate its standard error?</li>
+                    <li>In a two-dimensional mathematical population with strictly \( N^2 = n^2 k^2 \) units, the linear trend is forcefully given by \( y_{ij} = i + j \) (\( i,j = 1,2,\ldots,nk \)), where \( y_{ij} \) is the exact item value in the \( i \)-th row and \( j \)-th column. A robust systematic square grid sample of strictly \( n^2 \) units is cleanly taken by aggressively choosing two mathematically independent random starts \( (i,j) \) each firmly between 0 and \( k \) and \( (i_x + xk, j_y + yk) \) for \( x,y = 0,1,\ldots,(n - 1) \). Show mathematically that the precise mean of this sample overwhelmingly has the exact same mathematical precision as the standard sample mean of size \( n^2 \).</li>
+                </ol>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
+                <ol>
+                    <li>गणितीय रूप से systematic sampling क्या है? उन सटीक सख्त परिस्थितियों (strict circumstances) को बताएं जिनके तहत इसे तार्किक रूप से (logically) simple random sampling पर प्राथमिकता दी जानी चाहिए। व्यापक रूप से (comprehensively) समझाएं कि आप एकल गणितीय (single mathematical) random start के साथ systematic sample के variance का estimate कैसे लगाएंगे।</li>
+                    <li>कठोरता से 'linear' और 'circular' systematic sampling गणितीय procedures का वर्णन करें और उनके अंतर्निहित (inherent) फायदों और नुकसानों पर सख्ती से चर्चा करें। सटीक आकार \( N \) की एक सख्ती से finite population में, गणितीय रूप से दिखाएं कि समान probability के साथ random sampling, wor की तुलना में systematic sampling मजबूती से अधिक efficient होगी, यदि गणितीय intra-class correlation coefficient कड़ाई से \( \rho < -\frac{1}{N - 1} \) है।</li>
+                    <li>उन पूर्ण स्थितियों (absolute situations) पर चर्चा करें जिनके तहत बड़े पैमाने पर censuses और field surveys में अन्य वैकल्पिक प्रकार के samples पर systematic samples को निश्चित रूप से (definitively) प्राथमिकता दी जाती है। गणितीय रूप से दिखाएं कि एक systematic sample mean, population mean का एक simple random mean की तुलना में कहीं अधिक कुशल (efficient) estimator है, लेकिन एक सख्त linear trend वाली population में stratified random sample mean की तुलना में गणितीय रूप से कम efficient है।</li>
+                    <li>सख्ती से \( N \) units की population से ठीक \( n \) units का systematic sample निकालने की कठोर गणितीय procedure का ठीक-ठीक वर्णन करें, जहाँ दुर्भाग्य से \( N \), \( n \) का एक साफ (clean) गुणज (multiple) होना आवश्यक नहीं है। (i) आप population में किसी characteristic के सही (true) mean का गणितीय रूप से अनुमान कैसे लगाएंगे और इसकी सख्त unbiasedness की पूरी तरह से (thoroughly) जांच कैसे करेंगे? (ii) आप size \( n \) के ठीक तीन systematic samples के स्वतंत्र estimates को एक एकल दोषरहित (flawless) pooled estimate में प्रभावी रूप से गणितीय रूप से कैसे जोड़ेंगे (combine) जो पूरी तरह से unbiased है और दृढ़ता (firmly) से इसकी standard error का estimate कैसे लगाएंगे?</li>
+                    <li>सख्ती से \( N^2 = n^2 k^2 \) units वाली एक two-dimensional गणितीय population में, linear trend को बलपूर्वक (forcefully) \( y_{ij} = i + j \) (\( i,j = 1,2,\ldots,nk \)) द्वारा दिया गया है, जहाँ \( y_{ij} \), \( i \)-वीं row और \( j \)-वें column में सटीक item value है। सख्ती से \( n^2 \) units का एक मजबूत (robust) systematic square grid sample 0 और \( k \) के बीच दो गणितीय रूप से स्वतंत्र random starts \( (i,j) \) को मजबूती से (firmly) लेकर और \( x,y = 0,1,\ldots,(n - 1) \) के लिए \( (i_x + xk, j_y + yk) \) को आक्रामक रूप से (aggressively) चुनकर सफाई से (cleanly) लिया जाता है। गणितीय रूप से दिखाएं कि इस sample के सटीक mean में भारी रूप से (overwhelmingly) \( n^2 \) size के मानक (standard) sample mean के समान सटीक गणितीय precision है।</li>
+                </ol>
+            </div>
+        </section>
+
+    
+        <!-- QUIZZES -->
+        <!-- QUIZZES SECTION -->
+        <section id="quiz-mcq" class="section-card">
+            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+            
+            <div class="question-box">
+                <div class="question">1. In systematic sampling, the sampling interval \( k \) is mathematically evaluated by: <br> (व्यवस्थित प्रतिचयन में, प्रतिचयन अंतराल \( k \) का गणितीय मूल्यांकन किसके द्वारा किया जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( N \times n \)</li>
+                    <li>b) \( n / N \)</li>
+                    <li>c) \( N / n \)</li>
+                    <li>d) \( N - n \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
+                <div id="mcq1" class="answer"><strong>Correct Answer:</strong> c) \( N / n \) <br> <em>Explanation:</em> The population size \( N \) is divided cleanly by the sample size \( n \) to determine the fixed mathematical distance \( k \) between selected units.</div>
+            </div>
+            
+            <div class="question-box">
+                <div class="question">2. When \( N \) is strictly NOT a clean integer multiple of \( k \), the most robust alternative strategy is: <br> (जब \( N \) कड़ाई से \( k \) का एक स्पष्ट पूर्णांक गुणज नहीं है, तो सबसे मजबूत वैकल्पिक रणनीति है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Linear systematic sampling</li>
+                    <li>b) Circular systematic sampling</li>
+                    <li>c) Deep stratification</li>
+                    <li>d) Stopping the survey</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer</button>
+                <div id="mcq2" class="answer"><strong>Correct Answer:</strong> b) Circular systematic sampling <br> <em>Explanation:</em> It wraps the population end-to-end, treating it as a continuous loop so every unit maintains a perfectly equal \( 1/N \) inclusion probability.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. A devastating mathematical drawback of systematic sampling occurs aggressively if the population heavily exhibits: <br> (व्यवस्थित प्रतिचयन की एक विनाशकारी गणितीय कमी आक्रामक रूप से होती है यदि जनसंख्या भारी रूप से प्रदर्शित करती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Total randomness</li>
+                    <li>b) A straight linear trend</li>
+                    <li>c) Hidden, unforeseen periodicity</li>
+                    <li>d) Exponential decay</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer</button>
+                <div id="mcq3" class="answer"><strong>Correct Answer:</strong> c) Hidden, unforeseen periodicity <br> <em>Explanation:</em> If the interval \( k \) syncs with a hidden cycle (like surveying every 7th day for retail sales), it locks onto a devastating bias.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. To mathematically crush a strong linear trend in systematic sampling, the most highly recommended technique is: <br> (व्यवस्थित प्रतिचयन में एक मजबूत रैखिक प्रवृत्ति को गणितीय रूप से कुचलने के लिए, सबसे अधिक अनुशंसित तकनीक है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Yates' End Corrections</li>
+                    <li>b) Circular sampling</li>
+                    <li>c) Pure Simple Random Sampling</li>
+                    <li>d) Stratified Proportional Allocation</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer</button>
+                <div id="mcq4" class="answer"><strong>Correct Answer:</strong> a) Yates' End Corrections <br> <em>Explanation:</em> Yates proved that dynamically re-weighting only the very first and absolute final sample units flawlessly eradicates the entire mathematical error induced by a pure linear trend.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. The relative precision of systematic sampling compared to Simple Random Sampling (SRS) relies heavily upon the intra-class correlation coefficient \( \rho_w \). It is vastly superior to SRS if: <br> (सरल यादृच्छिक प्रतिचयन (SRS) की तुलना में व्यवस्थित प्रतिचयन की सापेक्ष सटीकता अंतर-वर्ग सहसंबंध गुणांक \( \rho_w \) पर बहुत अधिक निर्भर करती है। यह SRS से बहुत बेहतर है यदि:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \rho_w = 0 \)</li>
+                    <li>b) \( \rho_w > -1/(N-1) \)</li>
+                    <li>c) \( \rho_w < -1/(N-1) \)</li>
+                    <li>d) \( \rho_w = 1 \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer</button>
+                <div id="mcq5" class="answer"><strong>Correct Answer:</strong> c) \( \rho_w < -1/(N-1) \) <br> <em>Explanation:</em> Systematic sampling requires the sample to be internally highly heterogeneous (negative correlation). The more negative \( \rho_w \) is, the tighter the sample variance drops.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. Mathematically, systematic sampling behaves exactly like selecting a single primary unit from a set of ____________ mutually exclusive clusters. <br> (गणितीय रूप से, व्यवस्थित प्रतिचयन बिल्कुल ____________ परस्पर अनन्य गुच्छों के एक समूह से एक एकल प्राथमिक इकाई का चयन करने जैसा व्यवहार करता है।)</div>
+                <ul class="mcq-options">
+                    <li>a) \( n \)</li>
+                    <li>b) \( N \)</li>
+                    <li>c) \( k \)</li>
+                    <li>d) \( N/k \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer</button>
+                <div id="mcq6" class="answer"><strong>Correct Answer:</strong> c) \( k \) <br> <em>Explanation:</em> The population is split into exactly \( k \) possible systematic samples (clusters) of size \( n \). The random start simply picks 1 of those \( k \) clusters completely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. A profound fundamental disadvantage of a single systematic sample is the theoretical inability to mathematically evaluate its own: <br> (एक एकल व्यवस्थित प्रतिदर्श का एक गहरा मौलिक नुकसान गणितीय रूप से अपने स्वयं के किस चीज का मूल्यांकन करने में सैद्धांतिक अक्षमता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Sample Mean</li>
+                    <li>b) Sampling Variance</li>
+                    <li>c) Linear Trend</li>
+                    <li>d) Population Ratio</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer</button>
+                <div id="mcq7" class="answer"><strong>Correct Answer:</strong> b) Sampling Variance <br> <em>Explanation:</em> Because it acts like a sample of size \( n=1 \) (drawing 1 cluster of size n), there are no independent replications to natively calculate an unbiased variance from a single pass.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In a purely random population where no linear or periodic trend exists, the efficiency of systematic sampling mathematically equates seamlessly to: <br> (एक विशुद्ध रूप से यादृच्छिक जनसंख्या में जहाँ कोई रैखिक या आवधिक प्रवृत्ति मौजूद नहीं है, व्यवस्थित प्रतिचयन की दक्षता गणितीय रूप से किसके समान होती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Stratified sampling</li>
+                    <li>b) Two-stage cluster sampling</li>
+                    <li>c) Simple random sampling</li>
+                    <li>d) Census</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer</button>
+                <div id="mcq8" class="answer"><strong>Correct Answer:</strong> c) Simple random sampling <br> <em>Explanation:</em> Without any underlying structural order, taking a systematic grid grabs elements just as effectively and blindly as drawing them entirely at random.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. To actively overcome the limitation of estimating variance in systematic sampling, the most standard rigorous operational technique is: <br> (व्यवस्थित प्रतिचयन में प्रसरण का अनुमान लगाने की सीमा को सक्रिय रूप से दूर करने के लिए, सबसे मानक कठोर परिचालन तकनीक है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Abandoning systematic sampling</li>
+                    <li>b) The method of Interpenetrating Sub-samples</li>
+                    <li>c) Using a single fixed start</li>
+                    <li>d) Inflating the interval \( k \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer</button>
+                <div id="mcq9" class="answer"><strong>Correct Answer:</strong> b) The method of Interpenetrating Sub-samples <br> <em>Explanation:</em> Introduced heavily by Mahalanobis, drawing multiple smaller systematic samples (with multiple independent random starts) cleanly provides the replications needed to unbiasedly estimate the true variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. When applying systematic sampling in two dimensions (like a physical agricultural grid), an "aligned" grid explicitly implies: <br> (दो आयामों में (जैसे भौतिक कृषि ग्रिड) व्यवस्थित प्रतिचयन लागू करते समय, एक "संरेखित" ग्रिड स्पष्ट रूप से दर्शाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Every row uses a different independent random start</li>
+                    <li>b) The grid is perfectly square</li>
+                    <li>c) The sampled points form a perfectly straight, unbroken grid across both axes</li>
+                    <li>d) The grid is circular</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer</button>
+                <div id="mcq10" class="answer"><strong>Correct Answer:</strong> c) The sampled points form a perfectly straight, unbroken grid across both axes <br> <em>Explanation:</em> Aligned sampling locks a single random start for the X-axis and a single one for the Y-axis, creating a uniform, unbroken checkerboard pattern of sampled plots.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A "New Systematic Sampling" estimator proposed centrally by Singh utilizes: <br> (सिंह द्वारा केंद्रीय रूप से प्रस्तावित एक "नया व्यवस्थित प्रतिचयन" अनुमानक उपयोग करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Circular wrap-arounds only</li>
+                    <li>b) Modified weights assigned specifically to certain strategic units inside the sample</li>
+                    <li>c) A purely random \( k \) for every single step</li>
+                    <li>d) A fixed ratio divisor</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer</button>
+                <div id="mcq11" class="answer"><strong>Correct Answer:</strong> b) Modified weights assigned specifically to certain strategic units inside the sample <br> <em>Explanation:</em> The new estimator achieves lower variance in the presence of strong trends by specifically re-weighting elements structurally rather than just using a flat arithmetic mean.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. Under a mathematically perfect continuous linear trend \( y_i = i \), the variance of the simple systematic mean \( \bar{y}_{sy} \) is primarily proportional to: <br> (एक गणितीय रूप से पूर्ण निरंतर रैखिक प्रवृत्ति \( y_i = i \) के तहत, सरल व्यवस्थित माध्य \( \bar{y}_{sy} \) का प्रसरण मुख्य रूप से किसके आनुपातिक है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( k^2 \)</li>
+                    <li>b) \( n^2 \)</li>
+                    <li>c) \( 1/N \)</li>
+                    <li>d) Zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer</button>
+                <div id="mcq12" class="answer"><strong>Correct Answer:</strong> a) \( k^2 \) <br> <em>Explanation:</em> In a perfect line, the gap \( k \) dictates the error. The variance evaluates rigidly to \( (k^2 - 1)/12 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. In circular systematic sampling, the actual total number of possible distinct samples that can be generated is mathematically: <br> (परिपत्र व्यवस्थित प्रतिचयन में, उत्पन्न किए जा सकने वाले संभावित विशिष्ट प्रतिदर्शों की वास्तविक कुल संख्या गणितीय रूप से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( k \)</li>
+                    <li>b) \( n \)</li>
+                    <li>c) \( N \)</li>
+                    <li>d) \( N-n \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer</button>
+                <div id="mcq13" class="answer"><strong>Correct Answer:</strong> c) \( N \) <br> <em>Explanation:</em> Unlike linear sampling where there are only \( k \) possible starts, circular sampling allows absolutely any unit from 1 to \( N \) to serve validly as the initial random start point.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. If the data strictly exhibits a strong "autocorrelated" population structure (e.g., adjacent trees are very similar in height), systematic sampling is natively: <br> (यदि डेटा सख्ती से एक मजबूत "स्वतः सहसंबद्ध" जनसंख्या संरचना प्रदर्शित करता है (उदाहरण के लिए, आसन्न पेड़ ऊंचाई में बहुत समान हैं), तो व्यवस्थित प्रतिचयन मूल रूप से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Highly superior to Stratified Sampling</li>
+                    <li>b) Extremely inefficient</li>
+                    <li>c) Highly superior to Simple Random Sampling</li>
+                    <li>d) Equivalent to Cluster Sampling</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer</button>
+                <div id="mcq14" class="answer"><strong>Correct Answer:</strong> c) Highly superior to Simple Random Sampling <br> <em>Explanation:</em> By forcibly spreading the points evenly across the entire space, systematic sampling ruthlessly prevents grabbing redundant, heavily correlated adjacent data points.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. The exact sample mean in systematic sampling mathematically equates to the population mean if and only if the population is structurally: <br> (व्यवस्थित प्रतिचयन में सटीक प्रतिदर्श माध्य गणितीय रूप से जनसंख्या माध्य के बराबर होता है यदि और केवल यदि जनसंख्या संरचनात्मक रूप से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Bimodal</li>
+                    <li>b) Periodic with period \( k \)</li>
+                    <li>c) Perfectly linear with Yates' corrections applied correctly</li>
+                    <li>d) Entirely composed of identical constants</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer</button>
+                <div id="mcq15" class="answer"><strong>Correct Answer:</strong> d) Entirely composed of identical constants <br> <em>Explanation:</em> If every element in the population is the exact same number, any sample will flawlessly equal the population mean. Otherwise, some error always structurally persists.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Under a strictly periodic population where the period exactly equals the sampling interval \( k \), the systematic sampling variance violently explodes to equal: <br> (एक कड़ाई से आवधिक जनसंख्या के तहत जहाँ अवधि प्रतिचयन अंतराल \( k \) के बिल्कुल बराबर होती है, व्यवस्थित प्रतिचयन प्रसरण हिंसक रूप से बढ़कर किसके बराबर हो जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Zero</li>
+                    <li>b) The total population variance</li>
+                    <li>c) The Simple Random Sampling variance</li>
+                    <li>d) The Stratified variance</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer</button>
+                <div id="mcq16" class="answer"><strong>Correct Answer:</strong> b) The total population variance <br> <em>Explanation:</em> You essentially sample the exact same phase of the wave every single time. It provides zero new information, making it structurally no better than drawing just a single element randomly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. Unaligned systematic sampling in two dimensions provides a heavy mathematical advantage primarily by: <br> (दो आयामों में असंरेखित व्यवस्थित प्रतिचयन मुख्य रूप से किसके द्वारा भारी गणितीय लाभ प्रदान करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Creating a single rigid grid</li>
+                    <li>b) Dropping the sample size</li>
+                    <li>c) Eradicating vulnerability to strong linear trends running along rows or columns</li>
+                    <li>d) Eliminating all non-sampling errors entirely</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer</button>
+                <div id="mcq17" class="answer"><strong>Correct Answer:</strong> c) Eradicating vulnerability to strong linear trends running along rows or columns <br> <em>Explanation:</em> By injecting independent random starts across the axes (staggering the alignment), it safely breaks up any unseen straight-line periodicities in the terrain.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. If a population can be envisioned as mathematically "stratified" into \( n \) blocks of size \( k \), systematic sampling explicitly guarantees drawing: <br> (यदि किसी जनसंख्या को गणितीय रूप से \( k \) आकार के \( n \) ब्लॉकों में "स्तरीकृत" के रूप में देखा जा सकता है, तो व्यवस्थित प्रतिचयन स्पष्ट रूप से निकालने की गारंटी देता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( n \) units from the first block</li>
+                    <li>b) Zero units from the last block</li>
+                    <li>c) Exactly one unit from every single block natively</li>
+                    <li>d) Two units per block</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer</button>
+                <div id="mcq18" class="answer"><strong>Correct Answer:</strong> c) Exactly one unit from every single block natively <br> <em>Explanation:</em> The interval \( k \) forces the selection mechanism to smoothly hit every single \( k \)-sized segment exactly once, acting like a highly structured form of proportional stratification.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. In systematic sampling, the selection probability for the \( i \)-th element in the population is unconditionally: <br> (व्यवस्थित प्रतिचयन में, जनसंख्या में \( i \)-वें तत्व के लिए चयन प्रायिकता बिना शर्त है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( 1/N \)</li>
+                    <li>b) \( 1/n \)</li>
+                    <li>c) \( 1/k \)</li>
+                    <li>d) \( k/N \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer</button>
+                <div id="mcq19" class="answer"><strong>Correct Answer:</strong> c) \( 1/k \) <br> <em>Explanation:</em> Because there are exactly \( k \) possible distinct samples in linear systematic sampling, and you randomly pick 1, the probability for any single unit is strictly \( 1/k \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. According to Cochran's theorems on specific population structures, systematic sampling is overwhelmingly more precise than both SRS and Stratified sampling heavily in populations exhibiting: <br> (विशिष्ट जनसंख्या संरचनाओं पर कोचरन के प्रमेयों के अनुसार, व्यवस्थित प्रतिचयन उन आबादी में एसआरएस और स्तरीकृत प्रतिचयन दोनों की तुलना में अत्यधिक सटीक है जो प्रदर्शित करते हैं:)</div>
+                <ul class="mcq-options">
+                    <li>a) Random noise</li>
+                    <li>b) Periodic cyclic waves</li>
+                    <li>c) Convex autocorrelograms (Autocorrelated spatial populations)</li>
+                    <li>d) Only two extreme values</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
+                <div id="mcq20" class="answer"><strong>Correct Answer:</strong> c) Convex autocorrelograms (Autocorrelated spatial populations) <br> <em>Explanation:</em> For naturally occurring spatial data (like forest volumes) where correlation drops off in a convex curve, systematic sampling mathematically captures the absolute most precise spread of variance.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-fib" class="section-card">
+            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+
+            <div class="question-box">
+                <div class="question">1. The mathematical value \( k = N/n \) is broadly referred to as the sampling ____________. <br> (गणितीय मान \( k = N/n \) को व्यापक रूप से प्रतिचयन ____________ कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
+                <div id="fib1" class="answer"><strong>Answer:</strong> interval (अंतराल) <br> <em>Explanation:</em> It explicitly denotes the physical or numerical distance or gap systematically placed between every consecutive sampled unit.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. When \( N \) is stubbornly not a clear multiple of \( n \), the most brilliant mathematical workaround to preserve equal inclusion probabilities is ____________ systematic sampling. <br> (जब \( N \) हठपूर्वक \( n \) का स्पष्ट गुणज नहीं है, तो समान समावेशन प्रायिकताओं को संरक्षित करने का सबसे शानदार गणितीय उपाय ____________ व्यवस्थित प्रतिचयन है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer</button>
+                <div id="fib2" class="answer"><strong>Answer:</strong> circular (परिपत्र) <br> <em>Explanation:</em> Looping the population effectively removes the jagged edge at the end of the list, forcing exact \( 1/N \) probabilities across all draws.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. A significant theoretical failing of systematic sampling is its mathematical inability to natively estimate the sampling ____________ from a single standard sample. <br> (व्यवस्थित प्रतिचयन की एक महत्वपूर्ण सैद्धांतिक विफलता एकल मानक प्रतिदर्श से प्रतिचयन ____________ का मूल रूप से अनुमान लगाने में इसकी गणितीय अक्षमता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer</button>
+                <div id="fib3" class="answer"><strong>Answer:</strong> variance / error (प्रसरण / त्रुटि) <br> <em>Explanation:</em> Because the entire grid is locked after the first draw, there is zero independent replication natively to calculate variance without making risky statistical assumptions.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. To explicitly fix the error caused by a strong continuous linear trend, ____________ End Corrections are heavily utilized. <br> (एक मजबूत निरंतर रैखिक प्रवृत्ति के कारण होने वाली त्रुटि को स्पष्ट रूप से ठीक करने के लिए, ____________ अंत सुधारों का भारी उपयोग किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer</button>
+                <div id="fib4" class="answer"><strong>Answer:</strong> Yates' (येट्स के) <br> <em>Explanation:</em> Frank Yates proved that uniquely shifting the mathematical weights of solely the very first and absolute last sample units mathematically erases linear trend errors completely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. Systematic sampling performs disastrously if the population harbors a hidden ____________ that perfectly synchronizes with the interval \( k \). <br> (व्यवस्थित प्रतिचयन विनाशकारी रूप से कार्य करता है यदि जनसंख्या एक छिपी हुई ____________ को आश्रय देती है जो पूरी तरह से अंतराल \( k \) के साथ तालमेल बिठाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer</button>
+                <div id="fib5" class="answer"><strong>Answer:</strong> periodicity / cycle (आवधिकता / चक्र) <br> <em>Explanation:</em> If you sample ice cream sales every exactly 7 days (k=7), you will only ever observe Sundays, destroying the validity of the weekly average.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. The efficiency of systematic sampling skyrockets violently when the intra-class correlation \( \rho_w \) hits heavily ____________ values. <br> (व्यवस्थित प्रतिचयन की दक्षता तब हिंसक रूप से बढ़ जाती है जब अंतर-वर्ग सहसंबंध \( \rho_w \) भारी रूप से ____________ मानों पर पहुँचता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer</button>
+                <div id="fib6" class="answer"><strong>Answer:</strong> negative (नकारात्मक) <br> <em>Explanation:</em> Negative correlation means the units *inside* the systematic sample are extremely different from each other, which perfectly captures the full variation of the population.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The method of ____________ sub-samples cleanly bypasses the variance estimation problem by aggressively deploying multiple random starts. <br> (____________ उप-प्रतिदर्शों की विधि आक्रामक रूप से एकाधिक यादृच्छिक शुरुआत तैनात करके प्रसरण अनुमान समस्या को स्पष्ट रूप से दरकिनार कर देती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer</button>
+                <div id="fib7" class="answer"><strong>Answer:</strong> interpenetrating (अंतर्व्यापी) <br> <em>Explanation:</em> By taking \( m \) distinct systematic samples of size \( n/m \), you natively obtain \( m \) independent estimates, allowing pristine standard variance calculation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In a perfectly random population, the variance of the systematic mean is mathematically ____________ to the variance of the simple random mean. <br> (एक पूर्णतः यादृच्छिक जनसंख्या में, व्यवस्थित माध्य का प्रसरण गणितीय रूप से सरल यादृच्छिक माध्य के प्रसरण के ____________ होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer</button>
+                <div id="fib8" class="answer"><strong>Answer:</strong> equal (समान / बराबर) <br> <em>Explanation:</em> Without any underlying order, taking every \( k \)-th element is functionally identical to shuffling a deck and pulling random cards.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. Systematic sampling structurally behaves exactly like picking just one massive ____________ completely at random. <br> (व्यवस्थित प्रतिचयन संरचनात्मक रूप से पूरी तरह से यादृच्छिक रूप से सिर्फ एक विशाल ____________ चुनने जैसा व्यवहार करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer</button>
+                <div id="fib9" class="answer"><strong>Answer:</strong> cluster (गुच्छ) <br> <em>Explanation:</em> Once the start \( i \) is selected, all \( n \) elements are rigidly locked in. It is mathematically a 1-cluster sample from a population of \( k \) possible clusters.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. Two-dimensional systematic sampling natively provides massive gains in precision in agricultural or ____________ surveys. <br> (द्वि-आयामी व्यवस्थित प्रतिचयन मूल रूप से कृषि या ____________ सर्वेक्षणों में सटीकता में भारी लाभ प्रदान करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer</button>
+                <div id="fib10" class="answer"><strong>Answer:</strong> spatial / forestry (स्थानिक / वानिकी) <br> <em>Explanation:</em> Because things like soil fertility or tree density correlate physically across geography, spreading the sample evenly across X and Y coordinates crushes variance aggressively.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A completely unaligned grid sample in two dimensions utilizes heavily ____________ random starts to break row/column periodicities. <br> (दो आयामों में पूरी तरह से असंरेखित ग्रिड प्रतिदर्श पंक्ति/स्तंभ आवधिकताओं को तोड़ने के लिए भारी रूप से ____________ यादृच्छिक शुरुआत का उपयोग करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer</button>
+                <div id="fib11" class="answer"><strong>Answer:</strong> independent / multiple (स्वतंत्र / कई) <br> <em>Explanation:</em> Rather than one locked coordinate for the whole row, it staggers the coordinates independently, making it immune to straight-line structural biases.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. An absolutely continuous linear trend heavily inflates systematic variance exactly proportional to ____________. <br> (एक बिल्कुल निरंतर रैखिक प्रवृत्ति व्यवस्थित प्रसरण को ____________ के ठीक आनुपातिक रूप से भारी रूप से बढ़ाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer</button>
+                <div id="fib12" class="answer"><strong>Answer:</strong> \( k^2 \) <br> <em>Explanation:</em> Because the gap between selections is \( k \), the jump on a strictly linear slope creates a squared mathematical penalty if not corrected.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The primary reason systematic sampling is so overwhelmingly popular in massive field surveys is its extreme operational ____________. <br> (बड़े पैमाने पर क्षेत्र सर्वेक्षणों में व्यवस्थित प्रतिचयन के अत्यधिक लोकप्रिय होने का प्राथमिक कारण इसकी चरम परिचालन ____________ है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer</button>
+                <div id="fib13" class="answer"><strong>Answer:</strong> simplicity / convenience (सरलता / सुविधा) <br> <em>Explanation:</em> Drawing every 10th house on a street is exponentially faster and less error-prone for a field worker than strictly referencing 500 complex random numbers.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. In circular systematic sampling, the random start \( i \) is drawn freely from the entire range \( 1 \) to ____________. <br> (परिपत्र व्यवस्थित प्रतिचयन में, यादृच्छिक शुरुआत \( i \), \( 1 \) से ____________ तक की पूरी सीमा से स्वतंत्र रूप से खींची जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer</button>
+                <div id="fib14" class="answer"><strong>Answer:</strong> \( N \) <br> <em>Explanation:</em> Because the list seamlessly wraps around like a clock face, any unit in the entire population can serve flawlessly as the starting seed.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. If a population mathematically mirrors a highly correlated convex autocorrelogram, systematic sampling will safely ____________ stratified sampling. <br> (यदि जनसंख्या गणितीय रूप से अत्यधिक सहसंबद्ध उत्तल ऑटोकॉरेलोग्राम को दर्शाती है, तो व्यवस्थित प्रतिचयन सुरक्षित रूप से स्तरीकृत प्रतिचयन से ____________ होगा।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer</button>
+                <div id="fib15" class="answer"><strong>Answer:</strong> outperform / beat (बेहतर प्रदर्शन) <br> <em>Explanation:</em> Cochran rigorously proved that for spatially clustered natural phenomena, forcing equal spread via systematic sampling guarantees tighter precision than randomized strata.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The exact number of mathematically distinct sample paths available in standard linear systematic sampling is securely fixed at ____________. <br> (मानक रैखिक व्यवस्थित प्रतिचयन में उपलब्ध गणितीय रूप से भिन्न प्रतिदर्श पथों की सटीक संख्या ____________ पर सुरक्षित रूप से तय की गई है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer</button>
+                <div id="fib16" class="answer"><strong>Answer:</strong> \( k \) <br> <em>Explanation:</em> Once you pick a starting integer strictly between \( 1 \) and \( k \), the rest of the sample is rigidly predetermined.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In the presence of a perfectly monotonic line, Stratified sampling with 1 unit per stratum is mathematically ____________ efficient than standard systematic sampling. <br> (एक पूर्णतः एकदिष्ट रेखा की उपस्थिति में, प्रति स्तर 1 इकाई के साथ स्तरीकृत प्रतिचयन गणितीय रूप से मानक व्यवस्थित प्रतिचयन की तुलना में ____________ कुशल है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer</button>
+                <div id="fib17" class="answer"><strong>Answer:</strong> less (कम) <br> <em>Explanation:</em> While both are good, systematic locks the relative positions preventing them from accidentally clustering at the stratum edges, crushing the variance further.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. To mathematically counter the specific bias of a linear trend without utilizing Yates' corrections, one can implement a modified ____________ weighting scheme. <br> (येट्स के सुधारों का उपयोग किए बिना रैखिक प्रवृत्ति के विशिष्ट पूर्वाग्रह का गणितीय रूप से मुकाबला करने के लिए, कोई एक संशोधित ____________ भार योजना लागू कर सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer</button>
+                <div id="fib18" class="answer"><strong>Answer:</strong> estimator / arithmetic (अनुमानक / अंकगणितीय) <br> <em>Explanation:</em> Singh's 'New Systematic' estimator applies dynamic algebraic weights to aggressively neutralize the trend natively inside the formula.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If \( N \) is not a multiple of \( k \), standard linear systematic sampling strictly violates the rule of ____________ selection probabilities. <br> (यदि \( N \), \( k \) का गुणज नहीं है, तो मानक रैखिक व्यवस्थित प्रतिचयन कड़ाई से ____________ चयन प्रायिकताओं के नियम का उल्लंघन करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer</button>
+                <div id="fib19" class="answer"><strong>Answer:</strong> equal (समान) <br> <em>Explanation:</em> Elements at the beginning of the list will have slightly higher probabilities of being chosen than the stragglers at the heavily truncated end of the list.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The total structural variation in systematic sampling cleanly partitions into the variation ____________ the \( k \) systematic samples and the variation between them. <br> (व्यवस्थित प्रतिचयन में कुल संरचनात्मक भिन्नता \( k \) व्यवस्थित प्रतिदर्शों के ____________ भिन्नता और उनके बीच भिन्नता में स्पष्ट रूप से विभाजित होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
+                <div id="fib20" class="answer"><strong>Answer:</strong> within (भीतर) <br> <em>Explanation:</em> Just like cluster sampling ANOVA, the overall \( S^2 \) splits into \( S_w^2 \) (variation internally across the sampled items) and \( S_b^2 \).</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-tf" class="section-card">
+            <h2>✅ True or False (सही या गलत)</h2>
+
+            <div class="question-box">
+                <div class="question">1. Systematic sampling completely guarantees an unbiased estimate of the population variance from any single sample drawn. <br> (व्यवस्थित प्रतिचयन किसी भी एकल प्रतिदर्श से जनसंख्या प्रसरण के निष्पक्ष अनुमान की पूरी तरह से गारंटी देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
+                <div id="tf1" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It structurally cannot provide an unbiased variance estimate from a single pass because there is no independent replication (it behaves like \( n=1 \)).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. Circular systematic sampling flawlessly resolves the massive issue of unequal selection probabilities when \( N \) is not an integer multiple of \( k \). <br> (वृत्ताकार व्यवस्थित प्रतिचयन असमान चयन प्रायिकताओं के बड़े पैमाने पर मुद्दे को त्रुटिहीन रूप से हल करता है जब \( N \), \( k \) का पूर्णांक गुणज नहीं होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer</button>
+                <div id="tf2" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> By joining the end of the list cleanly back to the beginning, every unit is guaranteed an exact \( n/N \) chance of inclusion, restoring absolute fairness.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. If a population mathematically exhibits a strong periodic wave, systematic sampling is overwhelmingly superior to simple random sampling. <br> (यदि कोई जनसंख्या गणितीय रूप से एक मजबूत आवधिक तरंग प्रदर्शित करती है, तो व्यवस्थित प्रतिचयन सरल यादृच्छिक प्रतिचयन से कहीं अधिक बेहतर है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer</button>
+                <div id="tf3" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is the exact opposite. If the sampling interval \( k \) violently aligns with the period, systematic sampling will blindly sample the exact same peak or trough, creating an astronomically biased, devastating error.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. Yates' End Corrections aggressively eliminate bias caused strictly by continuous linear trends. <br> (येट्स के अंत सुधार कड़ाई से निरंतर रैखिक प्रवृत्तियों के कारण होने वाले पूर्वाग्रह को आक्रामक रूप से समाप्त कर देते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer</button>
+                <div id="tf4" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> By applying heavily calibrated mathematical weights strictly to the very first and the very last sampled elements, Yates flawlessly zeros out the error generated by a perfect sloping line.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. Mathematically, systematic sampling is completely identical to selecting a single, massive primary unit in strict Cluster Sampling. <br> (गणितीय रूप से, व्यवस्थित प्रतिचयन सख्त गुच्छ प्रतिचयन में एकल, विशाल प्राथमिक इकाई का चयन करने के पूरी तरह से समान है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer</button>
+                <div id="tf5" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Because all \( n \) items are rigidly locked into place the instant the first random start is chosen, the entire operation is just picking 1 cluster out of \( k \) possible clusters.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. The efficiency of systematic sampling radically improves as the internal heterogeneity (variation) of the systematic sample decreases. <br> (व्यवस्थित प्रतिचयन की दक्षता मौलिक रूप से बढ़ जाती है क्योंकि व्यवस्थित प्रतिदर्श की आंतरिक विषमता (भिन्नता) कम हो जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show/Hide Answer</button>
+                <div id="tf6" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Efficiency heavily *requires* internal heterogeneity. You want the sample to perfectly mirror the wide, diverse spread of the entire population. If the sample is too homogeneous, it means it missed the diverse reality.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The method of interpenetrating sub-samples involves drawing multiple short systematic samples explicitly to enable calculation of a valid sampling error. <br> (अंतर्व्यापी उप-प्रतिदर्शों की विधि में एक वैध प्रतिचयन त्रुटि की गणना को सक्षम करने के लिए स्पष्ट रूप से कई छोटे व्यवस्थित प्रतिदर्श निकालना शामिल है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer</button>
+                <div id="tf7" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> By splitting one large systematic survey into \( m \) independent systematic sweeps with \( m \) independent random starts, it restores the crucial independent replication needed for variance formulas.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In completely unaligned two-dimensional systematic sampling, every single point on the X-axis shares the exact same random start coordinate. <br> (पूरी तरह से असंरेखित द्वि-आयामी व्यवस्थित प्रतिचयन में, एक्स-अक्ष पर हर एक बिंदु बिल्कुल समान यादृच्छिक प्रारंभ समन्वय साझा करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer</button>
+                <div id="tf8" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> That describes an *aligned* grid. An *unaligned* grid staggers the random starts aggressively across rows and columns to violently shatter any hidden straight-line periodicities.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. For highly autocorrelated forestry spatial data, Cochran's mathematical models definitively prove systematic sampling is generally vastly superior to stratified random sampling. <br> (अत्यधिक स्व-सहसंबद्ध वानिकी स्थानिक डेटा के लिए, कोचरन के गणितीय मॉडल निश्चित रूप से साबित करते हैं कि व्यवस्थित प्रतिचयन आमतौर पर स्तरीकृत यादृच्छिक प्रतिचयन से काफी बेहतर है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer</button>
+                <div id="tf9" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Natural landscapes usually exhibit convex autocorrelation. By rigidly forcing the maximum possible spread between points, systematic sampling slaughters the variance better than random strata allocations can.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. Systematic sampling aggressively demands a completely randomized, thoroughly shuffled list to function properly under any circumstances. <br> (व्यवस्थित प्रतिचयन किसी भी परिस्थिति में ठीक से कार्य करने के लिए आक्रामक रूप से एक पूरी तरह से यादृच्छिक, पूरी तरह से फेरबदल की गई सूची की मांग करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer</button>
+                <div id="tf10" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Its massive operational power is that it works gorgeously on ordered, sorted, or un-shuffled lists (like geographical maps or chronological files), natively acting as an implicit stratifier.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A negative intra-class correlation \( \rho_w \) within the systematic sample strictly guarantees that systematic sampling will easily outperform Simple Random Sampling. <br> (व्यवस्थित प्रतिदर्श के भीतर एक नकारात्मक अंतर-वर्ग सहसंबंध \( \rho_w \) कड़ाई से गारंटी देता है कि व्यवस्थित प्रतिचयन आसानी से सरल यादृच्छिक प्रतिचयन से बेहतर प्रदर्शन करेगा।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer</button>
+                <div id="tf11" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> A negative \( \rho_w \) mathematically proves the elements inside the sample are wildly different from each other, which perfectly encapsulates the vast spread of the whole population.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. If a file cabinet contains 5000 folders and you need 100 folders, you should rigidly pull a folder exactly every 500th slot. <br> (यदि एक फ़ाइल कैबिनेट में 5000 फ़ोल्डर हैं और आपको 100 फ़ोल्डरों की आवश्यकता है, तो आपको हर 500वें स्लॉट पर कड़ाई से एक फ़ोल्डर खींचना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer</button>
+                <div id="tf12" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The interval \( k = N/n = 5000/100 = 50 \). You must pull exactly every 50th folder, not 500th.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. Linear systematic sampling flawlessly ensures an equal representation of population boundaries regardless of whether \( N \) is a multiple of \( k \). <br> (रैखिक व्यवस्थित प्रतिचयन त्रुटिहीन रूप से जनसंख्या सीमाओं का समान प्रतिनिधित्व सुनिश्चित करता है, भले ही \( N \), \( k \) का गुणज हो या नहीं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer</button>
+                <div id="tf13" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> If \( N \) is not a multiple, linear sampling structurally favors elements at the front of the list. Only circular systematic sampling natively fixes this.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. Singh's 'New Systematic' estimator aggressively modifies the strict arithmetic mean to combat heavy linear trend biases entirely algebraically. <br> (सिंह का 'नया व्यवस्थित' अनुमानक पूरी तरह से बीजगणितीय रूप से भारी रैखिक प्रवृत्ति पूर्वाग्रहों का मुकाबला करने के लिए सख्त अंकगणितीय माध्य को आक्रामक रूप से संशोधित करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer</button>
+                <div id="tf14" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> It achieves bias destruction against linear trends without physically altering the field sampling routine, solely relying on an advanced mathematical weighting equation on the backend.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. In a perfectly random, trendless population, systematic sampling is statistically useless and violently inflates the sampling variance. <br> (एक पूरी तरह से यादृच्छिक, प्रवृत्तीहीन जनसंख्या में, व्यवस्थित प्रतिचयन सांख्यिकीय रूप से बेकार है और प्रतिचयन प्रसरण को हिंसक रूप से बढ़ाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer</button>
+                <div id="tf15" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> In a perfectly random population, systematic sampling performs mathematically identical to Simple Random Sampling. It does not inflate the variance, it just matches it.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The primary operational genius of systematic sampling is that field agents do not explicitly need an intensive, pre-numbered master sampling frame if the elements are physically lined up. <br> (व्यवस्थित प्रतिचयन की प्राथमिक परिचालन प्रतिभा यह है कि यदि तत्वों को भौतिक रूप से पंक्तिबद्ध किया जाता है, तो क्षेत्र एजेंटों को स्पष्ट रूप से गहन, पूर्व-क्रमांकित मास्टर प्रतिचयन फ्रेम की आवश्यकता नहीं होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer</button>
+                <div id="tf16" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If houses are neatly on a street or files are strictly in a drawer, the agent just physically counts every \( k \)-th item, requiring zero complex list preparation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. Systematic sampling natively mimics proportional stratified sampling by rigidly guaranteeing one sample is explicitly drawn from every successive zone of size \( k \). <br> (व्यवस्थित प्रतिचयन मूल रूप से आनुपातिक स्तरीकृत प्रतिचयन की नकल करता है, यह कठोरता से गारंटी देता है कि आकार \( k \) के प्रत्येक क्रमिक क्षेत्र से स्पष्ट रूप से एक प्रतिदर्श निकाला गया है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer</button>
+                <div id="tf17" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The locked interval forces the sample to organically blanket every sector of the population perfectly evenly, achieving high-grade implicit stratification automatically.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The total sum of squares \( (N-1)S^2 \) for a population cannot mathematically be partitioned under systematic sampling. <br> (किसी जनसंख्या के लिए कुल वर्गों का योग \( (N-1)S^2 \) गणितीय रूप से व्यवस्थित प्रतिचयन के तहत विभाजित नहीं किया जा सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer</button>
+                <div id="tf18" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Because it acts like cluster sampling, the total variance flawlessly partitions into variance *between* the systematic samples and variance *within* them.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If the population size \( N \) is severely unknown, standard circular systematic sampling becomes completely impossible to accurately set up. <br> (यदि जनसंख्या का आकार \( N \) गंभीर रूप से अज्ञात है, तो मानक वृत्ताकार व्यवस्थित प्रतिचयन को सटीक रूप से स्थापित करना पूरी तरह से असंभव हो जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer</button>
+                <div id="tf19" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Circular sampling mathematically demands an exact value of \( N \) to effectively wrap the random start logic around the end of the list securely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. Applying Yates' end corrections explicitly demands discarding the entire middle of the systematic sample to compute the trend correctly. <br> (येट्स के अंत सुधारों को लागू करने के लिए स्पष्ट रूप से प्रवृत्ति की सही गणना करने के लिए व्यवस्थित प्रतिदर्श के पूरे मध्य को त्यागने की आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
+                <div id="tf20" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The middle elements are kept perfectly intact with normal weights. Only the absolute first and very last elements have their algebraic multipliers tweaked.</div>
+            </div>
+
+        </section>
+        
+        <script>
+        function showTopic(topicId) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            var elem = document.getElementById(topicId);
+            if (elem) {
+                elem.classList.add('active');
+            }
+            
+            var activeLink = document.querySelector(`.nav-link[onclick*="${topicId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            if(window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('hinglish-active');
+            var btn = document.querySelector('.lang-toggle-btn');
+            if (document.body.classList.contains('hinglish-active')) {
+                btn.textContent = 'Switch to English';
+            } else {
+                btn.textContent = 'Switch to Hinglish';
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv) {
+                answerDiv.classList.toggle('show');
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+    </script>
+</body>
+</html>

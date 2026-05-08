@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 7: Regression Estimators | Theory of Sampling</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
+            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
+            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
+        
+        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        
+        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
+        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
+        
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
+        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
+        .section-card.active { display: block; }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
+        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
+        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
+        .section-card li { margin-bottom: 8px; }
+        
+        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hinglish-content { display: none; }
+        .hinglish-active .english-content { display: none; }
+        .hinglish-active .hinglish-content { display: block; }
+        
+        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
+        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
+
+        /* QUIZ STYLES */
+        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
+        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
+        .mcq-options li { margin-bottom: 5px; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
+        .toggle-btn:hover { background: var(--navy-light); }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
+        .answer.show { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="book-header">
+        <div class="header-icon"><i class="fas fa-chart-line"></i></div>
+        <div class="header-text">
+            <h1>Chapter 7: Regression Estimators | Theory of Sampling</h1>
+            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <a class="nav-link active" onclick="showTopic('sec7-1')">7.1 Introduction</a>
+        <a class="nav-link" onclick="showTopic('sec7-2')">7.2 Difference Estimator</a>
+        <a class="nav-link" onclick="showTopic('sec7-3')">7.3 Regression Estimator</a>
+        <a class="nav-link" onclick="showTopic('sec7-4')">7.4 Comparison with MPU</a>
+        <a class="nav-link" onclick="showTopic('sec7-5')">7.5 Reg. Est. in Stratified</a>
+        <a class="nav-link" onclick="showTopic('sec7-6')">7.6 Multi-variate Reg. Est.</a>
+        
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
+        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
+        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
+        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
+        <a class="nav-link" onclick="showTopic('sec7-7')">📝 Exercise (Subjective)</a>
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Back to Index</a>
+    </aside>
+
+    <main class="main-content">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+
+        <section id="sec7-1" class="section-card active">
+            <div class="english-content">
+                <h2>7.1 Introduction</h2>
+                <div class="quote">
+                    "At thirty man suspects himself a fool;<br>
+                    Knows it at forty, and reforms his plan:<br>
+                    At fifty chides his infamous delay,<br>
+                    Pushes his prudent purpose to resolve,<br>
+                    In all the magnanimity of thought<br>
+                    Resolves, and re-resolves: then dies the same."<br>
+                    -- <strong>J. Young</strong>
+                </div>
+                <p>Like ratio estimators, linear regression estimators also make use of auxiliary information for increasing precision. It was seen that the ratio estimator provides a precise estimate of the population mean if regression is linear and the line passes through the origin. When regression is linear and the line does not go through the origin, it is better to use estimators based on linear regression. In other words, if the study variate (\( y \)) is approximately a constant and a multiple of the auxiliary variate, it is more precise to estimate the population mean or total by fitting a linear regression. Such an estimator is called a regression estimator. We shall now discuss the main characteristics of such estimators and compare them with the mean per unit estimator and ratio estimator.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>7.1 परिचय (Introduction)</h2>
+                <div class="quote">
+                    "तीस साल की उम्र में आदमी खुद को मूर्ख समझता है;<br>
+                    चालीस में इसे जान लेता है, और अपनी योजना में सुधार करता है:<br>
+                    पचास में अपनी कुख्यात देरी को धिक्कारता है,<br>
+                    अपने विवेकपूर्ण उद्देश्य को हल करने के लिए जोर देता है,<br>
+                    विचार की पूरी महानता में संकल्प लेता है,<br>
+                    और फिर से संकल्प लेता है: फिर वैसा ही मर जाता है।"<br>
+                    -- <strong>जे. यंग</strong>
+                </div>
+                <p>Ratio estimators की तरह, linear regression estimators भी precision (सटीकता) बढ़ाने के लिए auxiliary information (सहायक जानकारी) का उपयोग करते हैं। यह देखा गया था कि ratio estimator population mean का एक precise estimate प्रदान करता है यदि regression linear है और रेखा origin (मूल बिंदु) से होकर गुजरती है। जब regression linear हो और रेखा origin से होकर नहीं जाती है, तो linear regression पर आधारित estimators का उपयोग करना बेहतर होता है। दूसरे शब्दों में, यदि study variate (\( y \)) लगभग एक constant (स्थिरांक) और auxiliary variate का एक multiple (गुणज) है, तो एक linear regression फिट करके population mean या total का estimate लगाना अधिक precise होता है। ऐसे estimator को regression estimator कहा जाता है। हम अब ऐसे estimators की main characteristics पर चर्चा करेंगे और उनकी तुलना mean per unit estimator और ratio estimator से करेंगे।</p>
+            </div>
+        </section>
+
+        <section id="sec7-2" class="section-card">
+            <div class="english-content">
+                <h2>7.2 Difference Estimator</h2>
+                <p>Let \( y \) and \( x \) be correlated characteristics. We wish to estimate \( Y \). If, from a simple random sample, we obtain the unbiased estimators \( \bar{y} \) and \( \bar{x} \) of \( Y \) and \( X \), respectively, then we can improve upon the estimator \( \bar{y} \) by introducing a difference function. Thus, a simple difference estimator is defined by</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_D = \bar{y} + (\bar{X} - \bar{x}) \quad (7.2.1) $$
+                </div>
+                <p>It is assumed that there is a unit change in \( y \) when a unit change is made in \( x \), \( x \) and \( y \) having equal variances. This assumption will not be valid if the relationship is of the type \( y = cx + k \), where \( c \) and \( k \) are constants. In this situation, a more generalized difference estimator is defined as</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_D = \bar{y} + c(\bar{X} - \bar{x}) \quad (7.2.2) $$
+                    <p>where \( c \) and \( \bar{X} \) are known quantities.</p>
+                </div>
+                <p>In simple random sampling, the difference estimator and its variance are discussed in the following theorems.</p>
+
+                <h3>Theorem 7.2.1</h3>
+                <p>In simple random sampling, wor, the difference estimator \( \bar{y}_D \) is unbiased and its sampling variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_D) = V(\bar{y}) + c^2V(\bar{x}) - 2c\text{ Cov}(\bar{y},\bar{x}) $$
+                    $$ = V(\bar{y})(1 + \alpha^2 - 2\alpha\rho) \quad (7.2.3) $$
+                    <p>where \( \rho \) is the correlation coefficient between \( y \) and \( x \), and \( \alpha = cS_x/S_y \).</p>
+                </div>
+                <p>The proof is simple, and its development is left as an exercise. From this result, it may be noted that \( \bar{y}_D \) has smaller variance than \( \bar{y} \) if \( \rho > \alpha/2 \).</p>
+
+                <h3>Corollary</h3>
+                <p>Show that \( V(\bar{y}_D) \) will have its minimum value when</p>
+                <div class="derivation-block">
+                    $$ c = \text{Cov}(\bar{y},\bar{x})/V(\bar{x}) \quad (7.2.4) $$
+                </div>
+                <p>This proves that the optimum value to be given to \( c \) is \( \beta \), the value of the regression coefficient of \( y \) on \( x \). In this case, \( \alpha = \rho \) and the minimum value of variance is \( V(\bar{y})(1 - \rho^2) \).</p>
+
+                <h3>Theorem 7.2.2</h3>
+                <p>In simple random sampling, wor, the sampling variance of \( \bar{y}_D \) is obtained by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_D) = \frac{(1 - f)}{n}(S_y^2 + c^2S_x^2 - 2\rho cS_yS_x) \quad (7.2.5) $$
+                    <p>where \( c \) is some specified quantity.</p>
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Since \( c \) is a given constant and \( E(\bar{x} - \bar{X}) = 0 \), therefore, the unbiasedness of \( \bar{y}_D \) is proved. Further, denoting</p>
+                    $$ u_i = y_i - c(x_i - \bar{X}), \quad \bar{u} = \bar{y} - c(\bar{x} - \bar{X}) $$
+                    <p>and \( U = Y - c(X - \bar{X}) = Y \), we have</p>
+                    $$ V(\bar{y}_D) = V(\bar{u}) = \frac{(1 - f)}{n}S_u^2 $$
+                    <p>Hence,</p>
+                    $$ S_u^2 = \frac{\sum (u_i - \bar{U})^2}{(N - 1)} = \frac{\sum [(y_i - \bar{Y}) - c(x_i - \bar{X})]^2}{(N - 1)} = S_y^2 + c^2S_x^2 - 2c\rho S_yS_x $$
+                    <div class="explanation">\( \because \) expanding the square clearly yields the respective variances and the covariance term mathematically scaled by the exact constant \( c \).</div>
+                </div>
+
+                <h3>Corollary 1</h3>
+                <p>For the case \( c = R( = \bar{Y}/\bar{X}) \), the variance of the difference estimator \( \bar{y}_D \) is exactly the same as the first order approximation of \( V(\widehat{Y}_R) \) given in relation (6.4.4).</p>
+
+                <h3>Corollary 2</h3>
+                <p>The difference estimator \( \bar{y}_D \) will be more precise than the mean per unit estimator \( \bar{y} \) if \( c < 2\rho S_y/S_x \).</p>
+                <p>This gives the condition that the difference estimator will be more efficient than the mean per unit estimator if \( c < 2\beta \), otherwise, the mean per unit estimator will be efficient. Hence, it may be concluded that the difference estimator will be simple to apply as its results are exact. If one can guess \( c \) from a pilot survey, then a proper decision about its use can be taken. An illustration of some characteristic situations in the application of difference estimates has been given by Zarkovic (1956).</p>
+
+                <h3>Corollary 3</h3>
+                <p>In simple random sampling, wor, an unbiased estimator of \( V(\bar{y}_D) \) is obtained by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_D) = v(\bar{y}) + c^2v(\bar{x}) - 2c\text{ cov}(\bar{y},\bar{x}) $$
+                    $$ = \frac{(1 - f)}{n}(s_y^2 + c^2s_x^2 - 2cs_{yx}) \quad (7.2.6) $$
+                    <p>where \( s_y^2, s_x^2 \) and \( s_{yx} \) have their usual definitions for sample variances and covariance.</p>
+                </div>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>7.2 Difference Estimator (अंतर आकलक)</h2>
+                <p>मान लीजिए \( y \) और \( x \) correlated characteristics हैं। हम \( Y \) का estimate लगाना चाहते हैं। यदि, एक simple random sample से, हम क्रमशः \( Y \) और \( X \) के unbiased estimators \( \bar{y} \) और \( \bar{x} \) प्राप्त करते हैं, तो हम एक difference function (अंतर फलन) का परिचय देकर estimator \( \bar{y} \) में सुधार कर सकते हैं। इस प्रकार, एक simple difference estimator को इस प्रकार परिभाषित किया गया है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_D = \bar{y} + (\bar{X} - \bar{x}) \quad (7.2.1) $$
+                </div>
+                <p>यह माना जाता है कि \( x \) में unit change (इकाई परिवर्तन) होने पर \( y \) में unit change होता है, जहाँ \( x \) और \( y \) के variances समान हैं। यह assumption (मान्यता) तब मान्य (valid) नहीं होगी यदि relationship \( y = cx + k \) प्रकार का है, जहाँ \( c \) और \( k \) constants हैं। इस स्थिति में, एक अधिक generalized difference estimator को इस प्रकार परिभाषित किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_D = \bar{y} + c(\bar{X} - \bar{x}) \quad (7.2.2) $$
+                    <p>जहाँ \( c \) और \( \bar{X} \) ज्ञात मात्राएँ (known quantities) हैं।</p>
+                </div>
+                <p>Simple random sampling में, difference estimator और उसके variance पर निम्नलिखित theorems में चर्चा की गई है।</p>
+
+                <h3>Theorem 7.2.1</h3>
+                <p>Simple random sampling, wor में, difference estimator \( \bar{y}_D \) unbiased (अभिनत) है और इसका sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_D) = V(\bar{y}) + c^2V(\bar{x}) - 2c\text{ Cov}(\bar{y},\bar{x}) $$
+                    $$ = V(\bar{y})(1 + \alpha^2 - 2\alpha\rho) \quad (7.2.3) $$
+                    <p>जहाँ \( \rho \), \( y \) और \( x \) के बीच correlation coefficient है, और \( \alpha = cS_x/S_y \) है।</p>
+                </div>
+                <p>इसका proof (प्रमाण) सरल है, और इसका विकास (development) एक अभ्यास (exercise) के रूप में छोड़ दिया गया है। इस result से, यह ध्यान दिया जा सकता है कि \( \bar{y}_D \) का variance \( \bar{y} \) से छोटा होता है यदि \( \rho > \alpha/2 \) है।</p>
+
+                <h3>Corollary (उप-प्रमेय)</h3>
+                <p>दिखाएं कि \( V(\bar{y}_D) \) का न्यूनतम मान (minimum value) तब होगा जब:</p>
+                <div class="derivation-block">
+                    $$ c = \text{Cov}(\bar{y},\bar{x})/V(\bar{x}) \quad (7.2.4) $$
+                </div>
+                <p>यह साबित करता है कि \( c \) को दिया जाने वाला optimum value \( \beta \) है, जो \( x \) पर \( y \) के regression coefficient का value है। इस मामले में, \( \alpha = \rho \) है और variance का न्यूनतम मान \( V(\bar{y})(1 - \rho^2) \) है।</p>
+
+                <h3>Theorem 7.2.2</h3>
+                <p>Simple random sampling, wor में, \( \bar{y}_D \) का sampling variance इसके द्वारा प्राप्त किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_D) = \frac{(1 - f)}{n}(S_y^2 + c^2S_x^2 - 2\rho cS_yS_x) \quad (7.2.5) $$
+                    <p>जहाँ \( c \) कुछ specified मात्रा है।</p>
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>चूँकि \( c \) एक दिया गया constant है और \( E(\bar{x} - \bar{X}) = 0 \) है, इसलिए, \( \bar{y}_D \) की unbiasedness (अभिनतता) सिद्ध होती है। आगे, दर्शाते हुए:</p>
+                    $$ u_i = y_i - c(x_i - \bar{X}), \quad \bar{u} = \bar{y} - c(\bar{x} - \bar{X}) $$
+                    <p>और \( U = Y - c(X - \bar{X}) = Y \) है, हमारे पास है:</p>
+                    $$ V(\bar{y}_D) = V(\bar{u}) = \frac{(1 - f)}{n}S_u^2 $$
+                    <p>अतः,</p>
+                    $$ S_u^2 = \frac{\sum (u_i - \bar{U})^2}{(N - 1)} = \frac{\sum [(y_i - \bar{Y}) - c(x_i - \bar{X})]^2}{(N - 1)} = S_y^2 + c^2S_x^2 - 2c\rho S_yS_x $$
+                    <div class="explanation">\( \because \) square का विस्तार (expanding) करने पर स्पष्ट रूप से variances और covariance पद प्राप्त होते हैं जो सटीक स्थिरांक (exact constant) \( c \) द्वारा गणितीय रूप से scaled होते हैं।</div>
+                </div>
+
+                <h3>Corollary 1</h3>
+                <p>मामले \( c = R( = \bar{Y}/\bar{X}) \) के लिए, difference estimator \( \bar{y}_D \) का variance ठीक वैसा ही है जैसा relation (6.4.4) में दिए गए \( V(\widehat{Y}_R) \) का first order approximation है।</p>
+
+                <h3>Corollary 2</h3>
+                <p>Difference estimator \( \bar{y}_D \), mean per unit estimator \( \bar{y} \) की तुलना में अधिक precise (सटीक) होगा यदि \( c < 2\rho S_y/S_x \) हो।</p>
+                <p>यह वह condition देता है कि difference estimator mean per unit estimator की तुलना में अधिक efficient (कुशल) होगा यदि \( c < 2\beta \), अन्यथा, mean per unit estimator efficient होगा। अतः, यह निष्कर्ष निकाला जा सकता है कि difference estimator लागू करने में सरल होगा क्योंकि इसके results exact (सटीक) होते हैं। यदि कोई एक pilot survey से \( c \) का अनुमान (guess) लगा सकता है, तो इसके उपयोग के बारे में एक उचित निर्णय लिया जा सकता है। Difference estimates के application में कुछ characteristic situations का एक उदाहरण Zarkovic (1956) द्वारा दिया गया है।</p>
+
+                <h3>Corollary 3</h3>
+                <p>Simple random sampling, wor में, \( V(\bar{y}_D) \) का एक unbiased estimator इसके द्वारा प्राप्त किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_D) = v(\bar{y}) + c^2v(\bar{x}) - 2c\text{ cov}(\bar{y},\bar{x}) $$
+                    $$ = \frac{(1 - f)}{n}(s_y^2 + c^2s_x^2 - 2cs_{yx}) \quad (7.2.6) $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec7-3" class="section-card">
+            <div class="english-content">
+                <h2>7.3 Regression Estimator</h2>
+                <p>While discussing the difference estimator, it was seen that the optimum value to be given to \( c \) is \( \beta \), where \( \beta \) is the regression coefficient of \( y \) on \( x \). Generally, \( \beta \) is not known in advance and its value is estimated from the sample. Suppose \( y_i \) and \( x_i \) are obtained for each unit in the sample, then a least square estimate of \( \beta \) is</p>
+                <div class="derivation-block">
+                    $$ b = \frac{\sum (y_i - \bar{y})(x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
+                </div>
+                <p>Thus, linear regression estimators of the population mean \( \bar{Y} \) and population total \( Y \) are given by</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_l = \bar{y} + b(\bar{X} - \bar{x}) $$
+                    <p>and</p>
+                    $$ \widehat{Y}_l = N[\bar{y} + b(\bar{X} - \bar{x})] \quad (7.3.1) $$
+                    <p>Here, \( \widehat{Y}_l = N\bar{y}_l \)</p>
+                </div>
+                <p>Therefore, we shall present the theory of the linear regression estimator \( \bar{y}_l \), only. Since \( b \) is a random variate, exact expressions for the bias and variance of the regression estimator are difficult to derive. In this section, large sample approximations to its bias and sampling variance will be given.</p>
+
+                <h3>7.3.1 Bias of Regression Estimator</h3>
+                <p>The regression estimator is consistent because, by increasing the sample size \( n \) to the population size \( N \), we have \( \bar{x} = \bar{X} \). Ultimately, the regression estimator reduces to \( \bar{Y} \).</p>
+                <p>The regression estimator \( \bar{y}_l \) is biased since (i) \( \beta \) is generally estimated by taking the ratio of the estimate of \( \text{Cov}(\bar{y},\bar{x}) \) to that of \( V(\bar{x}) \) and (ii) it involves the product of two estimates, viz. \( b\bar{x} \). The bias of the regression estimator will usually be trivial and will decrease as sample size increases.</p>
+
+                <h3>Theorem 7.3.1</h3>
+                <p>In simple random sampling, the bias of \( \bar{y}_l \) is approximated by</p>
+                <div class="derivation-block">
+                    $$ B(\bar{y}_l) \cong - \text{Cov}(\bar{x},b) \quad (7.3.2) $$
+                    <p>which will be negligible if the sample size is large.</p>
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Suppose</p>
+                    $$ \bar{y} = \bar{Y}(1 + e), \quad \bar{x} = \bar{X}(1 + e_1) \quad \text{and} \quad b = \beta(1 + e_2) $$
+                    <p>where \( E(e) = E(e_1) = E(e_2) = 0 \).</p>
+                    <p>Substituting these values in Eq. (7.3.1), we get</p>
+                    $$ \bar{y}_l = \bar{Y} + (e\bar{Y} - e_1\beta\bar{X}) - e_1e_2\beta\bar{X} \quad (7.3.3) $$
+                    <p>Therefore, the bias of the regression estimator is</p>
+                    $$ B(\bar{y}_l) = \bar{Y}E(e) - \beta\bar{X}E(e_1) - \beta\bar{X}E(e_1e_2) \quad (7.3.4) $$
+                    $$ = - \text{Cov}(\bar{x},b) $$
+                    <div class="explanation">\( \because \) since \( E(e) = E(e_1) = 0 \).</div>
+                </div>
+                <p>For large samples, usually \( \text{Cov}(\bar{x},b) \) decreases. It becomes zero if the joint distribution of \( y \) and \( x \) is a bivariate normal.</p>
+
+                <h3>Corollary 1</h3>
+                <p>If \( b = \widehat{R}( = \bar{y}/\bar{x}) \), the regression estimator \( \bar{y}_l \) reduces to the ratio estimator \( \widehat{Y}_R \) and its bias is given as in Eq. (7.3.2).</p>
+
+                <h3>Corollary 2</h3>
+                <p>If the sample is selected in the form of \( k \) independent sub-samples, then the bias can be unbiasedly estimated by</p>
+                <div class="derivation-block">
+                    $$ \widehat{B}(\bar{y}_l) \cong \frac{\sum_{i = 1}^k (\bar{x}_i - \bar{X})(b_i - b)}{(k - 1)} \quad (7.3.5) $$
+                </div>
+                <p>This estimator of bias can be used to get the unbiased regression estimator. A similar method has been discussed by Mickey (1959) and Williams (1961). The technique developed by Murthy (1962) can also be applied to make unbiased regression estimators.</p>
+
+                <h3>7.3.2 Sampling Variance of Regression Estimator</h3>
+                <p>When the sample size is large enough, the contribution of the term involving \( e_1e_2 \) in relation (7.3.3) is expected to be very small and the bias in the regression estimator \( \bar{y}_l \) reduces to zero. Therefore, if the terms of the second and higher orders are neglected, we can derive the sampling variance of the regression estimator.</p>
+
+                <h3>Theorem 7.3.2</h3>
+                <p>In simple random sampling, the large sample variance of the regression estimator is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_l) = V(\bar{y}) + \beta^2V(\bar{x}) - 2\beta \text{Cov}(\bar{y},\bar{x}) \quad (7.3.6) $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>If the term involving \( e_1e_2 \) in relation (7.3.3) is ignored, we have</p>
+                    $$ \bar{y}_l - \bar{Y} = e\bar{Y} - e_1\beta\bar{X} $$
+                    <p>Therefore,</p>
+                    $$ V(\bar{y}_l) = V(e\bar{Y} - e_1\beta\bar{X}) $$
+                    $$ = V(e\bar{Y}) + \beta^2V(e_1\bar{X}) - 2\beta \text{Cov}(e\bar{Y},e_1\bar{X}) $$
+                    $$ = V(\bar{y}) + \beta^2V(\bar{x}) - 2\beta \text{Cov}(\bar{y},\bar{x}) $$
+                    <div class="explanation">\( \because \) the variance of a linear combination elegantly separates into the individual variances and the covariance term scaled by \( \beta \).</div>
+                </div>
+
+                <h3>Corollary 1</h3>
+                <p>In simple random sampling, wor, the sampling variance of the regression estimator \( \bar{y}_l \) is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_l) = \frac{(1 - f)}{n}(S_y^2 + \beta^2S_x^2 - 2\beta S_{xy}) $$
+                    $$ = \frac{(1 - f)}{n}S_y^2(1 - \rho^2) \quad (7.3.7) $$
+                </div>
+                <p>This shows that if regression is linear and \( b \) is the least square estimate of \( \beta \) then the regression estimator \( \bar{y}_l \) is more precise than the difference estimator \( \bar{y}_D \). If the regression of \( y \) on \( x \) is perfectly linear, i.e. \( |\rho| = 1 \), the variance of the regression estimator becomes zero. Also if \( y \) and \( x \) are uncorrelated, the variance of \( \bar{y}_l \) reduces to that of the mean per unit estimator \( \bar{y} \).</p>
+
+                <h3>Corollary 2</h3>
+                <p>In large samples, an almost unbiased estimator of \( V(\bar{y}_l) \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_l) = \frac{(1 - f)}{n}(1 - r^2)s_y^2 = \frac{(1 - f)}{n}(s_y^2 - b^2s_x^2) $$
+                    $$ = \frac{(1 - f)}{n(n - 1)}\left[ \sum_{i = 1}^n (y_i - \bar{y})^2 - \frac{\left( \sum_{i = 1}^n (y_i - \bar{y})(x_i - \bar{x}) \right)^2}{\sum_{i = 1}^n (x_i - \bar{x})^2} \right] \quad (7.3.8) $$
+                </div>
+                <p>The last form in the above relation is good for computational purposes. According to standard regression theory, it is suggested that the divisor \( (n - 2) \) be used instead of \( (n - 1) \).</p>
+                <p>Williams (1963) has suggested a method for getting some precise unbiased regression estimators. A detailed discussion of these estimators is given by Rao (1969).</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>7.3 Regression Estimator (प्रतिगमन आकलक)</h2>
+                <p>Difference estimator पर चर्चा करते समय, यह देखा गया कि \( c \) को दिया जाने वाला optimum value \( \beta \) है, जहाँ \( \beta \), \( x \) पर \( y \) का regression coefficient है। आमतौर पर, \( \beta \) पहले से ज्ञात (known in advance) नहीं होता है और इसका value sample से estimate किया जाता है। मान लीजिए कि sample में प्रत्येक unit के लिए \( y_i \) और \( x_i \) प्राप्त किए जाते हैं, तो \( \beta \) का एक least square estimate है:</p>
+                <div class="derivation-block">
+                    $$ b = \frac{\sum (y_i - \bar{y})(x_i - \bar{x})}{\sum (x_i - \bar{x})^2} $$
+                </div>
+                <p>इस प्रकार, population mean \( \bar{Y} \) और population total \( Y \) के linear regression estimators इस प्रकार दिए गए हैं:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_l = \bar{y} + b(\bar{X} - \bar{x}) $$
+                    <p>और</p>
+                    $$ \widehat{Y}_l = N[\bar{y} + b(\bar{X} - \bar{x})] \quad (7.3.1) $$
+                    <p>यहाँ, \( \widehat{Y}_l = N\bar{y}_l \)</p>
+                </div>
+                <p>इसलिए, हम केवल linear regression estimator \( \bar{y}_l \) की theory प्रस्तुत करेंगे। चूँकि \( b \) एक random variate है, इसलिए regression estimator के bias और variance के लिए exact expressions निकालना मुश्किल है। इस section में, इसके bias और sampling variance के लिए large sample approximations दिए जाएंगे।</p>
+
+                <h3>7.3.1 Bias of Regression Estimator (प्रतिगमन आकलक का पूर्वाग्रह)</h3>
+                <p>Regression estimator consistent है क्योंकि, sample size \( n \) को population size \( N \) तक बढ़ाने पर, हमारे पास \( \bar{x} = \bar{X} \) होता है। अंततः (Ultimately), regression estimator \( \bar{Y} \) तक कम हो जाता है।</p>
+                <p>Regression estimator \( \bar{y}_l \) biased है क्योंकि (i) \( \beta \) का estimate आमतौर पर \( \text{Cov}(\bar{y},\bar{x}) \) के estimate और \( V(\bar{x}) \) के estimate का ratio (अनुपात) लेकर लगाया जाता है और (ii) इसमें दो estimates का product (गुणनफल) शामिल है, अर्थात \( b\bar{x} \)। Regression estimator का bias आमतौर पर मामूली (trivial) होगा और sample size बढ़ने पर कम हो जाएगा।</p>
+
+                <h3>Theorem 7.3.1</h3>
+                <p>Simple random sampling में, \( \bar{y}_l \) के bias का approximation इस प्रकार किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ B(\bar{y}_l) \cong - \text{Cov}(\bar{x},b) \quad (7.3.2) $$
+                    <p>जो नगण्य (negligible) होगा यदि sample size बड़ा है।</p>
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>मान लीजिए</p>
+                    $$ \bar{y} = \bar{Y}(1 + e), \quad \bar{x} = \bar{X}(1 + e_1) \quad \text{तथा} \quad b = \beta(1 + e_2) $$
+                    <p>जहाँ \( E(e) = E(e_1) = E(e_2) = 0 \) है।</p>
+                    <p>इन values को Eq. (7.3.1) में substitute करने पर, हमें मिलता है:</p>
+                    $$ \bar{y}_l = \bar{Y} + (e\bar{Y} - e_1\beta\bar{X}) - e_1e_2\beta\bar{X} \quad (7.3.3) $$
+                    <p>इसलिए, regression estimator का bias है:</p>
+                    $$ B(\bar{y}_l) = \bar{Y}E(e) - \beta\bar{X}E(e_1) - \beta\bar{X}E(e_1e_2) \quad (7.3.4) $$
+                    $$ = - \text{Cov}(\bar{x},b) $$
+                    <div class="explanation">\( \because \) चूँकि \( E(e) = E(e_1) = 0 \) है।</div>
+                </div>
+                <p>बड़े samples के लिए, आमतौर पर \( \text{Cov}(\bar{x},b) \) कम हो जाता है। यदि \( y \) और \( x \) का joint distribution bivariate normal है तो यह शून्य हो जाता है।</p>
+
+                <h3>Corollary 1</h3>
+                <p>यदि \( b = \widehat{R}( = \bar{y}/\bar{x}) \), तो regression estimator \( \bar{y}_l \) ratio estimator \( \widehat{Y}_R \) में बदल जाता है और इसका bias Eq. (7.3.2) में दिए गए अनुसार होता है।</p>
+
+                <h3>Corollary 2</h3>
+                <p>यदि sample को \( k \) independent sub-samples के रूप में select किया जाता है, तो bias का unbiasedly estimate इसके द्वारा लगाया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \widehat{B}(\bar{y}_l) \cong \frac{\sum_{i = 1}^k (\bar{x}_i - \bar{X})(b_i - b)}{(k - 1)} \quad (7.3.5) $$
+                </div>
+                <p>Bias के इस estimator का उपयोग unbiased regression estimator प्राप्त करने के लिए किया जा सकता है। Mickey (1959) और Williams (1961) द्वारा इसी तरह के method पर चर्चा की गई है। Unbiased regression estimators बनाने के लिए Murthy (1962) द्वारा विकसित technique को भी लागू किया जा सकता है。</p>
+
+                <h3>7.3.2 Sampling Variance of Regression Estimator (प्रतिगमन आकलक का प्रतिचयन प्रसरण)</h3>
+                <p>जब sample size काफी बड़ा होता है, तो relation (7.3.3) में \( e_1e_2 \) वाले term के योगदान के बहुत छोटे होने की उम्मीद होती है और regression estimator \( \bar{y}_l \) में bias शून्य हो जाता है। इसलिए, यदि second और higher orders के terms को neglected (अनदेखा) किया जाता है, तो हम regression estimator का sampling variance निकाल सकते हैं।</p>
+
+                <h3>Theorem 7.3.2</h3>
+                <p>Simple random sampling में, regression estimator का large sample variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_l) = V(\bar{y}) + \beta^2V(\bar{x}) - 2\beta \text{Cov}(\bar{y},\bar{x}) \quad (7.3.6) $$
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>यदि relation (7.3.3) में \( e_1e_2 \) वाले term को ignore किया जाता है, तो हमारे पास है:</p>
+                    $$ \bar{y}_l - \bar{Y} = e\bar{Y} - e_1\beta\bar{X} $$
+                    <p>इसलिए,</p>
+                    $$ V(\bar{y}_l) = V(e\bar{Y} - e_1\beta\bar{X}) $$
+                    $$ = V(e\bar{Y}) + \beta^2V(e_1\bar{X}) - 2\beta \text{Cov}(e\bar{Y},e_1\bar{X}) $$
+                    $$ = V(\bar{y}) + \beta^2V(\bar{x}) - 2\beta \text{Cov}(\bar{y},\bar{x}) $$
+                    <div class="explanation">\( \because \) linear combination का variance व्यक्तिगत variances और \( \beta \) द्वारा scaled covariance पद में शानदार ढंग से अलग हो जाता है।</div>
+                </div>
+
+                <h3>Corollary 1</h3>
+                <p>Simple random sampling, wor में, regression estimator \( \bar{y}_l \) का sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_l) = \frac{(1 - f)}{n}(S_y^2 + \beta^2S_x^2 - 2\beta S_{xy}) $$
+                    $$ = \frac{(1 - f)}{n}S_y^2(1 - \rho^2) \quad (7.3.7) $$
+                </div>
+                <p>यह दर्शाता है कि यदि regression linear है और \( b \), \( \beta \) का least square estimate है, तो regression estimator \( \bar{y}_l \) difference estimator \( \bar{y}_D \) की तुलना में अधिक precise है। यदि \( x \) पर \( y \) का regression पूरी तरह से linear है, यानी \( |\rho| = 1 \) है, तो regression estimator का variance शून्य हो जाता है। साथ ही यदि \( y \) और \( x \) uncorrelated हैं, तो \( \bar{y}_l \) का variance mean per unit estimator \( \bar{y} \) के variance के बराबर हो जाता है।</p>
+
+                <h3>Corollary 2</h3>
+                <p>बड़े samples में, \( V(\bar{y}_l) \) का एक almost unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_l) = \frac{(1 - f)}{n}(1 - r^2)s_y^2 = \frac{(1 - f)}{n}(s_y^2 - b^2s_x^2) $$
+                    $$ = \frac{(1 - f)}{n(n - 1)}\left[ \sum_{i = 1}^n (y_i - \bar{y})^2 - \frac{\left( \sum_{i = 1}^n (y_i - \bar{y})(x_i - \bar{x}) \right)^2}{\sum_{i = 1}^n (x_i - \bar{x})^2} \right] \quad (7.3.8) $$
+                </div>
+                <p>उपरोक्त relation में अंतिम रूप (last form) computational उद्देश्यों के लिए अच्छा है। Standard regression theory के अनुसार, यह सुझाव दिया जाता है कि \( (n - 1) \) के बजाय divisor (भाजक) \( (n - 2) \) का उपयोग किया जाए। Williams (1963) ने कुछ precise unbiased regression estimators प्राप्त करने के लिए एक method का सुझाव दिया है। इन estimators की विस्तृत चर्चा Rao (1969) द्वारा दी गई है।</p>
+            </div>
+        </section>
+
+        <section id="sec7-4" class="section-card">
+            <div class="english-content">
+                <h2>7.4 Comparison with the Mean per unit and Ratio Estimators</h2>
+                <p>For a large sample size, the variance for estimators of the population mean \( \bar{Y} \) can be written as</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \frac{(1 - f)}{n}S_y^2 \quad \text{(mean per unit)} $$
+                    $$ V(\widehat{Y}_R) = \frac{(1 - f)}{n}(S_y^2 - 2R\rho S_yS_x + R^2S_x^2) \quad \text{(ratio)} $$
+                    $$ V(\bar{y}_l) = \frac{(1 - f)}{n}(1 - \rho^2)S_y^2 \quad \text{(regression)} $$
+                </div>
+                <p>Firstly, comparing with the mean per unit estimator, we observe that the variance of the regression estimator is always smaller unless \( \rho = 0 \). In case \( \rho = 0 \), the variances for both are equal. The reduction in variance is large when \( \rho \) is high, and small when \( \rho \) is low.</p>
+                <p>Comparing next with the ratio estimator, it can be seen that the variance of the regression estimator is less than that of the ratio estimator if</p>
+                <div class="derivation-block">
+                    $$ (\rho S_y - RS_x)^2 > 0 $$
+                    <p>or</p>
+                    $$ (\beta - R)^2 > 0 \quad (7.4.1) $$
+                </div>
+                <p>which is always true unless \( \beta = R \). In this situation, both estimates have the same variance and this occurs only when the regression of \( y \) on \( x \) is a straight line through the origin.</p>
+
+                <p>This comparison suggests that all these estimators belong to the class of estimators</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \quad (7.4.2) $$
+                    <p>where \( z \) is a random variate having some values in a finite range.</p>
+                </div>
+                <p>By a suitable choice of \( z \), one can generate different types of estimators. If the variate \( z \) is zero, \( \bar{y}_z \) conforms to the mean per unit estimator, \( \bar{y} \). If \( z \) is a constant, \( \bar{y}_z \) becomes a difference estimator. When \( z \) is \( \bar{y}/\bar{x} \), the estimator \( \bar{y}_l \) becomes the ratio estimator \( \widehat{Y}_R \). Similarly, when \( z \) is equal to the sample regression coefficient \( b \), it becomes the linear regression estimator \( \bar{y}_l \). In large samples, the regression estimator is the most efficient and can be used if computational labour is not heavy.</p>
+
+                <p>The above comparisons suggest that the regression estimator is not always a proper choice although it provides a variance equal to or less than that of others. Some rules for a choice among alternatives are as follows:</p>
+                <ul>
+                    <li>When advance information on an appropriate value of \( \beta( = c) \) is available, then, with simple computations good results can be obtained with such values of \( c \) with the difference estimator.</li>
+                    <li>When the correlation coefficient between variates is nearly equal to the ratio of their standard deviations, i.e. \( \rho \cong \sigma_x/\sigma_y \), the difference estimator with \( c = 1 \) will attain equally precise results as the regression estimator.</li>
+                    <li>When the correlation coefficient between variates is nearly equal to the ratio of their coefficients of variation, i.e. \( \rho \cong C_x/C_y \), the ratio estimator will provide equally precise results as the regression estimator.</li>
+                    <li>When \( \rho \) is different from \( \sigma_x/\sigma_y \), the regression estimator should be preferred. In this situation, the difference estimator with \( c = 1 \) will not provide precise results.</li>
+                    <li>When \( \rho \) is different from \( C_x/C_y \), the regression estimator should be preferred. In this situation, the variance of the ratio estimator will be larger than that of the regression estimator.</li>
+                    <li>When computations for the regression estimator are heavy, time consuming and expensive, its use is recommended only if the gains from such computations are much more significant than the additional costs.</li>
+                </ul>
+
+                <h3 style="margin-top: 40px;">Example 7.1</h3>
+                <p>Using the data given in Example 6.1, estimate the total number of milch animals in 117 villages of zone A by the method of regression estimation. Also, compare its precision with the ratio estimate and mean per unit estimate.</p>
+                <div class="derivation-block">
+                    <p>Here,</p>
+                    $$ N = 117, \quad n = 17 $$
+                    $$ \Sigma x_i = 19381, \quad \Sigma y_i = 19266 $$
+                    $$ \bar{X} = 143968 $$
+                    $$ \bar{x} = 1140.06, \quad \bar{y} = 1133.29 $$
+                    <p>Hence,</p>
+                    $$ s_x^2 = 458.56, \quad s_y^2 = 287.85, \quad s_{xy} = 262.86 $$
+                    $$ b = s_{xy}/s_x^2 = 0.5732, \quad r = s_{xy}/s_xs_y = 0.7235 $$
+                    <p>Regression estimate of the total number of milch animals is obtained as</p>
+                    $$ \widehat{Y}_l = N\bar{y}_l = N[\bar{y} + b(\bar{X} - \bar{x})] $$
+                    $$ = 117[1133.29 - 0.5732(1140.06 - 1230.49)] $$
+                    $$ = 139263 $$
+                    <p>and an estimate of the variance of \( \widehat{Y}_l \) is given as</p>
+                    $$ v(\widehat{Y}_l) = \frac{(1 - f)N^2}{n}(1 - r^2)s_y^2 $$
+                    $$ = \frac{100 \times 117^2}{17}150.6757 = 103,700 $$
+                    <p>From Example 6.1,</p>
+                    $$ v(\widehat{Y}_R) = 118,890 \quad \text{and} \quad v(\widehat{Y}) = 129,285 $$
+                    <p>Hence, the relative precision of the regression estimate over the mean per unit estimate is</p>
+                    $$ R.P. = \left\{ \frac{v(\widehat{Y})}{v(\widehat{Y}_l)} \right\} \times 100 = 124.67\% $$
+                    <p>Similarly, the relative precision of the regression estimate over the ratio estimate is given by</p>
+                    $$ R.P. = \left\{ \frac{v(\widehat{Y}_R)}{v(\widehat{Y}_l)} \right\} \times 100 = 114.64\% $$
+                </div>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>7.4 Comparison with the Mean per unit and Ratio Estimators (प्रति इकाई माध्य और अनुपात आकलकों के साथ तुलना)</h2>
+                <p>बड़े sample size के लिए, population mean \( \bar{Y} \) के estimators का variance इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \frac{(1 - f)}{n}S_y^2 \quad \text{(mean per unit)} $$
+                    $$ V(\widehat{Y}_R) = \frac{(1 - f)}{n}(S_y^2 - 2R\rho S_yS_x + R^2S_x^2) \quad \text{(ratio)} $$
+                    $$ V(\bar{y}_l) = \frac{(1 - f)}{n}(1 - \rho^2)S_y^2 \quad \text{(regression)} $$
+                </div>
+                <p>सबसे पहले, mean per unit estimator के साथ तुलना करने पर, हम देखते हैं कि regression estimator का variance हमेशा छोटा होता है जब तक कि \( \rho = 0 \) न हो। \( \rho = 0 \) होने पर, दोनों के variances बराबर होते हैं। Variance में कमी (reduction) तब बड़ी होती है जब \( \rho \) उच्च (high) होता है, और तब छोटी होती है जब \( \rho \) निम्न (low) होता है।</p>
+                <p>आगे ratio estimator के साथ तुलना करने पर, यह देखा जा सकता है कि regression estimator का variance ratio estimator के variance से कम है यदि:</p>
+                <div class="derivation-block">
+                    $$ (\rho S_y - RS_x)^2 > 0 $$
+                    <p>या</p>
+                    $$ (\beta - R)^2 > 0 \quad (7.4.1) $$
+                </div>
+                <p>जो हमेशा सत्य है जब तक कि \( \beta = R \) न हो। इस स्थिति में, दोनों estimates का variance समान होता है और यह तभी होता है जब \( x \) पर \( y \) का regression origin (मूल बिंदु) से होकर गुजरने वाली एक straight line (सीधी रेखा) हो।</p>
+
+                <p>यह तुलना सुझाव देती है कि ये सभी estimators इस class of estimators से संबंधित हैं:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \quad (7.4.2) $$
+                    <p>जहाँ \( z \) एक random variate है जिसके कुछ values एक finite range में हैं।</p>
+                </div>
+                <p>\( z \) के एक उपयुक्त विकल्प (suitable choice) द्वारा, कोई भी विभिन्न प्रकार के estimators उत्पन्न कर सकता है। यदि variate \( z \) शून्य है, तो \( \bar{y}_z \), mean per unit estimator \( \bar{y} \) के अनुरूप (conforms) हो जाता है। यदि \( z \) एक constant है, तो \( \bar{y}_z \) एक difference estimator बन जाता है। जब \( z \), \( \bar{y}/\bar{x} \) होता है, तो estimator \( \bar{y}_l \) ratio estimator \( \widehat{Y}_R \) बन जाता है। इसी तरह, जब \( z \) sample regression coefficient \( b \) के बराबर होता है, तो यह linear regression estimator \( \bar{y}_l \) बन जाता है। बड़े samples में, regression estimator सबसे efficient होता है और इसका उपयोग किया जा सकता है यदि computational श्रम (labour) भारी नहीं है।</p>
+
+                <p>उपरोक्त तुलनाएं बताती हैं कि regression estimator हमेशा एक उचित विकल्प (proper choice) नहीं है, हालांकि यह दूसरों के बराबर या उससे कम variance प्रदान करता है। विकल्पों (alternatives) के बीच चयन के लिए कुछ नियम इस प्रकार हैं:</p>
+                <ul>
+                    <li>जब \( \beta( = c) \) के एक उपयुक्त value पर अग्रिम जानकारी (advance information) उपलब्ध हो, तो difference estimator के साथ \( c \) के ऐसे values के साथ सरल गणना (simple computations) से अच्छे परिणाम प्राप्त किए जा सकते हैं।</li>
+                    <li>जब variates के बीच correlation coefficient उनके standard deviations के अनुपात के लगभग बराबर हो, यानी \( \rho \cong \sigma_x/\sigma_y \) हो, तो \( c = 1 \) के साथ difference estimator regression estimator के समान ही precise results प्राप्त करेगा।</li>
+                    <li>जब variates के बीच correlation coefficient उनके coefficients of variation के अनुपात के लगभग बराबर हो, यानी \( \rho \cong C_x/C_y \) हो, तो ratio estimator regression estimator के समान ही precise results प्रदान करेगा।</li>
+                    <li>जब \( \rho \), \( \sigma_x/\sigma_y \) से भिन्न हो, तो regression estimator को प्राथमिकता दी जानी चाहिए। इस स्थिति में, \( c = 1 \) के साथ difference estimator precise results प्रदान नहीं करेगा।</li>
+                    <li>जब \( \rho \), \( C_x/C_y \) से भिन्न हो, तो regression estimator को प्राथमिकता दी जानी चाहिए। इस स्थिति में, ratio estimator का variance regression estimator के variance से बड़ा होगा।</li>
+                    <li>जब regression estimator के लिए computations भारी, समय लेने वाली और महँगी (expensive) हों, तो इसके उपयोग की अनुशंसा (recommended) केवल तभी की जाती है जब ऐसी computations से होने वाले लाभ (gains) अतिरिक्त लागतों (additional costs) की तुलना में कहीं अधिक महत्वपूर्ण हों।</li>
+                </ul>
+
+                <h3 style="margin-top: 40px;">उदाहरण 7.1 (Example 7.1)</h3>
+                <p>Example 6.1 में दिए गए data का उपयोग करते हुए, estimation की regression method द्वारा zone A के 117 गाँवों में दुधारू पशुओं (milch animals) की कुल संख्या का estimate लगाएँ। साथ ही, इसकी precision की तुलना ratio estimate और mean per unit estimate से करें।</p>
+                <div class="derivation-block">
+                    <p>यहाँ,</p>
+                    $$ N = 117, \quad n = 17 $$
+                    $$ \Sigma x_i = 19381, \quad \Sigma y_i = 19266 $$
+                    $$ \bar{X} = 143968 $$
+                    $$ \bar{x} = 1140.06, \quad \bar{y} = 1133.29 $$
+                    <p>अतः,</p>
+                    $$ s_x^2 = 458.56, \quad s_y^2 = 287.85, \quad s_{xy} = 262.86 $$
+                    $$ b = s_{xy}/s_x^2 = 0.5732, \quad r = s_{xy}/s_xs_y = 0.7235 $$
+                    <p>दुधारू पशुओं की कुल संख्या का Regression estimate इस प्रकार प्राप्त होता है:</p>
+                    $$ \widehat{Y}_l = N\bar{y}_l = N[\bar{y} + b(\bar{X} - \bar{x})] $$
+                    $$ = 117[1133.29 - 0.5732(1140.06 - 1230.49)] $$
+                    $$ = 139263 $$
+                    <p>और \( \widehat{Y}_l \) के variance का एक estimate इस प्रकार दिया गया है:</p>
+                    $$ v(\widehat{Y}_l) = \frac{(1 - f)N^2}{n}(1 - r^2)s_y^2 $$
+                    $$ = \frac{100 \times 117^2}{17}150.6757 = 103,700 $$
+                    <p>Example 6.1 से,</p>
+                    $$ v(\widehat{Y}_R) = 118,890 \quad \text{और} \quad v(\widehat{Y}) = 129,285 $$
+                    <p>इसलिए, mean per unit estimate पर regression estimate की relative precision है:</p>
+                    $$ R.P. = \left\{ \frac{v(\widehat{Y})}{v(\widehat{Y}_l)} \right\} \times 100 = 124.67\% $$
+                    <p>इसी तरह, ratio estimate पर regression estimate की relative precision इस प्रकार दी गई है:</p>
+                    $$ R.P. = \left\{ \frac{v(\widehat{Y}_R)}{v(\widehat{Y}_l)} \right\} \times 100 = 114.64\% $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec7-5" class="section-card">
+            <div class="english-content">
+                <h2>7.5 Regression Estimators in Stratified Sampling</h2>
+                <p>When the population is stratified into \( k \) strata and, in the \( m \)-th stratum, \( n_m \) units are selected from \( N_m \) units with simple random sampling, wor, like the ratio estimators, two regression estimators are possible. One is the separate regression estimator which is obtained by estimating the regression coefficients for each stratum separately. Another is the combined regression estimator which is obtained by getting a common (pooled) regression coefficient for all the strata.</p>
+
+                <h3>7.5.1 Separate Regression Estimator</h3>
+                <p>A separate regression estimator \( \bar{y}_{ls} \) (\( s \) for separate) in stratified sampling may be defined as</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{ls} = \sum_{m = 1}^k W_m[\bar{y}_m + b_m(\bar{X}_m - \bar{x}_m)] \quad (7.5.1) $$
+                </div>
+                <p>where \( W_m \), \( \bar{y}_m \), \( \bar{x}_m \), \( \bar{X}_m \) and \( b_m \) are the corresponding terms for the \( m \)-th stratum. Like the usual regression estimator, \( \bar{y}_{ls} \) is biased. If \( b_m \) is chosen in advance, and not based on the sample values, \( \bar{y}_{ls} \) is an unbiased estimator of \( \bar{Y} \).</p>
+
+                <h3>Theorem 7.5.1</h3>
+                <p>If sampling is independent in different strata and sample size is large enough in each stratum, then \( \bar{y}_{ls} \) is an almost unbiased estimator. To the first order of approximation, its variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{ls}) = \sum_{m = 1}^k W_m^2\frac{(1 - f_m)}{n_m}(S_{y_m}^2 - 2b_m\rho_mS_{y_m}S_{x_m} + b_m^2S_{x_m}^2) \quad (7.5.2) $$
+                </div>
+                <p>The proof is obvious.</p>
+
+                <h3>Corollary 1</h3>
+                <p>If \( b_m = \beta_m \), the true regression coefficient in the \( m \)-th stratum is satisfied and the variance may be written as</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{ls}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m}(1 - \rho_m^2)S_{y_m}^2 \quad (7.5.3) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>Provided the sample size \( n_m \) is large in all strata, an estimator of variance is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{ls}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m(n_m - 1)}\left[ \sum_{j = 1}^{n_m} (y_{mj} - \bar{y}_m)^2 - b_m^2\sum_{j = 1}^{n_m} (x_{mj} - \bar{x}_m)^2 \right] \quad (7.5.4) $$
+                </div>
+                <p>The estimator \( \bar{y}_{ls} \) also suffers from the same drawback as the corresponding ratio estimator, the ratio of the bias to its standard error becoming quite large. Since the leading terms in bias come from the quadratic regression of \( y_m \) on \( x_m \), this may be of the same sign in all strata. Hence, the overall bias in the estimator \( \bar{y}_{ls} \) may be very large.</p>
+
+                <h3>7.5.2 Combined Regression Estimator</h3>
+                <p>A combined regression estimator \( \bar{y}_{lc} \) (\( c \) for combined) in stratified sampling may be defined as</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{lc} = \bar{y}_{st} + b_c(\bar{X} - \bar{x}_{st}) \quad (7.5.5) $$
+                </div>
+                <p>where \( \bar{y}_{st} \) and \( \bar{x}_{st} \) are the stratified sample means of \( y \) and \( x \) variates, and \( b_c \) is the pooled estimate obtained by</p>
+                <div class="derivation-block">
+                    $$ b_c = \frac{\sum_{m = 1}^k \sum_{j = 1}^{n_m} (y_{mj} - \bar{y}_m)(x_{mj} - \bar{x}_m)}{\sum_{m = 1}^k \sum_{j = 1}^{n_m} (x_{mj} - \bar{x}_m)^2} $$
+                </div>
+                <p>The important point is to obtain the value of \( b_c \). An easier method is to select a few extreme values of \( x \), some high and some low. A straight line through the average values is drawn. The slope of this line is taken as the estimate of \( b_c \), which is given by \( (y_1 - y_2)/(x_1 - x_2) \), where \( (x_1,y_1) \) and \( (x_2,y_2) \) are two points on the line.</p>
+                <p>It can be shown that the combined regression estimator \( \bar{y}_{lc} \) is also a biased estimator of \( \bar{Y} \). It is analogous to \( \widehat{Y}_{Rc} \). All the results can be drawn on similar lines.</p>
+
+                <h3>Theorem 7.5.2</h3>
+                <p>If sampling is independent in different strata and sample size is large enough in each stratum, the variance of \( \bar{y}_{lc} \) is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{lc}) = \sum_{m = 1}^k W_m^2\frac{(1 - f_m)}{n_m}(S_{y_m}^2 - 2b_c\rho_mS_{y_m}S_{x_m} + b_c^2S_{x_m}^2) \quad (7.5.6) $$
+                </div>
+                <p>The proof is obvious.</p>
+
+                <h3>Corollary 1</h3>
+                <p>If \( \beta_m = \frac{\rho_mS_{y_m}}{S_{x_m}} \) and weight \( a_m = \frac{W_m^2(1 - f_m)}{n_m}S_{x_m}^2 \), a combined regression coefficient, \( \beta_c = \frac{\sum a_m\beta_m}{\sum a_m} \) minimizes the variance of \( \bar{y}_{lc} \).</p>
+
+                <h3>Corollary 2</h3>
+                <p>Provided sample size \( n_m \) is large in all strata, the estimator of variance is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{lc}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m(n_m - 1)}\sum_{j = 1}^{n_m} [(y_{mj} - \bar{y}_m) - b_c(x_{mj} - \bar{x}_m)]^2 \quad (7.5.7) $$
+                </div>
+                <p>The estimator \( \bar{y}_{lc} \) also suffers from the same defect as the corresponding ratio estimator. This estimator will not be appropriate when there is reason to believe that the regression coefficient \( b_m \) varies considerably from stratum to stratum.</p>
+
+                <h3>7.5.3 Comparison of Combined and Separate Estimators</h3>
+                <p>Some caution is required when deciding whether the separate or combined regression estimator is to be used at any specific situation. The bias in the separate regression estimator is likely to be larger when sample size in each stratum is small. On the other hand, the defect of the combined estimator is that its variance is inflated if the population regression coefficients differ from stratum to stratum. If the regressions are approximately linear and the regression coefficients appear to be the same in all strata, use of the combined regression estimator is preferred. If the regressions are linear but the coefficients differ from stratum to stratum, it is advisable to adopt the separate estimator. Though the separate regression estimator is likely to be more efficient than the combined regression estimator, the latter is likely to have smaller bias.</p>
+
+                <h3 style="margin-top: 40px;">Example 7.2</h3>
+                <p>With the data given in Example 6.2, estimate the total number of trees in the districts by the regression method of estimation and compare its precision.</p>
+                <div class="derivation-block">
+                    <p>We can use the calculations and results obtained in the above mentioned example. Also,</p>
+                    $$ b_1 = 62.93, \quad b_2 = 43.53, \quad b_3 = 36.56 $$
+
+                    <p><strong>(i) Separate Regression Estimate</strong></p>
+                    <p>The estimate of the total number of trees is given by</p>
+                    $$ \widehat{Y}_{ls} = \sum_{m = 1}^k N_m[\bar{y}_m + b_m(\bar{X}_m - \bar{x}_m)] = 2,672,911 $$
+                    <p>and</p>
+                    $$ v(\widehat{Y}_{ls}) = \sum_{m = 1}^k N_m^2\frac{(1 - f_m)}{n_m}(s_{y_m}^2 - b_m^2s_{x_m}^2) $$
+                    $$ = \sum_{m = 1}^k N_m^2\left( \frac{1}{n_m} - \frac{1}{N_m} \right)(s_{y_m}^2 - b_m^2s_{x_m}^2) $$
+                    $$ = 1,870,633,332 $$
+                    <p>Therefore, efficiency over ratio estimate is given by</p>
+                    $$ \left( \frac{2,441,137,835}{1,870,633,332} \right) \times 100 = 130.50\% $$
+
+                    <p><strong>(ii) Combined Regression Estimate</strong></p>
+                    <p>An estimate of the total number of trees is given by</p>
+                    $$ \widehat{Y}_{lc} = N\bar{y}_{lc} = N[\bar{y}_{st} + b_c(\bar{X} - \bar{x}_{st})] = 2,643,949 $$
+                    <p>and</p>
+                    $$ v(\widehat{Y}_{lc}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m(n_m - 1)}\sum_{j = 1}^{n_m} [(y_{mj} - \bar{y}_m) - b_c(x_{mj} - \bar{x}_m)]^2 $$
+                    $$ = 2,020,917,640 $$
+                    <p>Therefore, efficiency over ratio estimate</p>
+                    $$ = \frac{6,019,519,627}{2,020,917,640} \times 100 = 297.86\% $$
+                    <p>Similarly, the efficiency of the separate regression estimate \( (\widehat{Y}_{ls}) \) over the combined regression estimate \( (\widehat{Y}_{lc}) \) is</p>
+                    $$ RE = \frac{2,020,917,640}{1,870,633,332} \times 100 = 108.03\% $$
+                </div>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>7.5 Regression Estimators in Stratified Sampling (स्तरीकृत प्रतिचयन में प्रतिगमन आकलक)</h2>
+                <p>जब population को \( k \) strata में stratified किया जाता है और, \( m \)-वें stratum में, simple random sampling, wor के साथ \( N_m \) units से \( n_m \) units select की जाती हैं, तो ratio estimators की तरह, दो regression estimators संभव हैं। एक separate regression estimator है जो प्रत्येक stratum के लिए अलग-अलग regression coefficients का estimate लगाकर प्राप्त किया जाता है। दूसरा combined regression estimator है जो सभी strata के लिए एक सामान्य (pooled) regression coefficient प्राप्त करके प्राप्त किया जाता है।</p>
+
+                <h3>7.5.1 Separate Regression Estimator (अलग प्रतिगमन आकलक)</h3>
+                <p>Stratified sampling में एक separate regression estimator \( \bar{y}_{ls} \) (\( s \), separate के लिए) को इस प्रकार परिभाषित किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{ls} = \sum_{m = 1}^k W_m[\bar{y}_m + b_m(\bar{X}_m - \bar{x}_m)] \quad (7.5.1) $$
+                </div>
+                <p>जहाँ \( W_m \), \( \bar{y}_m \), \( \bar{x}_m \), \( \bar{X}_m \) और \( b_m \), \( m \)-वें stratum के लिए संबंधित terms हैं। सामान्य regression estimator की तरह, \( \bar{y}_{ls} \) biased है। यदि \( b_m \) को sample values के आधार पर नहीं, बल्कि पहले से (in advance) चुना जाता है, तो \( \bar{y}_{ls} \), \( \bar{Y} \) का एक unbiased estimator है।</p>
+
+                <h3>Theorem 7.5.1</h3>
+                <p>यदि विभिन्न strata में sampling independent है और प्रत्येक stratum में sample size काफी बड़ा है, तो \( \bar{y}_{ls} \) लगभग unbiased estimator है। First order of approximation तक, इसका variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{ls}) = \sum_{m = 1}^k W_m^2\frac{(1 - f_m)}{n_m}(S_{y_m}^2 - 2b_m\rho_mS_{y_m}S_{x_m} + b_m^2S_{x_m}^2) \quad (7.5.2) $$
+                </div>
+                <p>Proof स्पष्ट है।</p>
+
+                <h3>Corollary 1</h3>
+                <p>यदि \( b_m = \beta_m \) है, तो \( m \)-वें stratum में true regression coefficient संतुष्ट (satisfied) होता है और variance को इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{ls}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m}(1 - \rho_m^2)S_{y_m}^2 \quad (7.5.3) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>बशर्ते (Provided) सभी strata में sample size \( n_m \) बड़ा हो, variance का एक estimator इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{ls}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m(n_m - 1)}\left[ \sum_{j = 1}^{n_m} (y_{mj} - \bar{y}_m)^2 - b_m^2\sum_{j = 1}^{n_m} (x_{mj} - \bar{x}_m)^2 \right] \quad (7.5.4) $$
+                </div>
+                <p>Estimator \( \bar{y}_{ls} \) भी संबंधित ratio estimator जैसी ही कमी (drawback) से ग्रस्त है, bias और उसकी standard error का अनुपात काफी बड़ा हो जाता है। चूँकि bias में leading terms \( x_m \) पर \( y_m \) के quadratic regression से आते हैं, यह सभी strata में समान चिह्न (sign) का हो सकता है। इसलिए, estimator \( \bar{y}_{ls} \) में समग्र (overall) bias बहुत बड़ा हो सकता है।</p>
+
+                <h3>7.5.2 Combined Regression Estimator (संयुक्त प्रतिगमन आकलक)</h3>
+                <p>Stratified sampling में एक combined regression estimator \( \bar{y}_{lc} \) (\( c \), combined के लिए) को इस प्रकार परिभाषित किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{lc} = \bar{y}_{st} + b_c(\bar{X} - \bar{x}_{st}) \quad (7.5.5) $$
+                </div>
+                <p>जहाँ \( \bar{y}_{st} \) और \( \bar{x}_{st} \), \( y \) और \( x \) variates के stratified sample means हैं, और \( b_c \) pooled estimate है जिसे इसके द्वारा प्राप्त किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ b_c = \frac{\sum_{m = 1}^k \sum_{j = 1}^{n_m} (y_{mj} - \bar{y}_m)(x_{mj} - \bar{x}_m)}{\sum_{m = 1}^k \sum_{j = 1}^{n_m} (x_{mj} - \bar{x}_m)^2} $$
+                </div>
+                <p>महत्वपूर्ण बिंदु \( b_c \) का value प्राप्त करना है। एक आसान तरीका \( x \) के कुछ extreme values (चरम मानों) को select करना है, कुछ उच्च और कुछ निम्न। Average values के माध्यम से एक straight line खींची जाती है। इस line के slope (ढलान) को \( b_c \) का estimate माना जाता है, जो \( (y_1 - y_2)/(x_1 - x_2) \) द्वारा दिया जाता है, जहाँ \( (x_1,y_1) \) और \( (x_2,y_2) \) line पर दो बिंदु हैं।</p>
+                <p>यह दिखाया जा सकता है कि combined regression estimator \( \bar{y}_{lc} \) भी \( \bar{Y} \) का एक biased estimator है। यह \( \widehat{Y}_{Rc} \) के समान (analogous) है। सभी results समान तर्ज पर निकाले जा सकते हैं।</p>
+
+                <h3>Theorem 7.5.2</h3>
+                <p>यदि विभिन्न strata में sampling independent है और प्रत्येक stratum में sample size काफी बड़ा है, तो \( \bar{y}_{lc} \) का variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{lc}) = \sum_{m = 1}^k W_m^2\frac{(1 - f_m)}{n_m}(S_{y_m}^2 - 2b_c\rho_mS_{y_m}S_{x_m} + b_c^2S_{x_m}^2) \quad (7.5.6) $$
+                </div>
+                <p>Proof स्पष्ट है।</p>
+
+                <h3>Corollary 1</h3>
+                <p>यदि \( \beta_m = \frac{\rho_mS_{y_m}}{S_{x_m}} \) और weight \( a_m = \frac{W_m^2(1 - f_m)}{n_m}S_{x_m}^2 \) है, तो एक combined regression coefficient, \( \beta_c = \frac{\sum a_m\beta_m}{\sum a_m} \), \( \bar{y}_{lc} \) के variance को minimize करता है।</p>
+
+                <h3>Corollary 2</h3>
+                <p>बशर्ते सभी strata में sample size \( n_m \) बड़ा हो, variance का estimator इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_{lc}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m(n_m - 1)}\sum_{j = 1}^{n_m} [(y_{mj} - \bar{y}_m) - b_c(x_{mj} - \bar{x}_m)]^2 \quad (7.5.7) $$
+                </div>
+                <p>Estimator \( \bar{y}_{lc} \) भी संबंधित ratio estimator के समान ही दोष (defect) से ग्रस्त है। यह estimator तब उपयुक्त नहीं होगा जब यह मानने का कारण हो कि regression coefficient \( b_m \) stratum से stratum में काफी भिन्न होता है।</p>
+
+                <h3>7.5.3 Comparison of Combined and Separate Estimators (संयुक्त और अलग आकलकों की तुलना)</h3>
+                <p>यह तय करते समय कुछ सावधानी (caution) की आवश्यकता होती है कि किसी विशिष्ट स्थिति (specific situation) में separate या combined regression estimator का उपयोग किया जाना चाहिए या नहीं। Separate regression estimator में bias तब बड़ा होने की संभावना होती है जब प्रत्येक stratum में sample size छोटा हो। दूसरी ओर, combined estimator का दोष यह है कि इसका variance बढ़ जाता है यदि population regression coefficients stratum से stratum में भिन्न होते हैं। यदि regressions लगभग linear हैं और regression coefficients सभी strata में समान प्रतीत होते हैं, तो combined regression estimator का उपयोग पसंद किया जाता है। यदि regressions linear हैं लेकिन coefficients stratum से stratum में भिन्न हैं, तो separate estimator को अपनाना उचित (advisable) है। यद्यपि separate regression estimator के combined regression estimator की तुलना में अधिक efficient होने की संभावना है, लेकिन बाद वाले (latter) में bias कम होने की संभावना है।</p>
+
+                <h3 style="margin-top: 40px;">उदाहरण 7.2 (Example 7.2)</h3>
+                <p>Example 6.2 में दिए गए data के साथ, estimation की regression method द्वारा जिलों में पेड़ों की कुल संख्या का estimate लगाएँ और इसकी precision की तुलना करें।</p>
+                <div class="derivation-block">
+                    <p>हम उपर्युक्त (above mentioned) उदाहरण में प्राप्त calculations और results का उपयोग कर सकते हैं। साथ ही,</p>
+                    $$ b_1 = 62.93, \quad b_2 = 43.53, \quad b_3 = 36.56 $$
+
+                    <p><strong>(i) Separate Regression Estimate</strong></p>
+                    <p>पेड़ों की कुल संख्या का estimate इस प्रकार दिया गया है:</p>
+                    $$ \widehat{Y}_{ls} = \sum_{m = 1}^k N_m[\bar{y}_m + b_m(\bar{X}_m - \bar{x}_m)] = 2,672,911 $$
+                    <p>और</p>
+                    $$ v(\widehat{Y}_{ls}) = \sum_{m = 1}^k N_m^2\frac{(1 - f_m)}{n_m}(s_{y_m}^2 - b_m^2s_{x_m}^2) $$
+                    $$ = \sum_{m = 1}^k N_m^2\left( \frac{1}{n_m} - \frac{1}{N_m} \right)(s_{y_m}^2 - b_m^2s_{x_m}^2) $$
+                    $$ = 1,870,633,332 $$
+                    <p>इसलिए, ratio estimate पर efficiency इस प्रकार दी गई है:</p>
+                    $$ \left( \frac{2,441,137,835}{1,870,633,332} \right) \times 100 = 130.50\% $$
+
+                    <p><strong>(ii) Combined Regression Estimate</strong></p>
+                    <p>पेड़ों की कुल संख्या का एक estimate इस प्रकार दिया गया है:</p>
+                    $$ \widehat{Y}_{lc} = N\bar{y}_{lc} = N[\bar{y}_{st} + b_c(\bar{X} - \bar{x}_{st})] = 2,643,949 $$
+                    <p>और</p>
+                    $$ v(\widehat{Y}_{lc}) = \sum_{m = 1}^k \frac{W_m^2(1 - f_m)}{n_m(n_m - 1)}\sum_{j = 1}^{n_m} [(y_{mj} - \bar{y}_m) - b_c(x_{mj} - \bar{x}_m)]^2 $$
+                    $$ = 2,020,917,640 $$
+                    <p>इसलिए, ratio estimate पर efficiency</p>
+                    $$ = \frac{6,019,519,627}{2,020,917,640} \times 100 = 297.86\% $$
+                    <p>इसी तरह, combined regression estimate \( (\widehat{Y}_{lc}) \) पर separate regression estimate \( (\widehat{Y}_{ls}) \) की efficiency है:</p>
+                    $$ RE = \frac{2,020,917,640}{1,870,633,332} \times 100 = 108.03\% $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec7-6" class="section-card">
+            <div class="english-content">
+                <h2>7.6 Multi-variate Regression Estimator</h2>
+                <p>Frequently, data on more than one auxiliary variate are available and it is considered important to make use of all available information. If \( \bar{y} \) is the usual estimator of the mean of the main variate, \( \bar{x}_i \) is an unbiased estimator of the mean \( \bar{X}_i \) of the auxiliary variate \( x_i \) and \( \beta_i \) is the regression coefficient of \( y \) on \( x_i \), \( i = 1,2,...,k \).</p>
+
+                <p>An estimator of the form defined by</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{st_i} = \bar{y} + \sum_{i = 1}^k \beta_i(\bar{X}_i - \bar{x}_i) \quad (7.6.1) $$
+                </div>
+                <p>is used as a multi-variate estimator.</p>
+
+                <p>Des Raj (1965) proposed another difference estimator of the form</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{ml_z} = \sum_{i = 1}^k w_i[\bar{y} + \beta_i(\bar{X}_i - \bar{x}_i)] \quad (7.6.2) $$
+                    <p>where \( \beta_i \) are given regression coefficients and \( w_i \) are the weights adding up to unity.</p>
+                </div>
+
+                <p>For simplicity, we shall consider the case of two \( x \)-variates. In this case, the estimator may be written as</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{l_2} = \bar{y} + w_1\beta_1(\bar{X}_1 - \bar{x}_1) + w_2\beta_2(\bar{X}_2 - \bar{x}_2) \quad (7.6.3) $$
+                </div>
+                <p>with its variance given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{l_2}) = \frac{(1 - f)}{n}[V_y + w_1^2\beta_1^2V_{x_1} + w_2^2\beta_2^2V_{x_2} - 2\beta_1w_1\text{Cov}(y,x_1) - 2\beta_2w_2\text{Cov}(y,x_2) + 2\beta_1\beta_2w_1w_2\text{Cov}(x_1,x_2)] $$
+                    $$ = \frac{(1 - f)}{n}[A_{00} + w_1^2A_{11} + w_2^2A_{22} - 2w_1A_{01} - 2w_2A_{02} + 2w_1w_2A_{12}] \quad (7.6.4) $$
+                    <p>where \( A_{00} \), \( A_{11} \), ... are given in relation (6.11.4).</p>
+                </div>
+
+                <p>Putting \( w_2 = 1 - w_1 \) in the variance expression above, differentiating with respect to \( w_1 \) and equating the result to zero, we have the best weights given by</p>
+                <div class="derivation-block">
+                    $$ w_1 = \frac{(A_{22} - A_{12})}{(A_{11} + A_{22} - 2A_{12})} $$
+                    <p>and</p>
+                    $$ w_2 = 1 - w_1 \quad (7.6.5) $$
+                </div>
+
+                <p>By substituting the values of these weights in the variance expression, we have the minimum variance</p>
+                <div class="derivation-block">
+                    $$ V_{\min}(\bar{y}_{l_2}) = \frac{(1 - f)}{n}\frac{A_{11}A_{22} - (A_{12})^2}{A_{11} + A_{22} - 2A_{12}} \quad (7.6.6) $$
+                </div>
+
+                <p>Let us assume that \( \rho_{yx_1} = \rho_{yx_2} = \rho_0 \) and the correlation coefficient between \( x_1 \) and \( x_2 \) is \( \rho \). If \( C_{x_1} = C_{x_2} = C_0 \) and the coefficient of variation of \( y \) is \( c \), the optimum values of weights are given by</p>
+                <div class="derivation-block">
+                    $$ w_1 = w_2 = 1/2 $$
+                </div>
+                <p>By substituting these values in the variance, we have</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{l_2}) = \frac{(1 - f)\bar{Y}^2}{n}\left[ (1 + \rho)\frac{c^2}{2} + C_0(C_0 - 2c\rho_0) \right] \quad (7.6.7) $$
+                </div>
+
+                <p>Further, if only one \( x \) variate is used, the variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_0) = \frac{(1 - f)\bar{Y}^2}{n}[c^2 + C_0^2 - 2\rho_0cC_0] \quad (7.6.8) $$
+                </div>
+
+                <p>Comparing relations (7.6.7) and (7.6.8), we find it always better to use the second variate if \( \rho \neq 1 \). Similarly, when no \( x \) variate is used and a comparison is made with the case of one \( x \) variate, it is better to use one \( x \) variate if \( \rho_0 > c/2C_0 \).</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>7.6 Multi-variate Regression Estimator (बहुभिन्नरूपी प्रतिगमन आकलक)</h2>
+                <p>अक्सर, एक से अधिक auxiliary variate पर data उपलब्ध होते हैं और सभी उपलब्ध जानकारी का उपयोग करना महत्वपूर्ण माना जाता है। यदि \( \bar{y} \), main variate के mean का सामान्य estimator है, \( \bar{x}_i \), auxiliary variate \( x_i \) के mean \( \bar{X}_i \) का एक unbiased estimator है और \( \beta_i \), \( x_i \) पर \( y \) का regression coefficient है, \( i = 1,2,...,k \)।</p>
+
+                <p>इसके द्वारा परिभाषित रूप का एक estimator:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{st_i} = \bar{y} + \sum_{i = 1}^k \beta_i(\bar{X}_i - \bar{x}_i) \quad (7.6.1) $$
+                </div>
+                <p>एक multi-variate estimator के रूप में उपयोग किया जाता है।</p>
+
+                <p>Des Raj (1965) ने इस रूप के एक अन्य difference estimator का प्रस्ताव दिया:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{ml_z} = \sum_{i = 1}^k w_i[\bar{y} + \beta_i(\bar{X}_i - \bar{x}_i)] \quad (7.6.2) $$
+                    <p>जहाँ \( \beta_i \) दिए गए regression coefficients हैं और \( w_i \), weights हैं जिनका योग (sum) unity (एक) होता है।</p>
+                </div>
+
+                <p>सरलता के लिए, हम दो \( x \)-variates के मामले (case) पर विचार करेंगे। इस मामले में, estimator को इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_{l_2} = \bar{y} + w_1\beta_1(\bar{X}_1 - \bar{x}_1) + w_2\beta_2(\bar{X}_2 - \bar{x}_2) \quad (7.6.3) $$
+                </div>
+                <p>इसके variance के साथ जो इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{l_2}) = \frac{(1 - f)}{n}[V_y + w_1^2\beta_1^2V_{x_1} + w_2^2\beta_2^2V_{x_2} - 2\beta_1w_1\text{Cov}(y,x_1) - 2\beta_2w_2\text{Cov}(y,x_2) + 2\beta_1\beta_2w_1w_2\text{Cov}(x_1,x_2)] $$
+                    $$ = \frac{(1 - f)}{n}[A_{00} + w_1^2A_{11} + w_2^2A_{22} - 2w_1A_{01} - 2w_2A_{02} + 2w_1w_2A_{12}] \quad (7.6.4) $$
+                    <p>जहाँ \( A_{00} \), \( A_{11} \), ... relation (6.11.4) में दिए गए हैं।</p>
+                </div>
+
+                <p>उपरोक्त variance expression में \( w_2 = 1 - w_1 \) रखकर, \( w_1 \) के संबंध में differentiating (अवकलन) करने और result को शून्य के बराबर रखने पर, हमारे पास best weights इस प्रकार दिए गए हैं:</p>
+                <div class="derivation-block">
+                    $$ w_1 = \frac{(A_{22} - A_{12})}{(A_{11} + A_{22} - 2A_{12})} $$
+                    <p>और</p>
+                    $$ w_2 = 1 - w_1 \quad (7.6.5) $$
+                </div>
+
+                <p>Variance expression में इन weights के values को substitute करने पर, हमारे पास minimum variance है:</p>
+                <div class="derivation-block">
+                    $$ V_{\min}(\bar{y}_{l_2}) = \frac{(1 - f)}{n}\frac{A_{11}A_{22} - (A_{12})^2}{A_{11} + A_{22} - 2A_{12}} \quad (7.6.6) $$
+                </div>
+
+                <p>मान लीजिए कि \( \rho_{yx_1} = \rho_{yx_2} = \rho_0 \) और \( x_1 \) और \( x_2 \) के बीच correlation coefficient \( \rho \) है। यदि \( C_{x_1} = C_{x_2} = C_0 \) और \( y \) का coefficient of variation \( c \) है, तो weights के optimum values इस प्रकार दिए गए हैं:</p>
+                <div class="derivation-block">
+                    $$ w_1 = w_2 = 1/2 $$
+                </div>
+                <p>Variance में इन values को substitute करने पर, हमारे पास है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_{l_2}) = \frac{(1 - f)\bar{Y}^2}{n}\left[ (1 + \rho)\frac{c^2}{2} + C_0(C_0 - 2c\rho_0) \right] \quad (7.6.7) $$
+                </div>
+
+                <p>इसके अलावा, यदि केवल एक \( x \) variate का उपयोग किया जाता है, तो variance इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_0) = \frac{(1 - f)\bar{Y}^2}{n}[c^2 + C_0^2 - 2\rho_0cC_0] \quad (7.6.8) $$
+                </div>
+
+                <p>Relations (7.6.7) और (7.6.8) की तुलना करने पर, हम पाते हैं कि दूसरे variate का उपयोग करना हमेशा बेहतर होता है यदि \( \rho \neq 1 \) हो। इसी तरह, जब किसी \( x \) variate का उपयोग नहीं किया जाता है और एक \( x \) variate के मामले से तुलना की जाती है, तो एक \( x \) variate का उपयोग करना बेहतर होता है यदि \( \rho_0 > c/2C_0 \) हो।</p>
+            </div>
+        </section>
+
+        <section id="sec7-ref" class="section-card">
+            <div class="english-content">
+                <h2>References</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Des Raj (1965). On a method of using multi-auxiliary information in sample surveys. <em>J. Amer. Statist. Assoc.</em>, 60, 270-277.</li>
+                    <li>Williams, W. H. (1963). The precision of some unbiased regression estimators. <em>Biometrics</em>, 19, 352-361.</li>
+                    <li>Zarkovic, S. S. (1956). An illustration of some characteristic situations in the application of the difference estimates. <em>Rev. Inter. Statist. Inst.</em>, 24, 52-63.</li>
+                    <li>Murthy, M. N. (1962). Generalized analytical robust theory. <em>Sankhya</em>, 24, 28-36.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>References (संदर्भ)</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Des Raj (1965). On a method of using multi-auxiliary information in sample surveys. <em>J. Amer. Statist. Assoc.</em>, 60, 270-277.</li>
+                    <li>Williams, W. H. (1963). The precision of some unbiased regression estimators. <em>Biometrics</em>, 19, 352-361.</li>
+                    <li>Zarkovic, S. S. (1956). An illustration of some characteristic situations in the application of the difference estimates. <em>Rev. Inter. Statist. Inst.</em>, 24, 52-63.</li>
+                    <li>Murthy, M. N. (1962). Generalized analytical robust theory. <em>Sankhya</em>, 24, 28-36.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec7-7" class="section-card">
+            <div class="english-content">
+                <h2>Exercise (Subjective)</h2>
+                <ol>
+                    <li>Show that, if the proportional increase in the variance of the regression estimator \( \bar{y}_l \) arising due to the use of \( b \) instead of \( \beta \) is to be less than \( \alpha \), then the relative deviation is \( \left| \frac{b}{\beta} - 1 \right| < \left[ \frac{\alpha(1 - \rho^2)}{\rho^2} \right]^{1/2} \) (Cochran, 1963)</li>
+                    <li>A random sample, wor, is selected from a finite population of \( N \) units, which itself is assumed to be a sample from a super population by following the model \( E(y_i|x_i) = \alpha + \beta x_i, V(y_i|x_i) = ax_i^b, \text{Cov}(y_i,y_j|x_i,x_j) = 0, \text{for } j \neq i \). Show that the regression estimator of the population mean \( \bar{Y} \) is always more precise than the ratio estimator when \( x \) is used as an auxiliary variate.</li>
+                    <li>Using the difference estimator \( t_1 = \bar{y} + \beta(\bar{X} - \bar{x}) \) and the regression estimator \( t_2 = \bar{y} + b(\bar{X} - \bar{x}) \), an estimator is defined as \( t_3 = t_1 + (b - \beta)(\bar{X} - \bar{x}) \). Show that \( \text{MSE}(t_2) = V(t_1) + E(b - \beta)^2(\bar{X} - \bar{x})^2 + 2E(b - \beta)(\bar{X} - \bar{x})(t_1 - \bar{Y}) \), and hence prove that \( \text{MSE}(t_2) \ll V(t_1) \).</li>
+                </ol>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
+                <ol>
+                    <li>दिखाएं कि, यदि \( \beta \) के बजाय \( b \) के उपयोग के कारण उत्पन्न होने वाले regression estimator \( \bar{y}_l \) के variance में आनुपातिक वृद्धि (proportional increase) को \( \alpha \) से कम होना है, तो relative deviation है: \( \left| \frac{b}{\beta} - 1 \right| < \left[ \frac{\alpha(1 - \rho^2)}{\rho^2} \right]^{1/2} \) (Cochran, 1963)</li>
+                    <li>एक random sample, wor, \( N \) units की एक finite population से select किया जाता है, जिसे स्वयं model का पालन करते हुए एक super population से एक sample माना जाता है: \( E(y_i|x_i) = \alpha + \beta x_i, V(y_i|x_i) = ax_i^b, \text{Cov}(y_i,y_j|x_i,x_j) = 0, \text{जहाँ } j \neq i \text{ के लिए} \)। दिखाएं कि population mean \( \bar{Y} \) का regression estimator ratio estimator की तुलना में हमेशा अधिक precise होता है जब \( x \) को auxiliary variate के रूप में उपयोग किया जाता है।</li>
+                    <li>Difference estimator \( t_1 = \bar{y} + \beta(\bar{X} - \bar{x}) \) और regression estimator \( t_2 = \bar{y} + b(\bar{X} - \bar{x}) \) का उपयोग करते हुए, एक estimator को \( t_3 = t_1 + (b - \beta)(\bar{X} - \bar{x}) \) के रूप में परिभाषित किया गया है। दिखाएं कि \( \text{MSE}(t_2) = V(t_1) + E(b - \beta)^2(\bar{X} - \bar{x})^2 + 2E(b - \beta)(\bar{X} - \bar{x})(t_1 - \bar{Y}) \), और अतः सिद्ध करें कि \( \text{MSE}(t_2) \ll V(t_1) \)।</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- QUIZZES SECTION -->
+        <section id="quiz-mcq" class="section-card">
+            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+            
+            <div class="question-box">
+                <div class="question">1. The linear regression estimator is more efficient than the mean per unit estimator when: <br> (रैखिक प्रतिगमन अनुमानक माध्य प्रति इकाई अनुमानक की तुलना में अधिक कुशल होता है जब:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \rho = 0 \)</li>
+                    <li>b) \( \rho \neq 0 \)</li>
+                    <li>c) \( \rho \) is negative only</li>
+                    <li>d) Both a and c</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
+                <div id="mcq1" class="answer"><strong>Correct Answer:</strong> b) \( \rho \neq 0 \) <br> <em>Explanation:</em> The variance of the regression estimator is \( V(\bar{y}_l) = V(\bar{y})(1 - \rho^2) \). It will always be smaller than the mean per unit variance as long as there is some correlation (either positive or negative), i.e., \( \rho \neq 0 \).</div>
+            </div>
+            
+            <div class="question-box">
+                <div class="question">2. If the regression of \( y \) on \( x \) passes through the origin, which estimator provides the same variance as the regression estimator? <br> (यदि \( x \) पर \( y \) का प्रतिगमन मूल बिंदु से होकर गुजरता है, तो कौन सा अनुमानक प्रतिगमन अनुमानक के समान प्रसरण प्रदान करता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Mean per unit estimator</li>
+                    <li>b) Difference estimator with \( c = 1 \)</li>
+                    <li>c) Ratio estimator</li>
+                    <li>d) Product estimator</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer</button>
+                <div id="mcq2" class="answer"><strong>Correct Answer:</strong> c) Ratio estimator <br> <em>Explanation:</em> When the regression is a straight line through the origin, the slope \( \beta \) equals \( R \) (\( \bar{Y}/\bar{X} \)), making the ratio estimator mathematically identical in efficiency to the regression estimator.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. The simple difference estimator \( \bar{y}_D = \bar{y} + (\bar{X} - \bar{x}) \) assumes that a unit change in \( x \) leads to a corresponding unit change in \( y \) and that both variables have: <br> (सरल अंतर अनुमानक यह मानता है कि \( x \) में इकाई परिवर्तन से \( y \) में भी इकाई परिवर्तन होता है और दोनों चरों में:)</div>
+                <ul class="mcq-options">
+                    <li>a) Zero variance</li>
+                    <li>b) Equal variances</li>
+                    <li>c) Proportional variances</li>
+                    <li>d) Infinite variances</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer</button>
+                <div id="mcq3" class="answer"><strong>Correct Answer:</strong> b) Equal variances <br> <em>Explanation:</em> The simplified difference estimator formulation inherently assumes \( S_x^2 \approx S_y^2 \) rendering the adjustment directly 1:1.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The regression estimator \( \bar{y}_l \) mathematically guarantees to reduce to the population mean \( \bar{Y} \) exactly when: <br> (प्रतिगमन अनुमानक \( \bar{y}_l \) गणितीय रूप से सटीक रूप से जनसंख्या माध्य \( \bar{Y} \) तक कम होने की गारंटी देता है जब:)</div>
+                <ul class="mcq-options">
+                    <li>a) The sample size \( n \) is very small</li>
+                    <li>b) The sample size \( n \) equals the population size \( N \)</li>
+                    <li>c) \( \rho = 0 \)</li>
+                    <li>d) \( \bar{x} = 0 \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer</button>
+                <div id="mcq4" class="answer"><strong>Correct Answer:</strong> b) The sample size \( n \) equals the population size \( N \) <br> <em>Explanation:</em> If \( n = N \), then \( \bar{x} \) perfectly equals \( \bar{X} \), causing the \( b(\bar{X}-\bar{x}) \) term to vanish, making it completely consistent.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. Why is the linear regression estimator \( \bar{y}_l \) technically considered a biased estimator? <br> (रैखिक प्रतिगमन अनुमानक \( \bar{y}_l \) को तकनीकी रूप से पक्षपाती अनुमानक क्यों माना जाता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) It ignores auxiliary data</li>
+                    <li>b) It involves the product of two sample estimates, viz. \( b \) and \( \bar{x} \)</li>
+                    <li>c) It assumes a normal distribution universally</li>
+                    <li>d) It is independent of \( \rho \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer</button>
+                <div id="mcq5" class="answer"><strong>Correct Answer:</strong> b) It involves the product of two sample estimates, viz. \( b \) and \( \bar{x} \) <br> <em>Explanation:</em> Because both the slope \( b \) and the mean \( \bar{x} \) are random variables estimated from the sample, their expectation \( E(b\bar{x}) \) is not simply the product of their expectations.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. The variance of the regression estimator is given by \( V(\bar{y}_l) = \frac{1 - f}{n}S_y^2(1 - \rho^2) \). If the regression of \( y \) on \( x \) is perfectly linear (\( |\rho| = 1 \)), the variance becomes: <br> (प्रतिगमन अनुमानक का प्रसरण \( V(\bar{y}_l) = \frac{1 - f}{n}S_y^2(1 - \rho^2) \) द्वारा दिया गया है। यदि \( x \) पर \( y \) का प्रतिगमन पूरी तरह से रैखिक (\( |\rho| = 1 \)) है, तो प्रसरण बन जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Maximum</li>
+                    <li>b) Zero</li>
+                    <li>c) Equal to \( S_y^2 \)</li>
+                    <li>d) Infinite</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer</button>
+                <div id="mcq6" class="answer"><strong>Correct Answer:</strong> b) Zero <br> <em>Explanation:</em> If correlation is perfect, the auxiliary variable accurately predicts every value of \( y \) without any error, eliminating the sampling variance entirely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The difference estimator is highly appealing because, unlike the standard regression estimator, it is mathematically: <br> (अंतर अनुमानक अत्यधिक आकर्षक है क्योंकि, मानक प्रतिगमन अनुमानक के विपरीत, यह गणितीय रूप से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Completely Unbiased</li>
+                    <li>b) Always less efficient</li>
+                    <li>c) Independent of auxiliary variables</li>
+                    <li>d) Biased</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer</button>
+                <div id="mcq7" class="answer"><strong>Correct Answer:</strong> a) Completely Unbiased <br> <em>Explanation:</em> Because the constant \( c \) in the generalized difference estimator is chosen in advance (not estimated from the sample), the expectation is perfectly unbiased.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In stratified sampling, if the population regression coefficients differ significantly from stratum to stratum, it is highly advisable to adopt the: <br> (स्तरीकृत प्रतिचयन में, यदि जनसंख्या प्रतिगमन गुणांक स्तर-दर-स्तर काफी भिन्न होते हैं, तो इसे अपनाने की अत्यधिक सलाह दी जाती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Combined regression estimator</li>
+                    <li>b) Separate regression estimator</li>
+                    <li>c) Unstratified mean</li>
+                    <li>d) Simple Random Sampling</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer</button>
+                <div id="mcq8" class="answer"><strong>Correct Answer:</strong> b) Separate regression estimator <br> <em>Explanation:</em> If local stratum trends differ, forcing a single pooled slope \( b_c \) will falsely inflate the variance. The separate estimator adapts to local slopes.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. To utilize the multi-variate regression estimator properly, one must determine the optimum weights \( W_i \) which are defined such that they mathematically: <br> (बहुभिन्नरूपी प्रतिगमन अनुमानक का ठीक से उपयोग करने के लिए, किसी को इष्टतम भार \( W_i \) निर्धारित करना चाहिए जो इस प्रकार परिभाषित हैं कि वे गणितीय रूप से:)</div>
+                <ul class="mcq-options">
+                    <li>a) Multiply to zero</li>
+                    <li>b) Sum up to unity (1)</li>
+                    <li>c) Are purely random</li>
+                    <li>d) Always equal the correlation coefficients</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer</button>
+                <div id="mcq9" class="answer"><strong>Correct Answer:</strong> b) Sum up to unity (1) <br> <em>Explanation:</em> A linear combination estimator requires weights that correctly normalize the scale, thus \( \sum W_i = 1 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. The combined regression estimator pools data to calculate a single regression coefficient \( b_c \), making it less susceptible to: <br> (संयुक्त प्रतिगमन अनुमानक एक एकल प्रतिगमन गुणांक \( b_c \) की गणना करने के लिए डेटा को जमा करता है, जिससे यह किसके प्रति कम संवेदनशील हो जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Decreased variance</li>
+                    <li>b) Computational simplicity</li>
+                    <li>c) High bias in small stratum samples</li>
+                    <li>d) True linear regression</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer</button>
+                <div id="mcq10" class="answer"><strong>Correct Answer:</strong> c) High bias in small stratum samples <br> <em>Explanation:</em> The separate estimator accumulates bias across all strata because it estimates \( b_m \) individually. A combined estimator stabilizes the slope estimate across the whole population.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A generalized difference estimator \( \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \) becomes the ratio estimator precisely when the random variate \( z \) equals: <br> (एक सामान्यीकृत अंतर अनुमानक \( \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \) अनुपात अनुमानक बन जाता है जब यादृच्छिक चर \( z \) बराबर होता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( 0 \)</li>
+                    <li>b) \( 1 \)</li>
+                    <li>c) \( \bar{y}/\bar{x} \)</li>
+                    <li>d) \( b \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer</button>
+                <div id="mcq11" class="answer"><strong>Correct Answer:</strong> c) \( \bar{y}/\bar{x} \) <br> <em>Explanation:</em> If \( z \) is explicitly the ratio of the sample means, the function mathematically collapses perfectly into the classical ratio estimator format.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. Under which scenario is it practically recommended to use the difference estimator with \( c=1 \) rather than the more complex regression estimator? <br> (किस परिदृश्य के तहत अंतर अनुमानक को \( c=1 \) के साथ उपयोग करने की व्यावहारिक रूप से सिफारिश की जाती है, न कि अधिक जटिल प्रतिगमन अनुमानक की?)</div>
+                <ul class="mcq-options">
+                    <li>a) When \( \rho \approx 0 \)</li>
+                    <li>b) When \( \rho \approx \sigma_x/\sigma_y \)</li>
+                    <li>c) When computational costs are zero</li>
+                    <li>d) When \( n=N \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer</button>
+                <div id="mcq12" class="answer"><strong>Correct Answer:</strong> b) When \( \rho \approx \sigma_x/\sigma_y \) <br> <em>Explanation:</em> In this specific situation, the theoretical optimal \( c \) approaches 1. Thus, using the simple difference estimator achieves the same high precision with zero computational load.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. In the multi-variate regression estimator using two auxiliary variables \( x_1 \) and \( x_2 \), if the two variables are perfectly correlated (\( \rho_{12} = 1 \)), the addition of the second variable: <br> (दो सहायक चरों \( x_1 \) और \( x_2 \) का उपयोग करने वाले बहु-भिन्नरूपी प्रतिगमन अनुमानक में, यदि दो चर पूरी तरह से सहसंबद्ध हैं (\( \rho_{12} = 1 \)), तो दूसरे चर को जोड़ने से:)</div>
+                <ul class="mcq-options">
+                    <li>a) Doubles the precision</li>
+                    <li>b) Squares the variance</li>
+                    <li>c) Provides no new independent information</li>
+                    <li>d) Makes the estimator unbiased</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer</button>
+                <div id="mcq13" class="answer"><strong>Correct Answer:</strong> c) Provides no new independent information <br> <em>Explanation:</em> If the two predictors are perfectly collinear, adding the second one offers mathematically zero new variance reduction power.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. The bias in the separate regression estimator in stratified sampling is likely to be large when: <br> (स्तरीकृत प्रतिचयन में अलग प्रतिगमन अनुमानक में पूर्वाग्रह तब बड़ा होने की संभावना है जब:)</div>
+                <ul class="mcq-options">
+                    <li>a) The sample size within each stratum is small</li>
+                    <li>b) The sample size within each stratum is large</li>
+                    <li>c) \( \rho \) is close to 1</li>
+                    <li>d) The strata are perfectly homogeneous</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer</button>
+                <div id="mcq14" class="answer"><strong>Correct Answer:</strong> a) The sample size within each stratum is small <br> <em>Explanation:</em> Because regression estimators are biased in small samples, calculating them separately across dozens of small strata causes the bias to accumulate dangerously.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. In large samples, an almost unbiased estimator of \( V(\bar{y}_l) \) utilizes the standard regression divisor: <br> (बड़े प्रतिदर्शों में, \( V(\bar{y}_l) \) का लगभग निष्पक्ष अनुमानक मानक प्रतिगमन भाजक का उपयोग करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( (n-1) \)</li>
+                    <li>b) \( (n-2) \)</li>
+                    <li>c) \( N \)</li>
+                    <li>d) \( n^2 \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer</button>
+                <div id="mcq15" class="answer"><strong>Correct Answer:</strong> b) \( (n-2) \) <br> <em>Explanation:</em> According to standard linear regression theory, one degree of freedom is lost estimating the mean and another for the slope, suggesting \( n-2 \) as the optimal divisor.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Des Raj (1965) proposed an extended multi-variate difference estimator where the weights \( w_i \) must be exactly equal to: <br> (देस राज (1965) ने एक विस्तारित बहुभिन्नरूपी अंतर अनुमानक प्रस्तावित किया जहाँ भार \( w_i \) बिल्कुल किसके बराबर होना चाहिए:)</div>
+                <ul class="mcq-options">
+                    <li>a) Values adding up to unity</li>
+                    <li>b) The exact regression coefficients \( \beta_i \)</li>
+                    <li>c) Zero</li>
+                    <li>d) Infinity</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer</button>
+                <div id="mcq16" class="answer"><strong>Correct Answer:</strong> a) Values adding up to unity <br> <em>Explanation:</em> The formulation explicitly requires that the total weight sums to 1 to maintain mathematical consistency with the primary mean.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. The first order of approximation for the bias of the regression estimator \( B(\bar{y}_l) \) is equal to: <br> (प्रतिगमन अनुमानक \( B(\bar{y}_l) \) के पूर्वाग्रह के सन्निकटन का पहला क्रम किसके बराबर है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( - \text{Cov}(\bar{x}, b) \)</li>
+                    <li>b) \( V(\bar{x}) \)</li>
+                    <li>c) \( \rho \)</li>
+                    <li>d) \( \bar{Y} \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer</button>
+                <div id="mcq17" class="answer"><strong>Correct Answer:</strong> a) \( - \text{Cov}(\bar{x}, b) \) <br> <em>Explanation:</em> Theorem 7.3.1 demonstrates that the expectation of the product of their errors mathematically isolates exactly into the negative covariance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The theoretical optimum value for the constant \( c \) in a generalized difference estimator ensures that the variance reaches its: <br> (एक सामान्यीकृत अंतर अनुमानक में स्थिरांक \( c \) के लिए सैद्धांतिक इष्टतम मान यह सुनिश्चित करता है कि प्रसरण अपने किस स्तर तक पहुँचता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Absolute maximum</li>
+                    <li>b) Absolute minimum</li>
+                    <li>c) Zero limit</li>
+                    <li>d) Constant threshold</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer</button>
+                <div id="mcq18" class="answer"><strong>Correct Answer:</strong> b) Absolute minimum <br> <em>Explanation:</em> By taking the derivative with respect to \( c \) and setting it to zero, it guarantees the variance curve hits its absolute minimum.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If the correlation coefficient \( \rho \) is zero, the variance of the regression estimator mathematically reduces exactly to: <br> (यदि सहसंबंध गुणांक \( \rho \) शून्य है, तो प्रतिगमन अनुमानक का प्रसरण गणितीय रूप से बिल्कुल कम हो जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( 0 \)</li>
+                    <li>b) The variance of the simple mean per unit estimator \( V(\bar{y}) \)</li>
+                    <li>c) The variance of the ratio estimator</li>
+                    <li>d) Infinity</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer</button>
+                <div id="mcq19" class="answer"><strong>Correct Answer:</strong> b) The variance of the simple mean per unit estimator \( V(\bar{y}) \) <br> <em>Explanation:</em> With zero correlation, the auxiliary variable offers no predictive power, and the \( (1-\rho^2) \) multiplier becomes 1, returning the standard simple variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The primary defining characteristic of the regression estimator is that it mathematically models the relationship between \( y \) and \( x \) as a: <br> (प्रतिगमन अनुमानक की प्राथमिक परिभाषित विशेषता यह है कि यह गणितीय रूप से \( y \) और \( x \) के बीच के संबंध को किसके रूप में मॉडल करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Circular periodic wave</li>
+                    <li>b) Straight line (linear function)</li>
+                    <li>c) Exponential decay</li>
+                    <li>d) Purely random scatter</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
+                <div id="mcq20" class="answer"><strong>Correct Answer:</strong> b) Straight line (linear function) <br> <em>Explanation:</em> It explicitly fits a linear least squares regression line \( y = cx + k \) to dynamically adjust the sample mean.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-fib" class="section-card">
+            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+
+            <div class="question-box">
+                <div class="question">1. The regression estimator is particularly powerful because it models the relationship between the study variate and the auxiliary variate as a ____________ line. <br> (प्रतिगमन अनुमानक विशेष रूप से शक्तिशाली है क्योंकि यह अध्ययन चर और सहायक चर के बीच संबंध को एक ____________ रेखा के रूप में मॉडल करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
+                <div id="fib1" class="answer"><strong>Answer:</strong> straight (linear) / सीधी (रैखिक) <br> <em>Explanation:</em> It essentially relies on fitting a linear equation \( y = \beta x + \alpha \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. A generalized difference estimator allows the constant multiplier to be explicitly defined as ____________ rather than forcing a 1:1 ratio. <br> (एक सामान्यीकृत अंतर अनुमानक निरंतर गुणक को स्पष्ट रूप से 1:1 अनुपात को बाध्य करने के बजाय ____________ के रूप में परिभाषित करने की अनुमति देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer</button>
+                <div id="fib2" class="answer"><strong>Answer:</strong> \( c \) <br> <em>Explanation:</em> This constant accounts for scale differences or non-proportional linear shifts between the two variables.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. For the generalized difference estimator to achieve absolute minimum variance, the constant \( c \) must perfectly equal the ____________ coefficient. <br> (सामान्यीकृत अंतर अनुमानक को पूर्ण न्यूनतम प्रसरण प्राप्त करने के लिए, स्थिरांक \( c \) पूरी तरह से ____________ गुणांक के बराबर होना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer</button>
+                <div id="fib3" class="answer"><strong>Answer:</strong> regression (\( \beta \)) / प्रतिगमन <br> <em>Explanation:</em> \( \beta = \text{Cov}(x,y)/V(x) \) perfectly balances the adjustment.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The regression estimator is mathematically considered a ____________ estimator because the slope \( b \) is calculated directly from the sample data. <br> (प्रतिगमन अनुमानक को गणितीय रूप से एक ____________ अनुमानक माना जाता है क्योंकि ढलान \( b \) की गणना सीधे प्रतिदर्श डेटा से की जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer</button>
+                <div id="fib4" class="answer"><strong>Answer:</strong> biased (पक्षपाती) <br> <em>Explanation:</em> The product of two random variables (\( b \) and \( \bar{x} \)) introduces a technical bias that diminishes as sample size grows.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. If the correlation \( \rho \) is mathematically zero, the regression estimator offers exactly ____________ reduction in variance over the simple mean. <br> (यदि सहसंबंध \( \rho \) गणितीय रूप से शून्य है, तो प्रतिगमन अनुमानक सरल माध्य पर प्रसरण में बिल्कुल ____________ कमी प्रदान करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer</button>
+                <div id="fib5" class="answer"><strong>Answer:</strong> zero (शून्य) <br> <em>Explanation:</em> The variance multiplier is \( (1-\rho^2) \). If \( \rho=0 \), the multiplier is 1.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. If a sample is drawn in \( k \) independent sub-samples, the bias in the regression estimator can be estimated ____________. <br> (यदि प्रतिदर्श \( k \) स्वतंत्र उप-प्रतिदर्शों में लिया गया है, तो प्रतिगमन अनुमानक में पूर्वाग्रह का अनुमान ____________ लगाया जा सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer</button>
+                <div id="fib6" class="answer"><strong>Answer:</strong> unbiasedly (निष्पक्ष रूप से) <br> <em>Explanation:</em> Mickey and Williams established techniques to strictly correct the estimator across sub-samples to form an unbiased result.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The primary drawback of the separate regression estimator in stratified sampling is its susceptibility to large ____________ when stratum sizes are small. <br> (स्तरीकृत प्रतिचयन में अलग प्रतिगमन अनुमानक का प्राथमिक दोष छोटे स्तर के आकार होने पर बड़े ____________ के प्रति इसकी संवेदनशीलता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer</button>
+                <div id="fib7" class="answer"><strong>Answer:</strong> bias (पूर्वाग्रह) <br> <em>Explanation:</em> The bias term in regression estimators accumulates across all strata, blowing up the overall error if samples are tiny.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. The combined regression estimator circumvents heavy bias by cleanly calculating a single, pooled ____________ coefficient across the entire population. <br> (संयुक्त प्रतिगमन अनुमानक पूरी आबादी में एक एकल, जमा किए गए ____________ गुणांक की गणना करके भारी पूर्वाग्रह को टालता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer</button>
+                <div id="fib8" class="answer"><strong>Answer:</strong> regression (\( b_c \)) / प्रतिगमन <br> <em>Explanation:</em> A pooled slope is mathematically far more stable than calculating individual jittery slopes per stratum.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. In multi-variate regression, the mathematically optimal weights \( W_i \) are calculated by differentiating the variance and equating it to ____________. <br> (बहुभिन्नरूपी प्रतिगमन में, गणितीय रूप से इष्टतम भार \( W_i \) की गणना प्रसरण को अलग करके और उसे ____________ के बराबर करके की जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer</button>
+                <div id="fib9" class="answer"><strong>Answer:</strong> zero (शून्य) <br> <em>Explanation:</em> Standard calculus optimization guarantees finding the absolute minimum of the variance curve.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. If the exact population regression line passes smoothly through the origin, the ratio estimator and the regression estimator have exactly the same ____________. <br> (यदि सटीक जनसंख्या प्रतिगमन रेखा सुचारू रूप से मूल बिंदु से होकर गुजरती है, तो अनुपात अनुमानक और प्रतिगमन अनुमानक का ____________ बिल्कुल समान होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer</button>
+                <div id="fib10" class="answer"><strong>Answer:</strong> variance / efficiency (प्रसरण / दक्षता) <br> <em>Explanation:</em> At the origin, the y-intercept \( \alpha = 0 \), meaning \( y = \beta x \), which perfectly aligns with the ratio assumption \( y = Rx \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A linear regression estimator dynamically adjusts the simple sample mean \( \bar{y} \) using the mathematically known deviation \( (\bar{X} - \bar{x}) \) scaled heavily by ____________. <br> (एक रैखिक प्रतिगमन अनुमानक गतिशील रूप से सरल प्रतिदर्श माध्य \( \bar{y} \) को गणितीय रूप से ज्ञात विचलन \( (\bar{X} - \bar{x}) \) का उपयोग करके समायोजित करता है जिसे ____________ द्वारा भारी रूप से स्केल किया गया है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer</button>
+                <div id="fib11" class="answer"><strong>Answer:</strong> \( b \) (or slope/regression coefficient) / ढलान <br> <em>Explanation:</em> The slope \( b \) mathematically translates the error in the auxiliary \( x \) directly into the expected correction for \( y \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. The general form \( \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \) beautifully collapses back to the standard mean per unit estimator when \( z \) mathematically equals ____________. <br> (सामान्य रूप \( \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \) खूबसूरती से मानक माध्य प्रति इकाई अनुमानक पर वापस आ जाता है जब \( z \) गणितीय रूप से ____________ के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer</button>
+                <div id="fib12" class="answer"><strong>Answer:</strong> zero (शून्य) <br> <em>Explanation:</em> A multiplier of zero outright destroys the adjustment term, leaving only the raw sample mean \( \bar{y} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The regression estimator is asymptotically ____________, meaning it strictly converges to the true parameter as the sample size approaches the population size. <br> (प्रतिगमन अनुमानक स्पर्शोन्मुख रूप से ____________ है, जिसका अर्थ है कि जैसे-जैसे प्रतिदर्श आकार जनसंख्या आकार के करीब पहुंचता है, यह कड़ाई से सत्य पैरामीटर में परिवर्तित हो जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer</button>
+                <div id="fib13" class="answer"><strong>Answer:</strong> consistent (सुसंगत) <br> <em>Explanation:</em> Consistency guarantees that statistical errors and biases vanish flawlessly as \( n \to N \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. To compute the theoretical minimum variance \( V_{\min}(\bar{y}_{l_2}) \) for a two-variate regression, one perfectly substitutes the optimum ____________ into the variance formula. <br> (दो-चर प्रतिगमन के लिए सैद्धांतिक न्यूनतम प्रसरण \( V_{\min}(\bar{y}_{l_2}) \) की गणना करने के लिए, कोई प्रसरण सूत्र में पूरी तरह से इष्टतम ____________ को प्रतिस्थापित करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer</button>
+                <div id="fib14" class="answer"><strong>Answer:</strong> weights (\( W_1, W_2 \)) / भार <br> <em>Explanation:</em> The derived weights natively lock the variance to the lowest possible trough on the curve.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. The first-order approximation bias of the regression estimator relies explicitly on the fact that \( E(e) = E(e_1) = E(e_2) = \) ____________. <br> (प्रतिगमन अनुमानक के प्रथम-क्रम सन्निकटन पूर्वाग्रह स्पष्ट रूप से इस तथ्य पर निर्भर करता है कि \( E(e) = E(e_1) = E(e_2) = \) ____________।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer</button>
+                <div id="fib15" class="answer"><strong>Answer:</strong> 0 (शून्य) <br> <em>Explanation:</em> The relative error terms naturally center perfectly around zero, allowing linear terms to vanish during expectation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The separate regression estimator is expected to be more precise provided the sample in each stratum is ____________ enough. <br> (अलग प्रतिगमन अनुमानक के अधिक सटीक होने की उम्मीद है, बशर्ते प्रत्येक स्तर में नमूना पर्याप्त रूप से ____________ हो।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer</button>
+                <div id="fib16" class="answer"><strong>Answer:</strong> large (बड़ा) <br> <em>Explanation:</em> A large sample cleanly overrides the accumulation of bias that normally plagues separate stratum-level estimations.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In the expression \( \bar{y}_l = \bar{Y} + (e\bar{Y} - e_1\beta\bar{X}) - e_1e_2\beta\bar{X} \), the exact bias natively arises solely from the term ____________. <br> (व्यंजक \( \bar{y}_l = \bar{Y} + (e\bar{Y} - e_1\beta\bar{X}) - e_1e_2\beta\bar{X} \) में, सटीक पूर्वाग्रह मूल रूप से पूरी तरह से ____________ पद से उत्पन्न होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer</button>
+                <div id="fib17" class="answer"><strong>Answer:</strong> \( - e_1e_2\beta\bar{X} \) <br> <em>Explanation:</em> Because \( E(e) \) and \( E(e_1) \) explicitly equal 0, the only non-zero expectation natively left is the interaction (covariance) term \( e_1e_2 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. Standard regression theory safely suggests replacing the divisor \( (n-1) \) with ____________ when computing the unbiased estimator of variance. <br> (मानक प्रतिगमन सिद्धांत प्रसरण के निष्पक्ष अनुमानक की गणना करते समय भाजक \( (n-1) \) को ____________ से बदलने का सुरक्षित रूप से सुझाव देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer</button>
+                <div id="fib18" class="answer"><strong>Answer:</strong> \( (n-2) \) <br> <em>Explanation:</em> Fitting a line burns exactly two degrees of freedom (one for the intercept, one for the slope).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If the correlation between two independent predictors \( x_1 \) and \( x_2 \) is \( \rho_{12} = 1 \), the second predictor is mathematically totally ____________. <br> (यदि दो स्वतंत्र भविष्यवाणियों \( x_1 \) और \( x_2 \) के बीच सहसंबंध \( \rho_{12} = 1 \) है, तो दूसरी भविष्यवाणी गणितीय रूप से पूरी तरह से ____________ है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer</button>
+                <div id="fib19" class="answer"><strong>Answer:</strong> redundant / collinear (अनावश्यक / संरेखीय) <br> <em>Explanation:</em> It provides explicitly zero new information, safely making its mathematical inclusion useless.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The primary conceptual advantage of the generalized difference estimator over the standard regression estimator is that it mathematically perfectly avoids ____________. <br> (मानक प्रतिगमन अनुमानक पर सामान्यीकृत अंतर अनुमानक का प्राथमिक वैचारिक लाभ यह है कि यह गणितीय रूप से पूरी तरह से ____________ से बचता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
+                <div id="fib20" class="answer"><strong>Answer:</strong> bias (पूर्वाग्रह) <br> <em>Explanation:</em> By locking \( c \) to a known theoretical constant rather than estimating it, it flawlessly preserves unbiasedness.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-tf" class="section-card">
+            <h2>✅ True or False (सही या गलत)</h2>
+
+            <div class="question-box">
+                <div class="question">1. The difference estimator mathematically requires the exact slope parameter to be calculated from the sample data. <br> (अंतर अनुमानक को गणितीय रूप से प्रतिदर्श डेटा से सटीक ढलान पैरामीटर की गणना करने की आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
+                <div id="tf1" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The difference estimator uses a pre-specified constant \( c \). If the slope is calculated from the sample, it formally becomes a regression estimator.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. The regression estimator is an unbiased estimator for any finite sample size. <br> (प्रतिगमन अनुमानक किसी भी सीमित प्रतिदर्श आकार के लिए एक निष्पक्ष अनुमानक है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer</button>
+                <div id="tf2" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is structurally biased because it involves the product of two random variables (\( b \) and \( \bar{x} \)), although the bias is negligible in large samples.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. If the correlation \( \rho \) is zero, the linear regression estimator has exactly the same variance as the simple mean estimator. <br> (यदि सहसंबंध \( \rho \) शून्य है, तो रैखिक प्रतिगमन अनुमानक का प्रसरण बिल्कुल सरल माध्य अनुमानक के समान होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer</button>
+                <div id="tf3" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The variance reduction factor is \( (1-\rho^2) \). If \( \rho = 0 \), this multiplier perfectly equals 1, offering no improvement.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The separate regression estimator pools data across all strata to calculate a single, robust slope. <br> (अलग प्रतिगमन अनुमानक एक एकल, मजबूत ढलान की गणना करने के लिए सभी स्तरों पर डेटा एकत्र करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer</button>
+                <div id="tf4" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The combined regression estimator does that. The separate estimator calculates a unique slope \( b_m \) individually within each distinct stratum.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. If the sample size equals the population size (\( n = N \)), the regression estimator flawlessly evaluates to the true population mean. <br> (यदि प्रतिदर्श का आकार जनसंख्या के आकार (\( n = N \)) के बराबर है, तो प्रतिगमन अनुमानक निर्दोष रूप से सही जनसंख्या माध्य का मूल्यांकन करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer</button>
+                <div id="tf5" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If \( n = N \), then \( \bar{x} = \bar{X} \). The correction term \( b(\bar{X}-\bar{x}) \) becomes mathematically zero, leaving just \( \bar{y} \), which equals \( \bar{Y} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. The variance of the regression estimator can be rigorously partitioned into individual variance and covariance terms scaled by \( \beta \). <br> (प्रतिगमन अनुमानक के प्रसरण को \( \beta \) द्वारा मापे गए व्यक्तिगत प्रसरण और सहप्रसरण पदों में कठोरता से विभाजित किया जा सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show/Hide Answer</button>
+                <div id="tf6" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Yes, expanding \( V(\bar{y} - \beta\bar{x}) \) explicitly yields \( V(\bar{y}) + \beta^2V(\bar{x}) - 2\beta\text{Cov}(\bar{y},\bar{x}) \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. A significant flaw of the combined regression estimator is its high susceptibility to bias in small samples. <br> (संयुक्त प्रतिगमन अनुमानक का एक महत्वपूर्ण दोष छोटे नमूनों में पूर्वाग्रह के प्रति इसकी उच्च संवेदनशीलता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer</button>
+                <div id="tf7" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is the *separate* regression estimator that is highly susceptible to accumulating bias across small stratum samples. The combined estimator is explicitly designed to minimize this flaw.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In a multivariate regression estimator, adding an auxiliary variate that is perfectly correlated to an existing one (\( \rho_{12}=1 \)) cleanly cuts the variance in half. <br> (बहुभिन्नरूपी प्रतिगमन अनुमानक में, एक सहायक चर को जोड़ना जो मौजूदा चर के साथ पूरी तरह से सहसंबद्ध है (\( \rho_{12}=1 \)), प्रसरण को स्पष्ट रूप से आधा कर देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer</button>
+                <div id="tf8" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Adding a perfectly collinear predictor mathematically provides strictly zero new information, leading to absolutely no reduction in variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. The optimal multiplier \( c \) for a difference estimator completely independent of the sample data is mathematically proven to be \( \beta \). <br> (प्रतिदर्श डेटा से पूरी तरह स्वतंत्र अंतर अनुमानक के लिए इष्टतम गुणक \( c \) गणितीय रूप से \( \beta \) सिद्ध होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer</button>
+                <div id="tf9" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Differentiating the variance expression cleanly shows that replacing \( c \) with the true population regression slope \( \beta \) rigidly minimizes the variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. Ratio estimators outperform regression estimators whenever the line of regression has a massive non-zero y-intercept. <br> (अनुपात अनुमानक प्रतिगमन अनुमानकों से बेहतर प्रदर्शन करते हैं जब भी प्रतिगमन रेखा में एक विशाल गैर-शून्य y-अवरोधन होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer</button>
+                <div id="tf10" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is exactly the opposite. Ratio estimators require the regression line to pass roughly through the origin. If there is a massive intercept, the regression estimator will aggressively outperform the ratio estimator.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A regression estimator mathematically belongs to a broader class of estimators taking the form \( \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \). <br> (एक प्रतिगमन अनुमानक गणितीय रूप से अनुमानकों के एक व्यापक वर्ग से संबंधित है जो \( \bar{y}_z = \bar{y} + z(\bar{X} - \bar{x}) \) का रूप लेता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer</button>
+                <div id="tf11" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This broad class smoothly encompasses the simple mean (\( z=0 \)), difference estimator (\( z=c \)), ratio estimator (\( z=\bar{y}/\bar{x} \)), and regression estimator (\( z=b \)).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. The variance of the regression estimator is strictly defined as the product of the mean variance and the correlation coefficient \( \rho \). <br> (प्रतिगमन अनुमानक का प्रसरण कड़ाई से माध्य प्रसरण और सहसंबंध गुणांक \( \rho \) के गुणनफल के रूप में परिभाषित किया गया है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer</button>
+                <div id="tf12" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is the product of the mean variance and \( (1-\rho^2) \), natively reflecting the variance *unexplained* by the regression line.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. Mickey (1959) and Williams (1961) specifically researched methods to produce unbiased regression estimators. <br> (मिकी (1959) और विलियम्स (1961) ने विशेष रूप से निष्पक्ष प्रतिगमन अनुमानक उत्पन्न करने के तरीकों पर शोध किया।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer</button>
+                <div id="tf13" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> They developed mathematical techniques, such as splitting the sample into independent sub-samples, to strictly cleanly eliminate the inherent bias.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. The bias in the regression estimator is definitively zero if the joint distribution of \( y \) and \( x \) perfectly follows a bivariate normal distribution. <br> (प्रतिगमन अनुमानक में पूर्वाग्रह निश्चित रूप से शून्य है यदि \( y \) और \( x \) का संयुक्त वितरण पूरी तरह से एक द्विचर सामान्य वितरण का पालन करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer</button>
+                <div id="tf14" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> In a perfect bivariate normal distribution, the covariance term \( \text{Cov}(\bar{x}, b) \) mathematically converges to exactly zero.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. In large-scale rigorous surveys, if the mathematical sampling fraction is very small, sampling without replacement is overwhelmingly superior to with replacement. <br> (बड़े पैमाने पर कठोर सर्वेक्षणों में, यदि गणितीय प्रतिचयन अंश बहुत छोटा है, तो प्रतिस्थापन के बिना प्रतिचयन प्रतिस्थापन की तुलना में अत्यधिक बेहतर है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer</button>
+                <div id="tf15" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> If the sampling fraction \( (f = n/N) \) is very small, the multiplier \( (1-f) \) approaches 1, meaning the statistical efficiencies of WOR and WR sampling will mathematically differ insignificantly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Standard regression estimators generally lose 2 degrees of freedom during unbiased variance estimation. <br> (मानक प्रतिगमन अनुमानक आमतौर पर निष्पक्ष प्रसरण अनुमान के दौरान स्वतंत्रता की 2 डिग्री खो देते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer</button>
+                <div id="tf16" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This happens cleanly because both the y-intercept and the slope must be successfully estimated from the sample data.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. The difference estimator performs exceptionally poorly when \( \rho \approx \sigma_x/\sigma_y \). <br> (अंतर अनुमानक असाधारण रूप से खराब प्रदर्शन करता है जब \( \rho \approx \sigma_x/\sigma_y \)।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer</button>
+                <div id="tf17" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> When this specific condition mathematically holds, \( c = 1 \) is optimal, meaning the simple difference estimator achieves incredibly precise results identical to the complex regression estimator.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The multivariate regression estimator strictly requires that \( \sum W_i \) mathematically equals 0 to ensure unbiasedness. <br> (बहुभिन्नरूपी प्रतिगमन अनुमानक को कड़ाई से आवश्यकता होती है कि निष्पक्षता सुनिश्चित करने के लिए \( \sum W_i \) गणितीय रूप से 0 के बराबर हो।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer</button>
+                <div id="tf18" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The absolute mathematical requirement is that the weights sum cleanly to unity (1), natively scaling the overall parameter appropriately.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If computations are extraordinarily heavy, a regression estimator should only be selected if its efficiency gains substantially eclipse the increased operational costs. <br> (यदि गणना असाधारण रूप से भारी है, तो प्रतिगमन अनुमानक का चयन तभी किया जाना चाहिए जब इसकी दक्षता लाभ बढ़ी हुई परिचालन लागत को काफी हद तक ग्रहण कर ले।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer</button>
+                <div id="tf19" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This is a core guiding principle in sampling theory; theoretical variance reductions must definitively justify the real-world computational and data-collection burden.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The regression estimator mathematically isolates the variance fraction purely associated with the structural linear correlation between variables. <br> (प्रतिगमन अनुमानक गणितीय रूप से चरों के बीच संरचनात्मक रैखिक सहसंबंध से जुड़े प्रसरण अंश को अलग करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
+                <div id="tf20" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> It explicitly strips away the variation neatly explained by the predictor \( x \), leaving only the residual variation \( S_y^2(1-\rho^2) \).</div>
+            </div>
+
+        </section>
+        
+        <script>
+        function showTopic(topicId) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            var elem = document.getElementById(topicId);
+            if (elem) {
+                elem.classList.add('active');
+            }
+            
+            var activeLink = document.querySelector(`.nav-link[onclick*="${topicId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            if(window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('hinglish-active');
+            var btn = document.querySelector('.lang-toggle-btn');
+            if (document.body.classList.contains('hinglish-active')) {
+                btn.textContent = 'Switch to English';
+            } else {
+                btn.textContent = 'Switch to Hinglish';
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv) {
+                answerDiv.classList.toggle('show');
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 8: Cluster Sampling | Theory of Sampling</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
+            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
+            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
+        
+        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        
+        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
+        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
+        
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
+        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
+        .section-card.active { display: block; }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
+        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
+        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
+        .section-card li { margin-bottom: 8px; }
+        
+        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hinglish-content { display: none; }
+        .hinglish-active .english-content { display: none; }
+        .hinglish-active .hinglish-content { display: block; }
+        
+        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
+        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
+
+        /* QUIZ STYLES */
+        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
+        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
+        .mcq-options li { margin-bottom: 5px; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
+        .toggle-btn:hover { background: var(--navy-light); }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
+        .answer.show { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="book-header">
+        <div class="header-icon"><i class="fas fa-layer-group"></i></div>
+        <div class="header-text">
+            <h1>Chapter 8: Cluster Sampling | Theory of Sampling</h1>
+            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <a class="nav-link active" onclick="showTopic('sec8-1')">8.1 Introduction</a>
+        <a class="nav-link" onclick="showTopic('sec8-2')">8.2 Notations</a>
+        <a class="nav-link" onclick="showTopic('sec8-3')">8.3 Equal Cluster Sampling</a>
+        <a class="nav-link" onclick="showTopic('sec8-4')">8.4 Relative Efficiency</a>
+        <a class="nav-link" onclick="showTopic('sec8-5')">8.5 Optimum Cluster Size</a>
+        <a class="nav-link" onclick="showTopic('sec8-6')">8.6 Sampling for Proportions</a>
+        <a class="nav-link" onclick="showTopic('sec8-7')">8.7 Unequal Clusters</a>
+        <a class="nav-link" onclick="showTopic('sec8-8')">8.8 R.E. of Unequal Clusters</a>
+        <a class="nav-link" onclick="showTopic('sec8-9')">8.9 Varying Prob. Clusters</a>
+        
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
+        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
+        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
+        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
+        <a class="nav-link" onclick="showTopic('sec8-10')">📝 Exercise (Subjective)</a>
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Back to Index</a>
+    </aside>
+
+    <main class="main-content">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+
+        <section id="sec8-1" class="section-card active">
+            <div class="english-content">
+                <h2>8.1 Introduction</h2>
+                <div class="quote">
+                    "A Mathematician knows how to solve a problem but he can't do it"<br>
+                    -- <strong>W.E. Milne</strong>
+                </div>
+                <p>In random sampling, it is presumed that the population has been divided into a finite number of distinct and identifiable units defined as sampling units. The smallest unit into which the population can be divided is called an element of the population. A group of such elements is known as a cluster. When the sampling unit is a cluster, the procedure is called cluster sampling. If the entire area containing the population under study is divided into smaller segments and each element in the population belongs to one and only one segment, the procedure is sometimes called area sampling.</p>
+
+                <p>Generally, identification and location of an element requires considerable time. However, once an element has been located, the time taken for surveying a few neighbouring elements is small. Thus, the main function in cluster sampling is to specify clusters or to divide the population into appropriate clusters. Clusters are generally made up of neighbouring elements and, therefore, the elements within a cluster tend to have similar characteristics. As a simple rule, the number of elements in a cluster should be small and the number of clusters should be large. After dividing the population into specified clusters, the required number of clusters can be selected either by equal or unequal probabilities of selection. All the elements in selected clusters are enumerated.</p>
+
+                <p>For a given number of sampling units, cluster sampling is more convenient and less costly. The advantages of cluster sampling are that</p>
+                <ul>
+                    <li>(i) collection of data for neighbouring elements is easier, cheaper, faster and operationally more convenient than observing units spread over a region,</li>
+                    <li>(ii) it is less costly than simple random sampling due to the saving of time in journeys, identification, contacts, etc.</li>
+                    <li>(iii) when the sampling frame of elements may not be readily available.</li>
+                </ul>
+
+                <p>Even if such a frame is made available it would be expensive to base an enquiry on a simple random sample of elements. From the point of view of statistical efficiency, cluster sampling is generally less efficient than simple random sampling due to the usual tendency of units in a cluster to be similar. In fact, the efficiency of cluster sampling is likely to decrease with increase in cluster size. For a given sample size, a smaller sampling unit will bring more precise results than a larger sampling unit. In most practical situations, the loss in efficiency may be balanced by the reduction in cost. Therefore the efficiency per unit cost may be more in cluster sampling than in simple random sampling.</p>
+
+                <p>The selection of clusters can be random or by first selecting a unit called a key unit at random and then randomly taking the required number of neighbouring units to form the cluster. For example, to estimate the milk production, a cluster of three villages can be formed by first selecting a key village at random and then taking two more villages from a block of some specified area. Clusters may be overlapping or non-overlapping. Various sampling procedures, viz. simple random, stratified or systematic sampling procedures, discussed in earlier chapters, can be applied to cluster sampling by treating the clusters themselves as sampling units.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>8.1 Introduction (परिचय)</h2>
+                <div class="quote">
+                    "एक Mathematician जानता है कि किसी problem को कैसे solve किया जाए लेकिन वह इसे कर नहीं सकता।"<br>
+                    -- <strong>W.E. Milne</strong>
+                </div>
+                <p>Random sampling में, यह मान लिया जाता है कि population को एक finite number की distinct और identifiable units में divide किया गया है जिन्हें sampling units के रूप में define किया जाता है। Population की सबसे छोटी unit जिसमें इसे divide किया जा सकता है, उसे population का element कहा जाता है। ऐसे elements के group को cluster कहा जाता है। जब sampling unit एक cluster होता है, तो procedure को cluster sampling कहा जाता है। यदि पूरी area जिसमें study के तहत population है, को छोटे segments में divide किया जाता है और population का प्रत्येक element केवल एक ही segment से belong करता है, तो इस procedure को कभी-कभी area sampling कहा जाता है।</p>
+
+                <p>आमतौर पर, किसी element की identification और location में काफी समय लगता है। हालाँकि, एक बार एक element locate हो जाने के बाद, कुछ neighbouring elements का survey करने में लगने वाला समय कम होता है। इस प्रकार, cluster sampling में मुख्य कार्य clusters को specify करना या population को appropriate clusters में divide करना है। Clusters आमतौर पर neighbouring elements से बने होते हैं और इसलिए, एक cluster के भीतर elements में similar characteristics होने की tendency होती है। एक simple rule के रूप में, एक cluster में elements की संख्या छोटी होनी चाहिए और clusters की संख्या बड़ी होनी चाहिए। Population को specified clusters में divide करने के बाद, required number के clusters को selection की equal या unequal probabilities के द्वारा select किया जा सकता है। Selected clusters के सभी elements को enumerate किया जाता है।</p>
+
+                <p>दिए गए number के sampling units के लिए, cluster sampling अधिक convenient और कम costly है। Cluster sampling के advantages यह हैं कि:</p>
+                <ul>
+                    <li>(i) एक region में फैले हुए units को observe करने की तुलना में neighbouring elements के लिए data collect करना आसान, सस्ता, तेज़ और operationally अधिक convenient है,</li>
+                    <li>(ii) journeys, identification, contacts आदि में समय की बचत के कारण यह simple random sampling की तुलना में कम costly है,</li>
+                    <li>(iii) जब elements का sampling frame आसानी से available न हो।</li>
+                </ul>
+
+                <p>भले ही ऐसा frame available करा दिया जाए, elements के simple random sample पर enquiry base करना expensive होगा। Statistical efficiency के point of view से, एक cluster में units के similar होने की सामान्य tendency के कारण cluster sampling आमतौर पर simple random sampling की तुलना में कम efficient होती है। वास्तव में, cluster size बढ़ने के साथ cluster sampling की efficiency घटने की संभावना है। एक दिए गए sample size के लिए, एक छोटी sampling unit बड़ी sampling unit की तुलना में अधिक precise results लाएगी। अधिकांश practical situations में, efficiency में loss की भरपाई cost में reduction द्वारा की जा सकती है। इसलिए cluster sampling में efficiency per unit cost simple random sampling की तुलना में अधिक हो सकती है।</p>
+
+                <p>Clusters का selection random हो सकता है या पहले एक unit जिसे key unit कहा जाता है उसे random पर select करके और फिर cluster बनाने के लिए required number में neighbouring units को randomly लेकर किया जा सकता है। उदाहरण के लिए, milk production को estimate करने के लिए, तीन villages का एक cluster पहले random पर एक key village select करके और फिर किसी specified area के block से दो और villages लेकर बनाया जा सकता है। Clusters overlapping या non-overlapping हो सकते हैं। पिछले chapters में discuss की गई विभिन्न sampling procedures, जैसे simple random, stratified या systematic sampling procedures, को clusters को ही sampling units मानकर cluster sampling में apply किया जा सकता है।</p>
+            </div>
+        </section>
+
+        <section id="sec8-2" class="section-card">
+            <div class="english-content">
+                <h2>8.2 Notations</h2>
+                <p>We shall first consider the case of equal clusters. Suppose the population consists of \( N \) clusters, each of \( M \) elements, and that a sample of \( n \) clusters is drawn by the method of simple random sampling.</p>
+                <ul>
+                    <li>\( N = \) number of clusters in the population</li>
+                    <li>\( n = \) number of clusters in the sample</li>
+                    <li>\( M = \) number of elements in the cluster</li>
+                    <li>\( y_{ij} = \) the value of the characteristic under study for the \( j \)-th element, \( (j = 1,2,...,M) \) in the \( i \)-th cluster, \( (i = 1,2,...,N) \)</li>
+                    <li>\( \bar{y}_{i\cdot} = \sum_{j = 1}^M y_{ij}/M = \) the mean of per element of the \( i \)-th cluster</li>
+                    <li>\( \bar{y}_n = \sum_{i = 1}^n \bar{y}_{i\cdot}/n = \) the mean of cluster means in a sample of \( n \) clusters</li>
+                    <li>\( \bar{Y}_N = \sum_{i = 1}^N \bar{y}_{i\cdot}/N = \) the mean of cluster means in the population</li>
+                    <li>\( \bar{Y} = \sum_{i = 1}^N \sum_{j = 1}^M y_{ij}/NM = \) the mean per element in the population</li>
+                    <li>\( S_i^2 = \sum_{j = 1}^M (y_{ij} - \bar{y}_{i\cdot})^2/(M - 1) = \) the mean square between elements within the \( i \)-th cluster \( (i = 1,2,...,N) \)</li>
+                    <li>\( S_w^2 = \sum_{i = 1}^N S_i^2/N = \) the mean square within clusters, (\( w \) for within)</li>
+                    <li>\( S_b^2 = \sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2/(N - 1) = \) the mean square between clusters means in the population (\( b \) for between)</li>
+                    <li>\( S^2 = \sum_{i = 1}^N \sum_{j = 1}^M (y_{ij} - \bar{Y})^2/(NM - 1) = \) the mean square between elements in the population</li>
+                    <li>\( \rho = \frac{E(y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{E(y_{ij} - \bar{Y})^2} = \frac{\sum_{i = 1}^N \sum_{j \neq k}^M (y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{(M - 1)(NM - 1)S^2} = \) the intracluster correlation co-efficient between elements within clusters</li>
+                </ul>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>8.2 Notations (संकेतन)</h2>
+                <p>हम पहले equal clusters के case पर विचार करेंगे। मान लीजिए population में \( N \) clusters हैं, जिनमें से प्रत्येक में \( M \) elements हैं, और \( n \) clusters का एक sample simple random sampling के method द्वारा draw किया जाता है।</p>
+                <ul>
+                    <li>\( N = \) population में clusters की संख्या</li>
+                    <li>\( n = \) sample में clusters की संख्या</li>
+                    <li>\( M = \) cluster में elements की संख्या</li>
+                    <li>\( y_{ij} = \) \( i \)-वें cluster (\( i = 1,2,...,N \)) में \( j \)-वें element (\( j = 1,2,...,M \)) के लिए study के तहत characteristic की value</li>
+                    <li>\( \bar{y}_{i\cdot} = \sum_{j = 1}^M y_{ij}/M = \) \( i \)-वें cluster के per element का mean</li>
+                    <li>\( \bar{y}_n = \sum_{i = 1}^n \bar{y}_{i\cdot}/n = \) \( n \) clusters के sample में cluster means का mean</li>
+                    <li>\( \bar{Y}_N = \sum_{i = 1}^N \bar{y}_{i\cdot}/N = \) population में cluster means का mean</li>
+                    <li>\( \bar{Y} = \sum_{i = 1}^N \sum_{j = 1}^M y_{ij}/NM = \) population में mean per element</li>
+                    <li>\( S_i^2 = \sum_{j = 1}^M (y_{ij} - \bar{y}_{i\cdot})^2/(M - 1) = \) \( i \)-वें cluster (\( i = 1,2,...,N \)) के भीतर elements के बीच mean square</li>
+                    <li>\( S_w^2 = \sum_{i = 1}^N S_i^2/N = \) clusters के भीतर mean square, (\( w \) within के लिए)</li>
+                    <li>\( S_b^2 = \sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2/(N - 1) = \) population में clusters means के बीच mean square (\( b \) between के लिए)</li>
+                    <li>\( S^2 = \sum_{i = 1}^N \sum_{j = 1}^M (y_{ij} - \bar{Y})^2/(NM - 1) = \) population में elements के बीच mean square</li>
+                    <li>\( \rho = \frac{E(y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{E(y_{ij} - \bar{Y})^2} = \frac{\sum_{i = 1}^N \sum_{j \neq k}^M (y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{(M - 1)(NM - 1)S^2} = \) clusters के भीतर elements के बीच intracluster correlation co-efficient</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec8-3" class="section-card">
+            <div class="english-content">
+                <h2>8.3 Equal Cluster Sampling: Estimator of Mean and its Variance</h2>
+                <p>No new principles are involved in making estimates when a probability sample of \( n \) equal sized clusters has been taken and each cluster is enumerated completely. Since the clusters are of equal size, it is clear that \( \bar{Y}_N = \bar{Y} \). For the sampling variance of the estimator \( \bar{y}_n \) in the form developed by Hansen and Hurwitz (1942), we shall begin by proving the following theorem.</p>
+
+                <h3>Theorem 8.3.1</h3>
+                <p>In simple random sampling, wor, of \( n \) clusters each containing \( M \) elements from a population of \( N \) clusters, the sample mean \( \bar{y}_n \) is an unbiased estimator of \( \bar{Y} \) and its variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{n}S_b^2 \quad (8.3.1) $$
+                    $$ \cong \frac{(1 - f)}{n}S_b^2[1 + (M - 1)\rho] \quad (8.3.2) $$
+                    <p>where \( \rho \) is the intracluster correlation coefficient.</p>
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>By applying Theorem 2.3.1, it can be shown easily that \( \bar{y}_n \) is an unbiased estimator of \( \bar{Y} \) and its variance is given by</p>
+                    $$ V(\bar{y}_n) = \sum_{i = 1}^N \frac{(\bar{y}_{i\cdot} - \bar{Y}_N)^2}{(N - 1)} = \frac{(1 - f)}{n}S_b^2 $$
+                    <p>Using</p>
+                    $$ \sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2 = \frac{1}{M^2}\sum_{i = 1}^N \sum_{j = 1}^M (y_{ij} - \bar{Y})^2 + \frac{1}{M^2}\sum_{i = 1}^N \sum_{j \neq k}^M (y_{ij} - \bar{Y})(y_{ik} - \bar{Y}) $$
+                    <p>after substituting the value of \( \rho \) in the above relation, we have</p>
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{n}\frac{NM - 1}{M^2(N - 1)}S^2[1 + (M - 1)\rho] $$
+                    $$ \cong \frac{(1 - f)}{nM}S^2[1 + (M - 1)\rho] \quad \text{for large } N. $$
+                </div>
+                <p>It has been shown that the variance in cluster sampling depends on the number of clusters in the sample, the size of the cluster, the intracluster correlation coefficient \( \rho \) and the variance \( S^2 \). If \( M = 1 \), it gives the sampling variance of a simple random sample of \( nM \) elements taken individually. Both procedures are equally good in this situation.</p>
+                <p>If \( M > 1 \) and \( \rho \) is positive, cluster sampling will give a higher variance than the mean per element. If \( \rho \) is negative, there is reason to use cluster sampling.</p>
+
+                <h3>Corollary 1</h3>
+                <p>In simple random sampling, wor, of \( n \) clusters each containing \( M \) elements from a population of \( N \) clusters, the population total is estimated unbiasedly by</p>
+                <div class="derivation-block">
+                    $$ \widehat{Y}_C = NM\bar{y}_n $$
+                    <p>with its sampling variance,</p>
+                    $$ V(\widehat{Y}_C) = (1 - f)\frac{N^2}{n}M^2S_b^2 $$
+                    $$ \cong MN^2\frac{(1 - f)}{n}S^2[1 + (M - 1)\rho] \quad (8.3.3) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>Instead of sampling in clusters, if a simple random sample of \( nM \) elements be directly taken from the population of \( NM \) elements, the variance of the mean per element would be</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{nM}S^2 \quad (8.3.4) $$
+                </div>
+
+                <h3>Corollary 3</h3>
+                <p>In simple random sampling, wor, an estimator of variance of \( \bar{y}_n \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n) = \frac{(1 - f)}{n}s_b^2 \quad (8.3.5) $$
+                    <p>where</p>
+                    $$ s_b^2 = \frac{\sum_{i = 1}^n (\bar{y}_{i\cdot} - \bar{y}_n)^2}{(n - 1)} $$
+                </div>
+
+                <h3>Corollary 4</h3>
+                <p>In simple random sampling, wr, the cluster mean \( \bar{y}_n \) is an unbiased estimator of \( \bar{Y} \) and its variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{S_b^2}{n} \quad (8.3.6) $$
+                    <p>An estimator of variance \( V(\bar{y}_n) \) can be written as</p>
+                    $$ v(\bar{y}_n) = \frac{s_b^2}{n} \quad (8.3.7) $$
+                </div>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>8.3 Equal Cluster Sampling: Estimator of Mean and its Variance (समान गुच्छ प्रतिचयन: माध्य का आकलक और उसका प्रसरण)</h2>
+                <p>जब \( n \) equal sized clusters का एक probability sample लिया गया है और प्रत्येक cluster को पूरी तरह से enumerate किया गया है, तो estimates बनाने में कोई नए principles शामिल नहीं हैं। चूँकि clusters equal size के हैं, यह clear है कि \( \bar{Y}_N = \bar{Y} \)। Hansen और Hurwitz (1942) द्वारा develop किए गए form में estimator \( \bar{y}_n \) के sampling variance के लिए, हम निम्नलिखित theorem को prove करके शुरू करेंगे।</p>
+
+                <h3>Theorem 8.3.1</h3>
+                <p>\( N \) clusters की population से \( M \) elements वाले \( n \) clusters के simple random sampling, wor में, sample mean \( \bar{y}_n \), \( \bar{Y} \) का एक unbiased estimator है और इसका variance इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{n}S_b^2 \quad (8.3.1) $$
+                    $$ \cong \frac{(1 - f)}{n}S_b^2[1 + (M - 1)\rho] \quad (8.3.2) $$
+                    <p>जहाँ \( \rho \) intracluster correlation coefficient है।</p>
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>Theorem 2.3.1 को apply करके, यह आसानी से दिखाया जा सकता है कि \( \bar{y}_n \), \( \bar{Y} \) का एक unbiased estimator है और इसका variance इस प्रकार दिया जाता है:</p>
+                    $$ V(\bar{y}_n) = \sum_{i = 1}^N \frac{(\bar{y}_{i\cdot} - \bar{Y}_N)^2}{(N - 1)} = \frac{(1 - f)}{n}S_b^2 $$
+                    <p>का उपयोग करते हुए:</p>
+                    $$ \sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2 = \frac{1}{M^2}\sum_{i = 1}^N \sum_{j = 1}^M (y_{ij} - \bar{Y})^2 + \frac{1}{M^2}\sum_{i = 1}^N \sum_{j \neq k}^M (y_{ij} - \bar{Y})(y_{ik} - \bar{Y}) $$
+                    <p>उपरोक्त relation में \( \rho \) की value substitute करने के बाद, हमारे पास है:</p>
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{n}\frac{NM - 1}{M^2(N - 1)}S^2[1 + (M - 1)\rho] $$
+                    $$ \cong \frac{(1 - f)}{nM}S^2[1 + (M - 1)\rho] \quad \text{large } N \text{ के लिए।} $$
+                </div>
+                <p>यह दिखाया गया है कि cluster sampling में variance sample में clusters की संख्या, cluster के size, intracluster correlation coefficient \( \rho \) और variance \( S^2 \) पर depend करता है। यदि \( M = 1 \) है, तो यह individually लिए गए \( nM \) elements के simple random sample का sampling variance देता है। इस situation में दोनों procedures समान रूप से अच्छे हैं।</p>
+                <p>यदि \( M > 1 \) और \( \rho \) positive है, तो cluster sampling mean per element की तुलना में अधिक variance देगा। यदि \( \rho \) negative है, तो cluster sampling का उपयोग करने का कारण है।</p>
+
+                <h3>Corollary 1</h3>
+                <p>\( N \) clusters की population से \( M \) elements वाले \( n \) clusters के simple random sampling, wor में, population total को unbiasedly estimate किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ \widehat{Y}_C = NM\bar{y}_n $$
+                    <p>इसके sampling variance के साथ,</p>
+                    $$ V(\widehat{Y}_C) = (1 - f)\frac{N^2}{n}M^2S_b^2 $$
+                    $$ \cong MN^2\frac{(1 - f)}{n}S^2[1 + (M - 1)\rho] \quad (8.3.3) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>Clusters में sampling करने के बजाय, यदि \( nM \) elements का एक simple random sample सीधे \( NM \) elements की population से लिया जाता है, तो mean per element का variance होगा:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{nM}S^2 \quad (8.3.4) $$
+                </div>
+
+                <h3>Corollary 3</h3>
+                <p>Simple random sampling, wor में, \( \bar{y}_n \) के variance का एक estimator दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n) = \frac{(1 - f)}{n}s_b^2 \quad (8.3.5) $$
+                    <p>जहाँ</p>
+                    $$ s_b^2 = \frac{\sum_{i = 1}^n (\bar{y}_{i\cdot} - \bar{y}_n)^2}{(n - 1)} $$
+                </div>
+
+                <h3>Corollary 4</h3>
+                <p>Simple random sampling, wr में, cluster mean \( \bar{y}_n \), \( \bar{Y} \) का एक unbiased estimator है और इसका variance इस प्रकार दिया जाता है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{S_b^2}{n} \quad (8.3.6) $$
+                    <p>Variance \( V(\bar{y}_n) \) का एक estimator इस प्रकार लिखा जा सकता है:</p>
+                    $$ v(\bar{y}_n) = \frac{s_b^2}{n} \quad (8.3.7) $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec8-4" class="section-card">
+            <div class="english-content">
+                <h2>8.4 Relative Efficiency of Cluster Sampling</h2>
+                <p>In sampling \( nM \) elements from the population by simple random sampling, the variance of the sample mean \( \bar{y} \) is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \frac{(1 - f)S^2}{nM} $$
+                </div>
+                <p>Thus, the relative efficiency of cluster sampling compared with simple random sampling is given by</p>
+                <div class="derivation-block">
+                    $$ \text{Rel Efficiency} = \frac{V_{SR}(\bar{y})}{V_c(\bar{y}_n)} = \frac{S^2}{MS_b^2} \quad (8.4.1) $$
+                </div>
+                <p>This shows that the efficiency of cluster sampling increases as the mean square between clusters decreases.</p>
+                <p>Also</p>
+                <div class="derivation-block">
+                    $$ (N - 1)MS_b^2 = (NM - 1)S^2 - N(M - 1)S_w^2 \quad (8.4.2) $$
+                </div>
+                <p>Therefore, relative efficiency will increase with increase in the mean square within clusters. These results suggest that the clusters should be so formed that variation within clusters is maximum while variation between clusters is minimum. Another way to express relative efficiency is to make use of the concept of the intracluster correlation coefficient.</p>
+
+                <p>For large \( N \), the relative efficiency of cluster sampling in terms of intracluster coefficient \( \rho \) is given by</p>
+                <div class="derivation-block">
+                    $$ \text{Rel Efficiency } (E) = [1 + (M - 1)\rho]^{-1} \quad (8.4.3) $$
+                </div>
+                <ul>
+                    <li>(i) In case of complete homogeneity of clusters, \( S_w^2 = 0 \) and so \( \rho = 1 \) and \( E = 1/M \), i.e. cluster sampling is not efficient.</li>
+                    <li>(ii) In case of complete heterogeneity, \( S_w^2 = S^2 \) so \( S_b^2 = 0 \) and \( \rho = -1/(M - 1) \), i.e. cluster sampling is very efficient.</li>
+                </ul>
+
+                <p>Hence, it should be noted that \( \rho \) lies in the range \( -1/(M - 1) \) to 1. It also shows that cluster sampling will be more efficient if \( \rho \) is negative. In practice, \( \rho \) is usually positive as neighbouring elements are grouped to form clusters. Generally, \( \rho \) decreases with increase in \( M \). The efficiency of cluster sampling increases as the factor \( (M - 1) \) increases with cluster size.</p>
+
+                <p>The efficiency can easily be calculated by estimating the value of \( \rho \) from the sample. An estimator of \( \rho \) can be written as</p>
+                <div class="derivation-block">
+                    $$ \widehat{\rho} = \frac{(n - 1)Ms_b^2 - ns_w^2}{(n - 1)Ms_b^2 + n(M - 1)s_w^2} \quad (8.4.4) $$
+                    <p>where</p>
+                    $$ s_w^2 = \sum_{i = 1}^n \sum_{j = 1}^M \frac{(y_{ij} - \bar{y}_{i\cdot})^2}{n(M - 1)} \quad (8.4.5) $$
+                </div>
+                <p>Thus, for large \( N \), an estimate of the relative efficiency of cluster sampling can be written as</p>
+                <div class="derivation-block">
+                    $$ \text{Est. Rel Efficiency } (e) = \frac{1}{M} + \frac{(M - 1)s_w^2}{M^2s_b^2} \quad (8.4.6) $$
+                    <p>And accordingly \( \rho \) can be estimated by</p>
+                    $$ \widehat{\rho} = \frac{(1 - e)}{(M - 1)e} \quad (8.4.7) $$
+                </div>
+
+                <p>For a sample of \( n \) clusters, the results in the form of analysis of variance can be written in the form of Table 8.1.</p>
+                
+                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
+                    <caption>Table 8.1 Analysis of Variance for Sample of \( n \) Clusters</caption>
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Source of variation</th><th>Degrees of freedom</th><th>Mean square</th></tr>
+                    <tr><td>Between clusters</td><td>\( n - 1 \)</td><td>\( Ms_b^2 = \sum_{i = 1}^n \frac{(\bar{y}_{i\cdot} - \bar{y}_n)^2}{(n - 1)} \)</td></tr>
+                    <tr><td>Within clusters</td><td>\( n(M - 1) \)</td><td>\( s_w^2 = \sum_{i = 1}^n \sum_{j = 1}^M \frac{(y_{ij} - \bar{y}_{i\cdot})^2}{n(M - 1)} \)</td></tr>
+                    <tr style="border-top: 1px solid var(--border);"><td>Total sample</td><td>\( nM - 1 \)</td><td>\( s^2 = \sum_{i = 1}^n \sum_{j = 1}^M \frac{(y_{ij} - \bar{y}_n)^2}{(nM - 1)} \)</td></tr>
+                    <tr><td></td><td></td><td>\( = \frac{(n - 1)Ms_b^2 + n(M - 1)s_w^2}{(nM - 1)} \)</td></tr>
+                </table>
+
+                <p>It should be noted clearly that in a random sample of \( n \) clusters, \( s_b^2 \) and \( s_w^2 \) will provide unbiased estimates of \( S_b^2 \) and \( S_w^2 \) respectively while \( s^2 \) will not be an unbiased estimate of \( S^2 \). The reason is that a sample of \( M \) elements is not taken randomly from the population of \( NM \) elements. However, an unbiased estimate may be obtained easily by substituting the values in the relation, when</p>
+                <div class="derivation-block">
+                    $$ \widehat{S}^2 = \frac{(N - 1)Ms_b^2 + N(M - 1)s_w^2}{(NM - 1)} \quad (8.4.8) $$
+                </div>
+
+                <h3 style="margin-top: 40px;">Example 8.1</h3>
+                <p>A pilot sample survey for study of cultivation practices and yield of guava was conducted by IASRI in Allahabad district of Uttar Pradesh (India). From Umerpur-Neerna village, out of a total of 412 bearing trees, 15 clusters of size 4 trees each were selected and yields (in kg) were recorded as given.</p>
+                
+                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Cluster</th><th>1st tree</th><th>2nd tree</th><th>3rd tree</th><th>4th tree</th></tr>
+                    <tr><td>1</td><td>5.53</td><td>26.11</td><td>4.84</td><td>10.93</td></tr>
+                    <tr><td>2</td><td>0.69</td><td>19.08</td><td>15.79</td><td>11.18</td></tr>
+                    <tr><td>3</td><td>11.08</td><td>0.65</td><td>4.21</td><td>7.56</td></tr>
+                    <tr><td>4</td><td>12.66</td><td>32.52</td><td>16.92</td><td>37.02</td></tr>
+                    <tr><td>5</td><td>0.87</td><td>3.56</td><td>4.81</td><td>27.54</td></tr>
+                    <tr><td>6</td><td>6.40</td><td>11.68</td><td>40.05</td><td>5.15</td></tr>
+                    <tr><td>7</td><td>54.21</td><td>34.63</td><td>52.55</td><td>37.96</td></tr>
+                    <tr><td>8</td><td>1.94</td><td>35.97</td><td>29.54</td><td>25.98</td></tr>
+                    <tr><td>9</td><td>37.94</td><td>47.07</td><td>16.94</td><td>28.11</td></tr>
+                    <tr><td>10</td><td>56.92</td><td>17.69</td><td>26.24</td><td>6.77</td></tr>
+                    <tr><td>11</td><td>27.59</td><td>38.10</td><td>24.76</td><td>6.53</td></tr>
+                    <tr><td>12</td><td>45.98</td><td>5.17</td><td>1.17</td><td>6.53</td></tr>
+                    <tr><td>13</td><td>7.13</td><td>34.35</td><td>12.18</td><td>9.86</td></tr>
+                    <tr><td>14</td><td>14.23</td><td>16.89</td><td>28.93</td><td>21.70</td></tr>
+                    <tr><td>15</td><td>3.53</td><td>40.76</td><td>5.15</td><td>1.25</td></tr>
+                </table>
+
+                <p>(i) Estimate the average yield (in kg) per tree of guava in the Umerpur-Neerna village of Allahabad along with its standard error.<br>
+                (ii) Estimate the intracluster correlation coefficient between trees within clusters and efficiency of cluster sampling as compared to simple random sampling.</p>
+
+                <div class="derivation-block">
+                    <p>Here we have, \( M = 4 \), \( N = 103 \) and \( n = 15 \).</p>
+                    <p>Let \( y_{ij} \) be the yield of the \( j \)-th tree in the \( i \)-th cluster, \( j = 1,2,3,4 \) and \( i = 1,2,...,15 \).</p>
+                    <p><strong>(i)</strong> An estimate of the average yield per tree of guava is given as</p>
+                    $$ \bar{y}_n = \frac{1}{nM}\sum_{i = 1}^n \sum_{j = 1}^M y_{ij} = \frac{1}{n}\sum_{i = 1}^n \bar{y}_{i\cdot} $$
+                    $$ = \frac{292.04}{15} = 19.47 $$
+                    <p>Estimated variance of \( \bar{y}_n \) is given by</p>
+                    $$ v(\bar{y}_n) = \left( \frac{1}{n} - \frac{1}{N} \right)\frac{1}{n - 1}\sum_{i = 1}^n (\bar{y}_{i\cdot} - \bar{y}_n)^2 $$
+                    $$ = \left( \frac{1}{n} - \frac{1}{N} \right)\frac{1}{n - 1}\left[ \sum_{i = 1}^n \bar{y}_{i\cdot}^2 - n\bar{y}_n^2 \right] $$
+                    $$ = \left( \frac{1}{15} - \frac{1}{103} \right)\frac{1}{14}[7202.4262 - 15 \times 379.0809] $$
+                    $$ = \left( \frac{1}{15} - \frac{1}{103} \right) \times 108.3009 = 6.1686 $$
+                    <p>Therefore, standard error of \( \bar{y}_n = \sqrt{6.1686} = 2.48 \)</p>
+
+                    <p><strong>(ii)</strong> An estimate of the efficiency of cluster sampling as compared with simple random sampling can be made in the form of analysis of variance given as below:</p>
+                    <table style="width: 50%; margin: 10px auto; border-collapse: collapse; text-align: center;">
+                        <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Source of variation</th><th>df</th><th>Mean square</th></tr>
+                        <tr><td>Between clusters</td><td>14</td><td>108.3 (\( = Ms_b^2 \))</td></tr>
+                        <tr><td>Within clusters</td><td>397</td><td>188.6 (\( = s_w^2 \))</td></tr>
+                        <tr style="border-top: 1px solid var(--border);"><td>Total</td><td>411</td><td>249.3 (\( = \widehat{S}^2 \))</td></tr>
+                    </table>
+                    <p>Thus</p>
+                    $$ RE = \frac{249.3}{4 \times 108.3} = 0.576 $$
+                    <p>and</p>
+                    $$ \widehat{\rho} = \frac{(1 - 0.576)}{(4 - 1) \times 0.576} = 0.245 $$
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>8.4 Relative Efficiency of Cluster Sampling (गुच्छ प्रतिचयन की सापेक्ष दक्षता)</h2>
+                <p>Simple random sampling द्वारा population से \( nM \) elements की sampling में, sample mean \( \bar{y} \) का variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}) = \frac{(1 - f)S^2}{nM} $$
+                </div>
+                <p>इस प्रकार, simple random sampling की तुलना में cluster sampling की relative efficiency इस प्रकार दी गई है:</p>
+                <div class="derivation-block">
+                    $$ \text{Rel Efficiency} = \frac{V_{SR}(\bar{y})}{V_c(\bar{y}_n)} = \frac{S^2}{MS_b^2} \quad (8.4.1) $$
+                </div>
+                <p>यह दर्शाता है कि cluster sampling की efficiency तब बढ़ती है जब clusters के बीच mean square घटता है।</p>
+                <p>साथ ही</p>
+                <div class="derivation-block">
+                    $$ (N - 1)MS_b^2 = (NM - 1)S^2 - N(M - 1)S_w^2 \quad (8.4.2) $$
+                </div>
+                <p>इसलिए, clusters के भीतर mean square में increase के साथ relative efficiency बढ़ेगी। ये results suggest करते हैं कि clusters इस तरह बनाए जाने चाहिए कि clusters के भीतर variation maximum हो जबकि clusters के बीच variation minimum हो। Relative efficiency express करने का एक और तरीका intracluster correlation coefficient के concept का उपयोग करना है।</p>
+
+                <p>Large \( N \) के लिए, intracluster coefficient \( \rho \) के terms में cluster sampling की relative efficiency इस प्रकार दी गई है:</p>
+                <div class="derivation-block">
+                    $$ \text{Rel Efficiency } (E) = [1 + (M - 1)\rho]^{-1} \quad (8.4.3) $$
+                </div>
+                <ul>
+                    <li>(i) Clusters की complete homogeneity के case में, \( S_w^2 = 0 \) और इसलिए \( \rho = 1 \) और \( E = 1/M \), अर्थात cluster sampling efficient नहीं है।</li>
+                    <li>(ii) Complete heterogeneity के case में, \( S_w^2 = S^2 \) इसलिए \( S_b^2 = 0 \) और \( \rho = -1/(M - 1) \), अर्थात cluster sampling बहुत efficient है।</li>
+                </ul>
+
+                <p>इसलिए, यह ध्यान दिया जाना चाहिए कि \( \rho \), \( -1/(M - 1) \) से 1 के range में lie करता है। यह यह भी दर्शाता है कि यदि \( \rho \) negative है तो cluster sampling अधिक efficient होगी। Practice में, \( \rho \) आमतौर पर positive होता है क्योंकि neighbouring elements को clusters बनाने के लिए group किया जाता है। आमतौर पर, \( M \) में increase के साथ \( \rho \) decrease होता है। Cluster sampling की efficiency तब बढ़ती है जब factor \( (M - 1) \) cluster size के साथ बढ़ता है。</p>
+
+                <p>Sample से \( \rho \) की value estimate करके efficiency आसानी से calculate की जा सकती है। \( \rho \) का एक estimator इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \widehat{\rho} = \frac{(n - 1)Ms_b^2 - ns_w^2}{(n - 1)Ms_b^2 + n(M - 1)s_w^2} \quad (8.4.4) $$
+                    <p>जहाँ</p>
+                    $$ s_w^2 = \sum_{i = 1}^n \sum_{j = 1}^M \frac{(y_{ij} - \bar{y}_{i\cdot})^2}{n(M - 1)} \quad (8.4.5) $$
+                </div>
+                <p>इस प्रकार, large \( N \) के लिए, cluster sampling की relative efficiency का एक estimate इस प्रकार लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \text{Est. Rel Efficiency } (e) = \frac{1}{M} + \frac{(M - 1)s_w^2}{M^2s_b^2} \quad (8.4.6) $$
+                    <p>और तदनुसार \( \rho \) को इसके द्वारा estimate किया जा सकता है:</p>
+                    $$ \widehat{\rho} = \frac{(1 - e)}{(M - 1)e} \quad (8.4.7) $$
+                </div>
+
+                <p>\( n \) clusters के एक sample के लिए, analysis of variance के form में results Table 8.1 के form में लिखे जा सकते हैं (अंग्रेजी अनुभाग में तालिका देखें)।</p>
+
+                <p>यह clearly ध्यान दिया जाना चाहिए कि \( n \) clusters के एक random sample में, \( s_b^2 \) और \( s_w^2 \) क्रमशः \( S_b^2 \) और \( S_w^2 \) के unbiased estimates provide करेंगे जबकि \( s^2 \), \( S^2 \) का unbiased estimate नहीं होगा। कारण यह है कि \( M \) elements का sample \( NM \) elements की population से randomly नहीं लिया गया है। हालाँकि, relation में values substitute करके एक unbiased estimate आसानी से प्राप्त किया जा सकता है, जब</p>
+                <div class="derivation-block">
+                    $$ \widehat{S}^2 = \frac{(N - 1)Ms_b^2 + N(M - 1)s_w^2}{(NM - 1)} \quad (8.4.8) $$
+                </div>
+
+                <h3 style="margin-top: 40px;">उदाहरण 8.1 (Example 8.1)</h3>
+                <p>उत्तर प्रदेश (India) के Allahabad district में IASRI द्वारा guava की cultivation practices और yield की study के लिए एक pilot sample survey conduct किया गया था। Umerpur-Neerna village से, कुल 412 bearing trees में से 4 trees के size वाले 15 clusters को select किया गया और yields (in kg) record किए गए (अंग्रेजी अनुभाग में डेटा देखें)।</p>
+
+                <p>(i) Allahabad के Umerpur-Neerna village में guava के per tree average yield (in kg) को उसके standard error के साथ estimate करें।<br>
+                (ii) Clusters के भीतर trees के बीच intracluster correlation coefficient और simple random sampling की तुलना में cluster sampling की efficiency को estimate करें।</p>
+
+                <div class="derivation-block">
+                    <p>यहाँ हमारे पास है, \( M = 4 \), \( N = 103 \) और \( n = 15 \)।</p>
+                    <p>मान लीजिए \( y_{ij} \), \( i \)-वें cluster में \( j \)-वें tree का yield है, \( j = 1,2,3,4 \) और \( i = 1,2,...,15 \)।</p>
+                    <p><strong>(i)</strong> Guava के average yield per tree का एक estimate इस प्रकार दिया गया है:</p>
+                    $$ \bar{y}_n = \frac{1}{nM}\sum_{i = 1}^n \sum_{j = 1}^M y_{ij} = \frac{1}{n}\sum_{i = 1}^n \bar{y}_{i\cdot} $$
+                    $$ = \frac{292.04}{15} = 19.47 $$
+                    <p>\( \bar{y}_n \) का estimated variance इस प्रकार दिया गया है:</p>
+                    $$ v(\bar{y}_n) = \left( \frac{1}{n} - \frac{1}{N} \right)\frac{1}{n - 1}\sum_{i = 1}^n (\bar{y}_{i\cdot} - \bar{y}_n)^2 $$
+                    $$ = \left( \frac{1}{n} - \frac{1}{N} \right)\frac{1}{n - 1}\left[ \sum_{i = 1}^n \bar{y}_{i\cdot}^2 - n\bar{y}_n^2 \right] $$
+                    $$ = \left( \frac{1}{15} - \frac{1}{103} \right)\frac{1}{14}[7202.4262 - 15 \times 379.0809] $$
+                    $$ = \left( \frac{1}{15} - \frac{1}{103} \right) \times 108.3009 = 6.1686 $$
+                    <p>इसलिए, \( \bar{y}_n \) का standard error \( = \sqrt{6.1686} = 2.48 \)</p>
+
+                    <p><strong>(ii)</strong> Simple random sampling की तुलना में cluster sampling की efficiency का एक estimate analysis of variance के form में नीचे दिए गए अनुसार किया जा सकता है:</p>
+                    <table style="width: 50%; margin: 10px auto; border-collapse: collapse; text-align: center;">
+                        <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Source of variation</th><th>df</th><th>Mean square</th></tr>
+                        <tr><td>Between clusters</td><td>14</td><td>108.3 (\( = Ms_b^2 \))</td></tr>
+                        <tr><td>Within clusters</td><td>397</td><td>188.6 (\( = s_w^2 \))</td></tr>
+                        <tr style="border-top: 1px solid var(--border);"><td>Total</td><td>411</td><td>249.3 (\( = \widehat{S}^2 \))</td></tr>
+                    </table>
+                    <p>इस प्रकार</p>
+                    $$ RE = \frac{249.3}{4 \times 108.3} = 0.576 $$
+                    <p>और</p>
+                    $$ \widehat{\rho} = \frac{(1 - 0.576)}{(4 - 1) \times 0.576} = 0.245 $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec8-5" class="section-card">
+            <div class="english-content">
+                <h2>8.5 Optimum Cluster Size</h2>
+                <p>For a given sample size, the sampling variance increases with cluster size and decreases with increasing number of clusters. On the other hand, the cost decreases with the cluster size and increases with the number of clusters. Hence, it is necessary to determine a balancing point by finding out the optimum cluster size and the number of clusters in the samples which can minimize the sampling variance for a given cost or, alternatively, minimize the cost for a fixed variance.</p>
+
+                <p>The efficiency of cluster sampling has been studied by Smith (1938) and Hansen and Hurwitz (1942). Mahalanobis (1940, 1942) have studied the problem of determination of the optimum cluster size from the points of view of both variance and cost. A comparative study of cluster sizes in cluster sampling and sub-sampling procedures has been made by Singh (1956). In this section we shall discuss the problem of optimum size of cluster for which maximum precision is attained with a given cost, or vice versa.</p>
+
+                <p>A good account of discussion on the construction of cost functions for cluster sampling has been given by Hansen, Hurwitz and Madow (1953). In brief, we have summed up the guidelines here.</p>
+
+                <p>The cost of a survey, apart from overhead cost, will be made up of two components:</p>
+                <ul>
+                    <li>(i) Cost due to expenses in enumerating the elements in the sample and in travelling within the cluster, which is proportional to the number of elements in the sample.</li>
+                    <li>(ii) Cost due to expenses on travelling between clusters, which is proportional to the distance to be travelled between clusters. It has been shown empirically that the expected value of minimum distance between \( n \) points located at random is proportional to \( n^{1/2} \).</li>
+                </ul>
+
+                <p>The cost of a survey can be, therefore, expressed as</p>
+                <div class="derivation-block">
+                    $$ C = c_1nM + c_2n^{1/2} \quad (8.5.1) $$
+                    <p>where \( c_1 \) is the cost of enumerating an element, including the cost of travel between units within the cluster, and \( c_2 \) is the cost per unit distance travelled between clusters.</p>
+                </div>
+
+                <p>It has already been shown that the variance of the estimator \( \bar{y}_n \) based on a sample of \( n \) clusters of size \( M \) each, is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{(1 - f)S_b^2}{n} \quad (8.5.2) $$
+                </div>
+
+                <p>As shown by relation (8.4.2) \( S_b^2 \) can be obtained if we know (i) the variance \( S^2 \) between all elements in the population and (ii) the variance \( S_w^2 \) within clusters. Hence, an approach has always been made to predict \( S_w^2 \) as it is affected by the cluster size while \( S^2 \) remains unchanged by it.</p>
+
+                <p>Jessen (1942), Mahalanobis (1944) and Hendriks (1944) have attempted to develop a general law to predict how \( S_w^2 \) changes with size of cluster. On the basis of several agricultural surveys, they observed that \( S_w^2 \) appears to bear a relation with \( M \) which can be written by the empirical relation</p>
+                <div class="derivation-block">
+                    $$ S_w^2 = aM^b \ (b > 0) \quad (8.5.3) $$
+                    <p>where \( a \) and \( b \) are positive constants and are to be determined from the survey data.</p>
+                </div>
+
+                <p>From the analysis of variance, we have</p>
+                <div class="derivation-block">
+                    $$ S_b^2 = \frac{(MN - 1)S^2 - N(M - 1)S_w^2}{M(N - 1)} $$
+                </div>
+
+                <p>By substituting the value of \( S_w^2 \) from relation (8.5.3), for large \( N \), we have</p>
+                <div class="derivation-block">
+                    $$ S_b^2 = S^2 - (M - 1)aM^{b - 1} \quad (8.5.4) $$
+                </div>
+
+                <p>In relation (8.5.2), after ignoring the fpc and substituting the value of \( S_b^2 \) from relation (8.5.4), we have</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{1}{n}[S^2 - (M - 1)aM^{b - 1}] \quad (8.5.5) $$
+                </div>
+
+                <p>The problem under consideration is to calculate the values of \( n \) and \( M \) by minimizing \( V \) for given \( C \). To minimize \( \phi = C + \lambda V \) (\( \lambda \) being Lagrange's multiplier), differentiate \( \phi \) w.r.t. \( n \) and \( M \), respectively, and equate to zero. Solving the equations thus obtained, the value of \( n \) is given by</p>
+                <div class="derivation-block">
+                    $$ n = \left[ \frac{-c_2 + (c_2^2 + 4c_1CM)^{1/2}}{2c_1M} \right]^2 \quad (8.5.6) $$
+                </div>
+
+                <p>It is difficult to get an explicit expression for \( M \). However, \( M \) can be obtained from the equation</p>
+                <div class="derivation-block">
+                    $$ \frac{aM^{b - 1}[bM - (b - 1)]}{S^2 - (b - 1)aM^{b - 1}} = 1 - \left( 1 + \frac{4c_1CM}{c_2^2} \right)^{-1/2} \quad (8.5.7) $$
+                </div>
+
+                <p>by the iterative method. On substituting the value of \( M \) thus obtained in relation (8.5.7), we can obtain the optimum value of \( n \).</p>
+
+                <p>From relation (8.5.7), it follows that \( M \) will change according to changes in \( c_1 \), \( c_2 \) and \( C \) such that \( c_1CM/c_2^2 \) is nearly constant. This leads to the conclusion that the optimum size of the unit will be smaller when</p>
+                <ul>
+                    <li>(i) the cost of enumeration of an element increases;</li>
+                    <li>(ii) the cost of travel between units decreases; and</li>
+                    <li>(iii) the cost of the survey is sufficiently large.</li>
+                </ul>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>8.5 Optimum Cluster Size (इष्टतम गुच्छ आकार)</h2>
+                <p>एक दिए गए sample size के लिए, sampling variance cluster size के साथ बढ़ता है और clusters की संख्या बढ़ने के साथ घटता है। दूसरी ओर, cost cluster size के साथ घटती है और clusters की संख्या के साथ बढ़ती है। इसलिए, samples में optimum cluster size और clusters की संख्या का पता लगाकर एक balancing point determine करना आवश्यक है जो एक दिए गए cost के लिए sampling variance को minimize कर सकता है या alternatively, एक fixed variance के लिए cost को minimize कर सकता है।</p>
+
+                <p>Cluster sampling की efficiency को Smith (1938) और Hansen और Hurwitz (1942) द्वारा study किया गया है। Mahalanobis (1940, 1942) ने variance और cost दोनों के point of view से optimum cluster size के determination की problem को study किया है। Singh (1956) द्वारा cluster sampling और sub-sampling procedures में cluster sizes की एक comparative study की गई है। इस section में हम cluster के optimum size की problem पर discuss करेंगे जिसके लिए एक दिए गए cost के साथ maximum precision प्राप्त किया जाता है, या vice versa।</p>
+
+                <p>Cluster sampling के लिए cost functions के construction पर discussion का एक अच्छा account Hansen, Hurwitz और Madow (1953) द्वारा दिया गया है। संक्षेप में (In brief), हमने यहाँ guidelines को sum up किया है।</p>
+
+                <p>एक survey की cost, overhead cost को छोड़कर, दो components से बनी होगी:</p>
+                <ul>
+                    <li>(i) Sample में elements को enumerate करने और cluster के भीतर travelling में expenses के कारण cost, जो sample में elements की संख्या के proportional होती है।</li>
+                    <li>(ii) Clusters के बीच travelling पर expenses के कारण cost, जो clusters के बीच travel की जाने वाली distance के proportional होती है। यह empirically दिखाया गया है कि random पर locate किए गए \( n \) points के बीच minimum distance की expected value \( n^{1/2} \) के proportional होती है।</li>
+                </ul>
+
+                <p>इसलिए, survey की cost को इस प्रकार express किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ C = c_1nM + c_2n^{1/2} \quad (8.5.1) $$
+                    <p>जहाँ \( c_1 \) एक element को enumerate करने की cost है, जिसमें cluster के भीतर units के बीच travel की cost शामिल है, और \( c_2 \) clusters के बीच travel की गई per unit distance की cost है।</p>
+                </div>
+
+                <p>यह पहले ही दिखाया जा चुका है कि estimator \( \bar{y}_n \) का variance जो \( M \) size के \( n \) clusters के sample पर based है, इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{(1 - f)S_b^2}{n} \quad (8.5.2) $$
+                </div>
+
+                <p>जैसा कि relation (8.4.2) द्वारा दिखाया गया है, \( S_b^2 \) प्राप्त किया जा सकता है यदि हम जानते हैं (i) population में सभी elements के बीच variance \( S^2 \) और (ii) clusters के भीतर variance \( S_w^2 \)। इसलिए, हमेशा \( S_w^2 \) को predict करने का एक approach किया गया है क्योंकि यह cluster size से affect होता है जबकि \( S^2 \) इससे unchanged रहता है।</p>
+
+                <p>Jessen (1942), Mahalanobis (1944) और Hendriks (1944) ने यह predict करने के लिए एक general law develop करने का attempt किया है कि cluster के size के साथ \( S_w^2 \) कैसे change होता है। कई agricultural surveys के basis पर, उन्होंने observe किया कि \( S_w^2 \), \( M \) के साथ एक relation रखता प्रतीत होता है जिसे empirical relation द्वारा लिखा जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ S_w^2 = aM^b \ (b > 0) \quad (8.5.3) $$
+                    <p>जहाँ \( a \) और \( b \) positive constants हैं और survey data से determine किए जाने हैं।</p>
+                </div>
+
+                <p>Analysis of variance से, हमारे पास है:</p>
+                <div class="derivation-block">
+                    $$ S_b^2 = \frac{(MN - 1)S^2 - N(M - 1)S_w^2}{M(N - 1)} $$
+                </div>
+
+                <p>Relation (8.5.3) से \( S_w^2 \) की value substitute करके, large \( N \) के लिए, हमारे पास है:</p>
+                <div class="derivation-block">
+                    $$ S_b^2 = S^2 - (M - 1)aM^{b - 1} \quad (8.5.4) $$
+                </div>
+
+                <p>Relation (8.5.2) में, fpc को ignore करने और relation (8.5.4) से \( S_b^2 \) की value substitute करने के बाद, हमारे पास है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = \frac{1}{n}[S^2 - (M - 1)aM^{b - 1}] \quad (8.5.5) $$
+                </div>
+
+                <p>विचार के तहत problem दिए गए \( C \) के लिए \( V \) को minimize करके \( n \) और \( M \) की values calculate करना है। \( \phi = C + \lambda V \) (\( \lambda \) Lagrange का multiplier है) को minimize करने के लिए, \( \phi \) को क्रमशः \( n \) और \( M \) के w.r.t. differentiate करें और zero के equal करें। इस प्रकार प्राप्त equations को solve करने पर, \( n \) की value इस प्रकार दी गई है:</p>
+                <div class="derivation-block">
+                    $$ n = \left[ \frac{-c_2 + (c_2^2 + 4c_1CM)^{1/2}}{2c_1M} \right]^2 \quad (8.5.6) $$
+                </div>
+
+                <p>\( M \) के लिए एक explicit expression प्राप्त करना difficult है। हालाँकि, \( M \) को equation से प्राप्त किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \frac{aM^{b - 1}[bM - (b - 1)]}{S^2 - (b - 1)aM^{b - 1}} = 1 - \left( 1 + \frac{4c_1CM}{c_2^2} \right)^{-1/2} \quad (8.5.7) $$
+                </div>
+
+                <p>iterative method द्वारा। इस प्रकार प्राप्त \( M \) की value को relation में substitute करने पर, हम \( n \) की optimum value प्राप्त कर सकते हैं।</p>
+
+                <p>Relation (8.5.7) से, यह follows करता है कि \( M \), \( c_1 \), \( c_2 \) और \( C \) में changes के अनुसार change होगा ताकि \( c_1CM/c_2^2 \) लगभग constant रहे। यह इस conclusion की ओर ले जाता है कि unit का optimum size छोटा होगा जब:</p>
+                <ul>
+                    <li>(i) एक element के enumeration की cost बढ़ती है;</li>
+                    <li>(ii) units के बीच travel की cost घटती है; और</li>
+                    <li>(iii) survey की cost पर्याप्त रूप से बड़ी है।</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec8-6" class="section-card">
+            <div class="english-content">
+                <h2>8.6 Cluster Sampling for Proportions</h2>
+                <p>Suppose it is required to estimate the proportion of elements belonging to a specified class when the population consists of \( N \) clusters, each of size \( M \), and a random sample, wor, of \( n \) clusters is selected. Suppose the \( M \) elements in any cluster can be classified into two classes. Assuming that \( y_{ij} = 1 \), if the \( j \)-th element of the \( i \)-th cluster belongs to the class, and 0 otherwise. It can be easily seen that \( p_i = a_i/M \) is the proportion in the \( i \)-th cluster, \( a_i \) being the number of elements in the \( i \)-th cluster belonging to the specified class. An unbiased estimator of the population proportion is given by</p>
+                <div class="derivation-block">
+                    $$ P = \sum_{i = 1}^N a_i/NM = \sum_{i = 1}^N p_i/N $$
+                    $$ \widehat{P}_c = \sum_{i = 1}^n \frac{p_i}{n} = \bar{p} \quad (8.6.1) $$
+                    <p>where \( p_i \) is the proportion of elements belonging to the specified class in the \( i \)-th cluster of the sample.</p>
+                </div>
+
+                <p>The sampling variance of \( \widehat{P}_c \) is given by</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{P}_c) = \frac{(1 - f)}{n}S_b^2 \quad (8.6.2) $$
+                    <p>where \( S_b^2 \) is the variance between cluster proportions and is given by</p>
+                    $$ MS_b^2 = \sum_{i = 1}^N \frac{(p_i - P)^2}{N} = PQ - \sum_{i = 1}^N \frac{P_iQ_i}{N} \quad (8.6.3) $$
+                </div>
+
+                <p>For large \( N \), we have</p>
+                <div class="derivation-block">
+                    $$ S^2 \cong S_b^2 + S_w^2 = PQ $$
+                    <p>and the within-variance \( S_w^2 \) is given by \( \sum_{i = 1}^N P_iQ_i/N \). Hence, the intracluster correlation coefficient \( \rho \) can be written as</p>
+                    $$ \rho = 1 - \frac{\sum_{i = 1}^N MP_iQ_i}{(M - 1)PQ} \quad (8.6.4) $$
+                </div>
+
+                <p>Therefore, the sampling variance, in terms of the intracluster correlation coefficient, can be expressed as</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{P}_c) = \frac{(1 - f)NPQ}{(N - 1)nM}[1 + (M - 1)\rho] \quad (8.6.5) $$
+                </div>
+
+                <p>An estimator of the total number of units belonging to the specified category can be obtained by multiplying \( \widehat{P}_c \) by \( NM \) and the expression for its sampling variance is \( N^2M^2 \) times that given by Eq. (8.6.5).</p>
+
+                <p>If a simple random sample of \( nM \) elements could be taken, the variance of the sample proportion \( \widehat{P} \) would be given by</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{P}) = (1 - f)\frac{NPQ}{nM(N - 1)} \quad (8.6.6) $$
+                </div>
+
+                <p>The efficiency of cluster sampling as compared to simple random sampling, wor, can be obtained as</p>
+                <div class="derivation-block">
+                    $$ RE = \frac{(N - 1)}{(NM - 1)}\frac{NPQ}{NPQ - \sum_{i = 1}^N P_iQ_i} \quad (8.6.7) $$
+                </div>
+
+                <p>An estimator of \( V(\widehat{P}_c) \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\widehat{P}_c) = (1 - f)\frac{s_b^2}{n} = (1 - f)\frac{\sum_{i = 1}^n (p_i - \bar{p})^2}{n(n - 1)} \quad (8.6.8) $$
+                </div>
+
+                <p>An estimator for the sampling variance of the total number of units belonging to a specified class can be obtained by multiplying \( N^2M^2 \) to the value in relation (8.6.8).</p>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>8.6 Cluster Sampling for Proportions (अनुपात के लिए गुच्छ प्रतिचयन)</h2>
+                <p>मान लीजिए यह एक specified class से belong करने वाले elements के proportion को estimate करने के लिए required है जब population में \( N \) clusters होते हैं, प्रत्येक \( M \) size का होता है, और \( n \) clusters का एक random sample, wor, select किया जाता है। मान लीजिए किसी भी cluster में \( M \) elements को दो classes में classify किया जा सकता है। यह मानते हुए कि \( y_{ij} = 1 \), यदि \( i \)-वें cluster का \( j \)-वाँ element class से belong करता है, और 0 अन्यथा। यह आसानी से देखा जा सकता है कि \( p_i = a_i/M \), \( i \)-वें cluster में proportion है, जहाँ \( a_i \), \( i \)-वें cluster में specified class से belong करने वाले elements की संख्या है। Population proportion का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ P = \sum_{i = 1}^N a_i/NM = \sum_{i = 1}^N p_i/N $$
+                    $$ \widehat{P}_c = \sum_{i = 1}^n \frac{p_i}{n} = \bar{p} \quad (8.6.1) $$
+                    <p>जहाँ \( p_i \) sample के \( i \)-वें cluster में specified class से belong करने वाले elements का proportion है।</p>
+                </div>
+
+                <p>\( \widehat{P}_c \) का sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{P}_c) = \frac{(1 - f)}{n}S_b^2 \quad (8.6.2) $$
+                    <p>जहाँ \( S_b^2 \) cluster proportions के बीच variance है और इस प्रकार दिया गया है:</p>
+                    $$ MS_b^2 = \sum_{i = 1}^N \frac{(p_i - P)^2}{N} = PQ - \sum_{i = 1}^N \frac{P_iQ_i}{N} \quad (8.6.3) $$
+                </div>
+
+                <p>Large \( N \) के लिए, हमारे पास है:</p>
+                <div class="derivation-block">
+                    $$ S^2 \cong S_b^2 + S_w^2 = PQ $$
+                    <p>और within-variance \( S_w^2 \), \( \sum_{i = 1}^N P_iQ_i/N \) द्वारा दिया गया है। इसलिए, intracluster correlation coefficient \( \rho \) को इस प्रकार लिखा जा सकता है:</p>
+                    $$ \rho = 1 - \frac{\sum_{i = 1}^N MP_iQ_i}{(M - 1)PQ} \quad (8.6.4) $$
+                </div>
+
+                <p>इसलिए, sampling variance को, intracluster correlation coefficient के terms में, इस प्रकार express किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{P}_c) = \frac{(1 - f)NPQ}{(N - 1)nM}[1 + (M - 1)\rho] \quad (8.6.5) $$
+                </div>
+
+                <p>Specified category से belong करने वाले units की total number का एक estimator \( \widehat{P}_c \) को \( NM \) से multiply करके प्राप्त किया जा सकता है और इसके sampling variance का expression Eq. (8.6.5) द्वारा दिए गए value का \( N^2M^2 \) गुना है।</p>
+
+                <p>यदि \( nM \) elements का एक simple random sample लिया जा सके, तो sample proportion \( \widehat{P} \) का variance इस प्रकार दिया जाएगा:</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{P}) = (1 - f)\frac{NPQ}{nM(N - 1)} \quad (8.6.6) $$
+                </div>
+
+                <p>Simple random sampling, wor की तुलना में cluster sampling की efficiency इस प्रकार प्राप्त की जा सकती है:</p>
+                <div class="derivation-block">
+                    $$ RE = \frac{(N - 1)}{(NM - 1)}\frac{NPQ}{NPQ - \sum_{i = 1}^N P_iQ_i} \quad (8.6.7) $$
+                </div>
+
+                <p>\( V(\widehat{P}_c) \) का एक estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\widehat{P}_c) = (1 - f)\frac{s_b^2}{n} = (1 - f)\frac{\sum_{i = 1}^n (p_i - \bar{p})^2}{n(n - 1)} \quad (8.6.8) $$
+                </div>
+
+                <p>एक specified class से belong करने वाले units की total number के sampling variance के लिए एक estimator relation (8.6.8) में value को \( N^2M^2 \) से multiply करके प्राप्त किया जा सकता है।</p>
+            </div>
+        </section>
+
+        <section id="sec8-7" class="section-card">
+            <div class="english-content">
+                <h2>8.7 Unequal Cluster Sampling: Estimators of Mean and their Variances</h2>
+                <p>We have considered the case when the size of all the clusters is the same. But in many practical situations, cluster sizes vary. Now we shall discuss the case of unequal clusters.</p>
+
+                <p>Suppose there are \( N \) clusters. Let the \( i \)-th cluster consist of \( M_i \) elements; \( (i = 1,2,...,N) \) and \( \sum_{i = 1}^N M_i = M_0 \). The population mean per element \( \bar{Y} \) is defined by</p>
+                <div class="derivation-block">
+                    $$ \bar{Y} = \frac{\sum_{i = 1}^N \sum_{j = 1}^{M_i} y_{ij}}{\sum_{i = 1}^N M_i} = \frac{\sum_{i = 1}^N M_i\bar{y}_{i\cdot}}{\sum_{i = 1}^N M_i} = \frac{\sum_{i = 1}^N M_i\bar{y}_{i\cdot}}{M_0} $$
+                    <p>where \( \bar{y}_{i\cdot} \) is the mean per element of the \( i \)-th cluster.</p>
+                </div>
+
+                <p>We may also define the pooled mean of the cluster means as</p>
+                <div class="derivation-block">
+                    $$ \bar{Y}_N = \sum_{i = 1}^N \frac{\bar{y}_{i\cdot}}{N} $$
+                </div>
+
+                <p>Let a random sample, wor, of \( n \) clusters be drawn and all elements of the clusters surveyed. Three estimators of \( \bar{Y} \), as given below, may be considered:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_n = \sum_{i = 1}^n \frac{\bar{y}_{i\cdot}}{n} \quad (8.7.1) $$
+                    $$ \bar{y}_n' = \frac{\sum_{i = 1}^n M_i\bar{y}_{i\cdot}}{\sum_{i = 1}^n M_i} \quad (8.7.2) $$
+                    $$ \bar{y}_n^* = \frac{N}{nM_0}\sum_{i = 1}^n M_i\bar{y}_{i\cdot} = \frac{\sum_{i = 1}^n M_i\bar{y}_{i\cdot}}{n\bar{M}} \quad (8.7.3) $$
+                    <p>where</p>
+                    $$ \bar{M} = \frac{\sum_{i = 1}^N M_i}{N} = \frac{M_0}{N} $$
+                </div>
+
+                <h3>Theorem 8.7.1</h3>
+                <p>Show that the simple arithmetic mean given by relation (8.7.1) is not an unbiased estimator. The bias and sampling variance of the estimator are given by</p>
+                <div class="derivation-block">
+                    $$ B(\bar{y}_n) = -\frac{\text{Cov}(\bar{y}_{i\cdot},M_i)}{\bar{M}} \quad (8.7.4) $$
+                    <p>and</p>
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{n}S_b^2 $$
+                    <p>where</p>
+                    $$ S_b^2 = \frac{\sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2}{(N - 1)} $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>To prove that \( \bar{y}_n \) is not unbiased, we can write</p>
+                    $$ E(\bar{y}_n) = E\left[ \frac{1}{n}\sum_{i = 1}^n \bar{y}_{i\cdot} \right] = \frac{1}{n}\sum_{i = 1}^n E(\bar{y}_{i\cdot}) $$
+                    $$ = \sum_{i = 1}^N \frac{\bar{y}_{i\cdot}}{N} = \bar{Y}_N \neq \bar{Y} $$
+                    <p>Thus, \( \bar{y}_n \) is a biased estimator of the population mean \( \bar{Y} \).</p>
+                    <p>The bias of the estimator is given by</p>
+                    $$ B(\bar{y}_n) = E(\bar{y}_n) - \bar{Y} = \frac{\sum_{i = 1}^N \bar{y}_{i\cdot}}{N} - \frac{\sum_{i = 1}^N M_i\bar{y}_{i\cdot}}{N\bar{M}} $$
+                    $$ = \frac{\sum_{i = 1}^N (\bar{M} - M_i)\bar{y}_{i\cdot}}{N\bar{M}} = -\frac{\text{Cov}(\bar{y}_{i\cdot},M_i)}{\bar{M}} \quad (8.7.5) $$
+                </div>
+                <p>For a population in which \( M_i \)'s do not appreciably vary from one cluster to another, the bias may not be materially significant. If \( M_i \) and \( \bar{y}_{i\cdot} \) are uncorrelated, the bias is zero and \( \bar{y}_n \) is an unbiased estimator in this case.</p>
+                <p>This shows that bias is expected to be small when \( M_i \) and \( \bar{y}_{i\cdot} \) are not highly correlated. In such a case, it is advisable to use this estimator. Its sampling variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = E[\bar{y}_n - E(\bar{y}_n)]^2 = E(\bar{y}_n - \bar{Y}_N)^2 $$
+                    $$ = \frac{(1 - f)}{n}\frac{\sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2}{(N - 1)} = \frac{(1 - f)}{n}S_b^2 $$
+                </div>
+
+                <h3>Corollary</h3>
+                <p>An unbiased estimator of \( V(\bar{y}_n) \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n) = \frac{(1 - f)}{n}s_b^2 \quad (8.7.6) $$
+                    <p>where</p>
+                    $$ s_b^2 = \sum_{i = 1}^n \frac{(\bar{y}_{i\cdot} - \bar{y}_n)^2}{(n - 1)} $$
+                </div>
+
+                <h3>Theorem 8.7.2</h3>
+                <p>Show that the estimator of the mean \( \bar{Y} \) given by relation (8.7.2), which is a weighted mean of the cluster means and a ratio of two random variables, is consistent but not unbiased. Its sampling variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n') = \frac{(1 - f)}{n}S_b'^2 \quad (8.7.7) $$
+                    <p>where</p>
+                    $$ S_b'^2 = \frac{\sum_{i = 1}^N M_i^2(\bar{y}_{i\cdot} - \bar{Y})^2}{\bar{M}^2(N - 1)} $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>The estimator is given by replacing \( x_i \) by \( M_i \) and \( y_i \) by \( M_i\bar{y}_{i\cdot} \) in the ratio estimator. We have already seen that the ratio estimator is not unbiased, but consistent. A first order approximation to the variance of this estimator is given by</p>
+                    $$ V(\bar{y}_n') = \frac{(1 - f)}{n}S_b'^2 $$
+                </div>
+
+                <h3>Corollary</h3>
+                <p>An unbiased estimator of \( V(\bar{y}_n') \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n') = \frac{(1 - f)s_b'^2}{n} \quad (8.7.8) $$
+                    <p>where</p>
+                    $$ s_b'^2 = \frac{\sum_{i = 1}^n M_i^2(\bar{y}_{i\cdot} - \bar{y}_n')^2}{\bar{M}'^2(n - 1)} $$
+                    <p>and</p>
+                    $$ \bar{M}' = \frac{\sum_{i = 1}^n M_i}{n} $$
+                </div>
+
+                <h3>Theorem 8.7.3</h3>
+                <p>Show that the estimator of the mean given by relation (8.7.3) is unbiased and its variance is given by</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n^*) = \frac{(1 - f)}{n}S_b^{*2} \quad (8.7.9) $$
+                    <p>where</p>
+                    $$ S_b^{*2} = \frac{1}{(N - 1)}\sum_{i = 1}^N \left( \frac{M_i}{\bar{M}}\bar{y}_{i\cdot} - \bar{Y} \right)^2 $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Let us consider the estimator \( \bar{y}_n^* = \frac{\sum_{i = 1}^n M_i\bar{y}_{i\cdot}}{n\bar{M}} \)</p>
+                    $$ E(\bar{y}_n^*) = E\left( \sum_{i = 1}^n M_i\bar{y}_{i\cdot}/n\bar{M} \right) = \frac{\sum_{i = 1}^n E(M_i\bar{y}_{i\cdot})}{n\bar{M}} = \bar{Y} $$
+                    <p>Hence \( \bar{y}_n^* \) is an unbiased estimator. The sampling variance of the estimator is given by</p>
+                    $$ V(\bar{y}_n^*) = \frac{(1 - f)}{n}\sum_{i = 1}^N \left( \frac{M_i}{\bar{M}}\bar{y}_{i\cdot} - \bar{Y} \right)^2 $$
+                    $$ = \frac{(1 - f)}{n}S_b^{*2} $$
+                </div>
+                <p>It may be noticed that the estimator \( \bar{y}_n^* \) will often be less precise. This occurs because the variance depends upon the variation of the product \( M_i\bar{y}_{i\cdot} \) and is likely to be larger than \( \bar{y}_n \) unless \( \bar{y}_{i\cdot} \) and \( M_i \) vary in such a way that their product is almost constant.</p>
+
+                <h3>Corollary</h3>
+                <p>An unbiased estimator of \( V(\bar{y}_n^*) \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n^*) = \frac{(1 - f)}{n}s_b^{*2} \quad (8.7.10) $$
+                    <p>where</p>
+                    $$ s_b^{*2} = \frac{\sum_{i = 1}^n \left( \frac{M_i\bar{y}_{i\cdot}}{\bar{M}} - \bar{y}_n^* \right)^2}{(n - 1)} $$
+                </div>
+            </div>
+
+            <div class="hinglish-content">
+                <h2>8.7 Unequal Cluster Sampling: Estimators of Mean and their Variances (असमान गुच्छ प्रतिचयन: माध्य के आकलक और उनके प्रसरण)</h2>
+                <p>हमने उस case पर विचार किया है जब सभी clusters का size same होता है। लेकिन कई practical situations में, cluster sizes vary करते हैं। अब हम unequal clusters के case पर discuss करेंगे।</p>
+
+                <p>मान लीजिए \( N \) clusters हैं। मान लीजिए \( i \)-वें cluster में \( M_i \) elements हैं; \( (i = 1,2,...,N) \) और \( \sum_{i = 1}^N M_i = M_0 \)। Population mean per element \( \bar{Y} \) इस प्रकार define किया गया है:</p>
+                <div class="derivation-block">
+                    $$ \bar{Y} = \frac{\sum_{i = 1}^N \sum_{j = 1}^{M_i} y_{ij}}{\sum_{i = 1}^N M_i} = \frac{\sum_{i = 1}^N M_i\bar{y}_{i\cdot}}{\sum_{i = 1}^N M_i} = \frac{\sum_{i = 1}^N M_i\bar{y}_{i\cdot}}{M_0} $$
+                    <p>जहाँ \( \bar{y}_{i\cdot} \), \( i \)-वें cluster के per element का mean है।</p>
+                </div>
+
+                <p>हम cluster means के pooled mean को इस प्रकार भी define कर सकते हैं:</p>
+                <div class="derivation-block">
+                    $$ \bar{Y}_N = \sum_{i = 1}^N \frac{\bar{y}_{i\cdot}}{N} $$
+                </div>
+
+                <p>मान लीजिए \( n \) clusters का एक random sample, wor, draw किया जाता है और clusters के सभी elements survey किए जाते हैं। \( \bar{Y} \) के तीन estimators, जैसा कि नीचे दिया गया है, पर विचार किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \bar{y}_n = \sum_{i = 1}^n \frac{\bar{y}_{i\cdot}}{n} \quad (8.7.1) $$
+                    $$ \bar{y}_n' = \frac{\sum_{i = 1}^n M_i\bar{y}_{i\cdot}}{\sum_{i = 1}^n M_i} \quad (8.7.2) $$
+                    $$ \bar{y}_n^* = \frac{N}{nM_0}\sum_{i = 1}^n M_i\bar{y}_{i\cdot} = \frac{\sum_{i = 1}^n M_i\bar{y}_{i\cdot}}{n\bar{M}} \quad (8.7.3) $$
+                    <p>जहाँ</p>
+                    $$ \bar{M} = \frac{\sum_{i = 1}^N M_i}{N} = \frac{M_0}{N} $$
+                </div>
+
+                <h3>Theorem 8.7.1</h3>
+                <p>दिखाएँ कि relation (8.7.1) द्वारा दिया गया simple arithmetic mean एक unbiased estimator नहीं है। Estimator का bias और sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ B(\bar{y}_n) = -\frac{\text{Cov}(\bar{y}_{i\cdot},M_i)}{\bar{M}} \quad (8.7.4) $$
+                    <p>और</p>
+                    $$ V(\bar{y}_n) = \frac{(1 - f)}{n}S_b^2 $$
+                    <p>जहाँ</p>
+                    $$ S_b^2 = \frac{\sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2}{(N - 1)} $$
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>यह prove करने के लिए कि \( \bar{y}_n \) unbiased नहीं है, हम लिख सकते हैं:</p>
+                    $$ E(\bar{y}_n) = E\left[ \frac{1}{n}\sum_{i = 1}^n \bar{y}_{i\cdot} \right] = \frac{1}{n}\sum_{i = 1}^n E(\bar{y}_{i\cdot}) $$
+                    $$ = \sum_{i = 1}^N \frac{\bar{y}_{i\cdot}}{N} = \bar{Y}_N \neq \bar{Y} $$
+                    <p>इस प्रकार, \( \bar{y}_n \) population mean \( \bar{Y} \) का एक biased estimator है।</p>
+                    <p>Estimator का bias इस प्रकार दिया गया है:</p>
+                    $$ B(\bar{y}_n) = E(\bar{y}_n) - \bar{Y} = \frac{\sum_{i = 1}^N \bar{y}_{i\cdot}}{N} - \frac{\sum_{i = 1}^N M_i\bar{y}_{i\cdot}}{N\bar{M}} $$
+                    $$ = \frac{\sum_{i = 1}^N (\bar{M} - M_i)\bar{y}_{i\cdot}}{N\bar{M}} = -\frac{\text{Cov}(\bar{y}_{i\cdot},M_i)}{\bar{M}} \quad (8.7.5) $$
+                </div>
+                <p>ऐसी population के लिए जिसमें \( M_i \)'s एक cluster से दूसरे cluster में appreciably vary नहीं करते हैं, bias materially significant नहीं हो सकता है। यदि \( M_i \) और \( \bar{y}_{i\cdot} \) uncorrelated हैं, तो bias zero है और \( \bar{y}_n \) इस case में एक unbiased estimator है।</p>
+                <p>यह दर्शाता है कि bias के small होने की expected है जब \( M_i \) और \( \bar{y}_{i\cdot} \) highly correlated नहीं होते हैं। ऐसे case में, इस estimator का उपयोग करना advisable है। इसका sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n) = E[\bar{y}_n - E(\bar{y}_n)]^2 = E(\bar{y}_n - \bar{Y}_N)^2 $$
+                    $$ = \frac{(1 - f)}{n}\frac{\sum_{i = 1}^N (\bar{y}_{i\cdot} - \bar{Y}_N)^2}{(N - 1)} = \frac{(1 - f)}{n}S_b^2 $$
+                </div>
+
+                <h3>Corollary</h3>
+                <p>\( V(\bar{y}_n) \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n) = \frac{(1 - f)}{n}s_b^2 \quad (8.7.6) $$
+                    <p>जहाँ</p>
+                    $$ s_b^2 = \sum_{i = 1}^n \frac{(\bar{y}_{i\cdot} - \bar{y}_n)^2}{(n - 1)} $$
+                </div>
+
+                <h3>Theorem 8.7.2</h3>
+                <p>दिखाएँ कि relation (8.7.2) द्वारा दिया गया mean \( \bar{Y} \) का estimator, जो cluster means का एक weighted mean और दो random variables का ratio है, consistent है लेकिन unbiased नहीं है। इसका sampling variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n') = \frac{(1 - f)}{n}S_b'^2 \quad (8.7.7) $$
+                    <p>जहाँ</p>
+                    $$ S_b'^2 = \frac{\sum_{i = 1}^N M_i^2(\bar{y}_{i\cdot} - \bar{Y})^2}{\bar{M}^2(N - 1)} $$
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>Estimator, ratio estimator में \( x_i \) को \( M_i \) से और \( y_i \) को \( M_i\bar{y}_{i\cdot} \) से replace करके दिया गया है। हमने पहले ही देखा है कि ratio estimator unbiased नहीं है, बल्कि consistent है। इस estimator के variance का एक first order approximation इस प्रकार दिया गया है:</p>
+                    $$ V(\bar{y}_n') = \frac{(1 - f)}{n}S_b'^2 $$
+                </div>
+
+                <h3>Corollary</h3>
+                <p>\( V(\bar{y}_n') \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n') = \frac{(1 - f)s_b'^2}{n} \quad (8.7.8) $$
+                    <p>जहाँ</p>
+                    $$ s_b'^2 = \frac{\sum_{i = 1}^n M_i^2(\bar{y}_{i\cdot} - \bar{y}_n')^2}{\bar{M}'^2(n - 1)} $$
+                    <p>और</p>
+                    $$ \bar{M}' = \frac{\sum_{i = 1}^n M_i}{n} $$
+                </div>
+
+                <h3>Theorem 8.7.3</h3>
+                <p>दिखाएँ कि relation (8.7.3) द्वारा दिया गया mean का estimator unbiased है और इसका variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ V(\bar{y}_n^*) = \frac{(1 - f)}{n}S_b^{*2} \quad (8.7.9) $$
+                    <p>जहाँ</p>
+                    $$ S_b^{*2} = \frac{1}{(N - 1)}\sum_{i = 1}^N \left( \frac{M_i}{\bar{M}}\bar{y}_{i\cdot} - \bar{Y} \right)^2 $$
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>मान लीजिए हम estimator \( \bar{y}_n^* = \frac{\sum_{i = 1}^n M_i\bar{y}_{i\cdot}}{n\bar{M}} \) पर विचार करते हैं:</p>
+                    $$ E(\bar{y}_n^*) = E\left( \sum_{i = 1}^n M_i\bar{y}_{i\cdot}/n\bar{M} \right) = \frac{\sum_{i = 1}^n E(M_i\bar{y}_{i\cdot})}{n\bar{M}} = \bar{Y} $$
+                    <p>इसलिए \( \bar{y}_n^* \) एक unbiased estimator है। Estimator का sampling variance इस प्रकार दिया गया है:</p>
+                    $$ V(\bar{y}_n^*) = \frac{(1 - f)}{n}\sum_{i = 1}^N \left( \frac{M_i}{\bar{M}}\bar{y}_{i\cdot} - \bar{Y} \right)^2 $$
+                    $$ = \frac{(1 - f)}{n}S_b^{*2} $$
+                </div>
+                <p>यह notice किया जा सकता है कि estimator \( \bar{y}_n^* \) अक्सर कम precise होगा। ऐसा इसलिए होता है क्योंकि variance product \( M_i\bar{y}_{i\cdot} \) के variation पर depend करता है और यह \( \bar{y}_n \) की तुलना में बड़ा होने की संभावना है जब तक कि \( \bar{y}_{i\cdot} \) और \( M_i \) इस तरह से vary न करें कि उनका product लगभग constant हो।</p>
+
+                <h3>Corollary</h3>
+                <p>\( V(\bar{y}_n^*) \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_n^*) = \frac{(1 - f)}{n}s_b^{*2} \quad (8.7.10) $$
+                    <p>जहाँ</p>
+                    $$ s_b^{*2} = \frac{\sum_{i = 1}^n \left( \frac{M_i\bar{y}_{i\cdot}}{\bar{M}} - \bar{y}_n^* \right)^2}{(n - 1)} $$
+                </div>
+            </div>
+        </section>
+
+        <section id="sec8-8" class="section-card">
+            <div class="english-content">
+                <h2>8.8 Relative Efficiency of Unequal Cluster Sampling</h2>
+                <p>In a number of situations, it is easier to take some naturally formed groups of elements. Usually in such cases, cluster size would be unequal. For example, villages which are groups of households or households which are groups of persons, are usually taken as clusters for the purpose of sampling, on account of operational convenience. Thus unequal cluster sampling is the most practical situation and its relative efficiency with respect to simple random sampling should be worked out.</p>
+
+                <p>In unequal cluster sampling, the total number of elements \( \sum_{i = 1}^n M_i \) in the sample is a random variable with expected value \( n\bar{M} \). If an equivalent simple random sample of size \( n\bar{M} \) had been selected directly from the population of \( NM \) elements, the variance of the mean per element would be given by</p>
+                <div class="derivation-block">
+                    $$ V_{SR}(\bar{y}) = \frac{(N\bar{M} - n\bar{M})}{N\bar{M}n\bar{M}}S^2 = \frac{(1 - f)}{n\bar{M}}S^2 \quad (8.8.1) $$
+                </div>
+
+                <p>Comparing this with the value given by Eq. (8.7.9), we have,</p>
+                <div class="derivation-block">
+                    $$ \text{R.E.} = \frac{S^2}{\bar{M}S_b^{*2}} \quad (8.8.2) $$
+                </div>
+
+                <p>Hence, it is observed that the efficiency increases as the variation between clusters decreases. In general, cluster sampling will be efficient only when the variation between clusters is as small as possible.</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>8.8 Relative Efficiency of Unequal Cluster Sampling (असमान गुच्छ प्रतिचयन की सापेक्ष दक्षता)</h2>
+                <p>कई situations में, elements के कुछ naturally बने groups को लेना आसान होता है। आमतौर पर ऐसे cases में, cluster size unequal होगा। उदाहरण के लिए, villages जो households के groups हैं या households जो persons के groups हैं, आमतौर पर operational convenience के कारण sampling के purpose के लिए clusters के रूप में लिए जाते हैं। इस प्रकार unequal cluster sampling सबसे practical situation है और simple random sampling के respect में इसकी relative efficiency निकाली जानी चाहिए।</p>
+
+                <p>Unequal cluster sampling में, sample में elements की total number \( \sum_{i = 1}^n M_i \) एक random variable है जिसकी expected value \( n\bar{M} \) है। यदि \( n\bar{M} \) size का एक equivalent simple random sample सीधे \( NM \) elements की population से select किया गया होता, तो mean per element का variance इस प्रकार दिया जाता:</p>
+                <div class="derivation-block">
+                    $$ V_{SR}(\bar{y}) = \frac{(N\bar{M} - n\bar{M})}{N\bar{M}n\bar{M}}S^2 = \frac{(1 - f)}{n\bar{M}}S^2 \quad (8.8.1) $$
+                </div>
+
+                <p>Eq. (8.7.9) द्वारा दिए गए value के साथ इसकी तुलना करने पर, हमारे पास है:</p>
+                <div class="derivation-block">
+                    $$ \text{R.E.} = \frac{S^2}{\bar{M}S_b^{*2}} \quad (8.8.2) $$
+                </div>
+
+                <p>इसलिए, यह observe किया जाता है कि efficiency बढ़ती है क्योंकि clusters के बीच variation कम होता है। सामान्य तौर पर, cluster sampling तभी efficient होगी जब clusters के बीच variation यथासंभव (as small as possible) कम हो।</p>
+            </div>
+        </section>
+
+        <section id="sec8-9" class="section-card">
+            <div class="english-content">
+                <h2>8.9 Varying Probability Cluster Sampling</h2>
+                <p>In many practical situations, cluster size is positively correlated with the variable under study. In these cases it is advisable to select the clusters with probability proportional to the number of elements in the cluster. Hansen and Hurwitz (1943) gave a technique to select the clusters with probability proportional to their sizes \( M_i \). In some cases the sizes \( M_i \) are known only approximately. There are several applications in which the size is not the number of elements in the cluster and some other measure is considered for probability selection. In this section, we shall confine ourselves to discussion of the case where the probability of selection is proportional to cluster size \( M_i \).</p>
+
+                <p>Let \( p_i(0 < p_i < 1) \) be the probability of selecting the \( i \)-th cluster of size \( M_i(i = 1,2,...,N) \) at each draw, such that</p>
+                <div class="derivation-block">
+                    $$ \sum_{i = 1}^N p_i = 1 \quad (8.9.1) $$
+                </div>
+
+                <p>Suppose that</p>
+                <div class="derivation-block">
+                    $$ z_{ij} = \frac{M_iy_{ij}}{M_0p_i} $$
+                    <p>for \( j = 1,2,...,M_i \); \( i = 1,2,...,N \)</p>
+                </div>
+
+                <p>Further, suppose that \( n \) clusters are selected by pps with replacement, so that</p>
+                <div class="derivation-block">
+                    $$ z_{i\cdot} = \frac{M_i\bar{y}_{i\cdot}}{M_0p_i} $$
+                    <p>for \( i = 1,2,...,N \quad (8.9.2) \)</p>
+                </div>
+
+                <h3>Theorem 8.9.1</h3>
+                <p>If a sample of \( n \) clusters is drawn with probabilities \( p_i \) and with replacement, then an unbiased estimator of \( \bar{Y} \) is given by</p>
+                <div class="derivation-block">
+                    $$ \bar{z}_n = \frac{\sum_{i = 1}^n z_{i\cdot}}{n} \quad (8.9.3) $$
+                    <p>with its sampling variance</p>
+                    $$ V(\bar{z}_n) = \frac{\sum_{i = 1}^N p_i(z_{i\cdot} - \bar{Y})^2}{n} \quad (8.9.4) $$
+                </div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>To prove that \( \bar{z}_n \) is unbiased, we have</p>
+                    $$ E(\bar{z}_n) = E\left( \sum_{i = 1}^n z_{i\cdot}/n \right) = \frac{1}{n}\sum_{i = 1}^n E(z_{i\cdot}) $$
+                    $$ = \frac{1}{n}\sum_{i = 1}^n \sum_{i = 1}^N p_i\frac{M_i\bar{y}_{i\cdot}}{M_0p_i} = \frac{1}{n}\sum_{i = 1}^n \sum_{i = 1}^N \frac{M_i\bar{y}_{i\cdot}}{M_0} = \frac{1}{n}\sum_{i = 1}^n \bar{Y} = \bar{Y} $$
+                    <p>To obtain the sampling variance of \( \bar{z}_n \), we may proceed on similar lines as in Section 2 of Chapter 5. Thus, we get</p>
+                    $$ V(\bar{z}_n) = \frac{1}{n}\sum_{i = 1}^N p_i(z_{i\cdot} - \bar{Y})^2 $$
+                </div>
+
+                <h3>Corollary 1</h3>
+                <p>If units are drawn with probabilities proportional to size \( p_i = M_i/M_0 \) and with replacement, then an unbiased estimator of \( \bar{Y} \) is given by</p>
+                <div class="derivation-block">
+                    $$ \bar{z}_n = \sum_{i = 1}^n \bar{y}_{i\cdot}/n \quad (8.9.5) $$
+                    <p>with variance</p>
+                    $$ V(\bar{z}_n) = \sum_{i = 1}^N \frac{M_i}{M_0}(\bar{y}_{i\cdot} - \bar{Y})^2/n \quad (8.9.6) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>If units are drawn with probabilities \( p_i \) and with replacement, an unbiased estimator of variance \( V(\bar{z}_n) \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{z}_n) = \frac{\sum_{i = 1}^n (z_{i\cdot} - \bar{z}_n)^2}{n(n - 1)} \quad (8.9.7) $$
+                </div>
+
+                <h3>Corollary 3</h3>
+                <p>If units are drawn with probabilities proportional to size \( p_i = M_i/M_0 \) and with replacement, then an unbiased estimator of \( V(\bar{z}_n) \) is given by</p>
+                <div class="derivation-block">
+                    $$ v(\bar{z}_n) = \frac{\sum_{i = 1}^n (\bar{y}_{i\cdot} - \bar{z}_n)^2}{n(n - 1)} \quad (8.9.8) $$
+                </div>
+
+                <p>The efficiency of sampling \( n \) unequal clusters with pps, wr, as compared to simple random sampling, wr, by taking \( n\bar{M} \) elements, can be obtained by comparing Eq. (8.9.6) with the variance</p>
+                <div class="derivation-block">
+                    $$ V_{SR}(\bar{y}) = \frac{S^2}{n\bar{M}} $$
+                    <p>which can be expanded by introducing \( \bar{y}_{i\cdot} \) in the above relation. Thus,</p>
+                    $$ V_{SR}(\bar{y}) = \frac{1}{n\bar{M}}\frac{1}{N\bar{M}}\left[ \sum_{i = 1}^N \sum_{j = 1}^{M_i} (y_{ij} - \bar{y}_{i\cdot})^2 + \sum_{i = 1}^N M_i(\bar{y}_{i\cdot} - \bar{Y})^2 \right] $$
+                    $$ = \frac{\sigma_w^2}{n\bar{M}} + V(\bar{z}_n) $$
+                    <p>where</p>
+                    $$ \sigma_w^2 = \sum_{i = 1}^N \sum_{j = 1}^{M_i} \frac{(y_{ij} - \bar{y}_{i\cdot})^2}{N\bar{M}} = \sum_{i = 1}^N \frac{M_i\sigma_i^2}{N\bar{M}} $$
+                </div>
+                <p>Hence, the efficiency of cluster sampling is given by</p>
+                <div class="derivation-block">
+                    $$ E = \frac{V_{SR}}{V_{pps}} = [\bar{M}(1 - \sigma_w^2/\sigma^2)]^{-1} \quad (8.9.9) $$
+                </div>
+
+                <p>It can be seen that \( E \) is always greater than 1. Other sampling schemes, such as pps, wor, sampling, and pps systematic sampling with suitable arrangement of clusters may also be used to increase the efficiency. Further comparisons have been made under super population model by Des Raj (1954, 1958), Zarcovic (1960), and Foreman and Brewer (1971).</p>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>8.9 Varying Probability Cluster Sampling (विभिन्न प्रायिकता गुच्छ प्रतिचयन)</h2>
+                <p>कई practical situations में, cluster size study के तहत variable के साथ positively correlated होता है। इन cases में clusters को cluster में elements की संख्या के proportional probability के साथ select करना advisable है। Hansen और Hurwitz (1943) ने clusters को उनके sizes \( M_i \) के proportional probability के साथ select करने की एक technique दी। कुछ cases में sizes \( M_i \) केवल approximately ज्ञात होते हैं। ऐसे कई applications हैं जिनमें size, cluster में elements की संख्या नहीं है और probability selection के लिए कुछ अन्य measure पर विचार किया जाता है। इस section में, हम उस case की discussion तक खुद को confine रखेंगे जहाँ selection की probability cluster size \( M_i \) के proportional है।</p>
+
+                <p>मान लीजिए \( p_i(0 < p_i < 1) \), \( M_i \) size के \( i \)-वें cluster \( (i = 1,2,...,N) \) को प्रत्येक draw में select करने की probability है, जैसे कि:</p>
+                <div class="derivation-block">
+                    $$ \sum_{i = 1}^N p_i = 1 \quad (8.9.1) $$
+                </div>
+
+                <p>मान लीजिए कि:</p>
+                <div class="derivation-block">
+                    $$ z_{ij} = \frac{M_iy_{ij}}{M_0p_i} $$
+                    <p>\( j = 1,2,...,M_i \); \( i = 1,2,...,N \) के लिए</p>
+                </div>
+
+                <p>आगे, मान लीजिए कि \( n \) clusters को pps के साथ with replacement select किया जाता है, ताकि:</p>
+                <div class="derivation-block">
+                    $$ z_{i\cdot} = \frac{M_i\bar{y}_{i\cdot}}{M_0p_i} $$
+                    <p>\( i = 1,2,...,N \) के लिए \( \quad (8.9.2) \)</p>
+                </div>
+
+                <h3>Theorem 8.9.1</h3>
+                <p>यदि \( n \) clusters का एक sample \( p_i \) probabilities के साथ और with replacement draw किया जाता है, तो \( \bar{Y} \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ \bar{z}_n = \frac{\sum_{i = 1}^n z_{i\cdot}}{n} \quad (8.9.3) $$
+                    <p>इसके sampling variance के साथ:</p>
+                    $$ V(\bar{z}_n) = \frac{\sum_{i = 1}^N p_i(z_{i\cdot} - \bar{Y})^2}{n} \quad (8.9.4) $$
+                </div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>यह prove करने के लिए कि \( \bar{z}_n \) unbiased है, हमारे पास है:</p>
+                    $$ E(\bar{z}_n) = E\left( \sum_{i = 1}^n z_{i\cdot}/n \right) = \frac{1}{n}\sum_{i = 1}^n E(z_{i\cdot}) $$
+                    $$ = \frac{1}{n}\sum_{i = 1}^n \sum_{i = 1}^N p_i\frac{M_i\bar{y}_{i\cdot}}{M_0p_i} = \frac{1}{n}\sum_{i = 1}^n \sum_{i = 1}^N \frac{M_i\bar{y}_{i\cdot}}{M_0} = \frac{1}{n}\sum_{i = 1}^n \bar{Y} = \bar{Y} $$
+                    <p>\( \bar{z}_n \) का sampling variance प्राप्त करने के लिए, हम Chapter 5 के Section 2 में similar lines पर proceed कर सकते हैं। इस प्रकार, हमें मिलता है:</p>
+                    $$ V(\bar{z}_n) = \frac{1}{n}\sum_{i = 1}^N p_i(z_{i\cdot} - \bar{Y})^2 $$
+                </div>
+
+                <h3>Corollary 1</h3>
+                <p>यदि units को size के proportional probabilities \( p_i = M_i/M_0 \) के साथ और with replacement draw किया जाता है, तो \( \bar{Y} \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ \bar{z}_n = \sum_{i = 1}^n \bar{y}_{i\cdot}/n \quad (8.9.5) $$
+                    <p>variance के साथ:</p>
+                    $$ V(\bar{z}_n) = \sum_{i = 1}^N \frac{M_i}{M_0}(\bar{y}_{i\cdot} - \bar{Y})^2/n \quad (8.9.6) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>यदि units को probabilities \( p_i \) के साथ और with replacement draw किया जाता है, तो variance \( V(\bar{z}_n) \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{z}_n) = \frac{\sum_{i = 1}^n (z_{i\cdot} - \bar{z}_n)^2}{n(n - 1)} \quad (8.9.7) $$
+                </div>
+
+                <h3>Corollary 3</h3>
+                <p>यदि units को size के proportional probabilities \( p_i = M_i/M_0 \) के साथ और with replacement draw किया जाता है, तो \( V(\bar{z}_n) \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{z}_n) = \frac{\sum_{i = 1}^n (\bar{y}_{i\cdot} - \bar{z}_n)^2}{n(n - 1)} \quad (8.9.8) $$
+                </div>
+
+                <p>\( n\bar{M} \) elements लेकर simple random sampling, wr की तुलना में \( n \) unequal clusters की pps, wr के साथ sampling की efficiency Eq. (8.9.6) की variance के साथ तुलना करके प्राप्त की जा सकती है:</p>
+                <div class="derivation-block">
+                    $$ V_{SR}(\bar{y}) = \frac{S^2}{n\bar{M}} $$
+                    <p>जिसे उपरोक्त relation में \( \bar{y}_{i\cdot} \) introduce करके expand किया जा सकता है। इस प्रकार,</p>
+                    $$ V_{SR}(\bar{y}) = \frac{1}{n\bar{M}}\frac{1}{N\bar{M}}\left[ \sum_{i = 1}^N \sum_{j = 1}^{M_i} (y_{ij} - \bar{y}_{i\cdot})^2 + \sum_{i = 1}^N M_i(\bar{y}_{i\cdot} - \bar{Y})^2 \right] $$
+                    $$ = \frac{\sigma_w^2}{n\bar{M}} + V(\bar{z}_n) $$
+                    <p>जहाँ</p>
+                    $$ \sigma_w^2 = \sum_{i = 1}^N \sum_{j = 1}^{M_i} \frac{(y_{ij} - \bar{y}_{i\cdot})^2}{N\bar{M}} = \sum_{i = 1}^N \frac{M_i\sigma_i^2}{N\bar{M}} $$
+                </div>
+                <p>इसलिए, cluster sampling की efficiency इस प्रकार दी गई है:</p>
+                <div class="derivation-block">
+                    $$ E = \frac{V_{SR}}{V_{pps}} = [\bar{M}(1 - \sigma_w^2/\sigma^2)]^{-1} \quad (8.9.9) $$
+                </div>
+
+                <p>यह देखा जा सकता है कि \( E \) हमेशा 1 से greater होता है। Other sampling schemes, जैसे pps, wor, sampling, और clusters के suitable arrangement के साथ pps systematic sampling का उपयोग भी efficiency बढ़ाने के लिए किया जा सकता है। Des Raj (1954, 1958), Zarcovic (1960), और Foreman और Brewer (1971) द्वारा super population model के तहत further comparisons किए गए हैं।</p>
+            </div>
+        </section>
+
+        <section id="sec8-ref" class="section-card">
+            <div class="english-content">
+                <h2>References</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Hansen, M. H., & Hurwitz, W. N. (1942). Relative efficiencies of various sampling units in population inquiries. <em>J. Amer. Statist. Assoc.</em>, 37, 89-94.</li>
+                    <li>Mahalanobis, P. C. (1940). A sample survey of the acreage under jute in Bengal. <em>Sankhya</em>, 4, 511-530.</li>
+                    <li>Smith, H. F. (1938). An empirical law describing heterogeneity in the yields of agricultural crops. <em>J. Agric. Sci.</em>, 28, 1-23.</li>
+                    <li>Jessen, R. J. (1942). Statistical investigation of a sample survey for obtaining farm facts. <em>Iowa Agr. Exp. Stat. Res. Bull.</em>, 304.</li>
+                    <li>Sukhatme, P. V. (1954). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>References (संदर्भ)</h2>
+                <ul>
+                    <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
+                    <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
+                    <li>Hansen, M. H., & Hurwitz, W. N. (1942). Relative efficiencies of various sampling units in population inquiries. <em>J. Amer. Statist. Assoc.</em>, 37, 89-94.</li>
+                    <li>Mahalanobis, P. C. (1940). A sample survey of the acreage under jute in Bengal. <em>Sankhya</em>, 4, 511-530.</li>
+                    <li>Smith, H. F. (1938). An empirical law describing heterogeneity in the yields of agricultural crops. <em>J. Agric. Sci.</em>, 28, 1-23.</li>
+                    <li>Jessen, R. J. (1942). Statistical investigation of a sample survey for obtaining farm facts. <em>Iowa Agr. Exp. Stat. Res. Bull.</em>, 304.</li>
+                    <li>Sukhatme, P. V. (1954). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec8-10" class="section-card">
+            <div class="english-content">
+                <h2>Exercise (Subjective)</h2>
+                <ol>
+                    <li>If the \( NM \) elements in a population are grouped at random to form \( N \) clusters of \( M \) elements each, show that a random sample, wor, of \( n \) clusters would have the same efficiency as sampling \( nM \) elements in random sample, wor.</li>
+                    <li>A finite population of \( M_0 \) elements is divided into \( N \) clusters with the \( i \)-th cluster having \( M_i \) elements. A random sample, wor, of \( m \) elements is selected from the total population elements and the sample elements grouped according to the clusters to which they belong. If \( y \) is the sample total, based on the values of the sample elements in the \( n \) selected clusters, show that \( \widehat{\bar{Y}} = Ny/mn \) is an unbiased estimator for the population mean \( \bar{Y} \) and derive its sampling variance. (Ghosh, 1963)</li>
+                    <li>Let there be \( N \) clusters of \( M \) elements each. A sample of \( n \) clusters is taken systematically for estimating the population mean per element. Derive the sampling variance of the estimator in terms of the intracluster correlation coefficient (\( \rho \)) between pairs of elements in the clusters and (\( \rho_c' \)) between pairs of clusters at the samples, assuming \( N \) to be a multiple of \( n \). (Madow, 1949)</li>
+                    <li>A population consists of \( N \) clusters each containing \( M \) elements. A simple random sample of \( n \) clusters is selected to estimate the population mean per element. Assuming \( S_w^2 \), the variance within clusters, to be given by \( aM^b(b > 0) \) and the cost function to be \( C = c_1nM + c_2\sqrt{n} \), find the optimum size of the cluster for which the variance of the estimator is minimum, when cost of survey is fixed.</li>
+                    <li>For examining the efficiency of sampling households instead of persons for estimating the population of males in a given area, the following assumptions are made:
+                        <ul>
+                            <li>(i) each household consists of 4 persons (husband, wife and two children)</li>
+                            <li>(ii) the sexes of children are binomially distributed.</li>
+                        </ul>
+                        Show that the intracluster correlation coefficient is 1/6 and efficiency of sampling households compared to that of sampling persons is 200%. (Sukhatme, 1954)
+                    </li>
+                    <li>A population consists of \( N \) clusters, \( M_i \) being the size of the \( i \)-th cluster \( (i = 1,2,...,N) \). Clusters are selected one-by-one by pps of clusters, wr. The cluster selected at the \( (m + 1) \)-th draw is rejected if the number of distinct clusters selected in the first \( m \) draws is a pre-assigned number \( k \). Suppose the \( i \)-th cluster occurs \( m_i \) times in a sample of \( m \) draws, \( m_i = 0,1,2,..., i = 1,2,...,N \). If \( \bar{y}_{i\cdot} \) is the mean of the \( i \)-th cluster, show that \( \bar{y} = \sum_{i = 1}^N (m_i/m)\bar{y}_{i\cdot} \) is an unbiased estimator of the population mean. Also show that an unbiased estimate of the variance of this estimator is obtained by
+                        $$ v(\bar{y}) = \sum_{i = 1}^N \frac{m_i(\bar{y}_{i\cdot} - \bar{y})^2}{m(m - 1)} \quad \text{(Sampford, 1962)} $$
+                    </li>
+                    <li>If the population is divided into \( N \) unequal clusters, the \( i \)-th cluster consisting of \( M_i \) elements \( (i = 1,2,...,N) \) and \( r \) denotes the intracluster correlation coefficient defined by
+                        $$ r = \frac{\sum_{i = 1}^N \sum_{j \neq k}^{M_i} (y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{M_0(\bar{M} - 1)S^2} $$
+                        where \( M_0 \) and \( \bar{M} \) have their usual meanings.
+                        <ul>
+                            <li>(i) Show that the limits of \( r \) are given as
+                                $$ -\frac{1}{M - 1} < -\frac{M_0 - 1}{M_0(M - 1)} < r < \frac{(N - 1)S_b'^2}{NS^2} $$
+                                where
+                                $$ S_b'^2 = \sum_{i = 1}^N \frac{M_i(M_i - 1)(\bar{y}_{i\cdot} - \bar{Y})^2}{\bar{M}(\bar{M} - 1)(N - 1)} $$
+                            </li>
+                            <li>(ii) Show that for \( M_i = m \) for \( i = 1,2,...,N \) and \( S_b'^2 = S_b^2 \),
+                                $$ r = \frac{Nm\rho}{(Nm - 1)} $$
+                            </li>
+                            <li>(iii) If \( \bar{y}_n' \) is defined as in Eq. (8.7.2), show that
+                                $$ V(\bar{y}_n') \cong \frac{(1 - f)S^2}{n\bar{M}}[1 + r(M - 1)] $$
+                                where \( S^2 \) has its usual meaning. (Zasepa, 1962).
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+            
+            <div class="hinglish-content">
+                <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
+                <ol>
+                    <li>यदि एक population में \( NM \) elements को random पर group करके \( M \) elements वाले \( N \) clusters बनाए जाते हैं, तो दिखाएं कि \( n \) clusters के एक random sample, wor, की efficiency उतनी ही होगी जितनी \( nM \) elements के random sample, wor में sampling करने की होती है।</li>
+                    <li>\( M_0 \) elements की एक finite population को \( N \) clusters में divide किया जाता है, जिसमें \( i \)-वें cluster में \( M_i \) elements होते हैं। Total population elements में से \( m \) elements का एक random sample, wor, select किया जाता है और sample elements को उन clusters के अनुसार group किया जाता है जिनसे वे belong करते हैं। यदि \( y \) sample total है, जो \( n \) selected clusters में sample elements की values पर based है, तो दिखाएं कि \( \widehat{\bar{Y}} = Ny/mn \) population mean \( \bar{Y} \) के लिए एक unbiased estimator है और इसके sampling variance को derive करें। (Ghosh, 1963)</li>
+                    <li>मान लीजिए प्रत्येक में \( M \) elements वाले \( N \) clusters हैं। Population mean per element को estimate करने के लिए \( n \) clusters का एक sample systematically लिया जाता है। Estimator के sampling variance को clusters में pairs of elements के बीच intracluster correlation coefficient (\( \rho \)) और samples पर clusters के pairs के बीच (\( \rho_c' \)) के terms में derive करें, यह मानते हुए कि \( N \), \( n \) का एक multiple है। (Madow, 1949)</li>
+                    <li>एक population में \( N \) clusters होते हैं जिनमें से प्रत्येक में \( M \) elements होते हैं। Population mean per element को estimate करने के लिए \( n \) clusters का एक simple random sample select किया जाता है। \( S_w^2 \), clusters के भीतर variance को \( aM^b(b > 0) \) दिया गया मानते हुए और cost function को \( C = c_1nM + c_2\sqrt{n} \) मानते हुए, cluster का optimum size ज्ञात करें जिसके लिए estimator का variance minimum हो, जब survey की cost fixed हो।</li>
+                    <li>एक दिए गए area में males की population को estimate करने के लिए persons के बजाय households की sampling की efficiency को examine करने के लिए, निम्नलिखित assumptions किए गए हैं:
+                        <ul>
+                            <li>(i) प्रत्येक household में 4 persons (husband, wife और दो children) होते हैं।</li>
+                            <li>(ii) Children के sexes binomially distributed हैं।</li>
+                        </ul>
+                        दिखाएं कि intracluster correlation coefficient 1/6 है और persons की sampling की तुलना में households की sampling की efficiency 200% है। (Sukhatme, 1954)
+                    </li>
+                    <li>एक population में \( N \) clusters होते हैं, \( M_i \) \( i \)-वें cluster \( (i = 1,2,...,N) \) का size है। Clusters को pps of clusters, wr द्वारा one-by-one select किया जाता है। \( (m + 1) \)-वें draw में select किए गए cluster को reject कर दिया जाता है यदि पहले \( m \) draws में select किए गए distinct clusters की संख्या एक pre-assigned number \( k \) है। मान लीजिए \( m \) draws के sample में \( i \)-वाँ cluster \( m_i \) बार आता है, \( m_i = 0,1,2,...,i = 1,2,...,N \)। यदि \( \bar{y}_{i\cdot} \) \( i \)-वें cluster का mean है, तो दिखाएं कि \( \bar{y} = \sum_{i = 1}^N (m_i/m)\bar{y}_{i\cdot} \) population mean का एक unbiased estimator है। यह भी दिखाएं कि इस estimator के variance का एक unbiased estimate इसके द्वारा प्राप्त किया जाता है:
+                        $$ v(\bar{y}) = \sum_{i = 1}^N \frac{m_i(\bar{y}_{i\cdot} - \bar{y})^2}{m(m - 1)} \quad \text{(Sampford, 1962)} $$
+                    </li>
+                    <li>यदि population को \( N \) unequal clusters में divide किया जाता है, \( i \)-वाँ cluster \( M_i \) elements \( (i = 1,2,...,N) \) का consisting है और \( r \) intracluster correlation coefficient को denote करता है जो इसके द्वारा defined है:
+                        $$ r = \frac{\sum_{i = 1}^N \sum_{j \neq k}^{M_i} (y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{M_0(\bar{M} - 1)S^2} $$
+                        जहाँ \( M_0 \) और \( \bar{M} \) के अपने usual meanings हैं।
+                        <ul>
+                            <li>(i) दिखाएं कि \( r \) की limits इस प्रकार दी गई हैं:
+                                $$ -\frac{1}{M - 1} < -\frac{M_0 - 1}{M_0(M - 1)} < r < \frac{(N - 1)S_b'^2}{NS^2} $$
+                                जहाँ
+                                $$ S_b'^2 = \sum_{i = 1}^N \frac{M_i(M_i - 1)(\bar{y}_{i\cdot} - \bar{Y})^2}{\bar{M}(\bar{M} - 1)(N - 1)} $$
+                            </li>
+                            <li>(ii) दिखाएं कि \( i = 1,2,...,N \) के लिए \( M_i = m \) और \( S_b'^2 = S_b^2 \) के लिए,
+                                $$ r = \frac{Nm\rho}{(Nm - 1)} $$
+                            </li>
+                            <li>(iii) यदि \( \bar{y}_n' \) को Eq. (8.7.2) के अनुसार define किया गया है, तो दिखाएं कि
+                                $$ V(\bar{y}_n') \cong \frac{(1 - f)S^2}{n\bar{M}}[1 + r(M - 1)] $$
+                                जहाँ \( S^2 \) का अपना usual meaning है। (Zasepa, 1962).
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- QUIZZES SECTION -->
+        <section id="quiz-mcq" class="section-card">
+            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+            
+            <div class="question-box">
+                <div class="question">1. In cluster sampling, for maximum efficiency, the variation: <br> (गुच्छ प्रतिचयन में, अधिकतम दक्षता के लिए, भिन्नता:)</div>
+                <ul class="mcq-options">
+                    <li>a) Within clusters should be minimum</li>
+                    <li>b) Between clusters should be maximum</li>
+                    <li>c) Within clusters should be maximum and between clusters minimum</li>
+                    <li>d) Both should be equal</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
+                <div id="mcq1" class="answer"><strong>Correct Answer:</strong> c) Within clusters should be maximum and between clusters minimum <br> <em>Explanation:</em> High heterogeneity within clusters ensures each cluster accurately represents the whole population, making the selection of any cluster equally informative.</div>
+            </div>
+            
+            <div class="question-box">
+                <div class="question">2. As the size of the cluster increases, the efficiency of cluster sampling generally: <br> (जैसे-जैसे गुच्छ का आकार बढ़ता है, गुच्छ प्रतिचयन की दक्षता आम तौर पर:)</div>
+                <ul class="mcq-options">
+                    <li>a) Increases</li>
+                    <li>b) Decreases</li>
+                    <li>c) Remains constant</li>
+                    <li>d) Fluctuates randomly</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer</button>
+                <div id="mcq2" class="answer"><strong>Correct Answer:</strong> b) Decreases <br> <em>Explanation:</em> Elements in close proximity (like inside a cluster) tend to have similar characteristics (positive intracluster correlation). A larger cluster gathers more of the same, leading to a decrease in statistical efficiency compared to a simple random sample of the same size.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. What is the primary operational advantage of cluster sampling over simple random sampling? <br> (सरल यादृच्छिक प्रतिचयन की तुलना में गुच्छ प्रतिचयन का प्राथमिक परिचालन लाभ क्या है?)</div>
+                <ul class="mcq-options">
+                    <li>a) It always produces a smaller variance</li>
+                    <li>b) It is less costly and does not always require a sampling frame of ultimate elements</li>
+                    <li>c) It eliminates all forms of bias completely</li>
+                    <li>d) It naturally forms strata</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer</button>
+                <div id="mcq3" class="answer"><strong>Correct Answer:</strong> b) It is less costly and does not always require a sampling frame of ultimate elements <br> <em>Explanation:</em> Because elements are physically grouped together, travel costs drop dramatically and you only need a list of clusters, not every element.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The total cost function of a cluster survey incorporates two primary components: <br> (एक गुच्छ सर्वेक्षण के कुल लागत समारोह में दो प्राथमिक घटक शामिल होते हैं:)</div>
+                <ul class="mcq-options">
+                    <li>a) Strata cost and bias cost</li>
+                    <li>b) Overhead cost and variance penalty</li>
+                    <li>c) Enumeration cost within clusters and travel cost between clusters</li>
+                    <li>d) Systematic cost and proportional cost</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer</button>
+                <div id="mcq4" class="answer"><strong>Correct Answer:</strong> c) Enumeration cost within clusters and travel cost between clusters <br> <em>Explanation:</em> \( C = c_1 nM + c_2 n^{1/2} \) separates the cost proportional to elements from the cost proportional to distance traveled between \( n \) points.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. If the intracluster correlation coefficient \( \rho \) equals 1, it implies that: <br> (यदि अंतर्गुच्छ सहसंबंध गुणांक \( \rho \) 1 के बराबर है, तो इसका तात्पर्य है कि:)</div>
+                <ul class="mcq-options">
+                    <li>a) Clusters are completely heterogeneous</li>
+                    <li>b) Clusters are completely homogeneous (elements within a cluster are identical)</li>
+                    <li>c) Cluster sampling is highly efficient</li>
+                    <li>d) The variance is zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer</button>
+                <div id="mcq5" class="answer"><strong>Correct Answer:</strong> b) Clusters are completely homogeneous (elements within a cluster are identical) <br> <em>Explanation:</em> If \( \rho = 1 \), there is absolutely no variation within the cluster (\( S_w^2 = 0 \)), meaning sampling more than one element per cluster is mathematically useless.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. The variance of the simple arithmetic mean in cluster sampling with unequal cluster sizes is: <br> (असमान गुच्छ आकार वाले गुच्छ प्रतिचयन में साधारण अंकगणितीय माध्य का प्रसरण है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Always unbiased</li>
+                    <li>b) Based exclusively on \( S_w^2 \)</li>
+                    <li>c) Biased, with the bias relying heavily on the covariance between the cluster mean and cluster size</li>
+                    <li>d) Exactly zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer</button>
+                <div id="mcq6" class="answer"><strong>Correct Answer:</strong> c) Biased, with the bias relying heavily on the covariance between the cluster mean and cluster size <br> <em>Explanation:</em> Theorem 8.7.1 proves that \( B(\bar{y}_n) = - \text{Cov}(\bar{y}_{i\cdot}, M_i) / \bar{M} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. When estimating the variance within clusters (\( S_w^2 \)), Jessen (1942) and Mahalanobis proposed an empirical law defined as: <br> (गुच्छों के भीतर प्रसरण (\( S_w^2 \)) का अनुमान लगाते समय, जेसन (1942) और महालनोबिस ने किस रूप में परिभाषित एक अनुभवजन्य कानून का प्रस्ताव रखा?)</div>
+                <ul class="mcq-options">
+                    <li>a) \( S_w^2 = a + bM \)</li>
+                    <li>b) \( S_w^2 = aM^b \)</li>
+                    <li>c) \( S_w^2 = a / M^b \)</li>
+                    <li>d) \( S_w^2 = \log(aM) \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer</button>
+                <div id="mcq7" class="answer"><strong>Correct Answer:</strong> b) \( S_w^2 = aM^b \) <br> <em>Explanation:</em> They determined empirically that within-cluster variance follows a power law relationship based on the size of the cluster \( M \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In unequal cluster sampling, the estimator \( \bar{y}_n' = \frac{\sum M_i\bar{y}_{i\cdot}}{\sum M_i} \) is a classic example of a: <br> (असमान गुच्छ प्रतिचयन में, अनुमानक \( \bar{y}_n' \) किसका एक उत्कृष्ट उदाहरण है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Regression estimator</li>
+                    <li>b) Difference estimator</li>
+                    <li>c) Ratio estimator</li>
+                    <li>d) Perfectly unbiased estimator</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer</button>
+                <div id="mcq8" class="answer"><strong>Correct Answer:</strong> c) Ratio estimator <br> <em>Explanation:</em> Because both the numerator (total of cluster totals) and denominator (total cluster sizes) are random variables drawn from the sample, it functions as a ratio to size estimator.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. When clusters are selected with probabilities proportional to their sizes (PPS), it is generally to counteract: <br> (जब गुच्छों को उनके आकार (PPS) के आनुपातिक प्रायिकता के साथ चुना जाता है, तो यह आम तौर पर किसका मुकाबला करने के लिए होता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Negative correlation</li>
+                    <li>b) Positive correlation between cluster size and the variable under study</li>
+                    <li>c) Constant cluster sizes</li>
+                    <li>d) Travel costs</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer</button>
+                <div id="mcq9" class="answer"><strong>Correct Answer:</strong> b) Positive correlation between cluster size and the variable under study <br> <em>Explanation:</em> If larger clusters naturally have larger totals, giving them a higher chance of selection standardizes the variance drastically compared to equal probability selection.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. To estimate the proportion of elements belonging to a specific class using equal-sized cluster sampling, the variance utilizes the intracluster correlation \( \rho \). If \( \rho \) is positive, the variance is: <br> (समान आकार के गुच्छ प्रतिचयन का उपयोग करके किसी विशिष्ट वर्ग से संबंधित तत्वों के अनुपात का अनुमान लगाने के लिए, प्रसरण अंतर्गुच्छ सहसंबंध \( \rho \) का उपयोग करता है। यदि \( \rho \) सकारात्मक है, तो प्रसरण है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Completely eliminated</li>
+                    <li>b) Smaller than simple random sampling</li>
+                    <li>c) Larger than simple random sampling</li>
+                    <li>d) Equal to zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer</button>
+                <div id="mcq10" class="answer"><strong>Correct Answer:</strong> c) Larger than simple random sampling <br> <em>Explanation:</em> The multiplier is \( [1 + (M-1)\rho] \). If \( \rho > 0 \) and \( M > 1 \), this multiplier exceeds 1, mathematically inflating the variance relative to SRS.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. The unbiased estimator for unequal cluster sampling \( \bar{y}_n^* = \frac{N}{nM_0}\sum M_i\bar{y}_{i\cdot} \) is often less precise because its variance heavily depends on: <br> (असमान गुच्छ प्रतिचयन \( \bar{y}_n^* \) के लिए निष्पक्ष अनुमानक अक्सर कम सटीक होता है क्योंकि इसका प्रसरण काफी हद तक निर्भर करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) The variations in \( M_i \)</li>
+                    <li>b) The variation of the product \( M_i\bar{y}_{i\cdot} \)</li>
+                    <li>c) The constant \( M_0 \)</li>
+                    <li>d) \( \rho \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer</button>
+                <div id="mcq11" class="answer"><strong>Correct Answer:</strong> b) The variation of the product \( M_i\bar{y}_{i\cdot} \) <br> <em>Explanation:</em> Unless \( \bar{y}_{i\cdot} \) and \( M_i \) vary inversely to keep their product constant, the extreme fluctuations in \( M_i\bar{y}_{i\cdot} \) severely inflate the variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. For a fixed cost, identifying the optimum cluster size \( M \) involves finding a delicate balance where: <br> (एक निश्चित लागत के लिए, इष्टतम गुच्छ आकार \( M \) की पहचान करने में एक नाजुक संतुलन खोजना शामिल है जहाँ:)</div>
+                <ul class="mcq-options">
+                    <li>a) Variance is completely zero</li>
+                    <li>b) The increasing statistical variance is offset by decreasing operational cost</li>
+                    <li>c) \( M \) equals the population size</li>
+                    <li>d) Both \( c_1 \) and \( c_2 \) equal zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer</button>
+                <div id="mcq12" class="answer"><strong>Correct Answer:</strong> b) The increasing statistical variance is offset by decreasing operational cost <br> <em>Explanation:</em> Larger clusters are statistically inefficient but operationally cheap. The optimum size perfectly balances these two competing forces using Lagrange multipliers.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. In the formula for the variance of the cluster mean \( V(\bar{y}_n) = \frac{(1 - f)}{n}S_b^2 \), the term \( S_b^2 \) represents: <br> (गुच्छ माध्य \( V(\bar{y}_n) = \frac{(1 - f)}{n}S_b^2 \) के प्रसरण के सूत्र में, \( S_b^2 \) पद क्या दर्शाता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Variance within elements in the same cluster</li>
+                    <li>b) Variance between cluster means in the population</li>
+                    <li>c) Total population variance</li>
+                    <li>d) The sampling fraction</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer</button>
+                <div id="mcq13" class="answer"><strong>Correct Answer:</strong> b) Variance between cluster means in the population <br> <em>Explanation:</em> Because entire clusters are selected and fully enumerated, the only sampling variation comes from the differences between the clusters themselves (\( S_b^2 \)).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. If \( M=1 \), cluster sampling devolves perfectly into: <br> (यदि \( M=1 \), तो गुच्छ प्रतिचयन पूरी तरह से किसमें बदल जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Stratified sampling</li>
+                    <li>b) Ratio sampling</li>
+                    <li>c) Simple random sampling of individual elements</li>
+                    <li>d) Two-stage sampling</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer</button>
+                <div id="mcq14" class="answer"><strong>Correct Answer:</strong> c) Simple random sampling of individual elements <br> <em>Explanation:</em> A cluster of size 1 is literally just a single element. Sampling \( n \) such clusters is strictly identical to drawing a simple random sample of \( n \) elements.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. In unequal cluster sampling, if \( M_i \) and the cluster mean \( \bar{y}_{i\cdot} \) are completely uncorrelated, the simple arithmetic mean \( \bar{y}_n \) becomes: <br> (असमान गुच्छ प्रतिचयन में, यदि \( M_i \) और गुच्छ माध्य \( \bar{y}_{i\cdot} \) पूरी तरह से असंबंधित हैं, तो साधारण अंकगणितीय माध्य \( \bar{y}_n \) बन जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Inefficient</li>
+                    <li>b) An unbiased estimator of \( \bar{Y} \)</li>
+                    <li>c) A regression estimator</li>
+                    <li>d) Zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer</button>
+                <div id="mcq15" class="answer"><strong>Correct Answer:</strong> b) An unbiased estimator of \( \bar{Y} \) <br> <em>Explanation:</em> The bias \( B(\bar{y}_n) \) explicitly relies on the covariance \( \text{Cov}(\bar{y}_{i\cdot}, M_i) \). If this covariance is zero, the bias vanishes.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The expected minimum distance between \( n \) points located at random on a map is mathematically proportional to: <br> (मानचित्र पर यादृच्छिक रूप से स्थित \( n \) बिंदुओं के बीच अपेक्षित न्यूनतम दूरी गणितीय रूप से किसके समानुपाती है?)</div>
+                <ul class="mcq-options">
+                    <li>a) \( n \)</li>
+                    <li>b) \( n^2 \)</li>
+                    <li>c) \( n^{1/2} \)</li>
+                    <li>d) \( \log(n) \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer</button>
+                <div id="mcq16" class="answer"><strong>Correct Answer:</strong> c) \( n^{1/2} \) <br> <em>Explanation:</em> This empirical law forms the backbone of the travel cost component \( c_2 n^{1/2} \) in the cluster survey cost function.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In the analysis of variance for a sample of \( n \) clusters, \( s_w^2 \) provides an unbiased estimate of: <br> (\( n \) गुच्छों के प्रतिदर्श के लिए प्रसरण के विश्लेषण में, \( s_w^2 \) किसका निष्पक्ष अनुमान प्रदान करता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) \( S^2 \)</li>
+                    <li>b) \( S_b^2 \)</li>
+                    <li>c) \( S_w^2 \)</li>
+                    <li>d) \( \rho \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer</button>
+                <div id="mcq17" class="answer"><strong>Correct Answer:</strong> c) \( S_w^2 \) <br> <em>Explanation:</em> The within-cluster mean square directly evaluates the true population within-cluster variation without needing adjustment.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The variable \( \widehat{\rho} \) calculates the intracluster correlation coefficient from the sample. It requires finding both the: <br> (चर \( \widehat{\rho} \) प्रतिदर्श से अंतर्गुच्छ सहसंबंध गुणांक की गणना करता है। इसके लिए दोनों को खोजने की आवश्यकता होती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Mean and Median</li>
+                    <li>b) Between-cluster and Within-cluster mean squares (\( s_b^2 \) and \( s_w^2 \))</li>
+                    <li>c) Variance and Covariance of \( x \) and \( y \)</li>
+                    <li>d) Strata sizes</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer</button>
+                <div id="mcq18" class="answer"><strong>Correct Answer:</strong> b) Between-cluster and Within-cluster mean squares (\( s_b^2 \) and \( s_w^2 \)) <br> <em>Explanation:</em> The estimator structurally relies on comparing the variance occurring inside the clusters versus the variance occurring between them.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. In varying probability cluster sampling (PPS, WR), the estimator \( \bar{z}_n \) evaluates to \( \bar{Y} \). If clusters are drawn proportional to size (\( p_i = M_i/M_0 \)), \( \bar{z}_n \) simplifies exactly to: <br> (विभिन्न प्रायिकता गुच्छ प्रतिचयन (PPS, WR) में, अनुमानक \( \bar{z}_n \) का मूल्यांकन \( \bar{Y} \) होता है। यदि गुच्छों को आकार के समानुपाती खींचा जाता है (\( p_i = M_i/M_0 \)), तो \( \bar{z}_n \) बिल्कुल सरल हो जाता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( \sum (y_i / x_i) \)</li>
+                    <li>b) \( \sum \bar{y}_{i\cdot} / n \)</li>
+                    <li>c) \( \bar{Y} / n \)</li>
+                    <li>d) \( NM\bar{y} \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer</button>
+                <div id="mcq19" class="answer"><strong>Correct Answer:</strong> b) \( \sum \bar{y}_{i\cdot} / n \) <br> <em>Explanation:</em> The size weights \( M_i \) cancel out flawlessly with the probability weights \( M_i/M_0 \), reducing the unbiased estimator to just the simple average of the cluster means.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. What is a key unit in the context of cluster sampling? <br> (गुच्छ प्रतिचयन के संदर्भ में एक मुख्य इकाई (key unit) क्या है?)</div>
+                <ul class="mcq-options">
+                    <li>a) The largest cluster in the population</li>
+                    <li>b) A randomly selected unit around which neighboring units are gathered to form a cluster</li>
+                    <li>c) The median element in a cluster</li>
+                    <li>d) The population mean</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
+                <div id="mcq20" class="answer"><strong>Correct Answer:</strong> b) A randomly selected unit around which neighboring units are gathered to form a cluster <br> <em>Explanation:</em> This describes an operational method where a cluster is generated dynamically by selecting a random starting seed (the key unit) and expanding outward.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-fib" class="section-card">
+            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+
+            <div class="question-box">
+                <div class="question">1. The smallest unit into which the population can be divided is called an ____________ of the population. <br> (सबसे छोटी इकाई जिसमें जनसंख्या को विभाजित किया जा सकता है, उसे जनसंख्या का ____________ कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
+                <div id="fib1" class="answer"><strong>Answer:</strong> element (तत्व) <br> <em>Explanation:</em> A cluster is specifically composed of a localized group of these elementary units.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. When the entire geographical area containing the population is divided into segments, the cluster sampling procedure is often called ____________ sampling. <br> (जब जनसंख्या वाले संपूर्ण भौगोलिक क्षेत्र को खंडों में विभाजित किया जाता है, तो गुच्छ प्रतिचयन प्रक्रिया को अक्सर ____________ प्रतिचयन कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer</button>
+                <div id="fib2" class="answer"><strong>Answer:</strong> area (क्षेत्र) <br> <em>Explanation:</em> Area sampling is heavily utilized in agricultural and geographical surveys where physical space directly defines the cluster bounds.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. Because neighboring elements tend to share similar characteristics, intracluster correlation \( \rho \) is usually mathematically ____________. <br> (चूँकि पड़ोसी तत्वों में समान विशेषताएं साझा करने की प्रवृत्ति होती है, इसलिए अंतर्गुच्छ सहसंबंध \( \rho \) आमतौर पर गणितीय रूप से ____________ होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer</button>
+                <div id="fib3" class="answer"><strong>Answer:</strong> positive (सकारात्मक) <br> <em>Explanation:</em> For example, people in the same household often have similar incomes or diets, creating a positive internal correlation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The efficiency of cluster sampling generally ____________ as the size of the individual clusters increases. <br> (गुच्छ प्रतिचयन की दक्षता आम तौर पर ____________ है क्योंकि व्यक्तिगत गुच्छों का आकार बढ़ता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer</button>
+                <div id="fib4" class="answer"><strong>Answer:</strong> decreases (घटती) <br> <em>Explanation:</em> Taking more elements from the exact same neighborhood yields diminishing informational returns compared to taking elements from new areas.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. Cluster sampling is almost always chosen because it heavily reduces the overall survey ____________. <br> (गुच्छ प्रतिचयन लगभग हमेशा चुना जाता है क्योंकि यह समग्र सर्वेक्षण ____________ को भारी रूप से कम कर देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer</button>
+                <div id="fib5" class="answer"><strong>Answer:</strong> cost (लागत) <br> <em>Explanation:</em> Travel time, identification, and contact overheads plummet when surveying contiguous units instead of widely scattered single elements.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. If \( S_w^2 \) (variation within clusters) is zero, it mathematically implies that every element within a specific cluster is identical, resulting in \( \rho \) equaling exactly ____________. <br> (यदि \( S_w^2 \) (गुच्छों के भीतर भिन्नता) शून्य है, तो इसका गणितीय रूप से तात्पर्य है कि किसी विशिष्ट गुच्छ के भीतर प्रत्येक तत्व समान है, जिसके परिणामस्वरूप \( \rho \) बिल्कुल ____________ के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer</button>
+                <div id="fib6" class="answer"><strong>Answer:</strong> 1 (एक) <br> <em>Explanation:</em> Complete homogeneity makes additional sampling inside the cluster entirely redundant.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. To minimize variance in cluster formation, variation between clusters should be as ____________ as possible. <br> (गुच्छ निर्माण में प्रसरण को कम करने के लिए, गुच्छों के बीच भिन्नता यथासंभव ____________ होनी चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer</button>
+                <div id="fib7" class="answer"><strong>Answer:</strong> minimum / small (न्यूनतम / कम) <br> <em>Explanation:</em> If every cluster is a miniature replica of the whole population, then picking *any* cluster gives an identical, highly accurate estimate.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In unequal cluster sampling, the ratio to size estimator is represented by the notation ____________. <br> (असमान गुच्छ प्रतिचयन में, आकार अनुपात अनुमानक को संकेतन ____________ द्वारा दर्शाया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer</button>
+                <div id="fib8" class="answer"><strong>Answer:</strong> \( \bar{y}_n' \) <br> <em>Explanation:</em> It explicitly divides the sum of the cluster totals by the sum of the selected cluster sizes.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. The formula \( (N-1)MS_b^2 = (NM-1)S^2 - N(M-1)S_w^2 \) proves that \( S_b^2 \) and \( S_w^2 \) move in entirely ____________ directions for a fixed \( S^2 \). <br> (सूत्र \( (N-1)MS_b^2 = (NM-1)S^2 - N(M-1)S_w^2 \) साबित करता है कि \( S_b^2 \) और \( S_w^2 \) एक निश्चित \( S^2 \) के लिए पूरी तरह से ____________ दिशाओं में चलते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer</button>
+                <div id="fib9" class="answer"><strong>Answer:</strong> opposite (विपरीत) <br> <em>Explanation:</em> Because total variance is fixed, increasing the variance within the clusters necessarily shrinks the variance between the clusters.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. The cost of travel between randomly selected clusters scales in direct proportion to the square root of ____________. <br> (यादृच्छिक रूप से चयनित गुच्छों के बीच यात्रा की लागत ____________ के वर्गमूल के सीधे अनुपात में होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer</button>
+                <div id="fib10" class="answer"><strong>Answer:</strong> \( n \) (the number of clusters) (गुच्छों की संख्या) <br> <em>Explanation:</em> Geometric area density laws dictate that distance between \( n \) random points scales by \( \sqrt{n} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. The unbiased estimator \( \bar{y}_n^* \) for unequal clusters divides the weighted cluster totals by the strict constant ____________ instead of varying sample sizes. <br> (असमान गुच्छों के लिए निष्पक्ष अनुमानक \( \bar{y}_n^* \) अलग-अलग प्रतिदर्श आकारों के बजाय भारित गुच्छ योगों को सख्त स्थिरांक ____________ से विभाजित करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer</button>
+                <div id="fib11" class="answer"><strong>Answer:</strong> \( n\bar{M} \) <br> <em>Explanation:</em> By keeping the denominator fixed rather than a random variable, it preserves exact unbiasedness, although often at the severe cost of high variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. The empirical law for predicting how \( S_w^2 \) changes with cluster size \( M \) is heavily modeled by the equation \( S_w^2 = \) ____________. <br> (गुच्छ आकार \( M \) के साथ \( S_w^2 \) कैसे बदलता है, इसकी भविष्यवाणी करने के लिए अनुभवजन्य नियम भारी रूप से समीकरण \( S_w^2 = \) ____________ द्वारा तैयार किया गया है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer</button>
+                <div id="fib12" class="answer"><strong>Answer:</strong> \( aM^b \) <br> <em>Explanation:</em> Jessen and Mahalanobis observed this power-law relationship extensively in massive agricultural surveys.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. In the optimum cluster size derivation, the function \( \phi = C + \lambda V \) uses a classic mathematical tool known as a ____________ multiplier. <br> (इष्टतम गुच्छ आकार व्युत्पत्ति में, फ़ंक्शन \( \phi = C + \lambda V \) एक क्लासिक गणितीय उपकरण का उपयोग करता है जिसे ____________ गुणक के रूप में जाना जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer</button>
+                <div id="fib13" class="answer"><strong>Answer:</strong> Lagrange (लैग्रेंज) <br> <em>Explanation:</em> Lagrange multipliers are the standard calculus method for strictly optimizing functions subject to a harsh constraint (like fixed cost).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. When the cost of travel between units rapidly decreases, the optimum size of the cluster \( M \) structurally becomes ____________. <br> (जब इकाइयों के बीच यात्रा की लागत तेजी से घट जाती है, तो गुच्छ \( M \) का इष्टतम आकार संरचनात्मक रूप से ____________ हो जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer</button>
+                <div id="fib14" class="answer"><strong>Answer:</strong> smaller (छोटा) <br> <em>Explanation:</em> If traveling between completely new clusters is cheap, you should prefer sampling many small clusters to brutally minimize statistical variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. An estimator of the proportion \( P \) of elements belonging to a specified class in cluster sampling is represented mathematically by ____________. <br> (गुच्छ प्रतिचयन में किसी निर्दिष्ट वर्ग से संबंधित तत्वों के अनुपात \( P \) के एक अनुमानक को गणितीय रूप से ____________ द्वारा दर्शाया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer</button>
+                <div id="fib15" class="answer"><strong>Answer:</strong> \( \bar{p} \) (or \( \widehat{P}_c \)) <br> <em>Explanation:</em> It simply averages the independent proportions \( p_i \) observed accurately inside each selected cluster.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Simple random sampling will only yield the same exact precision as cluster sampling if the intracluster correlation \( \rho \) equals exactly ____________. <br> (सरल यादृच्छिक प्रतिचयन केवल तभी गुच्छ प्रतिचयन के समान सटीक सटीकता प्रदान करेगा यदि अंतर्गुच्छ सहसंबंध \( \rho \) बिल्कुल ____________ के बराबर हो।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer</button>
+                <div id="fib16" class="answer"><strong>Answer:</strong> zero (\( 0 \)) <br> <em>Explanation:</em> If \( \rho = 0 \), the elements inside a cluster are no more similar than randomly drawn elements, making the variance multiplier \( [1 + (M-1)0] = 1 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In sampling unequal clusters with varying probability (PPS, WR), the size weight \( M_i \) effectively ____________ with the selection probability \( p_i = M_i/M_0 \). <br> (विभिन्न प्रायिकता (PPS, WR) के साथ असमान गुच्छों का प्रतिचयन करते समय, आकार भार \( M_i \) चयन प्रायिकता \( p_i = M_i/M_0 \) के साथ प्रभावी रूप से ____________ हो जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer</button>
+                <div id="fib17" class="answer"><strong>Answer:</strong> cancels out (रद्द) <br> <em>Explanation:</em> This mathematical cancellation prevents the massive variance spikes that normally occur when unequal clusters are selected with equal probability.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The relative efficiency of unequal cluster sampling compared to simple random sampling primarily relies on reducing the variance ____________ the clusters. <br> (सरल यादृच्छिक प्रतिचयन की तुलना में असमान गुच्छ प्रतिचयन की सापेक्ष दक्षता मुख्य रूप से गुच्छों के ____________ प्रसरण को कम करने पर निर्भर करती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer</button>
+                <div id="fib18" class="answer"><strong>Answer:</strong> between (बीच) <br> <em>Explanation:</em> The smaller \( S_b^{*2} \) becomes, the higher the overall efficiency metric rises.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If \( n \) equal clusters are selected completely WITH replacement, the variance of the estimator \( \bar{y}_n \) collapses directly to ____________. <br> (यदि \( n \) समान गुच्छों को पूरी तरह से प्रतिस्थापन के साथ चुना जाता है, तो अनुमानक \( \bar{y}_n \) का प्रसरण सीधे ____________ तक गिर जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer</button>
+                <div id="fib19" class="answer"><strong>Answer:</strong> \( S_b^2 / n \) <br> <em>Explanation:</em> The finite population correction \( (1-f) \) disappears, leaving the straightforward variance of the cluster means.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The standard analysis of variance explicitly splits the total variation into two cleanly defined sources: Between clusters and ____________ clusters. <br> (प्रसरण का मानक विश्लेषण स्पष्ट रूप से कुल भिन्नता को दो स्पष्ट रूप से परिभाषित स्रोतों में विभाजित करता है: गुच्छों के बीच और गुच्छों के ____________।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
+                <div id="fib20" class="answer"><strong>Answer:</strong> Within (भीतर) <br> <em>Explanation:</em> These form the \( s_b^2 \) and \( s_w^2 \) components used to empirically evaluate the efficiency of the sample design.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-tf" class="section-card">
+            <h2>✅ True or False (सही या गलत)</h2>
+
+            <div class="question-box">
+                <div class="question">1. If the intracluster correlation \( \rho \) is perfectly zero, cluster sampling is statistically more efficient than simple random sampling. <br> (यदि अंतर्गुच्छ सहसंबंध \( \rho \) पूरी तरह से शून्य है, तो गुच्छ प्रतिचयन सांख्यिकीय रूप से सरल यादृच्छिक प्रतिचयन से अधिक कुशल है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
+                <div id="tf1" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> If \( \rho = 0 \), they are exactly equally efficient statistically. Cluster sampling only becomes *more* statistically efficient if \( \rho \) is negative.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. When \( M = 1 \), the mathematical formula for the variance of the cluster mean effortlessly matches the variance of a simple random sample. <br> (जब \( M = 1 \), गुच्छ माध्य के प्रसरण का गणितीय सूत्र सरल यादृच्छिक प्रतिदर्श के प्रसरण से आसानी से मेल खाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer</button>
+                <div id="tf2" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> A cluster consisting of exactly 1 element is functionally identical to drawing single elements via SRS.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. For unequal cluster sampling, the simple arithmetic mean of the cluster means \( \bar{y}_n \) is an entirely unbiased estimator of the population mean \( \bar{Y} \). <br> (असमान गुच्छ प्रतिचयन के लिए, गुच्छ माध्य \( \bar{y}_n \) का साधारण अंकगणितीय माध्य जनसंख्या माध्य \( \bar{Y} \) का पूरी तरह से निष्पक्ष अनुमानक है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer</button>
+                <div id="tf3" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Theorem 8.7.1 proves it is biased, natively suffering from the covariance between the cluster mean and the cluster size.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. A massive advantage of cluster sampling is that it outright eliminates the need to compile an exhaustive frame of every single ultimate element in the population. <br> (गुच्छ प्रतिचयन का एक बड़ा लाभ यह है कि यह जनसंख्या के प्रत्येक अंतिम तत्व का एक विस्तृत फ्रेम संकलित करने की आवश्यकता को पूरी तरह से समाप्त कर देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer</button>
+                <div id="tf4" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> You only need a complete frame of the larger clusters (like a list of villages) to perform the first stage of sampling.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. The ratio to size estimator \( \bar{y}_n' \) strictly requires knowing the exact average cluster size \( \bar{M} \) to be computed. <br> (आकार अनुपात अनुमानक \( \bar{y}_n' \) के लिए गणना किए जाने वाले सटीक औसत गुच्छ आकार \( \bar{M} \) को जानने की कड़ाई से आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer</button>
+                <div id="tf5" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It explicitly divides the sampled \( y \) totals by the sampled \( M \) totals, mathematically bypassing any need to know the true population mean \( \bar{M} \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. If an unequal cluster sampling plan uses PPS, the severe variance inflation normally caused by wildly fluctuating cluster sizes is completely neutralized. <br> (यदि असमान गुच्छ प्रतिचयन योजना PPS का उपयोग करती है, तो आम तौर पर बेतहाशा उतार-चढ़ाव वाले गुच्छ आकार के कारण होने वाली गंभीर प्रसरण मुद्रास्फीति पूरी तरह से बेअसर हो जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show/Hide Answer</button>
+                <div id="tf6" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Selecting a cluster directly proportional to its size inherently counterweights the massive variance its size would otherwise inject into the unweighted mean.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The total sample variance \( s^2 \) computed cleanly from all elements inside a cluster survey gives an absolutely unbiased estimate of the true population element variance \( S^2 \). <br> (गुच्छ सर्वेक्षण के अंदर सभी तत्वों से स्पष्ट रूप से गणना की गई कुल प्रतिदर्श प्रसरण \( s^2 \) सत्य जनसंख्या तत्व प्रसरण \( S^2 \) का एक बिल्कुल निष्पक्ष अनुमान देती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer</button>
+                <div id="tf7" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Because elements are physically grouped into clusters rather than drawn totally independently, \( s^2 \) requires a heavy mathematical adjustment (Eq 8.4.8) to become unbiased.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. In Jessen and Mahalanobis's empirical law \( S_w^2 = aM^b \), the parameter \( b \) must explicitly be greater than 0. <br> (जेसन और महालनोबिस के अनुभवजन्य नियम \( S_w^2 = aM^b \) में, पैरामीटर \( b \) स्पष्ट रूप से 0 से अधिक होना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer</button>
+                <div id="tf8" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> As cluster size expands geographically, it inherently gathers a wider, more diverse array of elements, systematically increasing the internal variation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. If travel costs between distinct clusters \( c_2 \) heavily skyrocket, the mathematically optimal cluster size \( M \) should dynamically shrink to compensate. <br> (यदि विशिष्ट गुच्छों \( c_2 \) के बीच यात्रा लागत भारी रूप से आसमान छूती है, तो गणितीय रूप से इष्टतम गुच्छ आकार \( M \) को क्षतिपूर्ति के लिए गतिशील रूप से सिकुड़ना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer</button>
+                <div id="tf9" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> If traveling is incredibly expensive, you want to stop traveling! You should significantly *increase* the cluster size \( M \) to collect more data per stop.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. The unbiased estimator \( \bar{y}_n^* \) is specifically renowned for generating a much smaller variance than the ratio to size estimator \( \bar{y}_n' \). <br> (निष्पक्ष अनुमानक \( \bar{y}_n^* \) विशेष रूप से आकार अनुपात अनुमानक \( \bar{y}_n' \) की तुलना में बहुत छोटा प्रसरण उत्पन्न करने के लिए प्रसिद्ध है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer</button>
+                <div id="tf10" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is notorious for being *less* precise. Fixing the denominator leaves it highly vulnerable to wildly swinging cluster totals in the numerator.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A key structural aspect of cluster sampling is that every single element housed within the selected cluster must be thoroughly enumerated. <br> (गुच्छ प्रतिचयन का एक प्रमुख संरचनात्मक पहलू यह है कि चयनित गुच्छ के भीतर रखे गए प्रत्येक तत्व की पूरी तरह से गणना की जानी चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer</button>
+                <div id="tf11" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> If you cleanly sub-sample elements inside the cluster rather than enumerating them all, the design rigidly transitions into two-stage sampling.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. The mathematical efficiency metric \( E \) directly equals \( V_c(\bar{y}_n) / V_{SR}(\bar{y}) \). <br> (गणितीय दक्षता मीट्रिक \( E \) सीधे \( V_c(\bar{y}_n) / V_{SR}(\bar{y}) \) के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer</button>
+                <div id="tf12" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Relative Efficiency is universally defined as \( V_{SR} / V_c \). You divide the standard (SRS) variance by the new variance to see if the multiplier is > 1.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The intracluster correlation \( \rho \) theoretically ranges exclusively from \( -1/(M-1) \) strictly up to 1. <br> (अंतर्गुच्छ सहसंबंध \( \rho \) सैद्धांतिक रूप से विशेष रूप से \( -1/(M-1) \) से कड़ाई से 1 तक होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer</button>
+                <div id="tf13" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This mathematically bounds the efficiency. Complete heterogeneity hits the negative lower bound, and complete homogeneity hits 1.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. If \( \rho \) is solidly negative, cluster sampling structurally provides a higher variance than drawing elements independently. <br> (यदि \( \rho \) ठोस रूप से नकारात्मक है, तो गुच्छ प्रतिचयन संरचनात्मक रूप से स्वतंत्र रूप से तत्वों को खींचने की तुलना में अधिक प्रसरण प्रदान करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer</button>
+                <div id="tf14" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> If \( \rho \) is negative, the cluster acts as a perfectly diverse micro-population, rendering cluster sampling *more* efficient than SRS.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. The total sum of squares mathematically partitions beautifully into a sum of squares between clusters and a sum of squares within clusters. <br> (कुल वर्गों का योग गणितीय रूप से गुच्छों के बीच वर्गों के योग और गुच्छों के भीतर वर्गों के योग में खूबसूरती से विभाजित होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer</button>
+                <div id="tf15" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This fundamental ANOVA partitioning \( (S^2 \text{ splitting into } S_b^2 \text{ and } S_w^2) \) is the bedrock of all cluster and stratification theory.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. The estimator \( \bar{p} \) strictly cleanly evaluates the population proportion by explicitly ignoring the structural bounds of the clusters. <br> (अनुमानक \( \bar{p} \) गुच्छों की संरचनात्मक सीमाओं को स्पष्ट रूप से अनदेखा करके जनसंख्या अनुपात का कड़ाई से मूल्यांकन करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer</button>
+                <div id="tf16" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> \( \bar{p} \) is heavily structured; it explicitly averages the independent local proportions \( p_i \) derived internally from each selected cluster.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. In cluster sampling for proportions, the internal structural variance \( S_w^2 \) cleanly equals \( \sum P_iQ_i/N \). <br> (अनुपातों के लिए गुच्छ प्रतिचयन में, आंतरिक संरचनात्मक प्रसरण \( S_w^2 \) स्पष्ट रूप से \( \sum P_iQ_i/N \) के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer</button>
+                <div id="tf17" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This translates the generic within-cluster variance perfectly into the binary boolean logic of strict proportions.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The relative efficiency formula inherently demands making the within-cluster variance \( S_w^2 \) as small as mathematically possible. <br> (सापेक्ष दक्षता सूत्र स्वाभाविक रूप से गुच्छ के भीतर प्रसरण \( S_w^2 \) को गणितीय रूप से यथासंभव छोटा बनाने की मांग करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer</button>
+                <div id="tf18" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It demands making the within-cluster variance as *large* as possible to force the between-cluster variance (which governs the sampling error) to shrink.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. Calculating \( m_{opt} \) utilizing Lagrange multipliers inherently requires knowing or aggressively estimating the absolute overhead cost \( a \). <br> (लैग्रेंज गुणक का उपयोग करके \( m_{opt} \) की गणना करने के लिए स्वाभाविक रूप से पूर्ण ओवरहेड लागत \( a \) को जानने या आक्रामक रूप से अनुमान लगाने की आवश्यकता होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer</button>
+                <div id="tf19" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> The overhead cost \( a \) washes out during differentiation. The optimum size is dictated entirely by the *ratio* of the variable unit costs \( c_1/c_2 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. Cluster sampling is fundamentally considered a technique for fiercely maximizing precision rather than ruthlessly minimizing cost. <br> (गुच्छ प्रतिचयन को मौलिक रूप से लागत को कम करने के बजाय सटीकता को अधिकतम करने की तकनीक माना जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
+                <div id="tf20" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is exactly the reverse. Cluster sampling usually sacrifices some statistical precision in exchange for massive, ruthless reductions in logistical surveying costs.</div>
+            </div>
+
+        </section>
+        
+        <script>
+        function showTopic(topicId) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            var elem = document.getElementById(topicId);
+            if (elem) {
+                elem.classList.add('active');
+            }
+            
+            var activeLink = document.querySelector(`.nav-link[onclick*="${topicId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            if(window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('hinglish-active');
+            var btn = document.querySelector('.lang-toggle-btn');
+            if (document.body.classList.contains('hinglish-active')) {
+                btn.textContent = 'Switch to English';
+            } else {
+                btn.textContent = 'Switch to Hinglish';
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv) {
+                answerDiv.classList.toggle('show');
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+    </script>
+</body>
+</html>

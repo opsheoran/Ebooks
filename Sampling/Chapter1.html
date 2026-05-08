@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 1 – Basic Concept of Sample Surveys | Theory of Sampling</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
+            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
+            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
+            --sidebar-w: 300px; --header-h: 72px;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
+        
+        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
+        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
+        
+        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
+        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
+        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
+        
+        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
+        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
+        .section-card.active { display: block; }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
+        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
+        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
+        .section-card li { margin-bottom: 8px; }
+        
+        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .hinglish-content { display: none; }
+        .hinglish-active .english-content { display: none; }
+        .hinglish-active .hinglish-content { display: block; }
+        
+        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
+        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
+        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
+
+        /* QUIZ STYLES */
+        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
+        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
+        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
+        .mcq-options li { margin-bottom: 5px; }
+        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
+        .toggle-btn:hover { background: var(--navy-light); }
+        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
+        .answer.show { display: block; }
+    </style>
+</head>
+<body>
+
+    <header class="book-header">
+        <div class="header-icon"><i class="fas fa-book"></i></div>
+        <div class="header-text">
+            <h1>Chapter 1: Basic Concept of Sample Surveys | Theory of Sampling</h1>
+            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
+        </div>
+    </header>
+
+    <aside class="sidebar">
+        <a class="nav-link active" onclick="showTopic('sec1-1')">1.1 Introduction</a>
+        <a class="nav-link" onclick="showTopic('sec1-2')">1.2 Fields of Application</a>
+        <a class="nav-link" onclick="showTopic('sec1-3')">1.3 Definitions & Prelims</a>
+        <a class="nav-link" onclick="showTopic('sec1-4')">1.4 Census vs Sample</a>
+        <a class="nav-link" onclick="showTopic('sec1-5')">1.5 Principles of Sampling</a>
+        <a class="nav-link" onclick="showTopic('sec1-6')">1.6 Steps in Sample Survey</a>
+        <a class="nav-link" onclick="showTopic('sec1-7')">1.7 Prob vs Non-Prob</a>
+        <a class="nav-link" onclick="showTopic('sec1-8')">1.8 Sampling Unit</a>
+        <a class="nav-link" onclick="showTopic('sec1-9')">1.9 Sampling Frame</a>
+        <a class="nav-link" onclick="showTopic('sec1-10')">1.10 Desiderata in Planning</a>
+        <a class="nav-link" onclick="showTopic('sec1-11')">1.11 Sampling Errors</a>
+        
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
+        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
+        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
+        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
+        <a class="nav-link" onclick="showTopic('sec1-12')">📝 Exercise (Subjective)</a>
+        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
+        <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Back to Index</a>
+    </aside>
+
+    <main class="main-content">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+
+<section id="sec1-1" class="section-card active">
+            <div class="english-content">
+                <h2>1.1 Introduction</h2>
+                <p>Deming (1950) explained this idea in a very simple but deep way:</p>
+                <div class="quote">
+                    "Sampling does not mean replacing full study with a partial one. Instead, sampling is the art and science of using probability theory to control and measure how reliable our useful statistical data really is."
+                </div>
+                <p>Laplace first suggested using sampling to study populations in 1783. But this method became widely used only by the mid-1930s. From the beginning, researchers had some basic questions in their minds:</p>
+                <ol>
+                    <li>How should we record our observations correctly?</li>
+                    <li>How many observations do we actually need?</li>
+                    <li>How should we design the overall sample structure?</li>
+                    <li>What methods should we use to analyze the collected data?</li>
+                </ol>
+                <p>Statisticians worked hard to find answers to these important questions. They developed and tested many advanced methods. Over time, statisticians became very interested in <strong>inductive logic</strong>. This means reasoning from a small part to understand the whole. The main question was: how can we make this reasoning scientifically correct? The answer was found in probability theory. This is how <strong>probability sampling</strong> began. It became a reliable mathematical tool to draw conclusions about populations, whether small or very large.</p>
+                <p>In old-style experiments, researchers assume that probability is already present. But in sample surveys, the researcher adds probability on purpose through <em>randomization</em>. Fisher (1935) first proposed this idea. He showed that using randomization while selecting a sample gives us a mathematically correct way to estimate the margin of error. He proved that randomization ensures fair selection. It also gives an exact measure of the risk involved. So, researchers started looking for methods that reduce this risk. Later, Mahalanobis (1944) added the important idea of the <em>cost function</em>. He changed the goal to finding the best mix of selection and estimation methods. This mix should keep accuracy high while keeping costs low.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.1 परिचय (Introduction)</h2>
+                <p>Deming (1950) ने इस बात को बहुत सरल और गहराई से समझाया है:</p>
+                <div class="quote">
+                    "Sampling (प्रतिचयन) का मतलब पूर्ण अध्ययन की जगह आंशिक अध्ययन करना नहीं है। बल्कि, sampling का मतलब probability theory (प्रायिकता सिद्धांत) का उपयोग करके यह जाँचना और मापना है कि हमारा उपयोगी सांख्यिकीय डेटा कितना विश्वसनीय है।"
+                </div>
+                <p>Laplace ने 1783 में पहली बार sampling के जरिए population (जनसंख्या) का अध्ययन करने का सुझाव दिया था। लेकिन यह तरीका 1930 के दशक के मध्य तक ही व्यापक रूप से इस्तेमाल होने लगा। शुरुआत से ही, शोधकर्ताओं के मन में कुछ बुनियादी सवाल थे:</p>
+                <ol>
+                    <li>हमें अपने अवलोकन (observations) सही तरीके से कैसे दर्ज करने चाहिए?</li>
+                    <li>हमें वास्तव में कितने अवलोकन चाहिए?</li>
+                    <li>हमें कुल sample का ढांचा कैसे तैयार करना चाहिए?</li>
+                    <li>एकत्र किए गए डेटा का विश्लेषण (analysis) करने के लिए हमें कौन से तरीके अपनाने चाहिए?</li>
+                </ol>
+                <p>सांख्यिकीविदों (statisticians) ने इन महत्वपूर्ण सवालों के जवाब ढूंढने के लिए कड़ी मेहनत की। उन्होंने कई उन्नत तरीके विकसित किए और उनका परीक्षण किया। समय के साथ, सांख्यिकीविद <strong>inductive logic</strong> (आगमनात्मक तर्क) में बहुत रुचि लेने लगे। इसका मतलब है - एक छोटे हिस्से से पूरे को समझने की सोच। मुख्य सवाल यह था: हम इस सोच को वैज्ञानिक रूप से सही कैसे बना सकते हैं? इसका जवाब probability theory (प्रायिकता सिद्धांत) में मिला। इसी तरह <strong>probability sampling</strong> की शुरुआत हुई। यह जनसंख्या के बारे में निष्कर्ष निकालने का एक भरोसेमंद गणितीय उपकरण बन गया, चाहे जनसंख्या छोटी हो या बहुत बड़ी।</p>
+                <p>पुराने तरीके के प्रयोगों में, शोधकर्ता मान लेते हैं कि प्रायिकता (probability) पहले से मौजूद है। लेकिन, sample surveys में शोधकर्ता <em>randomization</em> (यादृच्छिकीकरण) की तकनीक अपनाकर प्रायिकता के तत्व को जानबूझकर जोड़ते हैं। Fisher (1935) ने पहली बार इस विचार को प्रस्तुत किया। उन्होंने दिखाया कि sample चुनते समय randomization का उपयोग करने से त्रुटि (error) का अनुमान लगाने का एक गणितीय रूप से सही तरीका मिलता है। उन्होंने सिद्ध किया कि randomization निष्पक्ष चयन (fair selection) सुनिश्चित करता है। यह जोखिम (risk) का सटीक माप भी देता है। इसलिए, शोधकर्ता ऐसे तरीके ढूंढने लगे जो इस जोखिम को कम करें। बाद में, Mahalanobis (1944) ने <em>cost function</em> (लागत फलन) का महत्वपूर्ण विचार पेश किया। उन्होंने लक्ष्य को बदल दिया - अब बात ऐसी तकनीक ढूंढने की थी जो सटीकता बनाए रखते हुए लागत को कम रखे।</p>
+            </div>
+        </section>
+
+<section id="sec1-2" class="section-card">
+            <div class="english-content">
+                <h2>1.2 Fields of Application and Limitations</h2>
+                <p>This book aims to explain the basic theory and practical methods of sample surveys. We will see how these methods solve real-world problems. Sample surveys are important tools for collecting data. They help meet specific needs in government work, factory production, international trade, science research, and social-economic planning. Today, almost every area of modern life uses sample surveys for mapping and analysis.</p>
+                <p>Though sampling can be used in many fields, it works especially well in these situations:</p>
+                <ul>
+                    <li>When leaders need highly accurate and reliable results, but have a fixed budget to work with.</li>
+                    <li>When the items being studied show large differences in the feature we are measuring.</li>
+                    <li>When counting every single person or item (census) is not possible, too costly, or would destroy the items (like testing how strong steel cables are).</li>
+                    <li>When the area or group we are studying is very large, and we don't have a complete list of everyone.</li>
+                    <li>When we have very limited time, money, and trained staff.</li>
+                </ul>
+                <h3>Limitations of Sampling Theory</h3>
+                <p>Sampling theory is mathematically elegant, but it has some limits. Researchers must keep these in mind:</p>
+                <ul>
+                    <li>Even with the best sampling design, a sample does not cover the entire population. So, the estimates we get are never 100% exact.</li>
+                    <li>To use sampling theory successfully in the field, we need highly trained statistical experts. Without expert guidance, the results cannot be trusted.</li>
+                    <li>Planning, designing, and executing the survey must be done very carefully. Poor execution can introduce serious biases. This can lead to completely wrong conclusions.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.2 कहाँ-कहाँ इस्तेमाल (Application) और सीमाएं (Limitations)</h2>
+                <p>इस किताब (book) का मुख्य मकसद (main aim) है - sample surveys (नमूना सर्वेक्षण) के बुनियादी सिद्धांत (basic theory) और असल जिंदगी के तरीकों (practical methods) को समझाना। हम देखेंगे कि ये तरीके असली दुनिया (real-world) की समस्याओं (problems) को कैसे सुलझाते हैं। Sample surveys डेटा (data) इकट्ठा (collect) करने का अहम जरिया हैं। ये सरकारी काम (government work), फैक्ट्री उत्पादन (factory production), अंतरराष्ट्रीय व्यापार (international trade), विज्ञान रिसर्च (science research), और सामाजिक-आर्थिक योजनाओं (socio-economic planning) में खास जरूरतों को पूरा करने में मदद करते हैं। आजकल आधुनिक जीवन (modern life) के लगभग हर क्षेत्र (field) में sample surveys का इस्तेमाल विश्लेषण (analysis) और योजना बनाने (planning) के लिए होता है।</p>
+                <p>हालांकि इसका इस्तेमाल कई जगहों पर हो सकता है, लेकिन sampling techniques (नमूना तकनीकें) खास तौर पर इन स्थितियों (situations) में बहुत अच्छा काम करती हैं:</p>
+                <ul>
+                    <li>जब फैसला लेने वालों (decision-makers) को बहुत सटीक (accurate) और भरोसेमंद (reliable) नतीजे (results) चाहिए हों, लेकिन बजट (budget) फिक्स हो।</li>
+                    <li>जब जिन चीजों (units) का अध्ययन (study) हो रहा हो, उनमें जिस बात को नाप (measure) रहे हों, उसमें बहुत अंतर (variation) हो।</li>
+                    <li>जब हर एक व्यक्ति या चीज की गिनती (census) करना मुमकिन (possible) न हो, बहुत महंगा (costly) पड़े, या चीजें नष्ट (destroy) हो जाएं (जैसे स्टील केबल्स की मजबूती टेस्ट करना)।</li>
+                    <li>जब हम जिस इलाके (area) या ग्रुप (group) का अध्ययन कर रहे हों, वो बहुत बड़ा हो, और हमारे पास सबकी पूरी लिस्ट (complete list) न हो।</li>
+                    <li>जब हमारे पास समय (time), पैसा (money), और ट्रेनिंग वाले स्टाफ (trained staff) बहुत कम हों।</li>
+                </ul>
+                <h3>Sampling Theory (नमूना सिद्धांत) की सीमाएं (Limitations)</h3>
+                <p>Sampling theory गणित (mathematics) के हिसाब से बहुत खूबसूरत है, लेकिन इसकी कुछ सीमाएं (limits) भी हैं। शोधकर्ताओं (researchers) को इन बातों का ध्यान रखना चाहिए:</p>
+                <ul>
+                    <li>भले ही हम सबसे बेहतरीन (best) sampling design चुन लें, एक sample पूरी जनसंख्या (population) को कवर (cover) नहीं कर पाता। इसलिए, जो अनुमान (estimates) हमें मिलते हैं, वे कभी भी 100% सही (exact) नहीं होते।</li>
+                    <li>क्षेत्र (field) में sampling theory को सफलतापूर्वक (successfully) इस्तेमाल करने के लिए हमें बहुत अच्छी ट्रेनिंग वाले सांख्यिकीय विशेषज्ञों (statistical experts) की जरूरत होती है। बिना विशेषज्ञ (expert) की देखरेख (guidance) के, नतीजों (results) पर भरोसा (trust) नहीं किया जा सकता।</li>
+                    <li>सर्वेक्षण (survey) की योजना बनाना (planning), डिजाइन तैयार करना (designing), और उसे अमल में लाना (executing) - ये सब काम बहुत सावधानी (carefully) से करने चाहिए। अगर निष्पादन (execution) खराब हुआ, तो गंभीर पक्षपात (serious biases) आ सकते हैं। इससे बिल्कुल गलत (wrong) निष्कर्ष (conclusions) निकल सकते हैं।</li>
+                </ul>
+            </div>
+        </section>
+<section id="sec1-3" class="section-card">
+            <div class="english-content">
+                <h2>1.3 Definitions and Preliminaries</h2>
+                <p>Before studying detailed sampling methods, we must set a clear mathematical base. We also need to fix our standard terms.</p>
+
+                <h3>The Population and The Characteristic</h3>
+                <p>In statistics, we work with a complete group called the <strong>population</strong>:</p>
+                <div class="derivation-block">
+                    $$ V = \{u_1, u_2, \ldots, u_N\} $$
+                    <div class="explanation">\( \because \) the population is mathematically defined as a finite set of all \( N \) distinct units under study.</div>
+                </div>
+                <p>Each unit \( u_i \) has a measurable feature. We call this feature the <strong>characteristic</strong> \( y_i \). For example, it could be a person's age or a farm's crop yield.</p>
+
+                <h3>Sample Space and Probability</h3>
+                <p>Sampling theory focuses on picking <em>samples</em> efficiently. These are small groups taken from \( V \). Each possible result of a random draw is a <em>sample point</em>. All valid results together form the <em>sample space</em>. The sampling design gives each sample \( s \) a selection probability \( P(s) \). Two basic rules apply:</p>
+                <div class="derivation-block">
+                    $$ P(s) \geq 0 \quad \text{and} \quad \sum_{s} P(s) = 1 $$
+                    <div class="explanation">\( \because \) probabilities cannot be negative. Also, the total probability of all possible outcomes must exactly equal 1.</div>
+                </div>
+
+                <h3>Fundamental Theorems of Expectation and Variance</h3>
+                <p>Let \( X \) and \( Y \) be random variables. We use these key theorems often:</p>
+
+                <p><strong>Theorem 1.1 (Linearity of Expectation):</strong> The expected value of a sum equals the sum of expected values.</p>
+                <div class="derivation-block">
+                    $$ E(X+Y) = \sum_{x} \sum_{y} (x + y) P(X=x, Y=y) $$
+                    <div class="explanation">\( \because \) expectation distributes over addition. We calculate the weighted sum of all possible values.</div>
+                    $$ = \sum_{x} \sum_{y} x P(x, y) + \sum_{x} \sum_{y} y P(x, y) $$
+                    <div class="explanation">\( \because \) we split the double summation into two separate parts.</div>
+                    $$ = \sum_{x} x \sum_{y} P(x, y) + \sum_{y} y \sum_{x} P(x, y) $$
+                    <div class="explanation">\( \because \) we factor out terms that do not depend on the inner summation.</div>
+                    $$ = \sum_{x} x P(X=x) + \sum_{y} y P(Y=y) $$
+                    <div class="explanation">\( \because \) summing joint probabilities over one variable gives the marginal probability of the other.</div>
+                    $$ = E(X) + E(Y) \quad (1.3.1) $$
+                    <div class="explanation">\( \because \) this matches the standard definition of expectation. By induction, it works for any linear combination of variables.</div>
+                </div>
+
+                <p><strong>Theorem 1.3 (Variance of a Linear Transformation):</strong> Shifting and scaling a variable.</p>
+                <div class="derivation-block">
+                    $$ V(aX + b) = E\left[ (aX + b) - E(aX + b) \right]^2 $$
+                    <div class="explanation">\( \because \) variance measures the average squared distance from the mean.</div>
+                    $$ = E\left[ aX + b - (aE(X) + b) \right]^2 $$
+                    <div class="explanation">\( \because \) expectation works linearly: \( E(aX+b) = aE(X)+b \).</div>
+                    $$ = E\left[ aX - aE(X) \right]^2 $$
+                    <div class="explanation">\( \because \) the constant \( b \) cancels out. Shifting data does not change its spread.</div>
+                    $$ = E\left[ a^2 (X - E(X))^2 \right] $$
+                    <div class="explanation">\( \because \) we take the common factor \( a \) outside and square it.</div>
+                    $$ = a^2 E\left[ (X - E(X))^2 \right] = a^2 V(X) \quad (1.3.5) $$
+                    <div class="explanation">\( \because \) the constant \( a^2 \) moves out of the expectation. The remaining part is exactly \( V(X) \).</div>
+                </div>
+
+                <p><strong>Theorem 1.4 (Covariance Formula):</strong> Measuring joint variability.</p>
+                <div class="derivation-block">
+                    $$ Cov(X,Y) = E\left[ (X - E(X))(Y - E(Y)) \right] $$
+                    <div class="explanation">\( \because \) covariance is the average product of deviations from their respective means.</div>
+                    $$ = E\left[ XY - X E(Y) - Y E(X) + E(X)E(Y) \right] $$
+                    <div class="explanation">\( \because \) we expand the product of two binomials algebraically.</div>
+                    $$ = E(XY) - E(X)E(Y) - E(Y)E(X) + E(X)E(Y) $$
+                    <div class="explanation">\( \because \) expectation is linear. We treat \( E(X) \) and \( E(Y) \) as constants.</div>
+                    $$ = E(XY) - E(X)E(Y) \quad (1.3.6) $$
+                    <div class="explanation">\( \because \) similar terms cancel out, leaving a clean formula.</div>
+                </div>
+
+                <p><strong>Theorem 1.5 (Variance of a Sum):</strong></p>
+                <div class="derivation-block">
+                    $$ V\left( \sum_{i=1}^k a_i X_i \right) = \sum_{i=1}^k a_i^2 V(X_i) + \sum_{i \neq j} a_i a_j Cov(X_i, X_j) \quad (1.3.7) $$
+                    <div class="explanation">\( \because \) expanding the squared sum gives individual variance terms and cross-product covariance terms.</div>
+                </div>
+
+                <h3>Estimators, Bias, and Mean Square Error (MSE)</h3>
+                <p>A <strong>Parameter</strong> (\( \theta \)) is a true, fixed value that describes the whole population. A <strong>Statistic</strong> (\( t \)) is a number calculated from sample data. When we use a statistic to guess a parameter, we call it an <strong>Estimator</strong>.</p>
+                
+                <p><strong>Properties of Good Estimator:</strong></p>
+                <ol>
+                    <li>It must be unbiased.</li>
+                    <li>It must be consistent.</li>
+                    <li>It must be efficient.</li>
+                    <li>It must be sufficient.</li>
+                </ol>
+
+                <p><strong>1. Unbiased:</strong> An estimator \( t \) is unbiased for parameter \( \theta \) if \( E(t) = \theta \). If \( E(t) \neq \theta \), it is biased. The bias is calculated as:</p>
+                <div class="derivation-block">
+                    $$B(\theta) = E(t) - \theta$$
+                    <div class="explanation">\( \because \) bias shows how much the average estimate differs from the true value.</div>
+                </div>
+
+                <p><strong>2. Consistent:</strong> An estimator \( t_n \) is consistent for \( \theta \) if its probability of being far from \( \theta \) drops to zero as sample size \( n \) grows. In simple terms:</p>
+                <div class="derivation-block">
+                    $$\lim_{n \rightarrow \infty} P\left[|t_n - \theta| < \epsilon\right] = 1$$
+                </div>
+
+                <p><strong>3. Efficient:</strong> An estimator is more efficient than another if its Mean Square Error (MSE) is smaller. MSE is written as \( M(t) = E(t - \theta)^2 \).</p>
+
+                <p><em>Prove that</em> \( M(t) = V(t) + [B(t)]^2 \)</p>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    $$M(t) = E\left[ t - \theta \right]^2 = E\left[ t - E(t) + E(t) - \theta \right]^2$$
+                    <div class="explanation">\( \because \) we add and subtract \( E(t) \) to separate variance from bias.</div>
+                    $$= E\left[ (t - E(t))^2 + (E(t) - \theta)^2 + 2(t - E(t))(E(t) - \theta) \right]$$
+                    <div class="explanation">\( \because \) we expand using the algebraic identity \( (a+b)^2 \).</div>
+                    $$= E\left[ t - E(t) \right]^2 + (B(\theta))^2 + 2 \times 0$$
+                    <div class="explanation">\( \because \) \( [E(t) - \theta] \) is a constant. Also, the average deviation from the mean is always zero.</div>
+                    $$= V(t) + (B(t))^2$$
+                    <div class="explanation">\( \because \) the cross term vanishes. Total error equals variance plus squared bias.</div>
+                </div>
+                <p>If the estimator is unbiased, \( M(t) = V(t) \).</p>
+
+                <p><strong>4. Sufficient:</strong> An estimator \( t \) is sufficient for \( \theta \) if it captures all the information about \( \theta \) present in the sample. For observations \( x_1, x_2, \ldots, x_n \):</p>
+                <div class="derivation-block">
+                    $$L(x_1, x_2, \ldots, x_n | t) = f(x_1, x_2, \ldots, x_n) \ldots$$
+                </div>
+
+                <h3>Point and Interval Estimation:</h3>
+                <p><strong>Point estimation:</strong> When an estimator gives a single numerical value, it is called point estimation. For example:</p>
+                <div class="derivation-block">
+                    $$\widehat{\mu} = \bar{x},$$
+                    $${\widehat{\sigma}}^2 = \frac{1}{n - 1}\sum (x_i - \bar{x})^2$$
+                </div>
+                <p><strong>Interval estimation:</strong> When estimates are given as a range with a stated confidence level.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.3 Definitions और Preliminaries</h2>
+                <p>Detailed sampling methods का study शुरू करने से पहले, हमें एक clear mathematical base set करना होगा। हमें अपने standard terms को भी fix करना होगा।</p>
+
+                <h3>Population और Characteristic</h3>
+                <p>Statistics में, हम एक complete group के साथ work करते हैं जिसे <strong>Population</strong> कहते हैं:</p>
+                <div class="derivation-block">
+                    $$ V = \{u_1, u_2, \ldots, u_N\} $$
+                    <div class="explanation">\( \because \) Population को mathematically उन सभी \( N \) distinct units के finite set के रूप में define किया जाता है, जिनका study किया जा रहा है।</div>
+                </div>
+                <p>हर unit \( u_i \) की एक measurable feature होती है। हम इस feature को <strong>Characteristic</strong> \( y_i \) कहते हैं। Example के लिए, यह किसी person की age या farm की crop yield हो सकती है।</p>
+
+                <h3>Sample Space और Probability</h3>
+                <p>Sampling theory का main focus efficiently <em>Samples</em> pick करने पर होता है। ये \( V \) से लिए गए small groups होते हैं। Random draw का हर possible result एक <em>Sample Point</em> होता है। सारे valid results मिलकर <em>Sample Space</em> बनाते हैं। Sampling design हर sample \( s \) को एक selection probability \( P(s) \) देता है। यहाँ दो basic rules apply होते हैं:</p>
+                <div class="derivation-block">
+                    $$ P(s) \geq 0 \quad \text{तथा} \quad \sum_{s} P(s) = 1 $$
+                    <div class="explanation">\( \because \) Probabilities कभी negative नहीं हो सकतीं। साथ ही, सभी possible outcomes की total probability बिल्कुल 1 के बराबर होनी चाहिए।</div>
+                </div>
+
+                <h3>Expectation और Variance के Fundamental Theorems</h3>
+                <p>मान लीजिए \( X \) और \( Y \) Random Variables हैं। हम इन key theorems का use अक्सर करते हैं:</p>
+
+                <p><strong>Theorem 1.1 (Linearity of Expectation):</strong> Sum का Expected Value, Expected Values के Sum के बराबर होता है।</p>
+                <div class="derivation-block">
+                    $$ E(X+Y) = \sum_{x} \sum_{y} (x + y) P(X=x, Y=y) $$
+                    <div class="explanation">\( \because \) Expectation addition पर distribute होती है। हम सभी possible values का weighted sum calculate करते हैं।</div>
+                    $$ = \sum_{x} \sum_{y} x P(x, y) + \sum_{x} \sum_{y} y P(x, y) $$
+                    <div class="explanation">\( \because \) हम double summation को दो separate parts में split करते हैं।</div>
+                    $$ = \sum_{x} x \sum_{y} P(x, y) + \sum_{y} y \sum_{x} P(x, y) $$
+                    <div class="explanation">\( \because \) हम उन terms को factor out करते हैं जो inner summation पर depend नहीं करते।</div>
+                    $$ = \sum_{x} x P(X=x) + \sum_{y} y P(Y=y) $$
+                    <div class="explanation">\( \because \) एक variable पर joint probabilities का sum करने से दूसरे variable की Marginal Probability मिलती है।</div>
+                    $$ = E(X) + E(Y) \quad (1.3.1) $$
+                    <div class="explanation">\( \because \) यह Expectation की standard definition से match करता है। Induction द्वारा, यह variables के किसी भी linear combination के लिए work करता है।</div>
+                </div>
+
+                <p><strong>Theorem 1.3 (Variance of a Linear Transformation):</strong> एक variable को shift और scale करना।</p>
+                <div class="derivation-block">
+                    $$ V(aX + b) = E\left[ (aX + b) - E(aX + b) \right]^2 $$
+                    <div class="explanation">\( \because \) Variance mean से average squared distance को measure करता है।</div>
+                    $$ = E\left[ aX + b - (aE(X) + b) \right]^2 $$
+                    <div class="explanation">\( \because \) Expectation linearly work करती है: \( E(aX+b) = aE(X)+b \)।</div>
+                    $$ = E\left[ aX - aE(X) \right]^2 $$
+                    <div class="explanation">\( \because \) constant \( b \) cancel out हो जाता है। Data को shift करने से उसका spread change नहीं होता।</div>
+                    $$ = E\left[ a^2 (X - E(X))^2 \right] $$
+                    <div class="explanation">\( \because \) हम common factor \( a \) को outside लेते हैं और उसे square करते हैं।</div>
+                    $$ = a^2 E\left[ (X - E(X))^2 \right] = a^2 V(X) \quad (1.3.5) $$
+                    <div class="explanation">\( \because \) constant \( a^2 \) Expectation से बाहर निकल जाता है। Remaining part बिल्कुल \( V(X) \) ही है।</div>
+                </div>
+
+                <p><strong>Theorem 1.4 (Covariance Formula):</strong> Joint variability को measure करना।</p>
+                <div class="derivation-block">
+                    $$ Cov(X,Y) = E\left[ (X - E(X))(Y - E(Y)) \right] $$
+                    <div class="explanation">\( \because \) Covariance अपने respective means से deviations का average product होता है।</div>
+                    $$ = E\left[ XY - X E(Y) - Y E(X) + E(X)E(Y) \right] $$
+                    <div class="explanation">\( \because \) हम दो binomials के product को algebraically expand करते हैं।</div>
+                    $$ = E(XY) - E(X)E(Y) - E(Y)E(X) + E(X)E(Y) $$
+                    <div class="explanation">\( \because \) Expectation linear होती है। हम \( E(X) \) और \( E(Y) \) को constants की तरह treat करते हैं।</div>
+                    $$ = E(XY) - E(X)E(Y) \quad (1.3.6) $$
+                    <div class="explanation">\( \because \) similar terms cancel out हो जाते हैं, जिससे एक clean formula बचता है।</div>
+                </div>
+
+                <p><strong>Theorem 1.5 (Variance of a Sum):</strong></p>
+                <div class="derivation-block">
+                    $$ V\left( \sum_{i=1}^k a_i X_i \right) = \sum_{i=1}^k a_i^2 V(X_i) + \sum_{i \neq j} a_i a_j Cov(X_i, X_j) \quad (1.3.7) $$
+                    <div class="explanation">\( \because \) squared sum को expand करने पर individual variance terms और cross-product covariance terms मिलते हैं।</div>
+                </div>
+
+                <h3>Estimators, Bias, और Mean Square Error (MSE)</h3>
+                <p>एक <strong>Parameter</strong> (\( \theta \)) एक true, fixed value है जो पूरी population को describe करता है। एक <strong>Statistic</strong> (\( t \)) वह number है जो sample data से calculate किया जाता है। जब हम parameter को guess करने के लिए statistic का use करते हैं, तो हम उसे <strong>Estimator</strong> कहते हैं।</p>
+                
+                <p><strong>Good Estimator के Properties:</strong></p>
+                <ol>
+                    <li>यह unbiased होना चाहिए।</li>
+                    <li>यह consistent होना चाहिए।</li>
+                    <li>यह efficient होना चाहिए।</li>
+                    <li>यह sufficient होना चाहिए।</li>
+                </ol>
+
+                <p><strong>1. Unbiased:</strong> यदि \( E(t) = \theta \) हो, तो Estimator \( t \) parameter \( \theta \) के लिए unbiased है। यदि \( E(t) \neq \theta \) हो, तो यह biased है। Bias को इस प्रकार calculate किया जाता है:</p>
+                <div class="derivation-block">
+                    $$B(\theta) = E(t) - \theta$$
+                    <div class="explanation">\( \because \) Bias यह show करता है कि average estimate true value से कितना differ करता है।</div>
+                </div>
+
+                <p><strong>2. Consistent:</strong> यदि sample size \( n \) grow होने पर \( \theta \) से far होने की probability zero हो जाती है, तो Estimator \( t_n \), \( \theta \) के लिए consistent है। Simple terms में:</p>
+                <div class="derivation-block">
+                    $$\lim_{n \rightarrow \infty} P\left[|t_n - \theta| < \epsilon\right] = 1$$
+                </div>
+
+                <p><strong>3. Efficient:</strong> यदि किसी Estimator का Mean Square Error (MSE) दूसरे से smaller हो, तो वह more efficient होता है। MSE को \( M(t) = E(t - \theta)^2 \) लिखा जाता है।</p>
+
+                <p><em>Prove करें कि</em> \( M(t) = V(t) + [B(t)]^2 \)</p>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    $$M(t) = E\left[ t - \theta \right]^2 = E\left[ t - E(t) + E(t) - \theta \right]^2$$
+                    <div class="explanation">\( \because \) हम Variance को Bias से separate करने के लिए \( E(t) \) को add और subtract करते हैं।</div>
+                    $$= E\left[ (t - E(t))^2 + (E(t) - \theta)^2 + 2(t - E(t))(E(t) - \theta) \right]$$
+                    <div class="explanation">\( \because \) हम algebraic identity \( (a+b)^2 \) का use करके expand करते हैं।</div>
+                    $$= E\left[ t - E(t) \right]^2 + (B(\theta))^2 + 2 \times 0$$
+                    <div class="explanation">\( \because \) \( [E(t) - \theta] \) एक constant है। साथ ही, mean से deviation का average हमेशा zero होता है।</div>
+                    $$= V(t) + (B(t))^2$$
+                    <div class="explanation">\( \because \) cross term vanish हो जाता है। Total error Variance plus squared Bias के बराबर होता है।</div>
+                </div>
+                <p>यदि Estimator unbiased है, तो \( M(t) = V(t) \)।</p>
+
+                <p><strong>4. Sufficient:</strong> यदि Estimator \( t \), sample में present \( \theta \) की सारी information को capture कर लेता है, तो वह \( \theta \) के लिए sufficient है। Observations \( x_1, x_2, \ldots, x_n \) के लिए:</p>
+                <div class="derivation-block">
+                    $$L(x_1, x_2, \ldots, x_n | t) = f(x_1, x_2, \ldots, x_n) \ldots$$
+                </div>
+
+                <h3>Point और Interval Estimation:</h3>
+                <p><strong>Point Estimation:</strong> जब कोई Estimator केवल एक single numerical value देता है, तो उसे Point Estimation कहते हैं। Example के लिए:</p>
+                <div class="derivation-block">
+                    $$\widehat{\mu} = \bar{x},$$
+                    $${\widehat{\sigma}}^2 = \frac{1}{n - 1}\sum (x_i - \bar{x})^2$$
+                </div>
+                <p><strong>Interval Estimation:</strong> जब estimates को एक stated confidence level के साथ एक range के रूप में दिया जाता है।</p>
+            </div>
+        </section>
+
+        <section id="sec1-4" class="section-card">
+            <div class="english-content">
+                <h2>1.4 Census and Sample Surveys, Advantages and Disadvantages</h2>
+                <p>A <strong>Census Survey</strong> (or Complete Enumeration) counts every single unit in the population. It aims for perfect coverage. However, it needs huge money, trained staff, and a lot of time. It is also useless when testing destroys the item, like checking battery life.</p>
+                <p>Conversely, a <strong>Sample Survey</strong> studies only a carefully chosen part of the population. It uses this part to make reliable conclusions about the whole. It is much faster and cheaper.</p>
+                <p>Experts like Cochran (1977) list the main benefits of sample surveys:</p>
+                <ul>
+                    <li><strong>Reduced Cost:</strong> Studying a smaller group cuts expenses sharply.</li>
+                    <li><strong>Greater Speed:</strong> Data can be processed and published long before a census finishes.</li>
+                    <li><strong>Greater Accuracy:</strong> Smaller workloads allow better staff training and closer supervision. This reduces human errors significantly.</li>
+                    <li><strong>Greater Scope:</strong> We can ask more detailed and complex questions when dealing with a manageable group size.</li>
+                </ul>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.4 Census और Sample Surveys</h2>
+                <p>एक <strong>Census Survey</strong> (या Complete Enumeration) population की हर single unit को count करता है। इसका aim perfect coverage होता है। हालाँकि, इसके लिए huge money, trained staff, और बहुत time चाहिए। यह तब भी useless है जब testing से item destroy हो जाती है, जैसे battery life check करना।</p>
+                <p>इसके विपरीत, एक <strong>Sample Survey</strong> population के केवल carefully chosen part का study करता है। यह whole के बारे में reliable conclusions निकालने के लिए इस part का use करता है। यह बहुत faster और cheaper है।</p>
+                <p>Cochran (1977) जैसे experts sample surveys के main benefits को इस प्रकार list करते हैं:</p>
+                <ul>
+                    <li><strong>Reduced Cost:</strong> Smaller group का study करने से expenses sharply cut हो जाते हैं।</li>
+                    <li><strong>Greater Speed:</strong> Data को census finish होने से बहुत पहले process और publish किया जा सकता है।</li>
+                    <li><strong>Greater Accuracy:</strong> Smaller workloads better staff training और closer supervision की allow देते हैं। इससे human errors significantly reduce होते हैं।</li>
+                    <li><strong>Greater Scope:</strong> Manageable group size के साथ deal करते समय हम more detailed और complex questions पूछ सकते हैं।</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="sec1-5" class="section-card">
+            <div class="english-content">
+                <h2>1.5 Principles of Sampling Theory</h2>
+                <p>The overarching architecture of modern sampling theory rests firmly upon three unbreakable foundational principles. These principles ensure that sampling is not mere guesswork, but a robust scientific discipline.</p>
+                
+                <h3>1. Principle of Validity</h3>
+                <p>This principle dictates that the chosen sampling design must fundamentally provide mathematically valid estimates of the unknown population parameters. <em>Validity</em> strictly means that the sample is selected in such an objective manner that the resulting estimates can be rigorously interpreted using probability theory.</p>
+                
+                <h3>2. Principle of Statistical Regularity</h3>
+                <p>Rooted deeply in the core laws of large numbers from probability theory, this principle states: <em>"A moderately large number of items chosen entirely at random from a massive group will, on average, accurately possess the characteristics of the massive group itself."</em></p>
+
+                <h3>3. Principle of Optimization</h3>
+                <p>The principle of optimization is the mathematical quest to find a sampling design and estimation method that perfectly balances risk and reward. It mathematically demands either achieving a predetermined precision with minimum cost or maximum precision with a fixed cost.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.5 प्रतिचयन सिद्धांत के सिद्धांत (Principles of Sampling Theory)</h2>
+                <p>आधुनिक sampling theory की पूरी वास्तुकला (architecture) दृढ़ता से तीन अटूट मूलभूत सिद्धांतों (foundational principles) पर टिकी है। ये सिद्धांत यह सुनिश्चित करते हैं कि sampling कोई अनुमान लगाने का खेल नहीं है, बल्कि एक मजबूत वैज्ञानिक अनुशासन (scientific discipline) है।</p>
+                
+                <h3>1. वैधता का सिद्धांत (Principle of Validity)</h3>
+                <p>यह सिद्धांत (principle) यह निर्देश देता है कि चुना गया sampling design मौलिक रूप से अज्ञात population parameters के गणितीय रूप से वैध अनुमान (valid estimates) प्रदान करे। <em>वैधता (Validity)</em> का सख्त अर्थ है कि sample को इस तरह के वस्तुनिष्ठ (objective) तरीके से चुना गया है कि प्राप्त अनुमानों की व्याख्या probability theory का उपयोग करके कठोरता से की जा सके।</p>
+                
+                <h3>2. सांख्यिकीय नियमितता का सिद्धांत (Principle of Statistical Regularity)</h3>
+                <p>Probability theory के बड़े अंकों के नियमों (laws of large numbers) में गहराई से निहित, यह सिद्धांत कहता है: <em>"एक विशाल समूह (massive group) से पूरी तरह से यादृच्छिक (random) रूप से चुनी गई वस्तुओं की एक मध्यम रूप से बड़ी संख्या, औसत रूप से, उस विशाल समूह की विशेषताओं (characteristics) को सटीक रूप से दर्शाएगी।"</em></p>
+
+                <h3>3. इष्टतमीकरण का सिद्धांत (Principle of Optimization)</h3>
+                <p>Optimization का सिद्धांत एक ऐसे sampling design और estimation method को खोजने की गणितीय खोज है जो जोखिम (risk) और इनाम (reward) को पूरी तरह से संतुलित करता है।</p>
+            </div>
+        </section>
+
+        <section id="sec1-6" class="section-card">
+            <div class="english-content">
+                <h2>1.6 Principal Steps in a Sample Survey</h2>
+                <p>Conducting a sample survey is a massive organizational undertaking. To prevent operational chaos, statisticians adhere strictly to a logical sequence of steps:</p>
+                <ol>
+                    <li><strong>Statement of Objectives:</strong> The absolute first step is laying down a crystal-clear mission statement.</li>
+                    <li><strong>Definition of Population:</strong> The target population must be defined with zero ambiguity.</li>
+                    <li><strong>Determination of Sampling Frame:</strong> The researcher must build or locate a flawless list of all valid sampling units.</li>
+                    <li><strong>Selection of Proper Sampling Design:</strong> Armed with the frame, the statistician must choose a design (e.g., Stratified, Systematic, PPS) that mathematically minimizes the total risk (MSE) within the given budget.</li>
+                    <li><strong>Organization of Field Work:</strong> Field investigators must be rigorously trained, heavily supervised, and legally instructed to follow protocols strictly.</li>
+                    <li><strong>Summary and Analysis of Data:</strong> The raw data must be mercilessly scrutinized, edited, coded, and tabulated.</li>
+                </ol>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.6 प्रतिदर्श सर्वेक्षण के मुख्य कदम (Principal Steps in a Sample Survey)</h2>
+                <p>एक sample survey आयोजित करना एक बहुत बड़ा संगठनात्मक कार्य (organizational undertaking) है। परिचालन अराजकता (operational chaos) को रोकने के लिए, सांख्यिकीविद सख्ती से चरणों (steps) के एक तार्किक अनुक्रम (logical sequence) का पालन करते हैं:</p>
+                <ol>
+                    <li><strong>उद्देश्यों का विवरण (Statement of Objectives):</strong> सबसे पहला कदम एक स्पष्ट मिशन स्टेटमेंट तैयार करना है।</li>
+                    <li><strong>जनसंख्या की परिभाषा (Definition of Population):</strong> लक्षित (target) जनसंख्या को शून्य अस्पष्टता (zero ambiguity) के साथ परिभाषित किया जाना चाहिए।</li>
+                    <li><strong>प्रतिचयन ढांचे का निर्धारण (Determination of Sampling Frame):</strong> शोधकर्ता को सभी मान्य sampling units की एक दोषरहित सूची (flawless list) बनानी या ढूंढनी चाहिए।</li>
+                    <li><strong>उचित प्रतिचयन डिजाइन का चयन (Selection of Proper Sampling Design):</strong> फ्रेम से लैस, सांख्यिकीविद को एक ऐसा डिज़ाइन चुनना चाहिए जो दिए गए बजट के भीतर गणितीय रूप से कुल जोखिम को कम करता है।</li>
+                    <li><strong>क्षेत्र कार्य का संगठन (Organization of Field Work):</strong> फील्ड जांचकर्ताओं को कठोरता से प्रशिक्षित किया जाना चाहिए और उन पर भारी निगरानी रखी जानी चाहिए।</li>
+                    <li><strong>डेटा का सारांश और विश्लेषण (Summary and Analysis of Data):</strong> कच्चे डेटा (raw data) की निर्दयतापूर्वक जांच, संपादन, कोडिंग और सारणीकरण किया जाना चाहिए।</li>
+                </ol>
+            </div>
+        </section>
+
+        <section id="sec1-7" class="section-card">
+            <div class="english-content">
+                <h2>1.7 Probability vs Non-Probability Sampling</h2>
+                <p><strong>Probability Sampling:</strong> A strictly scientific method where every single unit in the population is assigned a definite, known probability of selection. Only this method permits the mathematical calculation of estimation errors, forming the core of all advanced statistical texts.</p>
+                <p><strong>Non-Probability Sampling:</strong> Also known as purposive or judgment sampling. Here, the sampler subjectively hand-picks units they personally deem "representative." While cheap and quick for casual opinion surveys, it is statistically crippled because calculating the margin of error is mathematically impossible.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.7 प्रायिकता बनाम गैर-प्रायिकता प्रतिचयन (Probability vs Non-Probability Sampling)</h2>
+                <p><strong>Probability Sampling (प्रायिकता प्रतिचयन):</strong> यह एक कड़ाई से वैज्ञानिक तरीका है जहां जनसंख्या की हर एक इकाई को चयन की एक निश्चित, ज्ञात प्रायिकता (known probability) दी जाती है। केवल यही तरीका अनुमान त्रुटियों (estimation errors) की गणितीय गणना की अनुमति देता है।</p>
+                <p><strong>Non-Probability Sampling (गैर-प्रायिकता प्रतिचयन):</strong> इसे judgement sampling (निर्णय प्रतिचयन) भी कहा जाता है। यहां, शोधकर्ता व्यक्तिपरक (subjectively) रूप से उन इकाइयों को चुनता है जिन्हें वह व्यक्तिगत रूप से "प्रतिनिधि" (representative) मानता है। हालांकि यह सस्ता और तेज है, यह सांख्यिकीय रूप से कमजोर है क्योंकि margin of error (त्रुटि के मार्जिन) की गणना करना गणितीय रूप से असंभव है।</p>
+            </div>
+        </section>
+
+
+
+    
+        <section id="sec1-8" class="section-card">
+            <div class="english-content">
+                <h2>1.8 Sampling Unit</h2>
+                <p>A sampling unit has already been defined in the previous section, but it needs further description as it forms the basis of the sampling procedure. These units may be natural units of the population such as individuals in a locality, or natural aggregates of such units such as a family, or they may be artificial units such as a farm, etc.</p>
+                <p>Before selecting the sample, the population must be divided into units which are <strong>distinct, unambiguous and non-overlapping</strong>, such that every element (the smallest component part into which a population can be divided) of the population belongs to one and only one sampling unit. Since the collection of all sampling units of a specified type constitutes a population, the sampling units should be so specified that each and every element in the population occurs just in one sampling unit. Otherwise, some of the elements will not be included in any sample.</p>
+                <p>For example, if the sampling unit is a family, it should be so defined that an individual does not belong to two different families nor should it leave out any individuals belonging to it.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.8 Sampling Unit (प्रतिचयन इकाई)</h2>
+                <p>एक sampling unit को पिछले section में पहले ही define किया जा चुका है, लेकिन इसे आगे वर्णन करने की आवश्यकता है क्योंकि यह sampling procedure का आधार बनता है। ये units population की natural units (प्राकृतिक इकाइयाँ) हो सकती हैं जैसे कि किसी इलाके (locality) में व्यक्ति (individuals), या ऐसी units के प्राकृतिक समुच्चय (natural aggregates) जैसे कि परिवार (family), या वे कृत्रिम इकाइयाँ (artificial units) हो सकती हैं जैसे कि एक खेत (farm), आदि।</p>
+                <p>Sample select करने से पहले, population को उन units में विभाजित किया जाना चाहिए जो <strong>distinct, unambiguous और non-overlapping</strong> हों, ताकि population का प्रत्येक element (सबसे छोटा घटक भाग जिसमें population को विभाजित किया जा सकता है) एक और केवल एक sampling unit से संबंधित हो। चूँकि एक specified type की सभी sampling units का collection एक population का गठन करता है, sampling units को इस तरह specify किया जाना चाहिए कि population का प्रत्येक element ठीक एक sampling unit में हो। अन्यथा, कुछ elements किसी भी sample में शामिल नहीं किए जाएंगे।</p>
+                <p>उदाहरण के लिए, यदि sampling unit एक परिवार है, तो इसे इस तरह define किया जाना चाहिए कि कोई व्यक्ति दो अलग-अलग परिवारों से संबंधित न हो और न ही यह उससे संबंधित किसी व्यक्ति को छोड़ दे।</p>
+            </div>
+        </section>
+
+        <section id="sec1-9" class="section-card">
+            <div class="english-content">
+                <h2>1.9 Sampling Frame</h2>
+                <p>As defined earlier, a complete list of sampling units which represents the population to be covered is called the <strong>sampling frame</strong>, popularly known as a frame. The construction of a sampling frame is sometimes one of the major practical problems. Generally, it is assumed that a frame is perfect if it is exhaustive, complete, and up-to-date in respect of sampling units and character structures.</p>
+                <p>So the frame should always be made up-to-date and free from errors of omission and duplication of sampling units. A sampling frame is subject to several types of defects which may be broadly classified as follows:</p>
+                <ul>
+                    <li><strong>Incomplete frame:</strong> When some sampling units of the population are either completely omitted or included more than once.</li>
+                    <li><strong>Inaccurate frame:</strong> When some of the sampling units of the population are listed inaccurately or some units which do not actually exist are included in the list.</li>
+                    <li><strong>Inadequate frame:</strong> When it does not include all classes of the population which are to be taken in the survey.</li>
+                    <li><strong>Out-of-date frame:</strong> When it has not been updated according to the exigencies of the occasion, although it was accurate, complete and adequate at the time of construction.</li>
+                </ul>
+                <p>Lists which have been routinely collected for some purpose are generally found to be incomplete and inaccurate and often contain unknown amounts of duplication. Such lists should be carefully examined and scrutinised to ensure that they are free from all such defects.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.9 Sampling Frame (प्रतिचयन ढांचा)</h2>
+                <p>जैसा कि पहले define किया गया था, sampling units की एक complete list जो कवर की जाने वाली population का प्रतिनिधित्व करती है, <strong>sampling frame</strong> कहलाती है जिसे लोकप्रिय रूप से frame के रूप में जाना जाता है। Sampling frame का निर्माण कभी-कभी प्रमुख practical problems में से एक होता है। आमतौर पर, यह माना जाता है कि एक frame perfect है यदि यह sampling units और character structures के संबंध में exhaustive (विस्तृत), complete और up-to-date (अद्यतित) है।</p>
+                <p>इसलिए frame को हमेशा up-to-date और sampling units के omission (छूट) और duplication (दोहराव) की errors से मुक्त बनाया जाना चाहिए। एक sampling frame कई प्रकार के defects (दोषों) के अधीन है जिन्हें मोटे तौर पर इस प्रकार classify किया जा सकता है:</p>
+                <ul>
+                    <li><strong>अपूर्ण फ्रेम (Incomplete frame):</strong> जब population की कुछ sampling units पूरी तरह से छोड़ दी जाती हैं या एक से अधिक बार शामिल की जाती हैं।</li>
+                    <li><strong>गलत फ्रेम (Inaccurate frame):</strong> जब population की कुछ sampling units गलत तरीके से listed होती हैं या कुछ units जो वास्तव में मौजूद नहीं हैं उन्हें list में शामिल किया जाता है।</li>
+                    <li><strong>अपर्याप्त फ्रेम (Inadequate frame):</strong> जब इसमें population के उन सभी वर्गों को शामिल नहीं किया जाता है जिन्हें survey में लिया जाना है।</li>
+                    <li><strong>पुराना फ्रेम (Out-of-date frame):</strong> जब इसे अवसर की आकस्मिकताओं (exigencies) के अनुसार update नहीं किया गया है, हालाँकि यह निर्माण के समय accurate, complete और adequate था।</li>
+                </ul>
+                <p>Lists जो नियमित रूप से किसी उद्देश्य के लिए collect की गई हैं, आमतौर पर incomplete और inaccurate पाई जाती हैं और अक्सर उनमें duplication की अज्ञात मात्रा होती है। ऐसी lists की सावधानीपूर्वक जाँच और scrutiny (छानबीन) की जानी चाहिए ताकि यह सुनिश्चित हो सके कि वे ऐसे सभी defects से मुक्त हैं।</p>
+            </div>
+        </section>
+
+        <section id="sec1-10" class="section-card">
+            <div class="english-content">
+                <h2>1.10 Desiderata in Planning of Sample Surveys</h2>
+                <p>The main stages of a survey are planning, data collection and data processing. Some of the important aspects involved in the planning and execution of a sample survey may be classified under the following heads:</p>
+                
+                <h3>Specification of Data Requirements</h3>
+                <p>When specifying the data requirements, the sampler should always include: (i) Statistical statement of the desired information, (ii) Clear specification of the domain of study, (iii) Form of data which are to be collected and limitations of budget, and (iv) Degree of precision aimed at.</p>
+                
+                <h3>Survey Reference and Reporting Periods</h3>
+                <p>From the operational point of view, it is desirable to decide about these periods well in advance. The <em>survey period</em> is the time period during which the required data are collected. The <em>reference period</em> is the time period to which the data information should refer. The <em>reporting period</em> is the time period for which the information is collected for a unit.</p>
+                
+                <h3>Preparation of Sampling Frame</h3>
+                <p>Since the sampling frame decides the structure of the survey and its design, it is necessary to pay adequate attention to the preparation of an up-to-date and accurate sampling frame. Even if some resources are to be spent on such work, it will be worthwhile.</p>
+                
+                <h3>Choice of Sampling Design</h3>
+                <p>A decision about an optimum sampling design, after taking the various technical, operational and risk factors into consideration, plays a very significant part. The principle of optimization should always be kept in mind, i.e. to achieve either a given degree of precision with a minimum cost, or the maximum possible precision with a fixed cost.</p>
+                
+                <h3>Method of Data Collection</h3>
+                <p>The planning and execution of a survey is influenced to a large extent by the method of data collection. In case the primary data is to be collected, a clear-cut mode of collection should be given as to whether data are to be collected by personal interview, mail enquiry, physical measurement, etc. To maintain uniformity, it is necessary to give detailed field instructions.</p>
+                
+                <h3>Field Work and Training of Personnel</h3>
+                <p>It is essential that the personnel should be thoroughly trained in locating sample units and the methods of collection of required data, before starting field work. The staff should be trained well, not only in the statistical aspects but also in the art of eliciting correct information from different sources.</p>
+                
+                <h3>Processing of Survey Data</h3>
+                <p>Processing of the collected data in a survey may be broadly classified under: (i) Scrutiny and editing of data, (ii) Tabulation of data, (iii) Statistical analysis.</p>
+                
+                <h3>Preparation of Reports</h3>
+                <p>The report may have sections such as objectives; scope; subject coverage; method of data collection; survey reference and reporting periods; sampling design and estimation procedure, tabulation procedure; presentation of results; accuracy; cost structure; responsibility; and references.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.10 Desiderata in Planning of Sample Surveys (प्रतिदर्श सर्वेक्षणों की योजना में वांछित बातें)</h2>
+                <p>एक survey के मुख्य stages (चरण) planning, data collection और data processing हैं। एक sample survey की planning और execution में शामिल कुछ महत्वपूर्ण पहलुओं को निम्नलिखित heads के अंतर्गत classify किया जा सकता है:</p>
+                
+                <h3>Specification of Data Requirements (डेटा आवश्यकताओं का विनिर्देश)</h3>
+                <p>Data requirements को specify करते समय, sampler को हमेशा शामिल करना चाहिए: (i) Desired information का statistical statement, (ii) Domain of study का स्पष्ट specification, (iii) Data का वह form जिसे कलेक्ट किया जाना है और budget की सीमाएँ, और (iv) Precision की Degree जिसका लक्ष्य रखा गया है।</p>
+                
+                <h3>Survey Reference and Reporting Periods (सर्वेक्षण संदर्भ और रिपोर्टिंग अवधि)</h3>
+                <p>Operational point of view से, इन periods के बारे में पहले से तय करना वांछनीय है। <em>Survey period</em> वह time period है जिसके दौरान required data कलेक्ट किया जाता है। <em>Reference period</em> वह time period है जिससे data information का संदर्भ होना चाहिए। <em>Reporting period</em> वह time period है जिसके लिए किसी unit के लिए information कलेक्ट की जाती है।</p>
+                
+                <h3>Preparation of Sampling Frame (प्रतिचयन ढांचे की तैयारी)</h3>
+                <p>चूँकि sampling frame एक survey के structure और उसके design को तय करता है, इसलिए एक up-to-date और accurate sampling frame की तैयारी पर पर्याप्त ध्यान देना आवश्यक है। भले ही इस तरह के काम पर कुछ resources खर्च करने पड़ें, यह सार्थक (worthwhile) होगा।</p>
+                
+                <h3>Choice of Sampling Design (प्रतिचयन डिजाइन का विकल्प)</h3>
+                <p>विभिन्न technical, operational और risk factors को ध्यान में रखने के बाद एक optimum sampling design के बारे में निर्णय बहुत महत्वपूर्ण भूमिका निभाता है। Principle of optimization को हमेशा ध्यान में रखा जाना चाहिए, यानी प्राप्त करने के लिए: या तो minimum cost के साथ precision की एक दी गई degree, या एक fixed cost के साथ maximum possible precision.</p>
+                
+                <h3>Method of Data Collection (डेटा संग्रह की विधि)</h3>
+                <p>एक survey की planning और execution बड़े पैमाने पर data collection के method से प्रभावित होती है। यदि primary data कलेक्ट किया जाना है, तो collection का एक स्पष्ट-कट तरीका दिया जाना चाहिए कि क्या data personal interview, mail enquiry, physical measurement, आदि द्वारा कलेक्ट किया जाना है। Uniformity बनाए रखने के लिए, विस्तृत field instructions देना आवश्यक है।</p>
+                
+                <h3>Field Work and Training of Personnel (क्षेत्र कार्य और कर्मचारियों का प्रशिक्षण)</h3>
+                <p>यह आवश्यक है कि field work शुरू करने से पहले, personnel को sample units का पता लगाने और required data कलेक्ट करने के तरीकों में अच्छी तरह से trained (प्रशिक्षित) किया जाना चाहिए। Staff को न केवल statistical aspects में बल्कि विभिन्न स्रोतों से correct information प्राप्त करने की कला में भी अच्छी तरह से प्रशिक्षित किया जाना चाहिए।</p>
+                
+                <h3>Processing of Survey Data (सर्वेक्षण डेटा का प्रसंस्करण)</h3>
+                <p>एक survey में कलेक्ट किए गए data की processing को मोटे तौर पर वर्गीकृत किया जा सकता है: (i) Scrutiny and editing of data, (ii) Tabulation of data, (iii) Statistical analysis.</p>
+                
+                <h3>Preparation of Reports (रिपोर्ट तैयार करना)</h3>
+                <p>Report में objectives; scope; subject coverage; method of data collection; survey reference and reporting periods; sampling design and estimation procedure, tabulation procedure; presentation of results; accuracy; cost structure; responsibility; और references जैसे sections हो सकते हैं।</p>
+            </div>
+        </section>
+
+        <section id="sec1-11" class="section-card">
+            <div class="english-content">
+                <h2>1.11 Sampling and Non-Sampling Errors</h2>
+                <p>The errors involved in collection, processing and analysis of the data in a survey may be classified as: (i) Sampling error, and (ii) Non-sampling error.</p>
+                
+                <h3>Sampling Error</h3>
+                <p>The error which arises due to only a sample being used to estimate the population parameters is termed <strong>sampling error</strong> or sampling fluctuation. Whatever may be the degree of cautiousness in selecting a sample, there will always be a difference between the population value (parameter) and its corresponding estimate.</p>
+                <p>This error is inherent and unavoidable in any and every sampling scheme. A sample with the smallest sampling error will always be considered a good representative of the population. This error can be reduced by increasing the size of the sample. In fact, the decrease in sampling error is inversely proportional to the square root of the sample size. When the sample survey becomes a census survey, the sampling error becomes zero.</p>
+                
+                <h3>Non-Sampling Error</h3>
+                <p>Besides sampling error, the sample estimate may be subject to other errors which, grouped together, are termed <strong>non-sampling errors</strong>. The main sources of non-sampling errors are:</p>
+                <ul>
+                    <li>Failure to measure some of the units in the selected sample.</li>
+                    <li>Observational errors due to defective measurement technique.</li>
+                    <li>Errors introduced in editing, coding and tabulating the results.</li>
+                </ul>
+                <p>In practice, the census survey results may suffer from non-sampling error although these may be free from sampling error. The non-sampling error is likely to increase with an increase in sample size, while sampling error decreases with an increase in sample size.</p>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.11 Sampling and Non-Sampling Errors (प्रतिचयन और गैर-प्रतिचयन त्रुटियां)</h2>
+                <p>एक survey में data के collection, processing और analysis में शामिल errors (त्रुटियों) को इस प्रकार classify किया जा सकता है: (i) Sampling error (प्रतिचयन त्रुटि), और (ii) Non-sampling error (गैर-प्रतिचयन त्रुटि)।</p>
+                
+                <h3>Sampling Error (प्रतिचयन त्रुटि)</h3>
+                <p>वह error जो केवल population parameters का estimate लगाने के लिए एक sample का उपयोग किए जाने के कारण उत्पन्न होती है, उसे <strong>sampling error</strong> या sampling fluctuation (प्रतिचयन उतार-चढ़ाव) कहा जाता है। Sample select करने में सतर्कता की degree चाहे जो भी हो, population value (parameter) और उसके corresponding estimate के बीच हमेशा एक अंतर होगा।</p>
+                <p>यह error किसी भी और हर sampling scheme में अंतर्निहित (inherent) और अपरिहार्य (unavoidable) है। सबसे छोटी sampling error वाले sample को हमेशा population का एक अच्छा representative माना जाएगा। Sample के size को बढ़ाकर इस error को कम किया जा सकता है। वास्तव में, sampling error में कमी sample size के square root के inversely proportional होती है। जब sample survey एक census survey बन जाता है, तो sampling error शून्य हो जाती है।</p>
+                
+                <h3>Non-Sampling Error (गैर-प्रतिचयन त्रुटि)</h3>
+                <p>Sampling error के अलावा, sample estimate अन्य errors के अधीन हो सकता है जिन्हें, एक साथ grouped करके, <strong>non-sampling errors</strong> कहा जाता है। Non-sampling errors के मुख्य स्रोत हैं:</p>
+                <ul>
+                    <li>Selected sample में कुछ units को measure करने में विफलता।</li>
+                    <li>Defective measurement technique के कारण Observational errors।</li>
+                    <li>Results को editing, coding और tabulating करने में शुरू की गई Errors।</li>
+                </ul>
+                <p>व्यवहार में, census survey के results non-sampling error से ग्रस्त हो सकते हैं, हालाँकि ये sampling error से मुक्त हो सकते हैं। Sample size में वृद्धि के साथ non-sampling error बढ़ने की संभावना है, जबकि sample size में वृद्धि के साथ sampling error कम हो जाती है।</p>
+            </div>
+        </section>
+
+        <section id="sec1-12" class="section-card">
+            <div class="english-content">
+                <h2>1.12 Set of Problems</h2>
+                <ol>
+                    <li>Describe the advantages of a sample survey in comparison with a census survey. Write the circumstances under which census surveys are preferred to sample surveys.</li>
+                    <li>Explain what you understand by probability sampling and non-probability sampling. What are their relative advantages and disadvantages?</li>
+                    <li>Draw a schedule for enquiry into the state of employment, under-employment in the rural sector of India. Justify your definitions and concepts and elaborate a set of instructions to field workers.</li>
+                    <li>What are the points which need special attention at the planning stages of sample surveys? With reference to any suitable example, explain whether these have been covered or not.</li>
+                    <li>Define population, sampling unit and sampling frame for conducting surveys on each of the following subjects. Mention other possible sampling units, if any, in each case and discuss their relative merits.
+                        <ul style="list-style-type: lower-roman;">
+                            <li>Popularity of family planning among families having more than two children.</li>
+                            <li>Monthly fish-catch along a given stretch of sea coast.</li>
+                            <li>Election for a political office with adult franchise.</li>
+                            <li>Measurement of the volume of timber available in a forest.</li>
+                            <li>Annual yield of apple fruit in a hilly district.</li>
+                            <li>Labour manpower in the urban area of a state.</li>
+                            <li>Study of incidence of lung cancer and heart attacks among the rural inhabitants of a country.</li>
+                            <li>Housing conditions in a rural area.</li>
+                            <li>Pre-harvest acreage under a specified crop in a region.</li>
+                            <li>Study of birth-rate in a district.</li>
+                            <li>Study of nutrient contents of food consumed by the residents in a city.</li>
+                        </ul>
+                    </li>
+                    <li>You are required to plan a sample survey to study the problem of indebted-ness among the rural agricultural population in India. Suggest a suitable survey plan on the following points: (i) Sampling unit, (ii) Sampling frame, (iii) Method of sampling, (iv) Method of data collection. Draft a suitable questionnaire that may be used in this regard.</li>
+                </ol>
+            </div>
+            <div class="hinglish-content">
+                <h2>1.12 Set of Problems (समस्याओं का समूह)</h2>
+                <ol>
+                    <li>एक census survey की तुलना में एक sample survey के लाभों का वर्णन करें। उन परिस्थितियों (circumstances) को लिखें जिनके तहत sample surveys की तुलना में census surveys को प्राथमिकता दी जाती है।</li>
+                    <li>समझाएं कि आप probability sampling और non-probability sampling से क्या समझते हैं। उनके relative advantages और disadvantages क्या हैं?</li>
+                    <li>भारत के ग्रामीण क्षेत्र (rural sector) में रोजगार (employment), अर्ध-रोजगार (under-employment) की स्थिति की जांच के लिए एक schedule (अनुसूची) तैयार करें। अपनी definitions और concepts को Justify (उचित सिद्ध) करें और field workers के लिए निर्देशों (instructions) का एक set विस्तृत करें।</li>
+                    <li>Sample surveys के planning stages (योजना चरणों) पर विशेष ध्यान देने वाले बिंदु क्या हैं? किसी उपयुक्त उदाहरण के संदर्भ में समझाएं कि इन्हें कवर किया गया है या नहीं।</li>
+                    <li>निम्नलिखित में से प्रत्येक विषय पर surveys आयोजित करने के लिए population, sampling unit और sampling frame को Define करें। यदि कोई हो, तो प्रत्येक मामले में अन्य possible sampling units का उल्लेख करें और उनके relative merits पर चर्चा करें।
+                        <ul style="list-style-type: lower-roman;">
+                            <li>दो से अधिक बच्चों वाले परिवारों के बीच परिवार नियोजन (family planning) की लोकप्रियता।</li>
+                            <li>समुद्र तट के एक दिए गए खिंचाव के साथ मासिक मछली-पकड़ना (Monthly fish-catch)।</li>
+                            <li>Adult franchise (वयस्क मताधिकार) के साथ एक राजनीतिक पद के लिए चुनाव।</li>
+                            <li>एक जंगल में उपलब्ध लकड़ी (timber) की मात्रा का मापन।</li>
+                            <li>एक पहाड़ी जिले में सेब के फल की वार्षिक उपज (Annual yield)।</li>
+                            <li>एक राज्य के शहरी क्षेत्र (urban area) में श्रम जनशक्ति (Labour manpower)।</li>
+                            <li>किसी देश के ग्रामीण निवासियों के बीच फेफड़ों के कैंसर और दिल के दौरे की घटनाओं का अध्ययन।</li>
+                            <li>एक ग्रामीण क्षेत्र में आवास की स्थिति (Housing conditions)।</li>
+                            <li>एक क्षेत्र में एक निर्दिष्ट फसल के तहत कटाई-पूर्व रकबा (Pre-harvest acreage)।</li>
+                            <li>एक जिले में जन्म दर (birth-rate) का अध्ययन।</li>
+                            <li>एक शहर में निवासियों द्वारा उपभोग किए जाने वाले भोजन के पोषक तत्वों (nutrient contents) का अध्ययन।</li>
+                        </ul>
+                    </li>
+                    <li>आपको भारत में ग्रामीण कृषि आबादी (rural agricultural population) के बीच ऋणग्रस्तता (indebted-ness) की समस्या का अध्ययन करने के लिए एक sample survey की योजना बनाने की आवश्यकता है। निम्नलिखित बिंदुओं पर एक उपयुक्त survey plan का सुझाव दें: (i) Sampling unit, (ii) Sampling frame, (iii) Method of sampling, (iv) Method of data collection. एक उपयुक्त प्रश्नावली (questionnaire) का मसौदा (Draft) तैयार करें जिसका उपयोग इस संबंध में किया जा सकता है।</li>
+                </ol>
+            </div>
+        </section>
+
+    
+        <!-- MULTIPLE CHOICE QUESTIONS (MCQ) -->
+        <!-- QUIZZES SECTION -->
+        <section id="quiz-mcq" class="section-card">
+            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+            
+            <div class="question-box">
+                <div class="question">1. The fundamental concept of sampling theory is originally attributed to: <br> (प्रतिचयन सिद्धांत की मौलिक अवधारणा मूल रूप से किसके द्वारा दी गई है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Fisher</li>
+                    <li>b) Deming</li>
+                    <li>c) Laplace</li>
+                    <li>d) Neyman</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
+                <div id="mcq1" class="answer"><strong>Correct Answer:</strong> c) Laplace <br> <em>Explanation:</em> The concept of sampling was used by Laplace in 1786 to estimate the population of France, making him the pioneer.</div>
+            </div>
+            
+            <div class="question-box">
+                <div class="question">2. Which of the following is NOT an advantage of a sample survey over a complete census? <br> (पूर्ण जनगणना की तुलना में प्रतिदर्श सर्वेक्षण का निम्नलिखित में से कौन सा लाभ नहीं है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Reduced cost</li>
+                    <li>b) Zero sampling error</li>
+                    <li>c) Greater speed</li>
+                    <li>d) Greater scope</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2')">Show/Hide Answer</button>
+                <div id="mcq2" class="answer"><strong>Correct Answer:</strong> b) Zero sampling error <br> <em>Explanation:</em> A sample survey inherently involves sampling error because only a fraction of the population is measured; a complete census eliminates sampling error (but may have higher non-sampling error).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. A list of all sampling units in the population is termed as: <br> (जनसंख्या में सभी प्रतिचयन इकाइयों की सूची को क्या कहा जाता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Sampling fraction</li>
+                    <li>b) Sampling frame</li>
+                    <li>c) Population parameter</li>
+                    <li>d) Sampling design</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3')">Show/Hide Answer</button>
+                <div id="mcq3" class="answer"><strong>Correct Answer:</strong> b) Sampling frame <br> <em>Explanation:</em> The sampling frame is the physical or conceptual list of all identifiable units from which the sample will be drawn.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. Non-sampling errors arise due to: <br> (गैर-प्रतिचयन त्रुटियाँ किसके कारण उत्पन्न होती हैं?)</div>
+                <ul class="mcq-options">
+                    <li>a) Only sampling a fraction of the population</li>
+                    <li>b) Faulty measuring instruments and interviewer bias</li>
+                    <li>c) Statistical variance</li>
+                    <li>d) Increasing the sample size</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4')">Show/Hide Answer</button>
+                <div id="mcq4" class="answer"><strong>Correct Answer:</strong> b) Faulty measuring instruments and interviewer bias <br> <em>Explanation:</em> Non-sampling errors occur during data collection, processing, and measurement, completely independent of the sampling process itself.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. The Principle of Statistical Regularity states that: <br> (सांख्यिकीय नियमितता का सिद्धांत बताता है कि:)</div>
+                <ul class="mcq-options">
+                    <li>a) Small samples always perfectly mirror the population</li>
+                    <li>b) A moderately large number of items chosen at random will possess characteristics of the large group</li>
+                    <li>c) Non-probability sampling is statistically regular</li>
+                    <li>d) Variance increases with sample size</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5')">Show/Hide Answer</button>
+                <div id="mcq5" class="answer"><strong>Correct Answer:</strong> b) A moderately large number of items chosen at random will possess characteristics of the large group <br> <em>Explanation:</em> Rooted in the mathematical theory of probability, this principle asserts that randomness ensures a large sample will be highly representative of the parent population.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. Purposive sampling is mathematically an example of: <br> (सोद्देश्य प्रतिचयन गणितीय रूप से किसका एक उदाहरण है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Random sampling</li>
+                    <li>b) Non-probability sampling</li>
+                    <li>c) Stratified sampling</li>
+                    <li>d) Cluster sampling</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6')">Show/Hide Answer</button>
+                <div id="mcq6" class="answer"><strong>Correct Answer:</strong> b) Non-probability sampling <br> <em>Explanation:</em> Purposive (or judgment) sampling relies strictly on the human selector's personal choice, making it impossible to assign an objective probability of selection to each unit.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The margin of uncertainty surrounding a sample estimate can be mathematically calculated using: <br> (प्रतिदर्श अनुमान के आसपास अनिश्चितता के मार्जिन की गणितीय गणना किसके उपयोग से की जा सकती है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Sampling error variance</li>
+                    <li>b) Non-sampling error only</li>
+                    <li>c) The sampling frame length</li>
+                    <li>d) A census</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7')">Show/Hide Answer</button>
+                <div id="mcq7" class="answer"><strong>Correct Answer:</strong> a) Sampling error variance <br> <em>Explanation:</em> The core advantage of probability sampling is that the sampling error can be objectively evaluated using standard statistical variance formulas.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. Which of the following usually generates a destructive test? <br> (निम्नलिखित में से कौन सा आमतौर पर एक विनाशकारी परीक्षण उत्पन्न करता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Conducting a population census</li>
+                    <li>b) Interviewing people about income</li>
+                    <li>c) Testing the breaking strength of a manufactured item</li>
+                    <li>d) Surveying crop acreage</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8')">Show/Hide Answer</button>
+                <div id="mcq8" class="answer"><strong>Correct Answer:</strong> c) Testing the breaking strength of a manufactured item <br> <em>Explanation:</em> Destructive testing destroys the item being observed. You cannot census a destructive test (e.g., breaking all items to test strength leaves nothing to sell).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. Expected value \( E(c) \), where \( c \) is a constant, equals: <br> (अपेक्षित मान \( E(c) \), जहाँ \( c \) एक स्थिरांक है, किसके बराबर है:)</div>
+                <ul class="mcq-options">
+                    <li>a) 0</li>
+                    <li>b) 1</li>
+                    <li>c) \( c \)</li>
+                    <li>d) Infinity</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9')">Show/Hide Answer</button>
+                <div id="mcq9" class="answer"><strong>Correct Answer:</strong> c) \( c \) <br> <em>Explanation:</em> The expectation of a mathematical constant is simply the constant itself.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. For independent random variables \( x \) and \( y \), \( V(ax + by) \) is mathematically: <br> (स्वतंत्र यादृच्छिक चर \( x \) और \( y \) के लिए, \( V(ax + by) \) गणितीय रूप से है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( aV(x) + bV(y) \)</li>
+                    <li>b) \( a^2V(x) + b^2V(y) \)</li>
+                    <li>c) \( aV(x) + bV(y) + 2ab\text{Cov}(x,y) \)</li>
+                    <li>d) Zero</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10')">Show/Hide Answer</button>
+                <div id="mcq10" class="answer"><strong>Correct Answer:</strong> b) \( a^2V(x) + b^2V(y) \) <br> <em>Explanation:</em> Because they are independent, the covariance term vanishes, leaving the sum of the variances scaled by the square of their constants.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A sampling unit must be: <br> (एक प्रतिचयन इकाई होनी चाहिए:)</div>
+                <ul class="mcq-options">
+                    <li>a) Ambiguous to allow surveyor choice</li>
+                    <li>b) Clearly, unambiguously, and non-overlappingly defined</li>
+                    <li>c) The entire population</li>
+                    <li>d) Invisible</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11')">Show/Hide Answer</button>
+                <div id="mcq11" class="answer"><strong>Correct Answer:</strong> b) Clearly, unambiguously, and non-overlappingly defined <br> <em>Explanation:</em> If sampling units are ambiguous or overlapping, it becomes impossible to assign an objective probability of selection to them.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. The mean square error (MSE) of an estimator \( t \) structurally equals: <br> (एक अनुमानक \( t \) की माध्य वर्ग त्रुटि (MSE) संरचनात्मक रूप से किसके बराबर है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( V(t) + [\text{Bias}(t)]^2 \)</li>
+                    <li>b) \( V(t) - \text{Bias}(t) \)</li>
+                    <li>c) \( V(t) / \text{Bias}(t) \)</li>
+                    <li>d) \( \text{Bias}(t) \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12')">Show/Hide Answer</button>
+                <div id="mcq12" class="answer"><strong>Correct Answer:</strong> a) \( V(t) + [\text{Bias}(t)]^2 \) <br> <em>Explanation:</em> This is a fundamental identity; MSE decomposes natively into the pure variance plus the square of the bias.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. In a sample survey, reducing the sample size will generally: <br> (प्रतिदर्श सर्वेक्षण में, प्रतिदर्श आकार को कम करने से आम तौर पर होगा:)</div>
+                <ul class="mcq-options">
+                    <li>a) Decrease sampling error</li>
+                    <li>b) Increase sampling error</li>
+                    <li>c) Have no mathematical effect on sampling error</li>
+                    <li>d) Eliminate non-sampling error entirely</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13')">Show/Hide Answer</button>
+                <div id="mcq13" class="answer"><strong>Correct Answer:</strong> b) Increase sampling error <br> <em>Explanation:</em> Sampling error is inversely proportional to sample size; looking at fewer elements inherently creates a less precise estimate.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. Pilot surveys are normally conducted to: <br> (पायलट सर्वेक्षण सामान्यतः किसलिए आयोजित किए जाते हैं:)</div>
+                <ul class="mcq-options">
+                    <li>a) Publish final official statistics</li>
+                    <li>b) Test questionnaires, estimate costs, and train personnel on a small scale</li>
+                    <li>c) Replace the main survey</li>
+                    <li>d) Increase total survey bias</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14')">Show/Hide Answer</button>
+                <div id="mcq14" class="answer"><strong>Correct Answer:</strong> b) Test questionnaires, estimate costs, and train personnel on a small scale <br> <em>Explanation:</em> A pilot survey acts as a trial run to expose operational flaws before committing massive funds to the full-scale survey.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. An estimator \( t \) is considered an unbiased estimator of population parameter \( \theta \) if: <br> (एक अनुमानक \( t \) को जनसंख्या पैरामीटर \( \theta \) का निष्पक्ष अनुमानक माना जाता है यदि:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( E(t) = 0 \)</li>
+                    <li>b) \( V(t) = \theta \)</li>
+                    <li>c) \( E(t) = \theta \)</li>
+                    <li>d) \( E(t^2) = \theta^2 \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15')">Show/Hide Answer</button>
+                <div id="mcq15" class="answer"><strong>Correct Answer:</strong> c) \( E(t) = \theta \) <br> <em>Explanation:</em> If the average of the estimator across all possible samples equals the true parameter, it possesses zero bias.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. Non-sampling errors can structurally affect: <br> (गैर-प्रतिचयन त्रुटियाँ संरचनात्मक रूप से प्रभावित कर सकती हैं:)</div>
+                <ul class="mcq-options">
+                    <li>a) Sample surveys only</li>
+                    <li>b) Complete censuses only</li>
+                    <li>c) Both sample surveys and complete censuses</li>
+                    <li>d) Neither</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16')">Show/Hide Answer</button>
+                <div id="mcq16" class="answer"><strong>Correct Answer:</strong> c) Both sample surveys and complete censuses <br> <em>Explanation:</em> Things like respondent lying, transcription errors, or faulty scales happen anytime data is collected, regardless of whether it's a sample or census.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. Which principle emphasizes that a well-designed sample can produce precise results due to balancing out of errors? <br> (कौन सा सिद्धांत इस बात पर जोर देता है कि त्रुटियों के संतुलन के कारण एक अच्छी तरह से डिज़ाइन किया गया प्रतिदर्श सटीक परिणाम दे सकता है?)</div>
+                <ul class="mcq-options">
+                    <li>a) Principle of Validity</li>
+                    <li>b) Principle of Optimization</li>
+                    <li>c) Principle of Statistical Regularity</li>
+                    <li>d) Principle of Inertia of Large Numbers</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17')">Show/Hide Answer</button>
+                <div id="mcq17" class="answer"><strong>Correct Answer:</strong> d) Principle of Inertia of Large Numbers <br> <em>Explanation:</em> This principle states that large aggregates tend to remain stable because the variations in different parts tend to cancel each other out.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. Under the Principle of Validity, the design must cleanly provide a valid estimate of the: <br> (वैधता के सिद्धांत के तहत, डिजाइन को स्पष्ट रूप से किसका एक वैध अनुमान प्रदान करना चाहिए:)</div>
+                <ul class="mcq-options">
+                    <li>a) Total budget</li>
+                    <li>b) Sampling error</li>
+                    <li>c) Interviewer salary</li>
+                    <li>d) True population bias</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18')">Show/Hide Answer</button>
+                <div id="mcq18" class="answer"><strong>Correct Answer:</strong> b) Sampling error <br> <em>Explanation:</em> A valid sampling design must logically and mathematically allow the estimation of its own sampling variance/error.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If \( x \) is a constant and \( y \) is a random variable, \( \text{Cov}(x,y) \) evaluates to: <br> (यदि \( x \) एक स्थिरांक है और \( y \) एक यादृच्छिक चर है, तो \( \text{Cov}(x,y) \) का मूल्यांकन होता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) \( V(y) \)</li>
+                    <li>b) 1</li>
+                    <li>c) 0</li>
+                    <li>d) \( xE(y) \)</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19')">Show/Hide Answer</button>
+                <div id="mcq19" class="answer"><strong>Correct Answer:</strong> c) 0 <br> <em>Explanation:</em> A constant has zero variance and mathematically cannot co-vary with a fluctuating random variable.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The collection of demographic data in India typically relies structurally on: <br> (भारत में जनसांख्यिकीय डेटा का संग्रह आम तौर पर संरचनात्मक रूप से किस पर निर्भर करता है:)</div>
+                <ul class="mcq-options">
+                    <li>a) Only non-probability judgment sampling</li>
+                    <li>b) Small sample surveys like the National Sample Survey (NSS)</li>
+                    <li>c) Massive multi-stage sample surveys</li>
+                    <li>d) Complete census with no sampling ever</li>
+                </ul>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
+                <div id="mcq20" class="answer"><strong>Correct Answer:</strong> c) Massive multi-stage sample surveys <br> <em>Explanation:</em> Government agencies like the NSSO employ complex probability sampling schemes across thousands of villages to gather accurate socio-economic data continuously.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-fib" class="section-card">
+            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+
+            <div class="question-box">
+                <div class="question">1. The physical or conceptual list of all identifiable units in the population is termed the ____________. <br> (जनसंख्या में सभी पहचान योग्य इकाइयों की भौतिक या वैचारिक सूची को ____________ कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
+                <div id="fib1" class="answer"><strong>Answer:</strong> sampling frame (प्रतिचयन फ्रेम) <br> <em>Explanation:</em> Without a proper frame, it is mathematically impossible to assign objective probabilities of selection to units.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. When you interview elements on the street strictly because they are available and easy to reach, it is called ____________ sampling. <br> (जब आप सड़क पर तत्वों का साक्षात्कार कड़ाई से करते हैं क्योंकि वे उपलब्ध हैं और उन तक पहुंचना आसान है, तो इसे ____________ प्रतिचयन कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2')">Show/Hide Answer</button>
+                <div id="fib2" class="answer"><strong>Answer:</strong> convenience / non-probability (सुविधा / गैर-प्रायिकता) <br> <em>Explanation:</em> This lacks a randomized probability structure and suffers from huge uncontrolled bias.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. A sampling design is fundamentally considered ____________ if the expected value of the estimator equals the true population parameter. <br> (एक प्रतिचयन डिजाइन को मौलिक रूप से ____________ माना जाता है यदि अनुमानक का अपेक्षित मान वास्तविक जनसंख्या पैरामीटर के बराबर है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3')">Show/Hide Answer</button>
+                <div id="fib3" class="answer"><strong>Answer:</strong> unbiased (निष्पक्ष) <br> <em>Explanation:</em> Unbiasedness ensures that over repeated sampling, the estimates average out cleanly to the absolute truth.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. The Principle of ____________ of Large Numbers ensures that errors in large groups tend to cancel each other out. <br> (बड़े अंकों की ____________ का सिद्धांत यह सुनिश्चित करता है कि बड़े समूहों में त्रुटियाँ एक-दूसरे को रद्द करने की प्रवृत्ति रखती हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4')">Show/Hide Answer</button>
+                <div id="fib4" class="answer"><strong>Answer:</strong> Inertia (जड़ता) <br> <em>Explanation:</em> Macpherson defined this property showing massive populations have an inherent stability against isolated fluctuations.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. Errors that aggressively accumulate due to faulty questionnaire design, respondent ignorance, or data entry typos are categorized explicitly as ____________ errors. <br> (त्रुटियाँ जो दोषपूर्ण प्रश्नावली डिजाइन, उत्तरदाता अज्ञानता या डेटा प्रविष्टि टाइपो के कारण आक्रामक रूप से जमा होती हैं, उन्हें स्पष्ट रूप से ____________ त्रुटियों के रूप में वर्गीकृत किया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5')">Show/Hide Answer</button>
+                <div id="fib5" class="answer"><strong>Answer:</strong> non-sampling (गैर-प्रतिचयन) <br> <em>Explanation:</em> These are completely separate from the statistical variance caused by the act of sampling itself.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. ____________ testing on manufactured goods outright necessitates sample surveys because a census would literally destroy the entire inventory. <br> (निर्मित वस्तुओं पर ____________ परीक्षण के लिए एकमुश्त प्रतिदर्श सर्वेक्षण की आवश्यकता होती है क्योंकि जनगणना वस्तुतः संपूर्ण इन्वेंट्री को नष्ट कर देगी।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6')">Show/Hide Answer</button>
+                <div id="fib6" class="answer"><strong>Answer:</strong> Destructive (विनाशकारी) <br> <em>Explanation:</em> Things like stress-testing concrete or examining bomb fuses cannot be evaluated on every single unit.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. To effectively optimize a survey, the principle dictates obtaining either maximum ____________ for a given cost, or minimum cost for a specified precision. <br> (किसी सर्वेक्षण को प्रभावी ढंग से अनुकूलित करने के लिए, सिद्धांत किसी दी गई लागत के लिए अधिकतम ____________, या निर्दिष्ट सटीकता के लिए न्यूनतम लागत प्राप्त करने का आदेश देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7')">Show/Hide Answer</button>
+                <div id="fib7" class="answer"><strong>Answer:</strong> precision / efficiency (सटीकता / दक्षता) <br> <em>Explanation:</em> The Principle of Optimization perfectly balances economic logistics against statistical quality.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. A small-scale preliminary rehearsal of the main survey designed to empirically detect operational flaws is termed a ____________ survey. <br> (परिचालन संबंधी खामियों को अनुभवजन्य रूप से दूर करने के लिए डिज़ाइन किए गए मुख्य सर्वेक्षण के छोटे पैमाने के प्रारंभिक पूर्वाभ्यास को ____________ सर्वेक्षण कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8')">Show/Hide Answer</button>
+                <div id="fib8" class="answer"><strong>Answer:</strong> pilot (पायलट) <br> <em>Explanation:</em> Pilot surveys are essential to estimate unknown cost parameters and refine the structural questionnaire layout.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. The mathematical variance of a constant \( c \) is explicitly equal to ____________. <br> (एक स्थिरांक \( c \) का गणितीय प्रसरण स्पष्ट रूप से ____________ के बराबर है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9')">Show/Hide Answer</button>
+                <div id="fib9" class="answer"><strong>Answer:</strong> 0 (zero / शून्य) <br> <em>Explanation:</em> A constant value never fluctuates, generating zero mathematical variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. If two random variables \( x \) and \( y \) are structurally independent, their covariance perfectly equals ____________. <br> (यदि दो यादृच्छिक चर \( x \) और \( y \) संरचनात्मक रूप से स्वतंत्र हैं, तो उनका सहप्रसरण पूरी तरह से ____________ के बराबर होता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10')">Show/Hide Answer</button>
+                <div id="fib10" class="answer"><strong>Answer:</strong> 0 (zero / शून्य) <br> <em>Explanation:</em> Independence implies that the fluctuation of one gives zero information about the fluctuation of the other.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A complete enumeration of every single ultimate unit in a defined population is scientifically termed a ____________. <br> (परिभाषित जनसंख्या में प्रत्येक अंतिम इकाई की पूर्ण गणना को वैज्ञानिक रूप से ____________ कहा जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11')">Show/Hide Answer</button>
+                <div id="fib11" class="answer"><strong>Answer:</strong> census (जनगणना) <br> <em>Explanation:</em> A census is the alternative to a sample survey, observing 100% of the elements.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. ____________ errors generally shrink mathematically as the sample size is aggressively increased. <br> (____________ त्रुटियाँ आम तौर पर गणितीय रूप से सिकुड़ती हैं क्योंकि प्रतिदर्श आकार को आक्रामक रूप से बढ़ाया जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12')">Show/Hide Answer</button>
+                <div id="fib12" class="answer"><strong>Answer:</strong> Sampling (प्रतिचयन) <br> <em>Explanation:</em> Gathering more data natively pulls the estimate closer to the population parameter, lowering the variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. The formula \( V(ax) = \) ____________ cleanly extracts the constant from the variance operation. <br> (सूत्र \( V(ax) = \) ____________ प्रसरण संक्रिया से स्थिरांक को स्पष्ट रूप से निकालता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13')">Show/Hide Answer</button>
+                <div id="fib13" class="answer"><strong>Answer:</strong> \( a^2 V(x) \) <br> <em>Explanation:</em> Constants scale variances quadratically.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. When designing a survey, defining the exact ____________ population (the group to be studied) is universally the critical first step. <br> (सर्वेक्षण डिजाइन करते समय, सटीक ____________ जनसंख्या (जिस समूह का अध्ययन किया जाना है) को परिभाषित करना सार्वभौमिक रूप से महत्वपूर्ण पहला कदम है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14')">Show/Hide Answer</button>
+                <div id="fib14" class="answer"><strong>Answer:</strong> target (लक्ष्य) <br> <em>Explanation:</em> A clearly defined target population dictates the entire design, frame, and scope of the operation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. In non-probability sampling, calculating the objective ____________ error is mathematically impossible. <br> (गैर-प्रायिकता प्रतिचयन में, वस्तुनिष्ठ ____________ त्रुटि की गणना करना गणितीय रूप से असंभव है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15')">Show/Hide Answer</button>
+                <div id="fib15" class="answer"><strong>Answer:</strong> sampling / margin of (प्रतिचयन / मार्जिन की) <br> <em>Explanation:</em> Without known selection probabilities, statistical variance formulas cannot be safely applied.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. ____________ sampling involves subjectively choosing elements that the investigator personally believes are typical or representative. <br> (____________ प्रतिचयन में व्यक्तिपरक रूप से उन तत्वों को चुनना शामिल है जो अन्वेषक व्यक्तिगत रूप से मानता है कि सामान्य या प्रतिनिधि हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16')">Show/Hide Answer</button>
+                <div id="fib16" class="answer"><strong>Answer:</strong> Purposive / Judgment (सोद्देश्य / निर्णय) <br> <em>Explanation:</em> It relies on human assumption rather than structural randomization.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. Mean Square Error seamlessly combines both the structural mathematical variance and the square of the ____________. <br> (माध्य वर्ग त्रुटि নির্বाध रूप से संरचनात्मक गणितीय प्रसरण और ____________ के वर्ग दोनों को जोड़ती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17')">Show/Hide Answer</button>
+                <div id="fib17" class="answer"><strong>Answer:</strong> bias (पूर्वाग्रह) <br> <em>Explanation:</em> \( \text{MSE} = V(t) + [B(t)]^2 \) measures the total expected squared deviation from the true parameter.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The Principle of ____________ states that a highly random sample will structurally hold the same properties as the massive population it was drawn from. <br> (____________ का सिद्धांत कहता है कि एक अत्यधिक यादृच्छिक प्रतिदर्श संरचनात्मक रूप से उसी विशाल आबादी के समान गुणों को धारण करेगा जिससे इसे खींचा गया था।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18')">Show/Hide Answer</button>
+                <div id="fib18" class="answer"><strong>Answer:</strong> Statistical Regularity (सांख्यिकीय नियमितता) <br> <em>Explanation:</em> This foundational theorem explicitly justifies why taking a small randomized subset natively reveals truth about the whole.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If \( x \) is any random variable, the expectation \( E(x - E(x)) \) is rigorously always exactly ____________. <br> (यदि \( x \) कोई यादृच्छिक चर है, तो अपेक्षा \( E(x - E(x)) \) कड़ाई से हमेशा बिल्कुल ____________ होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19')">Show/Hide Answer</button>
+                <div id="fib19" class="answer"><strong>Answer:</strong> 0 (zero / शून्य) <br> <em>Explanation:</em> The expected deviation of a variable cleanly around its own center of mass evaluates to zero perfectly.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. The primary cost savings in a sample survey compared to a census result from drastically reducing the amount of ____________ to be physically collected and processed. <br> (जनगणना की तुलना में एक प्रतिदर्श सर्वेक्षण में प्राथमिक लागत बचत भौतिक रूप से एकत्र और संसाधित किए जाने वाले ____________ की मात्रा को भारी रूप से कम करने से होती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
+                <div id="fib20" class="answer"><strong>Answer:</strong> data (डेटा) <br> <em>Explanation:</em> Less data means fewer interviewers, less travel, less computing power, and massively faster publishing times.</div>
+            </div>
+
+        </section>
+
+        <section id="quiz-tf" class="section-card">
+            <h2>✅ True or False (सही या गलत)</h2>
+
+            <div class="question-box">
+                <div class="question">1. The margin of error can be easily and objectively calculated in a purposive sample survey. <br> (एक सोद्देश्य प्रतिदर्श सर्वेक्षण में त्रुटि के मार्जिन की आसानी से और निष्पक्ष रूप से गणना की जा सकती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
+                <div id="tf1" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Because purposive sampling lacks strict randomization probabilities, applying mathematical variance formulas is scientifically invalid.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">2. Non-sampling errors can structurally exist even if a 100% complete population census is performed. <br> (गैर-प्रतिचयन त्रुटियाँ संरचनात्मक रूप से मौजूद हो सकती हैं, भले ही 100% पूर्ण जनसंख्या जनगणना की जाए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2')">Show/Hide Answer</button>
+                <div id="tf2" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Mistakes like lying respondents, tabulation typos, and badly trained staff happen independently of the fraction of the population being sampled.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">3. A sampling unit must be defined such that it cleanly avoids overlapping with any other unit in the population. <br> (एक प्रतिचयन इकाई को इस तरह से परिभाषित किया जाना चाहिए कि यह स्पष्ट रूप से जनसंख्या में किसी अन्य इकाई के साथ अतिव्यापन से बचाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3')">Show/Hide Answer</button>
+                <div id="tf3" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Ambiguity or overlap natively destroys the ability to cleanly assign selection probabilities to elements, invalidating the statistical design.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">4. As the size of a randomly drawn sample approaches the population size, the expected sampling error rapidly climbs towards infinity. <br> (जैसे-जैसे यादृच्छिक रूप से खींचे गए प्रतिदर्श का आकार जनसंख्या के आकार के करीब आता है, अपेक्षित प्रतिचयन त्रुटि तेजी से अनंत की ओर बढ़ती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4')">Show/Hide Answer</button>
+                <div id="tf4" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Sampling error aggressively drops as sample size increases, hitting perfectly zero when \( n = N \) (a complete census).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">5. The Principle of Statistical Regularity relies heavily on the underlying mathematical theory of probability. <br> (सांख्यिकीय नियमितता का सिद्धांत भारी रूप से प्रायिकता के अंतर्निहित गणितीय सिद्धांत पर निर्भर करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5')">Show/Hide Answer</button>
+                <div id="tf5" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> It explicitly states that moderately large samples selected completely at random will structurally embody the characteristics of the large group.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">6. A pilot survey is a complete substitute for a heavily rigorous, full-scale demographic census. <br> (पायलट सर्वेक्षण भारी रूप से कठोर, पूर्ण पैमाने पर जनसांख्यिकीय जनगणना का पूर्ण विकल्प है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6')">Show/Hide Answer</button>
+                <div id="tf6" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> A pilot survey is merely a small-scale operational trial run to cleanly expose field flaws before the expensive main survey starts.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">7. The expected value of the sum of two independent random variables \( E(x+y) \) mathematically evaluates cleanly to \( E(x) + E(y) \). <br> (दो स्वतंत्र यादृच्छिक चरों के योग का अपेक्षित मान \( E(x+y) \) गणितीय रूप से स्पष्ट रूप से \( E(x) + E(y) \) तक मूल्यांकन करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7')">Show/Hide Answer</button>
+                <div id="tf7" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The expectation operator is structurally a linear operator, making it flawlessly distribute across summation.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">8. A completely perfect sampling frame guarantees absolutely zero non-sampling errors during the survey. <br> (एक पूर्णतः परिपूर्ण प्रतिचयन फ्रेम सर्वेक्षण के दौरान बिल्कुल शून्य गैर-प्रतिचयन त्रुटियों की गारंटी देता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8')">Show/Hide Answer</button>
+                <div id="tf8" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> A perfect frame solves coverage issues, but interviewers can still make typos or respondents can still lie, creating heavy non-sampling errors.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">9. The primary disadvantage of a full census is the overwhelmingly huge massive requirement of time and money. <br> (पूर्ण जनगणना का प्राथमिक नुकसान समय और धन की भारी रूप से बड़ी विशाल आवश्यकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9')">Show/Hide Answer</button>
+                <div id="tf9" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Touching every single element in a massive population consumes immense resources, making sample surveys highly attractive economically.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">10. Convenience sampling natively guarantees that every sub-group within the population is mathematically represented equally. <br> (सुविधा प्रतिचयन मूल रूप से यह गारंटी देता है कि जनसंख्या के भीतर प्रत्येक उप-समूह को गणितीय रूप से समान रूप से दर्शाया गया है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10')">Show/Hide Answer</button>
+                <div id="tf10" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Convenience sampling severely distorts representation because it only captures the units that are easiest to reach, injecting brutal bias.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">11. A sampling design is considered valid only if it provides a reliable, mathematical estimate of its own sampling error. <br> (एक प्रतिचयन डिजाइन को केवल तभी वैध माना जाता है जब वह अपनी स्वयं की प्रतिचयन त्रुटि का एक विश्वसनीय, गणितीय अनुमान प्रदान करता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11')">Show/Hide Answer</button>
+                <div id="tf11" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> The Principle of Validity explicitly demands that a probability-based design must allow for the objective calculation of its variance.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">12. If a manufacturing process involves a destructive test, a sample survey is absolutely impossible, and a census must be used. <br> (यदि किसी निर्माण प्रक्रिया में विनाशकारी परीक्षण शामिल है, तो प्रतिदर्श सर्वेक्षण बिल्कुल असंभव है, और जनगणना का उपयोग किया जाना चाहिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12')">Show/Hide Answer</button>
+                <div id="tf12" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It is the exact opposite. A census would destroy all the products. A sample survey is unequivocally the ONLY possible method for destructive tests.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">13. Bias natively represents the mathematical difference between the expected value of the estimator and the true population parameter. <br> (पूर्वाग्रह मूल रूप से अनुमानक के अपेक्षित मान और वास्तविक जनसंख्या पैरामीटर के बीच गणितीय अंतर को दर्शाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13')">Show/Hide Answer</button>
+                <div id="tf13" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Structurally, \( B(t) = E(t) - \theta \). If this perfectly equals zero, the estimator is unbiased.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">14. Mean Square Error (MSE) is strictly calculated as the square of the variance divided by the bias. <br> (माध्य वर्ग त्रुटि (MSE) की गणना कड़ाई से पूर्वाग्रह द्वारा विभाजित प्रसरण के वर्ग के रूप में की जाती है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14')">Show/Hide Answer</button>
+                <div id="tf14" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> MSE is fundamentally defined as the pure additive sum of the variance and the square of the bias: \( \text{MSE} = V(t) + [B(t)]^2 \).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">15. One major operational advantage of sampling is that results can be tabulated and published significantly faster than a census. <br> (प्रतिचयन का एक बड़ा परिचालन लाभ यह है कि जनगणना की तुलना में परिणामों को काफी तेजी से सारणीबद्ध और प्रकाशित किया जा सकता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15')">Show/Hide Answer</button>
+                <div id="tf15" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Because there is massively less data to process, the turnaround time for releasing vital reports is exceptionally fast.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">16. If \( a \) is a strict constant, the covariance \( \text{Cov}(ax, y) \) mathematically simplifies neatly to \( a \cdot \text{Cov}(x,y) \). <br> (यदि \( a \) एक सख्त स्थिरांक है, तो सहप्रसरण \( \text{Cov}(ax, y) \) गणितीय रूप से बड़े करीने से \( a \cdot \text{Cov}(x,y) \) तक सरल हो जाता है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16')">Show/Hide Answer</button>
+                <div id="tf16" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> Constants scale covariances linearly, unlike variances which they scale quadratically.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">17. A sampling frame is exclusively required for non-probability judgmental surveys, not for random probability surveys. <br> (एक प्रतिचयन फ्रेम विशेष रूप से गैर-प्रायिकता निर्णय सर्वेक्षणों के लिए आवश्यक है, न कि यादृच्छिक प्रायिकता सर्वेक्षणों के लिए।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17')">Show/Hide Answer</button>
+                <div id="tf17" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> A frame (list of elements) is absolutely mandatory for probability sampling so that randomized mathematical draws can be executed. Judgmental surveys often ignore frames entirely.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">18. The Principle of Inertia of Large Numbers explicitly asserts that aggregates tend to fluctuate wildly and uncontrollably over time. <br> (बड़े अंकों की जड़ता का सिद्धांत स्पष्ट रूप से जोर देता है कि योग समय के साथ बेतहाशा और बेकाबू रूप से उतार-चढ़ाव करते हैं।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18')">Show/Hide Answer</button>
+                <div id="tf18" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> It asserts the exact opposite: large aggregates are remarkably stable because the small internal fluctuations perfectly cancel each other out.</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">19. If an estimator is biased, it is utterly useless and mathematically invalid for all official statistical survey operations. <br> (यदि कोई अनुमानक पक्षपाती है, तो यह सभी आधिकारिक सांख्यिकीय सर्वेक्षण कार्यों के लिए पूरी तरह से बेकार और गणितीय रूप से अमान्य है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19')">Show/Hide Answer</button>
+                <div id="tf19" class="answer"><strong>Answer:</strong> False (गलत) <br> <em>Explanation:</em> Many estimators (like the ratio estimator) are heavily biased in small samples but are still universally used because their bias becomes completely negligible in large samples (they are consistent).</div>
+            </div>
+
+            <div class="question-box">
+                <div class="question">20. Designing the specific questionnaire instrument is an essential early step deeply involved in planning an effective sample survey. <br> (विशिष्ट प्रश्नावली उपकरण को डिजाइन करना एक प्रभावी प्रतिदर्श सर्वेक्षण की योजना बनाने में गहराई से शामिल एक आवश्यक प्रारंभिक कदम है।)</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
+                <div id="tf20" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> A poorly structured questionnaire guarantees huge non-sampling errors, destroying the survey's accuracy regardless of how perfect the mathematical randomization is.</div>
+            </div>
+
+        </section>
+        
+        <script>
+        function showTopic(topicId) {
+            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+            
+            var elem = document.getElementById(topicId);
+            if (elem) {
+                elem.classList.add('active');
+            }
+            
+            var activeLink = document.querySelector(`.nav-link[onclick*="${topicId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            if(window.MathJax) { MathJax.typesetPromise(); }
+            window.scrollTo(0, 0);
+        }
+
+        function toggleLanguage() {
+            document.body.classList.toggle('hinglish-active');
+            var btn = document.querySelector('.lang-toggle-btn');
+            if (document.body.classList.contains('hinglish-active')) {
+                btn.textContent = 'Switch to English';
+            } else {
+                btn.textContent = 'Switch to Hinglish';
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+
+        function toggleAnswer(id) {
+            var answerDiv = document.getElementById(id);
+            if (answerDiv) {
+                answerDiv.classList.toggle('show');
+            }
+            if(window.MathJax) { MathJax.typesetPromise(); }
+        }
+    </script>
+</body>
+</html>
