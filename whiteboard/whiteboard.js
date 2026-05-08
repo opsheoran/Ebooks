@@ -315,7 +315,7 @@
 
         ctx.globalCompositeOperation = 'source-over';
         ctx.fillStyle = currentColor;
-        ctx.font = \`600 \${fontSize}px 'Source Serif 4', serif\`;
+        ctx.font = `600 ${fontSize}px 'Source Serif 4', serif`;
         ctx.textBaseline = 'top';
 
         let lines = text.split('\\n');
@@ -360,7 +360,7 @@
 
     // 7. Multi-Page Logic
     function updatePageIndicator() {
-        document.getElementById('pop-page-indicator').textContent = \`Page \${currentPageIndex + 1} of \${bookPages.length}\`;
+        document.getElementById('pop-page-indicator').textContent = `Page ${currentPageIndex + 1} of ${bookPages.length}`;
     }
 
     function loadPageData(dataUrl) {
