@@ -1,6 +1,6 @@
 /**
  * ── PROFESSIONAL TEACHER'S CANVAS (MULTI-PAGE) ──
- * High-DPI, Ultra-Smooth Ink, Notebook Paper, Rich Tools, Resize-Safe, and PDF Export.
+ * High-DPI, Ultra-Smooth Ink, Notebook Paper, Rich Tools (Grouped), Resize-Safe, and PDF Export.
  */
 
 (function() {
@@ -47,12 +47,37 @@
                 
                 <div class="toolbar-divider"></div>
                 
-                <button class="popup-tool-btn" data-tool="line" title="Straight Line"><i class="fas fa-slash"></i></button>
-                <button class="popup-tool-btn" data-tool="arrow" title="Arrow"><i class="fas fa-long-arrow-alt-right"></i></button>
-                <button class="popup-tool-btn" data-tool="rect" title="Rectangle"><i class="far fa-square"></i></button>
-                <button class="popup-tool-btn" data-tool="circle" title="Circle"><i class="far fa-circle"></i></button>
-                <button class="popup-tool-btn" data-tool="triangle" title="Triangle"><i class="fas fa-caret-up"></i></button>
-                <button class="popup-tool-btn" data-tool="axes" title="Graph Axes"><i class="fas fa-chart-line"></i></button>
+                <!-- Group: Lines & Graphs -->
+                <div class="tool-group">
+                    <button class="popup-tool-btn group-parent" title="Lines & Graphs"><i class="fas fa-slash"></i></button>
+                    <div class="tool-dropdown">
+                        <button class="popup-tool-btn" data-tool="line" title="Straight Line"><i class="fas fa-slash"></i></button>
+                        <button class="popup-tool-btn" data-tool="arrow" title="Arrow"><i class="fas fa-long-arrow-alt-right"></i></button>
+                        <button class="popup-tool-btn" data-tool="axes" title="Graph Axes"><i class="fas fa-chart-line"></i></button>
+                    </div>
+                </div>
+
+                <!-- Group: Basic Shapes -->
+                <div class="tool-group">
+                    <button class="popup-tool-btn group-parent" title="Shapes"><i class="far fa-square"></i></button>
+                    <div class="tool-dropdown">
+                        <button class="popup-tool-btn" data-tool="rect" title="Rectangle"><i class="far fa-square"></i></button>
+                        <button class="popup-tool-btn" data-tool="square" title="Square"><i class="fas fa-square-full"></i></button>
+                        <button class="popup-tool-btn" data-tool="circle" title="Circle"><i class="far fa-circle"></i></button>
+                        <button class="popup-tool-btn" data-tool="ellipse" title="Ellipse"><i class="fas fa-bullseye"></i></button>
+                    </div>
+                </div>
+
+                <!-- Group: Triangles -->
+                <div class="tool-group">
+                    <button class="popup-tool-btn group-parent" title="Triangles"><i class="fas fa-caret-up"></i></button>
+                    <div class="tool-dropdown">
+                        <button class="popup-tool-btn" data-tool="tri-iso" title="Isosceles Triangle"><i class="fas fa-caret-up"></i></button>
+                        <button class="popup-tool-btn" data-tool="tri-right" title="Right Triangle"><i class="fas fa-play"></i></button>
+                        <button class="popup-tool-btn" data-tool="tri-equi" title="Equilateral Triangle"><i class="fas fa-mountain"></i></button>
+                    </div>
+                </div>
+
                 <button class="popup-tool-btn" data-tool="text" title="Text Input"><i class="fas fa-font"></i></button>
 
                 <div class="toolbar-divider"></div>
@@ -194,10 +219,20 @@
         lastY = pos.y;
 
         if (currentTool === 'text') {
-            // Do not capture pointer for text tool so textarea can be clicked
-            openTextInput(startX, startY);
+            // Text tool should immediately place the text box and not capture the pointer
+            if (textOverlay.style.display === 'block') {
+                // Clicking canvas while text is open commits the text
+                commitText();
+            } else {
+                openTextInput(startX, startY);
+            }
             isDrawing = false;
             return;
+        }
+
+        // If clicking elsewhere while text is open (and not using text tool), commit it
+        if (textOverlay.style.display === 'block') {
+            commitText();
         }
 
         isDrawing = true;
@@ -271,13 +306,37 @@
                 ctx.lineTo(pos.x - headlen * Math.cos(angle + Math.PI / 6), pos.y - headlen * Math.sin(angle + Math.PI / 6));
             } else if (currentTool === 'rect') {
                 ctx.rect(startX, startY, pos.x - startX, pos.y - startY);
+            } else if (currentTool === 'square') {
+                let side = Math.min(Math.abs(pos.x - startX), Math.abs(pos.y - startY));
+                let dirX = (pos.x > startX) ? 1 : -1;
+                let dirY = (pos.y > startY) ? 1 : -1;
+                ctx.rect(startX, startY, side * dirX, side * dirY);
             } else if (currentTool === 'circle') {
                 let radius = Math.sqrt(Math.pow(pos.x - startX, 2) + Math.pow(pos.y - startY, 2));
                 ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
-            } else if (currentTool === 'triangle') {
+            } else if (currentTool === 'ellipse') {
+                let rx = Math.abs(pos.x - startX) / 2;
+                let ry = Math.abs(pos.y - startY) / 2;
+                let cx = startX + (pos.x - startX) / 2;
+                let cy = startY + (pos.y - startY) / 2;
+                ctx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+            } else if (currentTool === 'tri-iso') {
                 ctx.moveTo(startX + (pos.x - startX) / 2, startY);
                 ctx.lineTo(pos.x, pos.y);
                 ctx.lineTo(startX, pos.y);
+                ctx.closePath();
+            } else if (currentTool === 'tri-right') {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(startX, pos.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.closePath();
+            } else if (currentTool === 'tri-equi') {
+                let side = pos.x - startX;
+                let height = side * Math.sqrt(3) / 2;
+                let dir = (pos.y > startY) ? 1 : -1;
+                ctx.moveTo(startX + side / 2, startY);
+                ctx.lineTo(pos.x, startY + height * dir);
+                ctx.lineTo(startX, startY + height * dir);
                 ctx.closePath();
             } else if (currentTool === 'axes') {
                 let dx = Math.abs(pos.x - startX);
@@ -334,11 +393,12 @@
         textOverlay.style.color = currentColor;
         textOverlay.style.fontSize = (currentSize * 8) + 'px';
         textOverlay.value = '';
-        textOverlay.focus();
+        setTimeout(() => textOverlay.focus(), 10);
     }
 
     textOverlay.addEventListener('blur', commitText);
     textOverlay.addEventListener('keydown', (e) => {
+        // Shift+Enter allows new lines, Enter alone commits.
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             commitText();
@@ -361,9 +421,10 @@
         ctx.font = `600 ${fontSize}px 'Source Serif 4', serif`;
         ctx.textBaseline = 'top';
 
-        let lines = text.split('\\n');
+        let lines = text.split('\n');
         lines.forEach((line, i) => {
-            ctx.fillText(line, x, y + (i * fontSize * 1.2));
+            // Draw text directly on canvas
+            ctx.fillText(line, x + 8, y + 8 + (i * fontSize * 1.2)); // +8 padding adjustment
         });
 
         saveHistoryState();
@@ -547,10 +608,25 @@
 
     // 9. UI Controls Setup
     document.querySelectorAll('.popup-tool-btn[data-tool]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            // Remove active from all tool buttons
             document.querySelectorAll('.popup-tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTool = btn.dataset.tool;
+
+            // Handle Group Parent Icons
+            const group = btn.closest('.tool-group');
+            if (group) {
+                const parentBtn = group.querySelector('.group-parent');
+                if (parentBtn) {
+                    parentBtn.innerHTML = btn.innerHTML; // Inherit icon
+                    document.querySelectorAll('.group-parent').forEach(b => b.classList.remove('active'));
+                    parentBtn.classList.add('active'); // Highlight parent
+                }
+            } else {
+                // If a non-grouped tool is clicked, de-highlight all parents
+                document.querySelectorAll('.group-parent').forEach(b => b.classList.remove('active'));
+            }
         });
     });
 
