@@ -48,8 +48,11 @@
                 <div class="toolbar-divider"></div>
                 
                 <button class="popup-tool-btn" data-tool="line" title="Straight Line"><i class="fas fa-slash"></i></button>
+                <button class="popup-tool-btn" data-tool="arrow" title="Arrow"><i class="fas fa-long-arrow-alt-right"></i></button>
                 <button class="popup-tool-btn" data-tool="rect" title="Rectangle"><i class="far fa-square"></i></button>
                 <button class="popup-tool-btn" data-tool="circle" title="Circle"><i class="far fa-circle"></i></button>
+                <button class="popup-tool-btn" data-tool="triangle" title="Triangle"><i class="fas fa-caret-up"></i></button>
+                <button class="popup-tool-btn" data-tool="axes" title="Graph Axes"><i class="fas fa-chart-line"></i></button>
                 <button class="popup-tool-btn" data-tool="text" title="Text Input"><i class="fas fa-font"></i></button>
 
                 <div class="toolbar-divider"></div>
@@ -183,14 +186,22 @@
     // 4. Input Events
     canvas.addEventListener('pointerdown', (e) => {
         if (e.button !== 0 && e.button !== 5) return; 
-        isDrawing = true;
-        canvas.setPointerCapture(e.pointerId);
-
+        
         const pos = getPos(e);
         startX = pos.x;
         startY = pos.y;
         lastX = pos.x;
         lastY = pos.y;
+
+        if (currentTool === 'text') {
+            // Do not capture pointer for text tool so textarea can be clicked
+            openTextInput(startX, startY);
+            isDrawing = false;
+            return;
+        }
+
+        isDrawing = true;
+        canvas.setPointerCapture(e.pointerId);
 
         if (e.pointerType === 'pen' && e.button === 5) {
             let oldTool = currentTool;
@@ -207,9 +218,6 @@
             ctx.moveTo(startX, startY);
             ctx.lineTo(startX, startY);
             ctx.stroke();
-        } else if (currentTool === 'text') {
-            openTextInput(startX, startY);
-            isDrawing = false;
         } else {
             savedImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         }
@@ -252,11 +260,46 @@
             if (currentTool === 'line') {
                 ctx.moveTo(startX, startY);
                 ctx.lineTo(pos.x, pos.y);
+            } else if (currentTool === 'arrow') {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(pos.x, pos.y);
+                let angle = Math.atan2(pos.y - startY, pos.x - startX);
+                let headlen = currentSize * 5;
+                if (headlen < 15) headlen = 15;
+                ctx.lineTo(pos.x - headlen * Math.cos(angle - Math.PI / 6), pos.y - headlen * Math.sin(angle - Math.PI / 6));
+                ctx.moveTo(pos.x, pos.y);
+                ctx.lineTo(pos.x - headlen * Math.cos(angle + Math.PI / 6), pos.y - headlen * Math.sin(angle + Math.PI / 6));
             } else if (currentTool === 'rect') {
                 ctx.rect(startX, startY, pos.x - startX, pos.y - startY);
             } else if (currentTool === 'circle') {
                 let radius = Math.sqrt(Math.pow(pos.x - startX, 2) + Math.pow(pos.y - startY, 2));
                 ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            } else if (currentTool === 'triangle') {
+                ctx.moveTo(startX + (pos.x - startX) / 2, startY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.lineTo(startX, pos.y);
+                ctx.closePath();
+            } else if (currentTool === 'axes') {
+                let dx = Math.abs(pos.x - startX);
+                let dy = Math.abs(pos.y - startY);
+                let headlen = currentSize * 4;
+                if (headlen < 12) headlen = 12;
+                
+                // Y axis
+                ctx.moveTo(startX, startY + dy);
+                ctx.lineTo(startX, startY - dy);
+                // Top Arrow
+                ctx.lineTo(startX - headlen*0.4, startY - dy + headlen);
+                ctx.moveTo(startX, startY - dy);
+                ctx.lineTo(startX + headlen*0.4, startY - dy + headlen);
+                
+                // X axis
+                ctx.moveTo(startX - dx, startY);
+                ctx.lineTo(startX + dx, startY);
+                // Right Arrow
+                ctx.lineTo(startX + dx - headlen, startY - headlen*0.4);
+                ctx.moveTo(startX + dx, startY);
+                ctx.lineTo(startX + dx - headlen, startY + headlen*0.4);
             }
             ctx.stroke();
         }
