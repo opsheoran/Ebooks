@@ -1,0 +1,200 @@
+/* ── PROFESSIONAL FLOATING WHITEBOARD STYLES ── */
+
+.whiteboard-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 85vw;
+    height: 85vh;
+    background: #fff;
+    border: 4px solid #1B2A4A;
+    border-radius: 12px;
+    box-shadow: 0 20px 80px rgba(0,0,0,0.5);
+    z-index: 20000;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+
+    /* Professional Resizing */
+    resize: both;
+    min-width: 600px;
+    min-height: 400px;
+}
+
+.whiteboard-popup::-webkit-resizer {
+    background-color: #C8922A; /* gold */
+}
+
+.whiteboard-popup.active {
+    display: flex;
+}
+
+/* ── HEADER ── */
+.popup-header {
+    background: #1B2A4A;
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.popup-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.popup-close {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.popup-close:hover {
+    background: #9B2335;
+    transform: rotate(90deg);
+}
+
+/* ── CANVAS AREA ── */
+.popup-canvas-container {
+    flex: 1;
+    position: relative;
+    /* Notebook Paper Effect */
+    background-color: #faf9f6;
+    background-image: 
+        linear-gradient(90deg, transparent 79px, rgba(230,130,130,0.4) 79px, rgba(230,130,130,0.4) 81px, transparent 81px),
+        linear-gradient(rgba(100,150,200,0.2) 1px, transparent 1px);
+    background-size: 100% 30px;
+    background-position: 0px -1px;
+    cursor: crosshair;
+    overflow: hidden; /* Prevent scrollbars during resize */
+}
+
+#popup-canvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    touch-action: none; /* Crucial for zero-delay pointer events */
+    cursor: crosshair;
+}
+
+/* Text Input Overlay */
+#text-input-overlay {
+    position: absolute;
+    display: none;
+    background: transparent;
+    border: 2px dashed #C8922A;
+    font-family: 'Source Serif 4', serif;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    z-index: 10;
+}
+
+/* ── TOOLBAR ── */
+.popup-toolbar {
+    background: #F5F3EE;
+    border-top: 2px solid #DDD8CF;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+}
+
+.popup-tool-btn {
+    background: #fff;
+    border: 1px solid #DDD8CF;
+    border-radius: 6px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #1B2A4A;
+    font-size: 1rem;
+    transition: all 0.2s;
+    outline: none;
+}
+
+.popup-tool-btn:hover {
+    background: #e8e6df;
+}
+
+.popup-tool-btn.active {
+    background: #1B2A4A;
+    color: #fff;
+    border-color: #1B2A4A;
+    box-shadow: 0 2px 8px rgba(27,42,74,0.3);
+}
+
+.popup-color-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.2s;
+}
+
+.popup-color-dot.active {
+    border-color: #C8922A;
+    transform: scale(1.15);
+}
+
+.popup-size-slider {
+    width: 80px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.toolbar-divider {
+    width: 2px;
+    height: 28px;
+    background: #DDD8CF;
+    margin: 0 8px;
+}
+
+/* ── DRAW BUTTON TOGGLE ── */
+.draw-mode-toggle {
+    background: var(--navy);
+    color: #fff;
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition);
+}
+.draw-mode-toggle:hover {
+    background: var(--navy-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
