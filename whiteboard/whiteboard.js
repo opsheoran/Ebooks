@@ -57,7 +57,7 @@
     const popup = document.getElementById('whiteboard-popup');
     const canvas = document.getElementById('popup-canvas');
     // Requesting desynchronized for lower latency ink
-    const ctx = canvas.getContext('2d', { desynchronized: true, alpha: true });
+    const ctx = canvas.getContext('2d', { alpha: true });
     const container = document.getElementById('popup-canvas-wrap');
     const dragHandle = document.getElementById('popup-drag-handle');
     const textOverlay = document.getElementById('text-input-overlay');
