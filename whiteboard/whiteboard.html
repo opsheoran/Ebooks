@@ -3,404 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher's Canvas · Statistics 102</title>
-
+    <title>Teacher's Pro Canvas | E-Books Library</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+    <!-- Whiteboard CSS -->
+    <link rel="stylesheet" href="whiteboard.css?v=2.0">
     <style>
-        :root {
-            --navy:          #1B2A4A;
-            --navy-light:    #2E4270;
-            --gold:          #C8922A;
-            --gold-light:    #E8B84B;
-            --ivory:         #FAFAF7;
-            --paper:         #F5F3EE;
-            --border:        #DDD8CF;
-            --crimson:       #9B2335;
-            --sage:          #3D6B5A;
-            --sky:           #1D6FA4;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--paper);
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ── HEADER ───────────────────────────────────────────── */
-        .board-header {
-            background: var(--navy);
-            color: #fff;
-            padding: 12px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            z-index: 100;
-        }
-
-        .header-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .header-title h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
-        }
-
-        .back-btn {
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            text-decoration: none;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .back-btn:hover {
-            background: var(--gold);
-            border-color: var(--gold-light);
-        }
-
-        /* ── CANVAS AREA ────────────────────────────────────────── */
-        .canvas-container {
-            flex: 1;
-            position: relative;
-            background: #fff;
-            cursor: crosshair;
-        }
-
-        #whiteboard {
-            display: block;
-        }
-
-        /* ── FLOATING TOOLBAR ───────────────────────────────────── */
-        .toolbar {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: var(--navy);
-            padding: 15px;
-            border-radius: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            border: 2px solid var(--gold);
-            z-index: 1000;
-        }
-
-        .tool-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .tool-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.1);
-            color: #fff;
-            cursor: pointer;
+            background-color: #F5F3EE;
+            margin: 0;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
-            font-size: 1.1rem;
+            height: 100vh;
+            font-family: 'Source Serif 4', serif;
         }
-
-        .tool-btn:hover {
-            background: rgba(255,255,255,0.2);
-            transform: scale(1.1);
+        .container {
+            text-align: center;
         }
-
-        .tool-btn.active {
-            background: var(--gold);
-            color: var(--navy);
-            box-shadow: 0 0 15px var(--gold-light);
+        h1 {
+            font-family: 'Playfair Display', serif;
+            color: #1B2A4A;
         }
-
-        .color-dot {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 2px solid rgba(255,255,255,0.3);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .color-dot:hover {
-            transform: scale(1.2);
-        }
-
-        .color-dot.active {
-            border-color: #fff;
-            box-shadow: 0 0 8px rgba(255,255,255,0.5);
-        }
-
-        .size-slider {
-            width: 100px;
-            height: 4px;
-            appearance: none;
-            background: rgba(255,255,255,0.2);
-            border-radius: 2px;
-            outline: none;
-            margin: 10px 0;
-            transform: rotate(-90deg);
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-        .size-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--gold-light);
-            cursor: pointer;
-        }
-
-        /* ── UTILITIES ───────────────────────────────────────────── */
-        .divider {
-            height: 1px;
-            background: rgba(255,255,255,0.1);
-            width: 100%;
-        }
-
-        /* ── TOAST/MESSAGE ───────────────────────────────────────── */
-        #status-msg {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--sage);
+        .draw-mode-toggle {
+            background: #1B2A4A;
             color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
+            border: 2px solid #C8922A;
+            border-radius: 20px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(27,42,74,.12);
+            transition: all 0.3s ease;
+        }
+        .draw-mode-toggle:hover {
+            background: #2E4270;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(27,42,74,.16);
+        }
+        /* Make popup full size automatically for standalone page */
+        .whiteboard-popup {
+            width: 95vw !important;
+            height: 95vh !important;
         }
     </style>
 </head>
 <body>
-
-    <header class="board-header">
-        <div class="header-title">
-            <div style="background: var(--gold); width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: var(--navy);">
-                <i class="fas fa-chalkboard"></i>
-            </div>
-            <h1>Teacher's Interactive Canvas</h1>
-        </div>
-        <a href="stat102.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Course</a>
-    </header>
-
-    <div class="canvas-container" id="container">
-        <canvas id="whiteboard"></canvas>
-
-        <div class="toolbar">
-            <!-- Tools -->
-            <div class="tool-group">
-                <button class="tool-btn active" id="penTool" title="Pen"><i class="fas fa-pen"></i></button>
-                <button class="tool-btn" id="eraserTool" title="Eraser"><i class="fas fa-eraser"></i></button>
-                <button class="tool-btn" id="clearBtn" title="Clear All"><i class="fas fa-trash-alt"></i></button>
-            </div>
-
-            <div class="divider"></div>
-
-            <!-- Colors -->
-            <div class="tool-group">
-                <div class="color-dot active" style="background: #1B2A4A;" data-color="#1B2A4A"></div>
-                <div class="color-dot" style="background: #9B2335;" data-color="#9B2335"></div>
-                <div class="color-dot" style="background: #3D6B5A;" data-color="#3D6B5A"></div>
-                <div class="color-dot" style="background: #1D6FA4;" data-color="#1D6FA4"></div>
-                <div class="color-dot" style="background: #000000;" data-color="#000000"></div>
-            </div>
-
-            <div class="divider"></div>
-
-            <!-- Size -->
-            <div class="tool-group">
-                <input type="range" min="1" max="50" value="5" class="size-slider" id="sizeSlider">
-                <i class="fas fa-paint-brush" style="color: #fff; font-size: 0.8rem;"></i>
-            </div>
-
-            <div class="divider"></div>
-
-            <!-- Save -->
-            <div class="tool-group">
-                <button class="tool-btn" id="saveBtn" title="Save Image"><i class="fas fa-download"></i></button>
-            </div>
-        </div>
+    <div class="container">
+        <h1>Teacher's Pro Canvas</h1>
+        <p>A multi-page digital notebook for mathematical derivations and statistical proofs.</p>
+        <br>
+        <button class="draw-mode-toggle" id="draw-mode-btn"><i class="fas fa-chalkboard"></i> Open Canvas</button>
+        <br><br>
+        <a href="../index.html" style="color: #6B6B70; text-decoration: none; font-size: 0.9rem;">&larr; Back to E-Books Library</a>
     </div>
 
-    <div id="status-msg">Board Cleared!</div>
-
+    <!-- Whiteboard JS -->
+    <script src="whiteboard.js?v=2.0"></script>
     <script>
-        const canvas = document.getElementById('whiteboard');
-        const ctx = canvas.getContext('2d');
-        const container = document.getElementById('container');
-        
-        // State
-        let isDrawing = false;
-        let lastX = 0;
-        let lastY = 0;
-        let currentTool = 'pen';
-        let currentColor = '#1B2A4A';
-        let currentSize = 5;
-
-        // Init Canvas Size
-        function resize() {
-            canvas.width = container.clientWidth;
-            canvas.height = container.clientHeight;
-            
-            // Set canvas background to white for saving
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.lineJoin = 'round';
-            ctx.lineCap = 'round';
-            ctx.strokeStyle = currentColor;
-            ctx.lineWidth = currentSize;
-        }
-
-        window.addEventListener('resize', resize);
-        resize();
-
-        // Drawing Functions
-        function startDrawing(e) {
-            isDrawing = true;
-            const pos = getPos(e);
-            [lastX, lastY] = [pos.x, pos.y];
-        }
-
-        function draw(e) {
-            if (!isDrawing) return;
-            e.preventDefault();
-            
-            const pos = getPos(e);
-            
-            ctx.beginPath();
-            ctx.moveTo(lastX, lastY);
-            ctx.lineTo(pos.x, pos.y);
-            
-            if (currentTool === 'eraser') {
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.lineWidth = currentSize * 2;
-            } else {
-                ctx.globalCompositeOperation = 'source-over';
-                ctx.strokeStyle = currentColor;
-                ctx.lineWidth = currentSize;
-            }
-            
-            ctx.stroke();
-            [lastX, lastY] = [pos.x, pos.y];
-        }
-
-        function stopDrawing() {
-            isDrawing = false;
-            ctx.beginPath();
-        }
-
-        function getPos(e) {
-            let x, y;
-            if (e.type.includes('touch')) {
-                x = e.touches[0].clientX - canvas.offsetLeft;
-                y = e.touches[0].clientY - canvas.offsetTop;
-            } else {
-                x = e.offsetX;
-                y = e.offsetY;
-            }
-            return { x, y };
-        }
-
-        // Event Listeners
-        canvas.addEventListener('mousedown', startDrawing);
-        canvas.addEventListener('mousemove', draw);
-        canvas.addEventListener('mouseup', stopDrawing);
-        canvas.addEventListener('mouseout', stopDrawing);
-
-        canvas.addEventListener('touchstart', (e) => {
-            startDrawing(e);
-        }, { passive: false });
-        canvas.addEventListener('touchmove', (e) => {
-            draw(e);
-        }, { passive: false });
-        canvas.addEventListener('touchend', stopDrawing);
-
-        // UI Controls
-        document.getElementById('penTool').addEventListener('click', function() {
-            currentTool = 'pen';
-            setActiveTool(this);
-        });
-
-        document.getElementById('eraserTool').addEventListener('click', function() {
-            currentTool = 'eraser';
-            setActiveTool(this);
-        });
-
-        function setActiveTool(btn) {
-            document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
-
-        document.querySelectorAll('.color-dot').forEach(dot => {
-            dot.addEventListener('click', function() {
-                currentColor = this.getAttribute('data-color');
-                document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Switch to pen automatically if color is picked
-                currentTool = 'pen';
-                setActiveTool(document.getElementById('penTool'));
-            });
-        });
-
-        document.getElementById('sizeSlider').addEventListener('input', function() {
-            currentSize = this.value;
-        });
-
-        document.getElementById('clearBtn').addEventListener('click', function() {
-            if (confirm('Clear the entire board?')) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = '#ffffff';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                showStatus('Board Cleared!');
-            }
-        });
-
-        document.getElementById('saveBtn').addEventListener('click', function() {
-            const link = document.createElement('a');
-            link.download = 'teacher-elaboration-' + new Date().getTime() + '.png';
-            link.href = canvas.toDataURL();
-            link.click();
-            showStatus('Image Downloaded!');
-        });
-
-        function showStatus(msg) {
-            const el = document.getElementById('status-msg');
-            el.textContent = msg;
-            el.style.opacity = '1';
+        // Auto-click the button so the whiteboard pops up instantly when they visit this page
+        window.onload = function() {
             setTimeout(() => {
-                el.style.opacity = '0';
-            }, 2000);
-        }
+                document.getElementById('draw-mode-btn').click();
+            }, 300);
+        };
     </script>
 </body>
 </html>
