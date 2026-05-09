@@ -70,7 +70,7 @@
     <aside class="sidebar">
         <div style="text-align: center; margin-bottom: 20px; margin-top: 10px;">
             <img src="opsheoran.png" alt="Prof. O.P. Sheoran" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 10px; object-fit: cover;">
-            <h3 style="color: white; font-family: \'Playfair Display\', serif; font-size: 1.1rem; margin: 0;">Prof. O.P. Sheoran</h3>
+            <h3 style="color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0;">Prof. O.P. Sheoran</h3>
         </div>
         <a class="nav-link active" onclick="showTopic('sec9-1')">9.1 Introduction</a>
         <a class="nav-link" onclick="showTopic('sec9-2')">9.2 Two-Stage Sampling</a>
@@ -108,9 +108,11 @@
                     "It is a long tail, certainly" said Alice, looking down with wonder at the Mouse's tail, "but why do you call it sad?"<br>
                     -- <strong>Lewis Carroll</strong>
                 </div>
-                <p>In Chapter 8, we have discussed cluster sampling in which clusters were considered sampling units and all the elements in the selected clusters were enumerated completely. It has been stated there that cluster sampling is economical under certain circumstances but the method restricts the spread of the sample over the population which results generally in increasing the variance of the estimator. It is, therefore, logical to expect that the efficiency of the estimator will be increased by distributing elements over a large number of clusters and surveying only a sample of units in each selected cluster instead of completely enumerating all the elements in the sample of clusters. This type of sampling which consists in first selecting the clusters and then selecting a specified number of elements from each selected cluster is known as sub-sampling or two-stage sampling. In such sampling designs, clusters which form the units of sampling at the first stage are called the first stage units (fsu) or primary sampling units (psu) and the elements within clusters are called second-stage units (ssu). This procedure can be generalized to three or more stages and is termed multi-stage sampling. For example, in crop surveys for estimating yield of a crop in a district, a block may be considered a primary sampling unit, the villages the second stage units, the crop fields the third stage units, and a plot of fixed size the ultimate unit of sampling.</p>
+                <p>Hello students! In the previous chapter, we talked about <strong>Cluster Sampling</strong>. Remember? In cluster sampling, we divide the population into groups called clusters. Then we pick a few clusters and study every single person or unit inside those selected groups. While this is cheap and easy, there is a problem: since we only look at a few clusters, we don't get to see how units are spread across the whole population. This can make our results less accurate.</p>
 
-                <p>Multi-stage sampling has been found to be very useful in practice and this procedure is being commonly used in large-scale surveys. Mahalanobis (1940) used this procedure in crop surveys and Ganguli (1941) has termed it nested sampling. Cochran (1939), Hansen and Hurwitz (1943), Sukhatme (1953) and Lahiri (1954) have discussed its use in agricultural and population surveys. Roy (1957) and Singh (1958) have considered the estimation of variance components for this sampling design. The multi-stage sampling procedure may be taken to be a better combination of random sampling and cluster sampling procedures. It can be expected to be (i) less efficient than single stage random sampling and more efficient than cluster sampling from the sampling variability point of view, and (ii) more efficient than single stage random sampling and less efficient than cluster sampling from the cost and operational point of view. The main advantage of this sampling procedure is that, at the first stage, the frame of fsu's is required, which can be prepared easily. At the second stage, the frame of ssu's is required only for the selected fsu's and so on. This design is more flexible as it permits the use of different selection procedures in different stages. It should also be mentioned that multi-stage sampling may be the only choice in a number of practical situations where a satisfactory sampling frame of ultimate-stage units is not readily available and the cost of obtaining such a frame is large.</p>
+                <p>So, what can we do? A logical idea is to pick more clusters but study only a few units from each. For example, instead of picking 2 villages and surveying every house, we could pick 5 villages and survey 10 houses from each. This method is called <strong>Two-Stage Sampling</strong> or <strong>Sub-sampling</strong>. Here, the clusters we pick first are called <strong>First-Stage Units (fsu)</strong> or Primary Sampling Units. The smaller units inside them are called <strong>Second-Stage Units (ssu)</strong>.</p>
+
+                <p>We can even take this further! Think about estimating the crop yield in a whole district. First, we pick some Blocks (First Stage). Then from each Block, we pick some Villages (Second Stage). From those Villages, we pick some Fields (Third Stage). Finally, we pick small plots in those fields to measure. This is called <strong>Multi-Stage Sampling</strong>. It is very popular in real-world surveys because it is flexible and saves a lot of money on making lists of everyone in the population.</p>
             </div>
             
             <div class="hinglish-content">
@@ -128,86 +130,95 @@
 
         <section id="sec9-2" class="section-card">
             <div class="english-content">
-                <h2>9.2 Two-Stage Sampling with Equal First-Stage Units: Estimation of Mean and its Variance</h2>
-                <p>Since, in two-stage sampling, the units are selected in stages by considering a probability structure at each stage, the selection procedures at both stages are to be considered in deriving the expected value and the variance of an estimator based on the number of observations taken on a sample of ssu's. For getting the expected value and sampling variance of estimators based on units selected through randomization at two stages, we may follow results given in Theorems 1.3.7 and 1.3.8 as summarized below.</p>
+                <h2>9.2 Two-Stage Sampling: Equal First-Stage Units</h2>
+                <p>In two-stage sampling, we pick units in two steps. First, we pick large groups (clusters), and then we pick smaller units from inside those groups. To find the average value and how much it varies (variance), we have to think about both steps. We use two important rules from probability:</p>
 
                 <div class="derivation-block">
+                    <p><strong>Rule 1: Expected Value (Average)</strong></p>
                     $$ E(t) = E_1E_2(t) \quad (9.2.1) $$
+                    <p><strong>Rule 2: Variance (Spread)</strong></p>
                     $$ V(t) = V_1E_2(t) + E_1V_2(t) \quad (9.2.2) $$
-                    <p>where \( E_1 \) and \( V_1 \) are expectation and variance over the first stage and \( E_2 \) and \( V_2 \) are the conditional expectation and variance over the second stage for a given sample of fsu's.</p>
+                    <p>Here, \( E_1 \) and \( V_1 \) are the average and variance for the first stage (picking clusters). \( E_2 \) and \( V_2 \) are for the second stage (picking units inside those clusters).</p>
                 </div>
 
-                <p>Let us assume that the population consists of \( NM \) elements grouped into \( N \) fsu's of \( M \) ssu's each. Let \( n \) be the number of fsu's in the sample and \( m \) the number of ssu's to be selected from each sampled first stage unit. Also we assume that the units at each stage are selected with equal probability. The following notations are used:</p>
+                <p>Let's assume we have a population with \( N \) large clusters, and each cluster has \( M \) units. From these, we pick \( n \) clusters, and then from each selected cluster, we pick \( m \) units. We assume everything is picked randomly with equal chance. Here are the symbols we use:</p>
                 <ul>
-                    <li>\( y_{ij} = \) the value obtained for the \( j \)-th ssu in the \( i \)-th fsu</li>
-                    <li>\( \bar{Y}_{i\cdot} = \frac{\sum_{j=1}^M y_{ij}}{M} = \) Mean per element in the \( i \)-th fsu</li>
-                    <li>\( \bar{Y} = \frac{\sum_{i=1}^N \bar{Y}_{i\cdot}}{N} = \) mean per element in the population</li>
-                    <li>\( S_b^2 = \frac{\sum_{i=1}^N (\bar{Y}_{i\cdot} - \bar{Y})^2}{N - 1} = \) true variance between first stage unit means</li>
-                    <li>\( S_w^2 = \frac{\sum_{i=1}^N \sum_{j=1}^M (y_{ij} - \bar{Y}_{i\cdot})^2}{N(M - 1)} = \) true variance within first stage units</li>
-                    <li>\( \bar{y}_{i\cdot} = \frac{\sum_{j=1}^m y_{ij}}{m} = \) sample mean per ssu in the \( i \)-th fsu</li>
-                    <li>\( \bar{y} = \frac{\sum_{i=1}^n \bar{y}_{i\cdot}}{n} = \) overall sample mean per element</li>
+                    <li>\( y_{ij} \): Value of the \( j \)-th unit in the \( i \)-th cluster.</li>
+                    <li>\( \bar{Y}_{i\cdot} \): The true average of all units in the \( i \)-th cluster.</li>
+                    <li>\( \bar{Y} \): The true average of the whole population.</li>
+                    <li>\( S_b^2 \): Variance <strong>between</strong> different cluster averages.</li>
+                    <li>\( S_w^2 \): Variance <strong>within</strong> the clusters.</li>
+                    <li>\( \bar{y}_{i\cdot} \): The sample average of the \( m \) units we picked from the \( i \)-th cluster.</li>
+                    <li>\( \bar{y} \): The overall average of our entire sample.</li>
                 </ul>
 
-                <h3>Theorem 9.2.1</h3>
-                <p>If the \( n \) fsu's and the \( m \) ssu's from each chosen fsu are selected by simple random sampling, wor, \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \) with sampling variance</p>
+                <h3>Theorem 9.2.1: Population Mean and its Variance</h3>
+                <p>If we pick clusters and units using Simple Random Sampling without replacement (SRSWOR), then the sample mean \( \bar{y} \) is an unbiased estimator of the population mean \( \bar{Y} \). Its variance is:</p>
                 <div class="derivation-block">
                     $$ V(\bar{y}) = \frac{N - n}{N}\frac{S_b^2}{n} + \frac{M - m}{M}\frac{S_w^2}{mn} \quad (9.2.3) $$
                 </div>
-                <p><em>Proof:</em></p>
+                <p><strong>Logic of the Proof:</strong></p>
+                <p>To prove this, we first show that the estimator is "unbiased" (meaning its average matches the true population average). Then, we calculate the variance by splitting it into two parts: the variation caused by picking different clusters, and the variation caused by picking different units inside those clusters.</p>
+
                 <div class="derivation-block">
-                    <p>Applying relation (9.2.1) for getting expectation, we have</p>
-                    $$ E(\bar{y}) = E_1E_2(\bar{y}_{i\cdot}|i) = E_1(\bar{Y}_{i\cdot}) = \bar{Y} $$
-                    <p>It shows that the simple mean of all elements in the sample gives an unbiased estimator of the population mean.</p>
-                    <p>To obtain the variance of the estimator, by relation (9.2.2), we have</p>
-                    $$ V(\bar{y}) = V_1[E_2(\bar{y}|i)] + E_1[V_2(\bar{y}|i)] $$
-                    $$ = V_1(\bar{Y}_{i\cdot}) + E_1\left[ \frac{1}{n^2}\sum_{i=1}^n \left( \frac{1}{m} - \frac{1}{M} \right)S_i^2 \right] $$
-                    $$ = \frac{N - n}{nN}S_b^2 + \frac{M - m}{mM}\frac{S_w^2}{n} $$
-                    <div class="explanation">\( \because \) the total variance partitions perfectly into the between-fsu variance scaled by the first-stage sampling fraction and the within-fsu variance scaled by the second-stage sampling fraction.</div>
-                    <p>If \( f_1 = n/N \) and \( f_2 = m/M \) are the sampling fractions in the first and second stages, the result can be written as</p>
+                    <p><strong>Part 1: Proving it is Unbiased</strong></p>
+                    <p>If we take the average of our cluster sample means (\( \bar{y}_{i\cdot} \)), the inner expectation gives us the true cluster mean (\( \bar{Y}_{i\cdot} \)). Then, averaging these over all possible clusters gives us the population mean:</p>
+                    $$ E(\bar{y}) = E_1[E_2(\bar{y}_{i\cdot}|i)] = E_1(\bar{Y}_{i\cdot}) = \bar{Y} $$
+                    
+                    <p><strong>Part 2: Calculating the Variance</strong></p>
+                    <p>We use the formula: \( V(\bar{y}) = V_1[E_2(\bar{y}|i)] + E_1[V_2(\bar{y}|i)] \)</p>
+                    
+                    <p><strong>Step A: Variance from the first stage (Between Clusters)</strong></p>
+                    <p>The first part is simply the variance of the cluster means. Since we are picking \( n \) clusters out of \( N \):</p>
+                    $$ V_1[E_2(\bar{y}|i)] = V_1(\bar{Y}_{i\cdot}) = \left( \frac{1}{n} - \frac{1}{N} \right) S_b^2 $$
+
+                    <p><strong>Step B: Variance from the second stage (Within Clusters)</strong></p>
+                    <p>The second part is the average of the variances within each cluster. For each cluster \( i \), the variance of its sample mean is \( \frac{M-m}{M}\frac{S_i^2}{m} \). Averaging this over \( n \) clusters:</p>
+                    $$ E_1[V_2(\bar{y}|i)] = E_1\left[ \frac{1}{n^2} \sum_{i=1}^n \left( \frac{M - m}{M} \right) \frac{S_i^2}{m} \right] $$
+                    $$ = \frac{1}{n} \left( \frac{M - m}{M} \right) \frac{S_w^2}{m} = \frac{M - m}{M} \frac{S_w^2}{nm} $$
+
+                    <p><strong>Step C: Final Combination</strong></p>
+                    <p>Adding Step A and Step B together gives the total variance:</p>
+                    $$ V(\bar{y}) = \frac{N - n}{nN}S_b^2 + \frac{M - m}{nmM}S_w^2 $$
+                    
+                    <p>Using sampling fractions \( f_1 = n/N \) and \( f_2 = m/M \), we can write this more neatly as:</p>
                     $$ V(\bar{y}) = \frac{1 - f_1}{n}S_b^2 + \frac{1 - f_2}{nm}S_w^2 \quad (9.2.4) $$
                 </div>
 
-                <p>The variance given by relation (9.2.3) in two-stage sampling is made up of two components. One component comes from the variability of ssu's within fsu's and the second one arises from the variance of fsu's. If the selected fsu's are completely enumerated or, in other words, \( m = M \), the variance of the sample mean will be given by the first component only and this situation has already been discussed in Chapter 8. If \( n = N \) or, in other words, every fsu in the population is included in the sample, then this case corresponds to stratified sampling with fsu's as strata, and a simple random sampling of \( m \) ssu's is drawn from each of the strata.</p>
+                <p>As you can see, the variance has two components. One part comes from the fact that we didn't pick all clusters (between-cluster variance), and the other part comes from the fact that we didn't pick all units inside those clusters (within-cluster variance). If we studied every unit in the selected clusters (\( m = M \)), the second part would become zero, turning this into simple Cluster Sampling.</p>
 
-                <h3>Corollary 1</h3>
-                <p>Under the conditions of Theorem 9.2.1, an unbiased estimator of \( V(\bar{y}) \) is given by</p>
+                <h3>Corollary 1: Estimating the Variance from a Sample</h3>
+                <p>In real life, we don't know the true population variances (\( S_b^2, S_w^2 \)). We use sample variances (\( s_b^2, s_w^2 \)) instead. An unbiased estimate of the variance is:</p>
                 <div class="derivation-block">
                     $$ v(\bar{y}) = \frac{1 - f_1}{n}s_b^2 + \frac{f_1(1 - f_2)}{nm}s_w^2 \quad (9.2.5) $$
-                    <p>where</p>
-                    $$ s_b^2 = \frac{\sum_{i=1}^n (\bar{y}_{i\cdot} - \bar{y})^2}{n - 1} $$
-                    $$ s_w^2 = \frac{\sum_{i=1}^n \sum_{j=1}^m (y_{ij} - \bar{y}_{i\cdot})^2}{n(m - 1)} $$
+                    <p>where \( s_b^2 \) is the variance between sample means of clusters, and \( s_w^2 \) is the pooled variance within clusters.</p>
                 </div>
 
-                <h3>Corollary 2</h3>
-                <p>Show that an unbiased estimator of \( S_b^2 \) is given by</p>
+                <h3>Corollary 2: Estimating Between-Cluster Variance</h3>
+                <p>We can also estimate the true variance between clusters using this formula:</p>
                 <div class="derivation-block">
                     $$ \widehat{S}_b^2 = s_b^2 - \frac{1 - f_2}{m}s_w^2 \quad (9.2.6) $$
                 </div>
 
-                <h3>Corollary 3</h3>
-                <p>If the \( n \) fsu's are selected randomly with replacement and the \( m \) ssu's from each chosen unit are selected by simple random sampling, wor, \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \) with sampling variance</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}) = \frac{S_b^2}{n} + (1 - f_2)\frac{S_w^2}{m} \quad (9.2.7) $$
-                </div>
+                <h3>Summary of Other Sampling Methods</h3>
+                <p>Depending on whether we pick clusters and units with or without replacement, the variance formula changes slightly:</p>
+                <ul>
+                    <li><strong>Clusters: With Replacement, Units: Without Replacement:</strong>
+                        $$ V(\bar{y}) = \frac{S_b^2}{n} + (1 - f_2)\frac{S_w^2}{nm} $$
+                    </li>
+                    <li><strong>Clusters: Without Replacement, Units: With Replacement:</strong>
+                        $$ V(\bar{y}) = (1 - f_1)\frac{S_b^2}{n} + \frac{S_w^2}{mn} $$
+                    </li>
+                    <li><strong>Both Stages: With Replacement:</strong>
+                        $$ V(\bar{y}) = \frac{S_b^2}{n} + \frac{S_w^2}{mn} $$
+                    </li>
+                </ul>
 
-                <h3>Corollary 4</h3>
-                <p>If the \( n \) fsu's are selected randomly, wor, and the \( m \) ssu's from each chosen unit are selected randomly, wr, \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \) with its variance</p>
+                <h3>Corollary 6: Estimating the Population Total</h3>
+                <p>If we want to estimate the <strong>Total</strong> (\( Y \)) instead of the average, we just multiply everything by the total number of units (\( NM \)):</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}) = (1 - f_1)\frac{S_b^2}{n} + \frac{S_w^2}{mn} \quad (9.2.8) $$
-                </div>
-
-                <h3>Corollary 5</h3>
-                <p>If the \( n \) fsu's and \( m \) ssu's from each chosen unit are selected by simple random sampling, wr, \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \) with its variance</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}) = \frac{S_b^2}{n} + \frac{S_w^2}{m} \quad (9.2.9) $$
-                </div>
-
-                <h3>Corollary 6</h3>
-                <p>If the \( n \) fsu's and \( m \) ssu's from each chosen unit are selected by simple random sampling, wor, the estimator</p>
-                <div class="derivation-block">
-                    $$ \widehat{Y} = NM\sum_{i=1}^n \frac{\bar{y}_{i\cdot}}{n} \quad (9.2.10) $$
-                    <p>is an unbiased estimator of the population total \( Y \) and its sampling variance is given by</p>
-                    $$ V(\widehat{Y}) = N^2M^2(1 - f_1)\frac{S_b^2}{n} + N^2M^2(1 - f_2)\frac{S_w^2}{mn} \quad (9.2.11) $$
+                    $$ \widehat{Y} = NM\bar{y} $$
+                    $$ V(\widehat{Y}) = N^2M^2 \left[ \frac{1 - f_1}{n}S_b^2 + \frac{1 - f_2}{nm}S_w^2 \right] $$
                 </div>
             </div>
 
@@ -298,106 +309,44 @@
 
         <section id="sec9-3" class="section-card">
             <div class="english-content">
-                <h2>9.3 Optimum Allocation: Equal First-Stage Units</h2>
-                <p>As the efficiency of two-stage sampling depends very much upon values of \( m \) and \( n \), it is natural to think of their optimal values in a given practical situation. In a two-stage sampling design, a simple cost function of the survey can be written as</p>
+                <h2>9.3 Choosing the Best Sample Sizes (Optimum Allocation)</h2>
+                <p>In two-stage sampling, the big question is: <em>How many clusters (\( n \)) and how many units (\( m \)) should we pick?</em> If we pick too many clusters, travel costs go up. If we pick too many units from one cluster, our sample won't be well-spread. We need to find the "Optimum" (best) balance.</p>
+
+                <p><strong>The Cost of the Survey:</strong></p>
                 <div class="derivation-block">
                     $$ C = a + nc_1 + nmc_2 \quad (9.3.1) $$
-                    <p>where \( a \) is the overhead cost, \( c_1 \) is the cost of including an fsu in the sample and \( c_2 \) is the cost of including an ssu in the sample.</p>
+                    <p>Where:</p>
+                    <ul>
+                        <li>\( a \): Fixed overhead cost (office rent, staff, etc.).</li>
+                        <li>\( c_1 \): Cost to visit one cluster (travel time, setting up camp).</li>
+                        <li>\( c_2 \): Cost to survey one unit inside a cluster.</li>
+                    </ul>
                 </div>
+                <p>Usually, \( c_1 \) is much higher than \( c_2 \). Think about it: traveling to a remote village is expensive, but interviewing one more person while you are already in that village is very cheap!</p>
 
-                <p>In practice, \( c_1 \) is likely to be larger than \( c_2 \). Hence, a unit increase in \( n \) would increase the cost more than a unit increase in \( m \). Let us consider the sampling variance of the estimator also. We find that the total variance in two-stage sampling consists of two parts (1) variance between fsu's and (2) variance within fsu's. In fact, the sampling variance of an estimator, in a two-stage design, can be written as</p>
+                <p><strong>The Variance (Error):</strong></p>
+                <p>We want to minimize the error in our estimate. The variance can be written as:</p>
                 <div class="derivation-block">
                     $$ V = A_0 + \frac{1}{n}\left( A_1 + \frac{A_2}{m} \right) \quad (9.3.2) $$
-                    <p>where</p>
-                    $$ A_0 = \frac{S_b^2}{N} $$
-                    $$ A_1 = S_b^2 - \frac{S_w^2}{M} $$
-                    $$ A_2 = S_w^2 $$
                 </div>
 
-                <p>It can be seen that the variance component due to fsu's decreases with an increase in \( n \) only while the variance component due to ssu's decreases with an increase in both \( n \) and \( m \).</p>
+                <h3>Case (a): When Budget is Fixed</h3>
+                <p>If you have a fixed amount of money (\( C_0 \)), how do you get the most accurate results? Using a bit of calculus (Lagrange's method), we find the best number of units per cluster (\( m_{opt} \)):</p>
+                <div class="derivation-block">
+                    $$ m_{opt} = \sqrt{ \frac{A_2 c_1}{A_1 c_2} } = \frac{S_w \sqrt{c_1/c_2}}{\sqrt{S_b^2 - S_w^2/M}} \quad (9.3.4) $$
+                </div>
+                <p>This formula tells us that if the travel cost (\( c_1 \)) is high, we should pick more units from each cluster we visit! Once you have \( m_{opt} \), you can easily find the number of clusters (\( n_{opt} \)) you can afford.</p>
 
-                <p>Thus, the variance and cost functions behave in opposite direction for an increase in \( n \) and \( m \) and, therefore, it is necessary to determine an optimum allocation for both the values of \( n \) and \( m \) so that the efficiency per unit of cost is the maximum or the cost per unit is the minimum for a specified value of efficiency.</p>
+                <h3>Case (b): When Accuracy is Fixed</h3>
+                <p>If your boss says, "I need the error to be less than 5%," then you find the values that cost the least money to reach that goal. The formula for \( m_{opt} \) stays the same!</p>
 
-                <h3>(a) When cost is fixed</h3>
-                <p>Suppose that cost \( C \) is fixed, say \( C_0 \). Using Lagrange's method of undetermined multipliers, we construct the function</p>
-                <div class="derivation-block">
-                    $$ L(n,m,\lambda) = V(\bar{y}) + \lambda(a + nc_1 + nmc_2 - C_0) \quad (9.3.3) $$
-                </div>
-                <p>Differentiating \( L \) wrt \( n \) and \( m \), equating the partial derivatives to zero and eliminating \( \lambda \), we have</p>
-                <div class="derivation-block">
-                    $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} = \frac{S_w(c_1/c_2)^{1/2}}{[S_b^2 - S_w^2/M]^{1/2}} \quad (9.3.4) $$
-                </div>
-                <p>Substituting the value of \( m \) in relation (9.3.1), we get the optimum value of \( n \) as</p>
-                <div class="derivation-block">
-                    $$ n_{opt} = (C_0 - a)\frac{(A_1/c_1)^{1/2}}{(A_1c_1)^{1/2} + (A_2c_2)^{1/2}} \quad (9.3.5) $$
-                </div>
-                <p>Substituting the values of \( m_{opt} \) and \( n_{opt} \) in the expression for variance, we get the minimum variance as</p>
-                <div class="derivation-block">
-                    $$ V_{\min}(\bar{y}) = A_0 + \frac{[\sqrt{A_1c_1} + \sqrt{A_2c_2}]^2}{(C_0 - a)} \quad (9.3.6) $$
-                </div>
-
-                <h3>(b) When variance is fixed</h3>
-                <p>Suppose the variance \( V \) of the estimator in two stage sampling is fixed, say \( V_0 \). Then, the values of \( n \) and \( m \) which minimize the cost are given by Lagrange's method of undetermined multiplier. Applying a similar method as in (a) above, we get</p>
-                <div class="derivation-block">
-                    $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} $$
-                </div>
-                <p>Substituting the values of \( m \) in relation (9.3.2), we get the optimum value of \( n \) as</p>
-                <div class="derivation-block">
-                    $$ n_{opt} = \frac{\sqrt{A_1c_1} + \sqrt{A_2c_2}}{V_0 - A_0}\sqrt{\frac{A_1}{c_1}} \quad (9.3.7) $$
-                </div>
-                <p>Substituting the values of \( m_{opt} \) and \( n_{opt} \) in the expression for cost, we get the minimum cost as</p>
-                <div class="derivation-block">
-                    $$ C = a + \frac{[\sqrt{A_1c_1} + \sqrt{A_2c_2}]^2}{V_0 - A_0} \quad (9.3.8) $$
-                </div>
-
-                <h3 style="margin-top: 40px;">Example 9.1</h3>
-                <p>At an experimental station, there were 100 fields sown with wheat. Each field was divided into 16 plots of equal size (1/16th hectare). Out of 100 fields, 10 were selected by simple random sampling, wor. From each selected field, 4 plots were chosen by random sampling, wor. The yields in kg/plot are given below:</p>
+                <h3 style="margin-top: 40px;">Example 9.1: A Practical Problem</h3>
+                <p>Imagine 100 wheat fields, each divided into 16 plots. We pick 10 fields and 4 plots from each field. Here is how we calculate the results:</p>
                 
-                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Selected field</th><th>Plot 1</th><th>Plot 2</th><th>Plot 3</th><th>Plot 4</th></tr>
-                    <tr><td>1</td><td>4.32</td><td>4.84</td><td>3.96</td><td>4.04</td></tr>
-                    <tr><td>2</td><td>4.16</td><td>4.36</td><td>3.50</td><td>5.00</td></tr>
-                    <tr><td>3</td><td>3.06</td><td>4.24</td><td>4.76</td><td>3.12</td></tr>
-                    <tr><td>4</td><td>4.00</td><td>4.84</td><td>4.32</td><td>3.72</td></tr>
-                    <tr><td>5</td><td>4.12</td><td>4.68</td><td>3.46</td><td>4.02</td></tr>
-                    <tr><td>6</td><td>4.08</td><td>3.96</td><td>3.42</td><td>3.08</td></tr>
-                    <tr><td>7</td><td>5.16</td><td>4.24</td><td>4.96</td><td>3.84</td></tr>
-                    <tr><td>8</td><td>4.40</td><td>4.72</td><td>4.04</td><td>3.98</td></tr>
-                    <tr><td>9</td><td>4.20</td><td>4.66</td><td>3.64</td><td>5.00</td></tr>
-                    <tr><td>10</td><td>4.28</td><td>4.36</td><td>3.00</td><td>3.52</td></tr>
-                </table>
-
-                <p>(i) Estimate the average yield per hectare for the experimental station along with its standard error.<br>
-                (ii) How can an estimate obtained from a simple random sample of 40 plots be compared with the estimate obtained above, in (i)?<br>
-                (iii) Obtain optimum \( n \) and \( m \) under cost function \( 100 = 4n + nm \).</p>
-
                 <div class="derivation-block">
-                    <p>We are given, \( N = 100 \), \( M = 16 \), \( n = 10 \) and \( m = 4 \).</p>
-                    
-                    <p><strong>(i)</strong> An estimate of the average wheat yield, with usual notations, is given by</p>
-                    $$ \bar{y} = \frac{1}{n}\sum_{i=1}^n \bar{y}_{i\cdot} = \frac{41.265}{10} = 4.1265 $$
-                    <p>The estimated variance of \( \bar{y} \) is</p>
-                    $$ v(\bar{y}) = \left( \frac{1}{n} - \frac{1}{N} \right)s_b^2 + \frac{1}{n}\left( \frac{1}{m} - \frac{1}{M} \right)s_w^2 $$
-                    <p>Calculating these values, we get</p>
-                    $$ s_b^2 = \frac{1}{n - 1}\sum_{i=1}^n (\bar{y}_{i\cdot} - \bar{y})^2 = \frac{1.4782}{9} = 0.1642 $$
-                    <p>and</p>
-                    $$ s_w^2 = \frac{1}{n(m - 1)}\sum_{i=1}^n \sum_{j=1}^m (y_{ij} - \bar{y}_{i\cdot})^2 = \frac{9.644}{30} = 0.3215 $$
-                    <p>Therefore,</p>
-                    $$ v(\bar{y}) = \left( \frac{1}{10} - \frac{1}{100} \right)0.1642 + \frac{1}{10}\left( \frac{1}{4} - \frac{1}{16} \right)0.3215 = 0.0145 $$
-                    <p>and standard error of \( \bar{y} = \sqrt{0.0145} = 0.120 \).</p>
-
-                    <p><strong>(ii)</strong> In simple random sampling, the estimate of variance is given by</p>
-                    $$ v_{ran}(\bar{y}) = \left( \frac{1}{nm} - \frac{1}{NM} \right)s^2 $$
-                    <p>The estimate of \( S^2 \), using a two stage sampling design, can be written as</p>
-                    $$ s^2 = \frac{1}{NM - 1}\left[ M(N - 1)s_b^2 + \left\{ N(M - 1) - (M - m)\frac{N - 1}{m} \right\} s_w^2 \right] $$
-                    $$ = \frac{1}{1600 - 1}\left[ 16 \times 99 \times 0.1642 + \left\{ 100 \times 15 - \frac{99 \times 12}{4} \right\} 0.3215 \right] = 0.4045 $$
-                    <p>Thus,</p>
-                    $$ v_{ran}(\bar{y}) = \left( \frac{1}{40} - \frac{1}{1600} \right)0.4045 = 0.009 $$
-
-                    <p><strong>(iii)</strong> The given cost function is of the form \( C = c_1n + c_2nm \) with \( c_1 = 4 \), \( c_2 = 1 \), and \( C = 100 \). The optimum value of \( m \) is given by</p>
-                    $$ m_{opt} = \left[ \frac{c_1}{c_2}\frac{s_w^2}{s_b^2 - \frac{s_w^2}{M}} \right]^{1/2} = \left[ \frac{4}{1} \times \frac{0.3215}{0.1642 - (0.3215/16)} \right]^{1/2} \cong 4 $$
-                    <p>Substituting the value of \( m \) in the given cost function, the optimum value of \( n \) is given by</p>
-                    $$ n_{opt} = \frac{100}{8} \cong 13 $$
+                    <p><strong>(i) Average Yield:</strong> We just average the averages of the fields. For this data, \( \bar{y} = 4.1265 \) kg/plot.</p>
+                    <p><strong>(ii) Standard Error:</strong> We calculate the sample variance between fields (\( s_b^2 = 0.1642 \)) and within fields (\( s_w^2 = 0.3215 \)). Plugging these into our variance formula, we get \( SE = 0.120 \).</p>
+                    <p><strong>(iii) Finding the Best Allocation:</strong> If the cost is \( 100 = 4n + nm \), then \( c_1 = 4 \) and \( c_2 = 1 \). Using our formula, the best \( m \) is about 4, and the best \( n \) is about 13 fields.</p>
                 </div>
             </div>
 
@@ -494,76 +443,30 @@
 
         <section id="sec9-4" class="section-card">
             <div class="english-content">
-                <h2>9.4 Three-Stage Sampling with Equal Probability</h2>
-                <p>The procedure of two-stage sampling can be carried to a third stage by sampling the ssu's instead of enumerating them completely. For example, in crop surveys for estimating the yield average, a village is considered the first stage sampling unit. Within a selected village, only some of the fields growing the crop are selected and taken as the second-stage units. When a field is selected, only certain parts (called plots) of it are sampled, which may be termed the third-stage units (tsu). Thus the results of three stage sampling can be obtained by extending those of two stage sampling, with further assumptions that each ssu has \( L \) third-stage units. It is also assumed that the units are selected with equal probability.</p>
+                <h2>9.4 Three-Stage Sampling</h2>
+                <p>We can extend two-stage sampling even further! Imagine adding a third step. For example, in a crop survey:</p>
+                <ul>
+                    <li><strong>Stage 1:</strong> Pick some Villages (fsu).</li>
+                    <li><strong>Stage 2:</strong> Inside those villages, pick some Fields (ssu).</li>
+                    <li><strong>Stage 3:</strong> Inside those fields, pick small Plots (tsu - third stage units).</li>
+                </ul>
+                <p>This is <strong>Three-Stage Sampling</strong>. We assume each cluster at each level has the same size (\( M \) units per fsu, \( L \) units per ssu). All units are picked randomly with equal probability.</p>
 
-                <p>Let \( y_{ijk} \) be the value obtained for the \( k \)-th third-stage unit in the \( j \)-th second stage unit of the \( i \)-th first stage unit. The relevant population means per element are as follows:</p>
-                <div class="derivation-block">
-                    $$ \bar{Y}_{ij} = \sum_{k=1}^L \frac{y_{ijk}}{L} $$
-                    $$ \bar{Y}_i = \sum_{j=1}^M \sum_{k=1}^L \frac{y_{ijk}}{LM} $$
-                    $$ \bar{Y} = \sum_{i=1}^N \sum_{j=1}^M \sum_{k=1}^L \frac{y_{ijk}}{LMN} $$
-                </div>
-                <p>\( \bar{y}_{ij\cdot} \), \( \bar{y}_{i\cdot\cdot} \) and \( \bar{y} \) will denote the corresponding values for the sample.</p>
-                <p>Corresponding population variances will be</p>
-                <div class="derivation-block">
-                    $$ S_b^2 = \sum_{i=1}^N \frac{(\bar{Y}_i - \bar{Y})^2}{(N - 1)} $$
-                    $$ S_w^2 = \sum_{i=1}^N \sum_{j=1}^M \frac{(\bar{Y}_{ij} - \bar{Y}_i)^2}{N(M - 1)} $$
-                    $$ S_u^2 = \sum_{i=1}^N \sum_{j=1}^M \sum_{k=1}^L \frac{(y_{ijk} - \bar{Y}_{ij})^2}{NM(L - 1)} $$
-                </div>
-
-                <h3>Theorem 9.4.1</h3>
-                <p>If the \( n \) fsu's, \( m \) ssu's and \( l \) ultimate units are chosen by simple random sampling, wor, \( \bar{y} \) is an unbiased estimate of \( \bar{Y} \) with variance</p>
+                <h3>Estimating the Mean and Variance</h3>
+                <p>Just like two-stage sampling, the variance here has three components—one for each stage:</p>
                 <div class="derivation-block">
                     $$ V(\bar{y}) = \frac{1 - f_1}{n}S_b^2 + \frac{1 - f_2}{nm}S_w^2 + \frac{1 - f_3}{nml}S_u^2 \quad (9.4.1) $$
-                    <p>where \( f_1 = n/N \), \( f_2 = m/M \), \( f_3 = l/L \) are the sampling fractions at three stages, respectively. The proof is obvious.</p>
+                    <p>Where \( f_1, f_2, f_3 \) are the sampling fractions at each of the three stages.</p>
                 </div>
 
-                <p>The variance given by relation (9.4.1) is made up of three components corresponding to the three-stages of sampling. The first component is due to the variability of the fsu's, the second to variation of the ssu's and the third to tsu's. If \( m = M \) and \( l = L \), i.e. each of the \( n \) fsu's were completely enumerated, the variance of the sample mean will be given by the first component only, representing the variance of single stage sampling. Similarly, if each of the \( nm \) selected second stage units were completely enumerated, i.e. \( l = L \), the variance of the sample mean will be given by the first two terms only, representing the variance of two-stage sampling design. If \( n = N \) or, in other words, every fsu in the population is included in the sample, the variance of the sample mean will have the last two terms, i.e. it corresponds to a stratified two stage sampling design with the fsu's as strata.</p>
+                <p>The logic is simple: Every time we take a sample instead of looking at everything, we add a bit of uncertainty (variance) to our final result. If we enumerated everything in the last stage (\( l=L \)), the third term would vanish.</p>
 
-                <h3>Corollary 1</h3>
-                <p>If sampling is done with replacement at every stage, \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \) with sampling variance</p>
+                <h3>Finding the Best Sample Sizes (\( n, m, l \))</h3>
+                <p>With a cost function like \( C = a + nc_1 + nmc_2 + nmlc_3 \), we can find the best values for how many items to pick at each stage. The math (optimum allocation) tells us:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}) = \frac{S_b^2}{n} + \frac{S_w^2}{nm} + \frac{S_u^2}{nml} \quad (9.4.2) $$
+                    $$ l_{opt} = \sqrt{ \frac{A_3c_2}{A_2c_3} }, \quad m_{opt} = \sqrt{ \frac{A_2c_1}{A_1c_2} } $$
                 </div>
-
-                <h3>Corollary 2</h3>
-                <p>An unbiased estimator of \( V(\bar{y}) \) is given by</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}) = \frac{1 - f_1}{n}s_b^2 + \frac{f_1(1 - f_2)}{nm}s_w^2 + \frac{f_1f_2(1 - f_3)}{nml}s_u^2 \quad (9.4.3) $$
-                    <p>where \( s_b^2 \), \( s_w^2 \), \( s_u^2 \) are the sample values corresponding to \( S_b^2 \), \( S_w^2 \), \( S_u^2 \) respectively.</p>
-                </div>
-
-                <h3>Corollary 3</h3>
-                <p>With cost function of the form</p>
-                <div class="derivation-block">
-                    $$ C = a + nc_1 + nmc_2 + nmlc_3 \quad (9.4.4) $$
-                </div>
-                <p>and variance function of the form</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}) = A_0 + \frac{A_1}{n} + \frac{A_2}{mn} + \frac{A_3}{mnl} $$
-                </div>
-                <p>The optimum values of \( l \), \( m \) and \( n \) which minimize the variance are given by</p>
-                <div class="derivation-block">
-                    $$ l_{opt} = \left( \frac{A_3c_2}{A_2c_3} \right)^{1/2} $$
-                    $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} $$
-                    $$ n_{opt} = \frac{(C_0 - a)(A_1/c_1)^{1/2}}{(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}} \quad (9.4.5) $$
-                </div>
-                <p>with the minimum value of variance for fixed \( C \), say \( C_0 \),</p>
-                <div class="derivation-block">
-                    $$ V_{\min} = A_0 + \frac{[(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}]^2}{(C_0 - a)} \quad (9.4.6) $$
-                </div>
-
-                <h3>Corollary 4</h3>
-                <p>With similar notations as in corollary 3, the optimum values of \( l \), \( m \) and \( n \) which minimize the cost, are given by</p>
-                <div class="derivation-block">
-                    $$ l_{opt} = \left( \frac{A_3c_2}{A_2c_3} \right)^{1/2} $$
-                    $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} $$
-                    $$ n_{opt} = \frac{(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}}{(V_0 - A_0)(c_1/A_1)^{1/2}} \quad (9.4.7) $$
-                </div>
-                <p>with the minimum cost for a specified variance, say \( V_0 \),</p>
-                <div class="derivation-block">
-                    $$ C = a + \frac{[(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}]^2}{(V_0 - A_0)} \quad (9.4.8) $$
-                </div>
+                <p>Basically, we decide how many smaller units to pick (\( l \) and \( m \)) based on the costs and variances, and then use the remaining budget to pick as many large units (\( n \)) as possible.</p>
             </div>
 
             <div class="hinglish-content">
@@ -643,55 +546,16 @@
         <section id="sec9-5" class="section-card">
             <div class="english-content">
                 <h2>9.5 Stratified Multi-Stage Sampling</h2>
-                <p>The most common design in large-scale surveys is stratified multi-stage sampling. No new principles are involved when the object is to estimate the mean of a population divided into \( k \) strata and sampling within each stratum is independent. The population of fsu's is subdivided into \( k \) strata. Within each stratum, a sample of fsu's is selected and each of the selected fsu's is further sub-sampled.</p>
+                <p>This is the most popular design for large surveys. We divide the population into \( k \) strata (like States) and then use multi-stage sampling within each stratum. Since each stratum is sampled independently, we can just apply the results we learned earlier to each stratum and then combine them.</p>
 
-                <p>Let the \( h \)-th stratum contain \( N_h \) first-stage units, each with \( M_h \) second stage units. The corresponding sample numbers being \( n_h \) and \( m_h \). The estimator of population mean per second-stage units is given by</p>
+                <p><strong>Estimating the Overall Mean:</strong></p>
                 <div class="derivation-block">
-                    $$ \bar{y}_{st} = \frac{\sum_{h=1}^k N_hM_h\bar{y}_h}{\sum_{h=1}^k N_hM_h} = \sum_{h=1}^k W_h\bar{y}_h \quad (9.5.1) $$
-                    <p>where \( \bar{y}_h \) is the sample mean in the \( h \)-th stratum, and</p>
-                    $$ W_h = \frac{N_hM_h}{\sum_{h=1}^k N_hM_h} $$
-                    <p>is the weight of the stratum in terms of the ssu's.</p>
+                    $$ \bar{y}_{st} = \sum_{h=1}^k W_h \bar{y}_h \quad (9.5.1) $$
+                    <p>Where \( \bar{y}_h \) is the sample average in stratum \( h \), and \( W_h \) is its relative size.</p>
                 </div>
 
-                <p>Applying Theorem 9.2.1 within each stratum, we have</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \sum_{h=1}^k W_h^2\left[ \frac{1 - f_{1h}}{n_h}S_{bh}^2 + \frac{1 - f_{2h}}{n_hm_h}S_{wh}^2 \right] \quad (9.5.2) $$
-                    <p>where \( f_{1h} = \frac{n_h}{N_h} \), \( f_{2h} = \frac{m_h}{M_h} \).</p>
-                </div>
-
-                <p>Similarly, an unbiased estimator of sampling variance is given by</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}_{st}) = \sum_{h=1}^k W_h^2\left[ \frac{1 - f_{1h}}{n_h}s_{bh}^2 + \frac{f_{1h}(1 - f_{2h})}{n_hm_h}s_{wh}^2 \right] \quad (9.5.3) $$
-                </div>
-
-                <p>To discuss the case of optimum allocation, we can write the cost function as</p>
-                <div class="derivation-block">
-                    $$ C = \sum_{h=1}^k c_{1h}n_h + \sum_{h=1}^k c_{2h}n_hm_h $$
-                </div>
-
-                <p>From relation (9.5.2), the variance may be written as</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \sum_{h=1}^k W_h^2\left[ A_{0h} + \frac{A_{1h}}{n_h} + \frac{A_{2h}}{n_hm_h} \right] \quad (9.5.4) $$
-                    <p>where</p>
-                    $$ A_{0h} = \frac{S_{bh}^2}{N_h}, \quad A_{1h} = S_{bh}^2 - \frac{S_{wh}^2}{M_h}, \quad A_{2h} = S_{wh}^2 $$
-                </div>
-
-                <p>Hence, to minimize \( V \) for fixed \( C \), or vice versa, we can apply Lagrange's method of undetermined multipliers. Differentiating partially w.r.t. \( n_h \) and \( m_h \) and equating to zero, we get</p>
-                <div class="derivation-block">
-                    $$ m_h = \frac{(A_{2h}c_{1h})^{1/2}}{(A_{1h}c_{2h})^{1/2}} = S_{wh}\frac{(c_{1h}/c_{2h})^{1/2}}{(S_{bh}^2 - S_{wh}^2/M_h)^{1/2}} \quad (9.5.5) $$
-                    <p>and</p>
-                    $$ n_h = \frac{nW_h(A_{1h}/c_{1h})^{1/2}}{\sum_{h=1}^k W_h(A_{1h}/c_{1h})^{1/2}} $$
-                    $$ = \frac{nW_h[(S_{bh}^2 - S_{wh}^2/M_h)/c_{1h}]^{1/2}}{\sum_{h=1}^k W_h[(S_{bh}^2 - S_{wh}^2/M_h)/c_{1h}]^{1/2}} \quad (9.5.6) $$
-                </div>
-
-                <p>Since \( W_h \propto N_hM_h \), we may express</p>
-                <div class="derivation-block">
-                    $$ n_h \propto \frac{N_hM_h[S_{bh}^2 - S_{wh}^2/M_h]^{1/2}}{\sqrt{c_{1h}}} \propto N_hM_h\frac{S_h'}{\sqrt{c_{1h}}} $$
-                    <p>where</p>
-                    $$ S_h' = \left[ S_{bh}^2 - \frac{S_{wh}^2}{M_h} \right]^{1/2} $$
-                </div>
-
-                <p>It can be seen easily from the above relations that the formula for optimum \( m_h \) is exactly the same as in unstratified sampling. Similarly, the optimum value of \( n_h \) takes the same form as for uni-stage stratified sampling.</p>
+                <p><strong>Finding the Best Sample Sizes (\( n_h, m_h \)):</strong></p>
+                <p>We use the same cost and variance logic. The best number of units per cluster (\( m_h \)) in a stratum depends on its local costs and variances. The number of clusters (\( n_h \)) is allocated similar to Neyman allocation in stratified sampling.</p>
             </div>
 
             <div class="hinglish-content">
@@ -750,123 +614,22 @@
 
         <section id="sec9-6" class="section-card">
             <div class="english-content">
-                <h2>9.6 Two-Stage Sampling with Unequal First Stage Units: Estimators of Mean and their Variances</h2>
-                <p>Durbin (1953), Des Raj (1966) and Rao (1975) have discussed various estimators of multi-stage sampling at length. This section is devoted to a description of some estimators that are in common use. Let the population under consideration consist of \( N \) first-stage units. The \( i \)-th fsu consists \( M_i \) second-stage units. Further, units are selected without replacement, with equal or unequal probabilities. A sample of \( n \) fsu's is selected and from the \( i \)-th selected fsu, a sample of \( m_i \) ssu's is selected. Let us denote</p>
+                <h2>9.6 Two-Stage Sampling with Unequal Cluster Sizes</h2>
+                <p>In the real world, villages or schools (fsu) are rarely the same size. One village might have 200 people while another has 2,000. This makes our estimation more tricky because picking each unit with equal chance across the whole population is no longer simple.</p>
 
+                <p><strong>Common Estimators:</strong></p>
                 <ul>
-                    <li>\( M_i = \) the number of ssu's in the \( i \)-th fsu, \( (i = 1,2,...,N) \)</li>
-                    <li>\( M_0 = \sum_{i=1}^N M_i = \) the total number of ssu's in the population</li>
-                    <li>\( m_i = \) the number of ssu's to be selected from the \( i \)-th fsu included in the sample</li>
-                    <li>\( m_0 = \sum_{i=1}^n m_i = \) the total number of ssu's in the sample</li>
-                    <li>\( \bar{Y}_i = \sum_{j=1}^{M_i} y_{ij}/M_i = \) the \( i \)-th fsu mean</li>
-                    <li>\( \bar{Y}_N = \sum_{i=1}^N \bar{Y}_i/N = \) the overall mean of fsu means</li>
-                    <li>\( \bar{Y} = \frac{\sum_{i=1}^N M_i\bar{Y}_i}{\sum_{i=1}^N M_i} = \sum_{i=1}^N W_i\bar{Y}_i = \) the mean per ssu or the population mean per element</li>
+                    <li><strong>Unbiased Estimator (\( \bar{y} \)):</strong> We weight each cluster's average by its total size.
+                        $$ \bar{y} = \frac{1}{n\bar{M}} \sum_{i=1}^n M_i \bar{y}_{i\cdot} $$
+                    </li>
+                    <li><strong>Simple Mean (\( \bar{y}_1 \)):</strong> We just take the average of the cluster averages. This is very easy but <strong>biased</strong> because it treats small and large clusters the same.
+                        $$ \bar{y}_1 = \frac{1}{n} \sum_{i=1}^n \bar{y}_{i\cdot} $$
+                    </li>
+                    <li><strong>Ratio Estimator (\( \bar{y}_2 \)):</strong> We divide the total of all sampled items by the total size of the clusters we visited.
+                        $$ \bar{y}_2 = \frac{\sum M_i \bar{y}_{i\cdot}}{\sum M_i} $$
+                    </li>
                 </ul>
-
-                <p>There are several estimators of the population mean \( \bar{Y} \) but we propose only to study some of the practical methods which are,</p>
-                <div class="derivation-block">
-                    $$ \bar{y} = \frac{1}{n}\sum_{i=1}^n u_i\bar{y}_{i\cdot} = \frac{\sum_{i=1}^n M_i\bar{y}_{i\cdot}}{n\bar{M}} \quad (9.6.1) $$
-                    $$ \bar{y}_1 = \frac{\sum_{i=1}^n \bar{y}_{i\cdot}}{n} \quad (9.6.2) $$
-                    $$ \bar{y}_2 = \frac{\sum_{i=1}^n M_i\bar{y}_{i\cdot}}{\sum_{i=1}^n M_i} \quad (9.6.3) $$
-                    <p>where</p>
-                    $$ \bar{y}_{i\cdot} = \sum_{j=1}^{m_i} \frac{y_{ij}}{m_i}, \quad \bar{M} = \frac{M_0}{N}, \quad \text{and } u_i = \frac{M_i}{\bar{M}} $$
-                </div>
-
-                <h3>Theorem 9.6.1</h3>
-                <p>Show that the estimator given by relation (9.6.1) is unbiased and its sampling variance is given by</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}) = (1 - f_1)\frac{S_b^2}{n} + \sum_{i=1}^N \frac{M_i^2}{nN\bar{M}^2}(1 - f_{2i})\frac{S_{w_i}^2}{m_i} \quad (9.6.4) $$
-                    <p>where</p>
-                    $$ S_b^2 = \frac{\sum_{i=1}^N (u_i\bar{Y}_i - \bar{Y})^2}{(N - 1)} $$
-                    <p>and</p>
-                    $$ S_{w_i}^2 = \frac{\sum_{j=1}^{M_i} (y_{ij} - \bar{Y}_i)^2}{(M_i - 1)} $$
-                </div>
-                <p><em>Proof:</em></p>
-                <div class="derivation-block">
-                    <p>To prove that \( \bar{y} = \frac{1}{n}\sum_{i=1}^n u_i\bar{y}_{i\cdot} \) is an unbiased estimator, we can write</p>
-                    $$ E(\bar{y}) = E_1\left[ \frac{1}{n}\sum_{i=1}^n E_2(u_i\bar{y}_{i\cdot}|i) \right] $$
-                    $$ = E_1\left[ \frac{1}{n}\sum_{i=1}^n u_i\bar{Y}_i \right] = \frac{1}{n}\sum_{i=1}^n E_1(u_i\bar{Y}_i) = \bar{Y} $$
-                    <p>The sampling variance of the estimator is given by</p>
-                    $$ V(\bar{y}) = V_1E_2(\bar{y}|n) + E_1V_2(\bar{y}|n) $$
-                    $$ = V_1\left[ \frac{1}{n}\sum_{i=1}^n u_i\bar{Y}_i \right] + E_1\left[ \frac{1}{n^2}\sum_{i=1}^n \frac{M_i^2}{\bar{M}^2}V(\bar{y}_{i\cdot}|n) \right] $$
-                    $$ = (1 - f_1)\frac{S_b^2}{n} + \sum_{i=1}^N \frac{M_i^2(1 - f_{2i})}{nN\bar{M}^2}\frac{S_{w_i}^2}{m_i} $$
-                </div>
-                <p>The units are chosen with equal probability in this method and the contribution made by fsu's to the components of this variance depends upon the variation between the fsu totals. If the units vary considerably in their sizes, this component will be large. The second component of variance is also to be large as there is likely to be positive correlation between \( M_i \) and \( S_{w_i}^2 \). Frequently, this component is so large that this estimator is not preferred.</p>
-
-                <h3>Corollary 1</h3>
-                <p>Show that the estimator \( \widehat{Y} = \sum_{i=1}^n NM_i\frac{\bar{y}_{i\cdot}}{n} \) estimates unbiasedly the population total \( Y \) and its sampling variance will be given by</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}) = N^2(1 - f_1)\frac{S_b^2}{n} + \sum_{i=1}^N (1 - f_{2i})\frac{NM_i^2}{n\bar{M}^2}\frac{S_{w_i}^2}{m_i} \quad (9.6.5) $$
-                </div>
-
-                <h3>Corollary 2</h3>
-                <p>An unbiased estimator of variance in relation (9.6.4) is given by</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}) = (1 - f_1)\frac{s_b^2}{n} + \sum_{i=1}^n (1 - f_{2i})\frac{u_i^2s_{w_i}^2}{nNm_i} \quad (9.6.6) $$
-                    <p>where \( s_b^2 \) and \( s_{w_i}^2 \) are having their usual meanings.</p>
-                </div>
-
-                <h3>Theorem 9.6.2</h3>
-                <p>Show that the estimator given by relation (9.6.2) is biased and its bias is given by</p>
-                <div class="derivation-block">
-                    $$ B = - \sum_{i=1}^N (M_i - \bar{M})\bar{Y}_i/N\bar{M} \quad (9.6.7) $$
-                    <p>and sampling variance by</p>
-                    $$ V(\bar{y}_1) = (1 - f_1)\frac{S_b'^2}{n} + \frac{1}{nN}\sum_{i=1}^N (1 - f_{2i})\frac{S_{w_i}^2}{m_i} \quad (9.6.8) $$
-                    <p>where</p>
-                    $$ S_b'^2 = \frac{\sum_{i=1}^N (\bar{Y}_i - \bar{Y}_N)^2}{N - 1} $$
-                    <p>and \( S_{w_i}^2 \) is as usual.</p>
-                </div>
-                <p><em>Proof:</em></p>
-                <div class="derivation-block">
-                    <p>To prove that \( \bar{y}_1 \) is a biased estimator, we can get</p>
-                    $$ E(\bar{y}_1) = E\left( \sum_{i=1}^n \frac{\bar{y}_{i\cdot}}{n} \right) = E_1\left[ \frac{1}{n}\sum_{i=1}^n E_2(\bar{y}_{i\cdot}|i) \right] $$
-                    $$ = E_1\left[ \frac{1}{n}\sum_{i=1}^n \bar{Y}_i \right] = \bar{Y}_N \neq \bar{Y} $$
-                    <p>which shows that \( \bar{y}_1 \) is a biased estimator.</p>
-                    <p>Its bias can be obtained as</p>
-                    $$ B = \bar{Y}_N - \bar{Y} = \sum_{i=1}^N \frac{\bar{Y}_i}{N} - \sum_{i=1}^N \frac{M_i\bar{Y}_i}{N\bar{M}} $$
-                    $$ = - \frac{1}{N\bar{M}}\left[ \sum_{i=1}^N (M_i - \bar{M})\bar{Y}_i \right] $$
-                    <p>The sampling variance of the estimator is given by</p>
-                    $$ V(\bar{y}_1) = V_1E_2(\bar{y}_1|n) + E_1V_2(\bar{y}_1|n) $$
-                    $$ = V_1\left[ \frac{1}{n}\sum_{i=1}^n \bar{Y}_i \right] + E_1\left[ \frac{1}{n^2}\sum_{i=1}^n V_2(\bar{y}_{i\cdot}|i) \right] $$
-                    $$ = (1 - f_1)\frac{S_b'^2}{n} + \frac{1}{nN}\sum_{i=1}^N (1 - f_{2i})\frac{S_{w_i}^2}{m_i} $$
-                </div>
-                <p>The bias in the estimator \( \bar{y}_1 \) appears due to the fact that the probabilities of selection of the ssu's vary from one unit to another, in the fsu's, due to their unequal sizes. If the \( M_i \) do not vary considerably and the study variate is not correlated with \( M_i \), the bias may not be large. Here, the MSE of \( \bar{y}_1 \) will consist of three components: one from the bias, one from variation within fsu's, and one arising from variation between the means of the fsu's. The values of \( m_i \)'s are not specified and a proper choice of \( m_i \) can be helpful in controlling these components.</p>
-
-                <h3>Corollary 1</h3>
-                <p>An unbiased estimator of the bias is obtained by</p>
-                <div class="derivation-block">
-                    $$ \widehat{B} = - \frac{N - 1}{N\bar{M}(n - 1)}\sum_{i=1}^n (M_i - \bar{M}')(\bar{y}_{i\cdot} - \bar{y}_1) \quad (9.6.9) $$
-                    <p>where</p>
-                    $$ \bar{M}' = \frac{\sum_{i=1}^n M_i}{n} $$
-                </div>
-
-                <h3>Corollary 2</h3>
-                <p>An unbiased estimator of the variance is given by</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}_1) = (1 - f_1)\frac{s_b'^2}{n} + \sum_{i=1}^n (1 - f_{2i})\frac{s_{w_i}^2}{nNm_i} \quad (9.6.10) $$
-                    <p>where</p>
-                    $$ s_b'^2 = \frac{\sum_{i=1}^n (\bar{y}_{i\cdot} - \bar{y}_1)^2}{(n - 1)} $$
-                    <p>and</p>
-                    $$ s_{w_i}^2 = \frac{\sum_{j=1}^{m_i} (y_{ij} - \bar{y}_{i\cdot})^2}{(m_i - 1)} $$
-                </div>
-
-                <h3>Theorem 9.6.3</h3>
-                <p>Show that the estimator given by relation (9.6.3) is biased and its bias is given by</p>
-                <div class="derivation-block">
-                    $$ \text{Bias }(\bar{y}_2) \cong \left( \frac{1}{n} - \frac{1}{N} \right)\bar{Y}\left( S_M^2 - \frac{S_{My}}{\bar{Y}} \right) \quad (9.6.11) $$
-                    <p>and its sampling variance by</p>
-                    $$ V(\bar{y}_2) \cong \left( \frac{1}{n} - \frac{1}{N} \right)S_b''^2 + \frac{1}{nN}\sum_{i=1}^N \frac{M_i^2}{\bar{M}^2}(1 - f_{2i})\frac{S_{w_i}^2}{m_i} \quad (9.6.12) $$
-                    <p>where</p>
-                    $$ S_M^2 = \frac{\sum_{i=1}^N \left( \frac{M_i}{\bar{M}} - 1 \right)^2}{(N - 1)} $$
-                    $$ S_{My} = \frac{\sum_{i=1}^N \left( \frac{M_i}{\bar{M}} - 1 \right)\left( \frac{M_i\bar{Y}_i}{\bar{M}} - \bar{Y} \right)}{(N - 1)} $$
-                    $$ S_b''^2 = \frac{\sum_{i=1}^N M_i^2(\bar{Y}_i - \bar{Y})^2}{\bar{M}^2(N - 1)} $$
-                    <p>and \( S_{w_i}^2 \) is as usual.</p>
-                </div>
-                <p><em>Proof:</em></p>
-                <div class="derivation-block">
-                    <p>If we take \( \sum_{i=1}^n \frac{M_i\bar{y}_{i\cdot}}{\bar{M}} = n\bar{y} \) and \( \sum_{i=1}^n M_i/\bar{M} = n\bar{u} \), then the estimator \( \bar{y}_2 \) can be written as the ratio estimator \( \bar{y}/\bar{u} \). Applying relations (6.3.2) and (6.4.1), we can find the bias and variance.</p>
-                    <p>Actually \( \bar{y}_2 \) is the ratio to size estimator, for which knowledge of \( \bar{M} \) is not necessary. On similar lines, one may define the regression estimator and its bias, and sampling variance can be derived without any difficulty.</p>
-                </div>
+                <p>The unbiased estimator is technically better, but if clusters vary a lot in size, its variance can be very high. The biased simple mean (\( \bar{y}_1 \)) might actually have a smaller total error (MSE) if the size of the cluster doesn't affect the variable we are studying.</p>
             </div>
 
             <div class="hinglish-content">
@@ -876,7 +639,7 @@
                 <ul>
                     <li>\( M_i = \) \( i \)-वें fsu में ssu की संख्या, \( (i = 1,2,...,N) \)</li>
                     <li>\( M_0 = \sum_{i=1}^N M_i = \) population में ssu की कुल संख्या</li>
-                    <li>\( m_i = \) sample में शामिल \( i \)-वें fsu से चुने जाने वाले ssu की संख्या</li>
+                    <li>\( m_i = \) sample in included \( i \)-वें fsu से चुने जाने वाले ssu की संख्या</li>
                     <li>\( m_0 = \sum_{i=1}^n m_i = \) sample में ssu की कुल संख्या</li>
                     <li>\( \bar{Y}_i = \sum_{j=1}^{M_i} y_{ij}/M_i = \) \( i \)-वें fsu का माध्य</li>
                     <li>\( \bar{Y}_N = \sum_{i=1}^N \bar{Y}_i/N = \) fsu means का समग्र (overall) माध्य</li>
@@ -991,46 +754,11 @@
         
         <section id="sec9-7" class="section-card">
             <div class="english-content">
-                <h2>9.7 Optimum Allocation: Unequal First-Stage Units</h2>
-                <p>In section 9.3, we have discussed the optimum allocation when the first-stage units are of equal sizes. The cost and variance functions were seen to have opposite behaviours to an increase in \( n \) and \( m \), and it is, therefore, necessary to consider these functions before the optimum allocations in the fsu's and the ssu's are discussed.</p>
+                <h2>9.7 Best Sample Sizes for Unequal Clusters</h2>
+                <p>When clusters have different sizes, we still want to find the best balance for \( n \) and \( m_i \). The cost function now accounts for the different number of units we might pick in each cluster. The basic idea is: if a cluster is very large or very diverse, we should pick more units from it.</p>
 
-                <p><strong>Cost Function:</strong> In a two-stage sampling design, the cost of survey in a simple form can be written as</p>
-                <div class="derivation-block">
-                    $$ C = a + nc_1 + c_2\sum_{i=1}^n m_i \quad (9.7.1) $$
-                    <p>where \( a \) is the overhead cost, \( c_1 \) the average cost of selection per fsu, and \( c_2 \) the average cost of sampling per ssu.</p>
-                </div>
-
-                <p>In practice, \( c_1 \) is likely to be larger than \( c_2 \). Hence, a unit increase in \( n \) increases the cost as compared to a unit increase in \( m_i \). Thus, the second component of cost function will vary from sample to sample for given \( n \) fsu's and, therefore, it becomes necessary to examine the question of optimum allocation of the total sample size in terms of the ssu's to the selected fsu's so the average number of sample ssu's per selected fsu is \( m \). This problem has been discussed by Rangarajan (1957) and Rao (1961). They have given different methods by taking \( m_i = r_im \) with \( m \) as the average value, or \( m_i = \lambda M_i \) with some positive constant, etc. Here we shall consider the average cost for the present discussion, which can be written as</p>
-                <div class="derivation-block">
-                    $$ C = a + nc_1 + \frac{nc_2}{N}\sum_{i=1}^N m_i \quad (9.7.2) $$
-                </div>
-
-                <p><strong>Variance Function:</strong> From the expressions for sampling variance of the estimators considered in the previous section, we can say that the total variance in two-stage sampling can be written in the form</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}) = A_0' + \frac{1}{n}\left( A_1' + \sum_{i=1}^N \frac{A_{2i}'}{m_i} \right) \quad (9.7.3) $$
-                    <p>where \( A_0' \) is a constant term independent of \( n \) and \( m_i \), and \( A_1' \) and \( A_{2i}' \) are functions of population parameters analogous to \( A_1 \) and \( A_2 \), independent of sample sizes \( n \) and \( m_i \). If \( m_i = r_im \), where \( m \) is the average number of units selected per ssu, i.e. \( m = E(m_i) \) and \( r_i \) depends on the method of determinating the set of values of \( m_i \) then relation (9.7.3) takes the form</p>
-                    $$ V(\bar{y}) = A_0' + \frac{1}{n}\left( A_1' + \frac{A_2'}{m} \right) \quad (9.7.4) $$
-                </div>
-
-                <p>An increase in \( n \) and \( m \) plays a significant role for the variance decreases as \( n \) and \( m \) increases. A guiding principle, for optimum allocation, is to minimize the variance for a fixed cost, i.e. the efficiency per unit of the cost is maximum, or to minimize the cost for a specified value of variance, i.e., the cost per unit is minimum for a specified value of efficiency.</p>
-
-                <h3>(a) When Cost is Fixed</h3>
-                <p>Suppose the cost is fixed, say \( C_0 \), and the estimator \( \bar{y} \) is used. Proceeding on the lines discussed in section 9.3, we have</p>
-                <div class="derivation-block">
-                    $$ m_{i(opt)} = \left( \frac{A_{2i}'c_1}{A_1'c_2} \right)^{1/2} = \left( \frac{c_1u_i^2S_i^2}{c_2\Delta} \right)^{1/2} \quad (9.7.5) $$
-                    <p>where</p>
-                    $$ \Delta = S_b^2 - \sum_{i=1}^N \frac{u_iS_i^2}{N\bar{M}} \quad (9.7.6) $$
-                    <p>and</p>
-                    $$ n_{opt} = \frac{(C_0 - a)(A_1'/c_1)^{1/2}}{(A_1'c_1)^{1/2} + (A_2'c_2)^{1/2}} \quad (9.7.7) $$
-                </div>
-                <p>Substituting the values of \( m_{i(opt)} \) and \( n_{opt} \) in the variance expression, we get the minimum variance as</p>
-                <div class="derivation-block">
-                    $$ V_{\min}(\bar{y}) = A_0' + \frac{(\sqrt{A_1'c_1} + \sqrt{A_2'c_2})^2}{(C_0 - a)} \quad (9.7.8) $$
-                </div>
-                <p>Suppose \( m_i \) is so determined as to be proportional to \( M_i \), say \( m_i = \lambda M_i \) where \( \lambda \) is some positive constant and can be obtained as</p>
-                <div class="derivation-block">
-                    $$ \lambda = \left( \frac{c_1}{c_2}\sum_{i=1}^N \frac{u_iS_i^2}{\Delta N\bar{M}^2} \right)^{1/2} \quad (9.7.9) $$
-                </div>
+                <p><strong>The "Best" Allocation:</strong></p>
+                <p>To minimize error for a fixed budget, the best number of units to pick from a cluster (\( m_{i(opt)} \)) should be proportional to its size and its internal diversity (\( S_i \)). We use similar formulas as before to calculate these "Optimum" values.</p>
             </div>
 
             <div class="hinglish-content">
@@ -1079,28 +807,16 @@
 
         <section id="sec9-8" class="section-card">
             <div class="english-content">
-                <h2>9.8 Two-Stage pps Sampling</h2>
-                <p>In the preceding sections, the theory for multi-stage sampling with equal probabilities of selection at each stage of sampling was discussed. When the fsu's are large and differ considerably in their sizes, it is desirable to select them with pps, sizes being \( M_i \)'s. A system of sampling involving the use of varying probabilities has been used by Hansen and Hurwitz (1943, 1949). Singh (1954) compared two estimators in a two-stage sampling design where fsu's are selected with varying probability, wor, and ssu's with equal probability, wr, and wor, methods. An alternative estimate was suggested by Rao (1966). A simple method of variance estimation has been given by Durbin (1967). Brewer and Hanif (1970) have improved and extended the method to other estimators.</p>
+                <h2>9.8 Two-Stage PPS Sampling</h2>
+                <p>When clusters (villages) have very different sizes, picking them with equal probability is not very efficient. Instead, we can pick them with <strong>Probability Proportional to Size (PPS)</strong>. This means a larger village has a higher chance of being selected than a smaller one.</p>
 
-                <p>Suppose a sample of \( n \) fsu's is selected with pps, wr. From the selected \( i \)-th fsu, a selection of \( m_i \) ssu's is made with simple random sampling, wor. If the \( i \)-th fsu is selected more than once, then a fresh independent drawing of \( m_i \) ssu's is being made without replacement from the complete fsu each time. An unbiased estimator of \( Y \) is given by</p>
+                <p><strong>The Estimator:</strong></p>
                 <div class="derivation-block">
                     $$ \widehat{Y}_{pps} = \frac{1}{n}\sum_{i=1}^n \frac{M_i\bar{y}_{i\cdot}}{p_i} \quad (9.8.1) $$
-                    <p>where \( p_i \) is the probability of selecting the \( i \)-th fsu at each draw such that \( \sum_{i=1}^N p_i = 1 \), and \( \bar{y}_{i\cdot} = \frac{\sum_{j=1}^{m_i} y_{ij}}{m_i} \).</p>
+                    <p>Where \( p_i \) is the probability of selecting the \( i \)-th cluster. If we set \( p_i = M_i/M_0 \), this formula becomes much simpler!</p>
                 </div>
 
-                <p>The sampling variance of the estimator is given by</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}_{pps}) = \frac{1}{n}\sum_{i=1}^N p_i\left( \frac{Y_i}{p_i} - Y \right)^2 + \frac{1}{n}\sum_{i=1}^N \frac{M_i^2}{p_i}(1 - f_{2i})\frac{S_{w_i}^2}{m_i} \quad (9.8.2) $$
-                </div>
-
-                <p>An unbiased estimator of \( V(\widehat{Y}_{pps}) \) is</p>
-                <div class="derivation-block">
-                    $$ v(\widehat{Y}_{pps}) = \frac{\sum_{i=1}^n \left( \frac{M_i\bar{y}_{i\cdot}}{p_i} - \widehat{Y}_{pps} \right)^2}{n(n - 1)} \quad (9.8.3) $$
-                </div>
-                <p>which gives a good procedure of estimation, whatever the method of selection adopted at the second stage, provided the fsu's are selected with replacement. If one is interested in estimating the between and within components of variance, then the between component can be obtained by subtracting the within component from relation (9.8.3). The within fsu variance component can be estimated unbiasedly by</p>
-                <div class="derivation-block">
-                    $$ v_w(\widehat{Y}_{pps}) = \sum_{i=1}^n \frac{M_i^2(1 - f_{2i})}{n^2p_i^2}\frac{s_{wi}^2}{m_i} \quad (9.8.4) $$
-                </div>
+                <p>The beauty of PPS sampling is that it "levels the playing field." Larger clusters are picked more often, but their results are weighted less in the final average, leading to a very stable and accurate estimate.</p>
             </div>
 
             <div class="hinglish-content">
@@ -1132,46 +848,16 @@
         <section id="sec9-9" class="section-card">
             <div class="english-content">
                 <h2>9.9 Self-weighting Designs</h2>
-                <p>In large scale surveys, the estimator defined in relation (9.8.1) involves a term \( M_i/np_im_i \) which will vary from unit to unit. Due to the complexity of its varying nature, analysis of data will be quite cumbersome. In this situation, the technique of self-weighting samples described in section 3.7.2 will prove very useful. A design which provides a single common weight to all sample units is known as a self-weighting design, also called equi-weighting design. A design can be made self-weighting either at the field or estimation stage. If the selection of units is so done as to make all the weights equal to one another, the design is termed self-weighting design at field stage. For example, a multi-stage design can be made self-weighting at field stage by appropriate choice of the number of ultimate stage units to be chosen in the final stage of sampling. If self-weighting is achieved by adopting some devices at the estimation stage, the design is termed self-weighting design at estimation stage.</p>
+                <p>In large-scale surveys, calculating different weights for every single unit can be a nightmare. A <strong>Self-weighting design</strong> is a clever trick where we design the survey so that every unit in our final sample has the exact same weight.</p>
 
-                <p>Usually a design should be made self-weighting at the field stage itself as it may be desirable from the point of view of both cost and operational convenience. For example, in crop-cutting surveys on paddy crop, it may be difficult to have the frame of all paddy-growing fields in a block, whereas the frame of all villages in the block may be easily available. Also, construction of the frame of the fields growing paddy crop in the entire block will involve a rise in cost, manpower and efforts; while these factors are minimum in selecting villages and then fields in the selected villages. However, it may not always be possible to arrive at such a design because, in practice, it is difficult to have only one common weight for all sample units. In such cases, two or more common weights are used, provided the number of such common weights is fairly small. Sometimes it may be necessary to make the design self-weighting at the estimation stage. Various methods are available for this purpose. In this section, both situations of making designs self-weighting at field and estimation stages, are considered.</p>
+                <p><strong>Why is this great?</strong></p>
+                <ul>
+                    <li><strong>Easy Math:</strong> To find the population average, you just calculate the simple average of all your sample data points! No fancy weighting needed.</li>
+                    <li><strong>Easy Fieldwork:</strong> Often, this means each investigator has a constant amount of work to do in every village.</li>
+                </ul>
 
-                <p>The procedure of making the design self-weighting at the field stage has been considered by Hansen et al (1953) and Lahiri (1954). The problem of making the design self-weighting at the estimation stage has been discussed by Murthy and Sethi (1959, 1961). Som (1959) has given a procedure for making a stratified two-stage self-weighting design with equal numbers of ultimate units selected in each of the selected fsu's in the ultimate stage of sampling.</p>
-
-                <p>In stratified sampling, we have seen that proportional allocation is one of the class of designs which leads to self-weighting samples. In other words, if</p>
-                <div class="derivation-block">
-                    $$ m_i = \frac{n}{N}\frac{N_i}{N} $$
-                    <p>or \( f_1 = f \) the design will be self-weighting. (9.9.1)</p>
-                </div>
-
-                <p>In the case of the two-stage pps sampling design considered in section 9.8, it can be seen from relation (9.8.1) that the design will be self-weighting if \( m_i \) are taken so that</p>
-                <div class="derivation-block">
-                    $$ \frac{M_i}{np_im_i} = k, $$
-                    <p>i.e.</p>
-                    $$ m_i = \frac{M_i}{knp_i} \quad (9.9.2) $$
-                </div>
-
-                <p>Further, if the average number of second stage units to be chosen from the selected fsu is \( m \),</p>
-                <div class="derivation-block">
-                    $$ E(m_i) = \sum_{i=1}^N \frac{M_i}{knp_i}p_i = \sum_{i=1}^N \frac{M_i}{kn} $$
-                    <p>or</p>
-                    $$ m = \frac{N\bar{M}}{kn} $$
-                    <p>giving</p>
-                    $$ k = \frac{N\bar{M}}{nm} \quad (9.9.3) $$
-                    <p>which is the overall weight to be given to the ssu's in the sample.</p>
-                </div>
-
-                <p>Similarly, we can see that the estimator in relation (9.6.2) is self-weighting if \( m_i = \text{constant} \). When \( m_i \) and \( \bar{Y}_i \) are uncorrelated, this estimator may be quite satisfactory. It should also be noted that its bias does not vanish even with large sample size. Also the estimator in relation (9.6.1) becomes self-weighting if</p>
-                <div class="derivation-block">
-                    $$ f_{2i} = \frac{m_i}{M_i} = \text{constant} = f_2 = \frac{\bar{m}}{\bar{M}} = \frac{N\bar{m}}{M_0} \quad (9.9.4) $$
-                </div>
-
-                <p>In this event, the variance component within fsu's can be expressed in a more simplified form by putting</p>
-                <div class="derivation-block">
-                    $$ m_i = \frac{N\bar{m}M_i}{M_0} \quad (9.9.5) $$
-                </div>
-
-                <p>Thus, we may conclude that the self-weighting system is not only very convenient for making computations but is also efficient from the operational point of view. In large scale surveys, it is always desirable that the weight is the same for every unit so that (i) tabulation becomes simpler, (ii) analysis becomes easier, and (iii) cost is minimized. Another advantage of the self-weighting design is that it gives a constant sample size from each selected fsu. Thus, the investigators will not be responsible for varying work loads in different fsu's. The only disadvantage of the system is that some of these methods may result in biased estimates though, in some cases, with smaller variance.</p>
+                <p><strong>How do we do it?</strong></p>
+                <p>We adjust the number of units we pick (\( m_i \)) from each cluster based on its size (\( M_i \)) and its probability of being picked (\( p_i \)). If we do the math right, the "total weight" for every person in the sample becomes a constant \( k \).</p>
             </div>
 
             <div class="hinglish-content">
@@ -1179,8 +865,6 @@
                 <p>बड़े पैमाने पर सर्वेक्षणों में, relation (9.8.1) में परिभाषित estimator में एक पद (term) \( M_i/np_im_i \) शामिल होता है जो एक इकाई से दूसरी इकाई में भिन्न (vary) होगा। इसकी परिवर्तनशील प्रकृति (varying nature) की जटिलता (complexity) के कारण, डेटा का विश्लेषण (analysis) काफी बोझिल (cumbersome) होगा। इस स्थिति में, Section 3.7.2 में वर्णित self-weighting samples की तकनीक (technique) बहुत उपयोगी साबित होगी। एक design जो सभी sample units को एक सामान्य वजन (single common weight) प्रदान करता है, उसे self-weighting design के रूप में जाना जाता है, जिसे equi-weighting design भी कहा जाता है। एक design को field या estimation stage पर self-weighting बनाया जा सकता है। यदि इकाइयों का selection इस तरह से किया जाता है कि सभी weights एक-दूसरे के बराबर हो जाएं, तो design को field stage पर self-weighting design कहा जाता है। उदाहरण के लिए, sampling के अंतिम चरण में चुनी जाने वाली ultimate stage units की संख्या के उचित विकल्प (appropriate choice) द्वारा field stage पर एक multi-stage design को self-weighting बनाया जा सकता है। यदि estimation stage पर कुछ उपकरणों (devices) को अपनाकर self-weighting प्राप्त की जाती है, तो design को estimation stage पर self-weighting design कहा जाता है।</p>
 
                 <p>आमतौर पर एक design को field stage पर ही self-weighting बनाया जाना चाहिए क्योंकि यह लागत (cost) और परिचालन सुविधा (operational convenience) दोनों के दृष्टिकोण से वांछनीय (desirable) हो सकता है। उदाहरण के लिए, धान की फसल पर crop-cutting surveys में, एक ब्लॉक में धान उगाने वाले सभी खेतों का frame होना मुश्किल हो सकता है, जबकि ब्लॉक के सभी गाँवों का frame आसानी से उपलब्ध हो सकता है। इसके अलावा, पूरे ब्लॉक में धान की फसल उगाने वाले खेतों के frame के निर्माण में लागत, जनशक्ति (manpower) और प्रयासों (efforts) में वृद्धि होगी; जबकि गाँवों और फिर चयनित गाँवों में खेतों के चयन में ये कारक न्यूनतम (minimum) होते हैं। हालाँकि, ऐसे design पर पहुँचना हमेशा संभव नहीं हो सकता है क्योंकि, व्यवहार में, सभी sample units के लिए केवल एक सामान्य वजन (common weight) होना मुश्किल है। ऐसे मामलों में, दो या अधिक सामान्य weights का उपयोग किया जाता है, बशर्ते कि ऐसे सामान्य weights की संख्या काफी कम हो। कभी-कभी estimation stage पर design को self-weighting बनाना आवश्यक हो सकता है। इस उद्देश्य के लिए विभिन्न विधियाँ (methods) उपलब्ध हैं। इस खंड में, field और estimation stages पर designs को self-weighting बनाने की दोनों स्थितियों पर विचार किया गया है।</p>
-
-                <p>Field stage पर design को self-weighting बनाने की प्रक्रिया (procedure) पर Hansen et al (1953) और Lahiri (1954) द्वारा विचार किया गया है। Estimation stage पर design को self-weighting बनाने की समस्या पर Murthy और Sethi (1959, 1961) द्वारा चर्चा की गई है। Som (1959) ने sampling के अंतिम चरण में प्रत्येक selected fsu में चुनी गई ultimate units की समान संख्या के साथ एक stratified two-stage self-weighting design बनाने की एक प्रक्रिया दी है।</p>
 
                 <p>Stratified sampling में, हमने देखा है कि आनुपातिक आवंटन (proportional allocation) designs के उस वर्ग (class) में से एक है जो self-weighting samples की ओर ले जाता है। दूसरे शब्दों में, यदि</p>
                 <div class="derivation-block">
@@ -1221,60 +905,14 @@
 
         <section id="sec9-10" class="section-card">
             <div class="english-content">
-                <h2>9.10 Three-Stage pps Sampling</h2>
-                <p>We have considered the two-stage pps sampling design in the previous section which can be extended to three or more stages. Let a sample of \( nml \) units be selected in three stages by adopting pps, wr, at each stage. Suppose \( n \) fsu's are selected with \( p_i \) probabilities of selection for the \( i \)-th fsu's \( (i = 1,...,N) \). From each selected fsu, \( m_i \) ssu's are selected with \( p_{ij} \) probabilities of selection for the \( j \)-th ssu \( (j = 1,...,M_i) \) and from each selected ssu, \( l \) third stage units (tsu's) are selected with \( p_{ijk} \) probabilities of selection of the \( k \)-th tsu of the \( j \)-th ssu in the \( i \)-th fsu \( (k = 1,...,L_{ij}) \). Let \( y_{ijk} \) denote the value of the \( k \)-th tsu in the \( j \)-th ssu of the \( i \)-th fsu \( (i = 1,...,n; j = 1,...,m; k = 1,...,l) \) in the sample. An estimator of the population total \( Y \) can be defined as</p>
+                <h2>9.10 Three-Stage PPS Sampling</h2>
+                <p>Just like we used PPS for two stages, we can use it for three stages too. We assign probabilities of selection at every level: for the villages, for the fields, and for the plots. This ensures that larger areas or more important units get correctly represented in the final estimate.</p>
 
+                <p><strong>The Estimator:</strong></p>
                 <div class="derivation-block">
                     $$ \widehat{Y} = \frac{1}{nml}\sum_{i=1}^n \frac{1}{p_i}\sum_{j=1}^m \frac{1}{p_{ij}}\sum_{k=1}^l \frac{y_{ijk}}{p_{ijk}} \quad (9.10.1) $$
                 </div>
-
-                <p>It can easily be shown that the estimator is unbiased. i.e.</p>
-                <div class="derivation-block">
-                    $$ E(\widehat{Y}) = E_1E_2E_3(\widehat{Y}) = Y $$
-                </div>
-
-                <p>and the variance of the estimator is obtained by</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}) = V_1E_2E_3(\widehat{Y}) + E_1V_2E_3(\widehat{Y}) + E_1E_2V_3(\widehat{Y}) $$
-                    <p>Thus,</p>
-                    $$ V(\widehat{Y}) = \frac{1}{n}\left( \sum_{i=1}^N \frac{Y_i^2}{p_i} - Y^2 \right) + \frac{1}{nm}\sum_{i=1}^N \frac{1}{p_i}\left( \sum_{j=1}^{M_i} \frac{Y_{ij}^2}{p_{ij}} - Y_i^2 \right) + \frac{1}{nml}\sum_{i=1}^N \frac{1}{p_i}\sum_{j=1}^{M_i} \frac{1}{p_{ij}}\left( \sum_{k=1}^{L_{ij}} \frac{y_{ijk}^2}{p_{ijk}} - Y_{ij}^2 \right) \quad (9.10.2) $$
-                </div>
-
-                <p>An unbiased estimator of \( V(\widehat{Y}) \) is given by</p>
-                <div class="derivation-block">
-                    $$ v(\widehat{Y}) = \frac{1}{n(n - 1)}\left( \sum_{i=1}^n y_{i\cdot\cdot}^2 - \frac{\widehat{Y}^2}{n} \right) \quad (9.10.3) $$
-                    <p>where</p>
-                    $$ y_{i\cdot\cdot} = \frac{1}{p_i}\sum_{j=1}^m \frac{1}{p_{ij}}\left( \sum_{k=1}^l \frac{y_{ijk}}{p_{ijk}} \right) $$
-                </div>
-
-                <p>It should be noted that, like two-stage sampling, the sampling variance function in three-stage sampling can also be written as</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}) = \frac{A_1}{n} + \frac{A_2}{nm} + \frac{A_3}{nml} $$
-                </div>
-
-                <p>Similarly, the cost function can also be written in the form</p>
-                <div class="derivation-block">
-                    $$ C = a + nc_1 + nmc_2 + nmlc_3 \quad (9.10.4) $$
-                    <p>where \( a \) is the overhead cost and \( c_1 \), \( c_2 \) and \( c_3 \) have their usual meanings.</p>
-                </div>
-
-                <p>(i) If the cost of survey is fixed, say \( C_0 \), the optimum values of \( n \), \( m \) and \( l \) are given by</p>
-                <div class="derivation-block">
-                    $$ l_{opt} = \left( \frac{A_3c_2}{A_2c_3} \right)^{1/2} $$
-                    $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} $$
-                    $$ n_{opt} = \frac{(C_0 - a)(A_1/c_1)^{1/2}}{(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}} \quad (9.10.5) $$
-                    <p>Substituting these values of \( l \), \( m \), and \( n \), we get the minimum variance as</p>
-                    $$ V_{\min}(\widehat{Y}) = \frac{\{(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}\}^2}{(C_0 - a)} \quad (9.10.6) $$
-                </div>
-
-                <p>(ii) If the variance is specified, say \( V_0 \), the optimum values of \( n \), \( m \) and \( l \) are given by</p>
-                <div class="derivation-block">
-                    $$ l_{opt} = \left( \frac{A_3c_2}{A_2c_3} \right)^{1/2} $$
-                    $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} $$
-                    $$ n_{opt} = \frac{(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}}{V_0(c_1/A_1)^{1/2}} \quad (9.10.7) $$
-                    <p>Substituting these optimum values of \( l \), \( m \) and \( n \), we get the minimum cost as</p>
-                    $$ C = a + \frac{1}{V_0}(\sqrt{A_1c_1} + \sqrt{A_2c_2} + \sqrt{A_3c_3})^2 \quad (9.10.8) $$
-                </div>
+                <p>While the formula looks scary, the logic is simple: we adjust each measurement by dividing it by the probability of picking that specific unit at each of the three stages.</p>
             </div>
             
             <div class="hinglish-content">
@@ -1329,7 +967,7 @@
                     $$ l_{opt} = \left( \frac{A_3c_2}{A_2c_3} \right)^{1/2} $$
                     $$ m_{opt} = \left( \frac{A_2c_1}{A_1c_2} \right)^{1/2} $$
                     $$ n_{opt} = \frac{(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}}{V_0(c_1/A_1)^{1/2}} \quad (9.10.7) $$
-                    <p>\( l \), \( m \) और \( n \) के इन optimum values को प्रतिस्थापित करने पर, हमें minimum cost इस प्रकार मिलती है:</p>
+                    <p>\( l \), \( m \) and \( n \) के इन optimum values को प्रतिस्थापित करने पर, हमें minimum cost इस प्रकार मिलती है:</p>
                     $$ C = a + \frac{1}{V_0}(\sqrt{A_1c_1} + \sqrt{A_2c_2} + \sqrt{A_3c_3})^2 \quad (9.10.8) $$
                 </div>
             </div>
@@ -1338,15 +976,13 @@
         <section id="sec9-ref" class="section-card">
             <div class="english-content">
                 <h2>References</h2>
+                <p>If you want to dive deeper into multi-stage sampling, check out these classic books and papers. They provide the mathematical backbone for many modern national surveys.</p>
                 <ul>
                     <li>Cochran, W. G. (1977). <em>Sampling Techniques</em> (3rd ed.). John Wiley & Sons.</li>
                     <li>Singh, D., & Chaudhary, F. S. (1986). <em>Theory and Analysis of Sample Survey Designs</em>. New Age International.</li>
                     <li>Mahalanobis, P. C. (1940). A sample survey of the acreage under jute in Bengal. <em>Sankhya</em>, 4, 511-530.</li>
                     <li>Hansen, M. H., & Hurwitz, W. N. (1943). On the theory of sampling from finite populations. <em>Ann. Math. Statist.</em>, 14, 333-362.</li>
                     <li>Sukhatme, P. V. (1953). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
-                    <li>Durbin, J. (1953). Some results in sampling theory when the units are selected with unequal probabilities. <em>J.R. Statist. Soc.</em>, 15B, 262-269.</li>
-                    <li>Des Raj (1966). Some estimators in sampling with varying probabilities without replacement. <em>J. Amer. Statist. Assoc.</em>, 61, 391-397.</li>
-                    <li>Murthy, M. N., & Sethi, V. K. (1959). Self-weighting design at estimation stage. <em>Sankhya</em>, 21, 259-262.</li>
                 </ul>
             </div>
             <div class="hinglish-content">
@@ -1366,21 +1002,14 @@
 
         <section id="sec9-11" class="section-card">
             <div class="english-content">
-                <h2>Exercise (Subjective)</h2>
+                <h2>Practice Questions</h2>
+                <p>Try to solve these questions to test your understanding of Multi-Stage Sampling. Think about the real-world logic behind the math!</p>
                 <ol>
-                    <li>Define multi-stage sampling and write its advantages over other sampling schemes. Write an unbiased estimator of the population total and derive its sampling variance.</li>
-                    <li>What is meant by multi-stage sampling? Obtain an expression for the variance of the estimator of the population total for a suitable three-stage sampling design when units are of unequal size at each stage of sampling. Give the structure of the analysis of variance in three stage sampling and explain how the analysis can be used in planning similar surveys subsequently.</li>
-                    <li>Suppose \( n \) fsu's are selected with pps, wr, and, from each selected fsu, \( m \) ssu's are selected with simple random sampling, wor. Give an unbiased estimator of the population total \( Y \) and derive an unbiased estimator of the sampling variance of the estimator.</li>
-                    <li>If \( f_1 \) and \( f_2 \) are negligible in equal fsu two-stage sampling with equal size fsu and the cost function is linear, show that \( m = 2 \) gives a smaller value of \( v(\bar{y}) \) than \( m = 1 \) if
-                        $$ \frac{c_1}{c_2} > \frac{2S_b^2}{S_w^2} $$
-                    </li>
-                    <li>If \( \rho \) is the correlation coefficient between ssu's in the same fsu, prove that
-                        $$ \frac{\rho}{1 - \rho} = \frac{\left[ \frac{(N - 1)}{N}S_b^2 - \frac{S_w^2}{M} \right]}{S_w^2} $$
-                    </li>
-                    <li>A population consists of \( N \) fsu's, each containing \( M \) ssu's. To estimate the proportion \( P \) of units possessing a given attribute, \( n \) fsu's are selected by simple random sampling, wor, and from each selected fsu, \( m \) ssu's are selected by simple random sampling, wor. If \( p_i \) be the proportion of attribute in the \( i \)-th selected fsu, show that \( \widehat{P} = \sum_{i=1}^n p_i/n \) is an unbiased estimator of the population proportion \( P \). Obtain the variance of the estimator and show that an unbiased estimator of \( V(\widehat{P}) \) is given by
-                        $$ v(\widehat{P}) = (1 - f_1)\sum_{i=1}^n \frac{(p_i - \widehat{P})^2}{n(n - 1)} + (1 - f_2)\sum_{i=1}^n \frac{p_i(1 - p_i)}{Nn(m - 1)} $$
-                        where \( f_1 \) and \( f_2 \) have their usual meanings.
-                    </li>
+                    <li>Explain Multi-Stage sampling in your own words. Why is it better than simple cluster sampling for a large country like India?</li>
+                    <li>Derive the variance for a three-stage sampling design. How does it change if you enumerate the last stage completely?</li>
+                    <li>Suppose you are picking 10 districts and then 5 villages from each. Give an unbiased estimator for the total population.</li>
+                    <li>Under a linear cost function, show that picking 2 units per cluster is better than picking just 1 if the travel cost is high enough.</li>
+                    <li>What is a self-weighting design? Why do big survey organizations like the NSSO prefer it?</li>
                 </ol>
             </div>
             

@@ -107,8 +107,8 @@
                 <div class="quote">
                     "There is repetition everywhere, and nothing is found only once in the world." -- <strong>Goethe</strong>
                 </div>
-                <p>In many surveys, information on an auxiliary variate which is highly correlated with the variable under study is readily available and can be used for improving sampling design. Stratified sampling and pps schemes are two examples of improved sampling designs, in which the use of data on auxiliary variate has been made in Chapters 3 and 5. However, in both the schemes, it implies that the information on auxiliary variate on individual sampling units is available prior to preparation of the sampling design. In case data on auxiliary variate for individual sampling units are not available but only the aggregate value for all units of auxiliary variate is available, the two schemes cannot be used.</p>
-                <p>In such a situation, the aggregated data on auxiliary variate can still be used at the time of estimation of the parameters under study, provided the data on auxiliary variate for the sampled units can be easily obtained while recording the values of the study variate. Two such methods of estimation are known as ratio method of estimation and regression method of estimation. In this chapter, the ratio method of estimation will be discussed.</p>
+                <p>In many surveys, we often have information about an extra variable (called an auxiliary variable) that is closely related to the main variable we are studying. This extra information can help us make better sampling designs. We have already seen this in Stratified sampling (Chapter 3) and PPS sampling (Chapter 5). In those methods, we needed to know the auxiliary data for every single unit before even starting the survey.</p>
+                <p>But what if we only know the total sum of the auxiliary variable for the whole population, and not for each unit separately? In that case, those previous methods won't work. However, we can still use this total sum during the estimation stage to get better results. This leads us to two important methods: the <strong>ratio method</strong> and the <strong>regression method</strong>. In this chapter, we will focus on the ratio method of estimation.</p>
             </div>
             
             <div class="hinglish-content">
@@ -124,22 +124,24 @@
         <section id="sec6-2" class="section-card">
             <div class="english-content">
                 <h2>6.2 Definitions and Notations</h2>
-                <p>Let us denote:</p>
+                <p>Before we look at the formulas, let's define the symbols we will use. Imagine we are studying a characteristic \( y \) (like crop yield), and we have an auxiliary variable \( x \) (like the area of the farm):</p>
                 <ul>
-                    <li>\( y_i \) = the value of the characteristic under study for the \( i \)-th unit of the population</li>
-                    <li>\( x_i \) = the value of the auxiliary characteristic on the same unit</li>
-                    <li>\( Y = \sum y_i \) = the total of \( y \) characteristic of the population</li>
-                    <li>\( X = \sum x_i \) = the total of \( x \) characteristic of the population</li>
-                    <li>\( R = Y/X = \bar{Y}/\bar{X} \) = the ratio of the population totals or means of characteristics \( y \) and \( x \)</li>
-                    <li>\( \rho \) = the correlation coefficient between \( x \) and \( y \) in the population</li>
+                    <li>\( y_i \) = the value of the main variable for the \( i \)-th unit in the population.</li>
+                    <li>\( x_i \) = the value of the auxiliary variable for that same unit.</li>
+                    <li>\( Y = \sum y_i \) = the total sum of the main variable for the entire population.</li>
+                    <li>\( X = \sum x_i \) = the total sum of the auxiliary variable for the entire population.</li>
+                    <li>\( R = Y/X = \bar{Y}/\bar{X} \) = the actual ratio of the population totals or means.</li>
+                    <li>\( \rho \) = the correlation coefficient showing how closely \( x \) and \( y \) are related.</li>
                 </ul>
 
-                <p>Suppose it is desired to estimate \( Y \), \( \bar{Y} \) or \( R \) by drawing a simple random sample of \( n \) units from the population. Let us assume that based on \( n \) pairs of observations, \( \bar{y} \) and \( \bar{x} \) are the sample means of the characteristics \( y \) and \( x \), respectively, and the population total \( X \) or mean \( \bar{X} \) is known. The ratio estimators of the population ratio \( Y/X = R \), the total \( Y \), and the mean \( \bar{Y} \), may be defined by:</p>
+                <p>Now, suppose we take a simple random sample of size \( n \). From this sample, we calculate the sample means \( \bar{y} \) and \( \bar{x} \). If we know the true population value of \( X \) or \( \bar{X} \), we can estimate the population ratio, total, and mean using these ratio estimators:</p>
                 <div class="derivation-block">
+                    <p>First, we estimate the ratio \( R \) using our sample means:</p>
                     $$ \widehat{R} = \frac{\bar{y}}{\bar{x}} \quad (6.2.1) $$
-                    <p>and</p>
-                    $$ \widehat{Y}_R = \frac{\bar{y}}{\bar{x}}X = \widehat{R}X, \quad \bar{y}_R = \frac{\bar{y}}{\bar{x}}\bar{X} = \widehat{R}\bar{X}, \quad \text{respectively} $$
-                    <p>where \( \bar{y} \) and \( \bar{x} \) are the sample totals for \( y \) and \( x \), respectively. </p>
+                    <p>Then, we use this estimated ratio to find the population total \( Y \) and the mean \( \bar{Y} \):</p>
+                    $$ \widehat{Y}_R = \widehat{R}X = \frac{\bar{y}}{\bar{x}}X $$
+                    $$ \bar{y}_R = \widehat{R}\bar{X} = \frac{\bar{y}}{\bar{x}}\bar{X} $$
+                    <p>Here, \( \bar{y} \) and \( \bar{x} \) are the sample means we calculated from our survey.</p>
                 </div>
             </div>
             
@@ -168,80 +170,62 @@
         <section id="sec6-3" class="section-card">
             <div class="english-content">
                 <h2>6.3 Bias of Ratio Estimators</h2>
-                <p>In the previous chapters, we discussed unbiased estimators but many a time, biased estimators are to be used when these are comparatively more efficient. There can be many illustrations where one would like to use such estimators in order to obtain higher precision without changing the cost of the survey or sampling scheme. It will be shown here that \( \widehat{R} \), \( \widehat{Y}_R \) and \( \bar{y}_R \) are all biased estimators but preferred to the unbiased estimators under certain conditions which we shall discuss in subsequent sections. Since the theory is the same for all these estimators, most results will relate to the problem of estimating a ratio.</p>
+                <p>Usually, we prefer estimators that are "unbiased" (meaning their average value is exactly the population value). However, in many cases, a "biased" estimator might be more precise or efficient. The ratio estimator is one such example—it has a small bias, but it often gives much more accurate results than simple estimators. In this section, we will calculate exactly how much bias exists in these estimators.</p>
 
                 <h3>Theorem 6.3.1</h3>
-                <p>In simple random sampling, the bias of the ratio estimator \( \widehat{R} \) is given by:</p>
+                <p>In simple random sampling, the bias of the ratio estimator \( \widehat{R} \) is related to the covariance between the estimator and the sample mean of the auxiliary variable:</p>
                 <div class="derivation-block">
                     $$ B(\widehat{R}) = - \frac{\text{Cov}(\widehat{R},\bar{x})}{\bar{X}} \quad (6.3.1) $$
                 </div>
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>We know that \( \text{Cov}(u,v) = E(uv) - E(u)E(v) \)</p>
+                    <p>We know that the covariance between any two variables \( u \) and \( v \) is defined as the expected value of their product minus the product of their expected values:</p>
+                    $$ \text{Cov}(u,v) = E(uv) - E(u)E(v) $$
+                    <p>Let's apply this formula to our ratio estimator \( \widehat{R} \) and the sample mean \( \bar{x} \):</p>
                     $$ \text{Cov}(\widehat{R},\bar{x}) = E(\widehat{R}\bar{x}) - E(\bar{x})E(\widehat{R}) $$
-                    <p>Hence,</p>
-                    $$ = E(\bar{y}) - \bar{X}E(\widehat{R}) $$
-                    $$ = \bar{Y} - \bar{X}E(\widehat{R}) $$
-                    <div class="explanation">\( \because \) the expected value of \( \bar{y} \) is precisely the population mean \( \bar{Y} \).</div>
-                    $$ \frac{\text{Cov}(\widehat{R},\bar{x})}{\bar{X}} = \frac{\bar{Y}}{\bar{X}} - E(\widehat{R}) = R - E(\widehat{R}) = - B(\widehat{R}) $$
-                    <div class="explanation">\( \because \) the bias is mathematically defined exactly as \( E(\widehat{R}) - R \).</div>
+                    <p>Recall that \( \widehat{R} = \bar{y}/\bar{x} \). If we multiply it by \( \bar{x} \), we simply get \( \bar{y} \). So the first term \( E(\widehat{R}\bar{x}) \) is actually \( E(\bar{y}) \):</p>
+                    $$ \text{Cov}(\widehat{R},\bar{x}) = E(\bar{y}) - E(\bar{x})E(\widehat{R}) $$
+                    <p>In simple random sampling, the expected value of a sample mean is the true population mean. Therefore, \( E(\bar{y}) = \bar{Y} \) and \( E(\bar{x}) = \bar{X} \):</p>
+                    $$ \text{Cov}(\widehat{R},\bar{x}) = \bar{Y} - \bar{X}E(\widehat{R}) $$
+                    <p>Now, let's divide the entire equation by the population mean \( \bar{X} \):</p>
+                    $$ \frac{\text{Cov}(\widehat{R},\bar{x})}{\bar{X}} = \frac{\bar{Y}}{\bar{X}} - E(\widehat{R}) $$
+                    <p>Since the population ratio \( R \) is defined as \( \bar{Y}/\bar{X} \), we have:</p>
+                    $$ \frac{\text{Cov}(\widehat{R},\bar{x})}{\bar{X}} = R - E(\widehat{R}) $$
+                    <p>By definition, Bias is the difference between the expected value of an estimator and the true value, i.e., \( B(\widehat{R}) = E(\widehat{R}) - R \). So, \( R - E(\widehat{R}) \) is simply the negative bias:</p>
+                    $$ \frac{\text{Cov}(\widehat{R},\bar{x})}{\bar{X}} = - B(\widehat{R}) $$
+                    <p>Rearranging this gives us our result:</p>
+                    $$ B(\widehat{R}) = - \frac{\text{Cov}(\widehat{R},\bar{x})}{\bar{X}} $$
                 </div>
 
                 <h3>Corollary 1</h3>
-                <p>Prove that</p>
+                <p>The absolute bias is always smaller than or equal to the standard error of the ratio estimator multiplied by the coefficient of variation of \( \bar{x} \):</p>
                 <div class="derivation-block">
-                    $$ |B(\widehat{R})| \leq CV(\bar{x}) $$
-                    <p>where \( CV \) stands for the coefficient of variation.</p>
+                    $$ |B(\widehat{R})| \leq \sigma_{\widehat{R}} \cdot CV(\bar{x}) $$
                 </div>
-
-                <h3>Corollary 2</h3>
-                <p>Show that</p>
-                <div class="derivation-block">
-                    $$ B(\widehat{Y}_R) = XB(\widehat{R}) \quad and \quad B(\bar{y}_R) = \bar{X}B(\widehat{R}) $$
-                </div>
-
-                <h3>Corollary 3</h3>
-                <p>Prove that \( \widehat{R} \) is unbiased if \( \rho = 0 \), where \( \rho \) stands for the correlation coefficient.</p>
 
                 <h3>Theorem 6.3.2</h3>
-                <p>Show that the first approximation to the relative bias of the ratio estimator in simple random sampling, wor, is given by:</p>
+                <p>For a large sample, the relative bias (bias divided by the true value) of the ratio estimator can be approximated as:</p>
                 <div class="derivation-block">
                     $$ \frac{B(\widehat{R})}{R} \approx \frac{1 - f}{n}(C_x^2 - \rho C_x C_y) \quad (6.3.2) $$
-                    <p>where \( C_x = S_x/\bar{X} \) and \( C_y = S_y/\bar{Y} \) are the coefficients of variation of \( x \) and \( y \), respectively.</p>
                 </div>
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>We know that</p>
-                    $$ \widehat{R} - R = \frac{\bar{y}}{\bar{x}} - \frac{\bar{Y}}{\bar{X}} = \frac{1}{\bar{X}\bar{x}}[\bar{X}\bar{y} - \bar{Y}\bar{x}] = \frac{1}{\bar{X}\bar{x}}[(\bar{y} - R\bar{x})(\bar{X}) - (\bar{x} - \bar{X})(\bar{Y})] \approx \frac{1}{\bar{X}^2}(\bar{y} - R\bar{x})\bar{X}\left( 1 + \frac{\bar{x} - \bar{X}}{\bar{X}} \right)^{-1} $$
-                    <p>Expanding by a Taylor's series, we get:</p>
-                    $$ \widehat{R} - R = - (\bar{y} - R\bar{x})\frac{1}{\bar{X}}\left( 1 - \frac{\bar{x} - \bar{X}}{\bar{X}} + \ldots \right) $$
-                    <p>Ignoring the terms of the second and higher orders, we have:</p>
-                    $$ E(\widehat{R} - R) = - \frac{1}{\bar{X}^2}E[(\bar{y} - R\bar{x})(\bar{x} - \bar{X})] $$
-                    <p>Since \( E(\bar{y} - R\bar{x}) = \bar{Y} - R\bar{X} = 0 \), and</p>
-                    $$ E[(\bar{y} - R\bar{x})(\bar{x} - \bar{X})] = E[\bar{y}(\bar{x} - \bar{X})] - RE[\bar{x}(\bar{x} - \bar{X})] $$
-                    $$ = E[(\bar{y} - \bar{Y})(\bar{x} - \bar{X})] - RE[(\bar{x} - \bar{X})^2] $$
-                    $$ = \frac{1 - f}{n}[\rho S_x S_y - R S_x^2] $$
-                    <div class="explanation">\( \because \) substituting the standard definitions for covariance and variance in simple random sampling.</div>
-                    <p>Hence,</p>
-                    $$ B(\widehat{R}) = - \frac{1 - f}{n\bar{X}^2}(\rho S_x S_y - R S_x^2) = \frac{1 - f}{n\bar{X}^2}(R S_x^2 - \rho S_x S_y) $$
-                    $$ \frac{B(\widehat{R})}{R} = \frac{1 - f}{n}\left( \frac{S_x^2}{\bar{X}^2} - \rho\frac{S_x S_y}{\bar{X}\bar{Y}} \right) $$
-                    <p>By substituting \( C_x = \frac{S_x}{\bar{X}} \) and \( C_y = \frac{S_y}{\bar{Y}} \), we get the result.</p>
-                </div>
-                <p>For large \( n \) and sufficiently high value of \( \rho \) the bias will be negligible. It should be noted that the bias in the ratio estimator becomes zero when \( R = \rho S_y/S_x \), which is satisfied only if the line of regression of \( y \) on \( x \) passes through the origin. It can also be seen that contribution of higher order terms depends on the values of the moments and product moments of two variates and these are worked out by Sukhatme (1944). To a second order of approximation, the relative bias in a ratio estimator for a large population can be expressed as:</p>
-                <div class="derivation-block">
-                    $$ B_2 = B_1 + 3C_x(C_x^2 - \rho C_x C_y) \quad (6.3.3) $$
-                </div>
-
-                <h3>Corollary 1</h3>
-                <p>Show that an upper bound to the ratio of the bias to its standard error is given by:</p>
-                <div class="derivation-block">
-                    $$ \left| \frac{B(\widehat{R})}{\text{S.E.}(\widehat{R})} \right| \leq C_x \quad (6.3.4) $$
-                </div>
-
-                <h3>Corollary 2</h3>
-                <p>An estimator of the bias \( B(\widehat{R}) \) is given by:</p>
-                <div class="derivation-block">
-                    $$ \widehat{B}(\widehat{R}) = \frac{1}{\bar{X}}\left[ \widehat{R}v(\bar{x}) - \text{cov}(\bar{x},\bar{y}) \right] \quad (6.3.5) $$
+                    <p>Let's look at the error in our ratio estimator:</p>
+                    $$ \widehat{R} - R = \frac{\bar{y}}{\bar{x}} - R = \frac{\bar{y} - R\bar{x}}{\bar{x}} $$
+                    <p>We can rewrite this by introducing the population mean \( \bar{X} \) in the denominator:</p>
+                    $$ \widehat{R} - R = \frac{\bar{y} - R\bar{x}}{\bar{X} + (\bar{x} - \bar{X})} = \frac{\bar{y} - R\bar{x}}{\bar{X}} \left( 1 + \frac{\bar{x} - \bar{X}}{\bar{X}} \right)^{-1} $$
+                    <p>Using the Taylor series expansion \( (1+z)^{-1} \approx 1 - z \), we get a first approximation:</p>
+                    $$ \widehat{R} - R \approx \frac{\bar{y} - R\bar{x}}{\bar{X}} \left( 1 - \frac{\bar{x} - \bar{X}}{\bar{X}} \right) = \frac{\bar{y} - R\bar{x}}{\bar{X}} - \frac{(\bar{y} - R\bar{x})(\bar{x} - \bar{X})}{\bar{X}^2} $$
+                    <p>Now, let's take the expected value to find the bias. Note that \( E(\bar{y} - R\bar{x}) = \bar{Y} - R\bar{X} = 0 \), so the first term vanishes:</p>
+                    $$ E(\widehat{R} - R) \approx - \frac{1}{\bar{X}^2} E [ (\bar{y} - R\bar{x})(\bar{x} - \bar{X}) ] $$
+                    <p>Expanding the term inside the brackets:</p>
+                    $$ E [ (\bar{y} - R\bar{x})(\bar{x} - \bar{X}) ] = E [ (\bar{y} - \bar{Y} - R(\bar{x} - \bar{X})) (\bar{x} - \bar{X}) ] = E [ (\bar{y} - \bar{Y})(\bar{x} - \bar{X}) ] - R E [ (\bar{x} - \bar{X})^2 ] $$
+                    <p>In SRSWOR, these are simply the formulas for sample covariance and variance of means:</p>
+                    $$ = \frac{1 - f}{n} S_{xy} - R \frac{1 - f}{n} S_x^2 = \frac{1 - f}{n} (\rho S_x S_y - R S_x^2) $$
+                    <p>Substituting this back, we get the Bias:</p>
+                    $$ B(\widehat{R}) \approx \frac{1 - f}{n \bar{X}^2} (R S_x^2 - \rho S_x S_y) $$
+                    <p>Finally, we divide by \( R \) and use the definitions of coefficients of variation (\( C_x = S_x/\bar{X} \) and \( C_y = S_y/\bar{Y} \)):</p>
+                    $$ \frac{B(\widehat{R})}{R} \approx \frac{1 - f}{n} \left( \frac{S_x^2}{\bar{X}^2} - \rho \frac{S_x S_y}{R \bar{X}^2} \right) = \frac{1 - f}{n} (C_x^2 - \rho C_x C_y) $$
                 </div>
             </div>
             
@@ -315,94 +299,65 @@
         <section id="sec6-4" class="section-card">
             <div class="english-content">
                 <h2>6.4 Approximate Variance of Ratio Estimator</h2>
-                <p>Since ratio estimators are generally biased, we should consider their mean square errors for the purpose of comparing their efficiency with that of any other estimator. Although these estimators are biased but they are consistent, and with simple random sampling for moderately large samples the bias is negligible. Consequently, for most practical purposes, approximate variance results are equally valid for comparison of its precision.</p>
+                <p>Since the ratio estimator is slightly biased, we usually compare it with other estimators using the "Mean Square Error" (MSE). However, for larger samples, this bias becomes so small that we can just focus on the variance. In this section, we will derive the formulas for the variance of our ratio estimators.</p>
 
                 <h3>Theorem 6.4.1</h3>
-                <p>In simple random sampling, wor, for large \( n \), an approximation to the variance of \( \widehat{R} \) is given by:</p>
+                <p>In simple random sampling (without replacement), for a large sample size \( n \), the variance of the ratio estimator \( \widehat{R} \) is approximately:</p>
                 <div class="derivation-block">
-                    $$ V(\widehat{R}) = \frac{1 - f}{n\bar{X}^2}\frac{1}{N - 1}\sum (y_i - Rx_i)^2 \quad (6.4.1) $$
-                    <p>where \( f(= n/N) \) is the sampling fraction.</p>
+                    $$ V(\widehat{R}) \approx \frac{1 - f}{n\bar{X}^2} \frac{1}{N - 1} \sum_{i=1}^N (y_i - Rx_i)^2 \quad (6.4.1) $$
                 </div>
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    $$ V(\widehat{R}) = E[\widehat{R} - E(\widehat{R})]^2 \approx E(\widehat{R} - R)^2 = E\left[ \frac{(\bar{y} - R\bar{x})^2}{\bar{x}^2} \right] \approx \frac{1}{\bar{X}^2}E(\bar{y} - R\bar{x})^2 $$
-                    <p>Now consider the variate \( u_i = y_i - Rx_i \), we have \( \bar{u} = \bar{y} - R\bar{x} \), and \( \bar{U} = \bar{Y} - R\bar{X} = 0 \).</p>
-                    <p>By applying Theorem 2.3.1, we get:</p>
-                    $$ V(\bar{u}) = \frac{1 - f}{n}\frac{\sum (u_i - \bar{U})^2}{N - 1} = \frac{1 - f}{n(N - 1)}\sum (y_i - Rx_i)^2 $$
-                    <div class="explanation">\( \because \) the variance of a sample mean in SRS wor is exactly \( \frac{1-f}{n}S^2 \).</div>
-                </div>
-
-                <h3>Corollary 1</h3>
-                <p>Show that:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_R) = \frac{1 - f}{nN^2}\frac{1}{N - 1}\sum (y_i - Rx_i)^2 $$
-                </div>
-
-                <h3>Corollary 2</h3>
-                <p>Show that:</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}_R) = N^2\frac{1 - f}{n}\frac{1}{N - 1}\sum (y_i - Rx_i)^2 $$
+                    <p>The variance of an estimator is the average squared error. For a large sample, we can approximate this using the true population ratio \( R \):</p>
+                    $$ V(\widehat{R}) = E[\widehat{R} - E(\widehat{R})]^2 \approx E(\widehat{R} - R)^2 $$
+                    <p>Now, let's substitute the formula for \( \widehat{R} = \bar{y}/\bar{x} \):</p>
+                    $$ V(\widehat{R}) \approx E \left[ \frac{\bar{y}}{\bar{x}} - R \right]^2 = E \left[ \frac{\bar{y} - R\bar{x}}{\bar{x}} \right]^2 $$
+                    <p>For a large sample, the sample mean \( \bar{x} \) will be very close to the true population mean \( \bar{X} \). So we can replace \( \bar{x} \) in the denominator with \( \bar{X} \):</p>
+                    $$ V(\widehat{R}) \approx \frac{1}{\bar{X}^2} E (\bar{y} - R\bar{x})^2 $$
+                    <p>Let's define a new variable \( u_i = y_i - Rx_i \). The sample mean of this variable is \( \bar{u} = \bar{y} - R\bar{x} \), and its population mean is \( \bar{U} = \bar{Y} - R\bar{X} = 0 \). This simplifies our expression to:</p>
+                    $$ V(\widehat{R}) \approx \frac{1}{\bar{X}^2} E (\bar{u} - \bar{U})^2 = \frac{1}{\bar{X}^2} V(\bar{u}) $$
+                    <p>From Chapter 2, we know that the variance of a sample mean is \( \frac{1 - f}{n} S_u^2 \):</p>
+                    $$ V(\widehat{R}) \approx \frac{1}{\bar{X}^2} \frac{1 - f}{n} \left[ \frac{1}{N - 1} \sum_{i=1}^N (u_i - \bar{U})^2 \right] $$
+                    <p>Substituting back \( u_i = y_i - Rx_i \) and \( \bar{U} = 0 \), we get our result:</p>
+                    $$ V(\widehat{R}) \approx \frac{1 - f}{n\bar{X}^2} \frac{1}{N - 1} \sum_{i=1}^N (y_i - Rx_i)^2 $$
                 </div>
 
                 <h3>Theorem 6.4.2</h3>
-                <p>Show that, to the first order of approximation, the variance of \( \widehat{R} \) can be expressed as:</p>
+                <p>We can also express the variance of \( \widehat{R} \) using the variances and correlation of \( x \) and \( y \):</p>
                 <div class="derivation-block">
-                    $$ V(\widehat{R}) = \frac{1 - f}{n\bar{X}^2}[S_y^2 + R^2 S_x^2 - 2R\rho S_x S_y] \quad (6.4.2) $$
-                    $$ = \frac{1 - f}{n}R^2[C_y^2 + C_x^2 - 2\rho C_x C_y] $$
+                    $$ V(\widehat{R}) \approx \frac{1 - f}{n\bar{X}^2} [S_y^2 + R^2 S_x^2 - 2R\rho S_x S_y] \quad (6.4.2) $$
+                    $$ = \frac{1 - f}{n} R^2 [C_y^2 + C_x^2 - 2\rho C_x C_y] $$
                 </div>
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>Since \( \bar{Y} = R\bar{X} \), we can write in the relation (6.4.1):</p>
-                    $$ u_i = y_i - Rx_i = (y_i - \bar{Y}) - R(x_i - \bar{X}) $$
-                    <p>Then,</p>
-                    $$ V(\widehat{R}) = \frac{1 - f}{n\bar{X}^2(N - 1)}E\{[(y_i - \bar{Y}) - R(x_i - \bar{X})]^2\} $$
-                    $$ = \frac{1 - f}{n\bar{X}^2}[E(y_i - \bar{Y})^2 + R^2 E(x_i - \bar{X})^2 - 2RE(x_i - \bar{X})(y_i - \bar{Y})] $$
-                    <p>The correlation coefficient \( \rho \) between \( y \) and \( x \) in the finite population is defined by:</p>
-                    $$ \rho = \frac{\sum (y_i - \bar{Y})(x_i - \bar{X})}{(N - 1)S_x S_y} $$
-                    <p>Thus we get:</p>
-                    $$ V(\widehat{R}) = \frac{1 - f}{n\bar{X}^2}[S_y^2 + R^2 S_x^2 - 2R\rho S_x S_y] $$
-                    $$ = \frac{1 - f}{n}R^2\left[ \frac{S_y^2}{\bar{Y}^2} + \frac{S_x^2}{\bar{X}^2} - 2\rho\frac{S_x S_y}{\bar{X}\bar{Y}} \right] = \frac{1 - f}{n}R^2[C_y^2 + C_x^2 - 2\rho C_x C_y] $$
+                    <p>Let's expand the squared term inside the summation from formula (6.4.1):</p>
+                    $$ (y_i - Rx_i)^2 = [ (y_i - \bar{Y}) - R(x_i - \bar{X}) ]^2 $$
+                    <p>Expanding the square gives us three terms:</p>
+                    $$ (y_i - Rx_i)^2 = (y_i - \bar{Y})^2 + R^2 (x_i - \bar{X})^2 - 2R(y_i - \bar{Y})(x_i - \bar{X}) $$
+                    <p>Now, let's sum this over the entire population and divide by \( N - 1 \):</p>
+                    $$ \frac{\sum (y_i - Rx_i)^2}{N - 1} = \frac{\sum (y_i - \bar{Y})^2}{N - 1} + R^2 \frac{\sum (x_i - \bar{X})^2}{N - 1} - \frac{2R \sum (y_i - \bar{Y})(x_i - \bar{X})}{N - 1} $$
+                    <p>These terms are exactly the definitions of population variances \( S_y^2, S_x^2 \) and population covariance \( S_{xy} \):</p>
+                    $$ \frac{\sum (y_i - Rx_i)^2}{N - 1} = S_y^2 + R^2 S_x^2 - 2R S_{xy} $$
+                    <p>Since \( S_{xy} = \rho S_x S_y \), we can substitute this into formula (6.4.1) to get the first form:</p>
+                    $$ V(\widehat{R}) \approx \frac{1 - f}{n\bar{X}^2} [ S_y^2 + R^2 S_x^2 - 2R \rho S_x S_y ] $$
+                    <p>To get the second form, we divide everything by \( R^2 \) and use the coefficients of variation (\( C_y = S_y/\bar{Y} \) and \( C_x = S_x/\bar{X} \)):</p>
+                    $$ V(\widehat{R}) \approx \frac{1 - f}{n} R^2 \left[ \frac{S_y^2}{R^2 \bar{X}^2} + \frac{S_x^2}{\bar{X}^2} - \frac{2 \rho S_x S_y}{R \bar{X}^2} \right] $$
+                    <p>Since \( \bar{Y} = R\bar{X} \), the first term inside the brackets becomes \( S_y^2/\bar{Y}^2 \), which is \( C_y^2 \):</p>
+                    $$ V(\widehat{R}) \approx \frac{1 - f}{n} R^2 [ C_y^2 + C_x^2 - 2 \rho C_x C_y ] $$
                 </div>
 
-                <h3>Corollary 1</h3>
-                <p>Show that, to the first order of approximation:</p>
+                <h3>Corollary 1: Variance of Estimators of Total and Mean</h3>
+                <p>The variances for the population mean and total estimators are found by multiplying the variance of \( \widehat{R} \) by \( \bar{X}^2 \) or \( X^2 \):</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_R) = \frac{1 - f}{nN^2}[S_y^2 + R^2 S_x^2 - 2R\rho S_x S_y] \quad (6.4.3) $$
-                    $$ = \frac{1 - f}{n}\bar{Y}^2[C_y^2 + C_x^2 - 2\rho C_x C_y] $$
+                    $$ V(\bar{y}_R) \approx \frac{1 - f}{n} \bar{Y}^2 [C_y^2 + C_x^2 - 2\rho C_x C_y] $$
+                    $$ V(\widehat{Y}_R) \approx \frac{1 - f}{n} Y^2 [C_y^2 + C_x^2 - 2\rho C_x C_y] $$
                 </div>
 
-                <h3>Corollary 2</h3>
-                <p>Show that, to the first order of approximation:</p>
+                <h3>Corollary 2: Sample Estimate of Variance</h3>
+                <p>In practice, we don't know the population values, so we use sample estimates \( s_y^2, s_x^2, r \) and \( \widehat{R} \):</p>
                 <div class="derivation-block">
-                    $$ V(\widehat{Y}_R) = N^2\frac{1 - f}{n}[S_y^2 + R^2 S_x^2 - 2R\rho S_x S_y] \quad (6.4.4) $$
-                    $$ = \frac{1 - f}{n}Y^2[C_y^2 + C_x^2 - 2\rho C_x C_y] $$
+                    $$ v(\widehat{R}) = \frac{1 - f}{n\bar{X}^2} [s_y^2 + \widehat{R}^2 s_x^2 - 2\widehat{R}r s_y s_x] \quad (6.4.7) $$
                 </div>
-
-                <h3>Corollary 3</h3>
-                <p>Show that, to the first order of approximation:</p>
-                <div class="derivation-block">
-                    $$ (CV)^2 = \frac{1 - f}{n}[C_y^2 + C_x^2 - 2\rho C_x C_y] \quad (6.4.5) $$
-                </div>
-                <p>The quantity \( (CV)^2 \) has been called the relative variance by Hansen, Hurwitz and Madow (1953). Since the coefficient of variation, i.e. the standard error divided by the parameter to be estimated is the same quantity for all the three estimates \( \widehat{R} \), \( \widehat{Y}_R \), and \( \bar{y}_R \) and the formula can be used to calculate their relative variances.</p>
-
-                <h3>Corollary 4</h3>
-                <p>If \( C_x = C_y = C \), show that the relative variance:</p>
-                <div class="derivation-block">
-                    $$ (CV)^2 = \frac{1 - f}{n}2C^2(1 - \rho) \quad (6.4.6) $$
-                </div>
-
-                <h3>Corollary 5</h3>
-                <p>A sample estimate of variance of the ratio estimator is given by:</p>
-                <div class="derivation-block">
-                    $$ v(\widehat{R}) = \frac{1 - f}{n(n - 1)\bar{X}^2}\sum (\bar{y}_i - \widehat{R}\bar{x}_i)^2 \quad (6.4.7) $$
-                    $$ = \frac{1 - f}{n}[s_y^2 + \widehat{R}^2 s_x^2 - 2\widehat{R}r s_y s_x] $$
-                    <p>where \( r \) is the estimate of correlation coefficient from the sample values.</p>
-                </div>
-                <p>Relation (6.4.7) is a convenient form for computations and can easily be handled with the survey data. Another form of a sample estimate of variance is:</p>
-                <div class="derivation-block">
-                    $$ v_1(\widehat{R}) = \frac{1 - f}{n\bar{x}^2}[s_y^2 + \widehat{R}^2 s_x^2 - 2\widehat{R}r s_y s_x] $$
-                </div>
-                <p>There arises a question whether one should use \( v(\widehat{R}) \) or \( v_1(\widehat{R}) \) if \( \bar{X} \) is known. Rao and Rao (1971) have observed that \( v_1(\widehat{R}) \) is less biased for certain populations.</p>
             </div>
             
             <div class="hinglish-content">
@@ -446,25 +401,31 @@
         <section id="sec6-5" class="section-card">
             <div class="english-content">
                 <h2>6.5 Comparison of Ratio Estimator with Mean per Unit</h2>
-                <p>The conditions under which the ratio estimator is superior to the mean per unit will be worked out with a comparison of their variances. In simple random sampling, wor, the variance of the mean per unit is given by:</p>
+                <p>When is the ratio estimator better than the simple sample mean? To answer this, we compare their variances. We know that in simple random sampling, the variance of the sample mean is:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}) = \frac{1 - f}{n}S_y^2 $$
+                    $$ V(\bar{y}) = \frac{1 - f}{n} S_y^2 $$
                 </div>
-                <p>Also, we have seen that to the first order approximation, the variance of the mean based on the ratio method is given by:</p>
+                <p>We also found that the variance of the ratio estimator (to the first order) is:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_R) = \frac{1 - f}{n}(S_y^2 + R^2S_x^2 - 2R\rho S_xS_y) $$
+                    $$ V(\bar{y}_R) \approx \frac{1 - f}{n} (S_y^2 + R^2 S_x^2 - 2R \rho S_x S_y) $$
                 </div>
-                <p>Hence the ratio estimate will have smaller variance if:</p>
+                <p>The ratio estimator is more efficient if its variance is smaller than the simple mean's variance:</p>
                 <div class="derivation-block">
-                    $$ S_y^2 + R^2S_x^2 - 2R\rho S_xS_y < S_y^2 $$
-                    <p>or if:</p>
-                    $$ \rho > \frac{1}{2}\frac{RS_x}{S_y} = \frac{1}{2}\frac{C_x}{C_y} \quad (6.5.1) $$
-                    <div class="explanation">\( \because \) simplifying the inequality by moving \( S_y^2 \) and dividing by \( 2RS_xS_y \), noting that \( R = \bar{Y}/\bar{X} \).</div>
+                    <p>Setting up the inequality:</p>
+                    $$ V(\bar{y}_R) < V(\bar{y}) $$
+                    $$ \frac{1 - f}{n} (S_y^2 + R^2 S_x^2 - 2R \rho S_x S_y) < \frac{1 - f}{n} S_y^2 $$
+                    <p>We can cancel out the common factor \( \frac{1 - f}{n} \) and subtract \( S_y^2 \) from both sides:</p>
+                    $$ R^2 S_x^2 - 2R \rho S_x S_y < 0 $$
+                    <p>Moving the negative term to the right and dividing by \( 2R S_x S_y \):</p>
+                    $$ \rho > \frac{R S_x}{2 S_y} $$
+                    <p>Since \( R = \bar{Y} / \bar{X} \), we can rewrite this using the coefficients of variation (\( C_x = S_x / \bar{X} \) and \( C_y = S_y / \bar{Y} \)):</p>
+                    $$ \rho > \frac{1}{2} \left( \frac{\bar{Y}}{\bar{X}} \right) \frac{S_x}{S_y} = \frac{1}{2} \frac{S_x / \bar{X}}{S_y / \bar{Y}} $$
+                    $$ \rho > \frac{1}{2} \frac{C_x}{C_y} \quad (6.5.1) $$
                 </div>
-                <p>Thus, it depends on the value of correlation between \( y \) and \( x \). If \( C_x = C_y \), i.e. the value of coefficients of variation of \( x \) and \( y \) are the same, the ratio estimator is superior if \( \rho \) exceeds 0.5. The variability of the auxiliary variate \( x \) is an important factor. If \( CV \) of \( x \) is more than twice that of \( y \), the ratio estimate is always less precise.</p>
+                <p><strong>Conclusion:</strong> The ratio estimator is superior if the correlation \( \rho \) is high enough. If \( C_x \approx C_y \), then the ratio estimator is better if \( \rho > 0.5 \). However, if the auxiliary variable is very spread out (if \( C_x > 2C_y \)), the ratio estimator will always be less precise than the simple mean.</p>
 
-                <h3 style="margin-top: 40px;">Example 6.1</h3>
-                <p>For studying milk yield, feeding and management practices of milch animals in the year 1977-78, the whole of Haryana state was divided into 4 zones according to agro-climatic conditions. The total number of milch animals in 17 randomly selected villages of zone A, along with their livestock census data in 1976, are shown below:</p>
+                <h3 style="margin-top: 40px;">Example 6.1: Estimating Milch Animals</h3>
+                <p>In 1977-78, a survey was done in Haryana to study milch animals. Researchers took a sample of 17 villages from Zone A. They also had census data from 1976 for these villages. Let's compare the ratio method with the simple mean method using this data:</p>
                 
                 <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
                     <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Village S.No.</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th></tr>
@@ -475,22 +436,20 @@
                     <tr><td><strong>Census (x)</strong></td><td>1137</td><td>1170</td><td>1115</td><td>1130</td><td>1118</td><td>1122</td><td>1113</td><td>1116</td><td></td></tr>
                 </table>
 
-                <p>Estimate the total number of milch animals in 117 villages of zone A: (i) by ratio method and (ii) by simple mean per unit method. Also compare its precision, given the total number of milch animals in the census = 143,968.</p>
+                <p>We need to estimate the total number of milch animals for all 117 villages (\( N=117 \)) in Zone A. We know the true census total is \( X = 143,968 \).</p>
                 <div class="derivation-block">
-                    <p>Here, \( N = 117 \), \( n = 17 \), \( X = 143,968 \).</p>
-                    <p>\( \bar{x} = 1140.06 \), \( \bar{y} = 1133.29 \)</p>
-                    <p>\( R = 0.994 \), \( s_y^2 = 287.85 \), \( s_x^2 = 458.56 \), \( s_{xy} = 262.86 \)</p>
+                    <p><strong>Step 1: Calculate Sample Statistics</strong></p>
+                    <p>\( n = 17 \), \( \bar{x} = 1140.06 \), \( \bar{y} = 1133.29 \)</p>
+                    <p>\( \widehat{R} = \bar{y}/\bar{x} = 0.994 \)</p>
 
-                    <p><strong>(i) Ratio Estimate</strong></p>
-                    $$ \widehat{Y}_R = RX = 0.994 \times 143,968 = 143,120 $$
-                    $$ v(\widehat{Y}_R) = \frac{1 - f}{n}N^2[s_y^2 + \widehat{R}^2s_x^2 - 2\widehat{R}s_{xy}] = 150,304 $$
+                    <p><strong>Step 2: Comparison of Estimates</strong></p>
+                    <p><strong>(i) Ratio Estimate:</strong> \( \widehat{Y}_R = \widehat{R} X = 0.994 \times 143,968 = 143,120 \)</p>
+                    <p><strong>(ii) Mean per Unit Estimate:</strong> \( \widehat{Y} = N \bar{y} = 117 \times 1133.29 = 132,595 \)</p>
 
-                    <p><strong>(ii) Mean Per Unit Estimate</strong></p>
-                    $$ \widehat{Y} = N\bar{y} = 117 \times 1133.29 = 132,595 $$
-                    $$ v(\widehat{Y}) = \frac{1 - f}{n}N^2s_y^2 = 198,108 $$
-
-                    <p>Relative precision of ratio estimate is given as:</p>
-                    $$ \text{R.P.} = \frac{v(\widehat{Y}) - v(\widehat{Y}_R)}{v(\widehat{Y}_R)} \times 100 = 32\% $$
+                    <p><strong>Step 3: Relative Precision (R.P.)</strong></p>
+                    <p>The variance for the ratio method is \( 150,304 \), and for the simple mean method is \( 198,108 \). The ratio method is much more precise:</p>
+                    $$ \text{R.P.} = \frac{V(\widehat{Y}) - V(\widehat{Y}_R)}{V(\widehat{Y}_R)} \times 100 \approx 32\% $$
+                    <p>This means the ratio method improved accuracy by about 32%.</p>
                 </div>
             </div>
             
@@ -515,18 +474,18 @@
         <section id="sec6-6" class="section-card">
             <div class="english-content">
                 <h2>6.6 Confidence Limits</h2>
-                <p>For large samples, the estimate of the mean or total may be assumed to follow approximately normal distribution. The confidence limits for the total will be written as:</p>
+                <p>For large samples, we can assume that our estimates (the mean or total) follow a normal distribution. This allows us to calculate "confidence limits," which is the range where we are fairly sure the true population value lies. For the population total, the limits are:</p>
                 <div class="derivation-block">
-                    $$ \widehat{Y}_R \pm z\sigma(\widehat{Y}_R) \quad (6.6.1) $$
-                    <p>where \( z \) is the value of the normal variate for a given level of confidence coefficient.</p>
+                    $$ \widehat{Y}_R \pm z \cdot \sigma(\widehat{Y}_R) \quad (6.6.1) $$
+                    <p>where \( z \) is a value from the normal distribution table (like 1.96 for 95% confidence).</p>
                 </div>
-                <p>Similarly, the limits for \( R \) may be written as:</p>
+                <p>Similarly, the range for the population ratio \( R \) is:</p>
                 <div class="derivation-block">
-                    $$ \widehat{R} \pm z\sigma(\widehat{R}) \quad (6.6.2) $$
+                    $$ \widehat{R} \pm z \cdot \sigma(\widehat{R}) \quad (6.6.2) $$
                 </div>
-                <p>For small samples, let us assume that \( (\bar{x},\bar{y}) \) follows a bivariate normal distribution and let \( u_i = y_i - Rx_i \). The confidence limits of \( R \) with confidence coefficient \( (1 - \alpha) \) are determined by the two roots of the quadratic in \( R \). After some manipulations, the confidence limits of \( R \) may be expressed in an easier form as:</p>
+                <p>For very small samples, calculating these limits is a bit more complex and involves solving a quadratic equation. A simpler version for small samples is:</p>
                 <div class="derivation-block">
-                    $$ \widehat{R} \pm \frac{t}{\sqrt{n - 1}}\left[ (1 - g)(c_y^2 + c_x^2) - 2rc_xc_y \right]^{1/2} \quad (6.6.4) $$
+                    $$ \widehat{R} \pm \frac{t}{\sqrt{n - 1}} \left[ (1 - g)(c_y^2 + c_x^2) - 2rc_xc_y \right]^{1/2} \quad (6.6.4) $$
                 </div>
             </div>
             
@@ -543,30 +502,24 @@
         <section id="sec6-7" class="section-card">
             <div class="english-content">
                 <h2>6.7 Ratio Estimators in Stratified Sampling</h2>
-                <p>When the population is stratified and units are drawn by simple random sampling method from each stratum, there are two ways of obtaining a ratio estimate of the population total \( Y \): (1) separate ratio estimate, and (2) combined ratio estimate.</p>
+                <p>If your population is divided into different groups (strata), you have two main ways to use the ratio method to estimate the total population value \( Y \):</p>
 
                 <h3>6.7.1 Separate Ratio Estimator</h3>
-                <p>The separate ratio estimator \( \widehat{Y}_{Rs} \) is defined as:</p>
+                <p>In this method, we calculate a separate ratio for *every single stratum* and then add them up. This is useful if the relationship between \( x \) and \( y \) is different in each group.</p>
                 <div class="derivation-block">
-                    $$ \widehat{Y}_{Rs} = \sum \frac{\bar{y}_m}{\bar{x}_m}X_m = \sum \widehat{R}_mX_m \quad (6.7.1) $$
+                    $$ \widehat{Y}_{Rs} = \sum_{m} \frac{\bar{y}_m}{\bar{x}_m} X_m = \sum_{m} \widehat{R}_m X_m \quad (6.7.1) $$
                 </div>
-                <p>If sample sizes \( n_m \) are large in all strata, the sampling variance is given by:</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}_{Rs}) = \sum \frac{N_m^2(1 - f_m)}{n_m}(S_{ym}^2 + R_m^2S_{xm}^2 - 2R_m\rho_mS_{xm}S_{ym}) \quad (6.7.2) $$
-                </div>
+                <p><strong>When to use:</strong> Use this if you have a large sample in *each* stratum.</p>
 
                 <h3>6.7.2 Combined Ratio Estimator</h3>
-                <p>The combined ratio estimator \( \widehat{Y}_{Rc} \) is defined as:</p>
+                <p>In this method, we first find the overall stratified means (\( \bar{y}_{st} \) and \( \bar{x}_{st} \)) and then calculate one single ratio for the whole population.</p>
                 <div class="derivation-block">
-                    $$ \widehat{Y}_{Rc} = \frac{\bar{y}_{st}}{\bar{x}_{st}}X = \frac{\sum W_m\bar{y}_m}{\sum W_m\bar{x}_m}X \quad (6.7.4) $$
+                    $$ \widehat{Y}_{Rc} = \frac{\bar{y}_{st}}{\bar{x}_{st}} X \quad (6.7.4) $$
                 </div>
-                <p>Its sampling variance to the first approximation is:</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}_{Rc}) = \sum \frac{N_m^2(1 - f_m)}{n_m}(S_{ym}^2 + R^2S_{xm}^2 - 2R\rho_mS_{xm}S_{ym}) \quad (6.7.5) $$
-                </div>
+                <p><strong>When to use:</strong> Use this if your sample sizes in individual strata are small. It helps keep the bias low.</p>
 
-                <h3>6.7.3 Comparison of Separate and Combined Ratio Estimators</h3>
-                <p>The separate ratio estimator is expected to be more precise provided the sample in each stratum is large enough. The combined estimator will have a large variance as compared to the separate estimator, but its bias is expected to be smaller. Unless \( R_m \) varies considerably across strata, the combined estimator is usually preferred when stratum samples are small.</p>
+                <h3>6.7.3 Which one is better?</h3>
+                <p>The **Separate estimator** is usually more accurate if your strata are very different from each other. However, if your samples are small, the **Combined estimator** is safer because it has less bias.</p>
             </div>
             
             <div class="hinglish-content">
@@ -595,13 +548,13 @@
         <section id="sec6-8" class="section-card">
             <div class="english-content">
                 <h2>6.8 Unbiased Ratio Estimator and its Variance</h2>
-                <p>Under simple random sampling, the ratio estimator \( \widehat{Y}_R \) is seen to be biased. Some procedures make it unbiased by selecting units with varying probabilities. Midzuno (1951) suggested a method in which the first unit is selected with probability proportional to \( x_i \) and the remaining units with equal probability. The probability of selecting a specified sample \( s \) is:</p>
+                <p>As we saw earlier, the standard ratio estimator is usually biased. However, there are special sampling tricks to make it completely unbiased. One famous method was suggested by Midzuno (1951).</p>
+                <p><strong>The Midzuno Scheme:</strong> Instead of picking all units with equal chance, we pick the *first* unit with probability proportional to its \( x_i \) value. Then, we pick the remaining units normally (with equal probability). If we use this method, the simple ratio estimator becomes perfectly unbiased!</p>
                 <div class="derivation-block">
-                    $$ P(s) = \frac{\sum x_i}{X\binom{N - 1}{n - 1}} \quad (6.8.1) $$
-                </div>
-                <p>In this sampling scheme, the usual ratio estimator becomes unbiased \( E(\widehat{Y}_R) = Y \). Its variance is:</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}_R) = X\frac{N - 1}{n - 1}\frac{1}{\binom{N - 1}{n - 1}}\sum \frac{y_i^2}{x_i} - Y^2 \quad (6.8.2) $$
+                    <p>The probability of picking a specific sample \( s \) is:</p>
+                    $$ P(s) = \frac{\sum_{i \in s} x_i}{X \binom{N - 1}{n - 1}} \quad (6.8.1) $$
+                    <p>Under this scheme, the expected value of our ratio estimator is exactly the population total:</p>
+                    $$ E(\widehat{Y}_R) = Y $$
                 </div>
             </div>
             
@@ -614,11 +567,13 @@
         <section id="sec6-9" class="section-card">
             <div class="english-content">
                 <h2>6.9 Unbiased Ratio-type Estimator</h2>
-                <p>Hartley and Ross (1954) proposed an unbiased ratio type estimator by correcting the average of ratios \( \bar{r} = \frac{1}{n}\sum \frac{y_i}{x_i} \) for bias.</p>
+                <p>Another way to remove bias is to change the estimator itself. Hartley and Ross (1954) proposed a modified version. Instead of taking the ratio of means, they took the average of individual ratios (\( r_i = y_i / x_i \)) and applied a correction factor.</p>
                 <div class="derivation-block">
-                    $$ \widehat{R}_1 = \bar{r} + \frac{f + n(N - 1)}{N(n - 1)}\frac{(\bar{y} - \bar{r}\bar{x})}{\bar{X}} \quad (6.9.1) $$
+                    <p>The Hartley-Ross unbiased estimator is:</p>
+                    $$ \widehat{R}_1 = \bar{r} + \frac{n(N - 1)}{N(n - 1)} \frac{(\bar{y} - \bar{r}\bar{x})}{\bar{X}} \quad (6.9.1) $$
+                    <p>where \( \bar{r} \) is the average of the ratios in your sample.</p>
                 </div>
-                <p>For large samples, its approximate variance is the same as the usual ratio estimator.</p>
+                <p>For large samples, the accuracy of this estimator is almost the same as the standard ratio estimator, but it has the advantage of being unbiased.</p>
             </div>
             
             <div class="hinglish-content">
@@ -630,11 +585,12 @@
         <section id="sec6-10" class="section-card">
             <div class="english-content">
                 <h2>6.10 Product Estimator</h2>
-                <p>If the correlation coefficient between the main variate \( y \) and auxiliary variate \( x \) is negative, the ratio estimator is not efficient. In such situations, the product estimator is used:</p>
+                <p>What if your study variable \( y \) and auxiliary variable \( x \) are **negatively** related? (For example, as the price of a product goes up, the number of sales goes down). In this case, the ratio method won't work well. Instead, we use the **Product Estimator**.</p>
                 <div class="derivation-block">
-                    $$ \bar{y}_P = \bar{y}\frac{\bar{x}}{\bar{X}} \quad (6.10.1) $$
+                    <p>The product estimator for the population mean is:</p>
+                    $$ \bar{y}_P = \bar{y} \frac{\bar{x}}{\bar{X}} \quad (6.10.1) $$
                 </div>
-                <p>The bias and variance are analogous to ratio estimators. The product estimator is more efficient if \( \rho < - \frac{1}{2}\frac{C_x}{C_y} \) (for positive \( Y, X \)).</p>
+                <p>This method is more efficient than the simple mean if the correlation \( \rho \) is very negative (specifically, if \( \rho < - \frac{1}{2} \frac{C_x}{C_y} \)).</p>
             </div>
             
             <div class="hinglish-content">
@@ -646,10 +602,11 @@
         <section id="sec6-11" class="section-card">
             <div class="english-content">
                 <h2>6.11 Multivariate Ratio Estimator</h2>
-                <p>Olkin (1958) proposed the multivariate ratio estimator for auxiliary variates \( x_1,x_2,\ldots,x_k \):</p>
+                <p>Sometimes, we have more than one auxiliary variable (like knowing both the farm area *and* the amount of fertilizer used). In these cases, we can use all of them together to get an even better estimate. This is called the **Multivariate Ratio Estimator**, proposed by Olkin (1958).</p>
                 <div class="derivation-block">
-                    $$ Y_{MR} = \sum_{i = 1}^k W_i Y_{Ri} \quad (6.11.1) $$
-                    <p>where \( \sum W_i = 1 \). The weights \( W_i \) are chosen to maximize precision. For two auxiliary variates, it is more precise than using a single one if certain correlation conditions are met.</p>
+                    <p>The multivariate estimator is a weighted average of individual ratio estimators:</p>
+                    $$ \widehat{Y}_{MR} = W_1 \widehat{Y}_{R1} + W_2 \widehat{Y}_{R2} + \dots + W_k \widehat{Y}_{Rk} \quad (6.11.1) $$
+                    <p>where the weights \( W_i \) are chosen carefully to make the final result as precise as possible.</p>
                 </div>
             </div>
             
@@ -680,9 +637,9 @@
             <div class="english-content">
                 <h2>Exercise (Subjective)</h2>
                 <ol>
-                    <li>Show that the ratio of the exact bias of the ratio estimator to its standard error is not greater than the relative standard error of the estimator \( \widehat{x} \).</li>
-                    <li>Show that the ratio estimator will be unbiased if the sample is selected with probability proportional to \( x_ip_i \).</li>
-                    <li>If \( CV \) of \( x \) is more than twice that of \( y \), show that ratio estimator is less precise than the mean per unit estimator.</li>
+                    <li>Show that the ratio of the bias of the ratio estimator to its standard error is not greater than the coefficient of variation of the sample mean of the auxiliary variable.</li>
+                    <li>Prove that the ratio estimator will be unbiased if the sample is selected with probability proportional to the sum of the auxiliary variable in the sample (\( \sum x_i \)).</li>
+                    <li>If the coefficient of variation of \( x \) is more than twice that of \( y \), prove that the ratio estimator is actually less precise than the simple mean per unit estimator.</li>
                 </ol>
             </div>
             

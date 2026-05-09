@@ -107,15 +107,15 @@
                 <div class="quote">
                     "In a minute there is time / For decisions and revisions which a minute will reverse." -- <strong>T.S. Eliot</strong>
                 </div>
-                <p>In Chapter 2 we discussed simple random sampling in which the selection probabilities were strictly equal for all units of the population. Whenever the units vary fundamentally in size, simple random sampling is not an appropriate mathematical procedure as no importance is given to the size of the unit. Such ancillary information about the size of the units can be efficiently utilized in selecting the sample so as to mathematically derive more efficient estimators of the population parameters.</p>
-                <p>One such powerful method is to definitively assign unequal probabilities of selection to different units in the population precisely depending on their relative sizes. When units vary heavily in their sizes and the variate under study is mathematically highly correlated with the size of the unit, the probability of selection may be explicitly assigned in strict proportion to the size of the unit. This type of sampling procedure where the probability of selection is proportional to the size of the unit is unequivocally known as <strong>probability proportional to size sampling</strong>, abbreviated universally as <strong>pps sampling</strong>.</p>
+                <p>Hello students! In Chapter 2, we learned about simple random sampling. In that method, every unit in the population has the same chance of being picked. But think about this: what if the units are not the same size? For example, if we are studying crop yield, a large farm will contribute much more to the total than a tiny garden. In such cases, giving every unit an equal chance doesn't seem very smart, does it?</p>
+                <p>To get better results, we can use "extra" information about the size of each unit. We assign a higher chance of selection to bigger units and a lower chance to smaller ones. This method is called <strong>Probability Proportional to Size sampling</strong>, or simply <strong>PPS sampling</strong>. If the study variable (like yield) is closely related to the size (like area), this method works like magic and gives very accurate estimates.</p>
                 
-                <p>There is a basic structural mathematical difference between simple random sampling and pps sampling procedures:</p>
+                <p>There is one big difference between simple random sampling and PPS sampling:</p>
                 <ul>
-                    <li>In simple random sampling, the mathematical probability of drawing any specified unit at any given draw is rigorously exactly the same (\( 1/N \)).</li>
-                    <li>In pps sampling, the probability intrinsically differs from draw to draw based on size.</li>
+                    <li>In simple random sampling, the probability of picking any unit is always \( 1/N \). It stays the same for everyone.</li>
+                    <li>In PPS sampling, the probability changes based on the size of the unit. Bigger units are more likely to be in our sample.</li>
                 </ul>
-                <p>The core mathematical theory of pps sampling is consequently heavily more complex than that of simple random sampling. We shall first comprehensively discuss the theory mathematically appropriate to pps sampling with replacement (pps wr) and then rigorously present the advanced theory of pps sampling without replacement (pps wor).</p>
+                <p>Because the probabilities are unequal, the math behind PPS sampling is a bit more complex. Don't worry, we will go through it step-by-step. First, we will look at how to pick a sample when we put the units back after picking (PPS with replacement), and then we will study the case where we don't put them back (PPS without replacement).</p>
             </div>
             
             <div class="hinglish-content">
@@ -138,24 +138,23 @@
         <section id="sec5-2" class="section-card">
             <div class="english-content">
                 <h2>5.2 Procedures of Selecting a Sample</h2>
-                <p>The mathematical procedure of rigorously selecting a pps sample fundamentally consists in intimately associating with each unit a distinct number or set of numbers precisely equal to its size. The explicit selection of units is flawlessly done corresponding to a number chosen at random from the massive totality of numbers associated. There are strictly two main methods of selection:</p>
+                <p>How do we actually pick a sample where the chance depends on size? The basic idea is to give each unit a set of numbers. If a unit is twice as big as another, it should get twice as many numbers! Then we pick a random number, and whichever unit "owns" that number gets selected. There are two main ways to do this:</p>
 
                 <h3>5.2.1 Cumulative Total Method</h3>
-                <p>Let the size of the \( i \)-th unit be mathematically denoted as \( X_i \) (\( i = 1, 2, \ldots, N \)), the total overall size being rigidly \( X = \sum_{i = 1}^N X_i \). We uniquely associate the integer numbers 1 to \( X_1 \) with the very first unit, the numbers \( (X_1 + 1) \) to \( (X_1 + X_2) \) with the exact second unit, and so on progressively. A random number \( k \) is cleanly chosen at random from the range 1 to \( X \), and the unit with which this specific number is associated is conclusively selected.</p>
+                <p>Imagine we have \( N \) units. Let's say the size of the \( i \)-th unit is \( X_i \). The total size of all units combined is \( X = \sum_{i = 1}^N X_i \). In this method, we assign numbers to units like this: Unit 1 gets numbers from 1 to \( X_1 \). Unit 2 gets numbers from \( X_1 + 1 \) up to \( X_1 + X_2 \), and so on. We keep adding the sizes to get "cumulative totals". Then, we pick a random number \( k \) between 1 and \( X \). The unit that owns the range containing \( k \) is our winner!</p>
                 <div class="derivation-block">
-                    <p>Clearly, the \( i \)-th unit in the population is mathematically being selected with a robust probability strictly proportional to \( X_i \):</p>
+                    <p>The logic is simple: since each unit \( i \) is given exactly \( X_i \) numbers out of the total \( X \), the chance of picking it is exactly proportional to its size:</p>
                     $$ p_i = \frac{X_i}{X} \quad \text{for } i = 1, 2, \ldots, N $$
-                    <div class="explanation">\( \because \) the number of integer tickets allocated to unit \( i \) is exactly \( X_i \) out of a total \( X \).</div>
+                    <div class="explanation">Since we have \( X_i \) tickets for unit \( i \) and total tickets are \( X \), the probability is \( X_i/X \).</div>
                 </div>
-                <p>If a sample of precise size \( n \) is required, the procedure is rigorously repeated \( n \) times with full replacement of the units selected. This mathematical procedure of selection is distinctly known as the <strong>cumulative total method</strong> for the method severely needs continuous cumulation of the unit sizes.</p>
-                <p>The main mathematical difficulty inherently in this procedure is the absolute compulsion to compute massive successive cumulative totals, which rapidly becomes time-consuming and computationally costly when the population size \( N \) is astronomically large.</p>
+                <p>If we need a sample of size \( n \), we just repeat this process \( n \) times. If we put the unit back each time, it's called "with replacement". The only problem with this method is that if we have thousands of units, calculating these cumulative totals takes a lot of time and effort.</p>
 
                 <h3>Example 5.1</h3>
-                <p>A region has 10 commercial warehouses consisting of 50, 30, 45, 25, 40, 26, 24, 35, 28, and 27 specific storage units, respectively. Mathematically select a sample of four distinct warehouses by the cumulative total method with replacement and with probability exactly proportional to the number of storage units.</p>
+                <p>Suppose there are 10 warehouses with different number of storage units: 50, 30, 45, 25, 40, 26, 24, 35, 28, and 27. We want to pick a sample of 4 warehouses using the cumulative total method.</p>
                 <div class="derivation-block">
-                    <p>The very first step is to flawlessly form cumulative totals as shown mathematically below:</p>
+                    <p>Step 1: Create a table of cumulative totals:</p>
                     <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
-                        <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>Size (\( X_i \))</th><th>Cumulative Size</th><th>Associated Numbers</th></tr>
+                        <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>Size (\( X_i \))</th><th>Cumulative Size</th><th>Assigned Range</th></tr>
                         <tr><td>1</td><td>50</td><td>50</td><td>1 &ndash; 50</td></tr>
                         <tr><td>2</td><td>30</td><td>80</td><td>51 &ndash; 80</td></tr>
                         <tr><td>3</td><td>45</td><td>125</td><td>81 &ndash; 125</td></tr>
@@ -167,23 +166,21 @@
                         <tr><td>9</td><td>28</td><td>323</td><td>296 &ndash; 323</td></tr>
                         <tr><td>10</td><td>27</td><td>350</td><td>324 &ndash; 350</td></tr>
                     </table>
-                    <p>To mathematically select a warehouse, a random number strictly not exceeding 350 is drawn. Suppose the random number selected is definitively 272. It can be seen from the cumulative totals that the number falls into the mathematical group 261&ndash;295, i.e., the 8th warehouse is selected. Similarly, choosing other numbers like 346, 165, and 094 selects the 10th, 5th, and 3rd warehouses respectively.</p>
+                    <p>Step 2: Pick random numbers between 1 and 350. If we pick 272, it falls in the range 261-295, so Warehouse 8 is picked. If we pick 346, Warehouse 10 is picked. We repeat this until we have 4 warehouses.</p>
                 </div>
 
                 <h3>5.2.2 Lahiri's Method</h3>
-                <p>Lahiri (1951) elegantly suggested an alternative brilliant procedure in which tedious mathematical cumulations are completely avoided. It consists of strictly selecting a number at random between 1 and \( N \) and noting down the unit with the corresponding serial number, provisionally. Another random number is then cleanly chosen between 1 and \( M \), where \( M \) is mathematically the absolute maximum size among all the \( N \) units of the population.</p>
+                <p>Lahiri suggested a clever way to avoid all those additions! Here is what we do: Pick a random number between 1 and \( N \) to choose a unit "candidate". Then, pick another random number between 1 and \( M \), where \( M \) is the size of the largest unit in the whole population.</p>
                 <div class="derivation-block">
-                    <p>If the second random number is strictly smaller than or equal to the mathematical size of the unit provisionally selected, the unit is definitively selected into the sample. If not, the entire procedure is rejected and rigorously repeated until a unit is finally selected. For a sample of \( n \) units, the procedure is identically repeated until exactly \( n \) units are secured.</p>
-                    <div class="explanation">\( \because \) the probability of retaining the provisionally selected unit \( i \) is exactly \( X_i / M \), making the overall unconditional probability of selecting unit \( i \) precisely \( \frac{1}{N} \times \frac{X_i}{M} \), which is perfectly proportional to \( X_i \).</div>
+                    <p>If the second number is less than or equal to the size of our candidate unit, we keep it. If it's bigger, we throw it away and try again with a new pair of random numbers. We keep going until we have \( n \) units.</p>
+                    <div class="explanation">The probability of picking unit \( i \) is \( \frac{1}{N} \) (to pick it as a candidate) times \( \frac{X_i}{M} \) (to keep it). Overall, this is \( \frac{X_i}{NM} \), which is perfectly proportional to its size \( X_i \).</div>
                 </div>
 
                 <h3>Example 5.2</h3>
-                <p>Select a sample of exactly four warehouses using the data in Example 5.1 by Lahiri's method of pps, wr.</p>
+                <p>Let's use Lahiri's method for the same warehouses. Here, \( N = 10 \) and the biggest warehouse size is \( M = 50 \). We pick pairs of random numbers \( (i, j) \).</p>
                 <div class="derivation-block">
-                    <p>In this case, \( N = 10 \) and the absolute maximum size \( M = 50 \) (from warehouse 1). We must draw a pair of random numbers \( (i, j) \) where \( i \leq 10 \) and \( j \leq 50 \).</p>
-                    <p>Suppose the first random pair drawn is (10, 13). Since warehouse 10 has a size of 27, and 13 is strictly less than 27, the 10th unit is successfully selected.</p>
-                    <p>Suppose the next drawn pair is (4, 26). The size of warehouse 4 is exactly 25. Since 26 is strictly greater than 25, this specific pair is forcefully rejected.</p>
-                    <p>We draw again and get (8, 16). Warehouse 8 has size 35, and 16 is less than 35, so warehouse 8 is strictly selected. We continue this robust mathematical process until 4 units are selected.</p>
+                    <p>Example: We pick (10, 13). Warehouse 10 has size 27. Since 13 is less than 27, we accept Warehouse 10.</p>
+                    <p>Next, we pick (4, 26). Warehouse 4 has size 25. Since 26 is bigger than 25, we reject it and try again!</p>
                 </div>
             </div>
             
@@ -229,59 +226,41 @@
         <section id="sec5-3" class="section-card">
             <div class="english-content">
                 <h2>5.3 Estimation in PPS Sampling with Replacement: Total and its Sampling Variance</h2>
-                <p>Consider a finite population of exactly \( N \) units and let \( y_i \) firmly denote the explicit value of the characteristic under study for the specific unit \( u_i \) of the population (\( i = 1, \ldots, N \)). Suppose further that \( p_i = X_i / X \) mathematically be the true probability that the unit \( u_i \) is explicitly selected in a sample of size exactly one, such that universally \( \sum_{i=1}^N p_i = 1 \).</p>
-                <p>Let precisely \( n \) independent selections be strictly made with the replacement method and the value of \( y \) for each selected unit be accurately observed. Further, let \( (y_i, p_i) \) be the paired value and probability of selection of the \( i \)-th unit of the actual sample. It can be seen definitively that the random variates \( y_i / p_i \) (\( i = 1, 2, \ldots, n \)) are mathematically independently and identically distributed. If \( p_i = 1/N \), it flawlessly gives rise to a simple random sample. This rigorously shows that simple random sampling is inherently a special case of pps sampling.</p>
+                <p>Now, let's get into the math of how we estimate the population total and see how accurate our guess is. Suppose we have a population of \( N \) units. For each unit \( u_i \), we have a value we want to study, \( y_i \), and a known size, \( X_i \).</p>
+                <p>The probability of picking any unit \( i \) in a single draw is \( p_i = X_i/X \). We pick \( n \) units one by one, and every time we pick one, we record its value and put it back. This is "PPS with replacement".</p>
 
-                <h3>Theorem 5.3.1</h3>
-                <p>In pps sampling, wr, an unbiased mathematical estimator of the population total \( Y \) is rigorously given by:</p>
+                <h3>Theorem 5.3.1: Unbiased Estimator for Population Total</h3>
+                <p>In PPS sampling with replacement, how do we calculate the total? We take the average of the ratios of the study value to its probability. The formula is:</p>
                 <div class="derivation-block">
                     $$ \widehat{Y}_{pps} = \frac{1}{n} \sum_{i=1}^n \frac{y_i}{p_i} \quad (5.3.1) $$
-                    <p>with its exact sampling variance elegantly given by:</p>
-                    $$ V(\widehat{Y}_{pps}) = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 \quad (5.3.2) $$
-                </div>
-                <p><em>Proof:</em></p>
-                <div class="derivation-block">
-                    <p>Let us definitively define random variates \( z_i = y_i / p_i \) (\( i = 1, \ldots, n \)) which are strictly independently and identically distributed. Hence,</p>
-                    $$ E(z_i) = \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} ) = \sum_{i=1}^N y_i = Y $$
-                    <div class="explanation">\( \because \) the expected value over the entire population mathematically cancels out the probabilities, leaving the exact population total \( Y \).</div>
-                    <p>Now let us rigorously consider \( \widehat{Y}_{pps} = \frac{1}{n} \sum_{i=1}^n z_i \). Since</p>
-                    $$ E(\widehat{Y}_{pps}) = E\left( \frac{1}{n} \sum_{i=1}^n z_i \right) = \frac{1}{n} \sum_{i=1}^n E(z_i) = \frac{1}{n} (n Y) = Y $$
-                    <div class="explanation">\( \because \) the expectation of a sum is the sum of expectations, heavily confirming \( \widehat{Y}_{pps} \) is definitively an unbiased estimator.</div>
-                    <p>To explicitly obtain the sampling variance of \( \widehat{Y}_{pps} \), we have:</p>
-                    $$ V(\widehat{Y}_{pps}) = V\left( \frac{1}{n} \sum_{i=1}^n z_i \right) = \frac{1}{n^2} \sum_{i=1}^n V(z_i) = \frac{1}{n} V(z_i) $$
-                    <div class="explanation">\( \because \) the covariance terms \( \text{Cov}(y_i/p_i, y_j/p_j) \), for \( i \neq j \), are rigorously zero due to completely independent draws with replacement.</div>
-                    $$ = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 $$
-                    <p>This explicitly shows that the mathematical variance of the estimator is strictly inversely proportional to the sample size \( n \) as in simple random sampling, wr.</p>
+                    <p><strong>Proof:</strong> To show it is unbiased, we need to prove that its expected value is exactly \( Y \).</p>
+                    <p>Logic: In each draw, the expected value of \( y_i/p_i \) is the sum of (Value \(\times\) Probability) for all possible units in the population.</p>
+                    $$ E\left( \frac{y_i}{p_i} \right) = \sum_{j=1}^N p_j \left( \frac{Y_j}{p_j} \right) $$
+                    <p>The probabilities \( p_j \) cancel out!</p>
+                    $$ = \sum_{j=1}^N Y_j = Y $$
+                    <p>Now, since our estimator is the average of \( n \) such draws:</p>
+                    $$ E(\widehat{Y}_{pps}) = E\left( \frac{1}{n} \sum_{i=1}^n \frac{y_i}{p_i} \right) = \frac{1}{n} \sum_{i=1}^n E\left( \frac{y_i}{p_i} \right) $$
+                    $$ = \frac{1}{n} \sum_{i=1}^n Y = \frac{n Y}{n} = Y $$
+                    <div class="explanation">So, our estimator \( \widehat{Y}_{pps} \) is indeed an unbiased estimator of the true population total \( Y \).</div>
                 </div>
 
-                <h3>Corollary</h3>
-                <p>An unbiased estimator of the population mean, \( \bar{Y}_{pps} \), is mathematically given by:</p>
+                <h3>Sampling Variance</h3>
+                <p>The variance tells us how much our estimate might fluctuate from sample to sample. Because each draw is independent (since we replace the units), the variance of the average is just \( 1/n \) times the variance of a single draw.</p>
                 <div class="derivation-block">
-                    $$ \bar{y}_{pps} = \frac{1}{n} \sum_{i=1}^n \frac{y_i}{N p_i} \quad (5.3.3) $$
-                    <p>with its precise sampling variance:</p>
-                    $$ V(\bar{y}_{pps}) = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{N p_i} - \bar{Y} \right)^2 \quad (5.3.4) $$
+                    <p>The variance of \( \widehat{Y}_{pps} \) is given by:</p>
+                    $$ V(\widehat{Y}_{pps}) = \frac{1}{n} \left[ \sum_{i=1}^N \frac{Y_i^2}{p_i} - Y^2 \right] $$
+                    <p>Or in another form:</p>
+                    $$ V(\widehat{Y}_{pps}) = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{Y_i}{p_i} - Y \right)^2 \quad (5.3.2) $$
                 </div>
 
-                <h3>Theorem 5.3.2</h3>
-                <p>In pps sampling, wr, an unbiased mathematical estimator of \( V(\bar{y}_{pps}) \) is securely given by:</p>
+                <h3>Theorem 5.3.2: Estimating the Variance from Sample</h3>
+                <p>In real life, we don't know the population values \( Y_i \), so we need to estimate the variance using only our sample data.</p>
                 <div class="derivation-block">
-                    $$ \widehat{v}(\bar{y}_{pps}) = \frac{1}{n(n-1)} \sum_{i=1}^n \left[ \frac{y_i}{N p_i} - \bar{y}_{pps} \right]^2 \quad (5.3.5) $$
-                    $$ = \frac{1}{n(n-1)} \left[ \sum_{i=1}^n \left( \frac{y_i}{N p_i} \right)^2 - n \bar{y}_{pps}^2 \right] \quad (5.3.6) $$
-                </div>
-                <p><em>Proof:</em></p>
-                <div class="derivation-block">
-                    <p>In pps sampling, wr, \( z_i (= y_i / p_i) \), \( i = 1, 2, \ldots, n \), are strictly independent unbiased estimators of \( Y \) having exactly the same variance. Let us define:</p>
-                    $$ s^2 = \frac{\sum (z_i - \bar{z})^2}{n - 1} $$
-                    <div class="explanation">\( \because \) it mathematically mimics the standard unbiased sample variance formula for independent and identically distributed variables.</div>
-                    <p>It can be definitively shown that \( s^2 \) is an unbiased estimator of the true population variance parameter. By substituting \( y_i / N p_i \) for \( z_i \) and adjusting for the mean, the theorem is robustly proven.</p>
-                </div>
-
-                <h3>Corollary</h3>
-                <p>An unbiased estimator of \( V(\widehat{Y}_{pps}) \) is efficiently given by:</p>
-                <div class="derivation-block">
-                    $$ \widehat{v}(\widehat{Y}_{pps}) = \frac{N^2}{n(n-1)} \sum_{i=1}^n \left( \frac{y_i}{N p_i} - \bar{y}_{pps} \right)^2 \quad (5.3.7) $$
-                    $$ = \frac{1}{n(n-1)} \left[ \sum_{i=1}^n \left( \frac{y_i}{p_i} \right)^2 - n \widehat{Y}_{pps}^2 \right] \quad (5.3.8) $$
-                    <p>Equation (5.3.8) is predominantly used for rapid computational purposes.</p>
+                    <p>An unbiased estimator of the variance \( V(\widehat{Y}_{pps}) \) is:</p>
+                    $$ \widehat{v}(\widehat{Y}_{pps}) = \frac{1}{n(n-1)} \sum_{i=1}^n \left( \frac{y_i}{p_i} - \widehat{Y}_{pps} \right)^2 \quad (5.3.7) $$
+                    <p>For quick calculations, we can use this easier form:</p>
+                    $$ \widehat{v}(\widehat{Y}_{pps}) = \frac{1}{n(n-1)} \left[ \sum_{i=1}^n \left( \frac{y_i}{p_i} \right)^2 - n \widehat{Y}_{pps}^2 \right] \quad (5.3.8) $$
+                    <div class="explanation">This looks exactly like the standard sample variance formula \( s^2/n \), but applied to the ratios \( y_i/p_i \).</div>
                 </div>
             </div>
 
@@ -347,63 +326,45 @@
         <section id="sec5-4" class="section-card">
             <div class="english-content">
                 <h2>5.4 Gain due to PPS Sampling with Replacement</h2>
-                <p>One may naturally be extremely interested to know whether it is strictly possible to mathematically estimate the actual gain due to pps sampling, as systematically compared to simple random sampling, directly from the pps sample itself. In simple random sample, wr, the true variance is firmly given by:</p>
+                <p>Hello students! Now you might be thinking: "Is PPS sampling really better than Simple Random Sampling (SRS)?" and "Can we prove it using just our sample data?" The answer is Yes! We can estimate how much accuracy we gained by using PPS instead of SRS, using the same sample we collected.</p>
+                
+                <p>In Simple Random Sampling (with replacement), the variance of our estimate is:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^N y_i^2 - \bar{Y}^2 \right] \quad (5.3.9) $$
+                    $$ V(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^N y_i^2 - \bar{Y}^2 \right] \quad (5.4.1) $$
                 </div>
-                <p>An exact unbiased estimator of \( \sum y_i^2 \) is strictly given by \( \frac{1}{n} \sum \frac{y_i^2}{p_i} \) and that of \( N \bar{Y}^2 \) is robustly mathematically obtained from:</p>
+                
+                <p>To find the "gain," we need to estimate this SRS variance using our PPS sample. We can do this by finding unbiased estimates for the parts of the formula:</p>
+                <ul>
+                    <li>The term \( \sum y_i^2 \) is estimated by \( \frac{1}{n} \sum \frac{y_i^2}{p_i} \).</li>
+                    <li>The term \( N \bar{Y}^2 \) is estimated by \( \left[ \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right] \).</li>
+                </ul>
+
+                <p>When we put these pieces together, we get the estimated variance for SRS based on our PPS data:</p>
                 <div class="derivation-block">
-                    $$ \left[ \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right] $$
+                    $$ \widehat{v}_{pps}(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^n \frac{y_i^2}{p_i} - \left( \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right) \right] \quad (5.4.2) $$
                 </div>
-                <p>After rigorously substituting these calculated values, we meticulously have an unbiased estimator of the variance of the estimate strictly based on simple random sample calculated purely on the basis of the pps sample estimate:</p>
+                
+                <p>Finally, the <strong>percentage gain</strong> in efficiency due to PPS sampling is calculated as:</p>
                 <div class="derivation-block">
-                    $$ \widehat{v}_{pps}(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^n \frac{y_i^2}{p_i} - \left( \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right) \right] \quad (5.3.10) $$
-                </div>
-                <p>Hence, the percentage gain safely due to pps sampling can be rigorously estimated by:</p>
-                <div class="derivation-block">
-                    $$ \text{Gain} = \frac{\left[ \widehat{v}_{pps}(\bar{y}_{SR}) - \widehat{v}(\bar{y}_{pps}) \right]}{\widehat{v}(\bar{y}_{pps})} \times 100 \quad (5.3.11) $$
+                    $$ \text{Percentage Gain} = \frac{\widehat{v}_{pps}(\bar{y}_{SR}) - \widehat{v}(\bar{y}_{pps})}{\widehat{v}(\bar{y}_{pps})} \times 100 \quad (5.4.3) $$
+                    <div class="explanation">This tells us how much more precise our PPS estimate is compared to a standard SRS estimate of the same size.</div>
                 </div>
 
                 <h3 style="margin-top: 40px;">Example 5.3</h3>
-                <p>A rigorous sample survey was conducted to extensively study the yield of wheat in a region. A sample of 20 agricultural farms from a total of exactly 100 was strictly taken, with probability cleanly proportional to the physical area under wheat crop, explicitly with the replacement method. The total area under wheat crop (\( X \)) was mathematically 484.5 hectares. The area under crop (\( x \)) and final yield (\( y \)) were noted precisely in hectares and quintals per hectare, respectively.</p>
-                <p>The sample selected firmly by the cumulative total method was:</p>
-                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Area (\( x \))</th><td>5.2</td><td>25.9</td><td>93.9</td><td>4.2</td><td>4.7</td><td>4.8</td><td>4.9</td><td>6.8</td><td>4.7</td><td>5.7</td><td>2.1</td><td>2.4</td><td>4.0</td><td>11.3</td><td>7.4</td><td>7.4</td><td>4.8</td><td>1.2</td><td>2.6</td><td>6.2</td></tr>
-                    <tr><th>Yield (\( y \))</th><td>28</td><td>30</td><td>22</td><td>24</td><td>25</td><td>28</td><td>37</td><td>26</td><td>32</td><td>16</td><td>16</td><td>16</td><td>61</td><td>61</td><td>29</td><td>47</td><td>22</td><td>24</td><td>34</td><td>40</td></tr>
-                </table>
-                <p>The sample securely selected by Lahiri's method was:</p>
-                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Area (\( x \))</th><td>4.8</td><td>4.1</td><td>1.3</td><td>5.2</td><td>6.9</td><td>6.0</td><td>2.0</td><td>6.3</td><td>5.2</td><td>4.2</td><td>4.8</td><td>5.9</td><td>5.8</td><td>5.8</td><td>5.1</td><td>4.7</td><td>5.6</td><td>5.2</td><td>4.0</td><td>4.6</td></tr>
-                    <tr><th>Yield (\( y \))</th><td>22</td><td>19</td><td>6</td><td>25</td><td>54</td><td>43</td><td>4</td><td>40</td><td>28</td><td>29</td><td>22</td><td>39</td><td>39</td><td>44</td><td>30</td><td>27</td><td>34</td><td>31</td><td>18</td><td>31</td></tr>
-                </table>
-                <p>Mathematically estimate the average yield per farm along with its standard error for both specific samples. Also explicitly estimate the exact gain in efficiency due strictly to pps sampling compared directly to simple random sampling with replacement.</p>
-                
+                <p>Let's look at a real-life example. A survey was done to study wheat yield. A sample of 20 farms was taken from 100 farms. The farms were picked with probability proportional to the area under wheat (PPS), with replacement. The total wheat area (\( X \)) was 484.5 hectares.</p>
+                <p>We used two methods to pick the farms: the Cumulative Total method and Lahiri's method. Let's see the results.</p>
+                <p><strong>(i) Cumulative Total Method Result:</strong></p>
                 <div class="derivation-block">
-                    <p><strong>(i) Cumulative Total Method</strong></p>
-                    <p>(a) The robust estimate of average yield/farm is precisely given by:</p>
-                    $$ \bar{y}_{pps} = \frac{1}{nN} \sum \frac{y_i}{p_i} $$
-                    <p>Here strictly \( N = 100 \), \( n = 20 \), \( X = 484.5 \). Therefore,</p>
-                    $$ \bar{y}_{pps} = \frac{484.5 \times 1205930}{100 \times 20} = 29.11 $$
-                    <p>and</p>
-                    $$ \widehat{v}(\bar{y}_{pps}) = \frac{1}{20 \times 19} \left[ \frac{(484.5)^2 \times 728.1481}{100 \times 100} - 20(29.11)^2 \right] = 2.00 $$
-                    <p>or absolute standard error of \( \bar{y}_{pps} = \sqrt{2.00} = 1.41 \).</p>
+                    <p>The average yield per farm (\( \bar{y}_{pps} \)) was estimated as <strong>29.11 quintals</strong>.</p>
+                    <p>The Standard Error (SE) was <strong>1.41</strong>. This means our estimate is quite stable.</p>
+                    <p>When we compared it to SRS, the gain in precision was a massive <strong>282%</strong>! This shows PPS was a very smart choice here.</p>
+                </div>
 
-                    <p>(b) The mathematical estimate of variance based exactly on a simple random sample, on the assumption of the pps sample, is securely given by:</p>
-                    $$ \widehat{v}_{pps}(\bar{y}_{SR}) = \frac{100}{20 \times 99} \left[ \frac{484.5 \times 4156.05}{20 \times (100)} - 100 \times (29.11)^2 - 2.00 \right] = 7.64 $$
-                    <p>Hence, the percentage gain in precision strictly due to pps sampling is cleanly:</p>
-                    $$ \text{Percentage gain} = \frac{7.64 - 2.00}{2.00} \times 100 = 282\% $$
-
-                    <p><strong>(ii) Lahiri's Method</strong></p>
-                    <p>(a) The rigorous estimate of average yield/farm is given by:</p>
-                    $$ \bar{y}_{pps} = \frac{484.5 \times 114.85}{100 \times 20} = 27.82 $$
-                    <p>and</p>
-                    $$ \widehat{v}(\bar{y}_{pps}) = \frac{1}{20 \times 19} \left[ 23.4740 \times 708.6056 - 20 \times (27.82)^2 \right] = 2.27 $$
-                    <p>Standard error of \( \bar{y}_{pps} = \sqrt{2.27} = 1.51 \).</p>
-
-                    <p>(b) The absolute estimate of variance based on simple random sample is explicitly:</p>
-                    $$ \widehat{v}_{pps}(\bar{y}_{SR}) = \frac{100 \times 80}{20 \times 99} \left[ \frac{484.5 \times 3734.74}{20 \times (100)} - (27.82)^2 - 2.27 \right] = 5.78 $$
-                    <p>Therefore, the robust percentage gain in efficiency unequivocally is:</p>
-                    $$ \frac{(5.78 - 2.27)}{2.27} \times 100 = 155\% $$
+                <p><strong>(ii) Lahiri's Method Result:</strong></p>
+                <div class="derivation-block">
+                    <p>The average yield was estimated as <strong>27.82 quintals</strong>.</p>
+                    <p>The Standard Error was <strong>1.51</strong>.</p>
+                    <p>The gain in efficiency compared to SRS was <strong>155%</strong>. Even though this gain is smaller than the first method (due to different random picks), it's still much better than simple random sampling!</p>
                 </div>
             </div>
 
@@ -465,8 +426,9 @@
         <section id="sec5-5" class="section-card">
             <div class="english-content">
                 <h2>5.5 PPS Sampling without Replacement</h2>
-                <p>Since the effective sample size strictly in the case of without replacement sampling is inherently expected to be mathematically larger compared definitively to sampling with replacement, the rigorous sampling without replacement can robustly provide a more efficient estimator than sampling with replacement. A massive amount of mathematical work in the rigorous field of sampling with varying probabilities, wor, has been comprehensively done, but unfortunately, most of the theoretical procedures are intensely complex and strictly not easily applicable in large-scale field surveys.</p>
-                <p>If the mathematical sampling fraction is very small, in large-scale rigorous surveys, the statistical efficiencies of sampling with or without replacement will mathematically differ insignificantly. However, if the exact sampling fraction is substantially larger or moderately large, it is mathematically strongly expected that the precise gain in efficiency due strictly to pps sampling, wor will be overwhelmingly substantial. In the remaining part of this technical chapter, we shall comprehensively discuss some specific advanced results which have become most mathematically significant these days.</p>
+                <p>Hello students! Until now, we looked at PPS sampling where we put the unit back (with replacement). But what if we don't put it back? This is called <strong>PPS without replacement (WOR)</strong>.</p>
+                <p>Think about it: if we don't put a unit back, we are forced to pick a new, different unit for the next draw. This means our sample will have more "unique" information. Because of this, PPS WOR is usually even more efficient and accurate than PPS with replacement. In many large surveys, if we pick a big chunk of the population, the gain in accuracy can be very high!</p>
+                <p>However, there is a catch: the math for WOR is much more complicated. Since the population keeps changing (one unit is removed after every draw), the probabilities for the remaining units keep changing too. But don't worry, we will look at some standard ways to handle this.</p>
             </div>
             
             <div class="hinglish-content">
@@ -479,65 +441,45 @@
         <section id="sec5-6" class="section-card">
             <div class="english-content">
                 <h2>5.6 Procedures of Selection of a PPS Sample without Replacement</h2>
-                <p>There are mathematically several robust procedures for selecting specific samples with strictly unequal probabilities, wor. A brief comprehensive discussion of some important rigorous procedures is definitively given below.</p>
+                <p>Picking a PPS sample without repetition is a bit like a game where the winners are removed from the pool. Let's look at the three most famous ways to do this.</p>
 
                 <h3>5.6.1 General Selection Procedure</h3>
-                <p>A mathematical generalization of the precise sampling scheme, wr, as strictly given in Section 5.2, would be to definitively select a pps sample of exact size unity and strictly remove the selected unit completely from the population. From the meticulously remaining units, another pps sample of precisely size one is taken identically as before and the exactly selected unit removed strictly from the remaining population. This process is flawlessly repeated until exactly \( n \) selections are made.</p>
+                <p>This is the most basic method. We pick one unit at a time using PPS. As soon as a unit is picked, we remove it from the population so it cannot be picked again. Then we update the probabilities for the remaining units and pick the next one.</p>
                 <div class="derivation-block">
-                    <p>Suppose exactly \( r \) units are strictly selected one by one, precisely with probability strictly proportional to a specific size measure \( x \), at each exact draw, without replacing the specific units selected in the previous definitive draws. The true mathematical probability of explicit selection strictly at the first draw for the specific \( j \)-th unit is rigorously given by:</p>
-                    $$ p_j = \frac{X_j}{X}, \quad j = 1, \ldots, N $$
-                    <p>where \( X = \sum X_i \).</p>
-                    <div class="explanation">\( \because \) the first draw is a standard proportional allocation based strictly on the initial total sum of sizes.</div>
+                    <p><strong>First Draw:</strong> The probability of picking unit \( j \) is just its size divided by the total size:</p>
+                    $$ p_j = \frac{X_j}{X} \quad \text{for } j = 1, 2, \ldots, N $$
                     
-                    <p>Similarly, the precise conditional probability that the specific \( i \)-th unit is decisively selected at the rigorous second draw, strictly given that the specific \( j \)-th unit has definitely been selected flawlessly at the first exact draw, is mathematically explicitly given by:</p>
-                    $$ p_{i|j} = \frac{p_i}{1 - p_j}, \quad i \neq j $$
-                    <div class="explanation">\( \because \) the previously drawn unit \( j \) is rigorously removed, shrinking the available probability space exclusively to \( (1 - p_j) \).</div>
-                    <p>This mathematical set up of sampling precisely comprises a strictly ordered set of exact sample values \( (y_1, y_2, \ldots, y_n) \) with their corresponding conditional mathematical probabilities \( (p_1, p_2, \ldots, p_n) \).</p>
+                    <p><strong>Second Draw:</strong> Now, suppose unit \( j \) was picked and removed. For the second unit \( i \), we must look at its probability among the <em>remaining</em> units. The new conditional probability is:</p>
+                    $$ p_{i|j} = \frac{p_i}{1 - p_j} \quad \text{for } i \neq j $$
+                    <div class="explanation">Logic: Since unit \( j \) is gone, its probability \( p_j \) is subtracted from the total (which was 1). So the new denominator is \( 1 - p_j \).</div>
                 </div>
 
                 <h3>Example 5.4</h3>
-                <p>In a village, there are exactly 8 fruit orchards with precisely 50, 30, 25, 40, 26, 44, 20, and 35 trees, respectively. Mathematically select a rigorous sample of exactly 2 orchards with true probability strictly proportional to the number of trees securely in the orchard and strictly without replacement.</p>
+                <p>Suppose we have 8 orchards with different numbers of trees. We want to pick 2 orchards without replacement.</p>
                 <div class="derivation-block">
-                    <p><strong>(i) First Draw:</strong> For selecting a unit strictly by probability proportional to the number of trees, using Lahiri's robust method of selection, rigorously consider the following arrangement:</p>
-                    <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
-                        <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Orchard Number</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
-                        <tr><th>Number of Trees</th><td>50</td><td>30</td><td>25</td><td>40</td><td>26</td><td>44</td><td>20</td><td>35</td></tr>
-                    </table>
-                    <p>Selecting a precise pair of random numbers \( (i, j) \) (\( i \leq 8, j \leq 50 \)), utilizing the random number table, we get the exact pair (5, 17). Since the number of trees \( X_i \) for orchard number 5 is definitively 26, which is strictly greater than the second number (17) of the selected random pair, the 5th orchard is flawlessly selected in the sample.</p>
-                    
-                    <p><strong>(ii) Second Draw:</strong> For cleanly selecting the precise second unit by rigorous probability strictly proportional to the exact number of trees in the orchard, we meticulously prepare the following arrangement definitively once again explicitly after safely deleting the strictly selected 5th orchard:</p>
-                    <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.9em;">
-                        <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Orchard Number</th><td>1</td><td>2</td><td>3</td><td>4</td><td>6</td><td>7</td><td>8</td></tr>
-                        <tr><th>Number of Trees</th><td>50</td><td>30</td><td>25</td><td>40</td><td>44</td><td>20</td><td>35</td></tr>
-                    </table>
-                    <p>As flawlessly done in (i), a specific pair of explicit random numbers \( (i, j) \) (\( i \leq 7, j \leq 50 \)) has to be rigorously selected, securely using the standard random number table. Rigorously referring to the table of completely random numbers, the specific pair perfectly selected is firmly (6, 18). As the precise size of the specific 6th unit natively in the above revised arrangement is explicitly 44, which is strictly greater than the second number of the true random pair securely selected, orchard 6 is conclusively selected into the specific sample.</p>
-                    <p>Thus, the final explicit sample conclusively selected safely consists of the precise units exactly at serial numbers 5 and 6 natively of the original list with the specific number of trees being decisively 26 and 44, respectively.</p>
+                    <p><strong>Draw 1:</strong> We use PPS to pick one orchard. Let's say Orchard 5 (with 26 trees) is selected. We remove it from the list.</p>
+                    <p><strong>Draw 2:</strong> Now we only have 7 orchards left. We look at their tree counts and pick one more using PPS. If Orchard 6 (with 44 trees) is picked, our sample is {Orchard 5, Orchard 6}. Simple, right?</p>
                 </div>
 
                 <h3>5.6.2 Narain's Scheme of Sample Selection</h3>
-                <p>In this technical section, we shall rigorously discuss an advanced scheme of true sample selection mathematically due to Narain (1951). The mathematical scheme strictly consists of carefully constructing completely revised distinct probabilities of specific selection \( p_i' \) (\( i = 1, 2, \ldots, N \)) explicitly such that the exact inclusion probabilities \( \pi_i \) are strictly proportional exclusively to the original probabilities of explicit selection \( p_i \) (\( i = 1, 2, \ldots, N \)) and specific sampling is firmly done strictly without replacement.</p>
+                <p>Narain (1951) came up with a very clever mathematical trick. He suggested that if we want the final total chance of a unit being in the sample (the <strong>inclusion probability</strong> \( \pi_i \)) to be exactly proportional to its size, we should slightly change our starting probabilities.</p>
                 <div class="derivation-block">
-                    <p>Here the true mathematical inclusion probabilities \( \pi_i \) are precisely given by:</p>
-                    $$ \pi_i = n p_i, \quad i = 1, 2, \ldots, N $$
-                    <div class="explanation">\( \because \) the target is to ensure that over all draws, the marginal inclusion probability of unit \( i \) totals precisely \( n \) times its single-draw probability.</div>
-                    <p>The explicit probabilities of precise selection and absolute inclusion heavily at the rigorous second and all subsequent conditional draws are exclusively proportional strictly to revised explicit probabilities \( p_i' \) completely on lines exactly similar exclusively to those explicitly at the very first true draw.</p>
-                    <p>As a strict mathematical illustration, let us exclusively consider the very simple true case \( N = 4 \) and exactly \( n = 2 \). The rigorous mathematical problem is unequivocally to evaluate exactly \( \pi_{ij} \) precisely given \( p_i \) (\( i, j = 1, 2, 3, 4 \)). The fundamental relationship \( \sum_{j \neq i} \pi_{ij} = (n - 1)\pi_i \) robustly provides a rigid system exclusively of exactly four specific linear mathematical equations carefully with strictly six unknowns. Thus, the specific mathematical problem is exclusively to choose carefully the specific values definitively of exactly two arbitrary theoretical parameters heavily with the explicit restriction natively that all the absolute above exact values are securely positive. The exact mathematical computations unavoidably become intensely tedious safely for exact \( n \) explicitly greater definitively than 2. The explicit methods specifically of solving the precise set of rigid equations have strictly been robustly discussed natively by several mathematical workers. Brewer and Undy (1962) have exclusively given a heavily faster rigorous iterative method explicitly of mathematical solution.</p>
+                    <p>He wanted to ensure that:</p>
+                    $$ \pi_i = n p_i \quad \text{for every unit } i $$
+                    <div class="explanation">This means if a unit is twice as big, it should be twice as likely to be in the final sample.</div>
+                    <p>Calculating these adjusted "starting" probabilities (\( p_i' \)) involves solving some tricky equations, but it makes our final estimates very accurate and fair.</p>
                 </div>
 
                 <h3>5.6.3 Sen-Midzuno Method</h3>
-                <p>A beautifully simple rigorous procedure of explicitly selecting a specific sample was elegantly suggested by Midzuno (1952) and strictly independently carefully by Sen (1952), which specifically consists definitively in safely selecting the very first unit explicitly with pps and the specifically remaining \( (n - 1) \) actual units firmly from the cleanly remaining \( (N - 1) \) actual units purely of the true population securely by precise simple random sampling, strictly wor.</p>
+                <p>This is a favorite among researchers because it's so easy to use! Instead of recalculating probabilities at every step, we do this:</p>
                 <div class="derivation-block">
-                    <p>For this specific mathematical selection procedure, the exact absolute inclusion probabilities specifically for individual and precisely pairwise units are explicitly given by:</p>
-                    $$ \pi_i = p_i + (1 - p_i) \frac{n - 1}{N - 1} \quad \text{for } i = 1, 2, \ldots, N $$
-                    <div class="explanation">\( \because \) unit \( i \) can clearly be explicitly selected mathematically at the very first precise draw exactly with probability \( p_i \), strictly or, cleanly if strictly not selected mathematically at exactly the first draw (probability \( 1 - p_i \)), it can accurately be strictly selected explicitly in the subsequent \( n-1 \) simple random draws.</div>
-                    
-                    <p>and</p>
-                    $$ \pi_{ij} = \frac{p_i(n - 1)}{N - 1} + \frac{p_j(n - 1)}{N - 1} + \frac{(1 - p_i - p_j)(n - 1)(n - 2)}{(N - 1)(N - 2)} $$
-                    <p>for strictly \( i \neq j = 1, 2, \ldots, N \).</p>
-                    <div class="explanation">\( \because \) both units \( i \) and \( j \) cleanly can unequivocally be mathematically selected either by specific unit \( i \) being mathematically selected natively at the precise first exact draw safely and unit \( j \) rigorously in the explicitly subsequent exact draws, or strictly vice-versa, specifically or neither exactly at strictly the first draw strictly but both accurately in the completely subsequent specific simple random distinct draws.</div>
-                    
-                    <p>By a direct mathematical extension heavily of the precise above rigid argument, we exclusively can safely have \( y_1, y_2, \ldots, y_n \), a true specific sample carefully of strictly \( n \) absolute units. The exact explicit probability cleanly of carefully including exactly these \( n \) distinct units safely in the strict sample is robustly mathematically given explicitly by:</p>
-                    $$ P(s) = \frac{N - 1}{N} (p_1 + p_2 + \cdots + p_n) \frac{n - 1}{N - 1} $$
+                    <ol>
+                        <li>Pick the <strong>very first unit</strong> using PPS (with probability \( p_i = X_i/X \)).</li>
+                        <li>Pick all the <strong>other units</strong> using Simple Random Sampling (SRS) from the units that are left.</li>
+                    </ol>
+                    <p>For this method, the chance of unit \( i \) getting into our sample is:</p>
+                    $$ \pi_i = p_i + (1 - p_i) \frac{n - 1}{N - 1} $$
+                    <div class="explanation">Why? Because unit \( i \) can enter the sample in two ways: either it's picked in the very first PPS draw (chance \( p_i \)), OR it's missed then (chance \( 1-p_i \)) but gets picked during the easy SRS draws later!</div>
                 </div>
             </div>
             
@@ -601,8 +543,8 @@
         <section id="sec5-7" class="section-card">
             <div class="english-content">
                 <h2>5.7 Estimation in PPS Sampling without Replacement: Total and its Sampling Variance</h2>
-                <p>As explicitly mentioned earlier, sampling robustly without replacement is mathematically more highly efficient than explicitly sampling exactly with full replacement. This strict mathematical rule also identically applies securely to robust pps sampling. Thus, we safely find that there are mathematically enumerable exact sampling procedures systematically for cleanly selecting a distinct sample with strictly varying probabilities flawlessly without replacement. A tremendous mathematical development of the advanced theory of strict varying probability true sampling has forcefully taken place purely during the last thirty years.</p>
-                <p>A good strict number of highly interesting true mathematical results can distinctly be rigorously quoted, but strict theoretical limitations of space do not safely permit us natively for a fully detailed comprehensive discussion. We shall, therefore, rigorously confine ourselves carefully to the explicit results which mathematically appear strictly to be completely worthwhile, exactly with a highly substantial explicit gain in true efficiency. Since the exact unconditional probability of true inclusion strictly changes dynamically by draws cleanly or strictly the true order of the specific selected exact units, we shall rigorously examine thoroughly both strict ordered and completely unordered mathematical estimators natively in the explicitly following exact sections.</p>
+                <p>Hello students! As we discussed earlier, sampling without replacement (WOR) is generally more efficient than sampling with replacement. Why? Because when we don't put a unit back after picking it, we ensure that every unit in our sample is unique. This means we get more "new" information, which makes our estimates more accurate. This rule also applies to PPS sampling.</p>
+                <p>Over the last few decades, researchers have developed many clever ways to handle the math for PPS without replacement. It's a bit tricky because as we pick units one by one, the probabilities for the remaining units keep changing. In the following sections, we will study two types of estimators: <strong>Ordered Estimators</strong> (where the order in which we pick the units matters) and <strong>Unordered Estimators</strong> (where the order doesn't matter).</p>
             </div>
             
             <div class="hinglish-content">
@@ -615,70 +557,51 @@
         <section id="sec5-8" class="section-card">
             <div class="english-content">
                 <h2>5.8 Ordered Estimators</h2>
-                <p>Let us rigorously consider those mathematical estimators which are strictly based firmly on the specific true order securely of exact units safely selected natively in the true sample explicitly and do not specifically require strict calculations cleanly of conditional inclusion probabilities \( \pi_i \) and \( \pi_{ij} \). Das (1951) and Des Raj (1956) have strictly proposed such robust exact estimators that carefully make flawless use exclusively of sequential conditional specific probabilities without heavily calculating exact \( \pi_i \) and precise \( \pi_{ij} \) which are generally mathematically heavily difficult exactly to strictly compute cleanly for safely many advanced sampling specific schemes. Here, we shall strictly consider definitively the exact estimator rigorously proposed by Des Raj, first specifically for the simple true case cleanly when strictly \( n = 2 \), safely and then definitively generalize the strict result.</p>
+                <p>Hello students! Let's talk about <strong>Ordered Estimators</strong>. These are special estimators where the sequence—the exact order in which we pick units—is very important. We use this information to build our estimate without needing to do some of the very difficult math (like calculating complex inclusion probabilities) that other methods require.</p>
+                <p>One of the most famous methods in this category was suggested by <strong>Des Raj (1956)</strong>. He showed how we can use the results of each draw to build an unbiased estimate. Let's look at how it works, starting with a sample of size 2.</p>
 
-                <h3>Des Raj's Ordered Estimator</h3>
-                <p><strong>(i) When \( n = 2 \):</strong> Let us rigorously mathematically suppose that the precise initial strict probabilities definitively of explicit selection specifically of exact units \( U_i \) are cleanly \( p_i \), \( i = 1, 2, \ldots, N \), where exactly \( p_i = X_i / X \). The specific first true draw is made explicitly with robust probability exactly \( p_i \). The exact second specific draw is carefully taken safely with strict conditional definitive probability safely \( p_j / (1 - p_i) \) precisely of the exact units. Suppose \( y_1 \) and \( y_2 \) are strictly the precise specific values cleanly drawn explicitly at the exact first and true second strict draws respectively, and precisely \( p_1 \) and exactly \( p_2 \) are their corresponding exact initial probabilities.</p>
+                <h3>Des Raj's Ordered Estimator (for \( n = 2 \))</h3>
+                <p>Imagine we want to pick 2 units without replacement. First, we pick the 1st unit (let's call its value \( y_1 \)) with probability \( p_1 \). Then, we remove it and pick the 2nd unit (\( y_2 \)) from the remaining units with probability \( p_2 / (1 - p_1) \).</p>
                 <div class="derivation-block">
-                    <p>Now let us rigorously cleanly define the strict exact estimators:</p>
+                    <p>Des Raj defined two components for our estimator:</p>
+                    <p><strong>1. From the first draw:</strong></p>
                     $$ z_1 = \frac{y_1}{p_1} $$
-                    $$ z_2 = \frac{y_1 + y_2 \frac{1 - p_1}{p_2}}{2} $$
-                    <div class="explanation">\( \because \) \( z_1 \) is the standard unbiased estimator explicitly based strictly on the completely first draw, and \( z_2 \) securely incorporates explicitly the exact specific conditional unbiased contribution definitively of strictly the exact second draw.</div>
+                    <p><strong>2. From the second draw:</strong></p>
+                    $$ z_2 = y_1 + y_2 \left( \frac{1 - p_1}{p_2} \right) $$
+                    <div class="explanation">Logic: Since we already know \( y_1 \), we only need to estimate the remaining total. The term \( y_2(1-p_1)/p_2 \) is an unbiased estimate of the total of all remaining units in the population.</div>
                     
-                    <p>Then, the explicit ordered true estimator is mathematically formulated as:</p>
-                    $$ \widehat{Y}_D = \frac{z_1 + z_2}{2} = \frac{1}{2} \left[ \frac{y_1(1 + p_1)}{p_1} + \frac{y_2(1 - p_1)}{p_2} \right] \quad (5.8.1) $$
+                    <p>The final <strong>Des Raj Estimator</strong> is just the average of these two:</p>
+                    $$ \widehat{Y}_D = \frac{z_1 + z_2}{2} $$
+                    <p>If we substitute the values of \( z_1 \) and \( z_2 \), we get the expanded form:</p>
+                    $$ \widehat{Y}_D = \frac{1}{2} \left[ \frac{y_1}{p_1} + y_1 + y_2 \frac{(1 - p_1)}{p_2} \right] = \frac{1}{2} \left[ \frac{y_1(1 + p_1)}{p_1} + \frac{y_2(1 - p_1)}{p_2} \right] \quad (5.8.1) $$
                 </div>
 
-                <h3>Theorem 5.8.1</h3>
-                <p>In pps sampling, wor, the specific exact estimator \( \widehat{Y}_D \) is completely an unbiased true estimator carefully and its strict rigorous sampling variance is elegantly given explicitly by:</p>
+                <h3>Theorem 5.8.1: Unbiasedness and Variance</h3>
+                <p>The estimator \( \widehat{Y}_D \) is a perfectly unbiased estimator of the population total \( Y \). This means if we repeated the experiment many times, the average of our estimates would be exactly the true total.</p>
                 <div class="derivation-block">
-                    $$ V(\widehat{Y}_D) = \frac{1}{2} \sum_i \sum_{j \neq i} p_i p_j \left[ \left( \frac{y_i}{p_i} - Y \right)^2 + \left( \frac{y_j}{1 - p_i} - Y \right)^2 (1 - p_i - p_j) \right] \quad (5.8.2) $$
-                </div>
-                <p><em>Proof:</em></p>
-                <div class="derivation-block">
-                    <p>We cleanly mathematically observe safely that the exact expected value of strictly \( z_1 \) is clearly exactly \( Y \), i.e.,</p>
-                    $$ E(z_1) = \sum \left( \frac{y_i}{p_i} \right) p_i = \sum y_i = Y $$
-                    <div class="explanation">\( \because \) the specific probability \( p_i \) definitively mathematical cancels explicitly with the specific denominator exactly cleanly.</div>
-                    
-                    <p>Similarly, for a firmly given exact \( y_1 \) drawn safely at the completely first draw, we strictly have:</p>
-                    $$ E(z_2 | y_1) = y_1 + \sum_{j \neq 1} \frac{y_j(1 - p_1)}{p_j} \frac{p_j}{1 - p_1} = y_1 + \sum_{j \neq 1} y_j $$
-                    <div class="explanation">\( \because \) the specific conditional true probability exactly cleanly is \( p_j / (1 - p_1) \).</div>
-                    $$ E(z_2 | y_1) = y_1 + Y - y_1 = Y $$
-                    <p>Therefore, \( E(z_2) = E[E(z_2 | y_1)] = Y \).</p>
-                    <div class="explanation">\( \because \) by the rigorous explicit mathematical law cleanly of securely total exact true probability.</div>
-                    <p>Thus, it can securely be explicitly mathematically shown properly that \( E(\widehat{Y}_D) = \frac{1}{2} (Y + Y) = Y \), meaning it is completely unbiased.</p>
-                    
-                    <p>Again, to rigorously strictly derive explicitly the true mathematical variance, we mathematically have:</p>
-                    $$ V(z_1) = \sum \sum p_i p_j \left( \frac{y_i}{p_i} - \frac{y_j}{p_j} \right)^2 $$
-                    <p>Also, \( V(z_2) = E_1[V(z_2 | y_1)] + V_1[E(z_2 | y_1)] \). Since precisely \( E(z_2 | y_1) = Y \) perfectly, \( V_1[E(z_2 | y_1)] = 0 \). Hence, we specifically mathematically safely have:</p>
-                    $$ V(z_2) = \sum \sum p_i p_j \left( \frac{y_j}{1 - p_i} - Y \right)^2 (1 - p_i - p_j) $$
-                    <p>Thus, the explicit strict exact variance definitively \( V(\widehat{Y}_D) \) is safely rigorously explicitly given clearly by \( \frac{1}{4}[V(z_1) + V(z_2)] \).</p>
+                    <p><strong>Proof of Unbiasedness:</strong></p>
+                    <p>We know that \( E(z_1) = Y \). Now let's check \( z_2 \). For a fixed first unit \( y_1 \), the expected value of the second part is:</p>
+                    $$ E(z_2 | y_1) = y_1 + E\left( y_2 \frac{1 - p_1}{p_2} \bigg| y_1 \right) $$
+                    $$ = y_1 + \sum_{j \neq 1} \left[ Y_j \frac{1 - p_1}{P_j} \times \frac{P_j}{1 - p_1} \right] $$
+                    $$ = y_1 + \sum_{j \neq 1} Y_j = Y $$
+                    <div class="explanation">The conditional probabilities cancel out the factors, leaving the sum of all remaining units. Together with \( y_1 \), they make the total \( Y \).</div>
+                    <p>Since both \( z_1 \) and \( z_2 \) have an expected value of \( Y \), their average \( \widehat{Y}_D \) is also unbiased.</p>
                 </div>
 
-                <h3>Corollary</h3>
-                <p>An exact explicit rigorous unbiased estimator explicitly of \( V(\widehat{Y}_D) \) is cleanly definitively obtained precisely by:</p>
+                <p>We can estimate the variance of this estimator from our sample using this formula:</p>
                 <div class="derivation-block">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{2} (1 - p_1) p_2 \left( \frac{y_1}{p_1} - \frac{y_2}{p_2} \right)^2 \quad (5.8.4) $$
                 </div>
 
-                <h3>Generalization</h3>
+                <h3>Generalization for sample size \( n \)</h3>
+                <p>What if we pick more than 2 units? We just keep going! We calculate components \( z_1, z_2, \ldots, z_n \) for every draw and take their average.</p>
                 <div class="derivation-block">
-                    <p>Define exactly \( p_i' \) safely as the completely revised strictly conditional true probabilities definitively of explicit specific exact selection. Define strictly \( z_i = y_i / p_i' \) safely for the exact specific \( i \)-th strictly unit safely in exactly the ordered robust sequence completely of true mathematical selection cleanly and their strictly exact formula explicitly as:</p>
-                    $$ z_1 = \frac{y_1}{p_1}, \quad \text{and } z_i = \frac{y_1 + \cdots + y_{i-1} + y_i \left( 1 - \sum_{k=1}^{i-1} p_k \right) / p_i'}{i} \quad \text{for } i = 2, \ldots, n $$
-                    <div class="explanation">\( \because \) each exact strictly \( z_i \) explicitly captures safely the completely independent true estimate strictly of the remaining unselected true total.</div>
-                    <p>We specifically safely have a robust explicit exactly exact estimator:</p>
-                    $$ \widehat{Y}_D = \frac{1}{n} \sum_{i=1}^n z_i = \bar{z} \quad (5.8.5) $$
+                    <p>The general formula for the \( i \)-th component is:</p>
+                    $$ z_i = y_1 + y_2 + \cdots + y_{i-1} + y_i \left[ \frac{1 - p_1 - p_2 - \cdots - p_{i-1}}{p_i} \right] $$
+                    <p>And our final estimate is the sample mean of these \( z_i \) values:</p>
+                    $$ \widehat{Y}_D = \frac{1}{n} \sum_{i=1}^n z_i \quad (5.8.5) $$
                 </div>
-
-                <h3>Theorem 5.8.2</h3>
-                <p>In robust pps sampling, strictly wor, the specific exact true estimator safely \( \widehat{Y}_D \) is completely definitively exactly an unbiased explicit estimator carefully of safely the explicit population true total specifically \( Y \) cleanly and precisely its sampling exact explicit strict mathematical variance explicitly is cleanly cleanly definitively given accurately by:</p>
-                <div class="derivation-block">
-                    $$ V(\widehat{Y}_D) = \frac{1}{n^2} \sum_{i=1}^n \sum_{j \neq i} p_i p_j \left( \frac{y_i}{p_i'} - \frac{y_j}{p_j'} \right)^2 [1 + r_{ij}(1) + \cdots + r_{ij}(n-1)] \quad (5.8.6) $$
-                    <p>where explicitly \( r_{ij}(k) \) securely is exactly the true strict specific mathematical probability strictly that completely exactly \( y_i \) cleanly and definitively \( y_j \) strictly are robustly not cleanly explicitly exactly mathematically included correctly explicitly in safely precisely the strict correct exact specific specific sequence cleanly.</p>
-                </div>
-
-                <h3>Corollary</h3>
-                <p>An exact explicit unbiased correct specific estimator exactly explicitly of strictly \( V(\widehat{Y}_D) \) mathematically strictly can securely mathematically be cleanly strictly reliably exactly obtained accurately precisely securely by:</p>
+                <p>To estimate the variance for any sample size \( n \), we use the standard "sample variance" formula applied to our calculated \( z_i \) values:</p>
                 <div class="derivation-block">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{n(n-1)} \sum_{i=1}^n (z_i - \bar{z})^2 \quad (5.8.8) $$
                 </div>
@@ -758,34 +681,40 @@
         <section id="sec5-9" class="section-card">
             <div class="english-content">
                 <h2>5.9 Unordered Estimators</h2>
-                <p>In the previous section, we have strictly considered the explicitly ordered mathematical estimators which safely depend firmly on the exact true order safely of the specific units clearly drawn definitively in the strict sample. Now we shall rigorously mathematically discuss explicitly such robust exact estimators which structurally do strictly not strictly safely depend cleanly on the true exact order explicitly in which the true specific units definitively are cleanly carefully drawn properly within the strict exact sample. These true mathematical estimators securely are generally technically called strictly unordered explicit estimators. Horvitz and Thompson (1952), Murthy (1957), and Basu (1958) have elegantly mathematically shown safely that these specific explicit estimators are rigorously more highly efficient exactly than ordered proper estimators. A clean strictly comparative study explicitly will be made purely properly after their safe explicit brief discussion.</p>
+                <p>Hello again! In the last section, we talked about "Ordered Estimators." These were based on the exact sequence or order in which we picked the units. But you know what? In many cases, it doesn't really matter if a unit was picked first or second—what matters is that it's in our sample! Estimators that don't care about the order are called <strong>Unordered Estimators</strong>.</p>
+                <p>Famous statisticians like <strong>Horvitz and Thompson (1952)</strong>, <strong>Murthy (1957)</strong>, and <strong>Basu (1958)</strong> found something very interesting: if we ignore the order and use the sample as a "set," our estimates actually become more accurate! This is because we are using the information more efficiently. Let's look at the most famous one first.</p>
 
                 <h3>5.9.1 Horvitz-Thompson Estimator</h3>
-                <p>Horvitz and Thompson (1952) suggested an explicit estimator which is mathematically an exact unbiased estimator of the precise population true total. Let us strictly formally suppose that the true initial mathematical true probability of selection of exactly the unit \( U_i \) is \( p_i \), where \( p_i = X_i / X \) for \( i = 1, 2, \ldots, N \). The true probability that the unit \( U_i \) is exactly included in the strict sample would be given by:</p>
+                <p>Horvitz and Thompson suggested a very clever way to estimate the population total. Instead of looking at the chance of picking a unit in the first or second draw, they looked at the <strong>total chance</strong> of a unit being in the final sample. We call this the <strong>Inclusion Probability (\( \pi_i \))</strong>.</p>
+                
                 <div class="derivation-block">
-                    $$ \pi_i = p_i + \sum_{j \neq i} \frac{p_i p_j}{1 - p_j} = p_i \left[ 1 + \sum_{j \neq i} \frac{p_j}{1 - p_j} \right] $$
-                    <div class="explanation">\( \because \) the unit is firmly mathematically selected at the first draw or correctly in any subsequent draw.</div>
+                    <p>Suppose the chance of picking unit \( i \) in a single draw is \( p_i \). If we are picking a sample of size 2 without replacement, unit \( i \) can get into our sample in two ways: either it's picked first, or it's picked second after some other unit \( j \).</p>
+                    <p>Logic: Total Inclusion Probability = (Prob. picked 1st) + (Sum of Prob. picked 2nd given some \( j \) was 1st).</p>
+                    $$ \pi_i = p_i + \sum_{j \neq i} p_j \left( \frac{p_i}{1 - p_j} \right) = p_i \left[ 1 + \sum_{j \neq i} \frac{p_j}{1 - p_j} \right] $$
                     
-                    <p>Further, the probability that both units \( U_i \) and \( U_j \) are included in the sample is:</p>
-                    $$ \pi_{ij} = \frac{p_i p_j}{1 - p_j} + \frac{p_i p_j}{1 - p_i} = p_i p_j \left[ \frac{1}{1 - p_j} + \frac{1}{1 - p_i} \right] $$
-                </div>
-                <p>Suppose that \( y_i \) be the value of the characteristic for the \( i \)-th unit. The estimator is defined as:</p>
-                <div class="derivation-block">
-                    $$ \widehat{Y}_{HT} = \sum_{i \in s} \frac{y_i}{\pi_i} \quad (5.9.1) $$
+                    <p>Similarly, the chance that both units \( i \) and \( j \) are in the sample together is:</p>
+                    $$ \pi_{ij} = p_i \left( \frac{p_j}{1 - p_i} \right) + p_j \left( \frac{p_i}{1 - p_j} \right) = p_i p_j \left[ \frac{1}{1 - p_i} + \frac{1}{1 - p_j} \right] $$
                 </div>
 
-                <h3>Theorem 5.9.1</h3>
-                <p>In pps sampling, wor, \( \widehat{Y}_{HT} \) is an unbiased estimator and its sampling variance is given by:</p>
+                <p>Now, to estimate the population total \( Y \), we take each value in our sample and divide it by its total chance of being included. This is the <strong>Horvitz-Thompson Estimator</strong>:</p>
                 <div class="derivation-block">
-                    $$ V_{HT}(\widehat{Y}_{HT}) = \sum_i \frac{1 - \pi_i}{\pi_i} y_i^2 + \sum_i \sum_{j \neq i} \frac{\pi_{ij} - \pi_i \pi_j}{\pi_i \pi_j} y_i y_j \quad (5.9.2) $$
+                    $$ \widehat{Y}_{HT} = \sum_{i \in s} \frac{y_i}{\pi_i} \quad (5.9.1) $$
+                    <div class="explanation">Logic: By dividing each value by its own inclusion probability, we "inflate" it to represent its share in the whole population. Summing these up gives us the total.</div>
                 </div>
-                <p>where \( \pi_{ij} \) is the probability of inclusion of both \( i \)-th and \( j \)-th units in the sample.</p>
-                
-                <h3>5.9.2 Murthy's Unordered Estimator</h3>
-                <p>Murthy (1957) suggested that an unordered estimator can be obtained by weighting all possible ordered estimators with their respective probabilities. Let \( \widehat{y}_{s_i} \) be an estimator of a population parameter \( \theta \) based on the ordered sample \( (s_i) \). An unordered estimator of \( \theta \) is given by:</p>
+
+                <p>The variance of this estimator shows us how much it spreads. It depends on how individual units and pairs of units are included in the sample:</p>
                 <div class="derivation-block">
+                    $$ V_{HT}(\widehat{Y}_{HT}) = \sum_{i=1}^N \frac{1 - \pi_i}{\pi_i} y_i^2 + \sum_{i=1}^N \sum_{j \neq i}^N \frac{\pi_{ij} - \pi_i \pi_j}{\pi_i \pi_j} y_i y_j \quad (5.9.2) $$
+                </div>
+
+                <h3>5.9.2 Murthy's Unordered Estimator</h3>
+                <p>Now, let's talk about another brilliant idea from <strong>Murthy (1957)</strong>. He said: "If different sequences of picking units lead to the same final sample, why not use all of them?"</p>
+                <p>Imagine we want a sample of {Unit A, Unit B}. In an ordered method, picking A then B is different from picking B then A. Murthy suggested that we should take an average of all such "ordered" estimates, but weight them by how likely each sequence was to happen.</p>
+                <div class="derivation-block">
+                    <p>Logic: The Unordered Estimator is the weighted sum of all possible ordered estimators that result in the same set of units.</p>
                     $$ \widehat{y}_M = \sum_{s_i \in s} \widehat{y}_{s_i} P(s_i | s) \quad (5.9.6) $$
-                    <p>where \( P(s_i | s) = P(s_i) / P(s) \).</p>
+                    <p>where \( P(s_i | s) = P(s_i) / P(s) \) is the relative chance of that specific sequence occurring among all sequences that give the same set of units.</p>
+                    <div class="explanation">This method is very powerful because it effectively "squeezes" more precision out of the same sample data by removing the effect of the drawing order.</div>
                 </div>
             </div>
             
@@ -826,17 +755,17 @@
         <section id="sec5-10" class="section-card">
             <div class="english-content">
                 <h2>5.10 PPS Systematic Sampling</h2>
-                <p>Madow (1949) suggested that a generalization can be made about systematic sampling with equal probabilities. The method consists of arranging the units at random and forming cumulative totals \( T_i = \sum_{j=1}^i X_j \) (\( i = 1, 2, \ldots, N \)), where \( X_j \) is the size of the \( j \)-th unit. In selecting \( n \) units by pps systematic sampling, a random number \( R \) is chosen from 1 to \( k \), where \( k = X / n \). The units corresponding to the numbers \( R + jk \), \( j = 0, 1, \ldots, (n - 1) \) constitute the sample. It is clear from the procedure that for \( t = 0, 1, \ldots, (n - 1) \), the \( i \)-th unit is included in the sample if \( T_{i-1} < R + tk \leq T_i \), and the probability of inclusion of the \( i \)-th unit is \( n p_i \). </p>
+                <p>Hello students! Do you remember <strong>Systematic Sampling</strong> from Chapter 4? We picked a random start and then every \( k \)-th unit. We can do the same thing with PPS!</p>
+                <p><strong>Madow (1949)</strong> showed us how. First, we arrange the units in a random order. Then, we calculate their cumulative totals \( T_i \). Instead of picking units with equal spacing, we pick "points" with equal spacing (say every \( k = X/n \) units of size). Whichever unit's cumulative range contains our point gets selected.</p>
                 
-                <p>An unbiased estimator of the population total \( Y \), derived by Hartley and Rao (1962), is given by:</p>
                 <div class="derivation-block">
+                    <p>An unbiased estimator for the total \( Y \) using this method was given by <strong>Hartley and Rao (1962)</strong>:</p>
                     $$ \widehat{Y}_{H-R} = \frac{1}{n} \sum_{i \in s} \frac{y_i}{p_i} \quad (5.10.1) $$
-                </div>
-                <p>For fairly large values of \( N \) and for values of \( n \) relatively small compared to \( N \), the approximate sampling variance of the estimator can be written as:</p>
-                <div class="derivation-block">
+                    
+                    <p>The beauty of this method is its variance. When \( N \) is large, it's approximately:</p>
                     $$ V(\widehat{Y}_{H-R}) \approx \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 [1 - (n - 1)p_i] \quad (5.10.2) $$
+                    <div class="explanation">Notice the term \( [1 - (n - 1)p_i] \). This is a "reduction term"—it makes the variance smaller! This means PPS Systematic sampling is usually more accurate than standard PPS with replacement.</div>
                 </div>
-                <p>which shows that even when the units are arranged at random, selecting them with pps systematic sampling is more efficient than pps sampling, wr, for the terms \( [1 - (n - 1)p_i] \) are acting as reduction terms.</p>
             </div>
             
             <div class="hinglish-content">

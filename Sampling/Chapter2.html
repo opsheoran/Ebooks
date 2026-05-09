@@ -101,45 +101,52 @@
         <section id="sec2-1" class="section-card active">
             <div class="english-content">
                 <h2>2.1 Simple Random Sampling</h2>
-                <p>The simplest and most common method of sampling is simple random sampling. In this method, the sample is drawn unit by unit, with an equal probability of selection for each unit at every draw. Therefore, simple random sampling is defined as a method of selecting \( n \) units out of a population of size \( N \) by giving equal probability to all units.</p>
-                <p>Alternatively, it is a sampling procedure in which all possible combinations of \( n \) units that may be formed from the population of \( N \) units have the exact same probability of selection. It is also sometimes referred to as <em>unrestricted random sampling</em>.</p>
+                <p>Hello students! Today we are going to learn about the most basic and common way to pick a sample: <strong>Simple Random Sampling</strong>. Imagine you have a bag full of marbles and you want to pick a few. In this method, you pick them one by one. The special thing here is that every single marble has the exact same chance of being picked at every turn. So, we can say that Simple Random Sampling is a way to choose \( n \) units from a total population of \( N \) units by giving everyone an equal opportunity.</p>
+                <p>In other words, it is a process where every possible group of \( n \) units you could form has the same probability of being selected. Sometimes, we call this <em>unrestricted random sampling</em> because there are no extra rules or restrictions on who gets picked.</p>
                 
                 <ul>
-                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> If a unit is selected, its data is recorded, and then it is immediately returned to the population before the next drawing is made. If this procedure is repeated \( n \) times, it gives rise to a simple random sample of \( n \) units with replacement.</li>
-                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> If this procedure is repeated until \( n \) distinct units are selected, and all repetitions are ignored (or units are not returned), it is called simple random sampling without replacement.</li>
+                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> Imagine you pick a unit, note down its details, and then put it right back into the bag before picking the next one. This means the same unit could be picked again! If you do this \( n \) times, you get a sample "with replacement."</li>
+                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> This is more common. Here, once you pick a unit, you keep it aside and don't put it back. You keep picking until you have \( n \) different units. Since you don't repeat any units, it's called "without replacement."</li>
                 </ul>
 
-                <p><strong>Theorem 2.1.1:</strong> The probability that a specified unit of the population is selected at any given draw is strictly equal to the probability of its being selected at the first draw.</p>
-                <p><em>Proof:</em></p>
+                <p><strong>Theorem 2.1.1:</strong> The chance of picking any particular unit at any specific turn (like the 3rd or 5th draw) is exactly the same as the chance of picking it at the very first turn.</p>
+                <p><em>Let's prove this logically:</em></p>
                 <div class="derivation-block">
-                    <p>The probability that the specified unit is selected at the \( r \)-th draw is clearly the mathematical product of:</p>
+                    <p>To pick a specific unit at the \( r \)-th draw, two things must happen:</p>
                     <ol type="a">
-                        <li>The probability that the specified unit is <em>not</em> selected in any of the previous \( (r - 1) \) draws, and</li>
-                        <li>The probability that it <em>is</em> selected at the \( r \)-th draw, conditional upon it not being selected in the previous \( (r - 1) \) draws.</li>
+                        <li>That unit should <strong>not</strong> have been picked in any of the previous \( (r - 1) \) turns.</li>
+                        <li>That unit must <strong>be picked</strong> exactly at the \( r \)-th turn.</li>
                     </ol>
-                    <p>The probability under (a) is given by:</p>
-                    $$ P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1} \cdots \frac{N - r + 1}{N - r + 2} = \frac{N - r + 1}{N} $$
-                    <div class="explanation">\( \because \) at each step, one less unselected unit is available, and these probabilities compound multiplicatively. The intermediate terms elegantly cancel out.</div>
-                    <p>The probability under (b) is given by:</p>
+                    <p>First, let's find the probability of (a). At the 1st draw, the chance of NOT picking it is \( \frac{N-1}{N} \). At the 2nd draw, since one unit is already gone, the chance is \( \frac{N-2}{N-1} \), and so on. Multiplying these together:</p>
+                    $$ P(\text{Not selected in first } r-1 \text{ draws}) = \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1} \cdot \frac{N - 3}{N - 2} \cdots \frac{N - r + 1}{N - r + 2} $$
+                    <p>If you look closely, the numbers in the middle cancel each other out (like the \( N-1 \) on top and bottom). After cancelling everything, we are left with:</p>
+                    $$ P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - r + 1}{N} $$
+                    <div class="explanation">\( \because \) the intermediate terms elegantly cancel out, leaving only the first denominator and the last numerator.</div>
+                    
+                    <p>Now, for step (b), at the \( r \)-th turn, we have \( N - (r - 1) \) units left in the bag. So the chance of picking our specific unit out of these remaining units is:</p>
                     $$ P(\text{Selected at } r \mid \text{Not selected prior}) = \frac{1}{N - r + 1} $$
                     <div class="explanation">\( \because \) there is exactly 1 specified unit remaining among the \( N - r + 1 \) total available units.</div>
-                    <p>Hence, the required probability is their product:</p>
-                    $$ P(\text{Selected at } r) = \frac{N - r + 1}{N} \times \frac{1}{N - r + 1} = \frac{1}{N} $$
-                    <div class="explanation">\( \because \) the term \( (N - r + 1) \) cancels out, demonstrating that the probability \( 1/N \) is completely independent of the draw number \( r \).</div>
+                    
+                    <p>To get the final answer, we multiply these two parts together:</p>
+                    $$ P(\text{Selected at draw } r) = \left( \frac{N - r + 1}{N} \right) \times \left( \frac{1}{N - r + 1} \right) $$
+                    <p>The term \( (N - r + 1) \) cancels out from the top and bottom, and we get:</p>
+                    $$ P(\text{Selected at draw } r) = \frac{1}{N} $$
+                    <div class="explanation">\( \because \) the result is just \( 1/N \), which doesn't depend on \( r \). This means it doesn't matter if it's the 1st draw or the 10th; the chance is always the same!</div>
                 </div>
 
-                <p><strong>Theorem 2.1.2:</strong> The probability of a specified unit being included in the final sample is equal to \( n/N \).</p>
+                <p><strong>Theorem 2.1.2:</strong> The probability that a specific unit ends up in your final sample of size \( n \) is simply \( n/N \).</p>
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>Let \( n \) denote the sample size. Since the specified unit may be included in the sample at <em>any</em> of the \( n \) draws, the probability that a specified unit is included in the sample is the sum of the probabilities of \( n \) mutually exclusive events (i.e., it is included at the 1st draw, OR 2nd draw, ..., OR \( n \)-th draw).</p>
-                    $$ P(\text{Included}) = P(\text{Draw } 1) + P(\text{Draw } 2) + \ldots + P(\text{Draw } n) $$
-                    <div class="explanation">\( \because \) the events are mutually exclusive (it can only be drawn for the first time once), we sum their probabilities.</div>
-                    <p>As rigorously proven in Theorem 2.1.1, the probability of each individual case is \( 1/N \).</p>
-                    $$ P(\text{Included}) = \underbrace{\frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N}}_{n \text{ times}} = \frac{n}{N} $$
+                    <p>Think about it this way: your favorite unit could enter the sample at the 1st draw, OR the 2nd draw, and so on, up to the \( n \)-th draw. Since these are separate possibilities (mutually exclusive), we just add their probabilities together.</p>
+                    $$ P(\text{Included in Sample}) = P(\text{Selected at Draw 1}) + P(\text{Selected at Draw 2}) + \ldots + P(\text{Selected at Draw } n) $$
+                    <p>From our previous theorem, we know that the probability for any single draw is \( 1/N \). So we add \( 1/N \) to itself \( n \) times:</p>
+                    $$ P(\text{Included}) = \underbrace{\frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N}}_{n \text{ times}} $$
+                    <p>This gives us the final result:</p>
+                    $$ P(\text{Included}) = \frac{n}{N} $$
                 </div>
 
                 <p><strong>Corollary 1:</strong> The probability of selecting a specified sample of \( n \) units, ignoring the order of selection, is \( 1 / \binom{N}{n} \).</p>
-                <p><strong>Corollary 2:</strong> If, in a population of \( N \) units, \( m \) units are deleted and \( m' \) units are added, the probability of selection of any unit at a specified draw becomes \( (N - m + m')^{-1} \).</p>
+                <p><strong>Corollary 2:</strong> If you change the population by removing \( m \) units and adding \( m' \) new ones, the total size becomes \( N - m + m' \). So, the chance of picking any unit at a specified draw becomes \( 1 / (N - m + m') \).</p>
             </div>
             <div class="hinglish-content">
                 <h2>2.1 Simple Random Sampling (सरल यादृच्छिक प्रतिचयन)</h2>
@@ -179,40 +186,32 @@
         <section id="sec2-2" class="section-card">
             <div class="english-content">
                 <h2>2.2 Procedures of Selecting a Random Sample</h2>
-                <p>Because the mathematical theory of sampling relies heavily on the strict assumption of random sampling, the actual technique used to select the sample is of paramount significance. Several robust procedures are utilized in practice:</p>
+                <p>Now, you might wonder: "How do we actually pick these random units in real life?" Since our whole theory depends on the sample being truly random, the way we select it is very important. Here are a few ways experts do it:</p>
                 
                 <h3>2.2.1 Lottery Method</h3>
-                <p>In practice, a ticket or chit may be uniquely associated with each unit of the population. Thus, every single sampling unit is given an identification mark from 1 to \( N \). The procedure of selecting an individual is conceptually simple. All the tickets are placed in a container, drum, or metallic spherical device where thorough, unbiased mixing or reshuffling is conducted before each draw. Draws continue until a sample of the required size \( n \) is achieved.</p>
-                <p>However, this procedure of physically numbering tickets and selecting them becomes incredibly cumbersome and impractical when the population size is massively large. Achieving a genuinely thorough shuffle in a physical drum is difficult. Furthermore, human bias and subconscious prejudice may easily creep into the selection process.</p>
+                <p>This is just like a standard lucky draw! We give every unit in the population a number from 1 to \( N \) and write these numbers on small slips of paper (chits). We put all these slips into a box or a drum and mix them up really well. Then, we blindly pick out \( n \) slips. Those units become our sample.</p>
+                <p>While this sounds easy, it's hard to do if the population is very big. Imagine making 10,000 chits! Also, if you don't mix them perfectly, the draw might not be truly fair.</p>
 
                 <h3>2.2.2 Use of Random Number Tables</h3>
-                <p>A random number table is a meticulously generated arrangement of digits (0 to 9), in either a linear or rectangular pattern. It is constructed so that every digit appears completely independent of the others. Prominent tables include:</p>
-                <ol>
-                    <li>Tippett's random number tables</li>
-                    <li>Fisher and Yates tables</li>
-                    <li>Kendall and Smith tables</li>
-                    <li>A Million Random Digits (RAND Corporation)</li>
-                </ol>
-                <p>To mathematically ascertain whether these digits are truly random, rigorous tests such as the Frequency test, Serial test, Gap test, and Poker test are applied.</p>
-
-                <p>The simplest way of selecting a sample using these tables is picking a random number from 1 to \( N \) and selecting the corresponding unit. However, this involves a high rejection rate for numbers greater than \( N \). Therefore, improved mathematical approaches are used:</p>
+                <p>To avoid the mess of chits, we use <strong>Random Number Tables</strong>. These are big lists of digits (0 to 9) that have been generated by machines to be completely random. Some famous ones are by Tippett, Fisher and Yates, and the RAND Corporation.</p>
+                <p>But how do we use a table of digits to pick, say, unit number 64? There are a few clever tricks:</p>
 
                 <h4>1. Remainder Approach</h4>
-                <p>Let \( N \) be an \( r \)-digit number, and let its highest \( r \)-digit multiple be \( N' \). A random number \( k \) is selected from 1 to \( N' \). The unit selected is the one whose serial number matches the <strong>remainder</strong> obtained when dividing \( k \) by \( N \). If the remainder is exactly zero, the very last unit (\( N \)) is selected.</p>
+                <p>Let's say your population size is \( N = 125 \). This is a 3-digit number. We look at 3-digit numbers in the table. The biggest 3-digit multiple of 125 is 875 (\( 125 \times 7 \)). We pick a random number between 001 and 875. Suppose we pick 314. We divide 314 by 125 and look at the <strong>remainder</strong>.</p>
                 <div class="derivation-block">
-                    <p><strong>Example:</strong> Let \( N = 125 \) (instead of 123). The highest 3-digit multiple is \( 125 \times 7 = 875 \). We select a random number between 001 and 875. Suppose the random number picked is 314. Dividing 314 by 125 gives a remainder of 64. Hence, the unit with serial number 64 is decisively selected.</p>
+                    <p><strong>Example:</strong> \( 314 \div 125 = 2 \) with a remainder of 64. So, we pick unit number 64 for our sample. If the remainder is 0, we pick the last unit (125).</p>
                 </div>
 
                 <h4>2. Quotient Approach</h4>
-                <p>Let \( N \) be an \( r \)-digit number, and let its highest multiple be \( N' \) such that \( N'/N = q \). A random number \( k \) is chosen between 0 and \( N' - 1 \). We divide \( k \) by \( q \) to obtain the quotient \( r \), and select the unit bearing the serial number \( (r + 1) \).</p>
+                <p>This is another way. Again, if \( N = 15 \), the biggest multiple we can use (staying under 100) is 90. Here \( 90 \div 15 = 6 \). We pick a random number from 0 to 89. Let's say we pick 73. We divide 73 by that number 6.</p>
                 <div class="derivation-block">
-                    <p><strong>Example:</strong> Let \( N = 15 \) (instead of 16), making \( N' = 90 \) and \( q = 90/15 = 6 \). We pick a random number between 0 and 89. Suppose we pick 73. Dividing 73 by 6 yields a quotient of 12. Hence, unit number \( 12 + 1 = 13 \) is selected.</p>
+                    <p><strong>Example:</strong> \( 73 \div 6 = 12 \) (ignoring the remainder here). We add 1 to this quotient: \( 12 + 1 = 13 \). So, unit number 13 is selected.</p>
                 </div>
 
                 <h4>3. Independent Choice of Digits</h4>
-                <p>This method involves the separate selection of digits to form a complete random number. It minimizes the reading of long strings but still requires rejecting numbers \( \geq N \).</p>
+                <p>In this simple method, you just pick digits one by one from the table to form your number. If the number you form is bigger than your population size \( N \), you just ignore it and try again.</p>
 
-                <p><strong>Example 2.2 (Corporate Branches):</strong> Consider 8 corporate branches having 110, 650, 890, 420, 1200, 750, 480, and 230 employees respectively. We need to draw a random sample of 10 employees. Instead of numbering every single employee 1 to 4730, we assign cumulative serial numbers to the branches: 110, 760, 1650, 2070, 3270, 4020, 4500, 4730. When a 4-digit random number is drawn (e.g., 2015), it falls into the 4th branch (range 1651 to 2070). Thus, employee number 365 inside the 4th branch is selected. This brilliantly avoids unnecessary numbering across the whole corporation.</p>
+                <p><strong>Example 2.2 (Corporate Branches):</strong> Suppose a big company has 8 branches with different numbers of employees (110, 650, etc.), totaling 4730 people. Instead of numbering every single person from 1 to 4730, we use <em>cumulative totals</em>. The first branch has employees 1-110, the second has 111-760 (since 110 + 650 = 760), and so on. If we pick a random number like 2015, we see which range it falls into. 2015 is between 1651 and 2070, which belongs to the 4th branch. This saves a lot of time!</p>
             </div>
             
             <div class="hinglish-content">
@@ -252,123 +251,112 @@
         <section id="sec2-3" class="section-card">
             <div class="english-content">
                 <h2>2.3 Estimation of Population Parameters</h2>
-                <p>Let us assume that each unit \( u_i \) in the population is strictly associated with a variate value \( y_i \), for the characteristic \( y \). For the mathematical parameters, let us explicitly designate:</p>
+                <p>Alright, now let's get into the math! Suppose we want to study a characteristic \( y \) (like the height of students). Every person in our total population of \( N \) people has a height, which we call \( y_i \). To describe the whole group, we use a few standard numbers:</p>
                 <ul>
-                    <li>The population total, \( Y = \sum_{i=1}^N y_i \)</li>
-                    <li>The population mean, \( \bar{Y} = \frac{1}{N}\sum_{i=1}^N y_i \)</li>
-                    <li>The population variance, \( \sigma^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 \)</li>
+                    <li><strong>Population Total:</strong> \( Y = \sum_{i=1}^N y_i \) (Adding up all the values).</li>
+                    <li><strong>Population Mean:</strong> \( \bar{Y} = \frac{1}{N}\sum_{i=1}^N y_i \) (The average value).</li>
+                    <li><strong>Population Variance:</strong> \( \sigma^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 \) (How much the values spread out).</li>
                 </ul>
 
-                <p>Let the \( n \) units randomly drawn into the sample be \( u_1, u_2, \ldots, u_n \), with corresponding variate values \( y_1, y_2, \ldots, y_n \). The estimators of the population total and population mean are mathematically given by:</p>
+                <p>When we pick a small sample of \( n \) units, we get their values: \( y_1, y_2, \ldots, y_n \). We use these sample values to guess (estimate) the population values:</p>
                 <div class="derivation-block">
-                    $$ \widehat{Y} = \frac{N}{n}\sum_{i=1}^n y_i = N\bar{y} $$
-                    $$ \text{and} \quad \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i $$
+                    <p>The best way to guess the population mean is to use the sample mean:</p>
+                    $$ \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i $$
+                    <p>And to guess the population total, we just multiply the sample mean by the total size \( N \):</p>
+                    $$ \widehat{Y} = N\bar{y} $$
                 </div>
-                <p>The scalar factor \( N/n \) by which the sample total is multiplied is technically called the <em>expansion</em>, <em>raising</em>, or <em>inflation factor</em>. Its inverse \( n/N \) is fundamentally known as the <em>sampling fraction</em>, denoted by the letter \( f \) throughout this text.</p>
+                <p>We call \( N/n \) the <em>expansion factor</em> because it "blows up" our sample total to match the population scale. Its opposite, \( n/N \), is the <em>sampling fraction</em> (represented by \( f \)).</p>
 
                 <h3><strong>Theorem 2.3.1:</strong></h3>
-                <p>In simple random sampling without replacement (SRSWOR), the sample mean \( \bar{y} \) is an unbiased estimator of \( \bar{Y} \), and its exact sampling variance is given by:</p>
+                <p>In Simple Random Sampling Without Replacement (SRSWOR), the sample mean \( \bar{y} \) is an <strong>unbiased estimator</strong> of the population mean \( \bar{Y} \). This means if we took all possible samples, their average would be exactly the true population mean. Also, we'll find its variance.</p>
+
+                <p><em>Proof for Unbiasedness:</em></p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}) = \left( 1 - \frac{n}{N} \right)\frac{S^2}{n} = (1 - f)\frac{S^2}{n} \quad (2.3.1) $$
-                    <p>where \( S^2 = \frac{N}{N-1}\sigma^2 \).</p>
+                    <p>First, we find the expected value (average) of our sample mean. We know that:</p>
+                    $$ E(\bar{y}) = E\left( \frac{1}{n}\sum_{i=1}^n y_i \right) $$
+                    <p>Since the expectation of a sum is the sum of the expectations, we can move the E inside:</p>
+                    $$ E(\bar{y}) = \frac{1}{n}\sum_{i=1}^n E(y_i) $$
+                    <p>Now, what is the average value of a single unit picked at random? Since every unit in the population has a \( 1/N \) chance of being picked, the average value for one draw is just the population mean:</p>
+                    $$ E(y_i) = \sum_{j=1}^N P_j Y_j = \sum_{j=1}^N \frac{1}{N} Y_j = \bar{Y} $$
+                    <p>So, our formula becomes:</p>
+                    $$ E(\bar{y}) = \frac{1}{n} \sum_{i=1}^n \bar{Y} $$
+                    <p>Since \( \bar{Y} \) is a constant, adding it \( n \) times gives \( n\bar{Y} \):</p>
+                    $$ E(\bar{y}) = \frac{1}{n} (n\bar{Y}) = \bar{Y} $$
+                    <div class="explanation">Because \( E(\bar{y}) = \bar{Y} \), we have proven that the sample mean is unbiased!</div>
                 </div>
 
-                <p><em>Proof:</em></p>
+                <p><em>Proof for Variance:</em></p>
                 <div class="derivation-block">
-                    <p>First, we prove unbiasedness. By definition of expected value over the sample space:</p>
-                    $$ E(\bar{y}) = E\left( \frac{1}{n}\sum_{i=1}^n y_i \right) = \frac{1}{n}\sum_{i=1}^n E(y_i) $$
-                    <div class="explanation">\( \because \) expectation is a linear operator, we can bring the expectation inside the finite sum.</div>
-                    <p>Since the probability of any specified unit being selected at any given draw is exactly \( 1/N \):</p>
-                    $$ E(y_i) = \sum_{i=1}^N P_i y_i = \frac{1}{N}\sum_{i=1}^N y_i = \bar{Y} $$
-                    <div class="explanation">\( \because \) the expected value of a single draw is simply the population mean.</div>
-                    $$ \therefore E(\bar{y}) = \frac{1}{n} \sum_{i=1}^n \bar{Y} = \frac{1}{n} (n\bar{Y}) = \bar{Y} $$
-                    <div class="explanation">\( \because \) summing the constant \( \bar{Y} \) exactly \( n \) times yields \( n\bar{Y} \). Thus, the sample mean is strictly unbiased.</div>
-
-                    <p>Next, we derive the variance of \( \bar{y} \):</p>
+                    <p>Now, let's see how much our sample mean fluctuates from the true mean. By definition:</p>
                     $$ V(\bar{y}) = E(\bar{y} - \bar{Y})^2 = E\left[ \frac{1}{n}\sum_{i=1}^n (y_i - \bar{Y}) \right]^2 $$
-                    <div class="explanation">\( \because \) variance is the expected squared deviation of the estimator from its mean.</div>
-                    $$ = \frac{1}{n^2} E\left[ \sum_{i=1}^n (y_i - \bar{Y})^2 + 2\sum_{i \neq j} (y_i - \bar{Y})(y_j - \bar{Y}) \right] $$
-                    <div class="explanation">\( \because \) expanding the square of a sum yields the sum of squares plus the sum of all cross-products.</div>
-                    <p>We evaluate the two expectation terms separately. First, the variance component:</p>
-                    $$ E(y_i - \bar{Y})^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 = \sigma^2 $$
-                    <div class="explanation">\( \because \) the expected squared deviation for a single draw is exactly the population variance \( \sigma^2 \).</div>
-                    <p>Second, the covariance component for SRSWOR. Since draws are without replacement, the probability of drawing unit \( i \) and unit \( j \) is \( \frac{1}{N(N-1)} \):</p>
-                    $$ E(y_i - \bar{Y})(y_j - \bar{Y}) = \frac{1}{N(N-1)}\sum_{i \neq j} (y_i - \bar{Y})(y_j - \bar{Y}) $$
-                    $$ = \frac{1}{N(N-1)}\left[ \left( \sum_{i=1}^N (y_i - \bar{Y}) \right)^2 - \sum_{i=1}^N (y_i - \bar{Y})^2 \right] $$
-                    <div class="explanation">\( \because \) the sum of cross-products is the square of the sum minus the sum of the squares.</div>
-                    $$ = \frac{1}{N(N-1)} \left[ 0 - N\sigma^2 \right] = -\frac{\sigma^2}{N-1} $$
-                    <div class="explanation">\( \because \) the sum of deviations from the mean is identically zero. This negative covariance directly reflects that sampling without replacement Sample mean from depletion.</div>
-                    <p>Substituting these back into the variance equation:</p>
-                    $$ V(\bar{y}) = \frac{1}{n^2} \left\{ n\sigma^2 + n(n-1)\left( -\frac{\sigma^2}{N-1} \right) \right\} $$
-                    <div class="explanation">\( \because \) there are exactly \( n \) squared terms and \( n(n-1) \) cross-product terms in the expansion.</div>
-                    $$ = \frac{1}{n^2} \left\{ \frac{n(N-1)\sigma^2 - n(n-1)\sigma^2}{N-1} \right\} = \frac{N-n}{N-1} \frac{\sigma^2}{n} $$
-                    $$ = \left( 1 - \frac{n}{N} \right) \frac{S^2}{n} $$
-                    <div class="explanation">\( \because \) we substitute \( S^2 = \frac{N}{N-1}\sigma^2 \) and factor out \( 1 - \frac{n}{N} \). This completes the proof.</div>
+                    <p>If we expand the square of the sum, we get squared terms for each unit and cross-product terms for every pair:</p>
+                    $$ V(\bar{y}) = \frac{1}{n^2} E\left[ \sum_{i=1}^n (y_i - \bar{Y})^2 + \sum_{i \neq j}^n (y_i - \bar{Y})(y_j - \bar{Y}) \right] $$
+                    <p>The first part is the average of squared deviations, which is just the population variance \( \sigma^2 \). Since we have \( n \) units:</p>
+                    $$ E \left[ \sum_{i=1}^n (y_i - \bar{Y})^2 \right] = n \sigma^2 $$
+                    <p>The second part involves pairs. In SRSWOR, picking one unit affects the chance of picking the next. The covariance between any two units is \( -\sigma^2 / (N-1) \). There are \( n(n-1) \) such pairs:</p>
+                    $$ E \left[ \sum_{i \neq j}^n (y_i - \bar{Y})(y_j - \bar{Y}) \right] = n(n-1) \left( \frac{-\sigma^2}{N-1} \right) $$
+                    <p>Putting it all back together:</p>
+                    $$ V(\bar{y}) = \frac{1}{n^2} \left[ n\sigma^2 - \frac{n(n-1)\sigma^2}{N-1} \right] $$
+                    <p>Taking \( \frac{n\sigma^2}{n^2} \) (which is \( \frac{\sigma^2}{n} \)) outside:</p>
+                    $$ V(\bar{y}) = \frac{\sigma^2}{n} \left[ 1 - \frac{n-1}{N-1} \right] = \frac{\sigma^2}{n} \left[ \frac{N-1-n+1}{N-1} \right] = \frac{N-n}{N-1} \frac{\sigma^2}{n} $$
+                    <p>Finally, since we define \( S^2 = \frac{N}{N-1}\sigma^2 \), we can write:</p>
+                    $$ V(\bar{y}) = \left( \frac{N-n}{N} \right)\frac{S^2}{n} = (1 - f)\frac{S^2}{n} $$
                 </div>
 
-                <p><strong>Corollary 1:</strong> In SRSWOR, the standard error of \( \bar{y} \) is:</p>
-                <div class="derivation-block">$$ S_{\bar{y}} = S\sqrt{\frac{N-n}{nN}} = S\sqrt{\frac{1-f}{n}} \quad (2.3.2) $$</div>
+                <p><strong>Corollaries:</strong></p>
+                <ul>
+                    <li>The Standard Error (how much we are usually "off") is \( S_{\bar{y}} = \sqrt{V(\bar{y})} = S\sqrt{\frac{1-f}{n}} \).</li>
+                    <li>For the Population Total, the variance is \( V(\widehat{Y}) = N^2 V(\bar{y}) = N^2 (1-f) \frac{S^2}{n} \).</li>
+                </ul>
 
-                <p><strong>Corollary 2:</strong> In SRSWOR, the variance of \( \widehat{Y} = N\bar{y} \), as an estimator of the population total \( Y \), is obtained as:</p>
-                <div class="derivation-block">$$ V(\widehat{Y}) = E(\widehat{Y} - Y)^2 = (1-f)\frac{N^2 S^2}{n} \quad (2.3.3) $$</div>
+                <p>If we pick our sample <strong>With Replacement (SRSWR)</strong>, the math changes slightly. The population acts like it is infinite because we never run out of units!</p>
 
-                <p><strong>Corollary 3:</strong> In SRSWOR, the standard error of \( \widehat{Y} \) is:</p>
-                <div class="derivation-block">$$ S_{\widehat{Y}} = NS\sqrt{\frac{1-f}{n}} \quad (2.3.4) $$</div>
-
-                <p>If sampling is with replacement (SRSWR), the term \( (N-n)/N \) (known as the finite population correction, fpc) vanishes because the population effectively acts as if it is infinite.</p>
-
-                <p><strong>Corollary 4:</strong> In SRSWR, the variance and standard error of \( \bar{y} \) can be written strictly as:</p>
-                <div class="derivation-block">$$ V(\bar{y}) = \frac{\sigma^2}{n}, \quad \sigma_{\bar{y}} = \frac{\sigma}{\sqrt{n}} \quad (2.3.5a) $$</div>
-
-                <p><strong>Corollary 5:</strong> In SRSWR, the variance and standard error of \( \widehat{Y} \) are:</p>
-                <div class="derivation-block">$$ V(\widehat{Y}) = \frac{N^2 \sigma^2}{n}, \quad \sigma_{\widehat{Y}} = \frac{N\sigma}{\sqrt{n}} \quad (2.3.5b) $$</div>
+                <p><strong>Corollaries for SRSWR:</strong></p>
+                <ul>
+                    <li>The variance and standard error of the mean are: \( V(\bar{y}) = \frac{\sigma^2}{n} \) and \( \sigma_{\bar{y}} = \frac{\sigma}{\sqrt{n}} \).</li>
+                    <li>For the Population Total: \( V(\widehat{Y}) = \frac{N^2 \sigma^2}{n} \) and \( \sigma_{\widehat{Y}} = \frac{N\sigma}{\sqrt{n}} \).</li>
+                </ul>
 
                 <h3><strong>Theorem 2.3.2:</strong></h3>
-                <p>In simple random sampling, the sample variance:</p>
-                <div class="derivation-block">$$ s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1} \quad (2.3.6) $$</div>
-                <p>is a mathematically unbiased estimator of the population mean square \( S^2 = \frac{N}{N-1}\sigma^2 \).</p>
+                <p>When we work with a sample, we can calculate the <strong>sample variance</strong> \( s^2 \). This theorem is very important because it proves that our sample's \( s^2 \) is a perfect guess (unbiased estimator) for the population mean square \( S^2 \).</p>
 
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>We may algebraically expand the numerator of \( s^2 \) by cleverly adding and subtracting \( \bar{Y} \):</p>
-                    $$ s^2 = \frac{\sum_{i=1}^n [(y_i - \bar{Y}) - (\bar{y} - \bar{Y})]^2}{n-1} $$
-                    $$ = \frac{\sum_{i=1}^n (y_i - \bar{Y})^2 - n(\bar{y} - \bar{Y})^2}{n-1} $$
-                    <div class="explanation">\( \because \) the cross term \( -2(\bar{y} - \bar{Y})\sum(y_i - \bar{Y}) \) perfectly evaluates to \( -2n(\bar{y} - \bar{Y})^2 \), which combines with the positive term to yield the simplified numerator.</div>
-                    
-                    <p>Taking expectations on both sides:</p>
-                    $$ E(s^2) = \frac{\sum_{i=1}^n E(y_i - \bar{Y})^2 - nE(\bar{y} - \bar{Y})^2}{n-1} $$
-                    <div class="explanation">\( \because \) expectation distributes linearly.</div>
-                    
-                    <p>We know \( E(y_i - \bar{Y})^2 = \sigma^2 = \frac{N-1}{N}S^2 \) and \( E(\bar{y} - \bar{Y})^2 = V(\bar{y}) = \frac{N-n}{Nn}S^2 \). Substituting these:</p>
-                    $$ E(s^2) = \frac{ n \left( \frac{N-1}{N}S^2 \right) - n \left( \frac{N-n}{Nn}S^2 \right) }{n-1} $$
-                    $$ = \frac{ S^2 \left[ \frac{n(N-1)}{N} - \frac{N-n}{N} \right] }{n-1} = \frac{ S^2 \left[ \frac{nN - n - N + n}{N} \right] }{n-1} $$
-                    $$ = \frac{ S^2 \frac{N(n-1)}{N} }{n-1} = S^2 $$
-                    <div class="explanation">\( \because \) the algebraic terms beautifully simplify to cancel \( (n-1) \) and \( N \), proving that \( s^2 \) is precisely an unbiased estimator of \( S^2 \).</div>
+                    <p>The sample variance is defined as:</p>
+                    $$ s^2 = \frac{1}{n-1}\sum_{i=1}^n (y_i - \bar{y})^2 $$
+                    <p>Let's play with the numerator. We can add and subtract the true population mean \( \bar{Y} \) inside the bracket:</p>
+                    $$ \sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n [(y_i - \bar{Y}) - (\bar{y} - \bar{Y})]^2 $$
+                    <p>Expanding the square (\( (a-b)^2 = a^2 - 2ab + b^2 \)):</p>
+                    $$ = \sum (y_i - \bar{Y})^2 - 2(\bar{y} - \bar{Y})\sum(y_i - \bar{Y}) + \sum(\bar{y} - \bar{Y})^2 $$
+                    <p>Notice that \( \sum(y_i - \bar{Y}) = n(\bar{y} - \bar{Y}) \). So the middle term and the last term combine:</p>
+                    $$ = \sum_{i=1}^n (y_i - \bar{Y})^2 - n(\bar{y} - \bar{Y})^2 $$
+                    <p>Now, let's take the expected value (average) of this expression:</p>
+                    $$ E\left[ \sum (y_i - \bar{y})^2 \right] = \sum_{i=1}^n E(y_i - \bar{Y})^2 - n E(\bar{y} - \bar{Y})^2 $$
+                    <p>The first term is just \( n \) times the population variance \( \sigma^2 \). The second term is \( n \) times the variance of the sample mean \( V(\bar{y}) \):</p>
+                    $$ = n\sigma^2 - n \left( \frac{N-n}{N-1} \frac{\sigma^2}{n} \right) $$
+                    <p>Simplifying the algebra:</p>
+                    $$ = n\sigma^2 - \frac{N-n}{N-1}\sigma^2 = \sigma^2 \left[ \frac{nN - n - N + n}{N-1} \right] = \sigma^2 \frac{N(n-1)}{N-1} $$
+                    <p>Since we defined \( S^2 = \frac{N}{N-1}\sigma^2 \), this is exactly \( (n-1)S^2 \).</p>
+                    $$ \therefore E(s^2) = \frac{1}{n-1} [ (n-1)S^2 ] = S^2 $$
+                    <div class="explanation">This proves that \( s^2 \) is an unbiased estimator of \( S^2 \). Great!</div>
                 </div>
 
-                <p><strong>Corollary 1:</strong> An unbiased estimator of the variance of \( \bar{y} \) in SRSWOR is:</p>
-                <div class="derivation-block">$$ v(\bar{y}) = (1-f)\frac{s^2}{n} \quad (2.3.7) $$</div>
-
-                <p><strong>Corollary 2:</strong> An unbiased estimator of the variance of \( \widehat{Y} \) in SRSWOR is:</p>
-                <div class="derivation-block">$$ v(\widehat{Y}) = (1-f)N^2 \frac{s^2}{n} \quad (2.3.8) $$</div>
-
-                <p><strong>Corollary 3 & 4:</strong> In SRSWR, the unbiased estimators for the variance of the mean and total drop the \( (1-f) \) term, becoming \( s^2/n \) and \( N^2 s^2/n \) respectively.</p>
+                <p><strong>More Corollaries (Unbiased Estimators of Variance):</strong></p>
+                <ul>
+                    <li>In SRSWOR, we estimate \( V(\bar{y}) \) using: \( v(\bar{y}) = (1-f)\frac{s^2}{n} \).</li>
+                    <li>In SRSWR, we just use: \( v(\bar{y}) = \frac{s^2}{n} \).</li>
+                </ul>
 
                 <h3>Example 2.3</h3>
-                <p>A random sample of \( n = 2 \) households was drawn from a small colony of \( N = 5 \) households having weekly grocery expenditures (in rupees) as follows:</p>
-                <table style="width: 50%; margin: 15px 0; border-collapse: collapse; text-align: center;">
-                    <tr style="border-bottom: 1px solid var(--border); background: #eee;"><th>Household</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
-                    <tr><td>Expenditure (in Rs.)</td><td>150</td><td>145</td><td>160</td><td>158</td><td>152</td></tr>
-                </table>
-                <p>(i) Calculate population mean \( \bar{Y} \), variance (\( \sigma^2 \)) and mean square error (\( S^2 \)).</p>
+                <p>Let's look at a small colony with \( N = 5 \) households. We pick a random sample of \( n = 2 \). Their weekly grocery bills (in Rs.) are: 150, 145, 160, 158, 152.</p>
                 <div class="derivation-block">
-                    <p>Population Mean \( \bar{Y} = (150 + 145 + 160 + 158 + 152) / 5 = 153.00 \)</p>
-                    <p>Population Variance \( \sigma^2 = [(150-153)^2 + (145-153)^2 + \ldots + (152-153)^2] / 5 = [9 + 64 + 49 + 25 + 1] / 5 = 29.60 \)</p>
-                    <p>Mean Square Error \( S^2 = \frac{N}{N-1}\sigma^2 = \frac{5}{4} \times 29.60 = 37.00 \)</p>
+                    <p><strong>(i) Population Values:</strong></p>
+                    <p>Mean \( \bar{Y} = (150 + 145 + 160 + 158 + 152) / 5 = 153.00 \)</p>
+                    <p>Variance \( \sigma^2 = [(-3)^2 + (-8)^2 + 7^2 + 5^2 + (-1)^2] / 5 = 148 / 5 = 29.60 \)</p>
+                    <p>Mean Square \( S^2 = \frac{5}{4} \times 29.60 = 37.00 \)</p>
                 </div>
-
-                <p>(ii) Enumerate all possible samples of size 2 by the <strong>with replacement</strong> method and empirically show that the sample mean and sample variance are unbiased estimators.</p>
-                <p>There are \( 5^2 = 25 \) possible samples. Each has a probability of \( 1/25 \).</p>
+                <p><strong>(ii) Practical Check:</strong> If we pick all possible samples of size 2, their means will vary. But if we average <em>all</em> those possible sample means, the answer will be exactly 153.0. This shows that the sample mean is unbiased in real life too!</p>
+            </div>
                 <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
                     <tr style="background: #f9f9f9;"><th>S.No</th><th>Units</th><th>Prob</th><th>\( y_1 \)</th><th>\( y_2 \)</th><th>\( \bar{y} \)</th><th>\( \bar{y} - \bar{Y} \)</th><th>\( (y_1-y_2)^2 / 4 \)</th></tr>
                     <tr><td>1</td><td>1,1</td><td>1/25</td><td>150</td><td>150</td><td>150.0</td><td>-3.0</td><td>0.00</td></tr>
