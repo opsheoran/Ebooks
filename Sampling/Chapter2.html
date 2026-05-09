@@ -101,149 +101,207 @@
         <section id="sec2-1" class="section-card active">
             <div class="english-content">
                 <h2>2.1 Simple Random Sampling</h2>
-                <p>Hello students! Today we are going to learn about the most basic and common way to pick a sample: <strong>Simple Random Sampling</strong>. Imagine you have a bag full of marbles and you want to pick a few. In this method, you pick them one by one. The special thing here is that every single marble has the exact same chance of being picked at every turn. So, we can say that Simple Random Sampling is a way to choose \( n \) units from a total population of \( N \) units by giving everyone an equal opportunity.</p>
-                <p>In other words, it is a process where every possible group of \( n \) units you could form has the same probability of being selected. Sometimes, we call this <em>unrestricted random sampling</em> because there are no extra rules or restrictions on who gets picked.</p>
-                
+                <p>Dear students, let us discuss the most common method of sampling: <strong>Simple Random Sampling</strong>. In this method, the sample is drawn unit by unit, with equal probability of selection for each unit at each draw. Therefore, Simple Random Sampling is a method of selecting \( n \) units out of a population of size \( N \) by giving equal probability to all units. It is also a procedure in which all possible combinations of \( n \) units that may be formed from the population of \( N \) units have the same probability of selection. It is also sometimes referred to as unrestricted random sampling.</p>
                 <ul>
-                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> Imagine you pick a unit, note down its details, and then put it right back into the bag before picking the next one. This means the same unit could be picked again! If you do this \( n \) times, you get a sample "with replacement."</li>
-                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> This is more common. Here, once you pick a unit, you keep it aside and don't put it back. You keep picking until you have \( n \) different units. Since you don't repeat any units, it's called "without replacement."</li>
+                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> If a unit is selected, noted, and then returned to the population before the next drawing is made, and this procedure is repeated \( n \) times, it gives rise to a simple random sample of \( n \) units with replacement.</li>
+                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> If this procedure is repeated till \( n \) distinct units are selected and all repetitions are ignored, it is called a simple random sampling without replacement.</li>
                 </ul>
 
-                <p><strong>Theorem 2.1.1:</strong> The chance of picking any particular unit at any specific turn (like the 3rd or 5th draw) is exactly the same as the chance of picking it at the very first turn.</p>
-                <p><em>Let's prove this logically:</em></p>
+                <p><strong>Theorem 2.1.1:</strong> The probability that a specified unit of the population being selected at any given draw is equal to the probability of its being selected at the first draw.</p>
+                <p><em>Let us look at the step-by-step proof:</em></p>
                 <div class="derivation-block">
-                    <p>To pick a specific unit at the \( r \)-th draw, two things must happen:</p>
+                    <p>The probability that the specified unit is selected at the \( r \)-th draw is the product of:</p>
                     <ol type="a">
-                        <li>That unit should <strong>not</strong> have been picked in any of the previous \( (r - 1) \) turns.</li>
-                        <li>That unit must <strong>be picked</strong> exactly at the \( r \)-th turn.</li>
+                        <li>The probability that the specified unit is not selected in any of the previous \( (r - 1) \) draws.</li>
+                        <li>The probability that it is selected at the \( r \)-th draw with the condition that it is not selected in the previous \( (r - 1) \) draws.</li>
                     </ol>
-                    <p>First, let's find the probability of (a). At the 1st draw, the chance of NOT picking it is \( \frac{N-1}{N} \). At the 2nd draw, since one unit is already gone, the chance is \( \frac{N-2}{N-1} \), and so on. Multiplying these together:</p>
-                    $$ P(\text{Not selected in first } r-1 \text{ draws}) = \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1} \cdot \frac{N - 3}{N - 2} \cdots \frac{N - r + 1}{N - r + 2} $$
-                    <p>If you look closely, the numbers in the middle cancel each other out (like the \( N-1 \) on top and bottom). After cancelling everything, we are left with:</p>
-                    $$ P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - r + 1}{N} $$
-                    <div class="explanation">\( \because \) the intermediate terms elegantly cancel out, leaving only the first denominator and the last numerator.</div>
-                    
-                    <p>Now, for step (b), at the \( r \)-th turn, we have \( N - (r - 1) \) units left in the bag. So the chance of picking our specific unit out of these remaining units is:</p>
-                    $$ P(\text{Selected at } r \mid \text{Not selected prior}) = \frac{1}{N - r + 1} $$
-                    <div class="explanation">\( \because \) there is exactly 1 specified unit remaining among the \( N - r + 1 \) total available units.</div>
-                    
-                    <p>To get the final answer, we multiply these two parts together:</p>
-                    $$ P(\text{Selected at draw } r) = \left( \frac{N - r + 1}{N} \right) \times \left( \frac{1}{N - r + 1} \right) $$
-                    <p>The term \( (N - r + 1) \) cancels out from the top and bottom, and we get:</p>
-                    $$ P(\text{Selected at draw } r) = \frac{1}{N} $$
-                    <div class="explanation">\( \because \) the result is just \( 1/N \), which doesn't depend on \( r \). This means it doesn't matter if it's the 1st draw or the 10th; the chance is always the same!</div>
+                    <p>First, we find the probability for part (a). The probability of not selecting the specified unit in the first draw is \( \frac{N-1}{N} \). In the second draw, it is \( \frac{N-2}{N-1} \), and so on up to the \( (r-1) \)-th draw. Multiplying these probabilities gives:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1} \cdots \frac{N - r + 1}{N - r + 2} \)</div>
+                    <div style="padding: 5px 0;">\( P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - r + 1}{N} \)</div>
+                    <div class="explanation">The intermediate terms cancel each other out.</div>
+                    <p>Now, for part (b), there are \( N - r + 1 \) units remaining before the \( r \)-th draw. The probability of selecting the specified unit at this draw is:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Selected at } r \mid \text{Not selected prior}) = \frac{1}{N - r + 1} \)</div>
+                    <p>Multiplying both probabilities to get the required probability:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Selected at draw } r) = \left( \frac{N - r + 1}{N} \right) \times \left( \frac{1}{N - r + 1} \right) \)</div>
+                    <div style="padding: 5px 0;">\( P(\text{Selected at draw } r) = \frac{1}{N} \)</div>
+                    <div class="explanation">This required probability is independent of the draw number \( r \). Thus, it is always \( 1/N \).</div>
                 </div>
 
-                <p><strong>Theorem 2.1.2:</strong> The probability that a specific unit ends up in your final sample of size \( n \) is simply \( n/N \).</p>
+                <p><strong>Theorem 2.1.2:</strong> The probability of a specified unit being included in the sample is equal to \( n/N \).</p>
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>Think about it this way: your favorite unit could enter the sample at the 1st draw, OR the 2nd draw, and so on, up to the \( n \)-th draw. Since these are separate possibilities (mutually exclusive), we just add their probabilities together.</p>
-                    $$ P(\text{Included in Sample}) = P(\text{Selected at Draw 1}) + P(\text{Selected at Draw 2}) + \ldots + P(\text{Selected at Draw } n) $$
-                    <p>From our previous theorem, we know that the probability for any single draw is \( 1/N \). So we add \( 1/N \) to itself \( n \) times:</p>
-                    $$ P(\text{Included}) = \underbrace{\frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N}}_{n \text{ times}} $$
-                    <p>This gives us the final result:</p>
-                    $$ P(\text{Included}) = \frac{n}{N} $$
+                    <p>Let \( n \) denote the sample size. Since the specified unit may be included in the sample at any of the \( n \) draws, the probability that a specified unit is included in the sample is the sum of the probabilities of \( n \) mutually exclusive events (i.e., it is included at the first draw, second draw, ..., up to the \( n \)-th draw).</p>
+                    <p>From Theorem 2.1.1, we know the probability for each specific draw is \( 1/N \). Therefore, the sum is:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Included in sample}) = \frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N} \quad (n \text{ times}) \)</div>
+                    <div style="padding: 5px 0;">\( P(\text{Included in sample}) = \frac{n}{N} \)</div>
                 </div>
 
-                <p><strong>Corollary 1:</strong> The probability of selecting a specified sample of \( n \) units, ignoring the order of selection, is \( 1 / \binom{N}{n} \).</p>
-                <p><strong>Corollary 2:</strong> If you change the population by removing \( m \) units and adding \( m' \) new ones, the total size becomes \( N - m + m' \). So, the chance of picking any unit at a specified draw becomes \( 1 / (N - m + m') \).</p>
+                <p><strong>Corollary 1:</strong> The probability of a specified sample of \( n \) units, ignoring order, is \( 1 / \binom{N}{n} \).</p>
+                <p><strong>Corollary 2:</strong> If in the population of \( N \) units, \( m \) units are deleted and \( m' \) are added, the probability of selection of any unit at a specified draw is \( 1 / (N - m + m') \).</p>
             </div>
             <div class="hinglish-content">
                 <h2>2.1 Simple Random Sampling (सरल यादृच्छिक प्रतिचयन)</h2>
-                <p>Sampling का सबसे सरल और आम method simple random sampling है। इस method में, sample को unit by unit निकाला जाता है, और प्रत्येक draw में प्रत्येक unit के selection की probability (प्रायिकता) समान (equal) होती है। इसलिए, simple random sampling, size \( N \) की population में से \( n \) units को select करने का एक method है जिसमें सभी units को समान probability दी जाती है।</p>
-                <p>या यह एक ऐसा sampling procedure है जिसमें \( N \) units की population से बनने वाले \( n \) units के सभी possible combinations के selection की probability समान होती है। इसे कभी-कभी <em>unrestricted random sampling</em> भी कहा जाता है।</p>
-                
+                <p>प्रिय छात्रों, आइए हम sampling की सबसे आम विधि पर चर्चा करें: <strong>Simple Random Sampling</strong>। इस method में, sample को unit by unit निकाला जाता है, और प्रत्येक draw में प्रत्येक unit के selection की probability (प्रायिकता) समान (equal) होती है। इसलिए, simple random sampling, size \( N \) की population में से \( n \) units को select करने का एक method है जिसमें सभी units को समान probability दी जाती है। यह एक ऐसी प्रक्रिया भी है जिसमें \( N \) units की population से बनने वाले \( n \) units के सभी possible combinations के selection की probability समान होती है। इसे कभी-कभी <em>unrestricted random sampling</em> भी कहा जाता है।</p>
                 <ul>
-                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> यदि एक unit को select करके नोट किया जाता है और अगला draw निकालने से पहले उसे वापस population में लौटा दिया जाता है और यह procedure \( n \) बार दोहराई जाती है, तो यह \( n \) units का SRSWR देता है।</li>
-                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> यदि इस procedure को तब तक दोहराया जाता है जब तक कि \( n \) distinct (विशिष्ट) units select न हो जाएं और सभी repetitions को ignore कर दिया जाए, तो इसे SRSWOR कहा जाता है।</li>
+                    <li><strong>Simple Random Sampling With Replacement (SRSWR):</strong> यदि एक unit को select करके नोट किया जाता है और अगला draw निकालने से पहले उसे वापस population में लौटा दिया जाता है और यह procedure \( n \) बार दोहराई जाती है, तो यह \( n \) units का simple random sample with replacement देता है।</li>
+                    <li><strong>Simple Random Sampling Without Replacement (SRSWOR):</strong> यदि इस procedure को तब तक दोहराया जाता है जब तक कि \( n \) distinct (विशिष्ट) units select न हो जाएं और सभी repetitions को ignore कर दिया जाए, तो इसे simple random sampling without replacement कहा जाता है।</li>
                 </ul>
 
                 <p><strong>Theorem 2.1.1:</strong> यह probability कि population की एक specified unit किसी भी दिए गए draw में select होती है, उसके पहले draw में select होने की probability के बराबर होती है।</p>
+                <p><em>आइए इसका step-by-step proof देखें:</em></p>
                 <div class="derivation-block">
-                    <p><strong>Proof:</strong> यह probability कि specified unit \( r \)-वें draw में select होती है, स्पष्ट रूप से निम्नलिखित का product (गुणनफल) है:</p>
+                    <p>यह probability कि specified unit \( r \)-वें draw में select होती है, निम्नलिखित का product (गुणनफल) है:</p>
                     <ol type="a">
-                        <li>इस probability कि specified unit पिछले \( (r - 1) \) draws में select नहीं होती है, और</li>
+                        <li>इस probability कि specified unit पिछले \( (r - 1) \) draws में select नहीं होती है।</li>
                         <li>इस probability कि यह \( r \)-वें draw में इस शर्त के साथ select होती है कि यह पिछले \( (r - 1) \) draws में select नहीं हुई थी।</li>
                     </ol>
-                    <p>(a) के अंतर्गत probability है:</p>
-                    $$ \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1}\cdots\frac{N - r + 1}{N - r + 2} = \frac{N - r + 1}{N} $$
-                    <div class="explanation">\( \because \) intermediate terms एक दूसरे को रद्द (cancel) कर देते हैं।</div>
-                    <p>(b) के अंतर्गत probability \( \frac{1}{N - r + 1} \) है।</p>
-                    <p>इसलिए आवश्यक (required) probability है:</p>
-                    $$ \frac{N - r + 1}{N} \times \frac{1}{N - r + 1} = \frac{1}{N} $$
-                    <div class="explanation">\( \because \) यह term \( r \), यानी draw number से स्वतंत्र (independent) है।</div>
+                    <p>सबसे पहले, हम (a) के लिए probability ज्ञात करते हैं। पहले draw में specified unit को select न करने की probability \( \frac{N-1}{N} \) है। दूसरे draw में, यह \( \frac{N-2}{N-1} \) है, और इसी तरह \( (r-1) \)-वें draw तक। इन probabilities को multiply (गुणा) करने पर हमें प्राप्त होता है:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - 1}{N} \cdot \frac{N - 2}{N - 1} \cdots \frac{N - r + 1}{N - r + 2} \)</div>
+                    <div style="padding: 5px 0;">\( P(\text{Not selected in } r-1 \text{ draws}) = \frac{N - r + 1}{N} \)</div>
+                    <div class="explanation">Intermediate terms एक दूसरे को cancel (रद्द) कर देते हैं।</div>
+                    <p>अब, (b) के लिए, \( r \)-वें draw से पहले \( N - r + 1 \) units शेष हैं। इस draw में specified unit को select करने की probability है:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Selected at } r \mid \text{Not selected prior}) = \frac{1}{N - r + 1} \)</div>
+                    <p>आवश्यक probability प्राप्त करने के लिए दोनों probabilities को multiply करने पर:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Selected at draw } r) = \left( \frac{N - r + 1}{N} \right) \times \left( \frac{1}{N - r + 1} \right) \)</div>
+                    <div style="padding: 5px 0;">\( P(\text{Selected at draw } r) = \frac{1}{N} \)</div>
+                    <div class="explanation">यह आवश्यक probability draw number \( r \) से independent (स्वतंत्र) है। इस प्रकार, यह हमेशा \( 1/N \) होती है।</div>
                 </div>
 
                 <p><strong>Theorem 2.1.2:</strong> Sample में एक specified unit के शामिल होने की probability \( n/N \) के बराबर होती है।</p>
+                <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p><strong>Proof:</strong> मान लीजिए \( n \) sample size को दर्शाता है। चूँकि specified unit \( n \) draws में से किसी में भी sample में शामिल की जा सकती है, इसलिए यह \( n \) mutually exclusive (परस्पर अनन्य) events का sum (योग) है।</p>
-                    <p>Theorem 2.1.1 के अनुसार, प्रत्येक case की probability \( 1/N \) है।</p>
-                    $$ \text{Required Probability} = \underbrace{\frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N}}_{n \text{ बार}} = \frac{n}{N} $$
+                    <p>मान लीजिए \( n \) sample size को दर्शाता है। चूँकि specified unit \( n \) draws में से किसी में भी sample में शामिल की जा सकती है, इसलिए यह probability कि एक specified unit sample में शामिल है, \( n \) mutually exclusive (परस्पर अनन्य) events की probabilities का sum (योग) है (अर्थात, यह पहले draw, दूसरे draw, ..., \( n \)-वें draw तक शामिल है)।</p>
+                    <p>Theorem 2.1.1 से, हम जानते हैं कि प्रत्येक विशिष्ट draw के लिए probability \( 1/N \) है। इसलिए, sum है:</p>
+                    <div style="padding: 5px 0;">\( P(\text{Included in sample}) = \frac{1}{N} + \frac{1}{N} + \ldots + \frac{1}{N} \quad (n \text{ बार}) \)</div>
+                    <div style="padding: 5px 0;">\( P(\text{Included in sample}) = \frac{n}{N} \)</div>
                 </div>
+
+                <p><strong>Corollary 1:</strong> \( n \) units के specified sample को select करने की probability, क्रम (order) को अनदेखा करते हुए, \( 1 / \binom{N}{n} \) है।</p>
+                <p><strong>Corollary 2:</strong> यदि \( N \) units की population में, \( m \) units हटा दी जाती हैं और \( m' \) जोड़ दी जाती हैं, तो किसी भी specified draw पर किसी unit के selection की probability \( 1 / (N - m + m') \) है।</p>
             </div>
         </section>
 
         <section id="sec2-2" class="section-card">
             <div class="english-content">
                 <h2>2.2 Procedures of Selecting a Random Sample</h2>
-                <p>Now, you might wonder: "How do we actually pick these random units in real life?" Since our whole theory depends on the sample being truly random, the way we select it is very important. Here are a few ways experts do it:</p>
+                <p>Since the entire theory of sampling rests fundamentally on the assumption of random sampling, the exact technique of drawing a random sample is of basic significance. A few common procedures used by statisticians are:</p>
+                <ol type="i">
+                    <li>Lottery Method</li>
+                    <li>Use of Random Number Tables</li>
+                </ol>
                 
                 <h3>2.2.1 Lottery Method</h3>
-                <p>This is just like a standard lucky draw! We give every unit in the population a number from 1 to \( N \) and write these numbers on small slips of paper (chits). We put all these slips into a box or a drum and mix them up really well. Then, we blindly pick out \( n \) slips. Those units become our sample.</p>
-                <p>While this sounds easy, it's hard to do if the population is very big. Imagine making 10,000 chits! Also, if you don't mix them perfectly, the draw might not be truly fair.</p>
+                <p>In practice, a ticket or chit is associated with each unit of the population. Thus, each sampling unit gets its own unique identification mark from 1 to \( N \). The procedure to select an individual is conceptually simple. All the tickets or chits are placed in a container, drum, or a metallic spherical device, where a thorough mixing or reshuffling is possible before each draw. Draws of tickets or chits continue until a sample of the required size \( n \) is achieved.</p>
+                <p>However, this procedure of numbering units on tickets and selecting one after reshuffling becomes quite cumbersome when the population size is very large. It may be rather difficult to achieve a truly thorough shuffling in practice. Human bias and prejudice may also easily creep into this method.</p>
 
                 <h3>2.2.2 Use of Random Number Tables</h3>
-                <p>To avoid the mess of chits, we use <strong>Random Number Tables</strong>. These are big lists of digits (0 to 9) that have been generated by machines to be completely random. Some famous ones are by Tippett, Fisher and Yates, and the RAND Corporation.</p>
-                <p>But how do we use a table of digits to pick, say, unit number 64? There are a few clever tricks:</p>
+                <p>A random number table is a careful arrangement of digits 0 to 9, either in a linear or rectangular pattern, where each position is filled with one of these digits. A table of random numbers is constructed such that all numbers, 0 to 9, appear completely independent of each other. Some random number tables in common use are:</p>
+                <ol type="i">
+                    <li>Tippett's random number tables</li>
+                    <li>Fisher and Yates tables</li>
+                    <li>Kendall and Smith tables</li>
+                    <li>A million random digits (RAND Corporation)</li>
+                </ol>
+                <p>To confidently ascertain whether these series of random numbers are genuinely random, the following standard tests may be applied:</p>
+                <ol type="i">
+                    <li>Frequency test</li>
+                    <li>Serial test</li>
+                    <li>Gap test</li>
+                    <li>Poker test</li>
+                </ol>
+                <p>A highly practical method of selecting a random sample is to choose units one-by-one with the help of a table of random numbers. By considering two-digit numbers, we can effortlessly obtain numbers from 00 to 99, all having the same frequency. Similarly, three or more digit numbers may be obtained by combining three or more rows or columns of these tables.</p>
+                <p>The simplest way of selecting a sample is by selecting a random number from 1 to \( N \) and then taking the unit bearing that number. This procedure, unfortunately, involves a number of rejections since all numbers greater than \( N \) appearing in the table are ignored. The use of random numbers is, therefore, modified. Some of these clever modified procedures are:</p>
 
                 <h4>1. Remainder Approach</h4>
-                <p>Let's say your population size is \( N = 125 \). This is a 3-digit number. We look at 3-digit numbers in the table. The biggest 3-digit multiple of 125 is 875 (\( 125 \times 7 \)). We pick a random number between 001 and 875. Suppose we pick 314. We divide 314 by 125 and look at the <strong>remainder</strong>.</p>
+                <p>Let \( N \) be an \( r \)-digit number and let its \( r \)-digit highest multiple be \( N' \). A random number \( k \) is chosen from 1 to \( N' \) and the unit with the serial number equal to the remainder obtained on dividing \( k \) by \( N \) is selected. If the remainder is strictly zero, the last unit (i.e., \( N \)) is selected.</p>
                 <div class="derivation-block">
-                    <p><strong>Example:</strong> \( 314 \div 125 = 2 \) with a remainder of 64. So, we pick unit number 64 for our sample. If the remainder is 0, we pick the last unit (125).</p>
+                    <p><strong>Illustration:</strong> Let \( N = 123 \). The highest three-digit multiple of 123 is 984 (\( 123 \times 8 \)). For selecting a unit, one random number from 001 to 984 has to be selected. Let the random number selected be 287. Dividing 287 by 123, the remainder is 41. Hence, the unit with serial number 41 is elegantly selected for the sample.</p>
                 </div>
 
                 <h4>2. Quotient Approach</h4>
-                <p>This is another way. Again, if \( N = 15 \), the biggest multiple we can use (staying under 100) is 90. Here \( 90 \div 15 = 6 \). We pick a random number from 0 to 89. Let's say we pick 73. We divide 73 by that number 6.</p>
+                <p>Let \( N \) be an \( r \)-digit number and let its \( r \)-digit highest multiple be \( N' \) such that \( N'/N = q \). A random number \( k \) is thoughtfully chosen from 0 to \( N' - 1 \). Dividing \( k \) by \( q \), the quotient \( r \) is obtained and the unit bearing the serial number \( r + 1 \) is selected in the sample.</p>
                 <div class="derivation-block">
-                    <p><strong>Example:</strong> \( 73 \div 6 = 12 \) (ignoring the remainder here). We add 1 to this quotient: \( 12 + 1 = 13 \). So, unit number 13 is selected.</p>
+                    <p><strong>Illustration:</strong> Let \( N = 15 \), hence \( r = 2 \), \( N' = 90 \) (highest 2-digit multiple), and \( q = 90/15 = 6 \). Let the two-digit random number chosen be 65, which lies cleanly between 0 and 89. Dividing 65 by 6, the quotient is 10. We add 1 to it: \( 10 + 1 = 11 \). Hence, the unit bearing number 11 is selected in the sample.</p>
                 </div>
 
                 <h4>3. Independent Choice of Digits</h4>
-                <p>In this simple method, you just pick digits one by one from the table to form your number. If the number you form is bigger than your population size \( N \), you just ignore it and try again.</p>
+                <p>This method, suggested mathematically by Mathai (1954), consists of the selection of two random numbers which are combined to form one random number. One random number is chosen according to the first digit and the other according to the remaining digits of the population size. If the number chosen is 0, the last unit is chosen. But if the number made up is greater than or equal to \( N \), the number is rejected and the operation is repeated.</p>
 
-                <p><strong>Example 2.2 (Corporate Branches):</strong> Suppose a big company has 8 branches with different numbers of employees (110, 650, etc.), totaling 4730 people. Instead of numbering every single person from 1 to 4730, we use <em>cumulative totals</em>. The first branch has employees 1-110, the second has 111-760 (since 110 + 650 = 760), and so on. If we pick a random number like 2015, we see which range it falls into. 2015 is between 1651 and 2070, which belongs to the 4th branch. This saves a lot of time!</p>
+                <h3>Example 2.1</h3>
+                <p>Select a random sample of 11 households from a list of 112 households in a village.</p>
+                <div class="derivation-block">
+                    <p>(i) By using the 3-digit random numbers given in columns 1 to 3, 4 to 6 and so on of the random number table and rejecting numbers greater than 112 (also the number 000), we have for the sample bearing serial numbers: 033, 051, 052, 099, 102, 081, 092, 013, 017, 076, and 079.</p>
+                    <p>(ii) In the above procedure, a large number of random numbers is rejected. Hence, a commonly used device, i.e., remainder approach, is employed to avoid the rejection of such large numbers. The greatest three-digit multiple of 112 is 896. By using three-digit random numbers as above, the sample will comprise of households with serial numbers: 086, 033, 049, 097, 051, 052, 066, 107, 015, 106, and 020.</p>
+                    <p>(iii) In case the quotient approach is applied, the 3-digit multiple of 112 is 896 and \( q = 8 \). Using the same random numbers and dividing them by 8, we have the sample of households with list numbers 025, 004, 020, 026, 006, 006, 092, 041, 085, 027, and 086 with the replacement method, and with list numbers 025, 004, 020, 026, 006, 092, 041, 085, 027, 086, and 042 without the replacement method.</p>
+                </div>
+
+                <h3>Example 2.2</h3>
+                <p>Ten orchards, in a locality near Lucknow, were having 125, 793, 970, 830, 1502, 864, 503, 106, 970, 312 fruit trees, respectively. Draw a random sample of 10 fruit trees by using random numbers.</p>
+                <div class="derivation-block">
+                    <p>Let us assume that in the first orchard the fruit trees bear serial numbers 1 to 125, in the second orchard from 126 to 918, and so on. Hence, the cumulative serial numbers may be written as: 125, 918, 1888, 2718, 4220, 5084, 5587, 5693, 6663, 6975. By using 4-digit random numbers of the above-said table with similar notions, we have: 1983, 0330, 1614, 2096, 0511, 0524, 3311, 6874, 2183, and 6926.</p>
+                    <p>With the first random number 1983, we select the fruit tree bearing serial number 95 in the 4th orchard. Similarly, with the second random number 0330, we select the tree bearing serial number 205 in the 2nd orchard, and so on. Working out this procedure further, we find that orchards included in the sample have serial numbers 2, 3, 4, 5, and 10. Thus, it is not necessary to give serial numbers to fruit trees in all the orchards; only five orchards of the above-shown numbers will suffice the purpose of selecting a random sample of 10 fruit trees.</p>
+                </div>
             </div>
             
             <div class="hinglish-content">
                 <h2>2.2 Procedures of Selecting a Random Sample (यादृच्छिक प्रतिदर्श चुनने की प्रक्रियाएं)</h2>
-                <p>चूँकि sampling की theory पूरी तरह random sampling की मान्यता (assumption) पर आधारित है, इसलिए sample चुनने के लिए उपयोग की जाने वाली तकनीक का बहुत महत्व है। व्यवहार में कई प्रक्रियाएं उपयोग की जाती हैं:</p>
+                <p>चूँकि sampling की पूरी theory मौलिक रूप से random sampling की मान्यता (assumption) पर आधारित है, इसलिए random sample निकालने की सटीक तकनीक का बुनियादी महत्व है। सांख्यिकीविदों (statisticians) द्वारा उपयोग की जाने वाली कुछ सामान्य प्रक्रियाएं हैं:</p>
+                <ol type="i">
+                    <li>Lottery Method (लॉटरी विधि)</li>
+                    <li>Use of Random Number Tables (यादृच्छिक संख्या तालिकाओं का उपयोग)</li>
+                </ol>
                 
                 <h3>2.2.1 Lottery Method (लॉटरी विधि)</h3>
-                <p>व्यवहार में, population की प्रत्येक unit के साथ एक ticket या chit जुड़ी हो सकती है। इस प्रकार, प्रत्येक sampling unit का 1 से \( N \) तक अपना पहचान चिह्न (identification mark) होता है। एक individual को select करने की प्रक्रिया वैचारिक रूप से सरल है। सभी tickets को एक drum या container में रखा जाता है, जिसमें प्रत्येक draw से पहले अच्छी तरह से mixing की जाती है।</p>
-                <p>हालाँकि, जब population size बहुत बड़ा होता है, तो tickets पर number देने की यह प्रक्रिया बोझिल (cumbersome) हो जाती है। इसके अलावा, इस method में मानवीय पूर्वाग्रह (human bias) भी आसानी से आ सकता है।</p>
+                <p>व्यवहार में, population की प्रत्येक unit के साथ एक ticket या chit जुड़ी हो सकती है। इस प्रकार, प्रत्येक sampling unit का 1 से \( N \) तक अपना विशिष्ट पहचान चिह्न (unique identification mark) होता है। एक individual को select करने की प्रक्रिया वैचारिक रूप से सरल है। सभी tickets या chits को एक drum या container में रखा जाता है, जहाँ प्रत्येक draw से पहले अच्छी तरह से mixing या reshuffling संभव हो। Tickets या chits के draws तब तक जारी रहते हैं जब तक कि आवश्यक size \( n \) का sample प्राप्त नहीं हो जाता।</p>
+                <p>हालाँकि, tickets पर number देने और reshuffling के बाद एक को चुनने की यह प्रक्रिया काफी बोझिल (cumbersome) हो जाती है जब population size बहुत बड़ा होता है। व्यवहार में वास्तव में पूरी तरह से shuffling प्राप्त करना मुश्किल हो सकता है। इस method में मानवीय पूर्वाग्रह (human bias) और prejudice भी आसानी से आ सकते हैं।</p>
 
                 <h3>2.2.2 Use of Random Number Tables (यादृच्छिक संख्या तालिकाओं का उपयोग)</h3>
-                <p>Random number table अंकों (digits 0 से 9) की एक सावधानीपूर्वक तैयार की गई व्यवस्था है। यह इस तरह बनाई जाती है कि सभी numbers एक-दूसरे से independent दिखाई देते हैं। प्रमुख tables हैं:</p>
-                <ol>
+                <p>Random number table अंकों (digits 0 से 9) की एक सावधानीपूर्वक व्यवस्था है, चाहे वह रैखिक (linear) हो या आयताकार (rectangular) पैटर्न में, जहाँ प्रत्येक स्थिति इन अंकों में से एक से भरी होती है। Random numbers की एक table इस तरह बनाई जाती है कि सभी संख्याएँ, 0 से 9, एक-दूसरे से पूरी तरह से स्वतंत्र (independent) दिखाई दें। सामान्य उपयोग में आने वाली कुछ random number tables हैं:</p>
+                <ol type="i">
                     <li>Tippett's random number tables</li>
                     <li>Fisher and Yates tables</li>
                     <li>Kendall and Smith tables</li>
+                    <li>A million random digits (RAND Corporation)</li>
                 </ol>
-                <p>इन numbers की randomness को verify करने के लिए Frequency test, Serial test, Gap test, और Poker test लागू किए जाते हैं।</p>
+                <p>यह सुनिश्चित करने के लिए कि random numbers की ये श्रृंखलाएँ वास्तव में random हैं, निम्नलिखित मानक परीक्षण (standard tests) लागू किए जा सकते हैं:</p>
+                <ol type="i">
+                    <li>Frequency test</li>
+                    <li>Serial test</li>
+                    <li>Gap test</li>
+                    <li>Poker test</li>
+                </ol>
+                <p>Random sample चुनने का एक अत्यधिक व्यावहारिक (highly practical) तरीका random numbers की table की मदद से इकाइयों को एक-एक करके चुनना है। दो अंकों की संख्याओं (two-digit numbers) पर विचार करके, हम आसानी से 00 से 99 तक की संख्याएँ प्राप्त कर सकते हैं, जिनकी आवृत्ति (frequency) समान होती है। इसी तरह, इन tables की तीन या अधिक पंक्तियों (rows) या स्तंभों (columns) को मिलाकर तीन या अधिक अंकों की संख्याएँ प्राप्त की जा सकती हैं।</p>
+                <p>Sample चुनने का सबसे सरल तरीका 1 से \( N \) तक एक random number चुनना और फिर उस नंबर वाली unit को लेना है। दुर्भाग्य से, इस प्रक्रिया में कई rejections शामिल होते हैं क्योंकि table में दिखाई देने वाली \( N \) से बड़ी सभी संख्याओं को अनदेखा कर दिया जाता है। इसलिए, random numbers के उपयोग को संशोधित (modified) किया जाता है। इनमें से कुछ चतुर संशोधित प्रक्रियाएं हैं:</p>
 
                 <h4>1. Remainder Approach (शेषफल दृष्टिकोण)</h4>
-                <p>मान लीजिए \( N \) एक \( r \)-digit की number है और इसका highest multiple (सबसे बड़ा गुणज) \( N' \) है। 1 से \( N' \) के बीच एक random number \( k \) चुना जाता है। \( k \) को \( N \) से divide करने पर प्राप्त remainder (शेषफल) के बराबर serial number वाली unit को select किया जाता है। यदि remainder शून्य है, तो अंतिम unit (\( N \)) select की जाती है।</p>
+                <p>मान लीजिए \( N \) एक \( r \)-अंकों की संख्या है और इसका \( r \)-अंकों का उच्चतम गुणज (highest multiple) \( N' \) है। 1 से \( N' \) तक एक random number \( k \) चुना जाता है और \( k \) को \( N \) से विभाजित करने पर प्राप्त remainder (शेषफल) के बराबर serial number वाली unit को चुना जाता है। यदि remainder सख्ती से शून्य है, तो अंतिम unit (यानी, \( N \)) को चुना जाता है।</p>
                 <div class="derivation-block">
-                    <p><strong>उदाहरण:</strong> मान लीजिए \( N = 125 \)। 125 का सबसे बड़ा 3-digit multiple 875 है। मान लीजिए selected random number 314 है। 314 को 125 से divide करने पर, remainder 64 आता है। इसलिए, sample में serial number 64 वाली unit को select किया जाता है।</p>
+                    <p><strong>चित्रण (Illustration):</strong> मान लीजिए \( N = 123 \)। 123 का उच्चतम तीन-अंकीय गुणज 984 (\( 123 \times 8 \)) है। एक unit चुनने के लिए, 001 से 984 तक एक random number चुनना होगा। मान लीजिए कि चुना गया random number 287 है। 287 को 123 से विभाजित करने पर, remainder 41 आता है। इसलिए, sample के लिए खूबसूरती से serial number 41 वाली unit को चुना जाता है।</p>
                 </div>
 
                 <h4>2. Quotient Approach (भागफल दृष्टिकोण)</h4>
-                <p>मान लीजिए \( N \) एक \( r \)-digit की number है और इसका highest multiple \( N' \) इस प्रकार है कि \( N'/N = q \)। 0 से \( N' - 1 \) तक एक random number \( k \) चुना जाता है। \( k \) को \( q \) से divide करने पर प्राप्त quotient (भागफल) \( r \) में 1 जोड़कर unit select की जाती है।</p>
+                <p>मान लीजिए \( N \) एक \( r \)-अंकों की संख्या है और इसका \( r \)-अंकों का उच्चतम गुणज \( N' \) इस प्रकार है कि \( N'/N = q \)। 0 से \( N' - 1 \) तक एक random number \( k \) सोच-समझकर चुना जाता है। \( k \) को \( q \) से विभाजित करने पर, quotient (भागफल) \( r \) प्राप्त होता है और sample में serial number \( r + 1 \) वाली unit चुनी जाती है।</p>
+                <div class="derivation-block">
+                    <p><strong>चित्रण (Illustration):</strong> मान लीजिए \( N = 15 \), इसलिए \( r = 2 \), \( N' = 90 \) (उच्चतम 2-अंकीय गुणज), और \( q = 90/15 = 6 \)। मान लीजिए कि चुनी गई दो-अंकीय random number 65 है, जो स्पष्ट रूप से 0 और 89 के बीच स्थित है। 65 को 6 से विभाजित करने पर, quotient 10 आता है। हम इसमें 1 जोड़ते हैं: \( 10 + 1 = 11 \)। इसलिए, sample में नंबर 11 वाली unit चुनी जाती है।</p>
+                </div>
 
                 <h4>3. Independent Choice of Digits (अंकों का स्वतंत्र चुनाव)</h4>
-                <p>इस method में दो random numbers का selection शामिल है जिन्हें मिलाकर एक random number बनाई जाती है।</p>
+                <p>यह method, जो गणितीय रूप से Mathai (1954) द्वारा सुझाया गया है, में दो random numbers का चुनाव शामिल है जिन्हें मिलाकर एक random number बनाई जाती है। एक random number पहले अंक के अनुसार और दूसरा population size के शेष अंकों के अनुसार चुना जाता है। यदि चुना गया नंबर 0 है, तो अंतिम unit को चुना जाता है। लेकिन यदि बनाई गई संख्या \( N \) से बड़ी या उसके बराबर है, तो संख्या को अस्वीकार (reject) कर दिया जाता है और ऑपरेशन को दोहराया जाता है।</p>
 
-                <p><strong>उदाहरण 2.2 (कॉर्पोरेट शाखाएँ):</strong> 8 कॉर्पोरेट शाखाओं (branches) पर विचार करें जिनमें क्रमशः 110, 650, 890, 420, 1200, 750, 480, और 230 कर्मचारी हैं। हमें 10 कर्मचारियों का sample लेना है। सभी 4730 कर्मचारियों को नंबर देने के बजाय, हम संचयी (cumulative) नंबर बनाते हैं: 110, 760, 1650, 2070, 3270, 4020, 4500, 4730। यदि random number 2015 आता है, तो यह चौथी शाखा (range 1651-2070) में गिरता है, जिससे अनावश्यक numbering से बचा जा सकता है।</p>
+                <h3>उदाहरण 2.1 (Example 2.1)</h3>
+                <p>एक गाँव में 112 घरों (households) की सूची में से 11 घरों का random sample निकालें।</p>
+                <div class="derivation-block">
+                    <p>(i) Random number table के कॉलम 1 से 3, 4 से 6 आदि में दिए गए 3-अंकीय random numbers का उपयोग करके और 112 (और संख्या 000 को भी) से बड़ी संख्याओं को reject करके, हमारे पास sample के लिए निम्नलिखित serial numbers हैं: 033, 051, 052, 099, 102, 081, 092, 013, 017, 076, और 079।</p>
+                    <p>(ii) उपरोक्त प्रक्रिया में, बड़ी संख्या में random numbers को reject कर दिया जाता है। इसलिए, ऐसी बड़ी संख्याओं की अस्वीकृति से बचने के लिए आमतौर पर उपयोग की जाने वाली युक्ति, यानी remainder approach को नियोजित किया जाता है। 112 का सबसे बड़ा तीन-अंकीय गुणज 896 है। ऊपर बताए अनुसार तीन-अंकीय random numbers का उपयोग करके, sample में निम्नलिखित serial numbers वाले घर शामिल होंगे: 086, 033, 049, 097, 051, 052, 066, 107, 015, 106, और 020।</p>
+                    <p>(iii) यदि quotient approach लागू किया जाता है, तो 112 का 3-अंकीय गुणज 896 है और \( q = 8 \) है। उन्हीं random numbers का उपयोग करके और उन्हें 8 से विभाजित करने पर, हमारे पास replacement method के साथ सूची संख्या 025, 004, 020, 026, 006, 006, 092, 041, 085, 027, और 086 वाले घरों का sample है, और without replacement method के साथ सूची संख्या 025, 004, 020, 026, 006, 092, 041, 085, 027, 086, और 042 का sample है।</p>
+                </div>
+
+                <h3>उदाहरण 2.2 (Example 2.2)</h3>
+                <p>लखनऊ के पास एक इलाके (locality) में दस बागों (orchards) में क्रमशः 125, 793, 970, 830, 1502, 864, 503, 106, 970, 312 फलों के पेड़ (fruit trees) थे। Random numbers का उपयोग करके 10 फलों के पेड़ों का एक random sample निकालें।</p>
+                <div class="derivation-block">
+                    <p>मान लीजिए कि पहले बाग में फलों के पेड़ों के serial numbers 1 से 125 तक हैं, दूसरे बाग में 126 से 918 तक, और इसी तरह। इसलिए, संचयी (cumulative) serial numbers इस प्रकार लिखे जा सकते हैं: 125, 918, 1888, 2718, 4220, 5084, 5587, 5693, 6663, 6975। समान धारणाओं (notions) के साथ उपर्युक्त table के 4-अंकीय random numbers का उपयोग करके, हमारे पास है: 1983, 0330, 1614, 2096, 0511, 0524, 3311, 6874, 2183, और 6926।</p>
+                    <p>पहले random number 1983 के साथ, हम चौथे बाग में serial number 95 वाले फल के पेड़ का चयन करते हैं। इसी तरह, दूसरे random number 0330 के साथ, हम दूसरे बाग में serial number 205 वाले पेड़ का चयन करते हैं, और इसी तरह। इस प्रक्रिया को आगे बढ़ाने पर, हम पाते हैं कि sample में शामिल बागों के serial numbers 2, 3, 4, 5, और 10 हैं। इस प्रकार, सभी बागों में फलों के पेड़ों को serial numbers देना आवश्यक नहीं है; केवल ऊपर दिखाए गए नंबरों के पांच बाग 10 फलों के पेड़ों का random sample चुनने के उद्देश्य को पूरा करने के लिए पर्याप्त होंगे।</p>
+                </div>
             </div>
         </section>
 
@@ -251,112 +309,118 @@
         <section id="sec2-3" class="section-card">
             <div class="english-content">
                 <h2>2.3 Estimation of Population Parameters</h2>
-                <p>Alright, now let's get into the math! Suppose we want to study a characteristic \( y \) (like the height of students). Every person in our total population of \( N \) people has a height, which we call \( y_i \). To describe the whole group, we use a few standard numbers:</p>
+                <p>Let us assume that each unit \( u_i \) in the population is associated with a variate value \( y_i \) for the character \( y \). For mathematical parameters, we designate:</p>
                 <ul>
-                    <li><strong>Population Total:</strong> \( Y = \sum_{i=1}^N y_i \) (Adding up all the values).</li>
-                    <li><strong>Population Mean:</strong> \( \bar{Y} = \frac{1}{N}\sum_{i=1}^N y_i \) (The average value).</li>
-                    <li><strong>Population Variance:</strong> \( \sigma^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 \) (How much the values spread out).</li>
+                    <li>The population total: \( Y = \sum_{i=1}^N y_i \)</li>
+                    <li>The population mean: \( \bar{Y} = \frac{1}{N}\sum_{i=1}^N y_i \)</li>
+                    <li>The population variance: \( \sigma^2 = \frac{1}{N}\sum_{i=1}^N (y_i - \bar{Y})^2 \)</li>
                 </ul>
 
-                <p>When we pick a small sample of \( n \) units, we get their values: \( y_1, y_2, \ldots, y_n \). We use these sample values to guess (estimate) the population values:</p>
+                <p>Let the \( n \) units in the independently drawn sample be \( u_1, u_2, \ldots, u_n \), strictly associated with variate values \( y_1, y_2, \ldots, y_n \) respectively. The mathematical estimators of population total and mean are given logically by:</p>
                 <div class="derivation-block">
-                    <p>The best way to guess the population mean is to use the sample mean:</p>
-                    $$ \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i $$
-                    <p>And to guess the population total, we just multiply the sample mean by the total size \( N \):</p>
-                    $$ \widehat{Y} = N\bar{y} $$
+                    <div style="padding: 5px 0;">\( \widehat{Y} = \frac{N}{n}\sum_{i=1}^n y_i = N\bar{y} \)</div>
+                    <div style="padding: 5px 0;">\( \bar{y} = \frac{1}{n}\sum_{i=1}^n y_i \)</div>
                 </div>
-                <p>We call \( N/n \) the <em>expansion factor</em> because it "blows up" our sample total to match the population scale. Its opposite, \( n/N \), is the <em>sampling fraction</em> (represented by \( f \)).</p>
+                <p>The scalar factor \( N/n \) by which the sample total is mathematically multiplied is sometimes technically called the expansion or raising or inflation factor. Its inverse \( n/N \) is fundamentally called the sampling fraction and is denoted rigorously by the letter \( f \).</p>
 
                 <h3><strong>Theorem 2.3.1:</strong></h3>
-                <p>In Simple Random Sampling Without Replacement (SRSWOR), the sample mean \( \bar{y} \) is an <strong>unbiased estimator</strong> of the population mean \( \bar{Y} \). This means if we took all possible samples, their average would be exactly the true population mean. Also, we'll find its variance.</p>
+                <p>In simple random sampling without replacement (SRSWOR), the sample mean \( \bar{y} \) is a mathematically unbiased estimator of \( \bar{Y} \) and its exact sampling variance is given by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N-n}{N} \frac{S^2}{n} = (1 - f)\frac{S^2}{n} \)</div>
+                    <p>where</p>
+                    <div style="padding: 5px 0;">\( S^2 = \frac{N}{N-1}\sigma^2 \)</div>
+                </div>
 
                 <p><em>Proof for Unbiasedness:</em></p>
                 <div class="derivation-block">
-                    <p>First, we find the expected value (average) of our sample mean. We know that:</p>
-                    $$ E(\bar{y}) = E\left( \frac{1}{n}\sum_{i=1}^n y_i \right) $$
-                    <p>Since the expectation of a sum is the sum of the expectations, we can move the E inside:</p>
-                    $$ E(\bar{y}) = \frac{1}{n}\sum_{i=1}^n E(y_i) $$
-                    <p>Now, what is the average value of a single unit picked at random? Since every unit in the population has a \( 1/N \) chance of being picked, the average value for one draw is just the population mean:</p>
-                    $$ E(y_i) = \sum_{j=1}^N P_j Y_j = \sum_{j=1}^N \frac{1}{N} Y_j = \bar{Y} $$
-                    <p>So, our formula becomes:</p>
-                    $$ E(\bar{y}) = \frac{1}{n} \sum_{i=1}^n \bar{Y} $$
-                    <p>Since \( \bar{Y} \) is a constant, adding it \( n \) times gives \( n\bar{Y} \):</p>
-                    $$ E(\bar{y}) = \frac{1}{n} (n\bar{Y}) = \bar{Y} $$
-                    <div class="explanation">Because \( E(\bar{y}) = \bar{Y} \), we have proven that the sample mean is unbiased!</div>
+                    <p>We know mathematically that the expectation of a sum operates linearly. Let \( \bar{y} \) be the sample mean and \( P(S) \) be the absolute probability of selection of a specific sample \( S \).</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \sum_{S} \bar{y} P(S) \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \sum_{S} \left[ \frac{1}{n} \sum_{i=1}^n y_i \right] P(S) \)</div>
+                    <p>Now, each specific population unit \( y_i \) objectively appears in exactly \( \binom{N-1}{n-1} \) of all possible samples.</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \frac{1}{n} \frac{1}{\binom{N}{n}} \sum_{i=1}^N y_i \binom{N-1}{n-1} \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \frac{1}{n} \frac{(N-n)! n!}{N!} \frac{(N-1)!}{(N-n)! (n-1)!} \sum_{i=1}^N y_i \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \frac{1}{n} \frac{n}{N} \sum_{i=1}^N y_i \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \frac{1}{N} \sum_{i=1}^N y_i \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}) = \bar{Y} \)</div>
+                    <div class="explanation">This solidly proves that the sample mean is a perfectly unbiased estimator of the population mean in SRSWOR.</div>
                 </div>
 
                 <p><em>Proof for Variance:</em></p>
                 <div class="derivation-block">
-                    <p>Now, let's see how much our sample mean fluctuates from the true mean. By definition:</p>
-                    $$ V(\bar{y}) = E(\bar{y} - \bar{Y})^2 = E\left[ \frac{1}{n}\sum_{i=1}^n (y_i - \bar{Y}) \right]^2 $$
-                    <p>If we expand the square of the sum, we get squared terms for each unit and cross-product terms for every pair:</p>
-                    $$ V(\bar{y}) = \frac{1}{n^2} E\left[ \sum_{i=1}^n (y_i - \bar{Y})^2 + \sum_{i \neq j}^n (y_i - \bar{Y})(y_j - \bar{Y}) \right] $$
-                    <p>The first part is the average of squared deviations, which is just the population variance \( \sigma^2 \). Since we have \( n \) units:</p>
-                    $$ E \left[ \sum_{i=1}^n (y_i - \bar{Y})^2 \right] = n \sigma^2 $$
-                    <p>The second part involves pairs. In SRSWOR, picking one unit affects the chance of picking the next. The covariance between any two units is \( -\sigma^2 / (N-1) \). There are \( n(n-1) \) such pairs:</p>
-                    $$ E \left[ \sum_{i \neq j}^n (y_i - \bar{Y})(y_j - \bar{Y}) \right] = n(n-1) \left( \frac{-\sigma^2}{N-1} \right) $$
-                    <p>Putting it all back together:</p>
-                    $$ V(\bar{y}) = \frac{1}{n^2} \left[ n\sigma^2 - \frac{n(n-1)\sigma^2}{N-1} \right] $$
-                    <p>Taking \( \frac{n\sigma^2}{n^2} \) (which is \( \frac{\sigma^2}{n} \)) outside:</p>
-                    $$ V(\bar{y}) = \frac{\sigma^2}{n} \left[ 1 - \frac{n-1}{N-1} \right] = \frac{\sigma^2}{n} \left[ \frac{N-1-n+1}{N-1} \right] = \frac{N-n}{N-1} \frac{\sigma^2}{n} $$
-                    <p>Finally, since we define \( S^2 = \frac{N}{N-1}\sigma^2 \), we can write:</p>
-                    $$ V(\bar{y}) = \left( \frac{N-n}{N} \right)\frac{S^2}{n} = (1 - f)\frac{S^2}{n} $$
+                    <p>We know that mathematically, variance is defined as the expected squared deviation from the mean:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = E(\bar{y}^2) - [E(\bar{y})]^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = E \left[ \left( \frac{1}{n} \sum_{i=1}^n y_i \right)^2 \right] - \bar{Y}^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = E \left[ \frac{1}{n^2} \left( \sum_{i=1}^n y_i^2 + \sum_{i \neq j}^n y_i y_j \right) \right] - \bar{Y}^2 \)</div>
+                    <p>Now, any specific population unit \( y_i^2 \) can logically occur in exactly \( \binom{N-1}{n-1} \) samples. And any pair of distinct units \( y_i y_j \) can collectively occur in \( \binom{N-2}{n-2} \) samples.</p>
+                    <p>From mathematical identity, we know:</p>
+                    <div style="padding: 5px 0;">\( \sum_{i \neq j}^N y_i y_j = \left( \sum_{i=1}^N y_i \right)^2 - \sum_{i=1}^N y_i^2 = N^2 \bar{Y}^2 - \sum_{i=1}^N y_i^2 \)</div>
+                    <p>Substituting these exact frequencies into the expectation:</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}^2) = \frac{1}{n^2} \frac{1}{\binom{N}{n}} \left[ \binom{N-1}{n-1} \sum_{i=1}^N y_i^2 + \binom{N-2}{n-2} \sum_{i \neq j}^N y_i y_j \right] \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}^2) = \frac{1}{n^2} \left[ \frac{n}{N} \sum_{i=1}^N y_i^2 + \frac{n(n-1)}{N(N-1)} \left( N^2 \bar{Y}^2 - \sum_{i=1}^N y_i^2 \right) \right] \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}^2) = \frac{1}{nN} \sum_{i=1}^N y_i^2 \left( 1 - \frac{n-1}{N-1} \right) + \frac{n-1}{n(N-1)} N \bar{Y}^2 \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}^2) = \frac{N-n}{nN(N-1)} \sum_{i=1}^N y_i^2 + \frac{N(n-1)}{n(N-1)} \bar{Y}^2 \)</div>
+                    <p>Finally, we rigorously subtract \( \bar{Y}^2 \) to isolate the variance:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = E(\bar{y}^2) - \bar{Y}^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N-n}{nN(N-1)} \sum_{i=1}^N y_i^2 + \bar{Y}^2 \left( \frac{N(n-1)}{n(N-1)} - 1 \right) \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N-n}{nN(N-1)} \sum_{i=1}^N y_i^2 - \frac{N-n}{n(N-1)} \bar{Y}^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N-n}{nN(N-1)} \left[ \sum_{i=1}^N y_i^2 - N\bar{Y}^2 \right] \)</div>
+                    <p>Since we technically define \( S^2 = \frac{1}{N-1} \left( \sum_{i=1}^N y_i^2 - N\bar{Y}^2 \right) \):</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N-n}{nN} S^2 = \left( 1 - \frac{n}{N} \right) \frac{S^2}{n} \)</div>
+                    <div class="explanation">This conclusively proves the exact variance formula for SRSWOR.</div>
                 </div>
 
                 <p><strong>Corollaries:</strong></p>
                 <ul>
-                    <li>The Standard Error (how much we are usually "off") is \( S_{\bar{y}} = \sqrt{V(\bar{y})} = S\sqrt{\frac{1-f}{n}} \).</li>
-                    <li>For the Population Total, the variance is \( V(\widehat{Y}) = N^2 V(\bar{y}) = N^2 (1-f) \frac{S^2}{n} \).</li>
+                    <li>The Standard Error algebraically emerges as \( S_{\bar{y}} = \sqrt{V(\bar{y})} = S\sqrt{\frac{1-f}{n}} \).</li>
+                    <li>For the Population Total, the mathematical variance is simply \( V(\widehat{Y}) = N^2 V(\bar{y}) = N^2 (1-f) \frac{S^2}{n} \).</li>
+                    <li>The Standard Error of the Total is \( S_{\widehat{Y}} = NS\sqrt{\frac{1-f}{n}} \).</li>
                 </ul>
 
-                <p>If we pick our sample <strong>With Replacement (SRSWR)</strong>, the math changes slightly. The population acts like it is infinite because we never run out of units!</p>
+                <p>If sampling is executed physically <strong>With Replacement (SRSWR)</strong>, the finite population correction completely vanishes because units can reappear infinitely.</p>
 
                 <p><strong>Corollaries for SRSWR:</strong></p>
                 <ul>
-                    <li>The variance and standard error of the mean are: \( V(\bar{y}) = \frac{\sigma^2}{n} \) and \( \sigma_{\bar{y}} = \frac{\sigma}{\sqrt{n}} \).</li>
+                    <li>The variance and standard error natively become: \( V(\bar{y}) = \frac{\sigma^2}{n} \) and \( \sigma_{\bar{y}} = \frac{\sigma}{\sqrt{n}} \).</li>
                     <li>For the Population Total: \( V(\widehat{Y}) = \frac{N^2 \sigma^2}{n} \) and \( \sigma_{\widehat{Y}} = \frac{N\sigma}{\sqrt{n}} \).</li>
                 </ul>
 
                 <h3><strong>Theorem 2.3.2:</strong></h3>
-                <p>When we work with a sample, we can calculate the <strong>sample variance</strong> \( s^2 \). This theorem is very important because it proves that our sample's \( s^2 \) is a perfect guess (unbiased estimator) for the population mean square \( S^2 \).</p>
+                <p>In pure simple random sampling, the unbiased sample variance \( s^2 = \frac{\sum_{i=1}^n (y_i - \bar{y})^2}{n-1} \) acts as a strictly unbiased estimator of the population mean square \( S^2 \).</p>
 
                 <p><em>Proof:</em></p>
                 <div class="derivation-block">
-                    <p>The sample variance is defined as:</p>
-                    $$ s^2 = \frac{1}{n-1}\sum_{i=1}^n (y_i - \bar{y})^2 $$
-                    <p>Let's play with the numerator. We can add and subtract the true population mean \( \bar{Y} \) inside the bracket:</p>
-                    $$ \sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n [(y_i - \bar{Y}) - (\bar{y} - \bar{Y})]^2 $$
-                    <p>Expanding the square (\( (a-b)^2 = a^2 - 2ab + b^2 \)):</p>
-                    $$ = \sum (y_i - \bar{Y})^2 - 2(\bar{y} - \bar{Y})\sum(y_i - \bar{Y}) + \sum(\bar{y} - \bar{Y})^2 $$
-                    <p>Notice that \( \sum(y_i - \bar{Y}) = n(\bar{y} - \bar{Y}) \). So the middle term and the last term combine:</p>
-                    $$ = \sum_{i=1}^n (y_i - \bar{Y})^2 - n(\bar{y} - \bar{Y})^2 $$
-                    <p>Now, let's take the expected value (average) of this expression:</p>
-                    $$ E\left[ \sum (y_i - \bar{y})^2 \right] = \sum_{i=1}^n E(y_i - \bar{Y})^2 - n E(\bar{y} - \bar{Y})^2 $$
-                    <p>The first term is just \( n \) times the population variance \( \sigma^2 \). The second term is \( n \) times the variance of the sample mean \( V(\bar{y}) \):</p>
-                    $$ = n\sigma^2 - n \left( \frac{N-n}{N-1} \frac{\sigma^2}{n} \right) $$
-                    <p>Simplifying the algebra:</p>
-                    $$ = n\sigma^2 - \frac{N-n}{N-1}\sigma^2 = \sigma^2 \left[ \frac{nN - n - N + n}{N-1} \right] = \sigma^2 \frac{N(n-1)}{N-1} $$
-                    <p>Since we defined \( S^2 = \frac{N}{N-1}\sigma^2 \), this is exactly \( (n-1)S^2 \).</p>
-                    $$ \therefore E(s^2) = \frac{1}{n-1} [ (n-1)S^2 ] = S^2 $$
-                    <div class="explanation">This proves that \( s^2 \) is an unbiased estimator of \( S^2 \). Great!</div>
+                    <p>We logically expand the sum of squares by carefully adding and subtracting the true population mean \( \bar{Y} \):</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n [(y_i - \bar{Y}) - (\bar{y} - \bar{Y})]^2 \)</div>
+                    <p>Expanding the squared term algebraically gives us:</p>
+                    <div style="padding: 5px 0;">\( \sum (y_i - \bar{y})^2 = \sum_{i=1}^n (y_i - \bar{Y})^2 - 2(\bar{y} - \bar{Y})\sum_{i=1}^n (y_i - \bar{Y}) + n(\bar{y} - \bar{Y})^2 \)</div>
+                    <p>Since the cross term natively evaluates to \( 2n(\bar{y} - \bar{Y})^2 \), we simplify firmly to:</p>
+                    <div style="padding: 5px 0;">\( \sum (y_i - \bar{y})^2 = \sum_{i=1}^n (y_i - \bar{Y})^2 - n(\bar{y} - \bar{Y})^2 \)</div>
+                    <p>Now, applying the mathematical expectation operator \( E \) to both sides:</p>
+                    <div style="padding: 5px 0;">\( E \left[ \sum_{i=1}^n (y_i - \bar{y})^2 \right] = \sum_{i=1}^n E(y_i - \bar{Y})^2 - n E(\bar{y} - \bar{Y})^2 \)</div>
+                    <p>We strictly know that \( E(y_i - \bar{Y})^2 = \sigma^2 = \frac{N-1}{N}S^2 \) and from Theorem 2.3.1, \( E(\bar{y} - \bar{Y})^2 = V(\bar{y}) = \frac{N-n}{Nn}S^2 \). Substituting these exact values:</p>
+                    <div style="padding: 5px 0;">\( E \left[ \sum (y_i - \bar{y})^2 \right] = n \left( \frac{N-1}{N}S^2 \right) - n \left( \frac{N-n}{Nn}S^2 \right) \)</div>
+                    <div style="padding: 5px 0;">\( E \left[ \sum (y_i - \bar{y})^2 \right] = S^2 \left( \frac{nN - n - N + n}{N} \right) = \frac{N(n-1)}{N} S^2 \)</div>
+                    <p>Since \( s^2 \) actively divides this entire sum by \( (n-1) \):</p>
+                    <div style="padding: 5px 0;">\( E(s^2) = E \left[ \frac{\sum (y_i - \bar{y})^2}{n-1} \right] = \frac{1}{n-1} \left[ \frac{N(n-1)}{N} S^2 \right] = S^2 \)</div>
+                    <div class="explanation">This conclusively proves that \( s^2 \) is an absolutely unbiased estimator of \( S^2 \).</div>
                 </div>
 
-                <p><strong>More Corollaries (Unbiased Estimators of Variance):</strong></p>
+                <p><strong>Corollaries (Unbiased Estimators of Variance):</strong></p>
                 <ul>
-                    <li>In SRSWOR, we estimate \( V(\bar{y}) \) using: \( v(\bar{y}) = (1-f)\frac{s^2}{n} \).</li>
-                    <li>In SRSWR, we just use: \( v(\bar{y}) = \frac{s^2}{n} \).</li>
+                    <li>In SRSWOR, an unbiased estimator of the variance of \( \bar{y} \) is: \( v(\bar{y}) = (1-f)\frac{s^2}{n} \).</li>
+                    <li>In SRSWOR, an unbiased estimator of the variance of \( \widehat{Y} \) is: \( v(\widehat{Y}) = N^2 (1-f)\frac{s^2}{n} \).</li>
+                    <li>In SRSWR, the unbiased estimators firmly drop the \( (1-f) \) factor, becoming \( \frac{s^2}{n} \) and \( N^2\frac{s^2}{n} \).</li>
                 </ul>
 
                 <h3>Example 2.3</h3>
-                <p>Let's look at a small colony with \( N = 5 \) households. We pick a random sample of \( n = 2 \). Their weekly grocery bills (in Rs.) are: 150, 145, 160, 158, 152.</p>
+                <p>A random sample of 2 households was drawn strictly from a small hypothetical colony of \( N = 5 \) households having monthly income (in rupees) as follows: 150, 145, 160, 158, 152.</p>
                 <div class="derivation-block">
-                    <p><strong>(i) Population Values:</strong></p>
-                    <p>Mean \( \bar{Y} = (150 + 145 + 160 + 158 + 152) / 5 = 153.00 \)</p>
-                    <p>Variance \( \sigma^2 = [(-3)^2 + (-8)^2 + 7^2 + 5^2 + (-1)^2] / 5 = 148 / 5 = 29.60 \)</p>
-                    <p>Mean Square \( S^2 = \frac{5}{4} \times 29.60 = 37.00 \)</p>
+                    <p><strong>(i) Calculate population mean, variance and mean square error.</strong></p>
+                    <div style="padding: 5px 0;">\( \bar{Y} = \frac{150 + 145 + 160 + 158 + 152}{5} = \frac{765}{5} = 153.00 \)</div>
+                    <div style="padding: 5px 0;">\( \sigma^2 = \frac{1}{5} \left[ (-3)^2 + (-8)^2 + 7^2 + 5^2 + (-1)^2 \right] = \frac{148}{5} = 29.60 \)</div>
+                    <div style="padding: 5px 0;">\( S^2 = \frac{5}{4} \times 29.60 = 37.00 \)</div>
                 </div>
-                <p><strong>(ii) Practical Check:</strong> If we pick all possible samples of size 2, their means will vary. But if we average <em>all</em> those possible sample means, the answer will be exactly 153.0. This shows that the sample mean is unbiased in real life too!</p>
-            </div>
+                <p><strong>(ii) With Replacement Check:</strong> Enumerate all mathematically possible samples of size 2 by the replacement method. The total number of possible samples is rigidly \( 5^2 = 25 \).</p>
                 <table border="1" style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
                     <tr style="background: #f9f9f9;"><th>S.No</th><th>Units</th><th>Prob</th><th>\( y_1 \)</th><th>\( y_2 \)</th><th>\( \bar{y} \)</th><th>\( \bar{y} - \bar{Y} \)</th><th>\( (y_1-y_2)^2 / 4 \)</th></tr>
                     <tr><td>1</td><td>1,1</td><td>1/25</td><td>150</td><td>150</td><td>150.0</td><td>-3.0</td><td>0.00</td></tr>
@@ -584,298 +648,472 @@
                 <h2>2.4 Estimation of Population Proportion</h2>
                 <p>Sometimes, the units in the population are fundamentally classified into exactly two groups: (i) possessing a particular characteristic, and (ii) not possessing that characteristic. For instance, a crop field may be irrigated or not irrigated. If it is irrigated, we assign a variate value \( y_i = 1 \). If not, \( y_i = 0 \). Let the total number of irrigated fields out of \( N \) be \( N_1 \).</p>
                 <div class="derivation-block">
-                    $$ \sum_{i=1}^N y_i = N_1 $$
-                    <div class="explanation">\( \because \) summing 1s precisely counts the total units possessing the characteristic.</div>
-                    $$ P = \frac{\sum y_i}{N} = \frac{N_1}{N} = \text{proportion of irrigated fields} $$
-                    <div class="explanation">\( \because \) dividing the total count by \( N \) mathematically yields the population proportion.</div>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^N y_i = N_1 \)</div>
+                    <div class="explanation">Because summing 1s precisely counts the total units possessing the characteristic.</div>
+                    <div style="padding: 5px 0;">\( P = \frac{\sum_{i=1}^N y_i}{N} = \frac{N_1}{N} \)</div>
+                    <div class="explanation">This represents the proportion of units in the population with the characteristic.</div>
                     <p>Since \( y_i \) only takes values 0 or 1, squaring it leaves it unchanged (\( y_i^2 = y_i \)), hence:</p>
-                    $$ \sum_{i=1}^N y_i^2 = N_1 = NP $$
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^N y_i^2 = N_1 = NP \)</div>
                 </div>
-                <p>If \( n_1 \) units out of a random sample of size \( n \) possess the characteristic, the sample proportion is \( p = n_1/n \). Hence, an unbiased estimator of \( P \) is:</p>
+                <p>If \( n_1 \) units out of a random sample of size \( n \) possess the characteristic, the sample proportion is \( p = n_1/n \). Since the problem of estimating a proportion is identical to estimating a population mean by defining the variate as above, an unbiased estimator of \( P \) is:</p>
                 <div class="derivation-block">
-                    $$ \widehat{P} = \frac{n_1}{n} = p \quad (2.4.1) $$
+                    <div style="padding: 5px 0;">\( \widehat{P} = \frac{n_1}{n} = p \)</div>
                 </div>
 
                 <h3><strong>Theorem 2.4.1:</strong></h3>
                 <p>In sampling without replacement (SRSWOR), the variance of \( p \) is given by:</p>
                 <div class="derivation-block">
-                    $$ V(p) = \frac{N-n}{n(N-1)}PQ = (1-f)\frac{N}{N-1}\frac{PQ}{n} \quad (2.4.2) $$
+                    <div style="padding: 5px 0;">\( V(p) = \frac{N-n}{n(N-1)}PQ = (1-f)\frac{N}{N-1}\frac{PQ}{n} \)</div>
                     <p>where \( Q = 1 - P \).</p>
                 </div>
 
-                <p><strong>Corollary 1:</strong> In sampling with replacement (SRSWR), the variance of \( p \) simplifies to:</p>
-                <div class="derivation-block">$$ V(p) = \frac{PQ}{n} \quad (2.4.3) $$</div>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Since \( p \) is essentially a sample mean (\( \bar{y} \)), its variance under SRSWOR follows Theorem 2.3.1:</p>
+                    <div style="padding: 5px 0;">\( V(p) = V(\bar{y}) = \frac{N-n}{N} \frac{S^2}{n} \)</div>
+                    <p>We need to evaluate the population mean square \( S^2 \) for the binary variate \( y_i \):</p>
+                    <div style="padding: 5px 0;">\( S^2 = \frac{1}{N-1} \sum_{i=1}^N (y_i - \bar{Y})^2 = \frac{1}{N-1} \left( \sum_{i=1}^N y_i^2 - N\bar{Y}^2 \right) \)</div>
+                    <p>Substituting \( \sum_{i=1}^N y_i^2 = NP \) and \( \bar{Y} = P \):</p>
+                    <div style="padding: 5px 0;">\( S^2 = \frac{1}{N-1} \left( NP - NP^2 \right) = \frac{N}{N-1} P(1 - P) = \frac{N}{N-1} PQ \)</div>
+                    <p>Plugging this value of \( S^2 \) back into the variance formula:</p>
+                    <div style="padding: 5px 0;">\( V(p) = \frac{N-n}{Nn} \left( \frac{N}{N-1} PQ \right) = \frac{N-n}{n(N-1)} PQ \)</div>
+                    <div class="explanation">This provides the exact variance of a sample proportion under SRSWOR.</div>
+                </div>
 
-                <p><strong>Corollary 2:</strong> The variance of \( N_1 = Np \), the estimated total number of units with the characteristic, is:</p>
-                <div class="derivation-block">$$ V(N_1) = \frac{N^2(N-n)PQ}{n(N-1)} \quad (2.4.4) $$</div>
+                <p><strong>Corollary 1:</strong> In sampling with replacement (SRSWR), the variance of \( p \) simplifies. Since the population is treated as infinite, the finite population correction vanishes and \( N/(N-1) \approx 1 \):</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( V(p) = \frac{PQ}{n} \)</div></div>
+
+                <p><strong>Corollary 2:</strong> The variance of \( N_1 = Np \), the estimated total number of units with the characteristic, is obtained by multiplying \( V(p) \) by \( N^2 \):</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( V(N_1) = \frac{N^2(N-n)PQ}{n(N-1)} \)</div></div>
 
                 <h3><strong>Theorem 2.4.2:</strong></h3>
                 <p>In sampling without replacement (SRSWOR), an unbiased estimator of \( V(p) \) is given by:</p>
-                <div class="derivation-block">$$ v(p) = (1-f)\frac{pq}{n-1} \quad (2.4.5) $$</div>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( v(p) = (1-f)\frac{pq}{n-1} \)</div></div>
 
-                <p><strong>Corollary 1 & 2:</strong> In SRSWR, \( v(p) = \frac{pq}{n-1} \) (2.4.6). The estimated variance for the total \( N_1 \) is \( v(N_1) = \frac{N(N-n)pq}{n-1} \) (2.4.7).</p>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>From Theorem 2.3.2, an unbiased estimator of the variance of a mean in SRSWOR is \( v(\bar{y}) = \frac{N-n}{N} \frac{s^2}{n} \).</p>
+                    <p>We evaluate the sample mean square \( s^2 \) for the binary sample:</p>
+                    <div style="padding: 5px 0;">\( s^2 = \frac{1}{n-1} \sum_{i=1}^n (y_i - \bar{y})^2 = \frac{1}{n-1} \left( \sum_{i=1}^n y_i^2 - n\bar{y}^2 \right) \)</div>
+                    <p>Since the sample elements are also binary, \( \sum_{i=1}^n y_i^2 = \sum_{i=1}^n y_i = np \) and \( \bar{y} = p \):</p>
+                    <div style="padding: 5px 0;">\( s^2 = \frac{1}{n-1} (np - np^2) = \frac{n}{n-1} p(1 - p) = \frac{n}{n-1} pq \)</div>
+                    <p>Substituting this into the variance estimator formula:</p>
+                    <div style="padding: 5px 0;">\( v(p) = \frac{N-n}{Nn} \left( \frac{n}{n-1} pq \right) = \frac{N-n}{N} \frac{pq}{n-1} = (1-f) \frac{pq}{n-1} \)</div>
+                    <div class="explanation">This proves the formula for the unbiased estimator of the variance of a sample proportion.</div>
+                </div>
 
-                <p><strong>Corollary 3:</strong> The coefficient of variation of \( p \) is given by:</p>
-                <div class="derivation-block">$$ CV = \frac{\sqrt{PQ/n}}{P} = \sqrt{\frac{Q}{nP}} \quad (2.4.8) $$</div>
+                <p><strong>Corollary 1 & 2:</strong> In SRSWR, the finite population correction is dropped, giving \( v(p) = \frac{pq}{n-1} \). The estimated variance for the total \( \widehat{N}_1 \) is \( v(\widehat{N}_1) = N^2 v(p) = \frac{N(N-n)pq}{n-1} \).</p>
+
+                <p><strong>Corollary 3:</strong> The coefficient of variation of \( p \) is given by the standard error divided by the parameter \( P \):</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( CV(p) = \frac{\sqrt{V(p)}}{P} \approx \frac{\sqrt{PQ/n}}{P} = \sqrt{\frac{Q}{nP}} \)</div></div>
 
                 <h3>Example 2.4</h3>
-                <p>A corporate directory of \( N = 5000 \) employees was examined to measure the accuracy of listed home addresses. A random sample of \( n = 400 \) names was drawn, which revealed that 60 employees had incorrect addresses. Estimate the total number of employees with wrong addresses and estimate the standard error.</p>
+                <p>A list of 3000 voters of a ward in a city was examined to measure the accuracy of listed ages. A random sample of 300 names was drawn, which revealed that 51 citizens were shown with wrong ages. Estimate the total number of voters having a wrong description of age and estimate the standard error.</p>
                 <div class="derivation-block">
-                    <p>Given: \( N = 5000, n = 400, n_1 = 60 \)</p>
-                    <p>Sample proportion \( p = 60/400 = 0.15 \). Therefore, \( q = 0.85 \).</p>
-                    <p>Estimated total \( \widehat{N}_1 = Np = 5000 \times 0.15 = 750 \).</p>
-                    <p>(i) Using SRSWR (With Replacement):</p>
-                    $$ S_{\widehat{N}_1} = N\sqrt{\frac{pq}{n-1}} = 5000\sqrt{\frac{(0.15)(0.85)}{399}} \approx 89.4 $$
-                    <p>(ii) Using SRSWOR (Without Replacement):</p>
-                    $$ S_{\widehat{N}_1} = N\sqrt{(1-f)\frac{pq}{n-1}} = 5000\sqrt{\left(1 - \frac{400}{5000}\right)\frac{(0.15)(0.85)}{399}} \approx 85.7 $$
+                    <p>Given: \( N = 3000, n = 300, n_1 = 51 \)</p>
+                    <p>Sample proportion \( p = 51/300 = 0.17 \). Therefore, \( q = 0.83 \).</p>
+                    <p>Estimated total voters with wrong age \( \widehat{N}_1 = Np = 3000 \times 0.17 = 510 \).</p>
+                    <p><strong>(i) Using SRSWR (With Replacement):</strong></p>
+                    <div style="padding: 5px 0;">\( S_{\widehat{N}_1} = N\sqrt{\frac{pq}{n-1}} = 3000\sqrt{\frac{(0.17)(0.83)}{299}} \approx 65.17 \)</div>
+                    <p><strong>(ii) Using SRSWOR (Without Replacement):</strong></p>
+                    <div style="padding: 5px 0;">\( S_{\widehat{N}_1} = N\sqrt{(1-f)\frac{pq}{n-1}} = 3000\sqrt{\left(1 - \frac{300}{3000}\right)\frac{(0.17)(0.83)}{299}} \approx 61.83 \)</div>
                 </div>
             </div>
 
-            
-              <div class="hinglish-content">
-                  <h2>2.4 Estimation of Population Proportion (जनसंख्या अनुपात का अनुमान)</h2>
-                  <p>कभी-कभी, population की units को मौलिक रूप से ठीक दो समूहों (groups) में वर्गीकृत किया जाता है: (i) जिनमें एक विशेष विशेषता (characteristic) होती है, और (ii) जिनमें वह विशेषता नहीं होती है। उदाहरण के लिए, एक फसल का खेत सिंचित (irrigated) हो सकता है या नहीं। यदि यह सिंचित है, तो हम एक variate value \( y_i = 1 \) निर्दिष्ट करते हैं। यदि नहीं, तो \( y_i = 0 \)। मान लीजिए \( N \) में से सिंचित खेतों की कुल संख्या \( N_1 \) है।</p>
-                  <div class="derivation-block">
-                      $$ \sum_{i=1}^N y_i = N_1 $$
-                      <div class="explanation">\( \because \) 1 को जोड़ने पर सटीक रूप से characteristic वाली units की कुल संख्या मिलती है।</div>
-                      $$ P = \frac{\sum y_i}{N} = \frac{N_1}{N} = \text{सिंचित खेतों का अनुपात (proportion of irrigated fields)} $$
-                      <div class="explanation">\( \because \) कुल गिनती को \( N \) से भाग देने पर गणितीय रूप से population proportion प्राप्त होता है।</div>
-                      <p>चूंकि \( y_i \) केवल 0 या 1 value लेता है, इसका वर्ग करने पर यह अपरिवर्तित (unchanged) रहता है (\( y_i^2 = y_i \)), इसलिए:</p>
-                      $$ \sum_{i=1}^N y_i^2 = N_1 = NP $$
-                  </div>
-                  <p>यदि size \( n \) के random sample में से \( n_1 \) units में विशेषता है, तो sample proportion \( p = n_1/n \) है। इसलिए, \( P \) का एक unbiased estimator है:</p>
-                  <div class="derivation-block">
-                      $$ \widehat{P} = \frac{n_1}{n} = p \quad (2.4.1) $$
-                  </div>
+            <div class="hinglish-content">
+                <h2>2.4 Estimation of Population Proportion (जनसंख्या अनुपात का अनुमान)</h2>
+                <p>कभी-कभी, population की units को मौलिक रूप से ठीक दो समूहों (groups) में वर्गीकृत किया जाता है: (i) जिनमें एक विशेष विशेषता (characteristic) होती है, और (ii) जिनमें वह विशेषता नहीं होती है। उदाहरण के लिए, एक फसल का खेत सिंचित (irrigated) हो सकता है या नहीं। यदि यह सिंचित है, तो हम एक variate value \( y_i = 1 \) निर्दिष्ट करते हैं। यदि नहीं, तो \( y_i = 0 \)। मान लीजिए \( N \) में से सिंचित खेतों की कुल संख्या \( N_1 \) है।</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^N y_i = N_1 \)</div>
+                    <div class="explanation">चूँकि 1 को जोड़ने पर सटीक रूप से characteristic वाली units की कुल संख्या मिलती है।</div>
+                    <div style="padding: 5px 0;">\( P = \frac{\sum_{i=1}^N y_i}{N} = \frac{N_1}{N} \)</div>
+                    <div class="explanation">यह population में उस विशेषता वाली इकाइयों के अनुपात को दर्शाता है।</div>
+                    <p>चूंकि \( y_i \) केवल 0 या 1 value लेता है, इसका वर्ग (square) करने पर यह अपरिवर्तित (unchanged) रहता है (\( y_i^2 = y_i \)), इसलिए:</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^N y_i^2 = N_1 = NP \)</div>
+                </div>
+                <p>यदि size \( n \) के random sample में से \( n_1 \) units में विशेषता है, तो sample proportion \( p = n_1/n \) है। चूंकि अनुपात का अनुमान लगाने की समस्या population mean के अनुमान लगाने के समान है, \( P \) का एक unbiased estimator है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \widehat{P} = \frac{n_1}{n} = p \)</div>
+                </div>
 
-                  <h3><strong>Theorem 2.4.1:</strong></h3>
-                  <p>Sampling without replacement (SRSWOR) में, \( p \) का variance इस प्रकार दिया गया है:</p>
-                  <div class="derivation-block">
-                      $$ V(p) = \frac{N-n}{n(N-1)}PQ = (1-f)\frac{N}{N-1}\frac{PQ}{n} \quad (2.4.2) $$
-                      <p>जहाँ \( Q = 1 - P \)।</p>
-                  </div>
+                <h3><strong>Theorem 2.4.1:</strong></h3>
+                <p>Sampling without replacement (SRSWOR) में, \( p \) का variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p) = \frac{N-n}{n(N-1)}PQ = (1-f)\frac{N}{N-1}\frac{PQ}{n} \)</div>
+                    <p>जहाँ \( Q = 1 - P \)।</p>
+                </div>
 
-                  <p><strong>Corollary 1:</strong> Sampling with replacement (SRSWR) में, \( p \) का variance सरल होकर बन जाता है:</p>
-                  <div class="derivation-block">$$ V(p) = \frac{PQ}{n} \quad (2.4.3) $$</div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>चूँकि \( p \) मूल रूप से एक sample mean (\( \bar{y} \)) है, SRSWOR के तहत इसका variance Theorem 2.3.1 का पालन करता है:</p>
+                    <div style="padding: 5px 0;">\( V(p) = V(\bar{y}) = \frac{N-n}{N} \frac{S^2}{n} \)</div>
+                    <p>हमें binary variate \( y_i \) के लिए population mean square \( S^2 \) का मूल्यांकन करना होगा:</p>
+                    <div style="padding: 5px 0;">\( S^2 = \frac{1}{N-1} \sum_{i=1}^N (y_i - \bar{Y})^2 = \frac{1}{N-1} \left( \sum_{i=1}^N y_i^2 - N\bar{Y}^2 \right) \)</div>
+                    <p>\( \sum_{i=1}^N y_i^2 = NP \) और \( \bar{Y} = P \) को प्रतिस्थापित करने पर:</p>
+                    <div style="padding: 5px 0;">\( S^2 = \frac{1}{N-1} \left( NP - NP^2 \right) = \frac{N}{N-1} P(1 - P) = \frac{N}{N-1} PQ \)</div>
+                    <p>इस \( S^2 \) के value को वापस variance formula में रखने पर:</p>
+                    <div style="padding: 5px 0;">\( V(p) = \frac{N-n}{Nn} \left( \frac{N}{N-1} PQ \right) = \frac{N-n}{n(N-1)} PQ \)</div>
+                    <div class="explanation">यह SRSWOR के तहत sample proportion का सटीक variance प्रदान करता है।</div>
+                </div>
 
-                  <p><strong>Corollary 2:</strong> \( N_1 = Np \), विशेषता वाली इकाइयों की अनुमानित कुल संख्या (estimated total number), का variance है:</p>
-                  <div class="derivation-block">$$ V(N_1) = \frac{N^2(N-n)PQ}{n(N-1)} \quad (2.4.4) $$</div>
+                <p><strong>Corollary 1:</strong> Sampling with replacement (SRSWR) में, \( p \) का variance सरल हो जाता है। चूँकि population को infinite माना जाता है, finite population correction गायब हो जाता है और \( N/(N-1) \approx 1 \):</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( V(p) = \frac{PQ}{n} \)</div></div>
 
-                  <h3><strong>Theorem 2.4.2:</strong></h3>
-                  <p>Sampling without replacement (SRSWOR) में, \( V(p) \) का unbiased estimator इस प्रकार दिया गया है:</p>
-                  <div class="derivation-block">$$ v(p) = (1-f)\frac{pq}{n-1} \quad (2.4.5) $$</div>
+                <p><strong>Corollary 2:</strong> \( N_1 = Np \) का variance, जो कि विशेषता वाली इकाइयों की अनुमानित कुल संख्या है, \( V(p) \) को \( N^2 \) से गुणा करके प्राप्त किया जाता है:</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( V(N_1) = \frac{N^2(N-n)PQ}{n(N-1)} \)</div></div>
 
-                  <p><strong>Corollary 1 & 2:</strong> SRSWR में, \( v(p) = \frac{pq}{n-1} \) (2.4.6)। कुल \( N_1 \) के लिए अनुमानित variance \( v(N_1) = \frac{N(N-n)pq}{n-1} \) (2.4.7) है।</p>
+                <h3><strong>Theorem 2.4.2:</strong></h3>
+                <p>Sampling without replacement (SRSWOR) में, \( V(p) \) का unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( v(p) = (1-f)\frac{pq}{n-1} \)</div></div>
 
-                  <p><strong>Corollary 3:</strong> \( p \) के variation का गुणांक (coefficient of variation) इस प्रकार दिया गया है:</p>
-                  <div class="derivation-block">$$ CV = \frac{\sqrt{PQ/n}}{P} = \sqrt{\frac{Q}{nP}} \quad (2.4.8) $$</div>
+                <p><em>Proof (प्रमाण):</em></p>
+                <div class="derivation-block">
+                    <p>Theorem 2.3.2 से, SRSWOR में mean के variance का एक unbiased estimator \( v(\bar{y}) = \frac{N-n}{N} \frac{s^2}{n} \) है।</p>
+                    <p>हम binary sample के लिए sample mean square \( s^2 \) का मूल्यांकन करते हैं:</p>
+                    <div style="padding: 5px 0;">\( s^2 = \frac{1}{n-1} \sum_{i=1}^n (y_i - \bar{y})^2 = \frac{1}{n-1} \left( \sum_{i=1}^n y_i^2 - n\bar{y}^2 \right) \)</div>
+                    <p>चूँकि sample elements भी binary हैं, \( \sum_{i=1}^n y_i^2 = \sum_{i=1}^n y_i = np \) और \( \bar{y} = p \):</p>
+                    <div style="padding: 5px 0;">\( s^2 = \frac{1}{n-1} (np - np^2) = \frac{n}{n-1} p(1 - p) = \frac{n}{n-1} pq \)</div>
+                    <p>इसे variance estimator formula में प्रतिस्थापित करने पर:</p>
+                    <div style="padding: 5px 0;">\( v(p) = \frac{N-n}{Nn} \left( \frac{n}{n-1} pq \right) = \frac{N-n}{N} \frac{pq}{n-1} = (1-f) \frac{pq}{n-1} \)</div>
+                    <div class="explanation">यह sample proportion के variance के unbiased estimator के सूत्र को सिद्ध करता है।</div>
+                </div>
 
-                  <h3>उदाहरण 2.4 (Example 2.4)</h3>
-                  <p>\( N = 5000 \) कर्मचारियों (employees) की एक कॉर्पोरेट निर्देशिका (directory) की जाँच की गई ताकि सूचीबद्ध घर के पते की सटीकता को मापा जा सके। \( n = 400 \) नामों का एक random sample निकाला गया, जिससे पता चला कि 60 कर्मचारियों के पते (addresses) गलत थे। गलत पते वाले कर्मचारियों की कुल संख्या का अनुमान लगाएँ और standard error का अनुमान लगाएँ।</p>
-                  <div class="derivation-block">
-                      <p>दिया है: \( N = 5000, n = 400, n_1 = 60 \)</p>
-                      <p>Sample proportion \( p = 60/400 = 0.15 \)। इसलिए, \( q = 0.85 \)।</p>
-                      <p>अनुमानित कुल (Estimated total) \( \widehat{N}_1 = Np = 5000 \times 0.15 = 750 \)।</p>
-                      <p>(i) SRSWR (With Replacement) का उपयोग करके:</p>
-                      $$ S_{\widehat{N}_1} = N\sqrt{\frac{pq}{n-1}} = 5000\sqrt{\frac{(0.15)(0.85)}{399}} \approx 89.4 $$
-                      <p>(ii) SRSWOR (Without Replacement) का उपयोग करके:</p>
-                      $$ S_{\widehat{N}_1} = N\sqrt{(1-f)\frac{pq}{n-1}} = 5000\sqrt{\left(1 - \frac{400}{5000}\right)\frac{(0.15)(0.85)}{399}} \approx 85.7 $$
-                  </div>
-              </div>
-</section>
+                <p><strong>Corollary 1 & 2:</strong> SRSWR में, finite population correction को हटा दिया जाता है, जिससे \( v(p) = \frac{pq}{n-1} \) प्राप्त होता है। कुल \( \widehat{N}_1 \) के लिए अनुमानित variance \( v(\widehat{N}_1) = N^2 v(p) = \frac{N(N-n)pq}{n-1} \) है।</p>
 
+                <p><strong>Corollary 3:</strong> \( p \) के coefficient of variation को standard error को parameter \( P \) से विभाजित करके दिया जाता है:</p>
+                <div class="derivation-block"><div style="padding: 5px 0;">\( CV(p) = \frac{\sqrt{V(p)}}{P} \approx \frac{\sqrt{PQ/n}}{P} = \sqrt{\frac{Q}{nP}} \)</div></div>
+
+                <h3>उदाहरण 2.4 (Example 2.4)</h3>
+                <p>एक शहर के एक वार्ड के 3000 मतदाताओं (voters) की सूची की जाँच की गई ताकि सूचीबद्ध आयु (ages) की सटीकता को मापा जा सके। 300 नामों का एक random sample निकाला गया, जिससे पता चला कि 51 नागरिकों की आयु गलत बताई गई थी। गलत आयु वाले मतदाताओं की कुल संख्या का अनुमान लगाएँ और standard error का अनुमान लगाएँ।</p>
+                <div class="derivation-block">
+                    <p>दिया है: \( N = 3000, n = 300, n_1 = 51 \)</p>
+                    <p>Sample proportion \( p = 51/300 = 0.17 \)। इसलिए, \( q = 0.83 \)।</p>
+                    <p>गलत आयु वाले अनुमानित कुल मतदाता \( \widehat{N}_1 = Np = 3000 \times 0.17 = 510 \)।</p>
+                    <p><strong>(i) SRSWR (With Replacement) का उपयोग करके:</strong></p>
+                    <div style="padding: 5px 0;">\( S_{\widehat{N}_1} = N\sqrt{\frac{pq}{n-1}} = 3000\sqrt{\frac{(0.17)(0.83)}{299}} \approx 65.17 \)</div>
+                    <p><strong>(ii) SRSWOR (Without Replacement) का उपयोग करके:</strong></p>
+                    <div style="padding: 5px 0;">\( S_{\widehat{N}_1} = N\sqrt{(1-f)\frac{pq}{n-1}} = 3000\sqrt{\left(1 - \frac{300}{3000}\right)\frac{(0.17)(0.83)}{299}} \approx 61.83 \)</div>
+                </div>
+            </div>
+        </section>
         <section id="sec2-5" class="section-card">
             <div class="english-content">
                 <h2>2.5 Combination of Unbiased Estimators</h2>
-                <p>There are practical scenarios where estimates derived from multiple independent samples must be mathematically pooled to formulate a superior combined estimate. If \( t_1, t_2, \ldots, t_m \) are mutually independent, unbiased estimators of a parameter \( \theta \), then their arithmetic pooled estimator:</p>
+                <p>There are practical situations where estimates derived from multiple independent samples must be mathematically pooled to formulate a superior combined estimate. If \( t_1, t_2, \ldots, t_m \) are mutually independent, unbiased estimators of a parameter \( \theta \), then their arithmetic pooled estimator is:</p>
                 <div class="derivation-block">
-                    $$ T = \frac{\sum_{i=1}^m t_i}{m} \quad (2.5.1) $$
+                    <div style="padding: 5px 0;">\( T = \frac{1}{m} \sum_{i=1}^m t_i \)</div>
                 </div>
-                <p>is naturally also an unbiased estimator of \( \theta \). Its exact variance is given by:</p>
+                <p>Since the expectation is linear, \( E(T) = \frac{1}{m}\sum E(t_i) = \frac{1}{m}(m\theta) = \theta \). Thus, it is naturally an unbiased estimator of \( \theta \). Its exact variance is given by:</p>
                 <div class="derivation-block">
-                    $$ V(T) = \frac{\sum_{i=1}^m V(t_i)}{m^2} \quad (2.5.2) $$
-                    <div class="explanation">\( \because \) the variance of a sum of independent variables is the sum of their variances, and the constant \( 1/m \) is squared when pulled out.</div>
+                    <div style="padding: 5px 0;">\( V(T) = V\left( \frac{1}{m} \sum_{i=1}^m t_i \right) = \frac{1}{m^2} \sum_{i=1}^m V(t_i) \)</div>
+                    <div class="explanation">Because the samples are independent, the covariance terms are zero, and the constant \( 1/m \) is squared when pulled out of the variance operator.</div>
                 </div>
-                
+
                 <h3>2.5.1 Simple Random Sampling for Variables</h3>
                 <p>Suppose \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) are sample means from independently drawn samples of sizes \( n_1, n_2, \ldots, n_m \). We can pool them by taking:</p>
                 <ol>
-                    <li>The Arithmetic Mean: \( \bar{y}' = \frac{\sum \bar{y}_i}{m} \) (2.5.4)</li>
-                    <li>The Weighted Mean: \( \bar{y}'' = \frac{\sum n_i \bar{y}_i}{n} \) (2.5.5), where \( n = \sum n_i \).</li>
+                    <li>The Arithmetic Mean: \( \bar{y}' = \frac{1}{m}\sum_{i=1}^m \bar{y}_i \)</li>
+                    <li>The Weighted Mean: \( \bar{y}'' = \frac{\sum_{i=1}^m n_i \bar{y}_i}{n} \) where \( n = \sum_{i=1}^m n_i \).</li>
                 </ol>
-                <p>The weighted mean is mathematically proven to be more efficient than the arithmetic mean because it appropriately gives higher influence to estimates derived from larger, inherently more reliable samples.</p>
+
+                <p><strong>When Sampling is With Replacement (SRSWR):</strong></p>
+                <div class="derivation-block">
+                    <p>The sampling variance for the arithmetic mean \( \bar{y}' \) is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}') = \frac{1}{m^2} \sum_{i=1}^m V(\bar{y}_i) = \frac{\sigma^2}{m^2} \sum_{i=1}^m \frac{1}{n_i} \)</div>
+                    <p>The sampling variance for the weighted mean \( \bar{y}'' \) is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}'') = V\left( \frac{\sum n_i \bar{y}_i}{n} \right) = \frac{1}{n^2} \sum n_i^2 V(\bar{y}_i) = \frac{1}{n^2} \sum n_i^2 \left( \frac{\sigma^2}{n_i} \right) = \frac{\sigma^2}{n^2} \sum n_i = \frac{\sigma^2}{n} \)</div>
+                    <div class="explanation">The weighted mean mathematically gives a smaller variance than the arithmetic mean, proving it is a more efficient estimator. It naturally gives higher influence to larger, more reliable samples.</div>
+                </div>
+
+                <p><strong>When Sampling is Without Replacement (SRSWOR):</strong></p>
+                <div class="derivation-block">
+                    <p>The sampling variance for the arithmetic mean \( \bar{y}' \) is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}') = \frac{1}{m^2} \sum_{i=1}^m V(\bar{y}_i) = \frac{1}{m^2} \sum_{i=1}^m \left( \frac{N-n_i}{N} \frac{S^2}{n_i} \right) = \frac{S^2}{m^2} \sum_{i=1}^m \left( \frac{1}{n_i} - \frac{1}{N} \right) \)</div>
+                    <p>The sampling variance for the weighted mean \( \bar{y}'' \) is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}'') = \frac{1}{n^2} \sum n_i^2 V(\bar{y}_i) = \frac{1}{n^2} \sum n_i^2 \left( \frac{N-n_i}{N} \frac{S^2}{n_i} \right) = \frac{S^2}{Nn^2} \sum (Nn_i - n_i^2) \)</div>
+                    <p>Notice that if all sample sizes are equal (\( n_i = n/m \)), both estimators converge and become perfectly identical.</p>
+                </div>
 
                 <h3>2.5.2 Simple Random Sampling for Attributes</h3>
-                <p>Similarly, if \( p_1, p_2, \ldots, p_m \) are independent sample proportions, we can pool them identically using either an arithmetic mean \( p' \) or a more efficient weighted mean \( p'' \).</p>
+                <p>The mathematical results derived above natively apply to attributes (proportions) as well. If \( p_1, p_2, \ldots, p_m \) are independent sample proportions, we can securely pool them using either the arithmetic mean \( p' \) or the more efficient weighted mean \( p'' \), substituting \( S^2 \) with \( \frac{N}{N-1}PQ \) (in SRSWOR) or \( \sigma^2 \) with \( PQ \) (in SRSWR).</p>
             </div>
-            
-            
-              <div class="hinglish-content">
-                  <h2>2.5 Combination of Unbiased Estimators (निष्पक्ष आकलकों का संयोजन)</h2>
-                  <p>व्यावहारिक परिदृश्यों (scenarios) में, कई स्वतंत्र samples से प्राप्त अनुमानों को गणितीय रूप से मिलाकर (pooled) एक बेहतर combined estimate बनाना पड़ता है। यदि \( t_1, t_2, \ldots, t_m \) parameter \( \theta \) के mutually independent, unbiased estimators हैं, तो उनका arithmetic pooled estimator:</p>
-                  <div class="derivation-block">
-                      $$ T = \frac{\sum_{i=1}^m t_i}{m} \quad (2.5.1) $$
-                  </div>
-                  <p>स्वाभाविक रूप से \( \theta \) का एक unbiased estimator भी होता है। इसका सटीक variance इस प्रकार दिया गया है:</p>
-                  <div class="derivation-block">
-                      $$ V(T) = \frac{\sum_{i=1}^m V(t_i)}{m^2} \quad (2.5.2) $$
-                      <div class="explanation">\( \because \) स्वतंत्र चरों (independent variables) के योग का variance उनके variances का योग होता है, और constant \( 1/m \) को बाहर निकालने पर उसका वर्ग (square) हो जाता है।</div>
-                  </div>
 
-                  <h3>2.5.1 Simple Random Sampling for Variables</h3>
-                  <p>मान लीजिए \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) स्वतंत्र रूप से निकाले गए sizes \( n_1, n_2, \ldots, n_m \) के samples से sample means हैं। हम निम्नलिखित लेकर उन्हें pool कर सकते हैं:</p>
-                  <ol>
-                      <li>Arithmetic Mean (अंकगणितीय माध्य): \( \bar{y}' = \frac{\sum \bar{y}_i}{m} \) (2.5.4)</li>
-                      <li>Weighted Mean (भारित माध्य): \( \bar{y}'' = \frac{\sum n_i \bar{y}_i}{n} \) (2.5.5), जहाँ \( n = \sum n_i \)।</li>
-                  </ol>
-                  <p>Weighted mean गणितीय रूप से arithmetic mean की तुलना में अधिक कुशल (efficient) साबित होता है क्योंकि यह बड़े, स्वाभाविक रूप से अधिक विश्वसनीय samples से प्राप्त अनुमानों को उचित रूप से अधिक प्रभाव (influence) देता है।</p>
+            <div class="hinglish-content">
+                <h2>2.5 Combination of Unbiased Estimators (निष्पक्ष आकलकों का संयोजन)</h2>
+                <p>व्यावहारिक परिदृश्यों (scenarios) में, कई स्वतंत्र samples से प्राप्त अनुमानों को गणितीय रूप से मिलाकर (pooled) एक बेहतर combined estimate बनाना पड़ता है। यदि \( t_1, t_2, \ldots, t_m \) parameter \( \theta \) के mutually independent, unbiased estimators हैं, तो उनका arithmetic pooled estimator है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( T = \frac{1}{m} \sum_{i=1}^m t_i \)</div>
+                </div>
+                <p>चूँकि expectation linear है, \( E(T) = \frac{1}{m}\sum E(t_i) = \frac{1}{m}(m\theta) = \theta \)। इस प्रकार, यह स्वाभाविक रूप से \( \theta \) का एक unbiased estimator है। इसका सटीक variance इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(T) = V\left( \frac{1}{m} \sum_{i=1}^m t_i \right) = \frac{1}{m^2} \sum_{i=1}^m V(t_i) \)</div>
+                    <div class="explanation">चूँकि samples independent हैं, covariance terms शून्य हैं, और variance operator से बाहर निकालने पर constant \( 1/m \) का वर्ग (square) हो जाता है।</div>
+                </div>
 
-                  <h3>2.5.2 Simple Random Sampling for Attributes</h3>
-                  <p>इसी तरह, यदि \( p_1, p_2, \ldots, p_m \) स्वतंत्र sample proportions हैं, तो हम एक arithmetic mean \( p' \) या एक अधिक कुशल weighted mean \( p'' \) का उपयोग करके उन्हें समान रूप से pool कर सकते हैं।</p>
-              </div>
-</section>
+                <h3>2.5.1 Simple Random Sampling for Variables</h3>
+                <p>मान लीजिए \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) स्वतंत्र रूप से निकाले गए sizes \( n_1, n_2, \ldots, n_m \) के samples से sample means हैं। हम निम्नलिखित लेकर उन्हें pool कर सकते हैं:</p>
+                <ol>
+                    <li>Arithmetic Mean (अंकगणितीय माध्य): \( \bar{y}' = \frac{1}{m}\sum_{i=1}^m \bar{y}_i \)</li>
+                    <li>Weighted Mean (भारित माध्य): \( \bar{y}'' = \frac{\sum_{i=1}^m n_i \bar{y}_i}{n} \) जहाँ \( n = \sum_{i=1}^m n_i \)।</li>
+                </ol>
 
+                <p><strong>When Sampling is With Replacement (SRSWR - प्रतिस्थापन के साथ प्रतिचयन):</strong></p>
+                <div class="derivation-block">
+                    <p>Arithmetic mean \( \bar{y}' \) के लिए sampling variance है:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}') = \frac{1}{m^2} \sum_{i=1}^m V(\bar{y}_i) = \frac{\sigma^2}{m^2} \sum_{i=1}^m \frac{1}{n_i} \)</div>
+                    <p>Weighted mean \( \bar{y}'' \) के लिए sampling variance है:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}'') = V\left( \frac{\sum n_i \bar{y}_i}{n} \right) = \frac{1}{n^2} \sum n_i^2 V(\bar{y}_i) = \frac{1}{n^2} \sum n_i^2 \left( \frac{\sigma^2}{n_i} \right) = \frac{\sigma^2}{n^2} \sum n_i = \frac{\sigma^2}{n} \)</div>
+                    <div class="explanation">Weighted mean गणितीय रूप से arithmetic mean की तुलना में एक छोटा variance देता है, यह साबित करता है कि यह एक अधिक कुशल (efficient) estimator है। यह स्वाभाविक रूप से बड़े, अधिक विश्वसनीय samples को उच्च प्रभाव देता है।</div>
+                </div>
+
+                <p><strong>When Sampling is Without Replacement (SRSWOR - प्रतिस्थापन के बिना प्रतिचयन):</strong></p>
+                <div class="derivation-block">
+                    <p>Arithmetic mean \( \bar{y}' \) के लिए sampling variance है:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}') = \frac{1}{m^2} \sum_{i=1}^m V(\bar{y}_i) = \frac{1}{m^2} \sum_{i=1}^m \left( \frac{N-n_i}{N} \frac{S^2}{n_i} \right) = \frac{S^2}{m^2} \sum_{i=1}^m \left( \frac{1}{n_i} - \frac{1}{N} \right) \)</div>
+                    <p>Weighted mean \( \bar{y}'' \) के लिए sampling variance है:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}'') = \frac{1}{n^2} \sum n_i^2 V(\bar{y}_i) = \frac{1}{n^2} \sum n_i^2 \left( \frac{N-n_i}{N} \frac{S^2}{n_i} \right) = \frac{S^2}{Nn^2} \sum (Nn_i - n_i^2) \)</div>
+                    <p>ध्यान दें कि यदि सभी sample sizes समान हैं (\( n_i = n/m \)), तो दोनों estimators converge होते हैं और पूरी तरह से समान (identical) हो जाते हैं।</p>
+                </div>
+
+                <h3>2.5.2 Simple Random Sampling for Attributes</h3>
+                <p>ऊपर प्राप्त गणितीय परिणाम स्वाभाविक रूप से attributes (अनुपातों) पर भी लागू होते हैं। यदि \( p_1, p_2, \ldots, p_m \) स्वतंत्र sample proportions हैं, तो हम उन्हें arithmetic mean \( p' \) या अधिक कुशल weighted mean \( p'' \) का उपयोग करके सुरक्षित रूप से pool कर सकते हैं, जिसमें \( S^2 \) को \( \frac{N}{N-1}PQ \) (SRSWOR में) या \( \sigma^2 \) को \( PQ \) (SRSWR में) से प्रतिस्थापित किया जाता है।</p>
+            </div>
+        </section>
         <section id="sec2-6" class="section-card">
             <div class="english-content">
                 <h2>2.6 Confidence Limits</h2>
-                <p>To draw statistically authoritative conclusions about the population parameter, we construct <em>confidence limits</em> around our sample estimate. Assuming the sample size is sufficiently large, the Central Limit Theorem dictates that the sample mean \( \bar{y} \) is normally distributed around the true mean \( \bar{Y} \) with variance \( V(\bar{y}) \). Hence, the \( 100(1 - \alpha)\% \) confidence limits for the population mean are rigorously defined as:</p>
+                <p>In order to draw conclusions about the population parameter, confidence limits are constructed around the sample estimate. If the sample size is large, the sample mean is normally distributed with mean \( \bar{Y} \) and variance \( V(\bar{y}) \). Hence, the \( 100(1 - \alpha)\% \) confidence limits for the population mean are given by:</p>
                 <div class="derivation-block">
-                    $$ \bar{y} \pm t(\alpha) S_{\bar{y}} $$
-                    <div class="explanation">\( \because \) the normal deviate \( t(\alpha) \) correctly scales the standard error to envelop the desired probability area under the normal curve.</div>
+                    <div style="padding: 5px 0;">\( \bar{y} \pm t(\alpha) \sqrt{V(\bar{y})} \)</div>
+                    <div class="explanation">where \( t(\alpha) \) is the value of the normal variate corresponding to the given level of confidence.</div>
                 </div>
 
                 <h3>Example 2.5</h3>
-                <p>A simple random sample of 80 agricultural plots was rigorously selected from a total population of 800 plots to estimate crop yield. The sample mean yield was 620 kg with a sample variance \( s^2 = 144.5 \). Estimate the total crop yield and set up the 95% confidence limits.</p>
+                <p>A simple random sample of 50 plots was selected from a population of 500 plots to estimate the total yield of a crop. The sample mean yield per plot was 550 kg with a sample variance \( s^2 = 111.25 \). Estimate the total yield of the crop and set up 95% confidence limits.</p>
                 <div class="derivation-block">
-                    <p>Given: \( N = 800, n = 80, \bar{y} = 620, s^2 = 144.5 \)</p>
-                    <p>Estimated total yield \( \widehat{Y} = N\bar{y} = 800 \times 620 = 496,000 \text{ kg} \).</p>
+                    <p>Here, \( N = 500, n = 50, \bar{y} = 550, s^2 = 111.25 \).</p>
+                    <p>The estimated total yield is:</p>
+                    <div style="padding: 5px 0;">\( \widehat{Y} = N\bar{y} = 500 \times 550 = 275,000 \text{ kg} \)</div>
                     <p>The standard error of \( \widehat{Y} \) is:</p>
-                    $$ S_{\widehat{Y}} = N\sqrt{(1-f)\frac{s^2}{n}} = 800\sqrt{\left(1 - \frac{80}{800}\right)\frac{144.5}{80}} $$
-                    <div class="explanation">\( \because \) we actively apply the finite population correction since sampling is naturally without replacement.</div>
-                    $$ = 800\sqrt{(0.9)(1.80625)} = 800\sqrt{1.6256} \approx 800 \times 1.275 = 1020 $$
-                    <p>For 95% confidence, the standard normal variate \( t(\alpha) = 1.96 \). The limits are:</p>
-                    $$ 496,000 \pm 1.96 \times 1020 \Rightarrow 496,000 \pm 1999.2 $$
-                    <p>Confidence limits: \( (494,000.8 \text{ to } 497,999.2) \text{ kg} \).</p>
+                    <div style="padding: 5px 0;">\( S_{\widehat{Y}} = N\sqrt{(1 - f)\frac{s^2}{n}} = 500\sqrt{\left( 1 - \frac{50}{500} \right)\frac{111.25}{50}} \)</div>
+                    <div style="padding: 5px 0;">\( S_{\widehat{Y}} = 500\sqrt{0.9 \times 2.225} = 500 \times 1.418 = 709 \)</div>
+                    <p>For 95% confidence, \( t(\alpha) = 1.96 \). The confidence limits are:</p>
+                    <div style="padding: 5px 0;">\( 275,000 \pm 1.96 \times 709 \Rightarrow (273,610, 276,390) \)</div>
                 </div>
             </div>
 
-            
-              <div class="hinglish-content">
-                  <h2>2.6 Confidence Limits (विश्वास सीमाएँ)</h2>
-                  <p>Population parameter के बारे में सांख्यिकीय रूप से आधिकारिक निष्कर्ष (authoritative conclusions) निकालने के लिए, हम अपने sample estimate के चारों ओर <em>confidence limits</em> बनाते हैं। यह मानते हुए कि sample size काफी बड़ा है, Central Limit Theorem निर्देश देता है कि sample mean \( \bar{y} \), true mean \( \bar{Y} \) के चारों ओर variance \( V(\bar{y}) \) के साथ normally distributed है। इसलिए, population mean के लिए \( 100(1 - \alpha)\% \) confidence limits को कड़ाई से इस प्रकार परिभाषित किया गया है:</p>
-                  <div class="derivation-block">
-                      $$ \bar{y} \pm t(\alpha) S_{\bar{y}} $$
-                      <div class="explanation">\( \because \) normal deviate \( t(\alpha) \) सही ढंग से standard error को scale करता है ताकि normal curve के तहत वांछित probability area को कवर किया जा सके।</div>
-                  </div>
+            <div class="hinglish-content">
+                <h2>2.6 Confidence Limits (विश्वास सीमाएँ)</h2>
+                <p>Population parameter के बारे में निष्कर्ष निकालने के लिए, sample estimate के चारों ओर confidence limits का निर्माण किया जाता है। यदि sample size बड़ा है, तो sample mean, mean \( \bar{Y} \) और variance \( V(\bar{y}) \) के साथ normally distributed होता है। इसलिए, population mean के लिए \( 100(1 - \alpha)\% \) confidence limits इस प्रकार दी जाती हैं:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \bar{y} \pm t(\alpha) \sqrt{V(\bar{y})} \)</div>
+                    <div class="explanation">जहाँ \( t(\alpha) \) दिए गए confidence level के अनुरूप normal variate का मान है।</div>
+                </div>
 
-                  <h3>उदाहरण 2.5 (Example 2.5)</h3>
-                  <p>फसल की उपज (crop yield) का अनुमान लगाने के लिए कुल 800 भूखंडों (plots) की आबादी से 80 कृषि भूखंडों का एक simple random sample सख्ती से चुना गया। Sample mean yield 620 kg था और sample variance \( s^2 = 144.5 \) था। कुल फसल की उपज का अनुमान लगाएं और 95% confidence limits निर्धारित करें।</p>
-                  <div class="derivation-block">
-                      <p>दिया है: \( N = 800, n = 80, \bar{y} = 620, s^2 = 144.5 \)</p>
-                      <p>अनुमानित कुल उपज (Estimated total yield) \( \widehat{Y} = N\bar{y} = 800 \times 620 = 496,000 \text{ kg} \)।</p>
-                      <p>\( \widehat{Y} \) की standard error है:</p>
-                      $$ S_{\widehat{Y}} = N\sqrt{(1-f)\frac{s^2}{n}} = 800\sqrt{\left(1 - \frac{80}{800}\right)\frac{144.5}{80}} $$
-                      <div class="explanation">\( \because \) हम सक्रिय रूप से finite population correction लागू करते हैं क्योंकि sampling स्वाभाविक रूप से without replacement है।</div>
-                      $$ = 800\sqrt{(0.9)(1.80625)} = 800\sqrt{1.6256} \approx 800 \times 1.275 = 1020 $$
-                      <p>95% confidence के लिए, standard normal variate \( t(\alpha) = 1.96 \)। Limits हैं:</p>
-                      $$ 496,000 \pm 1.96 \times 1020 \Rightarrow 496,000 \pm 1999.2 $$
-                      <p>Confidence limits: \( (494,000.8 \text{ से } 497,999.2) \text{ kg} \)।</p>
-                  </div>
-              </div>
-</section>
+                <h3>उदाहरण 2.5 (Example 2.5)</h3>
+                <p>एक फसल की कुल उपज (total yield) का अनुमान लगाने के लिए 500 भूखंडों (plots) की आबादी से 50 भूखंडों का एक simple random sample चुना गया। प्रति भूखंड sample mean yield 550 kg थी और sample variance \( s^2 = 111.25 \) था। फसल की कुल उपज का अनुमान लगाएँ और 95% confidence limits स्थापित करें।</p>
+                <div class="derivation-block">
+                    <p>यहाँ, \( N = 500, n = 50, \bar{y} = 550, s^2 = 111.25 \)।</p>
+                    <p>अनुमानित कुल उपज (estimated total yield) है:</p>
+                    <div style="padding: 5px 0;">\( \widehat{Y} = N\bar{y} = 500 \times 550 = 275,000 \text{ kg} \)</div>
+                    <p>\( \widehat{Y} \) की standard error है:</p>
+                    <div style="padding: 5px 0;">\( S_{\widehat{Y}} = N\sqrt{(1 - f)\frac{s^2}{n}} = 500\sqrt{\left( 1 - \frac{50}{500} \right)\frac{111.25}{50}} \)</div>
+                    <div style="padding: 5px 0;">\( S_{\widehat{Y}} = 500\sqrt{0.9 \times 2.225} = 500 \times 1.418 = 709 \)</div>
+                    <p>95% confidence के लिए, \( t(\alpha) = 1.96 \)। Confidence limits हैं:</p>
+                    <div style="padding: 5px 0;">\( 275,000 \pm 1.96 \times 709 \Rightarrow (273,610, 276,390) \)</div>
+                </div>
+            </div>
+        </section>
 
         <section id="sec2-7" class="section-card">
             <div class="english-content">
                 <h2>2.7 Estimation of Sample Size</h2>
-                <p>During the critical planning phase of a sample survey, determining the exact optimal sample size is the most vital mathematical problem. This is achieved by explicitly specifying the tolerable margin of error and the desired level of statistical confidence.</p>
-                <p>Let the maximum permissible marginal error in our estimate be \( e \). Assuming the sample mean is normally distributed, we set:</p>
+                <p>In planning a sample survey for estimating the population parameters, the important question is how to determine the size of the sample to be drawn. It can be done by specifying the degree of risk (or precision) in terms of permissible loss and the level of confidence. Before we discuss the problem for different sampling methods, let us approach a generalized solution to the problem of estimation of sample size.</p>
+                <p>Let \( z \) be the amount of error by taking the estimate and let \( l(z) \) be the loss incurred by taking it. For a given sampling method, the theory will provide us the density function. Thus, the expected value of the loss for a given sample size is obtained by:</p>
                 <div class="derivation-block">
-                    $$ e = t(\alpha)\sqrt{\frac{(N-n)S^2}{Nn}} \quad (2.7.4) $$
+                    <div style="padding: 5px 0;">\( L(n) = E[l(z)] \quad (2.7.1) \)</div>
                 </div>
-                <p>Solving this algebraic equation for \( n \) gracefully yields the exact required sample size:</p>
+                <p>Let us also consider the cost function for a sample of size \( n \), denoted by:</p>
                 <div class="derivation-block">
-                    $$ n = \frac{t^2 S^2 / e^2}{1 + t^2 S^2 / (N e^2)} \quad (2.7.5) $$
+                    <div style="padding: 5px 0;">\( C(n) = a + cn \quad (2.7.2) \)</div>
+                    <div class="explanation">where \( a \) is the over-head cost, and \( c \) is the cost per unit in the sampling method.</div>
                 </div>
-                <p>To compute this in practice, we first calculate the uncorrected sample size \( n_0 \) (assuming an infinite population):</p>
+                <p>By combining relations (2.7.1) and (2.7.2), we get the total loss which is given by:</p>
                 <div class="derivation-block">
-                    $$ n_0 = \frac{t^2 S^2}{e^2} \quad (2.7.6) $$
+                    <div style="padding: 5px 0;">\( \Phi(n) = L(n) + \lambda C(n) \quad (2.7.3) \)</div>
+                    <div class="explanation">where \( \lambda \) is some constant quantity.</div>
                 </div>
-                <p>Then we apply the finite population adjustment to find the true, final \( n \):</p>
+                <p>Since the purpose in taking the sample is to minimize the total loss, \( n \) should be so chosen that relation (2.7.3) is minimized. By differentiating \( \Phi(n) \) with respect to \( n \) and equating \( d\Phi/dn = 0 \), the optimum value of \( n \) can be determined.</p>
+
+                <h3>Example 2.6</h3>
+                <p>If the loss function due to an error in \( \bar{y} \) is proportional to \( |\bar{y} - \bar{Y}| \) and if the total cost of the survey is \( C = a + cn \), show that with simple random sampling, ignoring fpc, the optimum value of \( n \) is \( \left( \frac{k\sigma}{c\sqrt{2\pi}} \right)^{2/3} \), where \( k \) is a constant.</p>
                 <div class="derivation-block">
-                    $$ n = \frac{n_0}{1 + n_0/N} \quad (2.7.7) $$
-                    <div class="explanation">\( \because \) substituting \( n_0 \) into the algebraic structure inherently accounts for the depletion of the finite population during sampling.</div>
+                    <p>Here \( l(z) = |\bar{y} - \bar{Y}| \), or \( l(z) = k|\bar{y} - \bar{Y}| \), where \( k \) is some constant.</p>
+                    <p>Thus, it follows that:</p>
+                    <div style="padding: 5px 0;">\( L(n) = kE|\bar{y} - \bar{Y}| = k\sqrt{\frac{2}{\pi}}\frac{\sigma}{\sqrt{n}} \)</div>
+                    <div class="explanation">[It is assumed that \( \bar{y} \) is distributed \( N(\bar{Y},\sigma/\sqrt{n}) \)]</div>
+                    <p>Hence,</p>
+                    <div style="padding: 5px 0;">\( \Phi(n) = a + cn + k\sqrt{\frac{2}{\pi}}\frac{\sigma}{\sqrt{n}} \)</div>
+                    <p>By differentiation and equating \( d\Phi/dn = 0 \), we have:</p>
+                    <div style="padding: 5px 0;">\( n = \left( \frac{k\sigma}{c\sqrt{2\pi}} \right)^{2/3} \)</div>
+                </div>
+                <p>A similar treatment and analysis can be applied to any sampling method in which the loss function is inversely proportional to \( n \) and the cost function is also a function of \( n \). A generalized discussion is given by Yates (1960), and Raiffa and Schlaifer (1961). Chaudhary (1977) and Chaudhary and Singh (1979) have discussed a line for sequential methods. For a classified discussion, a good account of methods is given by Nordin (1944), Blythe (1945), Deming (1950) and Tippett (1950).</p>
+
+                <p>Now let us elaborate the results for the simple random sampling for a characteristic which can be measured quantitatively. Let the marginal error permissible in the estimate be \( e \), and \( (1 - \alpha) \) be the level of confidence. The sample mean is assumed to be normally distributed with mean \( \bar{Y} \) and variance:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N - n}{Nn}S^2 \)</div>
+                </div>
+                <p>Hence,</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( e = t(\alpha)\sqrt{\frac{(N - n)S^2}{Nn}} \quad (2.7.4) \)</div>
+                    <div class="explanation">where \( t(\alpha) \) is the value of the normal variate corresponding to given \( (1 - \alpha) \).</div>
+                </div>
+                <p>This gives:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{t^2S^2/e^2}{1 + t^2S^2/(Ne^2)} \quad (2.7.5) \)</div>
+                </div>
+                <p>(i) If finite population correction (fpc) is ignored, we have:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_0 = \frac{t^2S^2}{e^2} \quad (2.7.6) \)</div>
+                </div>
+                <p>(ii) If fpc is not ignored, we can get the value of \( n \) by putting the value of \( n_0 \) in Eqn. (2.7.5) and we have:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + \frac{n_0}{N}} \quad (2.7.7) \)</div>
                 </div>
 
                 <h3>Example 2.7</h3>
-                <p>A statistical study was planned for a population of \( N = 800 \) units. A pilot count revealed \( \bar{Y} = 65 \) and \( S^2 = 55.2 \). How many sampling units must be rigorously selected to estimate \( \bar{Y} \) with a permissible marginal error of 10% and a 95% confidence coefficient, assuming sampling without replacement?</p>
+                <p>A study of sampling methods was conducted in a population having 500 sampling units. By total count it was obtained that \( \bar{Y} = 50 \) and \( S^2 = 45 \). In a simple random sampling, how many sampling units should be chosen to estimate \( \bar{Y} \) with a permissible marginal error of 10 per cent and 95 per cent confidence coefficient, when sampling is done (i) with replacement method (ii) without replacement method?</p>
                 <div class="derivation-block">
-                    <p>Permissible error \( e = 10\% \text{ of } 65 = 6.5 \).</p>
-                    <p>For 95% confidence, \( t = 1.96 \).</p>
-                    <p>First, ignoring the finite population correction (fpc):</p>
-                    $$ n_0 = \frac{(1.96)^2 \times 55.2}{(6.5)^2} = \frac{3.8416 \times 55.2}{42.25} \approx 5.02 $$
-                    <p>Since sampling is without replacement, we strictly apply the fpc:</p>
-                    $$ n = \frac{5.02}{1 + 5.02/800} = \frac{5.02}{1.006275} \approx 4.99 $$
-                    <div class="explanation">\( \because \) the population is fairly large relative to the variance, the fpc only slightly reduces the required sample size to 5 units.</div>
+                    <p>(i) <strong>Sampling with replacement:</strong> In this case, we can ignore fpc and we have</p>
+                    <div style="padding: 5px 0;">\( e = 10\% \text{ of } 50 = 5 \), and \( t = 1.96 \).</div>
+                    <div style="padding: 5px 0;">\( n = \frac{t^2 S^2}{e^2} = \frac{(1.96)^2 \times 45}{(5)^2} = \frac{3.8416 \times 45}{25} = 6.91 \approx 7 \text{ units} \)</div>
+                    <p>(ii) <strong>Sampling without replacement:</strong> In this case, the fpc cannot be ignored and we take</p>
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + n_0/N} = \frac{6.91}{1 + 6.91/500} = \frac{6.91}{1.0138} = 6.8 \approx 7 \text{ units} \)</div>
+                </div>
+
+                <p>Similarly, we can also discuss these results when the sampling units are classified by the presence or absence of a characteristic. With similar notions, the sample proportion \( p \) may be assumed to be normally distributed with mean \( P \) and variance \( V(p) \). Hence, the value of \( n \) with a pre-assigned level of precision can be estimated by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( e = t(\alpha)\sqrt{\frac{N-n}{N-1} \frac{PQ}{n}} \quad (2.7.8) \)</div>
+                    <div class="explanation">where \( t(\alpha) \) has the same meaning given in relation (2.7.4).</div>
+                </div>
+                <p>This gives:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{t^2 PQ / e^2}{1 + \frac{t^2 PQ}{e^2 (N-1)}} \quad (2.7.9) \)</div>
+                </div>
+                <p>(i) If fpc is ignored, we have:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_0 = \frac{t^2 PQ}{e^2} \quad (2.7.10) \)</div>
+                </div>
+                <p>(ii) If fpc is not ignored, we get:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + \frac{n_0}{N-1}} \quad (2.7.11) \)</div>
                 </div>
 
                 <h3>Example 2.8 (Proportions)</h3>
-                <p>In a registered population of 6000 voters, 40 percent historically returned to the polls. Calculate the exact sample size required to estimate this proportion with a tight marginal error of 5% at a 95% confidence level, using sampling without replacement.</p>
+                <p>In a population of 4000 people who were called for casting their votes, 50 per cent returned to the polls. Estimate the sample size to estimate this proportion so that the marginal error is 5 per cent with 95 per cent confidence coefficient, when the sampling is done (i) with replacement and (ii) without replacement methods.</p>
                 <div class="derivation-block">
-                    <p>Given: \( P = 0.40, e = 0.05, t = 1.96, N = 6000 \).</p>
-                    <p>First, calculating \( n_0 \):</p>
-                    $$ n_0 = \frac{t^2 P(1-P)}{e^2} = \frac{(1.96)^2 (0.40)(0.60)}{(0.05)^2} = \frac{3.8416 \times 0.24}{0.0025} \approx 368.8 $$
-                    <p>Applying the finite population correction:</p>
-                    $$ n = \frac{n_0}{1 + n_0/N} = \frac{368.8}{1 + 368.8/6000} = \frac{368.8}{1.0614} \approx 347.5 $$
-                    <div class="explanation">\( \because \) applying the rigorous fpc legitimately saves the surveyor from unnecessarily sampling 21 extra voters. We must sample 348 voters.</div>
+                    <p>Given: \( P = 0.50, Q = 0.50, e = 0.05, t = 1.96, N = 4000 \).</p>
+                    <p>(i) <strong>Sampling with replacement:</strong> In this case, we can ignore fpc and have,</p>
+                    <div style="padding: 5px 0;">\( n_0 = \frac{t^2 P Q}{e^2} = \frac{(1.96)^2 (0.50)(0.50)}{(0.05)^2} = \frac{3.8416 \times 0.25}{0.0025} = 384.16 \approx 385 \)</div>
+                    <p>(ii) <strong>Sampling without replacement:</strong> In this case, fpc cannot be ignored and we have,</p>
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + n_0/(N-1)} = \frac{384.16}{1 + 384.16/3999} = \frac{384.16}{1.096} = 350.5 \approx 351 \)</div>
                 </div>
             </div>
 
-            
-              <div class="hinglish-content">
-                  <h2>2.7 Estimation of Sample Size (प्रतिदर्श आकार का अनुमान)</h2>
-                  <p>एक sample survey के महत्वपूर्ण नियोजन चरण (planning phase) के दौरान, सटीक इष्टतम (exact optimal) sample size निर्धारित करना सबसे महत्वपूर्ण गणितीय समस्या है। यह स्वीकार्य margin of error और सांख्यिकीय विश्वास (statistical confidence) के वांछित स्तर को स्पष्ट रूप से निर्दिष्ट करके प्राप्त किया जाता है।</p>
-                  <p>मान लीजिए हमारे अनुमान में अधिकतम स्वीकार्य सीमांत त्रुटि (maximum permissible marginal error) \( e \) है। यह मानते हुए कि sample mean normally distributed है, हम निर्धारित करते हैं:</p>
-                  <div class="derivation-block">
-                      $$ e = t(\alpha)\sqrt{\frac{(N-n)S^2}{Nn}} \quad (2.7.4) $$
-                  </div>
-                  <p>\( n \) के लिए इस बीजीय समीकरण (algebraic equation) को हल करने पर हमें ठीक आवश्यक sample size प्राप्त होता है:</p>
-                  <div class="derivation-block">
-                      $$ n = \frac{t^2 S^2 / e^2}{1 + t^2 S^2 / (N e^2)} \quad (2.7.5) $$
-                  </div>
-                  <p>व्यवहार में इसकी गणना करने के लिए, हम पहले uncorrected sample size \( n_0 \) (एक infinite population मानकर) की गणना करते हैं:</p>
-                  <div class="derivation-block">
-                      $$ n_0 = \frac{t^2 S^2}{e^2} \quad (2.7.6) $$
-                  </div>
-                  <p>फिर हम सही, अंतिम \( n \) खोजने के लिए finite population adjustment लागू करते हैं:</p>
-                  <div class="derivation-block">
-                      $$ n = \frac{n_0}{1 + n_0/N} \quad (2.7.7) $$
-                      <div class="explanation">\( \because \) algebraic structure में \( n_0 \) को प्रतिस्थापित करने पर sampling के दौरान finite population की कमी (depletion) को स्वाभाविक रूप से ध्यान में रखा जाता है।</div>
-                  </div>
+            <div class="hinglish-content">
+                <h2>2.7 Estimation of Sample Size (प्रतिदर्श आकार का अनुमान)</h2>
+                <p>Population parameters का अनुमान लगाने के लिए sample survey की योजना बनाने में, सबसे महत्वपूर्ण प्रश्न यह है कि निकाले जाने वाले sample का size कैसे निर्धारित किया जाए। यह permissible loss और confidence के level के संदर्भ में जोखिम (risk या precision) की डिग्री को निर्दिष्ट (specify) करके किया जा सकता है। इससे पहले कि हम विभिन्न sampling methods के लिए इस समस्या पर चर्चा करें, आइए sample size के estimation की समस्या के लिए एक generalized solution की ओर बढ़ें।</p>
+                <p>मान लीजिए \( z \) अनुमान लेने से होने वाली error की मात्रा है और \( l(z) \) इसे लेने से होने वाला नुकसान (loss) है। किसी दिए गए sampling method के लिए, theory हमें density function प्रदान करेगी। इस प्रकार, किसी दिए गए sample size के लिए loss का expected value इस प्रकार प्राप्त किया जाता है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( L(n) = E[l(z)] \quad (2.7.1) \)</div>
+                </div>
+                <p>आइए हम \( n \) आकार के sample के लिए cost function पर भी विचार करें, जिसे इस प्रकार दर्शाया गया है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( C(n) = a + cn \quad (2.7.2) \)</div>
+                    <div class="explanation">जहाँ \( a \) over-head cost है, और \( c \) sampling method में प्रति यूनिट cost है।</div>
+                </div>
+                <p>समीकरणों (2.7.1) और (2.7.2) को मिलाकर, हमें कुल नुकसान (total loss) मिलता है जो इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \Phi(n) = L(n) + \lambda C(n) \quad (2.7.3) \)</div>
+                    <div class="explanation">जहाँ \( \lambda \) कुछ constant quantity (स्थिरांक) है।</div>
+                </div>
+                <p>चूंकि sample लेने का उद्देश्य कुल नुकसान को कम (minimize) करना है, \( n \) को इस तरह चुना जाना चाहिए कि समीकरण (2.7.3) minimize हो जाए। \( \Phi(n) \) को \( n \) के सापेक्ष differentiate करके और \( d\Phi/dn = 0 \) के बराबर रखकर, \( n \) का optimum value निर्धारित किया जा सकता है।</p>
 
-                  <h3>उदाहरण 2.7 (Example 2.7)</h3>
-                  <p>\( N = 800 \) units की एक आबादी के लिए एक सांख्यिकीय अध्ययन की योजना बनाई गई थी। एक प्रायोगिक (pilot) गणना से पता चला कि \( \bar{Y} = 65 \) और \( S^2 = 55.2 \) है। \( \bar{Y} \) का अनुमान 10% की स्वीकार्य सीमांत त्रुटि (permissible marginal error) और 95% confidence coefficient के साथ लगाने के लिए (sampling without replacement मानकर) कितने sampling units को कड़ाई से चुना जाना चाहिए?</p>
-                  <div class="derivation-block">
-                      <p>स्वीकार्य त्रुटि (Permissible error) \( e = 65 \text{ का } 10\% = 6.5 \)।</p>
-                      <p>95% confidence के लिए, \( t = 1.96 \)।</p>
-                      <p>सबसे पहले, finite population correction (fpc) को अनदेखा करते हुए:</p>
-                      $$ n_0 = \frac{(1.96)^2 \times 55.2}{(6.5)^2} = \frac{3.8416 \times 55.2}{42.25} \approx 5.02 $$
-                      <p>चूंकि sampling without replacement है, हम सख्ती से fpc लागू करते हैं:</p>
-                      $$ n = \frac{5.02}{1 + 5.02/800} = \frac{5.02}{1.006275} \approx 4.99 $$
-                      <div class="explanation">\( \because \) variance के सापेक्ष population काफी बड़ी है, fpc केवल आवश्यक sample size को थोड़ा कम करके 5 units कर देता है।</div>
-                  </div>
+                <h3>उदाहरण 2.6 (Example 2.6)</h3>
+                <p>यदि \( \bar{y} \) में error के कारण loss function \( |\bar{y} - \bar{Y}| \) के समानुपाती (proportional) है और यदि survey की कुल लागत (total cost) \( C = a + cn \) है, तो दिखाएँ कि simple random sampling के साथ, fpc को अनदेखा करते हुए, \( n \) का optimum value \( \left( \frac{k\sigma}{c\sqrt{2\pi}} \right)^{2/3} \) है, जहाँ \( k \) एक constant है।</p>
+                <div class="derivation-block">
+                    <p>यहाँ \( l(z) = |\bar{y} - \bar{Y}| \), या \( l(z) = k|\bar{y} - \bar{Y}| \), जहाँ \( k \) कुछ constant है।</p>
+                    <p>इस प्रकार, यह अनुसरण करता है कि:</p>
+                    <div style="padding: 5px 0;">\( L(n) = kE|\bar{y} - \bar{Y}| = k\sqrt{\frac{2}{\pi}}\frac{\sigma}{\sqrt{n}} \)</div>
+                    <div class="explanation">[यह माना जाता है कि \( \bar{y} \) सामान्यतः \( N(\bar{Y},\sigma/\sqrt{n}) \) वितरित है]</div>
+                    <p>इसलिए,</p>
+                    <div style="padding: 5px 0;">\( \Phi(n) = a + cn + k\sqrt{\frac{2}{\pi}}\frac{\sigma}{\sqrt{n}} \)</div>
+                    <p>Differentiate करने और \( d\Phi/dn = 0 \) के बराबर रखने पर, हमें मिलता है:</p>
+                    <div style="padding: 5px 0;">\( n = \left( \frac{k\sigma}{c\sqrt{2\pi}} \right)^{2/3} \)</div>
+                </div>
+                <p>इस तरह के treatment और analysis को किसी भी sampling method पर लागू किया जा सकता है जिसमें loss function \( n \) के व्युत्क्रमानुपाती (inversely proportional) हो और cost function भी \( n \) का फलन हो। एक generalized discussion Yates (1960), और Raiffa और Schlaifer (1961) द्वारा दी गई है। Chaudhary (1977) और Chaudhary और Singh (1979) ने sequential methods के लिए एक दिशा पर चर्चा की है। वर्गीकृत चर्चा के लिए, Nordin (1944), Blythe (1945), Deming (1950) और Tippett (1950) द्वारा तरीकों का अच्छा विवरण दिया गया है।</p>
 
-                  <h3>उदाहरण 2.8 (Example 2.8 - Proportions)</h3>
-                  <p>6000 मतदाताओं (voters) की एक पंजीकृत आबादी (registered population) में, 40 प्रतिशत ऐतिहासिक रूप से मतदान के लिए लौटे। sampling without replacement का उपयोग करके, 95% confidence level पर 5% की सख्त सीमांत त्रुटि (tight marginal error) के साथ इस अनुपात का अनुमान लगाने के लिए आवश्यक सटीक sample size की गणना करें।</p>
-                  <div class="derivation-block">
-                      <p>दिया है: \( P = 0.40, e = 0.05, t = 1.96, N = 6000 \)।</p>
-                      <p>सबसे पहले, \( n_0 \) की गणना:</p>
-                      $$ n_0 = \frac{t^2 P(1-P)}{e^2} = \frac{(1.96)^2 (0.40)(0.60)}{(0.05)^2} = \frac{3.8416 \times 0.24}{0.0025} \approx 368.8 $$
-                      <p>finite population correction लागू करने पर:</p>
-                      $$ n = \frac{n_0}{1 + n_0/N} = \frac{368.8}{1 + 368.8/6000} = \frac{368.8}{1.0614} \approx 347.5 $$
-                      <div class="explanation">\( \because \) कठोर fpc को लागू करने से सर्वेक्षक कानूनी रूप से अनावश्यक रूप से 21 अतिरिक्त मतदाताओं का sample लेने से बच जाता है। हमें 348 मतदाताओं का sample लेना चाहिए।</div>
-                  </div>
-              </div>
-</section>
+                <p>अब हम एक ऐसी characteristic के लिए simple random sampling के परिणामों को विस्तृत करें जिसे quantitatively मापा जा सकता है। मान लीजिए कि estimate में permissible marginal error \( e \) है, और \( (1 - \alpha) \) confidence का level है। Sample mean को mean \( \bar{Y} \) और variance के साथ normally distributed माना जाता है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}) = \frac{N - n}{Nn}S^2 \)</div>
+                </div>
+                <p>इसलिए,</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( e = t(\alpha)\sqrt{\frac{(N - n)S^2}{Nn}} \quad (2.7.4) \)</div>
+                    <div class="explanation">जहाँ \( t(\alpha) \) दिए गए \( (1 - \alpha) \) के अनुरूप normal variate का मान है।</div>
+                </div>
+                <p>इससे मिलता है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{t^2S^2/e^2}{1 + t^2S^2/(Ne^2)} \quad (2.7.5) \)</div>
+                </div>
+                <p>(i) यदि finite population correction (fpc) को अनदेखा किया जाता है, तो हमारे पास है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_0 = \frac{t^2S^2}{e^2} \quad (2.7.6) \)</div>
+                </div>
+                <p>(ii) यदि fpc को अनदेखा नहीं किया जाता है, तो हम Eqn. (2.7.5) में \( n_0 \) का मान रखकर \( n \) का मान प्राप्त कर सकते हैं और हमारे पास है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + \frac{n_0}{N}} \quad (2.7.7) \)</div>
+                </div>
+
+                <h3>उदाहरण 2.7 (Example 2.7)</h3>
+                <p>500 sampling units वाली आबादी में sampling methods का अध्ययन किया गया। कुल गणना द्वारा यह प्राप्त हुआ कि \( \bar{Y} = 50 \) और \( S^2 = 45 \) है। एक simple random sampling में, 10 प्रतिशत की permissible marginal error और 95 प्रतिशत confidence coefficient के साथ \( \bar{Y} \) का अनुमान लगाने के लिए कितनी sampling units को चुना जाना चाहिए, जब sampling (i) with replacement method (ii) without replacement method से की जाती है?</p>
+                <div class="derivation-block">
+                    <p>(i) <strong>Sampling with replacement:</strong> इस स्थिति में, हम fpc को अनदेखा कर सकते हैं और हमारे पास है</p>
+                    <div style="padding: 5px 0;">\( e = 50 \text{ का } 10\% = 5 \), और \( t = 1.96 \)।</div>
+                    <div style="padding: 5px 0;">\( n = \frac{t^2 S^2}{e^2} = \frac{(1.96)^2 \times 45}{(5)^2} = \frac{3.8416 \times 45}{25} = 6.91 \approx 7 \text{ units} \)</div>
+                    <p>(ii) <strong>Sampling without replacement:</strong> इस स्थिति में, fpc को अनदेखा नहीं किया जा सकता है और हम लेते हैं</p>
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + n_0/N} = \frac{6.91}{1 + 6.91/500} = \frac{6.91}{1.0138} = 6.8 \approx 7 \text{ units} \)</div>
+                </div>
+
+                <p>इसी तरह, हम इन परिणामों पर तब भी चर्चा कर सकते हैं जब sampling units को किसी characteristic की उपस्थिति या अनुपस्थिति द्वारा वर्गीकृत (classified) किया जाता है। समान धारणाओं (notions) के साथ, sample proportion \( p \) को mean \( P \) और variance \( V(p) \) के साथ normally distributed माना जा सकता है। इसलिए, पूर्व-निर्धारित (pre-assigned) precision level के साथ \( n \) के मान का अनुमान इस प्रकार लगाया जा सकता है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( e = t(\alpha)\sqrt{\frac{N-n}{N-1} \frac{PQ}{n}} \quad (2.7.8) \)</div>
+                    <div class="explanation">जहाँ \( t(\alpha) \) का वही अर्थ है जो समीकरण (2.7.4) में दिया गया है।</div>
+                </div>
+                <p>इससे मिलता है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{t^2 PQ / e^2}{1 + \frac{t^2 PQ}{e^2 (N-1)}} \quad (2.7.9) \)</div>
+                </div>
+                <p>(i) यदि fpc को अनदेखा किया जाता है, तो हमारे पास है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_0 = \frac{t^2 PQ}{e^2} \quad (2.7.10) \)</div>
+                </div>
+                <p>(ii) यदि fpc को अनदेखा नहीं किया जाता है, तो हमें मिलता है:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + \frac{n_0}{N-1}} \quad (2.7.11) \)</div>
+                </div>
+
+                <h3>उदाहरण 2.8 (Example 2.8 - Proportions)</h3>
+                <p>4000 लोगों की आबादी में जिन्हें अपना वोट डालने के लिए बुलाया गया था, 50 प्रतिशत मतदान के लिए लौटे। इस proportion का अनुमान लगाने के लिए sample size का अनुमान लगाएँ ताकि 95 प्रतिशत confidence coefficient के साथ marginal error 5 प्रतिशत हो, जब sampling (i) with replacement और (ii) without replacement methods से की जाती है।</p>
+                <div class="derivation-block">
+                    <p>दिया है: \( P = 0.50, Q = 0.50, e = 0.05, t = 1.96, N = 4000 \)।</p>
+                    <p>(i) <strong>Sampling with replacement:</strong> इस स्थिति में, हम fpc को अनदेखा कर सकते हैं और हमारे पास है,</p>
+                    <div style="padding: 5px 0;">\( n_0 = \frac{t^2 P Q}{e^2} = \frac{(1.96)^2 (0.50)(0.50)}{(0.05)^2} = \frac{3.8416 \times 0.25}{0.0025} = 384.16 \approx 385 \)</div>
+                    <p>(ii) <strong>Sampling without replacement:</strong> इस स्थिति में, fpc को अनदेखा नहीं किया जा सकता है और हमारे पास है,</p>
+                    <div style="padding: 5px 0;">\( n = \frac{n_0}{1 + n_0/(N-1)} = \frac{384.16}{1 + 384.16/3999} = \frac{384.16}{1.096} = 350.5 \approx 351 \)</div>
+                </div>
+            </div>
+        </section>
 
         <section id="sec2-ref" class="section-card">
             <div class="english-content">
