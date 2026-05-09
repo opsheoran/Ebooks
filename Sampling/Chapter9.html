@@ -13,51 +13,78 @@
 <body>
 
     <header class="book-header">
-        <div class="header-icon"><i class="fas fa-sitemap"></i></div>
-        <div class="header-text">
-            <h1>Chapter 9: Multi-Stage Sampling | Theory of Sampling</h1>
-            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
-        </div>
-    
-        <button class="draw-mode-toggle" id="draw-mode-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>
-    </header>
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <div class="header-icon">🎲</div>
+    <div class="header-text">
+        <h1>Theory of Sampling</h1>
+        <div class="subtitle">CHAPTER 9 · MULTI-STAGE SAMPLING</div>
+    </div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
+    <button class="draw-mode-toggle" id="draw-mode-btn">
+        <i class="fas fa-chalkboard"></i> Open Whiteboard
+    </button>
+</header>
 
-    <aside class="sidebar">
-        <div style="text-align: center; margin-bottom: 20px; margin-top: 10px;">
-            <img src="opsheoran.png" alt="Prof. O.P. Sheoran" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 10px; object-fit: cover;">
-            <h3 style="color: white; font-family: 'Playfair Display', serif; font-size: 1.1rem; margin: 0;">Prof. O.P. Sheoran</h3>
+    <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>Chapter 9</h2>
+        <p>Multi-Stage Sampling<br>CCS Haryana Agricultural University</p>
+    </div>
+    <div class="sidebar-author">
+        <img src="opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+        <div class="sidebar-author-info">
+            <h3>Prof. O.P. Sheoran</h3>
+            <p>Author & Instructor</p>
         </div>
-        <a class="nav-link active" onclick="showTopic('sec9-1')">9.1 Introduction</a>
-        <a class="nav-link" onclick="showTopic('sec9-2')">9.2 Two-Stage Sampling</a>
-        <a class="nav-link" onclick="showTopic('sec9-3')">9.3 Optimum Allocation</a>
-        <a class="nav-link" onclick="showTopic('sec9-4')">9.4 Three-Stage Sampling</a>
-        <a class="nav-link" onclick="showTopic('sec9-5')">9.5 Stratified Multi-Stage</a>
-        <a class="nav-link" onclick="showTopic('sec9-6')">9.6 Unequal First Stage Units</a>
-        <a class="nav-link" onclick="showTopic('sec9-7')">9.7 Opt. Alloc. Unequal fsu</a>
-        <a class="nav-link" onclick="showTopic('sec9-8')">9.8 Two-Stage pps Sampling</a>
-        <a class="nav-link" onclick="showTopic('sec9-9')">9.9 Self-weighting Designs</a>
-        <a class="nav-link" onclick="showTopic('sec9-10')">9.10 Three-Stage pps Sampling</a>
-        
-        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
-        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
-        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
-        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
-        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
-        <a class="nav-link" onclick="showTopic('sec9-11')">📝 Exercise (Subjective)</a>
-        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
-        <a class="nav-link" href="index.html#home"><i class="fas fa-home"></i> Home</a>
-        <a class="nav-link" href="index.html#preface"><i class="fas fa-scroll"></i> Preface</a>
-        <a class="nav-link" href="index.html#syllabus"><i class="fas fa-list-alt"></i> Syllabus</a>
-        <a class="nav-link" href="index.html#author"><i class="fas fa-user-tie"></i> About Author</a>
-        <a class="nav-link" href="../index.html" style="background: rgba(255,255,255,0.1); margin-top: 10px;"><i class="fas fa-book-open"></i> Back to E-Books Library</a>
-    </aside>
+    </div>
+    <div class="nav-group-label">Navigation</div>
+    <ul class="nav-list">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html#home" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;">
+                <span class="nav-num">🏠</span> Home
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 5px;">
+                <span class="nav-num">📚</span> Back to E-Books Library
+            </a>
+        </li>
+    </ul>
+    <div class="nav-group-label">Main Concepts</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showTopic('sec9-1');return false;"><span class="nav-num">9.1</span> Introduction</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-2');return false;"><span class="nav-num">9.2</span> Two-Stage Sampling</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-3');return false;"><span class="nav-num">9.3</span> Optimum Allocation</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-4');return false;"><span class="nav-num">9.4</span> Three-Stage Sampling</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-5');return false;"><span class="nav-num">9.5</span> Stratified Multi-Stage</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-6');return false;"><span class="nav-num">9.6</span> Unequal First Stage Units</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-7');return false;"><span class="nav-num">9.7</span> Opt. Alloc. Unequal fsu</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-8');return false;"><span class="nav-num">9.8</span> Two-Stage pps Sampling</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-9');return false;"><span class="nav-num">9.9</span> Self-weighting Designs</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-10');return false;"><span class="nav-num">9.10</span> Three-Stage pps Sampling</a></li>
+    </ul>
+    <div class="nav-group-label">Practice Exercises</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('quiz-mcq');return false;"><span class="nav-num">❓</span> Multiple Choice</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('quiz-fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('quiz-tf');return false;"><span class="nav-num">✅</span> True / False</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec9-11');return false;"><span class="nav-num">📝</span> Exercise (Subjective)</a></li>
+    </ul>
+</nav>
 
     <main class="main-content">
-        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+        <button class="lang-toggle-btn" onclick="toggleLanguage()" style="margin-bottom: 20px; z-index: 100; position: relative;">Switch to Hinglish</button>
+        <div class="chapter-header">
+    <h1>Chapter 9: Multi-Stage Sampling</h1>
+    <div class="author">By Prof. O.P. Sheoran · Department of Mathematics & Statistics</div>
+</div>
 
-        <section id="sec9-1" class="section-card active">
-            <div class="english-content">
-                <h2>9.1 Introduction</h2>
+
+
+        <div id="sec9-1" class="topic-section active">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.1</span> Introduction</h2>
                 <div class="quote">
                     "Mine is a long and sad tale" said the Mouse, turning to Alice and sighing.<br>
                     "It is a long tail, certainly" said Alice, looking down with wonder at the Mouse's tail, "but why do you call it sad?"<br>
@@ -71,7 +98,7 @@
             </div>
             
             <div class="hinglish-content">
-                <h2>9.1 Introduction (परिचय)</h2>
+                <h2><span class="section-num">9.1</span> Introduction (परिचय)</h2>
                 <div class="quote">
                     "मेरी एक लंबी और दुखद कहानी है" चूहे ने एलिस की ओर मुड़ते हुए और आह भरते हुए कहा।<br>
                     "यह निश्चित रूप से एक लंबी पूंछ है" एलिस ने चूहे की पूंछ को आश्चर्य से नीचे देखते हुए कहा, "लेकिन आप इसे दुखद क्यों कहते हैं?"<br>
@@ -81,11 +108,13 @@
 
                 <p>Multi-stage sampling व्यवहार में (in practice) बहुत उपयोगी पाई गई है और इस procedure का उपयोग आमतौर पर बड़े पैमाने पर सर्वेक्षणों में किया जा रहा है। Mahalanobis (1940) ने फसल सर्वेक्षणों में इस procedure का उपयोग किया और Ganguli (1941) ने इसे nested sampling कहा है। Cochran (1939), Hansen और Hurwitz (1943), Sukhatme (1953) और Lahiri (1954) ने कृषि और जनसंख्या सर्वेक्षणों में इसके उपयोग पर चर्चा की है। Roy (1957) और Singh (1958) ने इस sampling design के लिए variance components के अनुमान (estimation) पर विचार किया है। Multi-stage sampling procedure को random sampling और cluster sampling procedures का एक बेहतर संयोजन (combination) माना जा सकता है। इससे यह उम्मीद की जा सकती है कि यह (i) sampling variability के दृष्टिकोण से single stage random sampling की तुलना में कम efficient और cluster sampling की तुलना में अधिक efficient होगी, और (ii) लागत (cost) और परिचालन (operational) दृष्टिकोण से single stage random sampling की तुलना में अधिक efficient और cluster sampling की तुलना में कम efficient होगी। इस sampling procedure का मुख्य लाभ यह है कि, first stage में, fsu के frame की आवश्यकता होती है, जिसे आसानी से तैयार किया जा सकता है। Second stage में, ssu के frame की आवश्यकता केवल selected fsu के लिए होती है और इसी तरह आगे। यह design अधिक लचीला (flexible) है क्योंकि यह विभिन्न stages में विभिन्न selection procedures के उपयोग की अनुमति देता है। यह भी उल्लेख किया जाना चाहिए कि कई व्यावहारिक स्थितियों में multi-stage sampling एकमात्र विकल्प (only choice) हो सकती है जहाँ अंतिम-चरण इकाइयों (ultimate-stage units) का एक संतोषजनक (satisfactory) sampling frame आसानी से उपलब्ध नहीं है और ऐसा frame प्राप्त करने की लागत बड़ी है।</p>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-2" class="section-card">
-            <div class="english-content">
-                <h2>9.2 Two-Stage Sampling: Equal First-Stage Units</h2>
+        <div id="sec9-2" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.2</span> Two-Stage Sampling: Equal First-Stage Units</h2>
                 <p>In two-stage sampling, we pick units in two steps. First, we pick large groups (clusters), and then we pick smaller units from inside those groups. To find the average value and how much it varies (variance), we have to think about both steps. We use two important rules from probability:</p>
 
                 <div class="derivation-block">
@@ -178,7 +207,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.2 Two-Stage Sampling with Equal First-Stage Units: Estimation of Mean and its Variance (समान प्रथम-चरण इकाइयों के साथ द्वि-चरण प्रतिचयन: माध्य का अनुमान और उसका प्रसरण)</h2>
+                <h2><span class="section-num">9.2</span> Two-Stage Sampling with Equal First-Stage Units: Estimation of Mean and its Variance (समान प्रथम-चरण इकाइयों के साथ द्वि-चरण प्रतिचयन: माध्य का अनुमान और उसका प्रसरण)</h2>
                 <p>चूँकि, two-stage sampling में, इकाइयों (units) को प्रत्येक चरण में एक probability structure पर विचार करके चरणों (stages) में चुना जाता है, ssu के एक sample पर लिए गए observations की संख्या के आधार पर एक estimator के expected value और variance को निकालने (deriving) में दोनों चरणों में selection procedures पर विचार किया जाना है। Two stages में randomization के माध्यम से चुनी गई इकाइयों पर आधारित estimators के expected value और sampling variance प्राप्त करने के लिए, हम नीचे संक्षेप में दिए गए Theorems 1.3.7 और 1.3.8 में दिए गए परिणामों का पालन कर सकते हैं।</p>
 
                 <div class="derivation-block">
@@ -260,11 +289,13 @@
                     $$ V(\widehat{Y}) = N^2M^2(1 - f_1)\frac{S_b^2}{n} + N^2M^2(1 - f_2)\frac{S_w^2}{mn} \quad (9.2.11) $$
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-3" class="section-card">
-            <div class="english-content">
-                <h2>9.3 Choosing the Best Sample Sizes (Optimum Allocation)</h2>
+        <div id="sec9-3" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.3</span> Choosing the Best Sample Sizes (Optimum Allocation)</h2>
                 <p>In two-stage sampling, the big question is: <em>How many clusters (\( n \)) and how many units (\( m \)) should we pick?</em> If we pick too many clusters, travel costs go up. If we pick too many units from one cluster, our sample won't be well-spread. We need to find the "Optimum" (best) balance.</p>
 
                 <p><strong>The Cost of the Survey:</strong></p>
@@ -306,7 +337,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.3 Optimum Allocation: Equal First-Stage Units (इष्टतम आवंटन: समान प्रथम-चरण इकाइयाँ)</h2>
+                <h2><span class="section-num">9.3</span> Optimum Allocation: Equal First-Stage Units (इष्टतम आवंटन: समान प्रथम-चरण इकाइयाँ)</h2>
                 <p>चूँकि two-stage sampling की efficiency काफी हद तक \( m \) और \( n \) के values पर निर्भर करती है, इसलिए किसी दी गई व्यावहारिक स्थिति में उनके इष्टतम (optimal) values के बारे में सोचना स्वाभाविक है। Two-stage sampling design में, सर्वेक्षण (survey) का एक सरल cost function इस प्रकार लिखा जा सकता है:</p>
                 <div class="derivation-block">
                     $$ C = a + nc_1 + nmc_2 \quad (9.3.1) $$
@@ -394,11 +425,13 @@
                     $$ n_{opt} = \frac{100}{8} \cong 13 $$
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-4" class="section-card">
-            <div class="english-content">
-                <h2>9.4 Three-Stage Sampling</h2>
+        <div id="sec9-4" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.4</span> Three-Stage Sampling</h2>
                 <p>We can extend two-stage sampling even further! Imagine adding a third step. For example, in a crop survey:</p>
                 <ul>
                     <li><strong>Stage 1:</strong> Pick some Villages (fsu).</li>
@@ -425,7 +458,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.4 Three-Stage Sampling with Equal Probability (समान प्रायिकता के साथ त्रि-चरण प्रतिचयन)</h2>
+                <h2><span class="section-num">9.4</span> Three-Stage Sampling with Equal Probability (समान प्रायिकता के साथ त्रि-चरण प्रतिचयन)</h2>
                 <p>Two-stage sampling की procedure को ssu को पूरी तरह से enumerate करने के बजाय उन्हें sample करके तीसरे stage तक ले जाया जा सकता है। उदाहरण के लिए, yield average को estimate करने के लिए crop surveys में, एक village को first stage sampling unit माना जाता है। एक selected village के भीतर, crop उगाने वाले कुछ ही खेतों (fields) को select किया जाता है और second-stage units के रूप में लिया जाता है। जब एक field को select किया जाता है, तो उसके केवल कुछ हिस्सों (जिन्हें plots कहा जाता है) को sample किया जाता है, जिसे third-stage units (tsu) कहा जा सकता है। इस प्रकार two stage sampling के results को further assumptions के साथ कि प्रत्येक ssu में \( L \) third-stage units हैं, extend करके three stage sampling के results प्राप्त किए जा सकते हैं। यह भी माना जाता है कि units को equal probability के साथ select किया जाता है।</p>
 
                 <p>मान लीजिए \( y_{ijk} \) \( i \)-वें first stage unit के \( j \)-वें second stage unit में \( k \)-वें third-stage unit के लिए प्राप्त value है। Relevant population means per element इस प्रकार हैं:</p>
@@ -496,11 +529,13 @@
                     $$ C = a + \frac{[(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}]^2}{(V_0 - A_0)} \quad (9.4.8) $$
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-5" class="section-card">
-            <div class="english-content">
-                <h2>9.5 Stratified Multi-Stage Sampling</h2>
+        <div id="sec9-5" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.5</span> Stratified Multi-Stage Sampling</h2>
                 <p>This is the most popular design for large surveys. We divide the population into \( k \) strata (like States) and then use multi-stage sampling within each stratum. Since each stratum is sampled independently, we can just apply the results we learned earlier to each stratum and then combine them.</p>
 
                 <p><strong>Estimating the Overall Mean:</strong></p>
@@ -514,7 +549,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.5 Stratified Multi-Stage Sampling (स्तरीकृत बहु-चरण प्रतिचयन)</h2>
+                <h2><span class="section-num">9.5</span> Stratified Multi-Stage Sampling (स्तरीकृत बहु-चरण प्रतिचयन)</h2>
                 <p>बड़े पैमाने पर (large-scale) सर्वेक्षणों में सबसे आम design stratified multi-stage sampling है। जब उद्देश्य (object) \( k \) strata में विभाजित population के mean का अनुमान लगाना हो और प्रत्येक stratum के भीतर sampling independent हो, तो कोई नए principles शामिल नहीं होते हैं। fsu की population को \( k \) strata में subdivide किया जाता है। प्रत्येक stratum के भीतर, fsu का एक sample चुना जाता है और प्रत्येक selected fsu को आगे sub-sample किया जाता है।</p>
 
                 <p>मान लीजिए कि \( h \)-वें stratum में \( N_h \) first-stage units हैं, जिनमें से प्रत्येक में \( M_h \) second stage units हैं। Corresponding sample numbers \( n_h \) और \( m_h \) हैं। Population mean per second-stage units का estimator इस प्रकार दिया गया है:</p>
@@ -565,11 +600,13 @@
 
                 <p>उपरोक्त relations से आसानी से देखा जा सकता है कि optimum \( m_h \) का formula बिल्कुल unstratified sampling के समान ही है। इसी तरह, \( n_h \) का optimum value, uni-stage stratified sampling के समान ही रूप लेता है।</p>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-6" class="section-card">
-            <div class="english-content">
-                <h2>9.6 Two-Stage Sampling with Unequal Cluster Sizes</h2>
+        <div id="sec9-6" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.6</span> Two-Stage Sampling with Unequal Cluster Sizes</h2>
                 <p>In the real world, villages or schools (fsu) are rarely the same size. One village might have 200 people while another has 2,000. This makes our estimation more tricky because picking each unit with equal chance across the whole population is no longer simple.</p>
 
                 <p><strong>Common Estimators:</strong></p>
@@ -588,7 +625,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.6 Two-Stage Sampling with Unequal First Stage Units: Estimators of Mean and their Variances (असमान प्रथम चरण इकाइयों के साथ द्वि-चरण प्रतिचयन: माध्य के आकलक और उनके प्रसरण)</h2>
+                <h2><span class="section-num">9.6</span> Two-Stage Sampling with Unequal First Stage Units: Estimators of Mean and their Variances (असमान प्रथम चरण इकाइयों के साथ द्वि-चरण प्रतिचयन: माध्य के आकलक और उनके प्रसरण)</h2>
                 <p>Durbin (1953), Des Raj (1966) और Rao (1975) ने multi-stage sampling के विभिन्न estimators पर विस्तार से चर्चा की है। यह खंड (section) कुछ estimators के description के लिए समर्पित (devoted) है जो आम उपयोग में हैं। मान लीजिए कि विचाराधीन population में \( N \) first-stage units हैं। \( i \)-वें fsu में \( M_i \) second-stage units हैं। इसके अलावा, units को बिना replacement के, समान या असमान probabilities के साथ चुना जाता है। \( n \) fsu's का एक sample चुना जाता है और \( i \)-वें selected fsu से, \( m_i \) ssu's का एक sample चुना जाता है। आइए दर्शाते हैं (Let us denote):</p>
 
                 <ul>
@@ -705,11 +742,13 @@
                     <p>वास्तव में \( \bar{y}_2 \) ratio to size estimator है, जिसके लिए \( \bar{M} \) का ज्ञान आवश्यक नहीं है। इसी तरह की तर्ज पर, कोई regression estimator और उसके bias को परिभाषित कर सकता है, और sampling variance बिना किसी कठिनाई के निकाला जा सकता है।</p>
                 </div>
             </div>
-        </section>
+</div>
+</div>
         
-        <section id="sec9-7" class="section-card">
-            <div class="english-content">
-                <h2>9.7 Best Sample Sizes for Unequal Clusters</h2>
+        <div id="sec9-7" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.7</span> Best Sample Sizes for Unequal Clusters</h2>
                 <p>When clusters have different sizes, we still want to find the best balance for \( n \) and \( m_i \). The cost function now accounts for the different number of units we might pick in each cluster. The basic idea is: if a cluster is very large or very diverse, we should pick more units from it.</p>
 
                 <p><strong>The "Best" Allocation:</strong></p>
@@ -717,7 +756,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.7 Optimum Allocation: Unequal First-Stage Units (इष्टतम आवंटन: असमान प्रथम-चरण इकाइयाँ)</h2>
+                <h2><span class="section-num">9.7</span> Optimum Allocation: Unequal First-Stage Units (इष्टतम आवंटन: असमान प्रथम-चरण इकाइयाँ)</h2>
                 <p>Section 9.3 में, हमने optimum allocation पर चर्चा की है जब first-stage units समान आकार (equal sizes) के होते हैं। Cost और variance functions को \( n \) और \( m \) में वृद्धि के लिए विपरीत (opposite) व्यवहार करते हुए देखा गया था, और इसलिए, fsu और ssu में optimum allocations पर चर्चा करने से पहले इन functions पर विचार करना आवश्यक है।</p>
 
                 <p><strong>Cost Function:</strong> Two-stage sampling design में, survey की cost को एक सरल रूप में इस प्रकार लिखा जा सकता है:</p>
@@ -758,11 +797,13 @@
                     $$ \lambda = \left( \frac{c_1}{c_2}\sum_{i=1}^N \frac{u_iS_i^2}{\Delta N\bar{M}^2} \right)^{1/2} \quad (9.7.9) $$
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-8" class="section-card">
-            <div class="english-content">
-                <h2>9.8 Two-Stage PPS Sampling</h2>
+        <div id="sec9-8" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.8</span> Two-Stage PPS Sampling</h2>
                 <p>When clusters (villages) have very different sizes, picking them with equal probability is not very efficient. Instead, we can pick them with <strong>Probability Proportional to Size (PPS)</strong>. This means a larger village has a higher chance of being selected than a smaller one.</p>
 
                 <p><strong>The Estimator:</strong></p>
@@ -775,7 +816,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.8 Two-Stage pps Sampling (द्वि-चरण पीपीएस प्रतिचयन)</h2>
+                <h2><span class="section-num">9.8</span> Two-Stage pps Sampling (द्वि-चरण पीपीएस प्रतिचयन)</h2>
                 <p>पिछले अनुभागों (sections) में, sampling के प्रत्येक stage पर selection की समान संभावनाओं (equal probabilities) के साथ multi-stage sampling के सिद्धांत (theory) पर चर्चा की गई थी। जब fsu बड़े होते हैं और उनके आकार (sizes) में काफी भिन्नता (differ considerably) होती है, तो उन्हें pps के साथ चुनना वांछनीय (desirable) है, जहाँ sizes \( M_i \) हैं। भिन्न (varying) probabilities के उपयोग को शामिल करने वाली sampling की एक प्रणाली (system) का उपयोग Hansen और Hurwitz (1943, 1949) द्वारा किया गया है। Singh (1954) ने एक two-stage sampling design में दो estimators की तुलना की, जहाँ fsu को varying probability, wor के साथ, और ssu को equal probability, wr, और wor, methods के साथ चुना जाता है। एक वैकल्पिक अनुमान (alternative estimate) Rao (1966) द्वारा सुझाया गया था। Durbin (1967) द्वारा variance estimation का एक सरल तरीका (simple method) दिया गया है। Brewer और Hanif (1970) ने विधि (method) में सुधार किया है और अन्य estimators तक विस्तारित (extended) किया है।</p>
 
                 <p>मान लीजिए कि \( n \) fsu का एक sample pps, wr के साथ चुना गया है। चयनित \( i \)-वें fsu से, \( m_i \) ssu का चयन simple random sampling, wor के साथ किया जाता है। यदि \( i \)-वें fsu को एक से अधिक बार चुना जाता है, तो हर बार पूर्ण fsu से बिना replacement के \( m_i \) ssu की एक ताज़ा स्वतंत्र ड्राइंग (fresh independent drawing) की जा रही है। \( Y \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
@@ -798,11 +839,13 @@
                     $$ v_w(\widehat{Y}_{pps}) = \sum_{i=1}^n \frac{M_i^2(1 - f_{2i})}{n^2p_i^2}\frac{s_{wi}^2}{m_i} \quad (9.8.4) $$
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-9" class="section-card">
-            <div class="english-content">
-                <h2>9.9 Self-weighting Designs</h2>
+        <div id="sec9-9" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.9</span> Self-weighting Designs</h2>
                 <p>In large-scale surveys, calculating different weights for every single unit can be a nightmare. A <strong>Self-weighting design</strong> is a clever trick where we design the survey so that every unit in our final sample has the exact same weight.</p>
 
                 <p><strong>Why is this great?</strong></p>
@@ -816,7 +859,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>9.9 Self-weighting Designs (स्व-भारित डिजाइन)</h2>
+                <h2><span class="section-num">9.9</span> Self-weighting Designs (स्व-भारित डिजाइन)</h2>
                 <p>बड़े पैमाने पर सर्वेक्षणों में, relation (9.8.1) में परिभाषित estimator में एक पद (term) \( M_i/np_im_i \) शामिल होता है जो एक इकाई से दूसरी इकाई में भिन्न (vary) होगा। इसकी परिवर्तनशील प्रकृति (varying nature) की जटिलता (complexity) के कारण, डेटा का विश्लेषण (analysis) काफी बोझिल (cumbersome) होगा। इस स्थिति में, Section 3.7.2 में वर्णित self-weighting samples की तकनीक (technique) बहुत उपयोगी साबित होगी। एक design जो सभी sample units को एक सामान्य वजन (single common weight) प्रदान करता है, उसे self-weighting design के रूप में जाना जाता है, जिसे equi-weighting design भी कहा जाता है। एक design को field या estimation stage पर self-weighting बनाया जा सकता है। यदि इकाइयों का selection इस तरह से किया जाता है कि सभी weights एक-दूसरे के बराबर हो जाएं, तो design को field stage पर self-weighting design कहा जाता है। उदाहरण के लिए, sampling के अंतिम चरण में चुनी जाने वाली ultimate stage units की संख्या के उचित विकल्प (appropriate choice) द्वारा field stage पर एक multi-stage design को self-weighting बनाया जा सकता है। यदि estimation stage पर कुछ उपकरणों (devices) को अपनाकर self-weighting प्राप्त की जाती है, तो design को estimation stage पर self-weighting design कहा जाता है।</p>
 
                 <p>आमतौर पर एक design को field stage पर ही self-weighting बनाया जाना चाहिए क्योंकि यह लागत (cost) और परिचालन सुविधा (operational convenience) दोनों के दृष्टिकोण से वांछनीय (desirable) हो सकता है। उदाहरण के लिए, धान की फसल पर crop-cutting surveys में, एक ब्लॉक में धान उगाने वाले सभी खेतों का frame होना मुश्किल हो सकता है, जबकि ब्लॉक के सभी गाँवों का frame आसानी से उपलब्ध हो सकता है। इसके अलावा, पूरे ब्लॉक में धान की फसल उगाने वाले खेतों के frame के निर्माण में लागत, जनशक्ति (manpower) और प्रयासों (efforts) में वृद्धि होगी; जबकि गाँवों और फिर चयनित गाँवों में खेतों के चयन में ये कारक न्यूनतम (minimum) होते हैं। हालाँकि, ऐसे design पर पहुँचना हमेशा संभव नहीं हो सकता है क्योंकि, व्यवहार में, सभी sample units के लिए केवल एक सामान्य वजन (common weight) होना मुश्किल है। ऐसे मामलों में, दो या अधिक सामान्य weights का उपयोग किया जाता है, बशर्ते कि ऐसे सामान्य weights की संख्या काफी कम हो। कभी-कभी estimation stage पर design को self-weighting बनाना आवश्यक हो सकता है। इस उद्देश्य के लिए विभिन्न विधियाँ (methods) उपलब्ध हैं। इस खंड में, field और estimation stages पर designs को self-weighting बनाने की दोनों स्थितियों पर विचार किया गया है।</p>
@@ -856,11 +899,13 @@
 
                 <p>इस प्रकार, हम यह निष्कर्ष (conclude) निकाल सकते हैं कि self-weighting system न केवल computations करने के लिए बहुत सुविधाजनक (convenient) है बल्कि परिचालन दृष्टिकोण (operational point of view) से भी कुशल (efficient) है। बड़े पैमाने पर सर्वेक्षणों में, यह हमेशा वांछनीय होता है कि प्रत्येक इकाई के लिए वजन समान हो ताकि (i) सारणीकरण (tabulation) सरल हो जाए, (ii) विश्लेषण (analysis) आसान हो जाए, और (iii) लागत कम हो जाए। Self-weighting design का एक और लाभ यह है कि यह प्रत्येक चयनित fsu से एक निरंतर (constant) sample size देता है। इस प्रकार, अन्वेषक (investigators) विभिन्न fsu में अलग-अलग कार्यभार (varying work loads) के लिए जिम्मेदार नहीं होंगे। सिस्टम का एकमात्र नुकसान यह है कि इनमें से कुछ विधियों के परिणामस्वरूप biased estimates हो सकते हैं, हालांकि, कुछ मामलों में, छोटे variance के साथ।</p>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-10" class="section-card">
-            <div class="english-content">
-                <h2>9.10 Three-Stage PPS Sampling</h2>
+        <div id="sec9-10" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">9.10</span> Three-Stage PPS Sampling</h2>
                 <p>Just like we used PPS for two stages, we can use it for three stages too. We assign probabilities of selection at every level: for the villages, for the fields, and for the plots. This ensures that larger areas or more important units get correctly represented in the final estimate.</p>
 
                 <p><strong>The Estimator:</strong></p>
@@ -871,7 +916,7 @@
             </div>
             
             <div class="hinglish-content">
-                <h2>9.10 Three-Stage pps Sampling (त्रि-चरण पीपीएस प्रतिचयन)</h2>
+                <h2><span class="section-num">9.10</span> Three-Stage pps Sampling (त्रि-चरण पीपीएस प्रतिचयन)</h2>
                 <p>हमने पिछले अनुभाग में two-stage pps sampling design पर विचार किया है जिसे तीन या अधिक stages तक बढ़ाया (extended) जा सकता है। मान लीजिए कि प्रत्येक stage पर pps, wr को अपनाकर \( nml \) units का एक sample तीन stages में चुना जाता है। मान लीजिए \( n \) fsu's को \( i \)-वें fsu \( (i = 1,...,N) \) के लिए \( p_i \) probabilities of selection के साथ चुना जाता है। प्रत्येक चयनित fsu से, \( m_i \) ssu's को \( j \)-वें ssu \( (j = 1,...,M_i) \) के लिए \( p_{ij} \) probabilities of selection के साथ चुना जाता है और प्रत्येक चयनित ssu से, \( l \) third stage units (tsu's) को \( i \)-वें fsu में \( j \)-वें ssu के \( k \)-वें tsu के \( p_{ijk} \) probabilities of selection के साथ चुना जाता है \( (k = 1,...,L_{ij}) \)। मान लीजिए \( y_{ijk} \) sample में \( i \)-वें fsu के \( j \)-वें ssu में \( k \)-वें tsu के मान को दर्शाता है \( (i = 1,...,n; j = 1,...,m; k = 1,...,l) \)। Population total \( Y \) के एक estimator को इस प्रकार परिभाषित किया जा सकता है:</p>
 
                 <div class="derivation-block">
@@ -926,10 +971,12 @@
                     $$ C = a + \frac{1}{V_0}(\sqrt{A_1c_1} + \sqrt{A_2c_2} + \sqrt{A_3c_3})^2 \quad (9.10.8) $$
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-ref" class="section-card">
-            <div class="english-content">
+        <div id="sec9-ref" class="topic-section">
+<div class="section-card">
+<div class="english-content">
                 <h2>References</h2>
                 <p>If you want to dive deeper into multi-stage sampling, check out these classic books and papers. They provide the mathematical backbone for many modern national surveys.</p>
                 <ul>
@@ -953,10 +1000,12 @@
                     <li>Murthy, M. N., & Sethi, V. K. (1959). Self-weighting design at estimation stage. <em>Sankhya</em>, 21, 259-262.</li>
                 </ul>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec9-11" class="section-card">
-            <div class="english-content">
+        <div id="sec9-11" class="topic-section">
+<div class="section-card">
+<div class="english-content">
                 <h2>Practice Questions</h2>
                 <p>Try to solve these questions to test your understanding of Multi-Stage Sampling. Think about the real-world logic behind the math!</p>
                 <ol>
@@ -986,11 +1035,13 @@
                     </li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
         <!-- QUIZZES SECTION -->
-        <section id="quiz-mcq" class="section-card">
-            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+        <div id="quiz-mcq" class="topic-section">
+<div class="section-card">
+<h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
             
             <div class="question-box">
                 <div class="question">1. In multi-stage sampling, the primary advantage is: <br> (बहु-चरण प्रतिचयन में, प्राथमिक लाभ क्या है?)</div>
@@ -1231,11 +1282,12 @@
                 <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
                 <div id="mcq20" class="answer"><strong>Correct Answer:</strong> b) Mahalanobis <br> <em>Explanation:</em> Mahalanobis (1940) famously pioneered the use of nested multi-stage cluster sampling procedures for massive agricultural surveys in India.</div>
             </div>
+</div>
+</div>
 
-        </section>
-
-        <section id="quiz-fib" class="section-card">
-            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+        <div id="quiz-fib" class="topic-section">
+<div class="section-card">
+<h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
 
             <div class="question-box">
                 <div class="question">1. In a two-stage sampling scheme, the clusters selected strictly at the first stage are fundamentally called ____________. <br> (दो-चरणीय प्रतिचयन योजना में, कड़ाई से पहले चरण में चुने गए गुच्छों को मौलिक रूप से ____________ कहा जाता है।)</div>
@@ -1356,11 +1408,12 @@
                 <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
                 <div id="fib20" class="answer"><strong>Answer:</strong> multi-stage / cluster (बहु-चरण / गुच्छ) <br> <em>Explanation:</em> This exact logistical requirement is the primary operational motivation for hierarchical sampling designs.</div>
             </div>
+</div>
+</div>
 
-        </section>
-
-        <section id="quiz-tf" class="section-card">
-            <h2>✅ True or False (सही या गलत)</h2>
+        <div id="quiz-tf" class="topic-section">
+<div class="section-card">
+<h2>✅ True or False (सही या गलत)</h2>
 
             <div class="question-box">
                 <div class="question">1. Multi-stage sampling usually yields a strictly smaller statistical variance than a simple random sample of identical overall size. <br> (बहु-चरण प्रतिचयन आमतौर पर समान समग्र आकार के एक सरल यादृच्छिक प्रतिदर्श की तुलना में कड़ाई से छोटा सांख्यिकीय प्रसरण प्राप्त करता है।)</div>
@@ -1481,12 +1534,12 @@
                 <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
                 <div id="tf20" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> By spreading randomization across hierarchical layers, it successfully marries the broad statistical safety of SRS with the fierce logistical savings of cluster grouping.</div>
             </div>
-
-        </section>
+</div>
+</div>
         
         <script>
         function showTopic(topicId) {
-            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.topic-section').forEach(card => card.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             
             var elem = document.getElementById(topicId);
@@ -1521,7 +1574,30 @@
             }
             if(window.MathJax) { MathJax.typesetPromise(); }
         }
+    
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
     </script>
-    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    <script src="../whiteboard/whiteboard.js?v=2.0">
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+    </script>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+    </script>
 </body>
 </html>

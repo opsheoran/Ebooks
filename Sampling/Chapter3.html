@@ -13,56 +13,83 @@
 <body>
 
     <header class="book-header">
-        <div class="header-icon"><i class="fas fa-book"></i></div>
-        <div class="header-text">
-            <h1>Chapter 3: Stratified Random Sampling | Theory of Sampling</h1>
-            <div style="font-family: 'DM Sans'; font-size: 0.8rem; color: rgba(255,255,255,0.7);">Prof. O.P. Sheoran</div>
-        </div>
-    
-        <button class="draw-mode-toggle" id="draw-mode-btn" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%);"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>
-    </header>
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+    <div class="header-icon">🎲</div>
+    <div class="header-text">
+        <h1>Theory of Sampling</h1>
+        <div class="subtitle">CHAPTER 3 · STRATIFIED RANDOM SAMPLING</div>
+    </div>
+    <div class="header-badge">Prof. O.P. Sheoran</div>
+    <button class="draw-mode-toggle" id="draw-mode-btn">
+        <i class="fas fa-chalkboard"></i> Open Whiteboard
+    </button>
+</header>
 
-    <aside class="sidebar">
-        <div style="text-align: center; margin-bottom: 20px; margin-top: 10px;">
-            <img src="opsheoran.png" alt="Prof. O.P. Sheoran" style="width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); margin-bottom: 10px; object-fit: cover;">
-            <h3 style="color: white; font-family: \'Playfair Display\', serif; font-size: 1.1rem; margin: 0;">Prof. O.P. Sheoran</h3>
+    <nav class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <h2>Chapter 3</h2>
+        <p>Stratified Random Sampling<br>CCS Haryana Agricultural University</p>
+    </div>
+    <div class="sidebar-author">
+        <img src="opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+        <div class="sidebar-author-info">
+            <h3>Prof. O.P. Sheoran</h3>
+            <p>Author & Instructor</p>
         </div>
-        <a class="nav-link active" onclick="showTopic('sec3-1')">3.1 Introduction</a>
-        <a class="nav-link" onclick="showTopic('sec3-2')">3.2 Principles of Stratification</a>
-        <a class="nav-link" onclick="showTopic('sec3-3')">3.3 Advantages of Stratification</a>
-        <a class="nav-link" onclick="showTopic('sec3-4')">3.4 Notations</a>
-        <a class="nav-link" onclick="showTopic('sec3-5')">3.5 Estimation of Mean & Var</a>
-        <a class="nav-link" onclick="showTopic('sec3-6')">3.6 Estimation for Proportions</a>
-        <a class="nav-link" onclick="showTopic('sec3-7')">3.7 Allocation of Sample Size</a>
-        <a class="nav-link" onclick="showTopic('sec3-8')">3.8 Relative Precision</a>
-        <a class="nav-link" onclick="showTopic('sec3-9')">3.9 Gain in Precision</a>
-        <a class="nav-link" onclick="showTopic('sec3-10')">3.10 Formation of Strata</a>
-        <a class="nav-link" onclick="showTopic('sec3-11')">3.11 Number of Strata</a>
-        <a class="nav-link" onclick="showTopic('sec3-12')">3.12 Method of Collapsed Strata</a>
-        <a class="nav-link" onclick="showTopic('sec3-13')">3.13 Post-Stratification</a>
-        <a class="nav-link" onclick="showTopic('sec3-14')">3.14 Deep Stratification</a>
-        
-        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
-        <div style="padding: 10px 20px; color: var(--gold); font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">Quizzes / Exercises</div>
-        <a class="nav-link" onclick="showTopic('quiz-mcq')">❓ Multiple Choice</a>
-        <a class="nav-link" onclick="showTopic('quiz-fib')">✏️ Fill in Blanks</a>
-        <a class="nav-link" onclick="showTopic('quiz-tf')">✅ True / False</a>
-        <a class="nav-link" onclick="showTopic('sec3-15')">📝 Exercise (Subjective)</a>
-        <hr style="border: 0.5px solid rgba(255,255,255,0.1); margin: 15px 20px;">
-        <a class="nav-link" href="index.html#home"><i class="fas fa-home"></i> Home</a>
-        <a class="nav-link" href="index.html#preface"><i class="fas fa-scroll"></i> Preface</a>
-        <a class="nav-link" href="index.html#syllabus"><i class="fas fa-list-alt"></i> Syllabus</a>
-        <a class="nav-link" href="index.html#author"><i class="fas fa-user-tie"></i> About Author</a>
-        <a class="nav-link" href="../index.html" style="background: rgba(255,255,255,0.1); margin-top: 10px;"><i class="fas fa-book-open"></i> Back to E-Books Library</a>
-    </aside>
+    </div>
+    <div class="nav-group-label">Navigation</div>
+    <ul class="nav-list">
+        <li class="nav-item">
+            <a class="nav-link" href="index.html#home" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;">
+                <span class="nav-num">🏠</span> Home
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 5px;">
+                <span class="nav-num">📚</span> Back to E-Books Library
+            </a>
+        </li>
+    </ul>
+    <div class="nav-group-label">Main Concepts</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link active" href="#" onclick="showTopic('sec3-1');return false;"><span class="nav-num">3.1</span> Introduction</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-2');return false;"><span class="nav-num">3.2</span> Principles of Stratification</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-3');return false;"><span class="nav-num">3.3</span> Advantages of Stratification</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-4');return false;"><span class="nav-num">3.4</span> Notations</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-5');return false;"><span class="nav-num">3.5</span> Estimation of Mean & Var</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-6');return false;"><span class="nav-num">3.6</span> Estimation for Proportions</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-7');return false;"><span class="nav-num">3.7</span> Allocation of Sample Size</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-8');return false;"><span class="nav-num">3.8</span> Relative Precision</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-9');return false;"><span class="nav-num">3.9</span> Gain in Precision</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-10');return false;"><span class="nav-num">3.10</span> Formation of Strata</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-11');return false;"><span class="nav-num">3.11</span> Number of Strata</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-12');return false;"><span class="nav-num">3.12</span> Method of Collapsed Strata</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-13');return false;"><span class="nav-num">3.13</span> Post-Stratification</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-14');return false;"><span class="nav-num">3.14</span> Deep Stratification</a></li>
+    </ul>
+    <div class="nav-group-label">Practice Exercises</div>
+    <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('quiz-mcq');return false;"><span class="nav-num">❓</span> Multiple Choice</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('quiz-fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('quiz-tf');return false;"><span class="nav-num">✅</span> True / False</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('sec3-15');return false;"><span class="nav-num">📝</span> Exercise (Subjective)</a></li>
+    </ul>
+</nav>
 
     <main class="main-content">
-        <button class="lang-toggle-btn" onclick="toggleLanguage()">Switch to Hinglish</button>
+        <button class="lang-toggle-btn" onclick="toggleLanguage()" style="margin-bottom: 20px; z-index: 100; position: relative;">Switch to Hinglish</button>
+        <div class="chapter-header">
+    <h1>Chapter 3: Stratified Random Sampling</h1>
+    <div class="author">By Prof. O.P. Sheoran · Department of Mathematics & Statistics</div>
+</div>
+
+
 
         <!-- SEC 3.1 -->
-        <section id="sec3-1" class="section-card active">
-            <div class="english-content">
-                <h2>3.1 Introduction</h2>
+        <div id="sec3-1" class="topic-section active">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.1</span> Introduction</h2>
                 <div class="quote">
                     "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \( 1\frac{1}{16} \) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
                 </div>
@@ -85,7 +112,7 @@
             </div>
             
             <div class="hinglish-content">
-                <h2>3.1 Introduction</h2>
+                <h2><span class="section-num">3.1</span> Introduction</h2>
                 <div class="quote">
                     "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \( 1\frac{1}{16} \) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
                 </div>
@@ -106,13 +133,15 @@
                     <li>Stratified data का analysis कैसे करें</li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
         <!-- SEC 3.2 to 3.4 -->
         
-        <section id="sec3-2" class="section-card">
-            <div class="english-content">
-                <h2>3.2 Principles of Stratification</h2>
+        <div id="sec3-2" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.2</span> Principles of Stratification</h2>
                 <p>When stratifying a population, you should follow these principles:</p>
                 <ol>
                     <li>The strata should be non-overlapping and should together comprise the whole population.</li>
@@ -122,7 +151,7 @@
                 </ol>
             </div>
             <div class="hinglish-content">
-                <h2>3.2 Principles of Stratification</h2>
+                <h2><span class="section-num">3.2</span> Principles of Stratification</h2>
                 <p>Population को stratify करते वक़्त आपको इन principles को follow करना चाहिए:</p>
                 <ol>
                     <li>Strata non-overlapping होने चाहिए और सभी strata मिलकर पूरी population को cover करने चाहिए।</li>
@@ -131,11 +160,13 @@
                     <li>अगर हमें पहले से बताया गया है कि कुछ sub-populations के लिए एक specific precision limit चाहिए, तो बेहतर होगा कि उन sub-populations को हम अलग से एक stratum मान लें।</li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-3" class="section-card">
-            <div class="english-content">
-                <h2>3.3 Advantages of Stratification</h2>
+        <div id="sec3-3" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.3</span> Advantages of Stratification</h2>
                 <p>Stratification serves many useful purposes. The principal ones are:</p>
                 <ol>
                     <li><strong>Administrative Convenience:</strong> The survey agency can establish field offices in various administrative zones, leading to better organization and supervision of fieldwork.</li>
@@ -148,7 +179,7 @@
                 </ol>
             </div>
             <div class="hinglish-content">
-                <h2>3.3 Advantages of Stratification</h2>
+                <h2><span class="section-num">3.3</span> Advantages of Stratification</h2>
                 <p>Stratification के बहुत से फायदे हैं, जिनमें से main ये हैं:</p>
                 <ol>
                     <li><strong>Administrative Convenience (प्रशासनिक सुविधा):</strong> Survey agency अलग-अलग zones में अपने field offices बना सकती है, जिससे field work का supervision अच्छे से हो पाता है।</li>
@@ -160,11 +191,13 @@
                     <li><strong>Precision में Gain:</strong> एक heterogeneous (अलग-अलग प्रकार की) population को homogeneous (एक जैसी) sub-populations में बाँटने से, हर stratum के अंदर variance कम हो जाता है। इससे हम छोटे sample से भी ज़्यादा सटीक (precise) estimate निकाल सकते हैं।</li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-4" class="section-card">
-            <div class="english-content">
-                <h2>3.4 Notations</h2>
+        <div id="sec3-4" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.4</span> Notations</h2>
                 <p>Let's define our notations carefully. Let \( k \) denote the number of strata, \( i \) denote a specific stratum, and \( j \) denote a sampling unit within that stratum.</p>
                 <p>For the \( i \)-th stratum:</p>
                 <ul>
@@ -183,7 +216,7 @@
                 </div>
             </div>
             <div class="hinglish-content">
-                <h2>3.4 Notations</h2>
+                <h2><span class="section-num">3.4</span> Notations</h2>
                 <p>चलिए अपने notations define करते हैं। मान लीजिए \( k \) total strata हैं, \( i \) किसी एक stratum को दर्शाता है, और \( j \) उस stratum के अंदर की एक sampling unit को दर्शाता है।</p>
                 <p>\( i \)-th stratum के लिए:</p>
                 <ul>
@@ -201,13 +234,15 @@
                     <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \) (Stratum का sample variance)</div>
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
 
     
-        <section id="sec3-5" class="section-card">
-            <div class="english-content">
-                <h2>3.5 Estimation of the Population Mean and its Variance</h2>
+        <div id="sec3-5" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.5</span> Estimation of the Population Mean and its Variance</h2>
                 <p>Suppose our population of \( N \) units is divided into \( k \) strata. The overall population mean per unit \( \bar{Y} \) can be written as a weighted average of the strata means:</p>
                 <div class="derivation-block">
                     <div style="padding: 5px 0;">\( \bar{Y} = \frac{1}{N} \sum_{i=1}^{k} N_i \bar{Y}_i = \sum_{i=1}^{k} W_i \bar{Y}_i \)</div>
@@ -298,7 +333,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.5 Estimation of the Population Mean and its Variance</h2>
+                <h2><span class="section-num">3.5</span> Estimation of the Population Mean and its Variance</h2>
                 <p>मान लीजिए हमारी \( N \) units की population \( k \) strata में divided है। Overall population का mean \( \bar{Y} \) हम strata means के weighted average के रूप में लिख सकते हैं:</p>
                 <div class="derivation-block">
                     <div style="padding: 5px 0;">\( \bar{Y} = \sum_{i=1}^{k} W_i \bar{Y}_i \)</div>
@@ -375,11 +410,13 @@
                     <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \frac{P_i Q_i}{n_i} \)</div>
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-6" class="section-card">
-            <div class="english-content">
-                <h2>3.6 Estimate of Variance</h2>
+        <div id="sec3-6" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.6</span> Estimate of Variance</h2>
                 <p>In practice, the population parameters \( S_i^2 \) are unknown, so we must estimate \( V(\bar{y}_{st}) \) from our sample data.</p>
                 <p>If a simple random sample is taken within each stratum, an unbiased estimator of \( S_i^2 \) is given by the sample variance \( s_i^2 \):</p>
                 <div class="derivation-block">
@@ -405,7 +442,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.6 Estimate of Variance</h2>
+                <h2><span class="section-num">3.6</span> Estimate of Variance</h2>
                 <p>असली surveys में हमें population का variance \( S_i^2 \) पता नहीं होता। तो हम उसकी जगह sample से calculate किया गया \( s_i^2 \) use करते हैं।</p>
                 <div class="derivation-block">
                     <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \)</div>
@@ -428,12 +465,14 @@
                     <div style="padding: 5px 0;">\( v(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{N_i - n_i}{N_i} \right) \frac{p_i q_i}{n_i - 1} \)</div>
                 </div>
             </div>
-        </section>
+</div>
+</div>
 
     
-        <section id="sec3-7" class="section-card">
-            <div class="english-content">
-                <h2>3.7 Allocation of Sample Size in Different Strata</h2>
+        <div id="sec3-7" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.7</span> Allocation of Sample Size in Different Strata</h2>
                 <p>In stratified sampling, allocating the sample \( n \) to different strata depends on three factors:</p>
                 <ol>
                     <li>The total number of units in the stratum (stratum size \( N_i \)).</li>
@@ -513,7 +552,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.7 Allocation of Sample Size</h2>
+                <h2><span class="section-num">3.7</span> Allocation of Sample Size</h2>
                 <p>जब हम stratified sampling करते हैं, तो सबसे बड़ा सवाल ये होता है कि हर stratum से कितना बड़ा sample (\( n_i \)) लिया जाए? इसे <strong>Allocation</strong> कहते हैं। एक अच्छा allocation वो होता है जिसमें हमें कम से कम खर्च में ज़्यादा से ज़्यादा accuracy मिले। Allocation 4 तरीके से होता है:</p>
                 
                 <h3>3.7.1 Equal Allocation</h3>
@@ -546,11 +585,13 @@
                     <li>Survey करने का खर्चा (\( c_i \)) कम हो।</li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-8" class="section-card">
-            <div class="english-content">
-                <h2>3.8 RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
+        <div id="sec3-8" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.8</span> RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
                 <p>In this section, we compare the precision of the usual estimators under simple random sampling (without stratification) and stratified random sampling employing proportional and optimum allocations. The variances are denoted by \( V(\bar{y}_n)_{SRS} \), \( V(\bar{y}_{st})_{prop} \), and \( V(\bar{y}_{st})_{opt} \) respectively.</p>
 
                 <p><strong>Theorem 3.8.1:</strong> If finite population correction (f.p.c.) is ignored, show that:</p>
@@ -619,7 +660,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.8 RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
+                <h2><span class="section-num">3.8</span> RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
                 <p>इस section में हम देखते हैं कि SRS (जिसमें कोई stratification नहीं होता), Proportional Allocation, और Optimum Allocation में सबसे अच्छा (precise) कौन है। हम इनके variances \( V(\bar{y}_n)_{SRS} \), \( V(\bar{y}_{st})_{prop} \), और \( V(\bar{y}_{st})_{opt} \) को compare करते हैं।</p>
 
                 <p><strong>Theorem 3.8.1:</strong> अगर हम finite population correction (f.p.c.) को ignore करें, तो prove करो कि:</p>
@@ -637,11 +678,13 @@
                 <p><strong>निष्कर्ष (Conclusion):</strong> जितना ज़्यादा अलग-अलग strata के means होंगे, proportional allocation उतना ही अच्छा perform करेगा SRS के comparison में। और Optimum allocation सबसे बेहतर precision देता है।<br>
                 Example 3.1 में UP के 2000 किसानों का data दिया गया है जिससे ये mathematically prove किया गया कि Optimum allocation का variance सबसे कम आता है।</p>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-9" class="section-card">
-            <div class="english-content">
-                <h2>3.9 ESTIMATION OF GAIN IN PRECISION DUE TO STRATIFICATION</h2>
+        <div id="sec3-9" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.9</span> ESTIMATION OF GAIN IN PRECISION DUE TO STRATIFICATION</h2>
                 <p>In comparing the precision, we assumed the population values (\( S_i^2 \), \( \bar{Y}_i \)) were known. But what if we only have a stratified sample and want to estimate the gain in precision due to stratification?</p>
                 <p>An unbiased estimator of \( V(\bar{y}_{st}) \) is \( v(\bar{y}_{st}) = \sum W_i^2 \left(\frac{1}{n_i} - \frac{1}{N_i}\right) s_i^2 \).</p>
                 <p>To compare, we need an unbiased estimate of \( V(\bar{y}_{n})_{SRS} \) based on the stratified sample.</p>
@@ -660,19 +703,21 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.9 ESTIMATION OF GAIN IN PRECISION DUE TO STRATIFICATION</h2>
+                <h2><span class="section-num">3.9</span> ESTIMATION OF GAIN IN PRECISION DUE TO STRATIFICATION</h2>
                 <p>अभी तक हमने मान लिया था कि population के \( S_i^2 \) और \( \bar{Y}_i \) हमें पता हैं। लेकिन survey के बाद अगर हमें check करना हो कि stratification से कितना फायदा (gain) हुआ, तो कैसे करेंगे?</p>
                 <p>Stratified variance का estimate तो हमें पता है \( v(\bar{y}_{st}) \)। पर अगर हमने strata ना बनाए होते और SRS किया होता, तो उसका variance क्या आता, उसका estimate हमें उसी stratified sample से निकालना पड़ता है।</p>
                 <p>इसका एक complex formula होता है जो ऊपर दिया गया है।</p>
                 <p>Relative gain निकालने के लिए हम दोनों variance estimates का difference निकाल कर उसको stratified variance estimate से divide कर देते हैं।</p>
                 <p>Example 3.3 में Trivandrum के pepper standards के survey data से calculate करके दिखाया गया है कि कैसे strata बनाने से precision percentage में gain आता है।</p>
             </div>
-        </section>
+</div>
+</div>
 
     
-        <section id="sec3-10" class="section-card">
-            <div class="english-content">
-                <h2>3.10 FORMATION OF STRATA</h2>
+        <div id="sec3-10" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.10</span> FORMATION OF STRATA</h2>
                 <p>How do we demarcate the boundaries of strata if the study variable is continuous? The goal is to choose demarcation points \( y_1, y_2, ..., y_{k-1} \) to minimize \( V(\bar{y}_{st}) \).</p>
                 <p>Dalenius showed that with proportional allocation, the optimal points are given by:</p>
                 <div class="derivation-block">
@@ -689,7 +734,7 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.10 FORMATION OF STRATA</h2>
+                <h2><span class="section-num">3.10</span> FORMATION OF STRATA</h2>
                 <p>अगर हमारा data continuous है (जैसे income या age), तो हम strata की boundaries कहाँ बनाएँ? हमारा मकसद है कि \( V(\bar{y}_{st}) \) minimize हो।</p>
                 <p>Dalenius ने prove किया था कि boundary points \( y_h \) उन दो strata के means का average होना चाहिए जिनको वो separate कर रहा है।</p>
                 <p>लेकिन practical life में इसे calculate करना बहुत मुश्किल है। इसलिए कुछ आसान नियम (rules) बनाए गए:</p>
@@ -700,11 +745,13 @@
                     <li><strong>\( \sqrt{f(y)} \) का rule:</strong> Dalenius और Hodges का best method, जिसमें frequency की square root को cumulate करके बराबर हिस्सों में बाँटा जाता है।</li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-11" class="section-card">
-            <div class="english-content">
-                <h2>3.11 DETERMINATION OF NUMBER OF STRATA</h2>
+        <div id="sec3-11" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.11</span> DETERMINATION OF NUMBER OF STRATA</h2>
                 <p>As we increase the number of strata \( k \), the variance decreases. Dalenius conjectured that the variance of an estimator with \( k \) strata compared to infinite strata is approximately:</p>
                 <div class="derivation-block">
                     <div style="padding: 5px 0;">\( \frac{V(\bar{y}_k)}{V(\bar{y}_\infty)} = \frac{k^2}{k^2 - 1} \)</div>
@@ -714,33 +761,37 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.11 DETERMINATION OF NUMBER OF STRATA</h2>
+                <h2><span class="section-num">3.11</span> DETERMINATION OF NUMBER OF STRATA</h2>
                 <p>कितने strata बनाने चाहिए? जब हम strata की संख्या \( k \) बढ़ाते हैं, तो variance कम होता है। पर इसका मतलब ये नहीं कि हम 100 strata बना दें।</p>
                 <p>Strata बढ़ाने से survey का खर्चा भी बढ़ता है। Cost का formula है \( C = C_0 + k C_1 + n C_2 \), जिसमें \( C_1 \) नए stratum बनाने का खर्चा है।</p>
                 <p>Optimum strata की संख्या वो है जहाँ variance कम होने का फायदा, खर्च बढ़ने के नुकसान को balance करे। Sethi की research के अनुसार, 6 से ज़्यादा strata बनाना शायद ही कभी फायदेमंद होता है।</p>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-12" class="section-card">
-            <div class="english-content">
-                <h2>3.12 METHOD OF COLLAPSED STRATA</h2>
+        <div id="sec3-12" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.12</span> METHOD OF COLLAPSED STRATA</h2>
                 <p>Sometimes the population is so heterogeneous that to achieve better representation, stratification is carried to the point that only \( n_i = 1 \) (one unit) is selected from each stratum. In such cases, the variance \( s_i^2 \) cannot be estimated because \( n_i - 1 = 0 \).</p>
                 <p>To estimate the variance, strata are grouped in pairs whose means do not differ much. This is called the <strong>technique of collapsed strata</strong>.</p>
                 <p>By grouping pairs, we get a combined variance estimate. However, this quantity will overestimate the true variance \( V(\bar{y}_{st}) \). The overestimation is small if the paired strata are similar in size and characteristics.</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.12 METHOD OF COLLAPSED STRATA</h2>
+                <h2><span class="section-num">3.12</span> METHOD OF COLLAPSED STRATA</h2>
                 <p>कभी-कभी population इतनी अलग-अलग (heterogeneous) होती है कि हमें इतने strata बनाने पड़ते हैं कि हर stratum से हम सिर्फ 1 ही unit (\( n_i = 1 \)) select कर पाते हैं। ऐसे case में हम variance \( s_i^2 \) नहीं निकाल सकते क्यूंकि formula में \( n_i - 1 = 0 \) हो जाएगा।</p>
                 <p>Variance estimate करने के लिए, हम उन strata के जोड़े (pairs) बना देते हैं जो एक दूसरे से मिलते-जुलते हैं। इसे <strong>Collapsed Strata</strong> method कहते हैं।</p>
                 <p>इस जोड़े (pair) से जो variance निकलता है, वो असली variance से थोड़ा ज़्यादा (overestimate) होता है। लेकिन अगर हमने अच्छे से pair बनाए हैं तो ये difference बहुत कम होता है।</p>
             </div>
-        </section>
+</div>
+</div>
 
         
-        <section id="sec3-13" class="section-card">
-            <div class="english-content">
-                <h2>3.13 POST-STRATIFICATION (STRATIFICATION AFTER SELECTION OF SAMPLE)</h2>
+        <div id="sec3-13" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.13</span> POST-STRATIFICATION (STRATIFICATION AFTER SELECTION OF SAMPLE)</h2>
                 <p>Sometimes, we don't have the frame to stratify before sampling (e.g., we don't have lists of voters by age, but we know their ages after surveying them). We draw a simple random sample, and then classify the selected units into strata. This is called <strong>post-stratification</strong>.</p>
                 <p>The weighted mean \( \bar{y}_{pw} = \sum W_i \bar{y}_i \) is used.</p>
                 <p>Stephan (1945) showed that for large \( n \), the variance is:</p>
@@ -751,30 +802,34 @@
             </div>
 
             <div class="hinglish-content">
-                <h2>3.13 POST-STRATIFICATION (STRATIFICATION AFTER SELECTION OF SAMPLE)</h2>
+                <h2><span class="section-num">3.13</span> POST-STRATIFICATION (STRATIFICATION AFTER SELECTION OF SAMPLE)</h2>
                 <p>कभी-कभी survey से पहले हमारे पास strata बनाने की जानकारी नहीं होती (जैसे, हमें नहीं पता कौन किस age group का है जब तक हम पूछ ना लें)। ऐसे में हम एक simple random sample ले लेते हैं, और फिर sample के अंदर लोगो को उनके age-group (strata) में बाँट देते हैं। इसे <strong>Post-Stratification</strong> कहते हैं।</p>
                 <p>बड़े sample size \( n \) के लिए, इसका variance लगभग Proportional Allocation वाले variance के बराबर ही आता है, थोड़े से adjustment के साथ। इसका मतलब है कि अगर पहले stratification ना हो पाए, तो बाद में करने से भी proportional allocation जैसा ही फायदा मिल जाता है।</p>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-14" class="section-card">
-            <div class="english-content">
-                <h2>3.14 DEEP STRATIFICATION</h2>
+        <div id="sec3-14" class="topic-section">
+<div class="section-card">
+<div class="english-content">
+                <h2><span class="section-num">3.14</span> DEEP STRATIFICATION</h2>
                 <p>If there are two alternative criteria of stratification, we can opt for two-way stratification which yields \( k_1 \) rows and \( k_2 \) columns, making \( k_1 \times k_2 \) strata.</p>
                 <p>If we want to estimate the variance, the minimum sample size must be \( 2 \times k_1 \times k_2 \). A problem arises when the available sample size \( n \) is less than the number of strata, yet we want proportional allocation for each criterion.</p>
                 <p>Bryant, Hartley and Jessen (1960) provided a method called deep stratification or controlled selection. By arranging cells and selecting them such that no two cells belong to the same row or column, original selection probabilities are preserved while maintaining multi-way stratification.</p>
             </div>
             <div class="hinglish-content">
-                <h2>3.14 DEEP STRATIFICATION</h2>
+                <h2><span class="section-num">3.14</span> DEEP STRATIFICATION</h2>
                 <p>अगर हमारे पास stratification के 2 criteria हैं (जैसे Age और Income दोनों), तो हम दोनों का use करके 2-way stratification कर सकते हैं। इससे \( k_1 \times k_2 \) number of strata बनेंगे।</p>
                 <p>Variance निकालने के लिए हमें कम से कम हर cell में 2 observations चाहिए। पर problem तब आती है जब हमारा total sample size \( n \), total strata से भी कम हो।</p>
                 <p>इसका solution Bryant, Hartley और Jessen ने दिया था जिसे <strong>Deep Stratification</strong> या Controlled Selection कहते हैं। इसमें हम mathematically cells को इस तरह select करते हैं कि दोनों criteria का proportional representation भी हो जाए, और sample size भी कम लगे।</p>
             </div>
-        </section>
+</div>
+</div>
 
 
-        <section id="sec3-ref" class="section-card">
-            <div class="english-content">
+        <div id="sec3-ref" class="topic-section">
+<div class="section-card">
+<div class="english-content">
                 <h2>Further Reading and References</h2>
                 <p>If you want to dive deeper into the theory, here are some standard textbooks used by students and researchers across India:</p>
                 <ul>
@@ -795,10 +850,12 @@
                     <li>Cochran, W. G. (1961). Comparison of methods for determining stratum boundaries. <em>Bull. Int. Statist. Inst.</em>, 38(2), 345-358.</li>
                 </ul>
             </div>
-        </section>
+</div>
+</div>
 
-        <section id="sec3-15" class="section-card">
-            <div class="english-content">
+        <div id="sec3-15" class="topic-section">
+<div class="section-card">
+<div class="english-content">
                 <h2>Practice Exercise (Subjective Questions)</h2>
                 <p>Try solving these problems to test your understanding of the mathematical derivations:</p>
                 <ol>
@@ -825,12 +882,14 @@
                     <li>तीन अलग-अलग सामुदायिक जिलों (community districts) को strata मानते हुए, इष्टतम परिस्थितियों में साक्षर (literate) व्यक्तियों के proportion का अनुमान लगाने के लिए 2000 व्यक्तियों के sample को गणितीय रूप से आवंटित (allocate) करें।</li>
                 </ol>
             </div>
-        </section>
+</div>
+</div>
 
         <!-- QUIZZES -->
         <!-- QUIZZES SECTION -->
-        <section id="quiz-mcq" class="section-card">
-            <h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+        <div id="quiz-mcq" class="topic-section">
+<div class="section-card">
+<h2>❓ Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
             
             <div class="question-box">
                 <div class="question">1. The primary objective of stratified random sampling is to: <br> (स्तरीकृत यादृच्छिक प्रतिचयन का प्राथमिक उद्देश्य है:)</div>
@@ -1071,11 +1130,12 @@
                 <button class="toggle-btn" onclick="toggleAnswer('mcq20')">Show/Hide Answer</button>
                 <div id="mcq20" class="answer"><strong>Correct Answer:</strong> b) Taking the square root of the sum of the weighted stratum variances <br> <em>Explanation:</em> Since the strata are independent, you simply sum their mathematically scaled variances \( W_h^2 V(\bar{y}_h) \) and take the square root.</div>
             </div>
+</div>
+</div>
 
-        </section>
-
-        <section id="quiz-fib" class="section-card">
-            <h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
+        <div id="quiz-fib" class="topic-section">
+<div class="section-card">
+<h2>✏️ Fill in the Blanks (रिक्त स्थान भरें)</h2>
 
             <div class="question-box">
                 <div class="question">1. Stratification aims to structurally maximize the variation ____________ strata and natively minimize the variation ____________ strata. <br> (स्तरीकरण का उद्देश्य संरचनात्मक रूप से स्तरों के ____________ भिन्नता को अधिकतम करना और मूल रूप से स्तरों के ____________ भिन्नता को कम करना है।)</div>
@@ -1196,11 +1256,12 @@
                 <button class="toggle-btn" onclick="toggleAnswer('fib20')">Show/Hide Answer</button>
                 <div id="fib20" class="answer"><strong>Answer:</strong> Sampling / Standard (प्रतिचयन / मानक) <br> <em>Explanation:</em> Because precision is governed only by the variance *within* the groups, removing the vast macro-differences from the equation slaughters the sampling error.</div>
             </div>
+</div>
+</div>
 
-        </section>
-
-        <section id="quiz-tf" class="section-card">
-            <h2>✅ True or False (सही या गलत)</h2>
+        <div id="quiz-tf" class="topic-section">
+<div class="section-card">
+<h2>✅ True or False (सही या गलत)</h2>
 
             <div class="question-box">
                 <div class="question">1. Stratification completely eliminates all non-sampling errors from the survey. <br> (स्तरीकरण सर्वेक्षण से सभी गैर-प्रतिचयन त्रुटियों को पूरी तरह से समाप्त कर देता है।)</div>
@@ -1321,12 +1382,12 @@
                 <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
                 <div id="tf20" class="answer"><strong>Answer:</strong> True (सही) <br> <em>Explanation:</em> This is the absolute core genius of stratification. By explicitly controlling the macro-differences, only the tiny micro-differences inside the groups can generate error.</div>
             </div>
-
-        </section>
+</div>
+</div>
         
         <script>
         function showTopic(topicId) {
-            document.querySelectorAll('.section-card').forEach(card => card.classList.remove('active'));
+            document.querySelectorAll('.topic-section').forEach(card => card.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
             
             var elem = document.getElementById(topicId);
@@ -1361,7 +1422,30 @@
             }
             if(window.MathJax) { MathJax.typesetPromise(); }
         }
+    
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
     </script>
-    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    <script src="../whiteboard/whiteboard.js?v=2.0">
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+    </script>
+
+    <script>
+        function toggleSidebar() {
+            var sidebar = document.getElementById('sidebar');
+            if (sidebar) {
+                sidebar.classList.toggle('open');
+            }
+        }
+    </script>
 </body>
 </html>
