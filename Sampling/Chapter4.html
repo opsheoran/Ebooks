@@ -7,52 +7,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
-            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
-            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
-            --sidebar-w: 300px; --header-h: 72px;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
-        
-        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
-        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
-        
-        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
-        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
-        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
-        
-        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
-        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
-        .section-card.active { display: block; }
-        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
-        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
-        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
-        .section-card li { margin-bottom: 8px; }
-        
-        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .hinglish-content { display: none; }
-        .hinglish-active .english-content { display: none; }
-        .hinglish-active .hinglish-content { display: block; }
-        
-        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
-        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
-        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
-
-        /* QUIZ STYLES */
-        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
-        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
-        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
-        .mcq-options li { margin-bottom: 5px; }
-        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
-        .toggle-btn:hover { background: var(--navy-light); }
-        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
-        .answer.show { display: block; }
-    </style>
+    <link rel="stylesheet" href="../common_style.css">
     <link rel="stylesheet" href="../whiteboard/whiteboard.css">
 </head>
 <body>
@@ -104,77 +59,106 @@
         <section id="sec4-1" class="section-card active">
             <div class="english-content">
                 <h2>4.1 Introduction</h2>
-                <p>In the earlier chapters, we studied sampling methods where every unit was chosen purely by chance or randomly. Now, we are going to learn a special method that is very easy to use. The best part about this method is that you only need to pick the very first unit randomly. After that, all the other units are picked automatically based on a fixed mathematical pattern. This method is called <strong>systematic random sampling</strong>, or simply <strong>systematic sampling</strong>.</p>
-                <p>Imagine we have a total of \( N \) items in a population, numbered from 1 to \( N \) in a specific order. Let's say we want a sample of size \( n \). We assume that \( N = nk \), where \( k \) is an integer. To start, we pick a random number between 1 and \( k \). After that, we pick every \( k \)-th unit from the list. This is called an <strong>every \( k \)-th systematic sample</strong>. This specific way of picking items is known as <strong>linear systematic sampling</strong>.</p>
-                <p>Sometimes, the total number \( N \) is not a perfect multiple of the sample size \( n \) (meaning \( N \neq nk \)). In such cases, we use a slightly different method called <strong>circular systematic sampling</strong>. Here, we treat the list of items as if it were a circle, so that we can keep picking every \( k \)-th item until we get the full sample we need.</p>
-                <p>Systematic sampling is very popular because it is simple and hard to get wrong. It is widely used in field surveys, like counting trees in a forest or estimating milk yield, because it often gives better results than simple random sampling. Many researchers like Madow and Madow, Finney, and Sukhatme have studied this method in detail and shown how useful it is in real-life situations.</p>
+                <p>In the previous chapters, we discussed sampling techniques where sampling units were selected randomly at every step. Now, we shall discuss a technique that has the wonderful feature of selecting the entire sample with just one single random start. This procedure, where only the first unit is selected with the help of random numbers and the remaining units get selected automatically following a pre-designed pattern, is called <strong>systematic random sampling</strong> (or simply systematic sampling).</p>
+                <p>Suppose the \( N \) units of the population are numbered from \( 1 \) to \( N \) in a specific order. Let us assume \( N = nk \), where \( n \) is the desired sample size and \( k \) is an integer. If we select a random number less than or equal to \( k \) and then select every \( k \)-th unit thereafter, the resulting sample is called an "every \( k \)-th systematic sample." This procedure is termed <strong>linear systematic sampling</strong>. However, if \( N \neq nk \), we can include every \( k \)-th unit in a circular manner until the whole list is exhausted, which is called <strong>circular systematic sampling</strong>.</p>
+                <p>Systematic sampling is simple and foolproof. Besides its simplicity, it often provides estimates that are more efficient than simple random sampling and is widely used in various types of surveys. It has been thoroughly discussed by researchers like Madow and Madow (1944) and its practical applications have been demonstrated by Finney (1948) and Sukhatme et al. (1958). Additionally, Singh et al. (1968) suggested a modified procedure and illustrated its suitability by applying it to a survey for estimating milk yield.</p>
             </div>
             
             <div class="hinglish-content">
-                <h2>4.1 परिचय (Introduction)</h2>
-                <p>पिछले अध्यायों (chapters) में हमने उन sampling techniques पर चर्चा की है जहाँ sampling units को पूरी तरह से randomly (यादृच्छिक रूप से) चुना गया था। अब हम औपचारिक रूप से एक विशिष्ट sampling technique पर चर्चा करेंगे जिसमें सिर्फ एक random start के साथ पूरे sample को select करने की एक उल्लेखनीय रूप से अच्छी विशेषता (remarkably nice feature) है। एक sampling technique जिसमें केवल पहली unit को random numbers की मदद से select किया जाता है और बाकी units किसी पूर्व-निर्धारित गणितीय पैटर्न (pre-designed mathematical pattern) के अनुसार स्वचालित रूप से (automatically) select हो जाती हैं, सख्ती से <strong>systematic random sampling</strong> (व्यवस्थित यादृच्छिक प्रतिचयन) कहलाती है। Systematic random sampling को अक्सर संक्षेप (briefly) में <strong>systematic sampling</strong> भी कहा जाता है।</p>
-                <p>मान लीजिए कि population की \( N \) units को किसी जानबूझकर किए गए क्रम (deliberate order) में 1 से \( N \) तक linearly number दिया गया है। मान लीजिए \( N = nk \), जहाँ \( n \) निर्दिष्ट sample size है और \( k \) एक पूर्णांक (integer) है। \( k \) से कम या उसके ठीक बराबर एक random number select किया जाता है, और उसके बाद हर \( k \)-वीं unit निकाली जाती है। परिणामी sample (resultant sample) को <strong>every \( k \)-th systematic sample</strong> कहा जाता है और ऐसी procedure को तकनीकी रूप से <strong>linear systematic sampling</strong> (रैखिक व्यवस्थित प्रतिचयन) कहा जाता है।</p>
-                <p>यदि \( N \neq nk \) है, और हर \( k \)-वीं unit को एक गोलाकार तरीके (circular manner) से तब तक शामिल किया जाता है जब तक कि पूरी list निश्चित रूप से समाप्त (definitively exhausted) न हो जाए, तो इसे सख्ती से <strong>circular systematic sampling</strong> (वृत्ताकार व्यवस्थित प्रतिचयन) कहा जाएगा।</p>
-                <p>Systematic sampling खूबसूरती से सरल और अपेक्षाकृत अचूक (foolproof) है। इसकी परिचालन सरलता (operational simplicity) के अलावा, यह procedure कई व्यावहारिक स्थितियों में, simple random sampling की तुलना में अधिक कुशल (efficient) parameter estimates प्रदान करती है और इसलिए विभिन्न प्रकार के field surveys में व्यापक रूप से उपयोग की जाती है।</p>
+                <h2>4.1 Introduction</h2>
+                <p>Pichle chapters mein humne un sampling techniques ko discuss kiya jahan sampling units har step par randomly select hoti thi. Ab hum ek aisi technique padhenge jisme ek bahut achha feature hai: pura sample sirf ek random start se select ho jata hai. Ek aisi sampling technique jisme sirf pehli unit random numbers ki madad se select ki jati hai, aur baaki ki units automatically ek pre-designed pattern ke according select ho jati hain, use <strong>systematic random sampling</strong> (ya short mein systematic sampling) kehte hain.</p>
+                <p>Maan lijiye population ki \( N \) units ko \( 1 \) se \( N \) tak kisi order mein number kiya gaya hai. Maan lijiye \( N = nk \), jahan \( n \) sample size hai aur \( k \) ek integer hai. Agar hum \( k \) ya usse chhota ek random number select karein, aur uske baad har \( k \)-th unit ko select karte jayein, toh is resultant sample ko "every \( k \)-th systematic sample" kehte hain. Is procedure ko <strong>linear systematic sampling</strong> kaha jata hai. Agar \( N \neq nk \) ho, aur har \( k \)-th unit ko circular manner mein list khatam hone tak include kiya jaye, toh isko <strong>circular systematic sampling</strong> kehte hain.</p>
+                <p>Systematic sampling simple aur foolproof hai. Apni simplicity ke alawa, yeh kai situations mein simple random sampling se zyada efficient estimates provide karti hai aur various surveys mein widely use hoti hai.</p>
             </div>
         </section>
 
         <section id="sec4-2" class="section-card">
             <div class="english-content">
-                <h2>4.2 How to Select a Systematic Sample</h2>
-                <p>Systematic sampling is a very common method used when we have a complete and updated list of all the items in our population. Before we look at its pros and cons, let's understand the two main ways to pick a sample using this method.</p>
+                <h2>4.2 Sample Selection Procedures</h2>
+                <p>Systematic sampling is a commonly used technique whenever a complete and up-to-date sampling frame is available. Before we evaluate its advantages and disadvantages, we shall first discuss these sample selection procedures.</p>
 
                 <h3>4.2.1 Linear Systematic Sampling</h3>
-                <p>The most basic method is linear systematic sampling. Imagine all the items in the population are arranged in a line and numbered from 1 to \( N \). Let's say we want a sample of size \( n \). We first calculate a number \( k \), which is \( N/n \). This \( k \) is called the <strong>sampling interval</strong>.</p>
-                <p>Here is how it works step-by-step:</p>
-                <ul>
-                    <li>First, we pick a random number \( i \) between 1 and \( k \).</li>
-                    <li>The \( i \)-th item on the list becomes our first sample unit.</li>
-                    <li>Then, we keep adding \( k \) to that number to pick the rest of the units.</li>
-                </ul>
-                <p>So, our sample will have items numbered: \( i, i + k, i + 2k, \ldots, i + (n - 1)k \). In this method, there are exactly \( k \) possible samples, and each one has an equal chance of being picked.</p>
-
-                <p><strong>What if \( N \) is not a perfect multiple of \( n \)?</strong><br>
-                If \( N \) is not exactly \( n \times k \), then linear sampling can be a bit tricky because the sample size might change. For example, if we have \( N = 11 \) items and want a sample of \( n = 4 \), the interval \( k \) would be 3. Our possible samples would be (1, 4, 7, 10), (2, 5, 8, 11), and (3, 6, 9). Notice that the first two samples have 4 items, but the last one only has 3. To fix this, we use the next method.</p>
+                <p>As mentioned earlier, a common procedure is the linear systematic sampling scheme. We suppose the population is linearly ordered in some way such that units can be numbered without ambiguity. Further, let \( N \) be expressible in the form \( N = nk \). Let the initially selected random number be \( i \) (where \( 1 \le i \le k \)). Here, \( k \) is called the sampling interval.</p>
+                <p>The selected sample comprises the units:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( i, i+k, i+2k, \dots, i+(n-1)k \)</div>
+                </div>
+                <p>This technique will generate \( k \) systematic samples with equal probability. Below is the schematic diagram showing \( k \) systematic samples in the population:</p>
+                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.85em;">
+                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Sample Number</th><th>1</th><th>2</th><th>...</th><th>\( i \)</th><th>...</th><th>\( k \)</th></tr>
+                    <tr><td><strong>Units</strong></td><td>1</td><td>2</td><td>...</td><td>\( i \)</td><td>...</td><td>\( k \)</td></tr>
+                    <tr><td></td><td>\( 1+k \)</td><td>\( 2+k \)</td><td>...</td><td>\( i+k \)</td><td>...</td><td>\( 2k \)</td></tr>
+                    <tr><td></td><td>\( 1+2k \)</td><td>\( 2+2k \)</td><td>...</td><td>\( i+2k \)</td><td>...</td><td>\( 3k \)</td></tr>
+                    <tr><td></td><td>\( \vdots \)</td><td>\( \vdots \)</td><td>\( \vdots \)</td><td>\( \vdots \)</td><td>\( \vdots \)</td><td>\( \vdots \)</td></tr>
+                    <tr><td></td><td>\( 1+(n-1)k \)</td><td>\( 2+(n-1)k \)</td><td>...</td><td>\( i+(n-1)k \)</td><td>...</td><td>\( nk \)</td></tr>
+                    <tr style="background: #eee; border-top: 1px solid var(--border);"><td><strong>Means</strong></td><td>\( \bar{y}_{.1} \)</td><td>\( \bar{y}_{.2} \)</td><td>...</td><td>\( \bar{y}_{.i} \)</td><td>...</td><td>\( \bar{y}_{.k} \)</td></tr>
+                </table>
+                <p>Another practical situation arises when \( N \) is not expressible in the form \( nk \). In this case, the present sampling scheme will give rise to samples of unequal size. \( k \) is taken as the integer nearest to \( N/n \). A random number is chosen from \( 1 \) to \( k \) and every \( k \)-th unit is drawn in the sample. Under this condition, the sample size is not necessarily \( n \); in some cases, it may be \( n-1 \). For example, if \( N=11, n=4 \), then \( k = 3 \). The possible samples are: \( \{1, 4, 7, 10\} \) (size 4), \( \{2, 5, 8, 11\} \) (size 4), and \( \{3, 6, 9\} \) (size 3), which are of unequal sizes.</p>
 
                 <h3>4.2.2 Circular Systematic Sampling</h3>
-                <p>To make sure we always get exactly \( n \) items in our sample, even when \( N \) is not a multiple of \( n \), we use circular systematic sampling. In this method, we imagine the list of items is arranged in a circle. </p>
-                <p>Here is the logic:
-                We pick a random start number \( i \) from anywhere between 1 and \( N \). Then we keep picking every \( k \)-th item (where \( k \) is the nearest integer to \( N/n \)). If we reach the end of the list, we just wrap around back to the beginning, like moving around a clock.</p>
-                <p>The items in our sample will be:</p>
+                <p>In linear systematic sampling, the main drawback is that the observed sample size can differ from the required sample size when \( N \neq nk \). Hence, the sample mean is not unbiased for the population mean. To overcome the difficulty of varying sample sizes, D.B. Lahiri (1952) suggested <strong>Circular Systematic Sampling</strong>, which ensures a sample of constant size \( n \) is always obtained.</p>
+                <p><strong>Steps for Circular Systematic Sampling:</strong></p>
+                <ol>
+                    <li>Let \( k \) be an integer nearest to \( N/n \).</li>
+                    <li>Select a random start \( i \) from \( 1 \) to \( N \) (instead of \( 1 \) to \( k \)).</li>
+                    <li>Select every \( k \)-th unit in a circular manner until a sample of size \( n \) is obtained.</li>
+                </ol>
+                <p>The selected sample units will correspond to the serial numbers:</p>
                 <div class="derivation-block">
-                    $$ i + jk \quad \text{if } i + jk \leq N $$
-                    $$ i + jk - N \quad \text{if } i + jk > N $$
-                    <p>for \( j = 0, 1, \ldots, (n - 1) \).</p>
+                    <div style="padding: 5px 0;">\( i + j k \), if \( i + j k \le N \)</div>
+                    <div style="padding: 5px 0;">\( i + j k - N \), if \( i + j k > N \)</div>
                 </div>
-                <p>In this method, every single item in the population has the same \( 1/N \) chance of being selected. This makes the selection process very fair.</p>
-                <p><strong>A quick example:</strong><br>
-                Let \( N = 11 \) and \( n = 4 \). Then \( k \) is 3. If we pick 10 as our random start, our sample items will be:
-                <br>1st unit: 10
-                <br>2nd unit: 10 + 3 = 13. Since 13 > 11, we do 13 - 11 = 2.
-                <br>3rd unit: 2 + 3 = 5.
-                <br>4th unit: 5 + 3 = 8.
-                <br>So our final sample is (10, 2, 5, 8).</p>
-                <p>One small problem with systematic sampling is that we cannot easily estimate the variance from just one sample. We will discuss a way to fix this in Section 4.9.</p>
+                <p>for \( j = 0, 1, \dots, n-1 \).</p>
+                <p>Every unit has got an equal probability of selection, which is \( n/N \).</p>
+                <p><strong>Example:</strong> Let \( N = 18 \) and \( n = 5 \). Then \( k \approx 18/5 = 3.6 \implies k = 4 \).<br>
+                The possible samples from different starts \( i \) would be:<br>
+                - If \( i=1 \): units are \( \{1, 5, 9, 13, 17\} \)<br>
+                - If \( i=2 \): units are \( \{2, 6, 10, 14, 18\} \)<br>
+                - If \( i=3 \): units are \( \{3, 7, 11, 15, 1\} \)<br>
+                - If \( i=4 \): units are \( \{4, 8, 12, 16, 2\} \)<br>
+                ... and so on up to \( i=18 \).</p>
+
+                <p><strong>Theorem: In circular systematic sampling, the sample mean is an unbiased estimator of the Population mean.</strong></p>
+                <p><em>Proof:</em></p>
+                <div class="derivation-block">
+                    <p>Let the sample mean be \( \bar{y}_{sys} \).</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{sys}) = \sum_{i=1}^{N} P_i \bar{y}_i \)</div>
+                    <p>Since there are \( N \) possible samples, each selected with probability \( P_i = \frac{1}{N} \):</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{sys}) = \frac{1}{N} \sum_{i=1}^{N} \left( \frac{1}{n} \sum_{j \in S_i} y_j \right) = \frac{1}{Nn} \sum_{i=1}^{N} \sum_{j \in S_i} y_j \)</div>
+                    <p>Because each population unit exactly occurs \( n \) times across all \( N \) possible samples, the sum over all samples covers every population unit \( n \) times:</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{sys}) = \frac{1}{Nn} \left( n \sum_{j=1}^{N} y_j \right) = \frac{1}{N} \sum_{j=1}^{N} y_j = \bar{Y} \)</div>
+                </div>
+                <p>Hence, in circular systematic sampling, even if \( N \neq nk \), we achieve a constant observed sample size \( n \), and the sample mean remains an unbiased estimator of the population mean.</p>
             </div>
             
             <div class="hinglish-content">
-                <h2>4.2 Sample Selection Procedures (प्रतिदर्श चयन की प्रक्रियाएं)</h2>
-                <p>Systematic sampling एक अत्यधिक आमतौर पर इस्तेमाल की जाने वाली technique है यदि एक पूरी तरह से complete और up-to-date sampling frame सख्ती से उपलब्ध कराया जाता है। हम पहले इन sample selection procedures पर व्यापक रूप से (comprehensively) चर्चा करेंगे इससे पहले कि हम उनके अंतर्निहित (inherent) फायदों और नुकसानों का मूल्यांकन करें।</p>
+                <h2>4.2 Sample Selection Procedures</h2>
+                <p>Systematic sampling ek commonly use hone wali technique hai agar hamare paas ek complete aur up-to-date sampling frame available ho. Iske faayde aur nuksan (advantages aur disadvantages) evaluate karne se pehle, aaiye hum in sample selection procedures ko detail mein discuss karte hain.</p>
 
-                <h3>4.2.1 Linear Systematic Sampling (रैखिक व्यवस्थित प्रतिचयन)</h3>
-                <p>जैसा कि ऊपर उल्लेख किया गया है, एक बहुत ही सामान्य procedure linear systematic sampling scheme है। हम मानते हैं कि population किसी विशिष्ट (distinct) तरीके से रैखिक रूप से क्रमित (linearly ordered) है ताकि units को बिना किसी अस्पष्टता के serial number द्वारा संदर्भित किया जा सके। इसके अलावा, मान लीजिए \( N \) को बीजीय रूप (algebraic form) \( N = nk \) में बिल्कुल व्यक्त किया जा सकता है और मान लीजिए कि selected random number \( i \ (\leq k) \) है, जहाँ \( k \) को गणितीय रूप से <strong>sampling interval</strong> कहा जाता है। इस सख्त procedure में, sample में निर्णायक (decisively) रूप से units \( i, i + k, i + 2k, \ldots, i + (n - 1)k \) शामिल होती हैं। यह technique पूरी तरह से समान probability के साथ \( k \) systematic samples गणितीय रूप से उत्पन्न करेगी।</p>
-
-                <p>एक और व्यावहारिक स्थिति तब उत्पन्न होती है यदि \( N \), \( N = nk \) के सख्त रूप में expressible नहीं है। इस मामले में, वर्तमान sampling scheme अनिवार्य रूप से असमान आकार के samples को जन्म देगी, क्योंकि \( k \) को \( N/n \) के निकटतम पूर्णांक के रूप में लिया जाता है। फिर 1 से \( k \) तक एक random number चुना जाता है और हर \( k \)-वीं unit को क्रमिक रूप से sample में निकाला जाता है। इस विशिष्ट स्थिति (specific condition) के तहत, sample size जरूरी नहीं कि बिल्कुल \( n \) हो और कुछ मामलों में यह \( (n - 1) \) हो सकता है। उदाहरण के लिए, यदि \( N = 11 \), \( n = 4 \) है, तो \( k \) का मान 3 है और possible samples बिल्कुल \( (1,4,7,10) \); \( (2,5,8,11) \) और \( (3,6,9) \) हैं, जो दुर्भाग्य से एक ही सटीक आकार के नहीं हैं।</p>
-
-                <h3>4.2.2 Circular Systematic Sampling (वृत्ताकार व्यवस्थित प्रतिचयन)</h3>
-                <p>विशिष्ट स्थिति \( N \neq nk \) के तहत अलग-अलग sample size की कठिनाई को गणितीय रूप से दूर करने के लिए, procedure को थोड़ा modify किया जाता है जिसके द्वारा हमेशा सख्ती से एक constant size का sample प्राप्त होता है। इस procedure में एक random start द्वारा 1 से \( N \) तक एक unit को select करना और उसके बाद लगातार हर \( k \)-वीं unit को select करना शामिल है, जहाँ \( k \), \( N/n \) के निकटतम पूर्णांक है, एक कड़ाई से गोलाकार तरीके (strictly circular manner) में, जब तक कि बिल्कुल \( n \) units का sample प्राप्त न हो जाए। इस technique को आमतौर पर गणितीय रूप से <strong>circular systematic sampling</strong> के रूप में जाना जाता है। मान लीजिए कि random number \( i \) वाली एक unit select की गई है। तब sample में ठीक (precisely) serial numbers के अनुरूप units शामिल होंगी:</p>
+                <h3>4.2.1 Linear Systematic Sampling</h3>
+                <p>Jaisa ki pehle bataya gaya, linear systematic sampling ek aam procedure hai. Hum yeh maante hain ki population ek linear order mein arrange hai taaki units ko bina kisi ambiguity ke number kiya ja sake. Maan lijiye \( N \) ko \( N = nk \) ke form mein express kiya ja sakta hai. Ek random number \( i \) (\( 1 \le i \le k \)) select kiya jata hai, jahan \( k \) ko sampling interval kehte hain.</p>
+                <p>Sample mein yeh units aati hain:</p>
                 <div class="derivation-block">
-                    $$ i + jk \quad \text{if } i + jk \leq N $$
-                    $$ i + jk - N \quad \text{if } i + jk > N $$
-                    <p>\( j = 0, 1, \ldots, (n - 1) \) के लिए।</p>
+                    <div style="padding: 5px 0;">\( i, i+k, i+2k, \dots, i+(n-1)k \)</div>
                 </div>
-                <p>यह आसानी से गणितीय रूप से verify किया जा सकता है कि इस मजबूत (robust) method में प्रत्येक unit के selection की probability \( (1/N) \) पूरी तरह से समान है।</p>
+                <p>Yeh technique equal probability ke sath \( k \) possible systematic samples generate karti hai, jise upar table mein dikhaya gaya hai.</p>
+                <p>Ek aur practical situation aati hai jab \( N \), \( nk \) ke form mein expressible nahi hota. Is case mein, \( k \) ko \( N/n \) ke nearest integer ke roop mein liya jata hai. \( 1 \) se \( k \) tak ek random number choose hota hai aur har \( k \)-th unit ko sample mein draw kiya jata hai. Is condition mein, sample size hamesha strictly \( n \) nahi hota, kabhi kabhi yeh \( n-1 \) bhi ho sakta hai (jaise example mein size 4 aur 3 ke samples mile). Is unequal size ki problem ko overcome karne ke liye hum agla section discuss karenge.</p>
+
+                <h3>4.2.2 Circular Systematic Sampling</h3>
+                <p>Linear systematic sampling mein ek main drawback yeh tha ki jab \( N \neq nk \) hota hai, toh observe kiya gaya sample size require kiye gaye size se alag ho sakta hai. Is problem ko overcome karne ke liye, D.B. Lahiri (1952) ne <strong>Circular Systematic Sampling</strong> propose ki jisse hamesha constant size \( n \) ka sample milta hai.</p>
+                <p><strong>Steps:</strong></p>
+                <ol>
+                    <li>\( k \) ko \( N/n \) ke nearest integer pe round off karein.</li>
+                    <li>\( 1 \) se \( N \) ke beech ek random start \( i \) select karein (na ki \( 1 \) se \( k \) tak).</li>
+                    <li>Har \( k \)-th unit ko circular order mein tab tak select karein jab tak \( n \) units ka sample poora na ho jaye.</li>
+                </ol>
+                <p>Units is tarah aayengi:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">Agar \( i + j k \le N \) hai, toh \( i + j k \)</div>
+                    <div style="padding: 5px 0;">Agar \( i + j k > N \) hai, toh \( i + j k - N \)</div>
+                </div>
+                <p>(jahan \( j = 0, 1, \dots, n-1 \)).</p>
+                <p>Har unit ke select hone ki probability equal hoti hai, jo ki \( n/N \) hoti hai. Humne upar \( N=18, n=5, k=4 \) ka example dekha ki kaise circular manner mein values aati hain (jaise 15 ke baad \( 15+4=19 \), par total 18 hi hain, toh wapas ghoom kar 1 par aa gaye). Is method mein har unit exactly \( n \) samples mein aati hai, jiske wajah se mathematical proof ke according sample mean population mean ka bilkul unbiased estimator ban jata hai.</p>
             </div>
         </section>
 
@@ -183,587 +167,436 @@
         <section id="sec4-3" class="section-card">
             <div class="english-content">
                 <h2>4.3 Advantages and Disadvantages</h2>
-                <p>Every sampling method has its good and bad points. Systematic sampling is no different. Let's see why it is so popular and where we need to be careful.</p>
-                
-                <h3>Advantages</h3>
-                <ul>
-                    <li><strong>Very Simple to Use:</strong> The biggest benefit is how easy it is to pick the items. You only need one random number, and the rest is automatic.</li>
-                    <li><strong>Saves Time and Effort:</strong> It is operationally very convenient and faster than other methods.</li>
-                    <li><strong>Covers the Whole Population:</strong> Because the units are spread out evenly, the sample represents the entire population very well. This is why it's great for things like forest surveys or estimating the amount of fish in a lake.</li>
-                    <li><strong>More Precise:</strong> In many real-life situations, it gives more accurate results than simple random sampling.</li>
-                </ul>
-
-                <h3>Disadvantages</h3>
-                <ul>
-                    <li><strong>Hidden Patterns:</strong> If the population has a repeating pattern (like every 7th day being a Sunday), and our interval matches that pattern, our sample will be very biased. For example, if we only survey sales on Sundays, we won't get a true average for the whole week.</li>
-                    <li><strong>Difficulty in Finding Error:</strong> If we only take one systematic sample, it is mathematically hard to calculate the exact sampling variance (or error).</li>
-                    <li><strong>Risky for Cyclic Data:</strong> If the sampling interval is exactly the same as the cycle of the data, the sample will be no better than picking just one unit by hand.</li>
-                </ul>
+                <p>The main advantage of systematic sampling is its simplicity of selection, operational convenience, and even spread of the sample over the entire population. Therefore, it has been found very useful in forest surveys for estimating the volume of timber, in fisheries for estimating the total catch of fish, in milk yield surveys for estimation of the lactation yield, etc.</p>
+                <p>Another advantage is that, except for populations with periodicities, systematic sampling provides an efficient estimate compared to alternative designs. Sometimes systematic sampling variances are much smaller than the variances for random selection of units within strata.</p>
+                <p>In the case of periodicity in the population, systematic sampling has to be used with considerable care. If, for a periodic population, the sampling interval is an odd multiple of half the period of the cycle, systematic sampling provides zero variance. When the sampling interval is a simple multiple of the period of the cycle, systematic sampling is no better than selecting one unit at random. A serious disadvantage of systematic sampling lies in its use with populations having unforeseen periodicity which may substantially contribute bias to the estimate. Another disadvantage concerns the drawback of estimating the sampling variance of estimators with a single sample.</p>
             </div>
             
             <div class="hinglish-content">
-                <h2>4.3 Advantages and Disadvantages (लाभ और हानियां)</h2>
-                <p>Systematic sampling का मुख्य गणितीय लाभ इसके चयन (selection) की पूर्ण सरलता, परिचालन सुविधा (operational convenience) और पूरी population पर sample का उल्लेखनीय रूप से समान फैलाव (even spread) है। इसलिए, लकड़ी (timber) की मात्रा का गणितीय रूप से अनुमान लगाने के लिए वन सर्वेक्षणों (forest surveys) में, मछली की कुल पकड़ का अनुमान लगाने के लिए मत्स्य पालन (fisheries) में, स्तनपान उपज (lactation yield) के कठोर अनुमान के लिए दूध की उपज सर्वेक्षणों (milk yield surveys) में, इसे व्यावहारिक रूप से बहुत उपयोगी पाया गया है। एक और गहरा (profound) फायदा यह है कि, periodicities (आवधिकता) से भरी हुई populations को छोड़कर, systematic sampling वैकल्पिक डिज़ाइनों (alternative designs) की तुलना में गणितीय रूप से एक efficient estimate प्रदान करती है। कभी-कभी systematic sampling variances, strata के भीतर units के random selection के लिए variances से काफी छोटे होते हैं।</p>
-                <p>Population में unforeseen periodicity (अप्रत्याशित आवधिकता) के मामले में, systematic sampling का उपयोग काफी गणितीय सावधानी (mathematical care) के साथ किया जाना चाहिए। यदि, एक periodic population के लिए, sampling interval गणितीय चक्र (mathematical cycle) की आधी अवधि का ठीक एक विषम गुणज (odd multiple) है, तो systematic sampling दोषरहित (flawlessly) रूप से शून्य variance (zero variance) प्रदान करती है। जब sampling interval चक्र की अवधि का एक सरल पूर्णांक गुणज (simple integer multiple) होता है, तो systematic sampling दुर्भाग्य से गणितीय रूप से यादृच्छिक रूप से (randomly) एक इकाई को चुनने से बेहतर नहीं होती है। Systematic sampling का एक गंभीर नुकसान (serious disadvantage) अंतर्निहित रूप से unforeseen periodicity वाले populations के साथ इसके उपयोग में निहित है जो population mean value के estimate में काफी विनाशकारी bias (पूर्वाग्रह) का योगदान दे सकता है। एक और मूलभूत नुकसान (fundamental disadvantage) एक एकल (single) systematic sample के साथ estimators के sampling variance का गणितीय रूप से अनुमान लगाने की सैद्धांतिक कमी (theoretical drawback) से संबंधित है.</p>
+                <h2>4.3 Advantages and Disadvantages</h2>
+                <p>Systematic sampling ka sabse bada faayda iska simple selection process, operational convenience, aur pure population par sample ka evenly spread hona hai. Isliye yeh forest surveys (timber volume nikalna), fisheries, aur milk yield surveys mein bahut useful mani jati hai. Periodic populations ko chhod kar, systematic sampling zyada efficient estimates deti hai. Kayi baar iska variance stratified random sampling se bhi chhota hota hai.</p>
+                <p>Lekin, agar population mein periodicity (ek regular wave jaisa pattern) ho, toh isko bahut dhyan se use karna padta hai. Agar sampling interval cycle ke period ka simple multiple ban jaye, toh systematic sampling kisi single random unit jitni hi bekaar ho jati hai. Sabse bada disadvantage ye hai ki unforeseen periodicity estimator mein bahut zyada bias la sakti hai. Ek aur nuksan yeh hai ki single sample ki madad se variance ka unbiased estimate nahi nikala ja sakta.</p>
             </div>
         </section>
 
         <section id="sec4-4" class="section-card">
             <div class="english-content">
-                <h2>4.4 Estimating the Mean and its Variance</h2>
-                <p>Let's use \( y_{ij} \) to represent the \( j \)-th unit of the \( i \)-th systematic sample. Here, \( i \) goes from 1 to \( k \) (the number of possible samples), and \( j \) goes from 1 to \( n \) (the sample size). The mean of the \( i \)-th sample is written as \( \bar{y}_i \). Our goal is to estimate the population mean \( \bar{Y} \) correctly. We will focus on the situation where \( N = nk \).</p>
+                <h2>4.4 Estimation of Mean and its Sampling Variance</h2>
+                <p>Let \( y_{ij} \) denote the \( j \)-th member of the \( i \)-th systematic sample, where \( i = 1, 2, \dots, k \) and \( j = 1, 2, \dots, n \). The mean of the \( i \)-th sample is denoted by \( \bar{y}_{.i} \). We consider the problem of estimating the population mean under the situation when \( N = nk \).</p>
 
-                <h3><strong>Theorem 4.4.1: Unbiasedness and Variance</strong></h3>
-                <p>In systematic sampling, the sample mean \( \bar{y}_{sy} \) is an unbiased estimator of the population mean \( \bar{Y} \). This means if we took all possible samples, their average would be exactly the population mean. The formula for its variance is:</p>
+                <h3><strong>Theorem 4.4.1</strong></h3>
+                <p>In systematic sampling with interval \( k \), the sample mean \( \bar{y}_{sys} \) is an unbiased estimator of the population mean \( \bar{Y} \). Its sampling variance is given by:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_c^2}{k} \quad (4.4.1) $$
-                    <p>Where \( S_c^2 \) is the mean square variation between the means of the possible samples (the "columns").</p>
-                </div>
-                <p><strong>Step-by-step Proof:</strong></p>
-                <div class="derivation-block">
-                    <p>1. First, we show that the estimator is unbiased. In this method, there are \( k \) possible samples, and each has a \( 1/k \) chance of being picked. The expected value (average) of our sample mean is:</p>
-                    $$ E(\bar{y}_{sy}) = \sum_{i = 1}^k \frac{\bar{y}_i}{k} = \frac{1}{k} \sum_{i=1}^k \left( \frac{1}{n} \sum_{j=1}^n y_{ij} \right) $$
-                    <p>2. If we combine the sums, we are just adding up every single item in the entire population and dividing by the total count \( nk = N \):</p>
-                    $$ E(\bar{y}_{sy}) = \frac{\sum_i \sum_j y_{ij}}{nk} = \frac{\text{Total Sum}}{N} = \bar{Y} $$
-                    <p>Since the result is \( \bar{Y} \), our estimator is unbiased.</p>
-                    <p>3. Now for the variance. Variance is the average squared difference between each sample mean and the population mean:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{1}{k} \sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 $$
-                    <p>4. By definition, the sum of squared differences for \( k \) columns is \( (k-1)S_c^2 \). So we get:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_c^2}{k} $$
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{k-1}{k} S_b^2 \)</div>
+                    <p>where \( S_b^2 \) denotes the mean square between the column means in the population (where \( i \) stands for column).</p>
                 </div>
 
-                <h3><strong>Theorem 4.4.2: Alternative Formula for Variance</strong></h3>
-                <p>We can also write the variance in a way that compares the overall variation in the population (\( \sigma^2 \)) with the variation inside each sample (\( \sigma_w^2 \)):</p>
+                <p><strong>Full Derivation:</strong></p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \sigma^2 - \sigma_w^2 \quad (4.4.2) $$
+                    <p>Since the probability of selection of the \( i \)-th systematic sample from the \( k \) possible samples is \( 1/k \), we have:</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{sys}) = \sum_{i=1}^{k} P_i \bar{y}_{.i} \)</div>
+                    <p>Substitute \( P_i = \frac{1}{k} \):</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{sys}) = \frac{1}{k} \sum_{i=1}^{k} \bar{y}_{.i} = \frac{1}{k} \sum_{i=1}^{k} \left( \frac{1}{n} \sum_{j=1}^{n} y_{ij} \right) = \frac{1}{nk} \sum_{i=1}^{k} \sum_{j=1}^{n} y_{ij} \)</div>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{sys}) = \frac{1}{N} \sum_{i=1}^{k} \sum_{j=1}^{n} y_{ij} = \bar{Y} \)</div>
+                    <p>Hence, \( \bar{y}_{sys} \) is an unbiased estimator.</p>
+                    <p>If the \( i \)-th sample is considered the \( i \)-th column, the total sum of squares due to column means (between-sample variation) is defined as:</p>
+                    <div style="padding: 5px 0;">\( (k-1) S_b^2 = \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 \)</div>
+                    <p>By definition, the variance of the sample mean \( \bar{y}_{sys} \) is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = E(\bar{y}_{sys} - \bar{Y})^2 = \frac{1}{k} \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 \)</div>
+                    <p>Substituting the sum of squares:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{1}{k} [ (k-1) S_b^2 ] = \frac{k-1}{k} S_b^2 \)</div>
                 </div>
-                <p><strong>Step-by-step Proof:</strong></p>
-                <div class="derivation-block">
-                    <p>1. We use a famous algebra rule: the Total Sum of Squares (TSS) is equal to the variation "Between Samples" plus the variation "Within Samples".</p>
-                    $$ (N - 1)S^2 = \text{SS Between} + \text{SS Within} $$
-                    $$ (N - 1)S^2 = n\sum_i (\bar{y}_i - \bar{Y})^2 + \sum_i \sum_j (y_{ij} - \bar{y}_i)^2 $$
-                    <p>2. We know that \( V(\bar{y}_{sy}) = \frac{\sum (\bar{y}_i - \bar{Y})^2}{k} \), so \( \text{SS Between} = nk V(\bar{y}_{sy}) \).</p>
-                    <p>3. We also define the variation within samples as \( S_w^2 \), so \( \text{SS Within} = k(n - 1)S_w^2 \).</p>
-                    <p>4. Putting these into our equation:</p>
-                    $$ (N - 1)S^2 = nk V(\bar{y}_{sy}) + k(n - 1)S_w^2 $$
-                    <p>5. Now divide everything by \( N \) (remember \( N = nk \)):</p>
-                    $$ \frac{(N - 1)S^2}{N} = V(\bar{y}_{sy}) + \frac{k(n - 1)S_w^2}{nk} $$
-                    $$ \sigma^2 = V(\bar{y}_{sy}) + \sigma_w^2 $$
-                    <p>6. Rearranging the terms, we get our result:</p>
-                    $$ V(\bar{y}_{sy}) = \sigma^2 - \sigma_w^2 $$
-                </div>
-                <p>This tells us something very important: To get a smaller error (\( V \)), we need to make sure our units within the sample are very different from each other (\( \sigma_w^2 \) should be large).</p>
+                <p>It should not be inferred from the above formula that the variance of the systematic sample mean will simply decrease if the sample size is increased. This makes it clear that systematic sampling is a delicate device and should be used carefully.</p>
 
-                <h3><strong>Theorem 4.4.3: Intra-class Correlation</strong></h3>
-                <p>This theorem helps us understand how the "likeness" or correlation between units in the same sample affects the error. The formula is:</p>
+                <h3><strong>Theorem 4.4.2</strong></h3>
+                <p>The sampling variance of the sample mean \( \bar{y}_{sys} \) is given by:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
-                    <p>Where \( \rho_w \) is the intra-class correlation coefficient.</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{N-1}{N} S^2 - \frac{k(n-1)}{N} S_w^2 \)</div>
+                    <p>where</p>
+                    <div style="padding: 5px 0;">\( S_w^2 = \frac{1}{k(n-1)} \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{y}_{.i})^2 \)</div>
+                    <p>is the within-sample variance, and \( S^2 \) is the total population variance.</p>
                 </div>
-                <p><strong>Step-by-step Proof:</strong></p>
+
+                <p><strong>Full Derivation:</strong></p>
                 <div class="derivation-block">
-                    <p>1. Start with the basic variance formula:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{1}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 $$
-                    <p>2. Write \( \bar{y}_i \) as the sum of units divided by \( n \):</p>
-                    $$ = \frac{1}{k}\sum_{i = 1}^k \left[ \frac{1}{n}\sum_{j = 1}^n y_{ij} - \bar{Y} \right]^2 = \frac{1}{n^2 k}\sum_{i = 1}^k \left[ \sum_{j = 1}^n (y_{ij} - \bar{Y}) \right]^2 $$
-                    <p>3. Expand the square inside. Squaring a sum gives the sum of squares plus the sum of cross-products:</p>
-                    $$ = \frac{1}{n^2 k}\sum_{i = 1}^k \left[ \sum_{j=1}^n (y_{ij} - \bar{Y})^2 + \sum_{j \neq l} (y_{ij} - \bar{Y})(y_{il} - \bar{Y}) \right] $$
-                    <p>4. The first part is just the total population variance divided by \( n \):</p>
-                    $$ = \frac{\sigma^2}{n} + \frac{1}{n^2 k} \sum_i \sum_{j \neq l} (y_{ij} - \bar{Y})(y_{il} - \bar{Y}) $$
-                    <p>5. By definition, the correlation \( \rho_w \) is related to the sum of cross-products. The sum of cross-products is equal to \( N(n - 1)\rho_w \sigma^2 \). Let's put that in:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n} + \frac{N(n - 1)\rho_w \sigma^2}{n^2 k} $$
-                    <p>6. Since \( N = nk \), the \( N \) and \( k \) cancel out mostly, leaving \( 1/n \):</p>
-                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n} + \frac{(n - 1)\rho_w \sigma^2}{n} = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
+                    <p>We know that the total sum of squares for the entire population is given by:</p>
+                    <div style="padding: 5px 0;">\( (N-1)S^2 = \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{Y})^2 \)</div>
+                    <p>We can split this into within-sample and between-sample sum of squares:</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{Y})^2 = \sum_{i=1}^{k} \sum_{j=1}^{n} [(y_{ij} - \bar{y}_{.i}) + (\bar{y}_{.i} - \bar{Y})]^2 \)</div>
+                    <div style="padding: 5px 0;">\( (N-1)S^2 = \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{y}_{.i})^2 + \sum_{i=1}^{k} \sum_{j=1}^{n} (\bar{y}_{.i} - \bar{Y})^2 + 2 \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y}) \sum_{j=1}^{n} (y_{ij} - \bar{y}_{.i}) \)</div>
+                    <p>The cross-product term is zero because the algebraic sum of deviations from the mean is zero (\( \sum_{j=1}^{n} (y_{ij} - \bar{y}_{.i}) = 0 \)). Hence,</p>
+                    <div style="padding: 5px 0;">\( (N-1)S^2 = \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{y}_{.i})^2 + n \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 \)</div>
+                    <p>By definition of \( S_w^2 \) and \( V(\bar{y}_{sys}) \):</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{y}_{.i})^2 = k(n-1)S_w^2 \)</div>
+                    <div style="padding: 5px 0;">\( n \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 = n [ k \cdot V(\bar{y}_{sys}) ] = N \cdot V(\bar{y}_{sys}) \)</div>
+                    <p>Substituting these, we get:</p>
+                    <div style="padding: 5px 0;">\( (N-1)S^2 = k(n-1)S_w^2 + N V(\bar{y}_{sys}) \)</div>
+                    <div style="padding: 5px 0;">\( N V(\bar{y}_{sys}) = (N-1)S^2 - k(n-1)S_w^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{N-1}{N} S^2 - \frac{k(n-1)}{N} S_w^2 \)</div>
                 </div>
+                <p>Since \( S^2 \) is fixed for a given population, it is obvious from this result that in order to reduce \( V(\bar{y}_{sys}) \) (between-sample variance), it is necessary to increase \( S_w^2 \) (within-sample variation).</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>4.4 Estimation of Mean and its Sampling Variance (माध्य और उसके प्रतिचयन प्रसरण का अनुमान)</h2>
-                <p>मान लीजिए \( y_{ij} \), \( i \)-वें systematic sample के \( j \)-वें सदस्य (member) को दर्शाता है, (\( j = 1, 2, \ldots n \); \( i = 1, 2, \ldots, k \))। \( i \)-वें sample के mean को स्पष्ट रूप से \( \bar{y}_i \) द्वारा दर्शाया जा सकता है। हमें दो पूरी तरह से अलग स्थितियों (entirely different situations) के तहत population mean का सटीक अनुमान लगाने की गणितीय समस्या पर विचार करना होगा: (i) जब \( N = nk \) और (ii) जब \( N \neq nk \)। पहले हम उस स्थिति पर पूरी तरह से चर्चा करेंगे जब \( N = nk \) हो।</p>
-
-                <h3><strong>Theorem 4.4.1:</strong></h3>
-                <p>Interval \( k \) के साथ systematic sampling में, sample mean \( \bar{y}_{sy} \) population mean \( \bar{Y} \) का एक unbiased estimator है। इसका सटीक sampling variance गणितीय रूप से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_c^2}{k} \quad (4.4.1) $$
-                    <p>जहाँ \( S_c^2 \) स्पष्ट रूप से population में column means के बीच mean square को दर्शाता है (\( c \), column के लिए है)।</p>
-                </div>
-                <p><em>Proof (प्रमाण):</em></p>
-                <div class="derivation-block">
-                    <p>चूँकि \( i \)-वें systematic sample को सख्ती से select करने की probability बिल्कुल \( 1/k \) है, हमारे पास गणितीय रूप से है:</p>
-                    $$ E(\bar{y}_{sy}) = \sum_{i = 1}^k \frac{\bar{y}_i}{k} = \frac{\sum_i \sum_j y_{ij}}{nk} = \bar{Y} $$
-                    <div class="explanation">\( \because \) expected value केवल सभी sample means का sum है जिसे possible samples \( k \) की संख्या से विभाजित (divided) किया गया है, जो ठीक overall population mean का मूल्यांकन (evaluates) करता है।</div>
-                    <p>अतः, \( \bar{y}_{sy} \) एक गणितीय रूप से unbiased estimator है।</p>
-                    <p>यदि \( i \)-वें sample को सख्ती से \( i \)-वां column माना जाता है, तो विशेष रूप से column means के कारण squares का total sum इस प्रकार दिया जाता है:</p>
-                    $$ \sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = (k - 1)S_c^2 $$
-                    <div class="explanation">\( \because \) यह \( k \) columns के लिए sum of squares की मानक बीजीय (algebraic) परिभाषा का पालन करता है।</div>
-                    <p>अतः, sample means \( \bar{y}_{sy} \) का variance सीधे इस प्रकार प्राप्त होता है:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{E(\bar{y}_i - \bar{Y})^2}{k} = \frac{(k - 1)S_c^2}{k} $$
-                    <div class="explanation">\( \because \) variance, population mean से sample mean का expected squared deviation है।</div>
-                </div>
-                <p>उपरोक्त सूत्र से यह बिल्कुल निष्कर्ष (inferred) नहीं निकाला जाना चाहिए कि यदि sample size को अंधाधुंध (indiscriminately) बढ़ाया जाता है तो systematic sample mean का variance लगातार कम हो जाएगा। यह सख्त गणितीय बिंदु स्पष्ट करता है कि systematic sampling एक नाजुक उपकरण (delicate device) है और इसका उपयोग सावधानी से किया जाना चाहिए।</p>
-
-                <h3><strong>Theorem 4.4.2:</strong></h3>
-                <p>Sample mean \( \bar{y}_{sy} \) का sampling variance वैकल्पिक रूप से गणितीय रूप से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{(N - 1)S^2}{N} - \frac{(n - 1)S_w^2}{n} = \sigma^2 - \sigma_w^2 \quad (4.4.2) $$
-                    <p>जहाँ \( S_w^2 = \frac{\sum_i \sum_j (y_{ij} - \bar{y}_i)^2}{k(n - 1)} \), \( (n - 1)S_w^2 = n\sigma_w^2 \) के साथ, और \( \sigma^2 \) का अपना सामान्य मौलिक (fundamental) अर्थ है।</p>
-                </div>
-                <p><em>Proof (प्रमाण):</em></p>
-                <div class="derivation-block">
-                    <p>हम बीजगणितीय रूप से (algebraically) जानते हैं कि total sum of squares (TSS) कठोरता से इस प्रकार दिया गया है:</p>
-                    $$ TSS = (N - 1)S^2 = \sum_i \sum_j (y_{ij} - \bar{y}_i)^2 + n\sum_i (\bar{y}_i - \bar{Y})^2 $$
-                    <div class="explanation">\( \because \) total sum of squares पूरी तरह से samples के भीतर sum of squares और samples के बीच sum of squares में विभाजित हो जाता है।</div>
-                    <p>साथ ही, हम सख्ती से जानते हैं कि \( \bar{y}_{sy} \) का variance है:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{\sum_i (\bar{y}_i - \bar{Y})^2}{k} $$
-                    <p>और विभाजन (partition) से:</p>
-                    $$ (N - 1)S^2 = k(n - 1)S_w^2 + nkV(\bar{y}_{sy}) $$
-                    <div class="explanation">\( \because \) TSS समीकरण में \( S_w^2 \) और \( V(\bar{y}_{sy}) \) की परिभाषाओं को प्रतिस्थापित करना।</div>
-                    <p>अतः, terms को बीजगणितीय रूप से पुनर्व्यवस्थित (rearranging) करने पर:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{(N - 1)S^2}{nk} - \frac{k(n - 1)S_w^2}{nk} = \frac{(N - 1)S^2}{N} - \frac{(n - 1)S_w^2}{n} = \sigma^2 - \sigma_w^2 $$
-                    <div class="explanation">\( \because \) \( nk \) (जो \( N \) के बराबर है) से भाग देने पर variance term अलग (isolates) हो जाता है।</div>
-                </div>
-                <p>चूँकि \( \sigma^2 \) दी गई population के लिए सख्ती से fixed है, यह इस शक्तिशाली परिणाम (powerful result) से स्पष्ट है कि गणितीय रूप से \( V(\bar{y}_{sy}) \) को कम करने के लिए within-sample variation \( \sigma_w^2 \) को बढ़ाना नितांत आवश्यक है।</p>
-
-                <h3><strong>Theorem 4.4.3:</strong> Intra-class Correlation</h3>
-                <p>Systematic sampling में गणितीय रूप से दिखाएं कि:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
-                    <p>जहाँ \( \rho_w \) एक ही systematic sample में इकाइयों के जोड़े के बीच कड़ाई से intra-class correlation coefficient है।</p>
-                </div>
-                <p><em>Proof (प्रमाण):</em></p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{1}{k}\sum_{r = 1}^k (\bar{y}_r - \bar{Y})^2 = \frac{1}{k}\sum_{r = 1}^k \left[ \frac{1}{n}\sum_{j = 0}^{n - 1} y_{r + jk} - \bar{Y} \right]^2 $$
-                    $$ = \frac{1}{n^2 k}\sum_{r = 1}^k \left[ \sum_{i = 1}^n (y_{ri} - \bar{Y}) \right]^2 $$
-                    $$ = \frac{1}{n^2 k}\sum_{r = 1}^k \left[ \sum(y_{ri} - \bar{Y})^2 + \sum_{i \neq j} (y_{ri} - \bar{Y})(y_{rj} - \bar{Y}) \right] $$
-                    <div class="explanation">\( \because \) sum के square का विस्तार करने पर squares का sum प्लस cross-products का sum प्राप्त होता है।</div>
-                    $$ = \frac{\sum (y_i - \bar{Y})^2}{nN} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} $$
-                    $$ = \frac{N\sigma^2}{nN} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} = \frac{\sigma^2}{n} + \frac{\sum\sum (y_{ri} - \bar{Y})(y_{rj} - \bar{Y})}{nN} \quad \text{--- (1)} $$
-                    <p>अब हम गणितीय रूप से जानते हैं कि \( \rho_{xy}\sigma_x \sigma_y = Cov(x,y) \)। Size \( n \) के \( k \) samples के भीतर intra-class correlation के लिए, cross products का sum बिल्कुल \( N(n - 1)\rho_w \sigma^2 \) है।</p>
-                    <div class="explanation">\( \because \) परिभाषा के अनुसार, \( N(n - 1)\rho_w \sigma^2 = \sum\sum(y_{ri} - \bar{Y})(y_{rj} - \bar{Y}) \)।</div>
-                    <p>इसे समीकरण (1) में वापस प्रतिस्थापित करने पर:</p>
-                    $$ V(\bar{y}_{sy}) = \frac{\sigma^2}{n} + \frac{N(n - 1)\rho_w \sigma^2}{nN} = \frac{\sigma^2}{n} + \frac{(n - 1)\rho_w \sigma^2}{n} $$
-                    $$ = \frac{\sigma^2}{n}[1 + (n - 1)\rho_w] $$
-                    <div class="explanation">\( \because \) \( \sigma^2/n \) को बाहर निकालने (factoring out) से सुरुचिपूर्ण प्रमाण (elegant proof) पूरा हो जाता है।</div>
-                </div>
+                <h2>4.4 Estimation of Mean and its Sampling Variance</h2>
+                <p>Maan lijiye \( i \)-th systematic sample ki \( j \)-th value \( y_{ij} \) hai.</p>
+                <p><strong>Theorem 4.4.1</strong> mein mathematical proof ke sath yeh dikhaya gaya hai ki systematic sample mean \( \bar{y}_{sys} \) population mean \( \bar{Y} \) ka unbiased estimator hota hai. Kyunki har sample ki aane ki probability \( 1/k \) hoti hai, unka expected value seedha population mean ke barabar hota hai. Iska variance \( V(\bar{y}_{sys}) = \frac{k-1}{k} S_b^2 \) hota hai, jahan \( S_b^2 \) column means ke beech ka variance hai.</p>
+                <p><strong>Theorem 4.4.2</strong> ek bahut important relationship derive karke batata hai. Total population variance ko hum within-sample (sample ke andar ka) aur between-sample (samples ke aapas ka) variance mein break kar sakte hain. Derivation se pata chalta hai ki \( V(\bar{y}_{sys}) = \frac{N-1}{N} S^2 - \frac{k(n-1)}{N} S_w^2 \). Is formula se clear hai ki agar hume estimator ka variance kam karna hai (taaki precision badhe), toh \( S_w^2 \) (within-sample variance) ko zyada hona chahiye. Iska matlab systematic sample ke andar ki units jitni zyada heterogeneous (alag-alag) hongi, hamara estimate utna hi achha hoga.</p>
             </div>
         </section>
         
         <section id="sec4-5" class="section-card">
             <div class="english-content">
-                <h2>4.5 Systematic vs. Simple Random Sampling</h2>
-                <p>Which method is better? To find out, we look at how units inside the same sample relate to each other. We use the intra-class correlation coefficient (\( \rho_w \)) for this. We already derived the formula:</p>
+                <h2>4.5 Comparison of Systematic with Random Sampling</h2>
+                <p>The relative efficiency of systematic sampling in comparison with simple random sampling can be studied by considering the intra-class correlation coefficient, denoted by \( \rho \), between the units of the same systematic sample.</p>
+                
+                <p><strong>Theorem: In systematic sampling, show that \( V(\bar{y}_{sys}) = \frac{N-1}{Nn} S^2 [1 + (n-1)\rho] \)</strong></p>
+                <p><strong>Full Derivation:</strong></p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{(nk - 1)S^2[1 + (n - 1)\rho_w]}{nk} \quad (4.5.1) $$
+                    <p>By definition, the variance of \( \bar{y}_{sys} \) is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = E(\bar{y}_{sys} - \bar{Y})^2 = \frac{1}{k} \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{1}{k} \sum_{i=1}^{k} \left( \frac{1}{n} \sum_{j=1}^{n} y_{ij} - \bar{Y} \right)^2 \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{1}{k n^2} \sum_{i=1}^{k} \left( \sum_{j=1}^{n} (y_{ij} - \bar{Y}) \right)^2 \)</div>
+                    <p>Expanding the square:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{1}{k n^2} \left[ \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{Y})^2 + \sum_{i=1}^{k} \sum_{j \neq j'}^{n} (y_{ij} - \bar{Y})(y_{ij'} - \bar{Y}) \right]  \quad --- (1) \)</div>
+                    
+                    <p>We know the first part is the total population sum of squares:</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^{k} \sum_{j=1}^{n} (y_{ij} - \bar{Y})^2 = (N-1)S^2 = n k \left( \frac{N-1}{N} \right) S^2 \)</div>
+                    
+                    <p>The intra-class correlation coefficient \( \rho \) within \( k \) samples of size \( n \) is defined by the sum of cross products divided by the total variance terms:</p>
+                    <div style="padding: 5px 0;">\( \rho = \frac{\sum_{i=1}^{k} \sum_{j \neq j'}^{n} (y_{ij} - \bar{Y})(y_{ij'} - \bar{Y})}{k n (n-1) \left( \frac{N-1}{N} \right) S^2} \)</div>
+                    
+                    <p>From this, the sum of cross products is:</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^{k} \sum_{j \neq j'}^{n} (y_{ij} - \bar{Y})(y_{ij'} - \bar{Y}) = \rho k n (n-1) \left( \frac{N-1}{N} \right) S^2 \)</div>
+                    
+                    <p>Substituting these back into equation (1):</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{1}{k n^2} \left[ k n \left( \frac{N-1}{N} \right) S^2 + \rho k n (n-1) \left( \frac{N-1}{N} \right) S^2 \right] \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{k n}{k n^2} \left( \frac{N-1}{N} \right) S^2 [1 + (n-1)\rho] \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{N-1}{Nn} S^2 [1 + (n-1)\rho] \)</div>
                 </div>
-                <p><strong>What does this formula tell us?</strong></p>
-                <ul>
-                    <li>If \( \rho_w \) is <strong>positive</strong>, it means units in the same sample are very similar. This makes the multiplier \( (n-1) \) work against us, and the error (variance) becomes very large.</li>
-                    <li>If \( \rho_w \) is <strong>negative</strong>, it means units in the same sample are very different (heterogeneous). This is exactly what we want! It makes the error smaller.</li>
-                </ul>
-                <p>So, systematic sampling works best when the units we pick are as different from each other as possible.</p>
 
-                <p><strong>Comparing Precision:</strong><br>
-                If we compare systematic sampling directly with simple random sampling, the ratio is:</p>
+                <p><strong>Comparison with SRSWR:</strong></p>
                 <div class="derivation-block">
-                    $$ \frac{V_{sr}}{V_{sy}} = \frac{N - 1}{N - n}[1 + \rho_w(n - 1)] \quad (4.5.3) $$
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{srswr}) = \frac{\sigma^2}{n} = \frac{N-1}{Nn} S^2 \)</div>
+                    <p>Relative efficiency with SRSWR:</p>
+                    <div style="padding: 5px 0;">\( \frac{V(\bar{y}_{srswr})}{V(\bar{y}_{sys})} = \frac{1}{1 + (n-1)\rho} \)</div>
+                    <p>Systematic sampling is more efficient than SRSWR if its relative efficiency > 1:</p>
+                    <div style="padding: 5px 0;">\( \frac{1}{1 + (n-1)\rho} > 1 \implies 1 + (n-1)\rho < 1 \implies \rho < 0 \)</div>
                 </div>
-                <p>Here is the final logic:</p>
-                <ul>
-                    <li>If \( \rho_w = -1/(N - 1) \): Both methods are exactly the same in quality.</li>
-                    <li>If \( \rho_w < -1/(N - 1) \): Systematic sampling is much better and more precise.</li>
-                    <li>If \( \rho_w > -1/(N - 1) \): Simple random sampling is actually better.</li>
-                </ul>
+
+                <p><strong>Comparison with SRSWOR:</strong></p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{srswor}) = \frac{N-n}{Nn} S^2 \)</div>
+                    <p>Systematic sampling would be more efficient than SRSWOR if \( V(\bar{y}_{sys}) < V(\bar{y}_{srswor}) \):</p>
+                    <div style="padding: 5px 0;">\( \frac{N-1}{Nn} S^2 [1 + (n-1)\rho] < \frac{N-n}{Nn} S^2 \)</div>
+                    <div style="padding: 5px 0;">\( (N-1) + (N-1)(n-1)\rho < N-n \)</div>
+                    <div style="padding: 5px 0;">\( (N-1)(n-1)\rho < N - n - N + 1 \implies (N-1)(n-1)\rho < -(n-1) \)</div>
+                    <div style="padding: 5px 0;">\( \rho < -\frac{1}{N-1} \)</div>
+                </div>
+
+                <p><strong>Range of \( \rho \) in systematic sampling:</strong></p>
+                <p>Since variance cannot be negative, \( V(\bar{y}_{sys}) \ge 0 \):</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( 1 + (n-1)\rho \ge 0 \implies \rho \ge -\frac{1}{n-1} \)</div>
+                </div>
+                <p>Since \( \rho \) is a correlation coefficient, \( \rho \le 1 \). Therefore, the range is \( -\frac{1}{n-1} \le \rho \le 1 \). The maximum value \( \rho \) can attain is 1, and the minimum is \( -\frac{1}{n-1} \) (in which case \( V(\bar{y}_{sys}) = 0 \)).</p>
             </div>
             
             <div class="hinglish-content">
-                <h2>4.5 Comparison of Systematic with Random Sampling (यादृच्छिक प्रतिचयन के साथ व्यवस्थित की तुलना)</h2>
-                <p>Simple random sampling की तुलना में systematic sampling की relative mathematical efficiency का गहराई से अध्ययन intra-class correlation coefficient \( \rho_w \) पर विचार करके किया जा सकता है। हमने प्राप्त किया:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{(nk - 1)S^2[1 + (n - 1)\rho_w]}{nk} \quad (4.5.1) $$
-                </div>
-                <p>Relation (4.5.1) से गणितीय रूप से यह देखा जा सकता है कि एक ही sample में units के बीच एक positive correlation estimate के sampling variance को बढ़ा (inflates) देता है। गुणक (multiplier) term \( (n - 1) \) के कारण छोटे positive correlation के लिए भी यह वृद्धि काफी महत्वपूर्ण (significant) है। चूँकि \( S^2 \) एक दी गई population के लिए कठोरता (rigorously) से fixed है, उपरोक्त संबंध से यह पूरी तरह से स्पष्ट है कि \( \rho_w \) की अधिकतम संभव नकारात्मक (negative) value वाली व्यवस्था (arrangement) को अत्यधिक प्राथमिकता दी जानी चाहिए। यह फिर से उसी गहरे निष्कर्ष (profound conclusion) पर ले जाता है कि एक ही systematic sample के भीतर units अध्ययन किए जा रहे characteristic के संबंध में यथासंभव अत्यधिक विषम (highly heterogeneous) होनी चाहिए।</p>
+                <h2>4.5 Comparison of Systematic with Random Sampling</h2>
+                <p>Systematic sampling ko Simple Random Sampling (SRS) ke sath compare karne ke liye hum <strong>intra-class correlation coefficient</strong> \( \rho \) (rho) ka use karte hain. \( \rho \) ek systematic sample ke andar ki units ke beech ka correlation hota hai.</p>
 
-                <p>चूँकि \( V_{sy} \) कभी गणितीय रूप से शून्य से कम नहीं होता है, \( \rho_w \), \( -1/(n - 1) \) से कम नहीं हो सकता है। इस प्रकार \( \rho_w \) का पूर्ण न्यूनतम मान (absolute minimum value) \( -1/(n - 1) \) है और सख्ती से इस मामले में \( V_{sy} = 0 \) है।</p>
+                <p>Humne mathematical derivation se prove kiya ki \( V(\bar{y}_{sys}) = \frac{N-1}{Nn} S^2 [1 + (n-1)\rho] \).</p>
+                <p>Is relation se pata chalta hai ki agar \( \rho \) positive hota hai, toh variance badh jata hai. Iska seedha matlab hai ki ek sample mein aane wali units apas mein alag (heterogeneous) honi chahiye, taaki unke beech correlation negative ho sake.</p>
+                <p>Jab hum SRSWR (with replacement) se compare karte hain, toh systematic sampling tab better hoti hai jab \( \rho < 0 \) ho.<br>Aur jab SRSWOR (without replacement) se compare karte hain, toh systematic sampling tab better hoti hai jab \( \rho < -\frac{1}{N-1} \) ho.</p>
 
-                <p>Simple random mean के साथ सीधे systematic sample mean की relative precision गणितीय रूप से इस प्रकार दी गई है:</p>
-                <div class="derivation-block">
-                    $$ \frac{V_{sr}}{V_{sy}} = \frac{N - 1}{N - n}[1 + \rho_w(n - 1)] \quad (4.5.3) $$
-                </div>
-                <p>यह निश्चित रूप से देखा जा सकता है कि relative precision \( \rho_w \) के वास्तविक मान पर अत्यधिक निर्भर करती है:</p>
-                <ul>
-                    <li>\( \rho_w = -1/(N - 1) \) के लिए, दोनों methods बिल्कुल समान precision के estimates देते हैं।</li>
-                    <li>\( \rho_w < -1/(N - 1) \) के लिए, systematic sample पर आधारित estimate सख्ती से अधिक precise है।</li>
-                    <li>\( \rho_w > -1/(N - 1) \) के लिए, यह गणितीय रूप से उलट (reverses) जाता है।</li>
-                </ul>
+                <p>Kyunki variance kabhi negative nahi ho sakta, isliye \( \rho \) ki value hamesha \( -\frac{1}{n-1} \) se lekar \( 1 \) tak hi hoti hai. Jab \( \rho \) minimum (yaani \( -\frac{1}{n-1} \)) hoti hai, tab variance bilkul \( 0 \) ho jata hai aur humein highest possible precision milti hai.</p>
             </div>
         </section>
 
         <section id="sec4-6" class="section-card">
             <div class="english-content">
-                <h2>4.6 Systematic vs. Stratified Random Sampling</h2>
-                <p>Now, let's see how systematic sampling compares with <strong>stratified random sampling</strong>. Imagine we divide our population of \( N = nk \) items into \( n \) groups (strata), where each group has \( k \) items. If we pick exactly one unit randomly from each group, we have a stratified sample.</p>
-                
-                <p>To compare them, we look at the variation inside these groups, which we call \( S_{wst}^2 \). </p>
-                <ul>
-                    <li>The variance for the mean in <strong>stratified sampling</strong> is:
-                        <div class="derivation-block">
-                            $$ V_{st}(\bar{y}) = (1 - f)\frac{S_{wst}^2}{n} \quad (4.6.4) $$
-                        </div>
-                    </li>
-                    <li>The variance for <strong>systematic sampling</strong> can be written as:
-                        <div class="derivation-block">
-                            $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_{wst}^2[1 + (n - 1)\rho_{wst}]}{nk} \quad (4.6.5) $$
-                        </div>
-                    </li>
-                </ul>
-                <p><strong>Which one should we choose?</strong><br>
-                It depends on the correlation \( \rho_{wst} \). If this value is positive, then stratified sampling is better. If it is zero, both methods are equally good. Usually, systematic sampling is very competitive because it acts like a highly organized form of stratification.</p>
-
-                <h3 style="margin-top: 40px;">Example 4.1: Cow's Milk Yield</h3>
-                <p>Let's look at a real-life example. We recorded the daily milk yield of a high-yield cow for 203 days. We want to see if systematic sampling is good for estimating the total milk the cow gave during this period. We will test two intervals: every 7 days and every 14 days.</p>
-                
-                <p><strong>Results:</strong></p>
+                <h2>4.6 Comparison of Systematic with Stratified Random Sampling</h2>
+                <p>Let us suppose that the population of \( N \) units is divided into \( n \) strata corresponding to \( n \) rows of the schematic diagram in Table 4.2.1 and that one unit is drawn randomly from each stratum, thus giving a stratified sample of size \( n \).</p>
+                <p>The pooled mean square between units within a stratum is defined by:</p>
                 <div class="derivation-block">
-                    <p>Total days \( N = 203 \). Population Mean \( \bar{Y} \approx 16.6 \) litres.</p>
-                    <p><strong>1. For a 7-day interval (\( k = 7 \)):</strong><br>
-                    Our sample size is \( n = 29 \). Using systematic sampling, we estimated the total yield to be 3402 litres.
-                    <br>- Systematic Variance: 5192
-                    <br>- Simple Random Variance: 23194.33
-                    <br><strong>Relative Efficiency:</strong> \( \frac{23194.33}{5192} \times 100 = 446.73\% \)</p>
-                    
-                    <p><strong>2. For a 14-day interval (\( k = 14 \)):</strong><br>
-                    Our sample size is \( n = 15 \).
-                    <br>- Systematic Variance: 11492
-                    <br>- Simple Random Variance: 52187.26
-                    <br><strong>Relative Efficiency:</strong> \( \frac{52187.26}{11492} \times 100 = 454.12\% \)</p>
+                    <div style="padding: 5px 0;">\( S_w^2 = \frac{1}{n(k-1)} \sum_{j=1}^{n} \sum_{i=1}^{k} (y_{ij} - \bar{y}_{j.})^2 \)</div>
                 </div>
-                <p><strong>Conclusion:</strong> In both cases, systematic sampling was more than <strong>4 times more efficient</strong> than simple random sampling! This is because it captured the natural changes in the cow's milk production very effectively by spreading the recorded days evenly.</p>
+                <p>Clearly, the variance of the mean of this stratified sample will be:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \frac{k-1}{nk} S_w^2 \)</div>
+                </div>
+                <p>Now we shall express the variance of the systematic sample in a suitable form for comparative study. Equation (4.4.1) can be written as:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{k-1}{nk} S_w^2 [1 + (n-1)\rho_{wst}] \)</div>
+                    <p>where \( \rho_{wst} \) is a non-circular serial correlation coefficient.</p>
+                </div>
+                <p>Comparing the two, we get:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = V(\bar{y}_{st}) [1 + (n-1)\rho_{wst}] \)</div>
+                </div>
+                <p>Thus, we see that the relative precision of systematic sampling over stratified random sampling depends upon the value of \( \rho_{wst} \). If \( \rho_{wst} \) is positive, then stratified random sampling will provide a better estimate. If \( \rho_{wst} = 0 \), both are equally good. If \( \rho_{wst} \) is negative, systematic sampling is better.</p>
+
+                <h3 style="margin-top: 40px;">Example 4.1</h3>
+                <p>Given below are the daily milk yield (in litres) records of the first lactation of a specified cow belonging to the Tharparkar herd maintained at the Government Cattle Farm, Patna. The milk yields of the first five days were not recorded, leaving a 203 days record.</p>
+                <p>(Data table of 203 days is given in the source).<br>
+                Total sum of values \( \sum y = 1435.5 \). Hence \( \bar{Y} = 1435.5 / 203 = 7.071 \).<br>
+                \( S^2 = 3.655 \).</p>
+                
+                <p><strong>Case (i): Systematic sampling with 7 days' interval (\( k=7 \)).</strong></p>
+                <div class="derivation-block">
+                    <p>\( n = 203/7 = 29 \). Taking random start \( i=5 \), we get the 5th sample.</p>
+                    <p>The unbiased estimate of the total milk yield is:</p>
+                    <div style="padding: 5px 0;">\( \hat{Y}_{sys} = N \times \bar{y}_{sys} = 203 \times \left( \frac{200.7}{29} \right) = 1404.9 \text{ litres} \)</div>
+                    <p>The variance of systematic sampling for the population total estimate is given as \( 809.11 \).</p>
+                    <p>The variance of simple random sample estimate (for \( n=29 \)) is:</p>
+                    <div style="padding: 5px 0;">\( V(\hat{Y}_{srs}) = \frac{N^2}{n} \left(1 - \frac{n}{N}\right) S^2 = 4426.68 \)</div>
+                    <p>Thus, the relative precision of systematic sampling over simple random sampling will be:</p>
+                    <div style="padding: 5px 0;">\( \frac{4426.68}{809.11} \times 100 = 547.1\% \)</div>
+                </div>
+                
+                <p><strong>Case (ii): Systematic sampling with 14 days' interval (\( k=14 \)).</strong></p>
+                <div class="derivation-block">
+                    <p>For \( k=14 \), \( n \) is nearest integer to \( 203/14 \approx 14.5 \implies n=14 \).</p>
+                    <p>Taking a random start \( i=10 \), we get the 10th sample. The unbiased estimate of total milk yield is:</p>
+                    <div style="padding: 5px 0;">\( \hat{Y}_{sys} = \frac{203}{14} \times 98.6 = 15 \times 98.6 = 1479.0 \text{ litres} \)</div>
+                    <p>Its variance is \( 3991.60 \).</p>
+                    <p>The variance of a simple random sample estimate of size 14 will be \( 10014.70 \).</p>
+                    <p>Relative precision:</p>
+                    <div style="padding: 5px 0;">\( \frac{10014.70}{3991.60} \times 100 = 250.9\% \)</div>
+                </div>
             </div>
 
             <div class="hinglish-content">
-                <h2>4.6 Comparison of Systematic with Stratified Random Sampling (स्तरीकृत यादृच्छिक प्रतिचयन के साथ व्यवस्थित की तुलना)</h2>
-                <p>आइए हम गणितीय रूप से मान लें कि \( N = nk \) units की population को schematic diagram की \( n \) rows के अनुरूप \( n \) strata में औपचारिक रूप से विभाजित किया गया है, और प्रत्येक stratum से बिल्कुल एक unit randomly निकाली जाती है, इस प्रकार size \( n \) का पूरी तरह से stratified sample प्राप्त होता है। तब \( j \)-वें stratum का mean गणितीय रूप से इस प्रकार परिभाषित है:</p>
-                <div class="derivation-block">
-                    $$ \bar{y}_{\cdot j} = \frac{1}{k}\sum_{i = 1}^k y_{ij}, \quad (j = 1, 2, \ldots, n) \quad (4.6.1) $$
-                </div>
-                <p>इसी तरह, \( j \)-वें stratum (row) के भीतर units का stratum mean square शानदार ढंग से (elegantly) इस प्रकार परिभाषित किया गया है:</p>
-                <div class="derivation-block">
-                    $$ S_{\cdot j}^2 = \frac{\sum_{i = 1}^k (y_{ij} - \bar{y}_{\cdot j})^2}{k - 1}, \quad (j = 1, 2, \ldots, n) \quad (4.6.2) $$
-                </div>
-                <p>अतः, stratum के भीतर units के बीच pooled mean square संरचनात्मक (structurally) रूप से इस प्रकार परिभाषित किया गया है:</p>
-                <div class="derivation-block">
-                    $$ S_{wst}^2 = \frac{\sum_j \sum_i (y_{ij} - \bar{y}_{\cdot j})^2}{n(k - 1)} = \frac{1}{n}\sum_j S_{\cdot j}^2 \quad (4.6.3) $$
-                </div>
-                <p>स्पष्ट रूप से, इस stratified sample के mean का गणितीय variance सुरक्षित (securely) रूप से दिया जाएगा:</p>
-                <div class="derivation-block">
-                    $$ V_{st}(\bar{y}) = \frac{(k - 1)S_{wst}^2}{nk} = (1 - f)\frac{S_{wst}^2}{n} \quad (4.6.4) $$
-                </div>
-                <p>अब हम एक तुलनात्मक अध्ययन (comparative study) के लिए एक उपयुक्त बीजीय रूप में systematic sample के variance को गणितीय रूप से व्यक्त करेंगे। Equation (4.4.1) को सख्ती से इस प्रकार फिर से लिखा जा सकता है:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{sy}) = \frac{(k - 1)S_{wst}^2[1 + (n - 1)\rho_{wst}]}{nk} \quad (4.6.5) $$
-                    <p>जहाँ \( \rho_{wst} \) एक non-circular serial correlation coefficient है जिसे विशिष्ट (distinctly) रूप से इस प्रकार परिभाषित किया गया है:</p>
-                    $$ \rho_{wst} = \frac{\sum_j \sum_{j' \neq j} [(\bar{y}_{\cdot j} - \bar{Y})(\bar{y}_{\cdot j'} - \bar{Y})]}{(n - 1)n(k - 1)S_{wst}^2} \quad (4.6.6) $$
-                </div>
-                <p>Relations (4.6.4) और (4.6.5) की तुलना करने पर, हमें स्पष्ट रूप से गणितीय relative precision प्राप्त होती है:</p>
-                <div class="derivation-block">
-                    $$ R.P. = \frac{V_{st}}{V_{sy}} = [1 + (n - 1)\rho_{wst}]^{-1} \quad (4.6.7) $$
-                </div>
-                <p>इस प्रकार हम स्पष्ट रूप से देखते हैं कि stratified random sampling की तुलना में systematic sampling की relative precision गणितीय रूप से \( \rho_{wst} \) के values पर निर्भर करती है। यदि \( \rho_{wst} \) दृढ़ता (firmly) से positive है तो stratified random sampling निश्चित (unequivocally) रूप से \( \bar{Y} \) का एक बेहतर, अधिक मजबूत (robust) estimate प्रदान करेगी। हालाँकि, यदि \( \rho_{wst} = 0 \) है, तो यह गणितीय रूप से निष्कर्ष निकाला जा सकता है कि systematic sampling और stratified random sampling दोनों समान रूप से अच्छे हैं।</p>
+                <h2>4.6 Comparison of Systematic with Stratified Random Sampling</h2>
+                <p>Maan lijiye ki population ko \( n \) strata (rows) mein baant diya gaya aur har stratum se 1 unit randomly nikali gayi. Isse stratified sampling ka variance milta hai: \( V(\bar{y}_{st}) = \frac{k-1}{nk} S_w^2 \).</p>
+                <p>Agar hum systematic variance ko ek serial correlation coefficient \( \rho_{wst} \) ki form mein likhein, toh wo aata hai: \( V(\bar{y}_{sys}) = V(\bar{y}_{st}) [1 + (n-1)\rho_{wst}] \).</p>
+                <p>Yahan par relative precision puri tarah \( \rho_{wst} \) par depend karti hai. Agar \( \rho_{wst} > 0 \) hoga, toh stratified sampling behter hogi. Agar \( \rho_{wst} < 0 \) hoga, toh systematic sampling baazi maar legi.</p>
 
-                <h3 style="margin-top: 40px;">उदाहरण 4.1 (Example 4.1)</h3>
-                <p>एक बड़े पैमाने पर (large-scale) सरकारी मवेशी फार्म (Government Cattle Farm) में रखी गई एक विशिष्ट उच्च उपज देने वाली (high-yield) गाय के पहले स्तनपान (first lactation) के दैनिक दूध की उपज (लीटर में) के रिकॉर्ड नीचे दिए गए हैं (अंग्रेजी अनुभाग में तालिका देखें)। पहले पांच दिनों की दूध की उपज सख्ती से दर्ज नहीं की गई थी, क्योंकि यह कोलोस्ट्रम अवधि (colostrum period) थी।</p>
-
-                <p>गाय की सही (true) स्तनपान उपज का अनुमान लगाने में, corresponding simple random sampling के संबंध में, रिकॉर्डिंग के ठीक 7 और 14 दिनों के interval के साथ systematic sampling की गणितीय efficiency ज्ञात कीजिए।</p>
-                <div class="derivation-block">
-                    <p>कुल \( N = 203 \) दिन।</p>
-                    <p><strong>(i) \( k = 7 \) के लिए:</strong> हमारे पास \( n = 29 \) है। Population mean \( \bar{Y} = 3370 / 203 \approx 16.6 \) है।</p>
-                    <p>एक कठोर (rigid) random start \( i = 5 \) लेते हुए, हम 5-वां systematic sample प्राप्त करते हैं। Total milk yield का गणितीय रूप से unbiased estimate इस प्रकार कैलकुलेट किया जाता है:</p>
-                    $$ \widehat{Y}_{sy} = k \times \sum_{j=1}^n y_{5+j(7)} = 7 \times 486 = 3402 \text{ लीटर} $$
-                    <p>Population total estimate के लिए systematic sampling का सटीक variance पूरी तरह से (thoroughly) इस प्रकार व्युत्पन्न (derived) किया गया है:</p>
-                    $$ V(\widehat{Y}_{sy}) = \frac{N^2}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{203^2}{7}[16.45^2 + 17.07^2 + \ldots + 16.03^2] - \frac{3370^2}{7} = 5192 $$
-                    <p>Total milk yield के simple random sample estimate का तुलनात्मक (comparative) variance कड़ाई से इस प्रकार कैलकुलेट किया जाता है:</p>
-                    $$ V(\widehat{Y}_{sr}) = N^2(1 - f)\frac{S^2}{n} = (203)^2\left( 1 - \frac{7}{203} \right) \times \frac{3865.72}{28} = 23194.33 $$
-                    <p>इस प्रकार, simple random sampling की तुलना में systematic sampling की relative mathematical precision भारी (overwhelmingly) रूप से होगी:</p>
-                    $$ \frac{23194.33}{5192} \times 100 = 446.73\% $$
-                    
-                    <p><strong>(ii) \( k = 14 \) के लिए:</strong> इसी तरह हमारे पास \( n = 15 \) या \( 14 \) है। Random start \( i = 10 \) लेते हुए, कुल estimate है:</p>
-                    $$ \widehat{Y}_{sy} = 14 \times 246 = 3444 \text{ लीटर} $$
-                    $$ V(\widehat{Y}_{sy}) = \frac{N^2}{k}\sum_{i = 1}^k \bar{y}_i^2 - \bar{Y}^2 = 14 \times \frac{812028}{14} - (2270)^2 = 11492 $$
-                    <p>Corresponding Simple Random Sample variance दृढ़ता (firmly) से \( 52187.26 \) मूल्यांकित होता है। इस प्रकार, precision है:</p>
-                    $$ \frac{52187.26}{11492} \times 100 = 454.12\% $$
-                    <div class="explanation">\( \because \) अत्यधिक व्यवस्थित (systematic) पैटर्न स्तनपान (lactation) की चक्रीय प्रकृति (cyclic nature) को सटीक रूप से पकड़ता है, जिससे SRS की तुलना में बड़े पैमाने पर बेहतर variance में कमी (reduction) प्राप्त होती है।</div>
-                </div>
+                <h3 style="margin-top: 40px;">Example 4.1</h3>
+                <p>Ek gaaye ke 203 din ke doodh (milk yield) ka data diya gaya hai. Jab hum \( k=7 \) (7 din ka interval) lete hain, toh systematic sampling ki precision simple random sampling ke mukable 547.1% aati hai, matlab yeh 5 guna zyada efficient hai!</p>
+                <p>Wahin jab hum \( k=14 \) lete hain, tab bhi yeh 250.9% precise hai. Yeh example clearly proof karta hai ki practical cases mein systematic sampling kafi powerful hoti hai.</p>
             </div>
         </section>
 
 <section id="sec4-7" class="section-card">
             <div class="english-content">
                 <h2>4.7 Estimation of Variance</h2>
-                <p>Now, students, here is a tricky part. If we take only one systematic sample (with one random start), we cannot find a perfectly "unbiased" estimate of the variance. Why? Because mathematically, a single systematic sample is like picking just one cluster of units. And we know that with only one unit, we can't calculate how much the values vary across different possible samples.</p>
+                <p>An unbiased estimate of the variance is not available for a systematic sample with one random start because a systematic sample is regarded as a random sample of one unit (cluster).</p>
+                <p>Recall that:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( (N-1)S^2 = k(n-1)S_w^2 + N V(\bar{y}_{sys}) \)</div>
+                </div>
+                <p>Substituting this in the variance formula, we get:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{N-1}{N} S^2 - \frac{k(n-1)}{N} S_w^2 \)</div>
+                </div>
+                <p>We can estimate \( S^2 \) and \( S_w^2 \) unbiasedly if we have multiple samples. However, from a single systematic sample, we cannot find an unbiased estimator of the variance because no two consecutive units can occur in the same sample.</p>
                 
-                <p>However, don't worry! We can still find some "biased" estimates that give us a good idea. Also, if we are lucky enough to have two or more independent systematic samples, then we can definitely find an unbiased estimate of the variance.</p>
-
-                <p>Suppose we have \( m \) independent systematic samples, and each sample has \( n \) units. In this case, we can find the unbiased estimate of the variance by looking at how the means of these samples differ from each other:</p>
+                <p>If \( m \) independent systematic samples are available, each of size \( n \), an unbiased estimate of the variance of the estimated mean is given by:</p>
                 <div class="derivation-block">
-                    <div class="explanation">To find the variance, we treat each sample mean as a single observation and apply the standard variance formula for \( m \) observations:</div>
-                    $$ v(\bar{y}_{sy}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y}_{sy})^2}{m(m - 1)} \quad (4.7.1) $$
-                    <p>where \( \bar{y}_{sy} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \) is the average of all the sample means.</p>
+                    <div style="padding: 5px 0;">\( \hat{V}(\bar{y}_{sys}) = \frac{N-nm}{nm(m-1)N} \sum_{i=1}^{m} (\bar{y}_{.i} - \bar{y}_{.})^2 \)</div>
+                    <p>where \( \bar{y}_{.} \) is the overall mean.</p>
                 </div>
-
-                <p>If we have only one sample, we use an approximate method. One way is to look at the differences between consecutive units in the sample. This is called the "successive difference" method:</p>
+                
+                <p>For a single systematic sample, some biased approximate estimators based on the differences between successive observations are:</p>
                 <div class="derivation-block">
-                    <div class="explanation">We calculate the mean square of the differences between neighboring units (\( y_i \) and \( y_{i+1} \)):</div>
-                    $$ S_{wc}^2 = \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} $$
-                    <div class="explanation">Then, we use this to estimate the variance of the sample mean:</div>
-                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{n} \times S_{wc}^2 \quad (4.7.2) $$
+                    <div style="padding: 5px 0;">\( v_1 = \frac{N-n}{Nn} \frac{\sum_{i=1}^{n-1} (y_{i+1} - y_i)^2}{2(n-1)} \)</div>
+                    <div style="padding: 5px 0;">\( v_2 = \frac{N-n}{Nn} \frac{\sum_{i=1}^{n-2} (y_{i+2} - 2y_{i+1} + y_i)^2}{6(n-2)} \)</div>
                 </div>
-
-                <p>Another slightly different formula used for approximation is:</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{N} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \quad (4.7.3) $$
-                </div>
-                <p>Please remember that these formulas (4.7.2 and 4.7.3) are biased. Use them carefully! In real practice, they might give misleading results. It is always better to compare them with the actual variance if you have the full population data. These methods were suggested by famous statisticians Cochran (1946) and Yates (1948).</p>
+                <p>These estimators are biased and should be used with caution, otherwise they may provide misleading results in practice.</p>
 
                 <h3 style="margin-top:40px;">Example 4.2</h3>
-                <p>Let's look at a real example. In 1967-68, a study was done in the Loni block of Meerut (U.P., India). They chose 45 agricultural holdings out of 225 using systematic sampling with an interval of \( k = 5 \). The data for arable land (in kacha bigha) is given below:</p>
-
-                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.85em;">
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th></tr>
-                    <tr><td><strong>Yield</strong></td><td>60</td><td>50</td><td>14</td><td>10</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>150</td><td>150</td><td>100</td><td>20</td><td>0</td></tr>
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>16</th><th>17</th><th>18</th><th>19</th><th>20</th><th>21</th><th>22</th><th>23</th><th>24</th><th>25</th><th>26</th><th>27</th><th>28</th><th>29</th><th>30</th></tr>
-                    <tr><td><strong>Yield</strong></td><td>25</td><td>192</td><td>25</td><td>0</td><td>13</td><td>0</td><td>0</td><td>50</td><td>0</td><td>10</td><td>0</td><td>0</td><td>0</td><td>85</td><td>30</td></tr>
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>31</th><th>32</th><th>33</th><th>34</th><th>35</th><th>36</th><th>37</th><th>38</th><th>39</th><th>40</th><th>41</th><th>42</th><th>43</th><th>44</th><th>45</th></tr>
-                    <tr><td><strong>Yield</strong></td><td>30</td><td>70</td><td>30</td><td>35</td><td>0</td><td>30</td><td>0</td><td>0</td><td>10</td><td>0</td><td>20</td><td>70</td><td>16</td><td>15</td><td>35</td></tr>
-                </table>
-
-                <p>Our task is to estimate the total land in these two villages and find the standard error of our estimate.</p>
+                <p>In an experimental agricultural census out of 225 holdings in two villages, 45 holdings were selected by systematic sampling (with \( k=5 \)). The total arable land for the 45 holdings is \( \sum y = 1968 \).</p>
+                <p>An estimate of the total arable land is given by:</p>
                 <div class="derivation-block">
-                    <p>First, let's find the total estimated land (\( \widehat{Y} \)):</p>
-                    <div class="explanation">The formula for population total is \( \frac{N}{n} \times \text{Sample Total} \). Here, the sum of sample values is 1348.</div>
-                    $$ \widehat{Y} = \frac{N}{n}\sum_{i = 1}^n y_i = \frac{225}{45} \times 1348 = 5 \times 1348 = 6740 \text{ kacha bigha} $$
-                    
-                    <p>Now, let's estimate the variance of this total using the successive difference formula (4.7.2):</p>
-                    <div class="explanation">The variance of the total is \( N^2 \) times the variance of the mean. We use the sum of squares of successive differences, which is calculated as 116,845 for this data.</div>
-                    $$ v(\widehat{Y}) = \frac{N^2(1 - f)}{n} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} $$
-                    
-                    <div class="explanation">Plugging in the values: \( N=225, n=45, f=45/225=0.2 \).</div>
-                    $$ v(\widehat{Y}) = \frac{225^2 \times (1 - 0.2)}{45} \times \frac{116845}{2 \times (45 - 1)} $$
-                    $$ = \frac{50625 \times 0.8}{45} \times \frac{116845}{88} $$
-                    $$ = \frac{40500}{45} \times 1327.784 = 900 \times 1327.784 = 1,195,005.6 $$
-                    
-                    <div class="explanation">\( \because \) calculating successive differences allows an approximate variance estimation without needing a full independent second sample, though it is inherently biased.</div>
-                    <p>Hence, the estimated standard error of \( \widehat{Y} \) is the square root of the variance:</p>
-                    $$ S.E.(\widehat{Y}) = \sqrt{1,195,005.6} \approx 1093.16 $$
+                    <div style="padding: 5px 0;">\( \hat{Y} = k \sum_{i=1}^{n} y_i = 5 \times 1968 = 9840 \text{ kacha bigha} \)</div>
+                </div>
+                <p>An approximate estimate of the variance of \( \hat{Y} \) is given by using the successive differences:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \hat{V}(\hat{Y}) = \frac{N^2 (N-n)}{Nn} \frac{\sum (y_{i+1} - y_i)^2}{2(n-1)} = 45500 \)</div>
+                    <p>Estimated standard error of \( \hat{Y} = \sqrt{45500} = 213.3 \) kacha bigha.</p>
                 </div>
             </div>
 
             <div class="hinglish-content">
-                <h2>4.7 Estimation of Variance (प्रसरण का अनुमान)</h2>
-                <p>बिल्कुल एक random start वाले systematic sample के लिए variance का एक unbiased estimate सख्ती से उपलब्ध नहीं है क्योंकि एक systematic sample को गणितीय रूप से केवल एक इकाई (cluster) का simple random sample माना जाता है। हालाँकि, एकल (single) systematic sample के आधार पर कुछ biased mathematical estimators संभव हैं। यदि दो या दो से अधिक systematic samples उपलब्ध हैं, तो estimated mean के variance का एक unbiased estimate कठोरता से गणितीय रूप से बनाया जा सकता है।</p>
+                <h2>4.7 Estimation of Variance</h2>
+                <p>Systematic sampling ki ek sabse badi problem yeh hai ki agar sirf ek hi sample liya gaya hai, toh hum uske variance ka unbiased estimate nahi nikal sakte. Formula ke derivation se pata chalta hai ki humein total variance \( S^2 \) aur within-sample variance \( S_w^2 \) dono chahiye hote hain. Par kyunki ek systematic sample mein lagatar 2 units ek sath aati hi nahi hain, isliye variance accurately estimate nahi kiya ja sakta.</p>
+                
+                <p>Agar hum \( m \) independent systematic samples le lein, tabhi ek exact unbiased variance nikal sakta hai. Lekin agar ek hi sample ho, toh Cochran aur Yates ne successive observations (ek ke baad ek aane wali) ke differences use karke kuch approximate (par biased) estimators (\( v_1 \) aur \( v_2 \)) diye hain. Inhe sambhal kar use karna chahiye.</p>
 
-                <p>मान लीजिए \( m \) independent systematic samples पूरी तरह से उपलब्ध हैं, जिनमें से प्रत्येक का size \( n \) है। तब, variance का एक unbiased estimate इस प्रकार दिया जाता है:</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}_{sy}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y}_{sy})^2}{m(m - 1)} \quad (4.7.1) $$
-                    <p>जहाँ \( \bar{y}_{sy} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \)।</p>
-                </div>
-
-                <p>एक systematic sample mean के variance का एक अनुमानित (approximate) और biased estimate गणितीय रूप से इस प्रकार दिया जाता है:</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{n} \times S_{wc}^2 \quad (4.7.2) $$
-                    <p>जहाँ \( S_{wc}^2 = \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \)।</p>
-                </div>
-
-                <p>एक systematic sample mean के variance का एक और अनुमानित और biased estimate इस प्रकार दिया जाता है:</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}_{sy}) = \frac{(1 - f)}{N} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} \quad (4.7.3) $$
-                </div>
-                <p>Relations (4.7.2) और (4.7.3) द्वारा दिए गए ये estimators biased हैं और इनका उपयोग अत्यधिक सावधानी (extreme caution) के साथ किया जाना चाहिए अन्यथा वे व्यवहार (practice) में भ्रामक (misleading) परिणाम प्रदान कर सकते हैं। इसलिए, संपूर्ण data का उपयोग करके प्राप्त sampling variance के साथ इसकी सीधे तुलना करके एक विशिष्ट मामले में bias का विचार प्राप्त करना गणितीय रूप से वांछनीय (desirable) है। ये estimators स्पष्ट रूप से Cochran (1946) और Yates (1948) द्वारा दिए गए परिणामों पर आधारित हैं।</p>
-
-                <h3 style="margin-top:40px;">उदाहरण 4.2 (Example 4.2)</h3>
-                <p>1967-68 के दौरान यूपी (भारत) के मेरठ जिले के लोनी ब्लॉक में I.A.S.R.I., नई दिल्ली द्वारा की गई एक प्रायोगिक कृषि जनगणना (experimental agricultural census) में, ब्लॉक के दो गाँवों को randomly select किया गया था। दो गाँवों, अर्थात् पंच-लोक और अग्रोला में ठीक 225 जोतों (holdings) में से, कड़ाई से 45 जोतों को systematic sampling (\( k = 5 \) के एक सटीक sampling interval के साथ) द्वारा select किया गया था। 45 selected जोतों के लिए कुल कृषि योग्य भूमि (कच्चा बीघा में, जहाँ 5 कच्चा बीघा = 1 एकड़) को गणितीय रूप से नीचे प्रलेखित (documented) किया गया है (अंग्रेजी अनुभाग में तालिका देखें)।</p>
-
-                <p>दो गाँवों में कुल कृषि योग्य भूमि का गणितीय रूप से अनुमान लगाएँ और estimate की अनुमानित standard error की स्पष्ट रूप से गणना करें।</p>
-                <div class="derivation-block">
-                    <p>Total arable land का एक unbiased estimate स्पष्ट रूप से इस प्रकार दिया गया है:</p>
-                    $$ \widehat{Y} = \frac{N}{n}\sum_{i = 1}^n y_i = 225 \times \frac{1348}{45} = 6740 \text{ कच्चा बीघा} $$
-                    <p>\( \widehat{Y} \) के variance के एक estimate की गणना गणितीय रूप से relation (4.7.2) का विस्तार करके की जाती है:</p>
-                    $$ v(\widehat{Y}) = \frac{N^2(1 - f)}{n} \times \frac{\sum_{i = 1}^{n - 1} (y_i - y_{i + 1})^2}{2(n - 1)} $$
-                    $$ = \frac{225^2 \times (1 - 45/225)}{45} \times \frac{116845}{2 \times (45 - 1)} $$
-                    $$ = \frac{225^2 \times (4/5)}{45} \times \frac{116845}{88} = \frac{40500}{45} \times 1327.78 = 11,950,031.25 $$
-                    <div class="explanation">\( \because \) क्रमिक अंतर (successive differences) की गणना करने से पूरी तरह से स्वतंत्र दूसरे sample की आवश्यकता के बिना एक approximate variance estimation की अनुमति मिलती है, हालांकि यह स्वाभाविक रूप से (inherently) biased है।</div>
-                    <p>अतः, \( \widehat{Y} \) की कड़ाई से estimated standard error \( \sqrt{11,950,031.25} = 3456.88 \) है।</p>
-                </div>
+                <h3 style="margin-top:40px;">Example 4.2</h3>
+                <p>Example 4.2 mein 225 holdings mein se \( k=5 \) ke interval par 45 holdings ka data liya gaya, total 1968 bigha zameen nikli. Poori population ki zameen ka estimate \( 1968 \times 5 = 9840 \) bigha aaya. Uska error successive differences wala formula laga ke approximate kiya gaya jo \( 213.3 \) bigha ka Standard Error aaya.</p>
             </div>
         </section>
 
         <section id="sec4-8" class="section-card">
             <div class="english-content">
                 <h2>4.8 Interpenetrating Systematic Sampling</h2>
-                <p>Sometimes, we really need a very accurate and solid estimate of the variance. In such cases, we use a technique called "Interpenetrating" sampling. Instead of taking one big systematic sample, we take several small systematic sub-samples. Each sub-sample starts with a completely different random number. To keep our total sample size the same (let's say \( n \)), we can take \( m \) sub-samples, each having \( n/m \) units.</p>
-                
-                <p>Let's say \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \) are the means of these \( m \) different sub-samples. We can combine them to get a single best estimate of the population mean:</p>
+                <p>If it is essential to have a rigorous estimate of the sampling variance, it can be done by taking \( m \) systematic sub-samples with independent random starts, each containing \( n/m \) units to keep the total sample size the same. Let \( \bar{y}_i \) be estimates based on \( m \) independent systematic sub-samples. An unbiased estimator of the population mean is the pooled mean:</p>
                 <div class="derivation-block">
-                    <div class="explanation">This "pooled mean" is simply the average of all the individual sub-sample means:</div>
-                    $$ \bar{y} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \quad (4.8.1) $$
+                    <div style="padding: 5px 0;">\( \bar{y}_{.} = \frac{1}{m} \sum_{i=1}^{m} \bar{y}_i \)</div>
                 </div>
-                
-                <p>The best part about this method is that we can now find an unbiased estimate of the variance very easily:</p>
+                <p>Then, an unbiased estimate of the variance of \( \bar{y}_{.} \) is:</p>
                 <div class="derivation-block">
-                    <div class="explanation">Because the \( m \) samples are independent, we can treat their means as individual data points and use the standard variance formula:</div>
-                    $$ v(\bar{y}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2}{m(m - 1)} \quad (4.8.2) $$
+                    <div style="padding: 5px 0;">\( \hat{V}(\bar{y}_{.}) = \frac{1}{m(m-1)} \sum_{i=1}^{m} (\bar{y}_i - \bar{y}_{.})^2 \)</div>
                 </div>
-                
-                <p>If we have \( m \) sub-samples, each with \( n' = n/m \) units, and our interval is \( k' = mk \), the total number of possible samples is \( k' \). The actual variance and its estimate are:</p>
-                <div class="derivation-block">
-                    <div class="explanation">The true population variance of the pooled mean is:</div>
-                    $$ V(\bar{y}) = \frac{(k' - m)}{k'm(k' - 1)}\sum_{i = 1}^{k'} (\bar{y}_i - \bar{Y})^2 \quad (4.8.3) $$
-                    <p>And from our sample, the estimate for this variance is:</p>
-                    $$ v(\bar{y}) = \frac{(k' - m)}{k'm(m - 1)}\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2 \quad (4.8.4) $$
-                </div>
-                <p>There is a small trade-off here. If \( m \) is small (like only 2 or 3 samples), our variance estimate won't be very precise. But if we increase \( m \) by making the sub-samples very small, our overall estimate of the population mean might become less efficient. So, as a statistician, you have to decide: do you want a better estimate of the mean, or a more reliable estimate of the variance?</p>
+                <p>Though these variance estimators are unbiased, they are less precise if \( m \) is small. Similarly, if \( m \) is increased by decreasing the sub-sample size, the combined estimator of the population mean is likely to be less efficient. Hence, one has to arrive at a decision between getting a good estimate of variance or a good estimate of the population mean.</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>4.8 Interpenetrating Systematic Sampling (अंतर-प्रवेशी व्यवस्थित प्रतिचयन)</h2>
-                <p>यदि sampling variance का एक गणितीय रूप से कठोर (rigorous) estimate होना आवश्यक है, तो इसे पूरी तरह से independent random starts के साथ systematic sub-samples लेकर किया जा सकता है, जिसमें कुल sample size को समान रखने के लिए कड़ाई से ठीक \( n/m \) units शामिल हों। मान लीजिए कि \( \bar{y}_1, \bar{y}_2, \ldots, \bar{y}_m \), \( m \) independent systematic sub-samples पर आधारित estimates हैं। Population mean का एक unbiased estimator pooled mean है जो संरचनात्मक रूप से (structurally) इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
-                    $$ \bar{y} = \frac{1}{m}\sum_{i = 1}^m \bar{y}_i \quad (4.8.1) $$
-                </div>
-                <p>तब, \( \bar{y} \) के सटीक गणितीय variance का एक unbiased estimate है:</p>
-                <div class="derivation-block">
-                    $$ v(\bar{y}) = \frac{\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2}{m(m - 1)} \quad (4.8.2) $$
-                </div>
-                <p>\( n/m (= n') \) units के \( m \) systematic sub-samples के मामले में, प्रत्येक सख्ती से 1 से \( mk (= k') \) तक random starts के साथ, pooled mean \( \bar{y} \) का सटीक variance और estimated variance गणितीय रूप से इसके द्वारा दिए गए हैं:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}) = \frac{(k' - m)}{k'm(k' - 1)}\sum_{i = 1}^{k'} (\bar{y}_i - \bar{Y})^2 \quad (4.8.3) $$
-                    <p>जहाँ \( \bar{y}_i \), \( i \)-वां sample mean है (\( i = 1, \ldots, k' \)) और</p>
-                    $$ v(\bar{y}) = \frac{(k' - m)}{k'm(m - 1)}\sum_{i = 1}^m (\bar{y}_i - \bar{y})^2 \quad (4.8.4) $$
-                </div>
-                <p>यद्यपि ये सटीक variance estimators unbiased हैं, यदि \( m \) छोटा है तो वे भारी (drastically) रूप से कम precise (सटीक) होते हैं। इसी तरह, यदि sub-sample size कम करके \( m \) को गणितीय रूप से बढ़ाया जाता है, तो population mean का combined estimator कम efficient होने की अत्यधिक संभावना है। इसलिए, एक सांख्यिकीविद् (statistician) को variance का अच्छा estimate प्राप्त करने की इच्छा बनाम population mean का अच्छा estimate प्राप्त करने के बीच एक दृढ़ निर्णय (firm decision) पर स्पष्ट रूप से पहुंचना होता है।</p>
+                <h2>4.8 Interpenetrating Systematic Sampling</h2>
+                <p>Agar variance ka bilkul sahi aur rigorous unbiased estimate chahiye hi chahiye, toh hum "Interpenetrating systematic sampling" use karte hain. Isme ek bada lamba sample lene ki jagah, chote-chote \( m \) independent systematic samples alag-alag random start se liye jate hain.</p>
+                <p>Un sabka average nikal ke pooled mean banta hai, aur un \( m \) samples ke apne means ka variance nikal kar overall variance ka unbiased estimate asani se mil jata hai. Par isme ek dikkat hai, agar \( m \) ko zyada bada kiya jaye, toh har sub-sample ka size chhota ho jata hai, jisse population mean ka estimate thoda kam efficient (less precise) ho sakta hai. Isliye mean aur variance dono ki precision ke beech ek balance rakhna padta hai.</p>
             </div>
         </section>
 
         <section id="sec4-9" class="section-card">
             <div class="english-content">
                 <h2>4.9 New Systematic Sampling</h2>
-                <p>As pointed out rigorously in the previous section, systematic sampling universally suffers from the mathematical drawback of not being able to elegantly provide an unbiased estimator of sampling variance strictly on the basis of a single sample. One statistically possible way of getting an unbiased variance estimator is to precisely use interpenetrating systematic sampling, but this frustratingly results in loss in precision and operational simplicity. Singh and Singh (1977) have expertly suggested a mathematically robust <strong>new systematic sampling procedure</strong> which beautifully provides an unbiased variance estimator. In this advanced section, we shall discuss briefly the specific mathematical outlines of the main results.</p>
-                <p>Suppose a population strictly consists of \( N \) distinct units and a specific sample of size \( n \) is to be drawn from it. Let \( u \ (\leq n) \) and \( d \) be two predetermined integers which are rigorously chosen in such a mathematical way that (i) every sample contains definitively distinct units, and (ii) the inclusion probability for each pair of units is mathematically non-zero. Starting with a single random number \( r \ (\leq N) \), we strictly select \( u \) units continuously, and thereafter the mathematically remaining \( n - u (= v) \) units with interval \( d \) such that \( d \leq u \) and \( u + vd \leq N \). With these severe restrictions, a sample of strictly desired sample size \( n \) can be perfectly drawn in two or more phases by this complex sampling scheme.</p>
-                <p>The sample space corresponding to the selection procedure rigidly contains \( N \) possible samples, and the specific sample point mathematically corresponding to the random number \( r \) is uniquely given by \( s_r = \{s', s''\} \) where \( s' \) consists of the exact unit indices \( r + m \), (\( m = 0, 1, \ldots, u - 1 \)) and \( s'' \) consists of the unit indices \( r + u - 1 + m'd \), (\( m' = 1, 2, \ldots, v \)).</p>
+                <p>As pointed out in previous sections, regular systematic sampling suffers from the drawback of not being able to provide an unbiased estimator of sampling variance on the basis of a single sample. One way was interpenetrating systematic sampling, but it results in loss in precision. Singh and Singh (1977) suggested a "New Systematic Sampling" procedure which provides an unbiased variance estimator from a single sample.</p>
+                <p>Suppose a population consists of \( N \) units and a sample of size \( n \) is to be drawn. Let \( a \) and \( k \) be two predetermined integers chosen such that every sample contains \( n \) distinct units, and the inclusion probability for each pair of units is non-zero. Starting with a random number, we select \( a \) units continuously, and thereafter the remaining \( n-a \) units with an interval \( k \).</p>
+                <p>The number of phases \( N' \) required for selecting a sample is:</p>
                 <div class="derivation-block">
-                    <p>The inclusion probabilities for individual units and pairwise units are mathematically given by \( \pi_i \) and \( \pi_{ij} \), which are known precisely under the new systematic sampling procedure. Hence, the Horvitz-Thompson estimator of the population mean dramatically simplifies to:</p>
-                    $$ \bar{y}_{nsy} = \frac{1}{n}\sum_{i \in s} y_i = \frac{1}{N}\sum_{i = 1}^N y_i \quad (4.9.3) $$
-                    <p>The sampling variance of the estimator \( \bar{y}_{nsy} \) in the Yates-Grundy form strictly reduces mathematically to:</p>
-                    $$ V(\bar{y}_{nsy}) = \frac{1}{2}\sum_i \sum_j \frac{(\pi_i \pi_j - \pi_{ij})}{\pi_{ij}}\left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \quad (4.9.4) $$
-                    <p>which can be elegantly rewritten as:</p>
-                    $$ V(\bar{y}_{nsy}) = \frac{N - n}{N}S^2 - \frac{n - 1}{n}S_{wnsy}^2 \quad (4.9.5) $$
-                    <p>where \( S_{wnsy}^2 = \frac{\sum_{i = 1}^N (y_i - \bar{y})^2}{N(n - 1)} \).</p>
-                    <p>An exact unbiased estimator of \( V(\bar{y}_{nsy}) \) can mathematically be obtained rigorously by:</p>
-                    $$ v(\bar{y}_{nsy}) = \frac{1}{2}\sum_{i \in s} \sum_{j \in s, j > i} \left( \frac{1}{\pi_{ij}} - \frac{1}{n^2} \right)(y_i - y_j)^2 \quad (4.9.6) $$
+                    <div style="padding: 5px 0;">\( N' = N - (n-a)k - a + 1 \)</div>
                 </div>
+                <p>The inclusion probabilities for individual units \( \pi_i \) and pairwise units \( \pi_{ij} \) are all known under this scheme. Hence, the Horvitz-Thompson estimator of the population mean simplifies to:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \hat{\bar{Y}}_{HT} = \frac{1}{N} \sum_{i \in s} \frac{y_i}{\pi_i} \)</div>
+                </div>
+                <p>The sampling variance of this estimator in Yates-Grundy form reduces to:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\hat{\bar{Y}}_{HT}) = \frac{1}{2N^2} \sum_{i \neq j}^{N} (\pi_i \pi_j - \pi_{ij}) \left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \)</div>
+                </div>
+                <p>An unbiased estimator of this variance can be directly obtained from the single sample by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \hat{V}(\hat{\bar{Y}}_{HT}) = \frac{1}{2N^2} \sum_{i \neq j \in s} \frac{\pi_i \pi_j - \pi_{ij}}{\pi_{ij}} \left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \)</div>
+                </div>
+                <p>In comparative studies, it was concluded that for many natural populations, new systematic sampling provides better results than the usual systematic sampling.</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>4.9 New Systematic Sampling* (नया व्यवस्थित प्रतिचयन*)</h2>
-                <p>जैसा कि पिछले section में कठोरता (rigorously) से बताया गया है, systematic sampling सार्वभौमिक (universally) रूप से एकल sample के आधार पर कड़ाई से sampling variance का एक unbiased estimator सुरुचिपूर्ण (elegantly) ढंग से प्रदान करने में सक्षम न होने की गणितीय कमी से ग्रस्त है। Unbiased variance estimator प्राप्त करने का एक सांख्यिकीय (statistically) रूप से संभव तरीका interpenetrating systematic sampling का सटीक उपयोग करना है, लेकिन इसके परिणामस्वरूप निराशाजनक रूप से precision और परिचालन सरलता (operational simplicity) में कमी आती है। Singh और Singh (1977) ने विशेषज्ञ रूप से एक गणितीय रूप से मजबूत (robust) <strong>नई systematic sampling procedure</strong> का सुझाव दिया है जो खूबसूरती से एक unbiased variance estimator प्रदान करती है। इस उन्नत (advanced) section में, हम मुख्य परिणामों के विशिष्ट गणितीय रूपरेखा (outlines) पर संक्षेप में चर्चा करेंगे।</p>
-                <p>मान लीजिए कि एक population में सख्ती से \( N \) distinct units हैं और उसमें से size \( n \) का एक विशिष्ट sample निकाला जाना है। मान लीजिए \( u \ (\leq n) \) और \( d \) दो पूर्वनिर्धारित (predetermined) पूर्णांक (integers) हैं जिन्हें इस तरह से गणितीय तरीके से कठोरता से चुना जाता है कि (i) प्रत्येक sample में निश्चित रूप से distinct units हों, और (ii) units के प्रत्येक pair के लिए inclusion probability गणितीय रूप से गैर-शून्य (non-zero) हो। एक single random number \( r \ (\leq N) \) से शुरू करके, हम लगातार \( u \) units सख्ती से select करते हैं, और उसके बाद गणितीय रूप से शेष \( n - u (= v) \) units को interval \( d \) के साथ इस प्रकार select करते हैं कि \( d \leq u \) और \( u + vd \leq N \) हो। इन गंभीर प्रतिबंधों (severe restrictions) के साथ, इस जटिल sampling scheme द्वारा दो या अधिक चरणों (phases) में कड़ाई से वांछित sample size \( n \) का एक sample पूरी तरह से निकाला जा सकता है।</p>
-                <div class="derivation-block">
-                    <p>Individual units और pairwise units के लिए inclusion probabilities गणितीय रूप से \( \pi_i \) और \( \pi_{ij} \) द्वारा दी जाती हैं, जो नई systematic sampling procedure के तहत सटीक रूप से ज्ञात हैं। इसलिए, population mean का Horvitz-Thompson estimator नाटकीय रूप से (dramatically) सरल होकर यह हो जाता है:</p>
-                    $$ \bar{y}_{nsy} = \frac{1}{n}\sum_{i \in s} y_i = \frac{1}{N}\sum_{i = 1}^N y_i \quad (4.9.3) $$
-                    <p>Yates-Grundy रूप में estimator \( \bar{y}_{nsy} \) का sampling variance सख्ती से गणितीय रूप से कम होकर यह हो जाता है:</p>
-                    $$ V(\bar{y}_{nsy}) = \frac{1}{2}\sum_i \sum_j \frac{(\pi_i \pi_j - \pi_{ij})}{\pi_{ij}}\left( \frac{y_i}{\pi_i} - \frac{y_j}{\pi_j} \right)^2 \quad (4.9.4) $$
-                    <p>जिसे सुरुचिपूर्ण ढंग से इस प्रकार फिर से लिखा जा सकता है:</p>
-                    $$ V(\bar{y}_{nsy}) = \frac{N - n}{N}S^2 - \frac{n - 1}{n}S_{wnsy}^2 \quad (4.9.5) $$
-                    <p>जहाँ \( S_{wnsy}^2 = \frac{\sum_{i = 1}^N (y_i - \bar{y})^2}{N(n - 1)} \) है।</p>
-                    <p>\( V(\bar{y}_{nsy}) \) का एक सटीक unbiased estimator गणितीय रूप से कठोरता से इसके द्वारा प्राप्त किया जा सकता है:</p>
-                    $$ v(\bar{y}_{nsy}) = \frac{1}{2}\sum_{i \in s} \sum_{j \in s, j > i} \left( \frac{1}{\pi_{ij}} - \frac{1}{n^2} \right)(y_i - y_j)^2 \quad (4.9.6) $$
-                </div>
+                <h2>4.9 New Systematic Sampling</h2>
+                <p>Jaisa ki pehle bataya gaya, normal systematic sampling ka sabse bada drawback ye hai ki single sample se variance ka unbiased estimate nahi milta. Singh aur Singh (1977) ne ek "New Systematic Sampling" technique banayi taaki ek single sample se hi variance ka unbiased estimate nikala ja sake, wo bhi bina precision lose kiye.</p>
+                <p>Is method mein, ek naye pattern mein sample select hota hai. Hum pehli kuch \( a \) units continuously chunte hain aur baaki units \( k \) ke interval par. Is tarike se har unit ke select hone ki probability (\( \pi_i \)) aur kisi bhi do units ke ek sath sample mein aane ki probability (\( \pi_{ij} \)) non-zero ho jati hain. Phir Horvitz-Thompson estimator ki madad se mean aur variance dono smoothly aur unbiased tareeke se estimate ho jate hain, aur iska result natural populations ke liye kafi better hota hai.</p>
             </div>
         </section>
 
         <section id="sec4-10" class="section-card">
             <div class="english-content">
-                <h2>4.10 Comparison for Specified Populations</h2>
-                <p>The mathematical performance of systematic sampling fundamentally in relation to stratified or simple random sampling depends very deeply on the specific nature of the population in which the characteristic under study has some mathematically simple trend in terms of units alone. Some major mathematical trends are discussed robustly here as under.</p>
+                <h2>4.10 Comparison of Systematic with Simple and Stratified Random Samples for Some Specified Populations</h2>
+                <p>The performance of systematic sampling in relation to stratified or simple random sampling depends very much on the nature of the population in which the characteristic under study has some simple trend.</p>
 
                 <h3>4.10.1 Populations with Linear Trend</h3>
-                <p>Suppose the values of the population units increase perfectly in accordance with a strict linear model such that:</p>
+                <p>Suppose the values of the population units increase in accordance with a linear model such that:</p>
                 <div class="derivation-block">
-                    $$ y_i = a + bi $$
-                    <p>where \( a \) and \( b \) are mathematical constants and \( i \) goes from 1 to \( N \).</p>
-                    <p>Hence, the population mean and variance algebraically evaluate to:</p>
-                    $$ \bar{Y} = \frac{\sum_{i = 1}^N (a + bi)}{N} = a + \frac{b(N + 1)}{2} $$
-                    $$ S^2 = \frac{\sum_{i = 1}^N (y_i - \bar{Y})^2}{N - 1} = \frac{b^2\sum_{i = 1}^N [i - (N + 1)/2]^2}{N - 1} = \frac{b^2 N(N + 1)}{12} $$
-                    <div class="explanation">\( \because \) the sum of squares of integers centers algebraically into this formula.</div>
-                    <p>Therefore, the variance for simple random sampling is:</p>
-                    $$ V_{sr} = \frac{N - n}{Nn}S^2 = \frac{(nk - 1)b^2}{12} \times \frac{k - 1}{nk} = \frac{(k - 1)(nk + 1)b^2}{12} \quad (4.10.1) $$
-                    <p>Similarly, finding variance firmly within strata requires us to put \( k \) for \( N \):</p>
-                    $$ V_{st} = \frac{N - n}{Nn}S_w^2 = \frac{nk - 1}{nk} \times \frac{(k - 1)k(k + 1)b^2}{12n} = \frac{(k - 1)(k + 1)b^2}{12n} \quad (4.10.2) $$
-                    <p>For systematic sampling, the mathematical values evaluate rigidly as:</p>
-                    $$ V_{sy} = \frac{1}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{b^2}{k}\sum_{i = 1}^k \left[ i - \frac{k + 1}{2} \right]^2 = \frac{b^2 k(k + 1)(k - 1)}{12k} = \frac{(k - 1)(k + 1)b^2}{12} \quad (4.10.3) $$
-                    <div class="explanation">\( \because \) mathematically replacing the summation with standard algebra gives this elegant reduction.</div>
-                    <p>Which beautifully proves:</p>
-                    $$ V_{st} : V_{sy} : V_{sr} = \left[ \frac{k + 1}{n} : k + 1 : nk + 1 \right] \approx \frac{1}{n} : 1 : n \approx 1 : n : n^2 \quad (4.10.4) $$
+                    <div style="padding: 5px 0;">\( y_i = a + i \cdot c \)</div>
+                    <p>where \( a \) and \( c \) are constants and \( i \) goes from 1 to \( N \).</p>
                 </div>
-                <p>It is mathematically seen that the variance of a stratified sample is uniquely only \( 1/n \)-th of the variance of a systematic sample in a population perfectly with linear trend. Hence, stratified sampling is mathematically the most efficient of all the strict methods for eliminating the effect of linear trend.</p>
+                <p>The Population Mean is:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \bar{Y} = a + \frac{N+1}{2} c \)</div>
+                </div>
+                <p>The Population variance is:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( S^2 = \frac{1}{N-1} \sum_{i=1}^{N} (y_i - \bar{Y})^2 = c^2 \frac{N(N+1)}{12} \)</div>
+                </div>
+
+                <p><strong>Case I: When units are selected by SRSWOR:</strong></p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{srswor}) = \frac{N-n}{Nn} S^2 = \frac{N-n}{Nn} c^2 \frac{N(N+1)}{12} = \frac{c^2 (N-n)(N+1)}{12n} \)</div>
+                </div>
+
+                <p><strong>Case II: Systematic Sampling:</strong></p>
+                <div class="derivation-block">
+                    <p>The \( j \)-th unit of the \( i \)-th systematic sample is \( y_{ij} = a + \{i + (j-1)k\}c \).</p>
+                    <p>The mean of the \( i \)-th systematic sample is:</p>
+                    <div style="padding: 5px 0;">\( \bar{y}_{.i} = a + i c + \frac{k(n-1)}{2} c \)</div>
+                    <p>Subtracting the population mean \( \bar{Y} \):</p>
+                    <div style="padding: 5px 0;">\( \bar{y}_{.i} - \bar{Y} = c \left[ i - \frac{k+1}{2} \right] \)</div>
+                    <p>The variance of the systematic sample is:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) = \frac{1}{k} \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 = \frac{c^2}{k} \sum_{i=1}^{k} \left( i - \frac{k+1}{2} \right)^2 = c^2 \frac{k^2 - 1}{12} \)</div>
+                </div>
+
+                <p><strong>Case III: Stratified Sampling:</strong></p>
+                <div class="derivation-block">
+                    <p>Similarly, the variance within strata is found by replacing \( N \) with \( k \) and \( n \) with 1:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \frac{1}{n} \left( \frac{k^2 - 1}{12} c^2 \right) = \frac{c^2 (k^2 - 1)}{12n} \)</div>
+                </div>
+
+                <p><strong>Comparison:</strong></p>
+                <div class="derivation-block">
+                    <p>Comparing the variances:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \frac{c^2(k^2-1)}{12n} \quad , \quad V(\bar{y}_{sys}) = \frac{c^2(k^2-1)}{12} \quad , \quad V(\bar{y}_{srswor}) = \frac{c^2(n-1)(nk+1)}{12n} \)</div>
+                    <p>Therefore, \( V(\bar{y}_{st}) = \frac{1}{n} V(\bar{y}_{sys}) \).</p>
+                    <p>For large \( n \), they are in the ratio:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) : V(\bar{y}_{sys}) : V(\bar{y}_{srswor}) \approx 1 : n : n^2 \)</div>
+                </div>
+                <p>It is seen that the variance of a stratified sample is only \( 1/n \)-th of the variance of a systematic sample. Hence, stratified sampling is the most efficient of all methods for eliminating the effect of linear trend.</p>
 
                 <h3>4.10.2 Populations with Periodic Variations</h3>
-                <p>Suppose the population heavily consists of a periodic trend which is mathematically represented by a sine function:</p>
+                <p>Suppose the population consists of a periodic trend which is represented by a sine wave that repeats after every cycle.</p>
+                <p><strong>Case I:</strong> When the sampling interval \( k \) is equal to or a simple multiple of the period of cyclic variation. All the units in the sample will be drawn from the same position of each cycle, making them perfectly homogeneous. Hence, \( S_w^2 \) is very small, and the variance \( V(\bar{y}_{sys}) \) will be extremely large, making the estimate as bad as a single unit. Low precision.</p>
+                <p><strong>Case II:</strong> When the sampling interval is not equal to, or is an odd multiple of half the period of cycles. Then the sample units will span the peaks and troughs of the wave, becoming highly heterogeneous. Thus, \( S_w^2 \) is large and \( V(\bar{y}_{sys}) \) is very small. In a very favorable case, precision could be maximized (even yielding zero variance).</p>
+
+                <h3>4.10.3 Natural Populations</h3>
+                <p>Systematic sampling is both operationally convenient and efficient in sampling natural populations like forest areas for estimating the volume of timber, hardwood seedlings, etc. Osborne (1942), Yates (1948) and Finney (1948) have examined its relative efficiency in natural populations and observed its performance is comparatively much better.</p>
+
+                <h3>4.10.4 Auto-correlated Populations</h3>
+                <p>In various natural populations, units close to each other are more alike than units far apart. For the study of such populations, called auto-correlated populations, we assume that observations \( y_i \) and \( y_{i+u} \) are positively correlated, and their serial correlation coefficient \( \rho_u \) depends on the distance \( u \) between them, decreasing as \( u \) increases.</p>
+                <p>The graph of \( \rho_u \) as a function of \( u \) is called a correlogram.</p>
+                <p>Madow and Madow (1944) have shown that if units are simply ordered, it is better to adopt systematic sampling instead of simple random sampling. Cochran (1946) has shown that if the second difference of the serial correlation coefficients is positive:</p>
                 <div class="derivation-block">
-                    $$ y_i = \sin\left( \frac{\pi i}{n} \right) + \theta_i $$
+                    <div style="padding: 5px 0;">\( \Delta^2 \rho_u = \rho_{u-1} - 2\rho_u + \rho_{u+1} \ge 0 \)</div>
                 </div>
-                <p>where \( i \) varies from 0 to an integral multiple of \( 2\pi \). A 5% systematic sample from such a population will disastrously consist of sampling units exactly drawn from the same relative position of each mathematical cycle. Thus, making systematic sampling the most precise of all sampling methods ONLY if \( k \) is an odd multiple of the half period. If it coincides with the cycle, precision completely vanishes.</p>
-                
-                <h3>4.10.3 Natural Populations and 4.10.4 Auto-correlated</h3>
-                <p>Systematic sampling is practically operationally convenient in forest areas. In <strong>Auto-correlated populations</strong>, units close together are heavily alike. Madow and Madow (1944) mathematically showed that if the correlogram is fundamentally concave upwards (\( \delta_d = \rho_d + \rho_{d + 2} - 2\rho_{d + 1} \geq 0 \)), then strictly \( E(V_{sy}) \leq E(V_{st}) \), making systematic sampling undeniably superior.</p>
+                <p>which implies the correlogram is concave upwards, then for such populations systematic sampling is even more efficient than stratified sampling:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{sys}) \le V(\bar{y}_{st}) \le V(\bar{y}_{srs}) \)</div>
+                </div>
             </div>
 
             <div class="hinglish-content">
-                <h2>4.10 Comparison for Specified Populations (निर्दिष्ट जनसंख्याओं के लिए तुलना)</h2>
-                <p>Stratified या simple random sampling के संबंध में systematic sampling का गणितीय प्रदर्शन मौलिक रूप से population की विशिष्ट प्रकृति पर बहुत गहराई से निर्भर करता है जिसमें अध्ययन किए जा रहे characteristic का केवल units के संदर्भ में कुछ गणितीय रूप से सरल रुझान (simple trend) होता है। कुछ प्रमुख गणितीय रुझानों (trends) पर यहाँ मजबूती से (robustly) चर्चा की गई है।</p>
+                <h2>4.10 Comparison of Systematic with Simple and Stratified Random Samples for Some Specified Populations</h2>
+                <p>Agar population mein data ek seedhi line (linear trend) ki tarah badh raha ho (jaise \( y_i = a + ic \)), toh systematic aur baaki methods kaisa perform karenge?</p>
+                <p>Humne mathematical derivation se total variance \( S^2 \) nikala, phir teeno methods ke variance nikale.</p>
+                <p>Jab inko compare karte hain toh pata chalta hai ki \( V(\bar{y}_{st}) = \frac{1}{n} V(\bar{y}_{sys}) \). Yani ratio lagbhag \( 1 : n : n^2 \) (Stratified : Systematic : SRSWOR) aati hai.</p>
+                <p>Iska matlab linear trend wali population mein Stratified sampling sabse best (most efficient) hoti hai, Systematic sampling beech mein hoti hai (SRS se \( n \) times better, par Stratified se \( n \) times kharab). Is trend ke asar ko sudharne ke liye hum 'end corrections' ya modified systematic sampling use kar sakte hain jisme dono ends se equidistant pairs chune jate hain.</p>
 
-                <h3>4.10.1 Populations with Linear Trend (रैखिक प्रवृत्ति वाली जनसंख्याएं)</h3>
-                <p>मान लीजिए population units के values पूरी तरह से एक सख्त linear model के अनुसार बढ़ते हैं जैसे कि:</p>
-                <div class="derivation-block">
-                    $$ y_i = a + bi $$
-                    <p>जहाँ \( a \) और \( b \) गणितीय constants हैं और \( i \), 1 से \( N \) तक जाता है।</p>
-                    <p>अतः, population mean और variance बीजीय (algebraically) रूप से मूल्यांकन (evaluate) करते हैं:</p>
-                    $$ \bar{Y} = \frac{\sum_{i = 1}^N (a + bi)}{N} = a + \frac{b(N + 1)}{2} $$
-                    $$ S^2 = \frac{\sum_{i = 1}^N (y_i - \bar{Y})^2}{N - 1} = \frac{b^2\sum_{i = 1}^N [i - (N + 1)/2]^2}{N - 1} = \frac{b^2 N(N + 1)}{12} $$
-                    <div class="explanation">\( \because \) पूर्णांकों (integers) के squares का sum बीजीय रूप से इस सूत्र (formula) में केंद्रित होता है।</div>
-                    <p>इसलिए, simple random sampling के लिए variance है:</p>
-                    $$ V_{sr} = \frac{N - n}{Nn}S^2 = \frac{(nk - 1)b^2}{12} \times \frac{k - 1}{nk} = \frac{(k - 1)(nk + 1)b^2}{12} \quad (4.10.1) $$
-                    <p>इसी तरह, strata के भीतर variance दृढ़ता (firmly) से खोजने के लिए हमें \( N \) के लिए \( k \) रखने की आवश्यकता है:</p>
-                    $$ V_{st} = \frac{N - n}{Nn}S_w^2 = \frac{nk - 1}{nk} \times \frac{(k - 1)k(k + 1)b^2}{12n} = \frac{(k - 1)(k + 1)b^2}{12n} \quad (4.10.2) $$
-                    <p>Systematic sampling के लिए, गणितीय मान कठोरता (rigidly) से मूल्यांकन करते हैं:</p>
-                    $$ V_{sy} = \frac{1}{k}\sum_{i = 1}^k (\bar{y}_i - \bar{Y})^2 = \frac{b^2}{k}\sum_{i = 1}^k \left[ i - \frac{k + 1}{2} \right]^2 = \frac{b^2 k(k + 1)(k - 1)}{12k} = \frac{(k - 1)(k + 1)b^2}{12} \quad (4.10.3) $$
-                    <div class="explanation">\( \because \) summation को मानक बीजगणित (standard algebra) से गणितीय रूप से बदलने पर यह सुरुचिपूर्ण (elegant) कमी (reduction) मिलती है।</div>
-                    <p>जो खूबसूरती से साबित करता है:</p>
-                    $$ V_{st} : V_{sy} : V_{sr} = \left[ \frac{k + 1}{n} : k + 1 : nk + 1 \right] \approx \frac{1}{n} : 1 : n \approx 1 : n : n^2 \quad (4.10.4) $$
-                </div>
-                <p>यह गणितीय रूप से देखा गया है कि एक stratified sample का variance पूरी तरह से linear trend वाली population में systematic sample के variance का विशिष्ट रूप से (uniquely) केवल \( 1/n \)-वां हिस्सा है। इसलिए, linear trend के प्रभाव को खत्म करने के लिए stratified sampling सभी सख्त methods में से गणितीय रूप से सबसे efficient है।</p>
+                <h3>4.10.2 Populations with Periodic Variations</h3>
+                <p>Agar population mein ek periodic variation (jaise wave ka regular upar-neeche jana, machines ke cycles aadi) hai, toh systematic sampling ki efficiency is baat par nirbhar karegi ki interval \( k \) kya hai.</p>
+                <p>Agar \( k \) poore cycle ki length ke barabar hai, toh har sample mein ek hi jaise values ayenge (sabse chote ya sabse bade), matlab sample andar se bilkul homogeneous ho jayega, aur isse hamara estimate sabse kharab (low precision) aayega.</p>
+                <p>Par agar \( k \) half-cycle ka odd multiple (jaise cycle 20 ki hai, aur \( k=10 \) liya) hai, toh sample mein sabse choti aur sabse badi values dono ek sath ayengi. Sample bahut heterogeneous ho jayega, aur tab systematic sampling sabse highest precision degi.</p>
 
-                <h3>4.10.2 Populations with Periodic Variations (आवधिक भिन्नता वाली जनसंख्याएं)</h3>
-                <p>मान लीजिए population में भारी रूप से एक periodic trend शामिल है जिसे गणितीय रूप से sine function द्वारा दर्शाया गया है:</p>
-                <div class="derivation-block">
-                    $$ y_i = \sin\left( \frac{\pi i}{n} \right) + \theta_i $$
-                </div>
-                <p>जहाँ \( i \), 0 से \( 2\pi \) के एक पूर्णांक गुणज (integral multiple) तक बदलता है। ऐसी population से एक 5% systematic sample विनाशकारी रूप से (disastrously) प्रत्येक गणितीय चक्र (mathematical cycle) के बिल्कुल समान सापेक्ष (relative) स्थिति से खींची गई sampling units से मिलकर बनेगा। इस प्रकार, systematic sampling को सभी sampling methods में से सबसे सटीक तभी बनाया जा सकता है जब \( k \) आधी अवधि (half period) का एक विषम गुणज (odd multiple) हो। यदि यह चक्र के साथ मेल खाता है (coincides), तो precision पूरी तरह से गायब (vanishes) हो जाती है।</p>
+                <h3>4.10.3 Natural Populations</h3>
+                <p>Natural populations jaise jungalon mein pedon (timber) ki volume ya plants ko estimate karne mein yeh method bahut aasan aur convenient hota hai. Purani studies ne saabit kiya hai ki aise naturally phaili hui populations mein systematic sampling SRS se kahin zyada better perform karti hai.</p>
+
+                <h3>4.10.4 Auto-correlated Populations</h3>
+                <p>Kayi natural situations mein, paas-paas ki units apas mein zyada milti julti hain. Inhe <strong>auto-correlated populations</strong> kehte hain. Yahan paas ki units mein correlation zyada hota hai, aur distance \( u \) badhne par serial correlation \( \rho_u \) kam hota jata hai. Iske graph ko correlogram kehte hain.</p>
+                <p>Cochran ne mathematical terms mein prove kiya ki agar yeh correlation lagatar is tarah kam ho ki uski shape upward concave ho (\( \Delta^2 \rho_u \ge 0 \)), toh systematic sampling sirf SRS se hi nahi, balki stratified sampling se bhi zyada achi (efficient) hoti hai!</p>
             </div>
         </section>
 
         <section id="sec4-11" class="section-card">
             <div class="english-content">
                 <h2>4.11 Two-Dimensional Systematic Sampling</h2>
-                <p>So far we have rigorously mathematically discussed one-dimensional systematic sampling in which the population units are supposed to be serially ordered squarely on a line. There are many situations where the population units are naturally arranged firmly on an area or a plane instead of a line. A strict systematic sampling procedure for such a situation is known mathematically as plane systematic or <strong>two-dimensional systematic sampling</strong>. The simplest mathematical extension of a linear systematic sample to the two-dimensional plane is popularly known as a <em>squared grid</em> or <em>aligned sample</em>. </p>
-                <p>Let us rigorously assume that the population consists of exactly \( N \) square grid areas of perfectly equal size and a sample of \( n \) grid areas is to be reliably taken. We assume that the grids are perfectly arranged in \( l \times m (= nk = N) \) form of cells. The simplest mathematical way is to select a precise pair of random numbers \( (i,j) \) such that \( i \leq r \), \( j \leq s \). Thus, the random location of a grid in the cell is determined uniquely.</p>
-                <p>An alternative procedure creates an <strong>unaligned sample</strong>, which mathematically selects \( r \) independent random numbers for rows, and \( s \) for columns. Extensive mathematical investigations have proven that an unaligned pattern is structurally superior both to a standard square grid and a completely stratified random sample.</p>
+                <p>So far we have discussed one-dimensional systematic sampling in which the population units are serially ordered on a line. There are many situations (like agriculture or forestry) where units are naturally arranged on an area or a plane. A systematic sampling procedure for such a situation is known as plane systematic or <strong>two-dimensional systematic sampling</strong>.</p>
+                <p>Let us assume the population area consists of \( N = n \times k \) grid areas, arranged in an \( n \times n \) form of cells, where each cell is \( k \times k \) grids.</p>
+                <ol>
+                    <li><strong>Square Grid (Aligned sample):</strong> The simplest way is to select a pair of random numbers \( (i, j) \) such that \( 1 \le i \le k, 1 \le j \le k \). The random location is determined uniquely for all cells. The selected grids form an aligned or square-grid pattern.</li>
+                    <li><strong>Unaligned sample:</strong> Select \( n \) independent random numbers \( i_r \le k \) and \( n \) independent random numbers \( j_c \le k \). The grids included are \( (r k + i_r, c k + j_c) \). This creates an unaligned pattern.</li>
+                </ol>
+                <p>Investigations by Quenouille (1949) indicated that an unaligned pattern will be superior both to an aligned square grid and a stratified random sample.</p>
             </div>
             
             <div class="hinglish-content">
-                <h2>4.11 Two-Dimensional Systematic Sampling (द्वि-आयामी व्यवस्थित प्रतिचयन)</h2>
-                <p>अब तक हमने कठोरता से (rigorously) गणितीय रूप से one-dimensional systematic sampling पर चर्चा की है जिसमें population units को एक रेखा (line) पर चौकोर (squarely) रूप से क्रमिक रूप से व्यवस्थित माना जाता है। कई ऐसी स्थितियाँ होती हैं जहाँ population units स्वाभाविक रूप से एक रेखा के बजाय एक क्षेत्र (area) या समतल (plane) पर मजबूती से (firmly) व्यवस्थित होती हैं। ऐसी स्थिति के लिए एक सख्त systematic sampling procedure को गणितीय रूप से plane systematic या <strong>two-dimensional systematic sampling</strong> के रूप में जाना जाता है। Two-dimensional plane में एक linear systematic sample का सबसे सरल गणितीय विस्तार (extension) लोकप्रिय रूप से <em>squared grid</em> या <em>aligned sample</em> के रूप में जाना जाता है।</p>
-                <p>आइए हम कठोरता से मान लें कि population में पूरी तरह से समान आकार के बिल्कुल \( N \) वर्गाकार (square) ग्रिड क्षेत्र (grid areas) शामिल हैं और \( n \) ग्रिड क्षेत्रों का एक sample मज़बूती से (reliably) लिया जाना है। हम मानते हैं कि ग्रिड्स को कोशिकाओं (cells) के \( l \times m (= nk = N) \) रूप में पूरी तरह से व्यवस्थित किया गया है। सबसे सरल गणितीय तरीका random numbers \( (i,j) \) की एक सटीक जोड़ी (precise pair) का चयन करना है जैसे कि \( i \leq r \), \( j \leq s \)। इस प्रकार, सेल में एक ग्रिड का random location विशिष्ट रूप से (uniquely) निर्धारित किया जाता है।</p>
-                <p>एक वैकल्पिक procedure एक <strong>unaligned sample</strong> बनाती है, जो गणितीय रूप से rows के लिए \( r \) स्वतंत्र random numbers और columns के लिए \( s \) select करती है। व्यापक गणितीय जांच (investigations) से यह सिद्ध हुआ है कि एक unaligned pattern संरचनात्मक रूप से (structurally) एक मानक square grid और एक पूरी तरह से stratified random sample दोनों से बेहतर है।</p>
+                <h2>4.11 Two-Dimensional Systematic Sampling</h2>
+                <p>Ab tak humne linear systematic sampling padhi jahan units ek line mein ordered the. Lekin kheti (agriculture) ya jungle (forestry) mein zameen ek area (2D plane) par hoti hai. Aisi jagah <strong>two-dimensional systematic sampling</strong> (plane systematic sampling) use hoti hai.</p>
+                <p>Agar area ko grid cells mein baanta jaye, toh do main tarike hain:</p>
+                <ol>
+                    <li><strong>Aligned Sample (Square grid):</strong> Bas ek set random coordinates \( (i, j) \) choose karo, aur pure area mein har cell ke usi jagah wale grids ko sample mein le lo. Yeh ek perfect aligned grid pattern banata hai.</li>
+                    <li><strong>Unaligned Sample:</strong> Har row aur har column ke liye alag random numbers choose karo, isse grid pattern unaligned ho jata hai.</li>
+                </ol>
+                <p>Quenouille ki research ne dikhaya ki yeh unaligned pattern simple grid ya stratified sampling dono se zyada behtar aur accurate result deta hai.</p>
             </div>
         </section>
 
