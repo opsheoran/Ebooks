@@ -127,16 +127,16 @@
 
                 <h3>5.2.1 Cumulative Total Method</h3>
                 <p>Imagine we have \( N \) units. Let's say the size of the \( i \)-th unit is \( X_i \). The total size of all units combined is \( X = \sum_{i = 1}^N X_i \). In this method, we assign numbers to units like this: Unit 1 gets numbers from 1 to \( X_1 \). Unit 2 gets numbers from \( X_1 + 1 \) up to \( X_1 + X_2 \), and so on. We keep adding the sizes to get "cumulative totals". Then, we pick a random number \( k \) between 1 and \( X \). The unit that owns the range containing \( k \) is our winner!</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>The logic is simple: since each unit \( i \) is given exactly \( X_i \) numbers out of the total \( X \), the chance of picking it is exactly proportional to its size:</p>
                     $$ p_i = \frac{X_i}{X} \quad \text{for } i = 1, 2, \ldots, N $$
-                    <div class="explanation">Since we have \( X_i \) tickets for unit \( i \) and total tickets are \( X \), the probability is \( X_i/X \).</div>
+                    <div class="proof-step">Since we have \( X_i \) tickets for unit \( i \) and total tickets are \( X \), the probability is \( X_i/X \).</div>
                 </div>
                 <p>If we need a sample of size \( n \), we just repeat this process \( n \) times. If we put the unit back each time, it's called "with replacement". The only problem with this method is that if we have thousands of units, calculating these cumulative totals takes a lot of time and effort.</p>
 
                 <h3>Example 5.1</h3>
                 <p>Suppose there are 10 warehouses with different number of storage units: 50, 30, 45, 25, 40, 26, 24, 35, 28, and 27. We want to pick a sample of 4 warehouses using the cumulative total method.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Step 1: Create a table of cumulative totals:</p>
                     <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 10px;">
                         <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>S.N.</th><th>Size (\( X_i \))</th><th>Cumulative Size</th><th>Assigned Range</th></tr>
@@ -156,14 +156,14 @@
 
                 <h3>5.2.2 Lahiri's Method</h3>
                 <p>Lahiri suggested a clever way to avoid all those additions! Here is what we do: Pick a random number between 1 and \( N \) to choose a unit "candidate". Then, pick another random number between 1 and \( M \), where \( M \) is the size of the largest unit in the whole population.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>If the second number is less than or equal to the size of our candidate unit, we keep it. If it's bigger, we throw it away and try again with a new pair of random numbers. We keep going until we have \( n \) units.</p>
-                    <div class="explanation">The probability of picking unit \( i \) is \( \frac{1}{N} \) (to pick it as a candidate) times \( \frac{X_i}{M} \) (to keep it). Overall, this is \( \frac{X_i}{NM} \), which is perfectly proportional to its size \( X_i \).</div>
+                    <div class="proof-step">The probability of picking unit \( i \) is \( \frac{1}{N} \) (to pick it as a candidate) times \( \frac{X_i}{M} \) (to keep it). Overall, this is \( \frac{X_i}{NM} \), which is perfectly proportional to its size \( X_i \).</div>
                 </div>
 
                 <h3>Example 5.2</h3>
                 <p>Let's use Lahiri's method for the same warehouses. Here, \( N = 10 \) and the biggest warehouse size is \( M = 50 \). We pick pairs of random numbers \( (i, j) \).</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Example: We pick (10, 13). Warehouse 10 has size 27. Since 13 is less than 27, we accept Warehouse 10.</p>
                     <p>Next, we pick (4, 26). Warehouse 4 has size 25. Since 26 is bigger than 25, we reject it and try again!</p>
                 </div>
@@ -175,31 +175,31 @@
 
                 <h3>5.2.1 Cumulative Total Method (संचयी योग विधि)</h3>
                 <p>मान लीजिए \( i \)-th unit का size गणितीय रूप से \( X_i \) (\( i = 1, 2, \ldots, N \)) के रूप में दर्शाया गया है, और कुल overall size \( X = \sum_{i = 1}^N X_i \) है। हम uniquely 1 से \( X_1 \) तक के integer numbers को पहली unit के साथ, \( (X_1 + 1) \) से \( (X_1 + X_2) \) तक के numbers को दूसरी unit के साथ, और इसी तरह क्रमिक रूप से जोड़ते हैं। 1 से \( X \) की range से एक random number \( k \) साफ तौर पर चुना जाता है, और जिस unit के साथ यह specific number जुड़ा होता है, उसे निर्णायक रूप से select कर लिया जाता है।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>स्पष्ट रूप से, population में \( i \)-th unit को गणितीय रूप से \( X_i \) के strict proportion में एक robust probability के साथ चुना जा रहा है:</p>
                     $$ p_i = \frac{X_i}{X} \quad \text{for } i = 1, 2, \ldots, N $$
-                    <div class="explanation">\( \because \) unit \( i \) को आवंटित (allocated) integer tickets की संख्या कुल \( X \) में से ठीक \( X_i \) है।</div>
+                    <div class="proof-step">\( \because \) unit \( i \) को आवंटित (allocated) integer tickets की संख्या कुल \( X \) में से ठीक \( X_i \) है।</div>
                 </div>
                 <p>यदि precise size \( n \) के sample की आवश्यकता है, तो procedure को चयनित units के full replacement के साथ कड़ाई से \( n \) बार दोहराया जाता है। चयन की यह mathematical procedure स्पष्ट रूप से <strong>cumulative total method</strong> के रूप में जानी जाती है क्योंकि इस विधि में unit sizes के निरंतर cumulation की भारी आवश्यकता होती है।</p>
                 <p>इस procedure में inherently मुख्य mathematical difficulty यह है कि हमें भारी क्रमिक cumulative totals की गणना करनी पड़ती है, जो population size \( N \) के बहुत बड़ा होने पर काफी time-consuming और computationally costly हो जाती है।</p>
 
                 <h3>उदाहरण 5.1 (Example 5.1)</h3>
                 <p>एक क्षेत्र में 10 commercial warehouses हैं जिनमें क्रमशः 50, 30, 45, 25, 40, 26, 24, 35, 28, और 27 specific storage units हैं। Cumulative total method द्वारा replacement के साथ और storage units की संख्या के ठीक proportional probability के साथ चार distinct warehouses का sample गणितीय रूप से चुनें।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>पहला step निर्दोष रूप से cumulative totals बनाना है जैसा कि गणितीय रूप से नीचे दिखाया गया है (अंग्रेजी section में table देखें)।</p>
                     <p>गणितीय रूप से एक warehouse को select करने के लिए, 350 से अधिक नहीं होने वाला एक random number निकाला जाता है। मान लीजिए चुना गया random number निश्चित रूप से 272 है। Cumulative totals से देखा जा सकता है कि यह संख्या 261&ndash;295 के mathematical group में आती है, यानी 8वें warehouse को चुना गया है। इसी तरह, 346, 165 और 094 जैसे अन्य numbers चुनने पर क्रमशः 10वें, 5वें और तीसरे warehouses select होते हैं।</p>
                 </div>
 
                 <h3>5.2.2 Lahiri's Method (लाहिड़ी की विधि)</h3>
                 <p>Lahiri (1951) ने सुरुचिपूर्ण ढंग से एक alternative brilliant procedure सुझाई जिसमें थकाऊ mathematical cumulations से पूरी तरह बचा जा सकता है। इसमें कड़ाई से 1 और \( N \) के बीच एक number random रूप से चुनना और अस्थायी (provisionally) रूप से corresponding serial number वाली unit को नोट करना शामिल है। फिर 1 और \( M \) के बीच एक और random number साफ तौर पर चुना जाता है, जहाँ \( M \) गणितीय रूप से population की सभी \( N \) units के बीच का absolute maximum size है।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>यदि दूसरा random number अस्थायी रूप से चुनी गई unit के mathematical size से कड़ाई से छोटा या उसके बराबर है, तो unit को निश्चित रूप से sample में select कर लिया जाता है। यदि नहीं, तो पूरी procedure को reject कर दिया जाता है और कड़ाई से तब तक दोहराया जाता है जब तक कि अंततः एक unit select न हो जाए। \( n \) units के sample के लिए, procedure को समान रूप से तब तक दोहराया जाता है जब तक कि ठीक \( n \) units प्राप्त न हो जाएं।</p>
-                    <div class="explanation">\( \because \) provisionally चुनी गई unit \( i \) को रखने की probability ठीक \( X_i / M \) है, जिससे unit \( i \) को चुनने की overall unconditional probability ठीक \( \frac{1}{N} \times \frac{X_i}{M} \) हो जाती है, जो \( X_i \) के पूरी तरह proportional है।</div>
+                    <div class="proof-step">\( \because \) provisionally चुनी गई unit \( i \) को रखने की probability ठीक \( X_i / M \) है, जिससे unit \( i \) को चुनने की overall unconditional probability ठीक \( \frac{1}{N} \times \frac{X_i}{M} \) हो जाती है, जो \( X_i \) के पूरी तरह proportional है।</div>
                 </div>
 
                 <h3>उदाहरण 5.2 (Example 5.2)</h3>
                 <p>Lahiri's method (pps, wr) द्वारा example 5.1 के data का उपयोग करके ठीक चार warehouses का sample चुनें।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>इस मामले में, \( N = 10 \) और absolute maximum size \( M = 50 \) है (warehouse 1 से)। हमें random numbers \( (i, j) \) की एक pair खींचनी होगी जहाँ \( i \leq 10 \) और \( j \leq 50 \) हो।</p>
                     <p>मान लीजिए पहली random pair (10, 13) खींची गई। चूंकि warehouse 10 का size 27 है, और 13 कड़ाई से 27 से कम है, इसलिए 10वीं unit सफलतापूर्वक select हो गई है।</p>
                     <p>मान लीजिए अगली खींची गई pair (4, 26) है। Warehouse 4 का size ठीक 25 है। चूंकि 26 कड़ाई से 25 से अधिक है, इसलिए इस specific pair को बलपूर्वक reject कर दिया जाता है।</p>
@@ -218,7 +218,7 @@
 
                 <h3>Theorem 5.3.1: Unbiased Estimator for Population Total</h3>
                 <p>In PPS sampling with replacement, how do we calculate the total? We take the average of the ratios of the study value to its probability. The formula is:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{pps} = \frac{1}{n} \sum_{i=1}^n \frac{y_i}{p_i} \quad (5.3.1) $$
                     <p><strong>Proof:</strong> To show it is unbiased, we need to prove that its expected value is exactly \( Y \).</p>
                     <p>Logic: In each draw, the expected value of \( y_i/p_i \) is the sum of (Value \(\times\) Probability) for all possible units in the population.</p>
@@ -228,12 +228,12 @@
                     <p>Now, since our estimator is the average of \( n \) such draws:</p>
                     $$ E(\widehat{Y}_{pps}) = E\left( \frac{1}{n} \sum_{i=1}^n \frac{y_i}{p_i} \right) = \frac{1}{n} \sum_{i=1}^n E\left( \frac{y_i}{p_i} \right) $$
                     $$ = \frac{1}{n} \sum_{i=1}^n Y = \frac{n Y}{n} = Y $$
-                    <div class="explanation">So, our estimator \( \widehat{Y}_{pps} \) is indeed an unbiased estimator of the true population total \( Y \).</div>
+                    <div class="proof-step">So, our estimator \( \widehat{Y}_{pps} \) is indeed an unbiased estimator of the true population total \( Y \).</div>
                 </div>
 
                 <h3>Sampling Variance</h3>
                 <p>The variance tells us how much our estimate might fluctuate from sample to sample. Because each draw is independent (since we replace the units), the variance of the average is just \( 1/n \) times the variance of a single draw.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>The variance of \( \widehat{Y}_{pps} \) is given by:</p>
                     $$ V(\widehat{Y}_{pps}) = \frac{1}{n} \left[ \sum_{i=1}^N \frac{Y_i^2}{p_i} - Y^2 \right] $$
                     <p>Or in another form:</p>
@@ -242,12 +242,12 @@
 
                 <h3>Theorem 5.3.2: Estimating the Variance from Sample</h3>
                 <p>In real life, we don't know the population values \( Y_i \), so we need to estimate the variance using only our sample data.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>An unbiased estimator of the variance \( V(\widehat{Y}_{pps}) \) is:</p>
                     $$ \widehat{v}(\widehat{Y}_{pps}) = \frac{1}{n(n-1)} \sum_{i=1}^n \left( \frac{y_i}{p_i} - \widehat{Y}_{pps} \right)^2 \quad (5.3.7) $$
                     <p>For quick calculations, we can use this easier form:</p>
                     $$ \widehat{v}(\widehat{Y}_{pps}) = \frac{1}{n(n-1)} \left[ \sum_{i=1}^n \left( \frac{y_i}{p_i} \right)^2 - n \widehat{Y}_{pps}^2 \right] \quad (5.3.8) $$
-                    <div class="explanation">This looks exactly like the standard sample variance formula \( s^2/n \), but applied to the ratios \( y_i/p_i \).</div>
+                    <div class="proof-step">This looks exactly like the standard sample variance formula \( s^2/n \), but applied to the ratios \( y_i/p_i \).</div>
                 </div>
             </div>
 
@@ -258,29 +258,29 @@
 
                 <h3>Theorem 5.3.1</h3>
                 <p>Pps sampling, wr में, population total \( Y \) का एक unbiased mathematical estimator कड़ाई से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{pps} = \frac{1}{n} \sum_{i=1}^n \frac{y_i}{p_i} \quad (5.3.1) $$
                     <p>और इसका exact sampling variance सुरुचिपूर्ण ढंग से इस प्रकार दिया गया है:</p>
                     $$ V(\widehat{Y}_{pps}) = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 \quad (5.3.2) $$
                 </div>
                 <p><em>Proof:</em></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>आइए निश्चित रूप से random variates \( z_i = y_i / p_i \) (\( i = 1, \ldots, n \)) को परिभाषित करें जो कड़ाई से independently और identically distributed हैं। अतः,</p>
                     $$ E(z_i) = \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} \right) = \sum_{i=1}^N y_i = Y $$
-                    <div class="explanation">\( \because \) पूरी population पर expected value गणितीय रूप से probabilities को cancel कर देता है, जिससे ठीक population total \( Y \) बचता है।</div>
+                    <div class="proof-step">\( \because \) पूरी population पर expected value गणितीय रूप से probabilities को cancel कर देता है, जिससे ठीक population total \( Y \) बचता है।</div>
                     <p>अब हम कड़ाई से \( \widehat{Y}_{pps} = \frac{1}{n} \sum_{i=1}^n z_i \) पर विचार करें। चूँकि</p>
                     $$ E(\widehat{Y}_{pps}) = E\left( \frac{1}{n} \sum_{i=1}^n z_i \right) = \frac{1}{n} \sum_{i=1}^n E(z_i) = \frac{1}{n} (n Y) = Y $$
-                    <div class="explanation">\( \because \) sum का expectation, expectations का sum होता है, जो निश्चित रूप से पुष्टि करता है कि \( \widehat{Y}_{pps} \) एक unbiased estimator है।</div>
+                    <div class="proof-step">\( \because \) sum का expectation, expectations का sum होता है, जो निश्चित रूप से पुष्टि करता है कि \( \widehat{Y}_{pps} \) एक unbiased estimator है।</div>
                     <p>स्पष्ट रूप से \( \widehat{Y}_{pps} \) का sampling variance प्राप्त करने के लिए, हमारे पास है:</p>
                     $$ V(\widehat{Y}_{pps}) = V\left( \frac{1}{n} \sum_{i=1}^n z_i \right) = \frac{1}{n^2} \sum_{i=1}^n V(z_i) = \frac{1}{n} V(z_i) $$
-                    <div class="explanation">\( \because \) covariance terms \( \text{Cov}(y_i/p_i, y_j/p_j) \), \( i \neq j \) के लिए, replacement के साथ पूरी तरह independent draws के कारण कड़ाई से zero हैं।</div>
+                    <div class="proof-step">\( \because \) covariance terms \( \text{Cov}(y_i/p_i, y_j/p_j) \), \( i \neq j \) के लिए, replacement के साथ पूरी तरह independent draws के कारण कड़ाई से zero हैं।</div>
                     $$ = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 $$
                     <p>यह स्पष्ट रूप से दर्शाता है कि estimator का mathematical variance कड़ाई से sample size \( n \) के inversely proportional होता है, जैसा कि simple random sampling, wr में होता है।</p>
                 </div>
 
                 <h3>Corollary (उपप्रमेय)</h3>
                 <p>Population mean, \( \bar{Y}_{pps} \), का एक unbiased estimator गणितीय रूप से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \bar{y}_{pps} = \frac{1}{n} \sum_{i=1}^n \frac{y_i}{N p_i} \quad (5.3.3) $$
                     <p>इसके precise sampling variance के साथ:</p>
                     $$ V(\bar{y}_{pps}) = \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{N p_i} - \bar{Y} \right)^2 \quad (5.3.4) $$
@@ -288,21 +288,21 @@
 
                 <h3>Theorem 5.3.2</h3>
                 <p>Pps sampling, wr में, \( V(\bar{y}_{pps}) \) का एक unbiased mathematical estimator सुरक्षित रूप से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\bar{y}_{pps}) = \frac{1}{n(n-1)} \sum_{i=1}^n \left[ \frac{y_i}{N p_i} - \bar{y}_{pps} \right]^2 \quad (5.3.5) $$
                     $$ = \frac{1}{n(n-1)} \left[ \sum_{i=1}^n \left( \frac{y_i}{N p_i} \right)^2 - n \bar{y}_{pps}^2 \right] \quad (5.3.6) $$
                 </div>
                 <p><em>Proof:</em></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Pps sampling, wr में, \( z_i (= y_i / p_i) \), \( i = 1, 2, \ldots, n \), बिल्कुल समान variance वाले कड़ाई से independent unbiased estimators हैं। आइए परिभाषित करें:</p>
                     $$ s^2 = \frac{\sum (z_i - \bar{z})^2}{n - 1} $$
-                    <div class="explanation">\( \because \) यह independent और identically distributed variables के लिए standard unbiased sample variance formula की गणितीय रूप से नकल करता है।</div>
+                    <div class="proof-step">\( \because \) यह independent और identically distributed variables के लिए standard unbiased sample variance formula की गणितीय रूप से नकल करता है।</div>
                     <p>यह निश्चित रूप से दिखाया जा सकता है कि \( s^2 \) true population variance parameter का एक unbiased estimator है। \( z_i \) के लिए \( y_i / N p_i \) को substitute करके और mean के लिए adjust करके, theorem मजबूती से prove हो जाती है।</p>
                 </div>
 
                 <h3>Corollary</h3>
                 <p>\( V(\widehat{Y}_{pps}) \) का एक unbiased estimator कुशलतापूर्वक इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_{pps}) = \frac{N^2}{n(n-1)} \sum_{i=1}^n \left( \frac{y_i}{N p_i} - \bar{y}_{pps} \right)^2 \quad (5.3.7) $$
                     $$ = \frac{1}{n(n-1)} \left[ \sum_{i=1}^n \left( \frac{y_i}{p_i} \right)^2 - n \widehat{Y}_{pps}^2 \right] \quad (5.3.8) $$
                     <p>Equation (5.3.8) का उपयोग मुख्य रूप से तेज़ computational उद्देश्यों के लिए किया जाता है।</p>
@@ -318,7 +318,7 @@
                 <p>Hello students! Now you might be thinking: "Is PPS sampling really better than Simple Random Sampling (SRS)?" and "Can we prove it using just our sample data?" The answer is Yes! We can estimate how much accuracy we gained by using PPS instead of SRS, using the same sample we collected.</p>
                 
                 <p>In Simple Random Sampling (with replacement), the variance of our estimate is:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^N y_i^2 - \bar{Y}^2 \right] \quad (5.4.1) $$
                 </div>
                 
@@ -329,28 +329,28 @@
                 </ul>
 
                 <p>When we put these pieces together, we get the estimated variance for SRS based on our PPS data:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}_{pps}(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^n \frac{y_i^2}{p_i} - \left( \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right) \right] \quad (5.4.2) $$
                 </div>
                 
                 <p>Finally, the <strong>percentage gain</strong> in efficiency due to PPS sampling is calculated as:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \text{Percentage Gain} = \frac{\widehat{v}_{pps}(\bar{y}_{SR}) - \widehat{v}(\bar{y}_{pps})}{\widehat{v}(\bar{y}_{pps})} \times 100 \quad (5.4.3) $$
-                    <div class="explanation">This tells us how much more precise our PPS estimate is compared to a standard SRS estimate of the same size.</div>
+                    <div class="proof-step">This tells us how much more precise our PPS estimate is compared to a standard SRS estimate of the same size.</div>
                 </div>
 
                 <h3 style="margin-top: 40px;">Example 5.3</h3>
                 <p>Let's look at a real-life example. A survey was done to study wheat yield. A sample of 20 farms was taken from 100 farms. The farms were picked with probability proportional to the area under wheat (PPS), with replacement. The total wheat area (\( X \)) was 484.5 hectares.</p>
                 <p>We used two methods to pick the farms: the Cumulative Total method and Lahiri's method. Let's see the results.</p>
                 <p><strong>(i) Cumulative Total Method Result:</strong></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>The average yield per farm (\( \bar{y}_{pps} \)) was estimated as <strong>29.11 quintals</strong>.</p>
                     <p>The Standard Error (SE) was <strong>1.41</strong>. This means our estimate is quite stable.</p>
                     <p>When we compared it to SRS, the gain in precision was a massive <strong>282%</strong>! This shows PPS was a very smart choice here.</p>
                 </div>
 
                 <p><strong>(ii) Lahiri's Method Result:</strong></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>The average yield was estimated as <strong>27.82 quintals</strong>.</p>
                     <p>The Standard Error was <strong>1.51</strong>.</p>
                     <p>The gain in efficiency compared to SRS was <strong>155%</strong>. Even though this gain is smaller than the first method (due to different random picks), it's still much better than simple random sampling!</p>
@@ -360,19 +360,19 @@
             <div class="hinglish-content">
                 <h2><span class="section-num">5.4</span> Gain due to PPS Sampling with Replacement (PPS Replacement के कारण होने वाला लाभ)</h2>
                 <p>कोई भी व्यक्ति स्वाभाविक रूप से यह जानने के लिए बहुत उत्सुक हो सकता है कि क्या सीधे pps sample से ही, simple random sampling की तुलना में pps sampling के कारण होने वाले actual gain का गणितीय रूप से अनुमान लगाना कड़ाई से संभव है। Simple random sample, wr में, true variance मजबूती से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^N y_i^2 - \bar{Y}^2 \right] \quad (5.3.9) $$
                 </div>
                 <p>\( \sum y_i^2 \) का एक exact unbiased estimator कड़ाई से \( \frac{1}{n} \sum \frac{y_i^2}{p_i} \) द्वारा दिया जाता है और \( N \bar{Y}^2 \) का robust estimate यहाँ से प्राप्त होता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \left[ \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right] $$
                 </div>
                 <p>इन calculated values को कड़ाई से substitute करने के बाद, हमारे पास विशुद्ध रूप से pps sample estimate के आधार पर calculate किए गए simple random sample के variance का एक unbiased estimator सावधानीपूर्वक तैयार हो जाता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}_{pps}(\bar{y}_{SR}) = \frac{1}{N^2} \left[ \frac{1}{n} \sum_{i=1}^n \frac{y_i^2}{p_i} - \left( \widehat{Y}_{pps}^2 - \widehat{v}(\widehat{Y}_{pps}) \right) \right] \quad (5.3.10) $$
                 </div>
                 <p>अतः, pps sampling के कारण सुरक्षित रूप से होने वाले percentage gain का कड़ाई से अनुमान लगाया जा सकता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \text{Gain} = \frac{\left[ \widehat{v}_{pps}(\bar{y}_{SR}) - \widehat{v}(\bar{y}_{pps}) \right]}{\widehat{v}(\bar{y}_{pps})} \times 100 \quad (5.3.11) $$
                 </div>
 
@@ -382,7 +382,7 @@
                 <p>Lahiri's method द्वारा सुरक्षित रूप से चुना गया sample था (तालिका के लिए अंग्रेजी section देखें)।</p>
                 <p>दोनों विशिष्ट samples के लिए farm प्रति average yield और उसके standard error का गणितीय अनुमान लगाएं। साथ ही, simple random sampling with replacement की तुलना में सीधे तौर पर pps sampling के कारण efficiency में होने वाले precise gain का स्पष्ट अनुमान लगाएं।</p>
                 
-                <div class="derivation-block">
+                <div class="derivation">
                     <p><strong>(i) Cumulative Total Method</strong></p>
                     <p>(a) Average yield/farm का robust estimate ठीक इस प्रकार दिया गया है:</p>
                     $$ \bar{y}_{pps} = \frac{1}{nN} \sum \frac{y_i}{p_i} $$
@@ -438,41 +438,41 @@
 
                 <h3>5.6.1 General Selection Procedure</h3>
                 <p>This is the most basic method. We pick one unit at a time using PPS. As soon as a unit is picked, we remove it from the population so it cannot be picked again. Then we update the probabilities for the remaining units and pick the next one.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p><strong>First Draw:</strong> The probability of picking unit \( j \) is just its size divided by the total size:</p>
                     $$ p_j = \frac{X_j}{X} \quad \text{for } j = 1, 2, \ldots, N $$
                     
                     <p><strong>Second Draw:</strong> Now, suppose unit \( j \) was picked and removed. For the second unit \( i \), we must look at its probability among the <em>remaining</em> units. The new conditional probability is:</p>
                     $$ p_{i|j} = \frac{p_i}{1 - p_j} \quad \text{for } i \neq j $$
-                    <div class="explanation">Logic: Since unit \( j \) is gone, its probability \( p_j \) is subtracted from the total (which was 1). So the new denominator is \( 1 - p_j \).</div>
+                    <div class="proof-step">Logic: Since unit \( j \) is gone, its probability \( p_j \) is subtracted from the total (which was 1). So the new denominator is \( 1 - p_j \).</div>
                 </div>
 
                 <h3>Example 5.4</h3>
                 <p>Suppose we have 8 orchards with different numbers of trees. We want to pick 2 orchards without replacement.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p><strong>Draw 1:</strong> We use PPS to pick one orchard. Let's say Orchard 5 (with 26 trees) is selected. We remove it from the list.</p>
                     <p><strong>Draw 2:</strong> Now we only have 7 orchards left. We look at their tree counts and pick one more using PPS. If Orchard 6 (with 44 trees) is picked, our sample is {Orchard 5, Orchard 6}. Simple, right?</p>
                 </div>
 
                 <h3>5.6.2 Narain's Scheme of Sample Selection</h3>
                 <p>Narain (1951) came up with a very clever mathematical trick. He suggested that if we want the final total chance of a unit being in the sample (the <strong>inclusion probability</strong> \( \pi_i \)) to be exactly proportional to its size, we should slightly change our starting probabilities.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>He wanted to ensure that:</p>
                     $$ \pi_i = n p_i \quad \text{for every unit } i $$
-                    <div class="explanation">This means if a unit is twice as big, it should be twice as likely to be in the final sample.</div>
+                    <div class="proof-step">This means if a unit is twice as big, it should be twice as likely to be in the final sample.</div>
                     <p>Calculating these adjusted "starting" probabilities (\( p_i' \)) involves solving some tricky equations, but it makes our final estimates very accurate and fair.</p>
                 </div>
 
                 <h3>5.6.3 Sen-Midzuno Method</h3>
                 <p>This is a favorite among researchers because it's so easy to use! Instead of recalculating probabilities at every step, we do this:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <ol>
                         <li>Pick the <strong>very first unit</strong> using PPS (with probability \( p_i = X_i/X \)).</li>
                         <li>Pick all the <strong>other units</strong> using Simple Random Sampling (SRS) from the units that are left.</li>
                     </ol>
                     <p>For this method, the chance of unit \( i \) getting into our sample is:</p>
                     $$ \pi_i = p_i + (1 - p_i) \frac{n - 1}{N - 1} $$
-                    <div class="explanation">Why? Because unit \( i \) can enter the sample in two ways: either it's picked in the very first PPS draw (chance \( p_i \)), OR it's missed then (chance \( 1-p_i \)) but gets picked during the easy SRS draws later!</div>
+                    <div class="proof-step">Why? Because unit \( i \) can enter the sample in two ways: either it's picked in the very first PPS draw (chance \( p_i \)), OR it's missed then (chance \( 1-p_i \)) but gets picked during the easy SRS draws later!</div>
                 </div>
             </div>
             
@@ -482,21 +482,21 @@
 
                 <h3>5.6.1 General Selection Procedure (सामान्य चयन प्रक्रिया)</h3>
                 <p>Section 5.2 में दी गई precise sampling scheme (wr) का एक mathematical generalization यह होगा कि निश्चित रूप से exact size unity का एक pps sample चुना जाए और कड़ाई से चयनित unit को population से पूरी तरह हटा दिया जाए। सावधानीपूर्वक बची हुई units में से, पहले की तरह ही समान रूप से size one का एक और pps sample लिया जाता है और बिल्कुल selected unit को कड़ाई से शेष population से हटा दिया जाता है। यह process निर्दोष रूप से तब तक दोहराई जाती है जब तक कि ठीक \( n \) selections न हो जाएं।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>मान लीजिए कि पिछले निश्चित draws में चुनी गई units को बदले बिना, प्रत्येक exact draw पर एक specific size measure \( x \) के कड़ाई से proportional probability के साथ ठीक \( r \) units एक-एक करके चुनी जाती हैं। Specific \( j \)-th unit के लिए कड़ाई से पहले draw पर explicit selection की true mathematical probability मजबूती से इस प्रकार दी गई है:</p>
                     $$ p_j = \frac{X_j}{X}, \quad j = 1, \ldots, N $$
                     <p>जहाँ \( X = \sum X_i \)।</p>
-                    <div class="explanation">\( \because \) पहला draw एक standard proportional allocation है जो कड़ाई से sizes के initial total sum पर आधारित है।</div>
+                    <div class="proof-step">\( \because \) पहला draw एक standard proportional allocation है जो कड़ाई से sizes के initial total sum पर आधारित है।</div>
                     
                     <p>इसी तरह, rigorous second draw में specific \( i \)-th unit के निर्णायक रूप से चुने जाने की precise conditional probability (यह देखते हुए कि specific \( j \)-th unit पहले exact draw में निर्दोष रूप से चुनी जा चुकी है) गणितीय रूप से स्पष्ट रूप से इस प्रकार दी गई है:</p>
                     $$ p_{i|j} = \frac{p_i}{1 - p_j}, \quad i \neq j $$
-                    <div class="explanation">\( \because \) पहले से खींची गई unit \( j \) को कड़ाई से हटा दिया जाता है, जिससे उपलब्ध probability space विशेष रूप से \( (1 - p_j) \) तक सिमट जाता है।</div>
+                    <div class="proof-step">\( \because \) पहले से खींची गई unit \( j \) को कड़ाई से हटा दिया जाता है, जिससे उपलब्ध probability space विशेष रूप से \( (1 - p_j) \) तक सिमट जाता है।</div>
                     <p>Sampling का यह mathematical set up सटीक रूप से exact sample values \( (y_1, y_2, \ldots, y_n) \) के एक strictly ordered set और उनकी corresponding conditional mathematical probabilities \( (p_1, p_2, \ldots, p_n) \) को शामिल करता है।</p>
                 </div>
 
                 <h3>उदाहरण 5.4 (Example 5.4)</h3>
                 <p>एक गाँव में, क्रमशः ठीक 50, 30, 25, 40, 26, 44, 20 और 35 पेड़ों के साथ बिल्कुल 8 फलों के बगीचे (orchards) हैं। गणितीय रूप से बगीचे में पेड़ों की संख्या के कड़ाई से proportional true probability के साथ और कड़ाई से बिना replacement के ठीक 2 बगीचों का एक rigorous sample चुनें।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p><strong>(i) First Draw:</strong> पेड़ों की संख्या के proportional probability द्वारा कड़ाई से एक unit चुनने के लिए, Lahiri's robust method का उपयोग करते हुए, कड़ाई से निम्नलिखित व्यवस्था (arrangement) पर विचार करें (तालिका के लिए अंग्रेजी section देखें)।</p>
                     <p>Random number table का उपयोग करते हुए, random numbers \( (i, j) \) (\( i \leq 8, j \leq 50 \)) की एक precise pair का चयन करते हुए, हमें exact pair (5, 17) मिलती है। चूंकि बगीचा संख्या 5 के लिए पेड़ों की संख्या \( X_i \) निश्चित रूप से 26 है, जो चुनी गई random pair के दूसरे number (17) से कड़ाई से अधिक है, इसलिए 5वां बगीचा sample में निर्दोष रूप से चुना गया है।</p>
                     
@@ -507,25 +507,25 @@
 
                 <h3>5.6.2 Narain's Scheme of Sample Selection (नारायण की सैंपल चयन योजना)</h3>
                 <p>इस तकनीकी section में, हम Narain (1951) द्वारा दी गई true sample selection की एक advanced scheme पर कड़ाई से चर्चा करेंगे। इस mathematical scheme में कड़ाई से specific selection की पूरी तरह से संशोधित probabilities \( p_i' \) (\( i = 1, 2, \ldots, N \)) को इस प्रकार सावधानीपूर्वक बनाना शामिल है कि exact inclusion probabilities \( \pi_i \) विशेष रूप से explicit selection की original probabilities \( p_i \) के कड़ाई से proportional हों और specific sampling मजबूती से कड़ाई से बिना replacement के की जाए।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>यहाँ true mathematical inclusion probabilities \( \pi_i \) सटीक रूप से इस प्रकार दी गई हैं:</p>
                     $$ \pi_i = n p_i, \quad i = 1, 2, \ldots, N $$
-                    <div class="explanation">\( \because \) लक्ष्य यह सुनिश्चित करना है कि सभी draws पर, unit \( i \) की marginal inclusion probability इसकी single-draw probability के ठीक \( n \) गुना के बराबर हो।</div>
+                    <div class="proof-step">\( \because \) लक्ष्य यह सुनिश्चित करना है कि सभी draws पर, unit \( i \) की marginal inclusion probability इसकी single-draw probability के ठीक \( n \) गुना के बराबर हो।</div>
                     <p>Rigorous second और बाद के सभी conditional draws पर precise selection और absolute inclusion की स्पष्ट probabilities विशेष रूप से संशोधित explicit probabilities \( p_i' \) के कड़ाई से proportional होती हैं, जो बिल्कुल पहले true draw की तरह ही होती हैं।</p>
                     <p>एक strict mathematical illustration के रूप में, आइए बहुत सरल case \( N = 4 \) और \( n = 2 \) पर विचार करें। Rigorous mathematical problem निर्विवाद रूप से \( p_i \) (\( i, j = 1, 2, 3, 4 \)) दिए जाने पर exact \( \pi_{ij} \) को evaluate करना है। Fundamental relationship \( \sum_{j \neq i} \pi_{ij} = (n - 1)\pi_i \) मजबूती से ठीक चार specific linear equations का एक rigid system प्रदान करती है जिसमें कड़ाई से छह unknowns होते हैं। इस प्रकार, specific mathematical problem विशेष रूप से दो arbitrary theoretical parameters की values को इस explicit restriction के साथ सावधानीपूर्वक चुनना है कि उपरोक्त सभी absolute exact values सुरक्षित रूप से positive हों। \( n \) के 2 से कड़ाई से बड़े होने पर exact mathematical computations अनिवार्य रूप से बहुत कठिन हो जाती हैं। Equations के rigid set को हल करने की explicit methods पर कई mathematical workers द्वारा मजबूती से चर्चा की गई है। Brewer and Undy (1962) ने mathematical solution के लिए विशेष रूप से काफी तेज़ rigorous iterative method दी है।</p>
                 </div>
 
                 <h3>5.6.3 Sen-Midzuno Method (सेन-मिदज़ुनो विधि)</h3>
                 <p>Sample को स्पष्ट रूप से select करने की एक खूबसूरती से सरल rigorous procedure Midzuno (1952) और कड़ाई से स्वतंत्र रूप से Sen (1952) द्वारा सुझाई गई थी। इसमें विशेष रूप से पहली unit को pps के साथ सुरक्षित रूप से चुनना और बाकी \( (n - 1) \) actual units को population की शेष \( (N - 1) \) units में से कड़ाई से simple random sampling (wor) द्वारा मजबूती से चुनना शामिल है।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>इस specific mathematical selection procedure के लिए, individual और pairwise units के लिए exact absolute inclusion probabilities स्पष्ट रूप से इस प्रकार दी गई हैं:</p>
                     $$ \pi_i = p_i + (1 - p_i) \frac{n - 1}{N - 1} \quad \text{for } i = 1, 2, \ldots, N $$
-                    <div class="explanation">\( \because \) unit \( i \) स्पष्ट रूप से पहले draw में \( p_i \) probability के साथ चुनी जा सकती है, या, यदि वह पहले draw में नहीं चुनी गई (probability \( 1 - p_i \)), तो वह बाद के \( n-1 \) simple random draws में सटीक रूप से चुनी जा सकती है।</div>
+                    <div class="proof-step">\( \because \) unit \( i \) स्पष्ट रूप से पहले draw में \( p_i \) probability के साथ चुनी जा सकती है, या, यदि वह पहले draw में नहीं चुनी गई (probability \( 1 - p_i \)), तो वह बाद के \( n-1 \) simple random draws में सटीक रूप से चुनी जा सकती है।</div>
                     
                     <p>और</p>
                     $$ \pi_{ij} = \frac{p_i(n - 1)}{N - 1} + \frac{p_j(n - 1)}{N - 1} + \frac{(1 - p_i - p_j)(n - 1)(n - 2)}{(N - 1)(N - 2)} $$
                     <p>कड़ाई से \( i \neq j = 1, 2, \ldots, N \) के लिए।</p>
-                    <div class="explanation">\( \because \) units \( i \) और \( j \) दोनों को निर्विवाद रूप से तब चुना जा सकता है जब या तो unit \( i \) पहले draw में चुनी जाए और unit \( j \) बाद के draws में, या इसके विपरीत, या फिर दोनों में से कोई भी पहले draw में न चुनी जाए लेकिन दोनों बाद के simple random draws में चुनी जाएं।</div>
+                    <div class="proof-step">\( \because \) units \( i \) और \( j \) दोनों को निर्विवाद रूप से तब चुना जा सकता है जब या तो unit \( i \) पहले draw में चुनी जाए और unit \( j \) बाद के draws में, या इसके विपरीत, या फिर दोनों में से कोई भी पहले draw में न चुनी जाए लेकिन दोनों बाद के simple random draws में चुनी जाएं।</div>
                     
                     <p>उपरोक्त rigid argument के सीधे mathematical extension से, हमारे पास कड़ाई से \( n \) units का एक true specific sample \( y_1, y_2, \ldots, y_n \) हो सकता है। इन \( n \) distinct units को sample में शामिल करने की exact explicit probability मजबूती से इस प्रकार दी गई है:</p>
                     $$ P(s) = \frac{N - 1}{N} (p_1 + p_2 + \cdots + p_n) \frac{n - 1}{N - 1} $$
@@ -559,13 +559,13 @@
 
                 <h3>Des Raj's Ordered Estimator (for \( n = 2 \))</h3>
                 <p>Imagine we want to pick 2 units without replacement. First, we pick the 1st unit (let's call its value \( y_1 \)) with probability \( p_1 \). Then, we remove it and pick the 2nd unit (\( y_2 \)) from the remaining units with probability \( p_2 / (1 - p_1) \).</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Des Raj defined two components for our estimator:</p>
                     <p><strong>1. From the first draw:</strong></p>
                     $$ z_1 = \frac{y_1}{p_1} $$
                     <p><strong>2. From the second draw:</strong></p>
                     $$ z_2 = y_1 + y_2 \left( \frac{1 - p_1}{p_2} \right) $$
-                    <div class="explanation">Logic: Since we already know \( y_1 \), we only need to estimate the remaining total. The term \( y_2(1-p_1)/p_2 \) is an unbiased estimate of the total of all remaining units in the population.</div>
+                    <div class="proof-step">Logic: Since we already know \( y_1 \), we only need to estimate the remaining total. The term \( y_2(1-p_1)/p_2 \) is an unbiased estimate of the total of all remaining units in the population.</div>
                     
                     <p>The final <strong>Des Raj Estimator</strong> is just the average of these two:</p>
                     $$ \widehat{Y}_D = \frac{z_1 + z_2}{2} $$
@@ -575,31 +575,31 @@
 
                 <h3>Theorem 5.8.1: Unbiasedness and Variance</h3>
                 <p>The estimator \( \widehat{Y}_D \) is a perfectly unbiased estimator of the population total \( Y \). This means if we repeated the experiment many times, the average of our estimates would be exactly the true total.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p><strong>Proof of Unbiasedness:</strong></p>
                     <p>We know that \( E(z_1) = Y \). Now let's check \( z_2 \). For a fixed first unit \( y_1 \), the expected value of the second part is:</p>
                     $$ E(z_2 | y_1) = y_1 + E\left( y_2 \frac{1 - p_1}{p_2} \bigg| y_1 \right) $$
                     $$ = y_1 + \sum_{j \neq 1} \left[ Y_j \frac{1 - p_1}{P_j} \times \frac{P_j}{1 - p_1} \right] $$
                     $$ = y_1 + \sum_{j \neq 1} Y_j = Y $$
-                    <div class="explanation">The conditional probabilities cancel out the factors, leaving the sum of all remaining units. Together with \( y_1 \), they make the total \( Y \).</div>
+                    <div class="proof-step">The conditional probabilities cancel out the factors, leaving the sum of all remaining units. Together with \( y_1 \), they make the total \( Y \).</div>
                     <p>Since both \( z_1 \) and \( z_2 \) have an expected value of \( Y \), their average \( \widehat{Y}_D \) is also unbiased.</p>
                 </div>
 
                 <p>We can estimate the variance of this estimator from our sample using this formula:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{2} (1 - p_1) p_2 \left( \frac{y_1}{p_1} - \frac{y_2}{p_2} \right)^2 \quad (5.8.4) $$
                 </div>
 
                 <h3>Generalization for sample size \( n \)</h3>
                 <p>What if we pick more than 2 units? We just keep going! We calculate components \( z_1, z_2, \ldots, z_n \) for every draw and take their average.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>The general formula for the \( i \)-th component is:</p>
                     $$ z_i = y_1 + y_2 + \cdots + y_{i-1} + y_i \left[ \frac{1 - p_1 - p_2 - \cdots - p_{i-1}}{p_i} \right] $$
                     <p>And our final estimate is the sample mean of these \( z_i \) values:</p>
                     $$ \widehat{Y}_D = \frac{1}{n} \sum_{i=1}^n z_i \quad (5.8.5) $$
                 </div>
                 <p>To estimate the variance for any sample size \( n \), we use the standard "sample variance" formula applied to our calculated \( z_i \) values:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{n(n-1)} \sum_{i=1}^n (z_i - \bar{z})^2 \quad (5.8.8) $$
                 </div>
             </div>
@@ -610,11 +610,11 @@
 
                 <h3>Des Raj's Ordered Estimator (देस राज का क्रमबद्ध अनुमानक)</h3>
                 <p><strong>(i) जब \( n = 2 \):</strong> आइए हम गणितीय रूप से यह मान लें कि units \( U_i \) के explicit selection की precise initial strict probabilities \( p_i \) हैं (\( i = 1, 2, \ldots, N \)), जहाँ \( p_i = X_i / X \)। Specific first true draw मजबूती से ठीक \( p_i \) probability के साथ किया जाता है। Exact second specific draw कड़ाई से units की conditional probability \( p_j / (1 - p_i) \) के साथ लिया जाता है। मान लीजिए \( y_1 \) और \( y_2 \) कड़ाई से वे values हैं जो क्रमशः पहले और दूसरे draws में खींची गई हैं, और \( p_1, p_2 \) उनकी corresponding initial probabilities हैं।</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>अब आइए कड़ाई से इन strict exact estimators को परिभाषित करें:</p>
                     $$ z_1 = \frac{y_1}{p_1} $$
                     $$ z_2 = \frac{y_1 + y_2 \frac{1 - p_1}{p_2}}{2} $$
-                    <div class="explanation">\( \because \) \( z_1 \) कड़ाई से पहले draw पर आधारित standard unbiased estimator है, और \( z_2 \) सुरक्षित रूप से दूसरे draw के exact conditional unbiased contribution को शामिल करता है।</div>
+                    <div class="proof-step">\( \because \) \( z_1 \) कड़ाई से पहले draw पर आधारित standard unbiased estimator है, और \( z_2 \) सुरक्षित रूप से दूसरे draw के exact conditional unbiased contribution को शामिल करता है।</div>
                     
                     <p>तब, explicit ordered true estimator को गणितीय रूप से इस प्रकार बनाया गया है:</p>
                     $$ \widehat{Y}_D = \frac{z_1 + z_2}{2} = \frac{1}{2} \left[ \frac{y_1(1 + p_1)}{p_1} + \frac{y_2(1 - p_1)}{p_2} \right] \quad (5.8.1) $$
@@ -622,21 +622,21 @@
 
                 <h3>Theorem 5.8.1</h3>
                 <p>Pps sampling (wor) में, specific exact estimator \( \widehat{Y}_D \) पूरी तरह से एक unbiased true estimator है और इसका sampling variance स्पष्ट रूप से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\widehat{Y}_D) = \frac{1}{2} \sum_i \sum_{j \neq i} p_i p_j \left[ \left( \frac{y_i}{p_i} - Y \right)^2 + \left( \frac{y_j}{1 - p_i} - Y \right)^2 (1 - p_i - p_j) \right] \quad (5.8.2) $$
                 </div>
                 <p><em>Proof:</em></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>हम सुरक्षित रूप से यह observe करते हैं कि \( z_1 \) का exact expected value कड़ाई से \( Y \) है, यानी:</p>
                     $$ E(z_1) = \sum \left( \frac{y_i}{p_i} \right) p_i = \sum y_i = Y $$
-                    <div class="explanation">\( \because \) specific probability \( p_i \) गणितीय रूप से denominator के साथ cancel हो जाती है।</div>
+                    <div class="proof-step">\( \because \) specific probability \( p_i \) गणितीय रूप से denominator के साथ cancel हो जाती है।</div>
                     
                     <p>इसी तरह, पहले draw में खींचे गए exact \( y_1 \) के लिए हमारे पास कड़ाई से है:</p>
                     $$ E(z_2 | y_1) = y_1 + \sum_{j \neq 1} \frac{y_j(1 - p_1)}{p_j} \frac{p_j}{1 - p_1} = y_1 + \sum_{j \neq 1} y_j $$
-                    <div class="explanation">\( \because \) specific conditional true probability ठीक रूप से \( p_j / (1 - p_1) \) है।</div>
+                    <div class="proof-step">\( \because \) specific conditional true probability ठीक रूप से \( p_j / (1 - p_1) \) है।</div>
                     $$ E(z_2 | y_1) = y_1 + Y - y_1 = Y $$
                     <p>इसलिए, \( E(z_2) = E[E(z_2 | y_1)] = Y \)।</p>
-                    <div class="explanation">\( \because \) total probability के rigorous mathematical law के कारण।</div>
+                    <div class="proof-step">\( \because \) total probability के rigorous mathematical law के कारण।</div>
                     <p>इस प्रकार, यह सुरक्षित रूप से दिखाया जा सकता है कि \( E(\widehat{Y}_D) = \frac{1}{2} (Y + Y) = Y \), जिसका अर्थ है कि यह पूरी तरह unbiased है।</p>
                     <p>पुनः, true mathematical variance निकालने के लिए हमारे पास है:</p>
                     $$ V(z_1) = \sum \sum p_i p_j \left( \frac{y_i}{p_i} - \frac{y_j}{p_j} \right)^2 $$
@@ -647,29 +647,29 @@
 
                 <h3>Corollary (उपप्रमेय)</h3>
                 <p>\( V(\widehat{Y}_D) \) का एक exact explicit unbiased estimator कड़ाई से इस प्रकार प्राप्त किया जाता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{2} (1 - p_1) p_2 \left( \frac{y_1}{p_1} - \frac{y_2}{p_2} \right)^2 \quad (5.8.4) $$
                 </div>
 
                 <h3>Generalization (सामान्यीकरण)</h3>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Specific exact selection की revised conditional probabilities को \( p_i' \) के रूप में परिभाषित करें। Ordered sequence की \( i \)-th unit के लिए \( z_i = y_i / p_i' \) और उनका formula कड़ाई से इस प्रकार परिभाषित करें:</p>
                     $$ z_1 = \frac{y_1}{p_1}, \quad \text{and } z_i = \frac{y_1 + \cdots + y_{i-1} + y_i \left( 1 - \sum_{k=1}^{i-1} p_k \right) / p_i'}{i} \quad \text{for } i = 2, \ldots, n $$
-                    <div class="explanation">\( \because \) प्रत्येक \( z_i \) कड़ाई से शेष unselected total के independent true estimate को capture करता है।</div>
+                    <div class="proof-step">\( \because \) प्रत्येक \( z_i \) कड़ाई से शेष unselected total के independent true estimate को capture करता है।</div>
                     <p>हमारे पास एक robust explicit exact estimator है:</p>
                     $$ \widehat{Y}_D = \frac{1}{n} \sum_{i=1}^n z_i = \bar{z} \quad (5.8.5) $$
                 </div>
 
                 <h3>Theorem 5.8.2</h3>
                 <p>Robust pps sampling (wor) में, specific exact true estimator \( \widehat{Y}_D \) कड़ाई से population total \( Y \) का एक unbiased estimator है और इसका sampling variance सटीक रूप से इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\widehat{Y}_D) = \frac{1}{n^2} \sum_{i=1}^n \sum_{j \neq i} p_i p_j \left( \frac{y_i}{p_i'} - \frac{y_j}{p_j'} \right)^2 [1 + r_{ij}(1) + \cdots + r_{ij}(n-1)] \quad (5.8.6) $$
                     <p>जहाँ \( r_{ij}(k) \) वह specific probability है कि \( y_i \) और \( y_j \) sequence में कड़ाई से शामिल नहीं हैं।</p>
                 </div>
 
                 <h3>Corollary</h3>
                 <p>\( V(\widehat{Y}_D) \) का एक exact unbiased estimator सुरक्षित रूप से इस प्रकार प्राप्त किया जा सकता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{n(n-1)} \sum_{i=1}^n (z_i - \bar{z})^2 \quad (5.8.8) $$
                 </div>
             </div>
@@ -686,7 +686,7 @@
                 <h3>5.9.1 Horvitz-Thompson Estimator</h3>
                 <p>Horvitz and Thompson suggested a very clever way to estimate the population total. Instead of looking at the chance of picking a unit in the first or second draw, they looked at the <strong>total chance</strong> of a unit being in the final sample. We call this the <strong>Inclusion Probability (\( \pi_i \))</strong>.</p>
                 
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Suppose the chance of picking unit \( i \) in a single draw is \( p_i \). If we are picking a sample of size 2 without replacement, unit \( i \) can get into our sample in two ways: either it's picked first, or it's picked second after some other unit \( j \).</p>
                     <p>Logic: Total Inclusion Probability = (Prob. picked 1st) + (Sum of Prob. picked 2nd given some \( j \) was 1st).</p>
                     $$ \pi_i = p_i + \sum_{j \neq i} p_j \left( \frac{p_i}{1 - p_j} \right) = p_i \left[ 1 + \sum_{j \neq i} \frac{p_j}{1 - p_j} \right] $$
@@ -696,24 +696,24 @@
                 </div>
 
                 <p>Now, to estimate the population total \( Y \), we take each value in our sample and divide it by its total chance of being included. This is the <strong>Horvitz-Thompson Estimator</strong>:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{HT} = \sum_{i \in s} \frac{y_i}{\pi_i} \quad (5.9.1) $$
-                    <div class="explanation">Logic: By dividing each value by its own inclusion probability, we "inflate" it to represent its share in the whole population. Summing these up gives us the total.</div>
+                    <div class="proof-step">Logic: By dividing each value by its own inclusion probability, we "inflate" it to represent its share in the whole population. Summing these up gives us the total.</div>
                 </div>
 
                 <p>The variance of this estimator shows us how much it spreads. It depends on how individual units and pairs of units are included in the sample:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V_{HT}(\widehat{Y}_{HT}) = \sum_{i=1}^N \frac{1 - \pi_i}{\pi_i} y_i^2 + \sum_{i=1}^N \sum_{j \neq i}^N \frac{\pi_{ij} - \pi_i \pi_j}{\pi_i \pi_j} y_i y_j \quad (5.9.2) $$
                 </div>
 
                 <h3>5.9.2 Murthy's Unordered Estimator</h3>
                 <p>Now, let's talk about another brilliant idea from <strong>Murthy (1957)</strong>. He said: "If different sequences of picking units lead to the same final sample, why not use all of them?"</p>
                 <p>Imagine we want a sample of {Unit A, Unit B}. In an ordered method, picking A then B is different from picking B then A. Murthy suggested that we should take an average of all such "ordered" estimates, but weight them by how likely each sequence was to happen.</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>Logic: The Unordered Estimator is the weighted sum of all possible ordered estimators that result in the same set of units.</p>
                     $$ \widehat{y}_M = \sum_{s_i \in s} \widehat{y}_{s_i} P(s_i | s) \quad (5.9.6) $$
                     <p>where \( P(s_i | s) = P(s_i) / P(s) \) is the relative chance of that specific sequence occurring among all sequences that give the same set of units.</p>
-                    <div class="explanation">This method is very powerful because it effectively "squeezes" more precision out of the same sample data by removing the effect of the drawing order.</div>
+                    <div class="proof-step">This method is very powerful because it effectively "squeezes" more precision out of the same sample data by removing the effect of the drawing order.</div>
                 </div>
             </div>
             
@@ -723,28 +723,28 @@
 
                 <h3>5.9.1 Horvitz-Thompson Estimator (हॉर्विट्ज़-थॉम्पसन अनुमानक)</h3>
                 <p>Horvitz और Thompson (1952) ने एक explicit estimator सुझाय़ा जो population total का एक exact unbiased estimator है। मान लीजिए कड़ाई से unit \( U_i \) के selection की initial probability \( p_i \) है, जहाँ \( p_i = X_i / X \)। Unit \( U_i \) के sample में exact inclusion की true probability इस प्रकार दी जाएगी:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \pi_i = p_i + \sum_{j \neq i} \frac{p_i p_j}{1 - p_j} = p_i \left[ 1 + \sum_{j \neq i} \frac{p_j}{1 - p_j} \right] $$
-                    <div class="explanation">\( \because \) unit को या तो पहले draw में चुना जाता है या बाद के किसी भी draw में।</div>
+                    <div class="proof-step">\( \because \) unit को या तो पहले draw में चुना जाता है या बाद के किसी भी draw में।</div>
                     
                     <p>आगे, दोनों units \( U_i \) और \( U_j \) के sample में शामिल होने की probability है:</p>
                     $$ \pi_{ij} = \frac{p_i p_j}{1 - p_j} + \frac{p_i p_j}{1 - p_i} = p_i p_j \left[ \frac{1}{1 - p_j} + \frac{1}{1 - p_i} \right] $$
                 </div>
                 <p>मान लीजिए \( y_i \), \( i \)-th unit की characteristic value है। Estimator को इस प्रकार परिभाषित किया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{HT} = \sum_{i \in s} \frac{y_i}{\pi_i} \quad (5.9.1) $$
                 </div>
 
                 <h3>Theorem 5.9.1</h3>
                 <p>Pps sampling (wor) में, \( \widehat{Y}_{HT} \) एक unbiased estimator है और इसका sampling variance इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V_{HT}(\widehat{Y}_{HT}) = \sum_i \frac{1 - \pi_i}{\pi_i} y_i^2 + \sum_i \sum_{j \neq i} \frac{\pi_{ij} - \pi_i \pi_j}{\pi_i \pi_j} y_i y_j \quad (5.9.2) $$
                 </div>
                 <p>जहाँ \( \pi_{ij} \), sample में दोनों \( i \)-th और \( j \)-th units के शामिल होने की probability है।</p>
                 
                 <h3>5.9.2 Murthy's Unordered Estimator (मूर्ति का अक्रमबद्ध अनुमानक)</h3>
                 <p>Murthy (1957) ने सुझाव दिया कि सभी संभावित ordered estimators को उनकी respective probabilities के साथ weighting देकर एक unordered estimator प्राप्त किया जा सकता है। मान लीजिए \( \widehat{y}_{s_i} \), ordered sample \( (s_i) \) के आधार पर population parameter \( \theta \) का एक estimator है। तब \( \theta \) का unordered estimator इस प्रकार दिया जाता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{y}_M = \sum_{s_i \in s} \widehat{y}_{s_i} P(s_i | s) \quad (5.9.6) $$
                     <p>जहाँ \( P(s_i | s) = P(s_i) / P(s) \) है।</p>
                 </div>
@@ -759,13 +759,13 @@
                 <p>Hello students! Do you remember <strong>Systematic Sampling</strong> from Chapter 4? We picked a random start and then every \( k \)-th unit. We can do the same thing with PPS!</p>
                 <p><strong>Madow (1949)</strong> showed us how. First, we arrange the units in a random order. Then, we calculate their cumulative totals \( T_i \). Instead of picking units with equal spacing, we pick "points" with equal spacing (say every \( k = X/n \) units of size). Whichever unit's cumulative range contains our point gets selected.</p>
                 
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>An unbiased estimator for the total \( Y \) using this method was given by <strong>Hartley and Rao (1962)</strong>:</p>
                     $$ \widehat{Y}_{H-R} = \frac{1}{n} \sum_{i \in s} \frac{y_i}{p_i} \quad (5.10.1) $$
                     
                     <p>The beauty of this method is its variance. When \( N \) is large, it's approximately:</p>
                     $$ V(\widehat{Y}_{H-R}) \approx \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 [1 - (n - 1)p_i] \quad (5.10.2) $$
-                    <div class="explanation">Notice the term \( [1 - (n - 1)p_i] \). This is a "reduction term"—it makes the variance smaller! This means PPS Systematic sampling is usually more accurate than standard PPS with replacement.</div>
+                    <div class="proof-step">Notice the term \( [1 - (n - 1)p_i] \). This is a "reduction term"—it makes the variance smaller! This means PPS Systematic sampling is usually more accurate than standard PPS with replacement.</div>
                 </div>
             </div>
             
@@ -774,11 +774,11 @@
                 <p>Madow (1949) ने सुझाव दिया कि equal probabilities वाले systematic sampling का generalization किया जा सकता है। इस method में units को random order में arrange किया जाता है और cumulative totals \( T_i = \sum_{j=1}^i X_j \) (\( i = 1, 2, \ldots, N \)) बनाए जाते हैं। Pps systematic sampling द्वारा \( n \) units select करने के लिए, 1 से \( k \) तक एक random number \( R \) चुना जाता है, जहाँ \( k = X / n \) है। \( R + jk \) (\( j = 0, 1, \ldots, n-1 \)) numbers के corresponding units sample बनाती हैं। इस procedure से यह स्पष्ट है कि \( i \)-th unit तब sample में शामिल होगी यदि \( T_{i-1} < R + tk \leq T_i \), और इसके inclusion की probability \( n p_i \) है।</p>
                 
                 <p>Hartley और Rao (1962) द्वारा population total \( Y \) का unbiased estimator इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{H-R} = \frac{1}{n} \sum_{i \in s} \frac{y_i}{p_i} \quad (5.10.1) $$
                 </div>
                 <p>\( N \) की काफी बड़ी values और \( N \) की तुलना में अपेक्षाकृत छोटे \( n \) के लिए, approximate sampling variance इस प्रकार है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\widehat{Y}_{H-R}) \approx \frac{1}{n} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 [1 - (n - 1)p_i] \quad (5.10.2) $$
                 </div>
                 <p>यह दर्शाता है कि random arrangement होने पर भी pps systematic sampling, pps wr की तुलना में अधिक efficient है, क्योंकि \( [1 - (n - 1)p_i] \) terms reduction terms के रूप में कार्य करते हैं।</p>
@@ -792,18 +792,18 @@
                 <h2><span class="section-num">5.11</span> Random Group Method</h2>
                 <p>Rao, Hartley and Cochran (1962) suggested a procedure of varying probabilities, wor, which consists of dividing the units of the population into \( n \) groups at random with \( N_i \) units in the \( i \)-th group, \( i = 1, 2, \ldots, n \) and then selecting one unit with pps from each of the \( n \) random groups. According to this method of selection, let \( y_1, y_2, \ldots, y_n \) be the varying probability sample, \( p_1, p_2, \ldots, p_n \) their corresponding initial probabilities of selection.</p>
                 <p>An estimator of the population total \( Y \) is defined by:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{RHC} = \sum_{i=1}^n \frac{y_i}{p_i} Q_i \quad (5.11.1) $$
                     <p>where \( Q_i = \sum_{j \in G_i} p_j \), \( p_j \) being the initial probability of selection for the \( j \)-th unit in the \( i \)-th group (\( j = 1, \ldots, N_i, i = 1, \ldots, n \)).</p>
                 </div>
 
                 <h3>Theorem 5.11.1</h3>
                 <p>In the random group selection method, the estimator \( \widehat{Y}_{RHC} \) is unbiased and its sampling variance is given by:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\widehat{Y}_{RHC}) = \frac{N^2 - \sum N_i^2}{N(N - 1)} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 \quad (5.11.2) $$
                 </div>
                 <p><em>Proof:</em></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>We know that \( E(\widehat{Y}_{RHC}) = E_1 E_2(\widehat{Y}_{RHC}) \) where \( E_2 \) denotes the expectation for a given split of the population and \( E_1 \) the expectation over all possible splits of the population into groups of sizes \( N_1, N_2, \ldots, N_n \). Then, for any given split:</p>
                     $$ E_2(\widehat{Y}_{RHC}) = \sum_{i=1}^n Q_i Y = Y $$
                     <p>Therefore, \( E(\widehat{Y}_{RHC}) = E_1(Y) = Y \). This shows that \( \widehat{Y}_{RHC} \) is an unbiased estimator.</p>
@@ -815,13 +815,13 @@
 
                 <h3>Corollary 1</h3>
                 <p>If the choice is that \( N_1 = N_2 = \cdots = N_n = N/n \), then \( V(\widehat{Y}_{RHC}) \) minimizes and its value is obtained by:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V_{\min}(\widehat{Y}_{RHC}) = \left[ 1 - \frac{n - 1}{N - 1} \right] \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 \quad (5.11.3) $$
                 </div>
 
                 <h3>Corollary 3</h3>
                 <p>An unbiased estimator of \( V(\widehat{Y}_{RHC}) \) is given by:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_{RHC}) = \frac{\sum N_i^2 - N}{N^2 - \sum N_i^2} \sum_{i=1}^n Q_i \left( \frac{y_i}{p_i} - \widehat{Y}_{RHC} \right)^2 \quad (5.11.6) $$
                 </div>
             </div>
@@ -830,18 +830,18 @@
                 <h2><span class="section-num">5.11</span> Random Group Method (यादृच्छिक समूह विधि)</h2>
                 <p>Rao, Hartley और Cochran (1962) ने varying probabilities (wor) की एक procedure सुझाई। इसमें population की units को random रूप से \( n \) groups में विभाजित किया जाता है, जहाँ \( i \)-th group में \( N_i \) units होती हैं। फिर प्रत्येक group से pps के साथ एक unit चुनी जाती है। मान लीजिए \( y_1, y_2, \ldots, y_n \) selected units हैं और \( p_1, p_2, \ldots, p_n \) उनकी initial selection probabilities हैं।</p>
                 <p>Population total \( Y \) का estimator इस प्रकार परिभाषित है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{Y}_{RHC} = \sum_{i=1}^n \frac{y_i}{p_i} Q_i \quad (5.11.1) $$
                     <p>जहाँ \( Q_i = \sum_{j \in G_i} p_j \) है (\( i \)-th group की कुल probabilities का योग)।</p>
                 </div>
 
                 <h3>Theorem 5.11.1</h3>
                 <p>Random group method में, \( \widehat{Y}_{RHC} \) unbiased है और इसका sampling variance इस प्रकार है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V(\widehat{Y}_{RHC}) = \frac{N^2 - \sum N_i^2}{N(N - 1)} \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 \quad (5.11.2) $$
                 </div>
                 <p><em>Proof:</em></p>
-                <div class="derivation-block">
+                <div class="derivation">
                     <p>हम जानते हैं कि \( E(\widehat{Y}_{RHC}) = E_1 E_2(\widehat{Y}_{RHC}) \) है। किसी दिए गए split के लिए:</p>
                     $$ E_2(\widehat{Y}_{RHC}) = \sum_{i=1}^n Q_i Y = Y $$
                     <p>इसलिए, \( E(\widehat{Y}_{RHC}) = E_1(Y) = Y \) है। यह दर्शाता है कि \( \widehat{Y}_{RHC} \) एक unbiased estimator है। Variance निकालने के लिए इसे दो हिस्सों में विभाजित किया जाता है, जहाँ \( V_1 E_2 \) zero हो जाता है और final result प्राप्त होता है।</p>
@@ -849,13 +849,13 @@
 
                 <h3>Corollary 1 (उपप्रमेय 1)</h3>
                 <p>यदि \( N_1 = N_2 = \cdots = N_n = N/n \) हो, तो \( V(\widehat{Y}_{RHC}) \) minimum होता है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ V_{\min}(\widehat{Y}_{RHC}) = \left[ 1 - \frac{n - 1}{N - 1} \right] \sum_{i=1}^N p_i \left( \frac{y_i}{p_i} - Y \right)^2 \quad (5.11.3) $$
                 </div>
 
                 <h3>Corollary 3 (उपप्रमेय 3)</h3>
                 <p>\( V(\widehat{Y}_{RHC}) \) का unbiased estimator इस प्रकार दिया गया है:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_{RHC}) = \frac{\sum N_i^2 - N}{N^2 - \sum N_i^2} \sum_{i=1}^n Q_i \left( \frac{y_i}{p_i} - \widehat{Y}_{RHC} \right)^2 \quad (5.11.6) $$
                 </div>
             </div>
@@ -870,12 +870,12 @@
 
                 <h3>5.12.1 Durbin's \( \pi \)ps Sampling Scheme</h3>
                 <p>Durbin's \( \pi \)ps sampling procedure for sample size 2 consists in selecting the first unit with probability \( p_i \) for the \( i \)-th unit and the second unit with the conditional probability for the \( j \)-th unit when the \( i \)-th unit is drawn at the first draw as:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ p_{j|i} = \frac{p_j}{1 - 2p_i} \quad \text{for } j \neq i $$
                 </div>
                 <p>where \( p_j \) are revised such that \( \sum_{j \neq i} p_{j|i} = 1 \).</p>
                 <p>For this selection procedure, the expressions for inclusion probabilities are given by:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \pi_i = 2p_i, \quad i = 1, 2, \ldots, N $$
                     <p>and</p>
                     $$ \pi_{ij} = 2p_i p_j \left[ \frac{1}{1 - 2p_i} + \frac{1}{1 - 2p_j} \right] \quad \text{where } j \neq i = 1, 2, \ldots, N $$
@@ -883,7 +883,7 @@
 
                 <h3>5.12.2 Hanurav's \( \pi \)ps Sampling Scheme</h3>
                 <p>The selection of 2 units under Hanurav's \( \pi \)ps sampling scheme consists of selecting 2 units by pps with replacement. If the units selected are distinct, the sample is retained. Otherwise, it is rejected and another sample of 2 units is selected with probability proportional to \( p_i' \), for the \( i \)-th unit, with replacement. If the units selected now are distinct, the sample is retained, and so on. For this selection procedure:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \pi_i = 2p_i $$
                     <p>and</p>
                     $$ \pi_{ij} = 2p_i p_j \left( 1 + \sum_{k=1}^\infty \frac{W_k}{(1 - p_i)(1 - p_j)} \right) $$
@@ -897,11 +897,11 @@
 
                 <h3>5.12.1 Durbin's \( \pi \)ps Sampling Scheme (डर्बिन की \( \pi \)ps योजना)</h3>
                 <p>Sample size 2 के लिए Durbin की procedure में पहली unit को \( p_i \) probability के साथ चुना जाता है और दूसरी unit को इस conditional probability के साथ:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ p_{j|i} = \frac{p_j}{1 - 2p_i} \quad \text{for } j \neq i $$
                 </div>
                 <p>इस procedure के लिए inclusion probabilities इस प्रकार हैं:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \pi_i = 2p_i, \quad i = 1, 2, \ldots, N $$
                     <p>और</p>
                     $$ \pi_{ij} = 2p_i p_j \left[ \frac{1}{1 - 2p_i} + \frac{1}{1 - 2p_j} \right] \quad \text{where } j \neq i $$
@@ -909,7 +909,7 @@
 
                 <h3>5.12.2 Hanurav's \( \pi \)ps Sampling Scheme (हनुराव की \( \pi \)ps योजना)</h3>
                 <p>इसमें 2 units को pps wr द्वारा चुना जाता है। यदि selected units distinct हैं, तो sample रख लिया जाता है। अन्यथा, उसे reject करके नई selection की जाती है। इस procedure के लिए:</p>
-                <div class="derivation-block">
+                <div class="derivation">
                     $$ \pi_i = 2p_i $$
                     <p>और</p>
                     $$ \pi_{ij} = 2p_i p_j \left( 1 + \sum_{k=1}^\infty \frac{W_k}{(1 - p_i)(1 - p_j)} \right) $$
