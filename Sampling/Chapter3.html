@@ -7,52 +7,7 @@
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --navy: #1B2A4A; --navy-mid: #243555; --navy-light: #2E4270;
-            --gold: #C8922A; --sky: #1D6FA4; --ivory: #FAFAF7; --sage: #3D6B5A;
-            --border: #DDD8CF; --text-dark: #1C1C1E; --text-mid: #3A3A3C;
-            --sidebar-w: 300px; --header-h: 72px;
-        }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: 'Source Serif 4', serif; background: #F5F3EE; color: var(--text-dark); line-height: 1.8; font-size: 16px; }
-        
-        .book-header { position: fixed; top: 0; left: 0; right: 0; height: var(--header-h); background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%); color: #fff; z-index: 1100; display: flex; align-items: center; padding: 0 28px; gap: 16px; }
-        .header-icon { width: 42px; height: 42px; background: var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-        .header-text h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; }
-        
-        .sidebar { position: fixed; left: 0; top: var(--header-h); width: var(--sidebar-w); height: calc(100vh - var(--header-h)); background: var(--navy); overflow-y: auto; padding: 20px 0; }
-        .nav-link { display: block; padding: 10px 20px; color: rgba(255,255,255,.75); text-decoration: none; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; cursor: pointer; border-left: 3px solid transparent; }
-        .nav-link:hover, .nav-link.active { background: rgba(200,146,42,.18); color: #E8B84B; border-left-color: var(--gold); }
-        
-        .main-content { margin-left: var(--sidebar-w); margin-top: var(--header-h); padding: 40px; max-width: 1000px; }
-        .section-card { background: var(--ivory); border-radius: 10px; padding: 40px; margin-bottom: 40px; box-shadow: 0 4px 20px rgba(27,42,74,.05); border-top: 4px solid var(--navy); display: none; }
-        .section-card.active { display: block; }
-        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 20px; border-bottom: 2px solid var(--border); padding-bottom: 10px; }
-        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--navy-light); margin: 25px 0 15px; }
-        .section-card p { margin-bottom: 15px; color: var(--text-mid); text-align: justify; }
-        .section-card ul, .section-card ol { margin: 10px 0 20px 30px; color: var(--text-mid); }
-        .section-card li { margin-bottom: 8px; }
-        
-        .lang-toggle-btn { position: sticky; top: 90px; float: right; background: var(--gold); color: var(--navy); border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .hinglish-content { display: none; }
-        .hinglish-active .english-content { display: none; }
-        .hinglish-active .hinglish-content { display: block; }
-        
-        .quote { font-style: italic; border-left: 4px solid var(--gold); padding-left: 15px; margin: 20px 0; color: var(--text-soft); }
-        .derivation-block { background: #F8FAFC; border-left: 3px solid var(--sky); padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; overflow-x: auto; }
-        .explanation { font-style: italic; color: var(--sky); font-weight: 500; font-size: 0.95rem; margin-top: 5px; margin-bottom: 15px; }
-
-        /* QUIZ STYLES */
-        .question-box { margin-bottom: 30px; border-bottom: 1px dashed var(--border); padding-bottom: 20px; }
-        .question { font-weight: 600; margin-bottom: 10px; color: var(--navy); }
-        .mcq-options { list-style: none; margin-left: 0; padding-left: 0; }
-        .mcq-options li { margin-bottom: 5px; }
-        .toggle-btn { background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500; margin: 10px 0; transition: all .25s; }
-        .toggle-btn:hover { background: var(--navy-light); }
-        .answer { display: none; background: #F0FBF5; border-left: 4px solid var(--sage); padding: 16px 20px; margin: 10px 0; border-radius: 0 8px 8px 0; color: var(--text-dark); font-size: .97rem; }
-        .answer.show { display: block; }
-    </style>
+    <link rel="stylesheet" href="../common_style.css">
     <link rel="stylesheet" href="../whiteboard/whiteboard.css">
 </head>
 <body>
@@ -109,53 +64,47 @@
             <div class="english-content">
                 <h2>3.1 Introduction</h2>
                 <div class="quote">
-                    "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \(\frac{1}{16}\) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
+                    "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \( 1\frac{1}{16} \) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
                 </div>
-                <p>Out of all the sampling methods, <strong>stratified sampling</strong> is the one we use most often in real-world surveys. In this method, we divide a population of \( N \) units into \( k \) smaller, separate groups called <strong>strata</strong>. For example, if the \( i \)-th group has \( N_i \) units, then adding them all up gives us the total population size:</p>
+                <p>Welcome class! Today we are discussing Stratified Random Sampling. Of all the methods of sampling, this procedure is the most commonly used in practical surveys. In stratified sampling, our entire population of \( N \) units is divided into \( k \) sub-groups or sub-populations, which we call <strong>strata</strong>. The \( i \)-th stratum has \( N_i \) units, where \( i = 1, 2, ..., k \).</p>
+                <p>These strata are non-overlapping and together they comprise the entire population. This means:</p>
                 <div class="derivation-block">
-                    $$ N_1 + N_2 + \cdots + N_k = N \quad (3.1.1) $$
-                    <div class="explanation">Think of it like cutting a cake into pieces. If you join all the pieces back together, you get the whole cake without any gaps or overlaps.</div>
+                    <div style="padding: 5px 0;">\( N_1 + N_2 + ... + N_k = N \)</div>
                 </div>
-                <p>Now, we pick a sample from each group independently. If we take \( n_i \) units from the \( i \)-th group, our total sample size \( n \) will be:</p>
+                <p>From each stratum, a sample is drawn independently. The sample size taken from the \( i \)-th stratum is \( n_i \), such that the total sample size \( n \) is:</p>
                 <div class="derivation-block">
-                    $$ n_1 + n_2 + \cdots + n_k = n \quad (3.1.2) $$
-                    <div class="explanation">Just like the population, the total sample is simply the sum of samples taken from each individual stratum.</div>
+                    <div style="padding: 5px 0;">\( n_1 + n_2 + ... + n_k = n \)</div>
                 </div>
-                <p>When we pick these samples randomly from each group, the process is called <strong>stratified random sampling</strong>.</p>
-                <p>Our main goal here is to get a better 'cross-section' of the population so that our results are more accurate. To do this well, we need to focus on four main steps:</p>
-                <ol type="i">
-                    <li>How to form these groups (strata).</li>
-                    <li>How many groups should we create?</li>
-                    <li>How to decide the sample size for each group (Allocation).</li>
-                    <li>How to analyze the data we collect.</li>
+                <p>When the sample is taken randomly from each stratum, the procedure is known as <strong>stratified random sampling</strong>. The main objective of this stratification is to give a better cross-section of the population to gain a higher degree of relative precision. To achieve this, we must carefully consider four points:</p>
+                <ol>
+                    <li>Formation of strata</li>
+                    <li>Number of strata to be made</li>
+                    <li>Allocation of sample size within each stratum</li>
+                    <li>Analysis of data from a stratified design</li>
                 </ol>
-                <p>We will first look at how to analyze the data and allocate samples, and then we will discuss how to form the groups.</p>
             </div>
             
             <div class="hinglish-content">
-                <h2>3.1 परिचय (Introduction)</h2>
+                <h2>3.1 Introduction</h2>
                 <div class="quote">
-                    "महोदय, आपकी अन्यथा सुंदर कविता ("The Vision of Sin") में एक पंक्ति है जो पढ़ती है 'Every moment dies a man, every moment one is born.' जाहिर है, यह सच नहीं हो सकता है और मेरा सुझाव है कि अगले संस्करण में आप इसे 'Every moment dies a man, every moment \(\frac{1}{16}\) is born.' पढ़ें। यहां तक कि यह मूल्य थोड़ा त्रुटिपूर्ण है लेकिन कविता के लिए पर्याप्त रूप से सटीक होना चाहिए।" (लॉर्ड टेनीसन को एक पत्र में) -- <strong>Charles Babbage</strong>
+                    "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \( 1\frac{1}{16} \) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
                 </div>
-                <p>Sampling के सभी methods में से, surveys में सबसे अधिक उपयोग की जाने वाली प्रक्रिया (procedure) stratified sampling (स्तरीकृत प्रतिचयन) है। Stratified sampling में, \( N \) units की population को \( k \) sub-populations में sub-divide (विभाजित) किया जाता है जिन्हें strata (स्तर) कहा जाता है, जहाँ \( i \)-th sub-population में \( N_i \) units (\( i = 1,2,\ldots,k \)) होती हैं। ये sub-populations non-overlapping (गैर-अतिव्यापी) होती हैं ताकि वे पूरी population का गठन करें, जैसे कि:</p>
+                <p>Welcome class! Aaj hum Stratified Random Sampling padhenge. Sampling ke sabhi methods mein, practical surveys mein sabse zyada yahi method use hota hai. Stratified sampling mein, hum apni \( N \) units ki puri population ko \( k \) sub-groups mein baant dete hain, jinhein hum <strong>strata</strong> kehte hain. \( i \)-th stratum mein \( N_i \) units hote hain.</p>
+                <p>Ye strata non-overlapping hote hain (yaani ek unit sirf ek hi stratum mein aayegi) aur sab milkar puri population banate hain:</p>
                 <div class="derivation-block">
-                    $$ N_1 + N_2 + \cdots + N_k = N \quad (3.1.1) $$
-                    <div class="explanation">\(\because \) strata बिना किसी चूक या ओवरलैप के finite population को पूरी तरह से विभाजित करते हैं।</div>
+                    <div style="padding: 5px 0;">\( N_1 + N_2 + ... + N_k = N \)</div>
                 </div>
-                <p>प्रत्येक stratum से स्वतंत्र रूप से एक sample निकाला जाता है, \( i \)-th stratum के भीतर sample size \( n_i \) (\( i = 1,2,\ldots,k \)) होता है, जैसे कि:</p>
+                <p>Har ek stratum se hum alag se aur independently ek sample nikalte hain. Agar \( i \)-th stratum se \( n_i \) units ka sample nikala, toh total sample size \( n \) banega:</p>
                 <div class="derivation-block">
-                    $$ n_1 + n_2 + \cdots + n_k = n \quad (3.1.2) $$
-                    <div class="explanation">\( \because \) कुल sample सभी व्यक्तिगत stratum samples का योग (sum) है।</div>
+                    <div style="padding: 5px 0;">\( n_1 + n_2 + ... + n_k = n \)</div>
                 </div>
-                <p>इस तरह से samples लेने की प्रक्रिया को stratified sampling के रूप में जाना जाता. है। यदि प्रत्येक stratum से sample randomly (यादृच्छिक रूप से) लिया जाता है, तो प्रक्रिया को stratified random sampling के रूप में जाना जाता है।</p>
-                <p>Stratification का मुख्य उद्देश्य population का एक बेहतर cross-section देना है ताकि higher degree की relative precision प्राप्त की जा सके। इसे प्राप्त करने के लिए, निम्नलिखित बिंदुओं की सावधानीपूर्वक जांच की जानी चाहिए:</p>
-                <ol type="i">
-                    <li>Strata का निर्माण (Formation of strata)</li>
-                    <li>बनाए जाने वाले strata की संख्या (Number of strata)</li>
-                    <li>प्रत्येक stratum के भीतर sample size का आवंटन (Allocation of sample size)</li>
-                    <li>एक stratified design से data का विश्लेषण (Analysis of data)</li>
+                <p>Jab hum har stratum se randomly sample nikalte hain, toh is procedure ko <strong>stratified random sampling</strong> kehte hain. Stratification ka main objective ye hai ki humein population ka ek better cross-section mile, taaki hamare estimates zyada precise (sateek) ho sakein. Ise achieve karne ke liye humein 4 baaton ka dhyan rakhna hota hai:</p>
+                <ol>
+                    <li>Strata kaise banayein (Formation)</li>
+                    <li>Kitne strata banayein (Number)</li>
+                    <li>Har stratum se kitna sample lein (Allocation)</li>
+                    <li>Stratified data ka analysis kaise karein</li>
                 </ol>
-                <p>हम stratified sampling के सिद्धांत से संबंधित अंतिम दो बिंदुओं की जांच करने के बाद पहले दो बिंदुओं पर चर्चा करेंगे।</p>
             </div>
         </section>
 
@@ -164,22 +113,22 @@
         <section id="sec3-2" class="section-card">
             <div class="english-content">
                 <h2>3.2 Principles of Stratification</h2>
-                <p>When we divide a population into strata, we should follow these simple principles:</p>
-                <ol type="i">
-                    <li>The groups (strata) must not overlap, and together they should cover the entire population.</li>
-                    <li>Try to group units that are similar to each other. For example, if you are studying income, put people with similar incomes in the same group. This is called making the strata <strong>homogeneous</strong>.</li>
-                    <li>If it's too hard to group by characteristics, you can group by area or administrative regions (like districts or states) for convenience.</li>
-                    <li>If you need very precise results for a specific group, treat that group as its own separate stratum.</li>
+                <p>When stratifying a population, you should follow these principles:</p>
+                <ol>
+                    <li>The strata should be non-overlapping and should together comprise the whole population.</li>
+                    <li>The stratification of the population should be done in such a way that strata are homogeneous within themselves, with respect to the characteristic under study.</li>
+                    <li>In many practical situations, when it is difficult to stratify with respect to the characteristic under study, administrative convenience may be considered as the basis for stratification.</li>
+                    <li>If the limit of precision for certain sub-populations is given, it will be better to treat each sub-population as a separate stratum.</li>
                 </ol>
             </div>
             <div class="hinglish-content">
-                <h2>3.2 Principles of Stratification (स्तरीकरण के सिद्धांत)</h2>
-                <p>एक population को stratify (स्तरीकृत) करने में जिन principles (सिद्धांतों) का पालन किया जाना चाहिए, उनका सारांश नीचे दिया गया है:</p>
-                <ol type="i">
-                    <li>Strata non-overlapping (गैर-अतिव्यापी) होने चाहिए और उन्हें एक साथ पूरी population का गठन करना चाहिए।</li>
-                    <li>Population का stratification इस तरह किया जाना चाहिए कि अध्ययन के तहत विशेषता के संबंध में strata अपने आप में homogeneous (सजातीय) हों।</li>
-                    <li>कई व्यावहारिक स्थितियों में जब अध्ययन के तहत विशेषता के संबंध में stratify करना मुश्किल होता है, तो प्रशासनिक सुविधा (administrative convenience) को stratification के आधार के रूप में माना जा सकता है।</li>
-                    <li>यदि कुछ sub-populations के लिए precision की सीमा दी गई है, तो प्रत्येक sub-population को एक stratum मानना बेहतर होगा।</li>
+                <h2>3.2 Principles of Stratification</h2>
+                <p>Population ko stratify karte waqt aapko in principles ko follow karna chahiye:</p>
+                <ol>
+                    <li>Strata non-overlapping hone chahiye aur sabhi strata milkar puri population ko cover karne chahiye.</li>
+                    <li>Population ka stratification is tarah hona chahiye ki har stratum ke andar ki units aapas mein homogeneous (ek jaisi) ho, specially us characteristic ke regarding jo hum study kar rahe hain.</li>
+                    <li>Bahut si practical situations mein study characteristic ke basis par stratify karna mushkil hota hai. Aise mein, administrative convenience (jaise blocks, tehsils ya zones) ko stratification ka basis maan lena chahiye.</li>
+                    <li>Agar humein pehle se bataya gaya hai ki kuch sub-populations ke liye ek specific precision limit chahiye, toh behtar hoga ki un sub-populations ko hum alag se ek stratum maan lein.</li>
                 </ol>
             </div>
         </section>
@@ -187,27 +136,28 @@
         <section id="sec3-3" class="section-card">
             <div class="english-content">
                 <h2>3.3 Advantages of Stratification</h2>
-                <p>Why is stratified sampling so useful? Here are the main reasons:</p>
-                <ol type="i">
-                    <li><strong>Easier to Manage:</strong> A survey agency can set up field offices in different districts. This makes the work well-organized and easier to supervise.</li>
-                    <li><strong>Better Design:</strong> It helps us handle different areas differently. For example, a survey in the plains might need a different approach than one in the hilly mountains.</li>
-                    <li><strong>Handling Extreme Values:</strong> If some units are very different from the rest (extreme values), we can put them in a separate group. This way, they don't spoil the average for everyone else.</li>
-                    <li><strong>Using Different Methods:</strong> We can use different sampling methods for different groups if we need to.</li>
-                    <li><strong>Fair Representation:</strong> It ensures that every group (like small farmers and big farmers) is represented fairly in the survey.</li>
-                    <li><strong>Better Accuracy:</strong> By grouping similar units together, we can get a much more precise estimate even with a smaller sample size.</li>
+                <p>Stratification serves many useful purposes. The principal ones are:</p>
+                <ol>
+                    <li><strong>Administrative Convenience:</strong> The survey agency can establish field offices in various administrative zones, leading to better organization and supervision of fieldwork.</li>
+                    <li><strong>Improving Sampling Design:</strong> Stratification by natural characteristics helps. For example, in yield surveys, plains, deserts, and hilly areas have different sampling problems, so they can be separate strata.</li>
+                    <li><strong>Handling Extreme Values:</strong> Extreme values in the population can be segregated into separate strata, reducing variability within other strata. Separate estimates can be combined for a precise overall estimate.</li>
+                    <li><strong>Different Sampling Designs:</strong> You can use different sampling designs in different strata based on what information is available for those units.</li>
+                    <li><strong>Adequate Representation:</strong> It ensures adequate representation to various important groups of the population.</li>
+                    <li><strong>Better Cross-section:</strong> It ensures the selection of a better cross-section of the population than an unstratified approach.</li>
+                    <li><strong>Gain in Precision:</strong> By subdividing a heterogeneous population into homogeneous sub-populations, measurements vary less within each stratum, allowing us to get a more precise estimate with a relatively smaller sample.</li>
                 </ol>
             </div>
             <div class="hinglish-content">
-                <h2>3.3 Advantages of Stratification (स्तरीकरण के लाभ)</h2>
-                <p>Stratification कई उपयोगी उद्देश्यों को पूरा करता है। मुख्य निम्नलिखित हैं:</p>
-                <ol type="i">
-                    <li><strong>Administrative Convenience (प्रशासनिक सुविधा):</strong> सर्वेक्षण कार्य करने वाली एजेंसी विभिन्न प्रशासनिक क्षेत्रों में अपने क्षेत्रीय कार्यालय स्थापित कर सकती है, जिससे बेहतर संगठन और पर्यवेक्षण (supervision) हो सकता है।</li>
-                    <li><strong>Improving Design (डिजाइन में सुधार):</strong> प्राकृतिक विशेषताओं द्वारा stratification sampling design को बेहतर बनाने में मदद करता है। उदाहरण के लिए, मैदानी, रेगिस्तानी और पहाड़ी क्षेत्रों में अलग-अलग दृष्टिकोण की आवश्यकता हो सकती है।</li>
-                    <li><strong>Handling Extreme Values (चरम मूल्यों को संभालना):</strong> Stratification विशेष रूप से तब अधिक प्रभावी होता है जब population में चरम मूल्य (extreme values) होते हैं जिन्हें अलग-अलग strata में अलग किया जा सकता है, जिससे variability कम हो जाती है।</li>
-                    <li><strong>Different Designs (विभिन्न डिजाइन):</strong> Stratification विभिन्न strata में विभिन्न sampling designs का उपयोग करना संभव बनाता है।</li>
-                    <li><strong>Adequate Representation (पर्याप्त प्रतिनिधित्व):</strong> Stratification population के विभिन्न समूहों को पर्याप्त प्रतिनिधित्व सुनिश्चित करता है, जो महत्व का हो सकता है।</li>
-                    <li><strong>Better Cross-Section (बेहतर क्रॉस-सेक्शन):</strong> Stratification unstratified population की तुलना में population के बेहतर cross-section का चयन सुनिश्चित करता है।</li>
-                    <li><strong>Gain in Precision (परिशुद्धता में लाभ):</strong> Stratification अनुमान में precision (परिशुद्धता) में लाभ लाता है। यदि प्रत्येक stratum homogeneous है, तो अपेक्षाकृत छोटे sample को लेकर अधिक सटीक अनुमान प्राप्त किया जा सकता है।</li>
+                <h2>3.3 Advantages of Stratification</h2>
+                <p>Stratification ke bahut se fayde hain, jinmein se main ye hain:</p>
+                <ol>
+                    <li><strong>Administrative Convenience (Prashasnik Suvidha):</strong> Survey agency alag-alag zones mein apne field offices bana sakti hai, jisse field work ka supervision achhe se ho pata hai.</li>
+                    <li><strong>Sampling Design ko Improve karna:</strong> Natural characteristics ke basis par stratification bahut madad karta hai. Jaise kheti ke surveys mein maidaani (plains), registaani (deserts) aur pahaadi (hilly) ilaqon ki alag problems hoti hain, toh unhe alag strata banana chahiye.</li>
+                    <li><strong>Extreme Values ko Handle karna:</strong> Population mein jo extreme values hoti hain, unhe alag stratum mein daal kar baki strata ki variability kam ki ja sakti hai. In sabke alag estimates nikal kar ek precise overall estimate banaya ja sakta hai.</li>
+                    <li><strong>Different Sampling Designs ka Use:</strong> Aap alag-alag strata mein alag-alag sampling methods (designs) use kar sakte hain, depend karta hai ki kahan kaisi information available hai.</li>
+                    <li><strong>Adequate Representation:</strong> Ye ensure karta hai ki population ke sabhi zaruri groups ko proper representation mile.</li>
+                    <li><strong>Better Cross-section:</strong> Bina stratification ke comparison mein, ye humein population ka ek behtar aur balanced cross-section deta hai.</li>
+                    <li><strong>Precision mein Gain:</strong> Ek heterogeneous (alag-alag prakar ki) population ko homogeneous (ek jaisi) sub-populations mein baantne se, har stratum ke andar variance kam ho jata hai. Isse hum chhote sample se bhi zyada sateek (precise) estimate nikal sakte hain.</li>
                 </ol>
             </div>
         </section>
@@ -215,34 +165,40 @@
         <section id="sec3-4" class="section-card">
             <div class="english-content">
                 <h2>3.4 Notations</h2>
-                <p>To understand the math, we use some symbols. Let \( i \) represent the group (stratum) and \( j \) represent a single unit within that group:</p>
+                <p>Let's define our notations carefully. Let \( k \) denote the number of strata, \( i \) denote a specific stratum, and \( j \) denote a sampling unit within that stratum.</p>
+                <p>For the \( i \)-th stratum:</p>
                 <ul>
-                    <li>\( N_i \): Total number of units in group \( i \).</li>
-                    <li>\( n_i \): Number of units we pick for our sample from group \( i \).</li>
-                    <li>\( W_i = N_i/N \): The "weight" of the group (its share in the whole population).</li>
-                    <li>\( f_i = n_i/N_i \): The sampling fraction (what part of the group we picked).</li>
+                    <li>\( N_i \): total number of units in the stratum</li>
+                    <li>\( n_i \): number of units in the sample from the stratum</li>
+                    <li>\( W_i = \frac{N_i}{N} \): stratum weight</li>
+                    <li>\( f_i = \frac{n_i}{N_i} \): sampling fraction in the stratum</li>
+                    <li>\( y_{ij} \): value of the \( j \)-th unit in the \( i \)-th stratum</li>
                 </ul>
-                <p>If \( y_{ij} \) is the value of the \( j \)-th unit in the \( i \)-th group, then:</p>
+                <p>Parameters for the \( i \)-th stratum:</p>
                 <div class="derivation-block">
-                    $$ \bar{Y}_i = \frac{1}{N_i} \sum_{j=1}^{N_i} y_{ij} \quad \text{(This is the true mean of the group)} $$
-                    $$ \bar{y}_i = \frac{1}{n_i} \sum_{j=1}^{n_i} y_{ij} \quad \text{(This is the mean of our sample from that group)} $$
-                    $$ S_i^2 = \frac{1}{N_i - 1} \sum_{j=1}^{N_i} (y_{ij} - \bar{Y}_i)^2 \quad \text{(This is the variance within the group)} $$
+                    <div style="padding: 5px 0;">\( \bar{Y}_i = \frac{1}{N_i} \sum_{j=1}^{N_i} y_{ij} \) (Stratum mean)</div>
+                    <div style="padding: 5px 0;">\( \bar{y}_i = \frac{1}{n_i} \sum_{j=1}^{n_i} y_{ij} \) (Sample mean of the stratum)</div>
+                    <div style="padding: 5px 0;">\( S_i^2 = \frac{1}{N_i - 1} \sum_{j=1}^{N_i} (y_{ij} - \bar{Y}_i)^2 \) (Stratum variance)</div>
+                    <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \) (Sample variance of the stratum)</div>
                 </div>
             </div>
             <div class="hinglish-content">
-                <h2>3.4 Notations (संकेतन)</h2>
-                <p>मान लीजिए \( i \) stratum को दर्शाता है और \( j \) stratum के भीतर sampling unit को दर्शाता है। निम्नलिखित प्रतीक (symbols) stratum \( i \) को संदर्भित करते हैं:</p>
+                <h2>3.4 Notations</h2>
+                <p>Chaliye apne notations define karte hain. Maan lijiye \( k \) total strata hain, \( i \) kisi ek stratum ko darshata hai, aur \( j \) us stratum ke andar ki ek sampling unit ko darshata hai.</p>
+                <p>\( i \)-th stratum ke liye:</p>
                 <ul>
-                    <li>\( N_i = \) units की कुल संख्या</li>
-                    <li>\( n_i = \) sample में units की संख्या</li>
-                    <li>\( W_i = N_i/N \) (stratum weight)</li>
-                    <li>\( f_i = n_i/N_i \) (stratum में sampling fraction)</li>
+                    <li>\( N_i \): us stratum mein total units ki sankhya</li>
+                    <li>\( n_i \): us stratum se nikale gaye sample mein units ki sankhya</li>
+                    <li>\( W_i = \frac{N_i}{N} \): stratum ka weight</li>
+                    <li>\( f_i = \frac{n_i}{N_i} \): stratum ka sampling fraction</li>
+                    <li>\( y_{ij} \): \( i \)-th stratum ki \( j \)-th unit ki value</li>
                 </ul>
-                <p>मान लीजिए \( y_{ij} \) stratum में \( j \)-th unit का मूल्य (value) है।</p>
+                <p>\( i \)-th stratum ke parameters:</p>
                 <div class="derivation-block">
-                    $$ \bar{Y}_i = \sum_{j} y_{ij}/N_i \quad \text{(stratum mean)} $$
-                    $$ \bar{y}_i = \sum_{j} y_{ij}/n_i \quad \text{(sample mean)} $$
-                    $$ S_i^2 = \sum_{j} (y_{ij} - \bar{Y}_i)^2 / (N_i - 1) \quad \text{(stratum variance)} $$
+                    <div style="padding: 5px 0;">\( \bar{Y}_i = \frac{1}{N_i} \sum_{j=1}^{N_i} y_{ij} \) (Stratum ka population mean)</div>
+                    <div style="padding: 5px 0;">\( \bar{y}_i = \frac{1}{n_i} \sum_{j=1}^{n_i} y_{ij} \) (Stratum ka sample mean)</div>
+                    <div style="padding: 5px 0;">\( S_i^2 = \frac{1}{N_i - 1} \sum_{j=1}^{N_i} (y_{ij} - \bar{Y}_i)^2 \) (Stratum ka population variance)</div>
+                    <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \) (Stratum ka sample variance)</div>
                 </div>
             </div>
         </section>
@@ -252,641 +208,567 @@
         <section id="sec3-5" class="section-card">
             <div class="english-content">
                 <h2>3.5 Estimation of the Population Mean and its Variance</h2>
-                <p>Imagine we have divided our population into \( k \) groups (strata). To find the average of the whole population (\( \bar{Y} \)), we just take a weighted average of the individual group means. Mathematically, it looks like this:</p>
+                <p>Suppose our population of \( N \) units is divided into \( k \) strata. The overall population mean per unit \( \bar{Y} \) can be written as a weighted average of the strata means:</p>
                 <div class="derivation-block">
-                    $$ \bar{Y} = \frac{1}{N} \sum_{i=1}^{k} \sum_{j=1}^{N_i} y_{ij} = \sum_{i=1}^{k} \frac{N_i \bar{Y}_i}{N} = \sum_{i=1}^{k} W_i \bar{Y}_i $$
-                    <div class="explanation">Here, \( W_i \) is the weight of each group. We simply multiply each group's average by its weight and add them up to get the total population average.</div>
+                    <div style="padding: 5px 0;">\( \bar{Y} = \frac{1}{N} \sum_{i=1}^{k} N_i \bar{Y}_i = \sum_{i=1}^{k} W_i \bar{Y}_i \)</div>
                 </div>
-                <p>To estimate this population average using a sample, we use the <strong>stratified sample mean</strong> (\( \bar{y}_{st} \)):</p>
+                <p>To estimate this, we construct an estimator denoted as \( \bar{y}_{st} \) (where 'st' stands for stratified). It is defined as:</p>
                 <div class="derivation-block">
-                    $$ \bar{y}_{st} = \sum_{i=1}^{k} \frac{N_i \bar{y}_i}{N} = \sum_{i=1}^{k} W_i \bar{y}_i \quad (3.5.1) $$
+                    <div style="padding: 5px 0;">\( \bar{y}_{st} = \frac{1}{N} \sum_{i=1}^{k} N_i \bar{y}_i = \sum_{i=1}^{k} W_i \bar{y}_i \)</div>
                 </div>
-                <p>Note: This is different from the simple average of all sample units (\( \bar{y} = \frac{1}{n} \sum n_i \bar{y}_i \)), which doesn't account for the group weights correctly unless we use proportional allocation.</p>
+                <p>Note that this is different from the overall simple sample mean \( \bar{y} = \frac{1}{n} \sum_{i=1}^k n_i \bar{y}_i \).</p>
 
-                <h3><strong>Theorem 3.5.1: Unbiasedness and General Variance</strong></h3>
-                <p>If the sample mean \( \bar{y}_i \) from every group is unbiased and we pick samples independently from each group, then our overall estimate \( \bar{y}_{st} \) is also unbiased. Its variance is simply the weighted sum of individual group variances.</p>
-                
-                <p><strong>Proof of Unbiasedness:</strong></p>
+                <h3><strong>Theorem 3.5.1</strong></h3>
+                <p>If in every stratum the sample estimator \( \bar{y}_i \) is unbiased and samples are drawn independently in different strata, then \( \bar{y}_{st} \) is an unbiased estimator of the population mean \( \bar{Y} \) and its sampling variance is given by:</p>
                 <div class="derivation-block">
-                    <p>Let's check if the expected value of our estimate equals the true population mean:</p>
-                    $$ E(\bar{y}_{st}) = E\left( \sum_{i=1}^{k} W_i \bar{y}_i \right) $$
-                    <p>Since expectation is linear, we can move the \( E \) inside the sum:</p>
-                    $$ = \sum_{i=1}^{k} W_i E(\bar{y}_i) $$
-                    <p>Because each group's sample mean is unbiased (\( E(\bar{y}_i) = \bar{Y}_i \)), we get:</p>
-                    $$ = \sum_{i=1}^{k} W_i \bar{Y}_i = \bar{Y} \quad (3.5.4) $$
-                    <div class="explanation">This proves that on average, our stratified estimate will give the correct population mean.</div>
-                </div>
-
-                <p><strong>Proof of Variance:</strong></p>
-                <div class="derivation-block">
-                    <p>Because we pick samples from each group independently, the variance of the sum is just the sum of the variances:</p>
-                    $$ V(\bar{y}_{st}) = V\left( \sum_{i=1}^{k} W_i \bar{y}_i \right) $$
-                    <p>When we pull a constant (\( W_i \)) out of a variance, it becomes squared:</p>
-                    $$ = \sum_{i=1}^{k} W_i^2 V(\bar{y}_i) \quad (3.5.5) $$
-                    <div class="explanation">This is the general formula for variance in stratified sampling.</div>
-                </div>
-
-                <h3><strong>Theorem 3.5.2: Variance under SRSWOR</strong></h3>
-                <p>If we use Simple Random Sampling Without Replacement (SRSWOR) within each group, the variance of our estimate is:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{N_i - n_i}{N_i} \right) \frac{S_i^2}{n_i} = \sum_{i=1}^{k} W_i^2 (1 - f_i) \frac{S_i^2}{n_i} \quad (3.5.6) $$
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 V(\bar{y}_i) \)</div>
                 </div>
                 <p><strong>Proof:</strong></p>
                 <div class="derivation-block">
-                    <p>From Theorem 2.3.1, we know the variance of a sample mean under SRSWOR for a single group is:</p>
-                    $$ V(\bar{y}_i) = \frac{N_i - n_i}{N_i n_i} S_i^2 $$
-                    <p>Now, we just plug this into our general variance formula from Theorem 3.5.1:</p>
-                    $$ V(\bar{y}_{st}) = \sum W_i^2 \left[ \frac{N_i - n_i}{N_i n_i} S_i^2 \right] $$
-                    <p>Using \( f_i = n_i / N_i \) (the sampling fraction), we can rewrite this as:</p>
-                    $$ = \sum W_i^2 (1 - f_i) \frac{S_i^2}{n_i} $$
-                    <div class="explanation">The term \( (1-f_i) \) is the finite population correction (fpc). If the population is very large, this term is almost 1.</div>
+                    <p>Taking the expectation on both sides:</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{st}) = E \left( \sum_{i=1}^{k} W_i \bar{y}_i \right) = \sum_{i=1}^{k} W_i E(\bar{y}_i) \)</div>
+                    <p>Since the samples are drawn independently and each strata behaves like a population, \( \bar{y}_i \) is an unbiased estimator of \( \bar{Y}_i \), so \( E(\bar{y}_i) = \bar{Y}_i \).</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{st}) = \sum_{i=1}^{k} W_i \bar{Y}_i = \frac{1}{N} \sum_{i=1}^{k} N_i \bar{Y}_i = \bar{Y} \)</div>
+                    <p>This shows that \( \bar{y}_{st} \) is an unbiased estimator.</p>
+                    <p>For the variance, since sampling is done independently in each stratum, the covariance terms between different strata are zero:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = V \left( \sum_{i=1}^{k} W_i \bar{y}_i \right) = \sum_{i=1}^{k} W_i^2 V(\bar{y}_i) \)</div>
+                    <p>Hence, the theorem is proved.</p>
                 </div>
 
-                <p><strong>Corollary 1 (Population Total):</strong> If we want to estimate the total sum (\( \widehat{Y}_{st} = N \bar{y}_{st} \)), its variance is just \( N^2 \) times the variance of the mean:</p>
-                <div class="derivation-block">$$ V(\widehat{Y}_{st}) = \sum N_i^2 (1 - f_i) \frac{S_i^2}{n_i} \quad (3.5.7) $$</div>
-
-                <p><strong>Corollary 2 (Proportional Allocation):</strong> If we pick samples such that \( n_i/n = N_i/N \), the formula simplifies to:</p>
-                <div class="derivation-block">$$ V(\bar{y}_{st})_{prop} = \frac{1-f}{n} \sum W_i S_i^2 \quad (3.5.8) $$</div>
-
-                <p><strong>Corollary 4 (With Replacement):</strong> If we sample with replacement (SRSWR), we just drop the \( (1-f_i) \) factor:</p>
-                <div class="derivation-block">$$ V(\bar{y}_{st})_{wr} = \sum \frac{W_i^2 S_i^2}{n_i} \quad (3.5.10) $$</div>
-
-
-                <h3 style="margin-top: 40px;">Estimation of the Population Proportion</h3>
-                <p>Sometimes we don't want to find an average, but a <strong>proportion</strong> (like the percentage of literate people). We use the symbol \( P \) for the population proportion and \( p_i \) for the sample proportion in each group.</p>
-                
-                <p><strong>Theorem 3.5.3:</strong> Our estimate for the whole population proportion is the weighted sum of individual proportions:</p>
+                <h3><strong>Theorem 3.5.2</strong></h3>
+                <p>For stratified random sampling without replacement (WOR), the sample estimator \( \bar{y}_{st} \) is unbiased and its sampling variance is given by:</p>
                 <div class="derivation-block">
-                    $$ p_{st} = \sum W_i p_i \quad (3.5.11) $$
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{1}{n_i} - \frac{1}{N_i} \right) S_i^2 = \sum_{i=1}^{k} W_i^2 \frac{N_i - n_i}{N_i n_i} S_i^2 \)</div>
                 </div>
-                <p>Its variance (without replacement) is:</p>
+                <p><strong>Proof:</strong></p>
                 <div class="derivation-block">
-                    $$ V(p_{st}) = \sum W_i^2 \left( \frac{N_i - n_i}{N_i - 1} \right) \frac{P_i Q_i}{n_i} \quad (3.5.12) $$
-                    <div class="explanation">Here \( Q_i = 1 - P_i \). This formula is derived exactly like the one for means, but using the specific variance of a proportion.</div>
+                    <p>Since in each stratum, a simple random sample without replacement is taken, \( \bar{y}_i \) is an unbiased estimator of \( \bar{Y}_i \). By Theorem 3.5.1, \( \bar{y}_{st} \) is unbiased for \( \bar{Y} \).</p>
+                    <p>Further, applying the known formula for variance of sample mean in SRSWOR to an individual stratum, we have:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_i) = \left( \frac{1}{n_i} - \frac{1}{N_i} \right) S_i^2 = \frac{N_i - n_i}{N_i n_i} S_i^2 \)</div>
+                    <p>Substituting this into the result of Theorem 3.5.1, we get:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{1}{n_i} - \frac{1}{N_i} \right) S_i^2 \)</div>
+                </div>
+
+                <p><strong>Corollary 1:</strong> If \( \hat{Y}_{st} = N \bar{y}_{st} \) is the estimator of the population total \( Y \), then \( \hat{Y}_{st} \) is an unbiased estimator and its sampling variance is:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\hat{Y}_{st}) = V(N \bar{y}_{st}) = N^2 V(\bar{y}_{st}) = \sum_{i=1}^{k} N_i (N_i - n_i) \frac{S_i^2}{n_i} \)</div>
+                </div>
+
+                <p><strong>Corollary 2:</strong> If in every stratum \( \frac{n_i}{N_i} \) is negligible (meaning \( N_i \) is very large), the variance reduces to:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) \approx \sum_{i=1}^{k} W_i^2 \frac{S_i^2}{n_i} \)</div>
+                </div>
+
+                <p><strong>Corollary 3:</strong> If in every stratum \( \frac{n_i}{N_i} \) is negligible, and the variance in all strata has the same value \( S_i^2 = S_w^2 \), the result reduces to:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) \approx \frac{S_w^2}{n} \sum_{i=1}^{k} \frac{W_i^2}{n_i} \)</div>
+                </div>
+
+                <p><strong>Corollary 4:</strong> For stratified random sampling with replacement (WR), \( \bar{y}_{st} \) is an unbiased estimator and its sampling variance is:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \frac{\sigma_i^2}{n_i} \)</div>
+                </div>
+                <p>where \( \sigma_i^2 = \frac{N_i - 1}{N_i} S_i^2 \).</p>
+
+                <h3><strong>Theorem 3.5.3</strong></h3>
+                <p>In stratified random sampling WOR, with sample size \( n = \sum n_i \); an unbiased estimator of the population proportion \( P \) is given by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( p_{st} = \sum_{i=1}^{k} W_i p_i \)</div>
+                </div>
+                <p>with its variance:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{N_i - n_i}{N_i - 1} \right) \frac{P_i Q_i}{n_i} \)</div>
+                </div>
+                <p>where \( p_i \) is the sample estimate of proportion \( P_i \) in the \( i \)-th stratum and \( Q_i = 1 - P_i \).</p>
+
+                <p><em>Corollary 1:</em> When \( N_i / (N_i - 1) \) can be taken as unity, we have:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( 1 - f_i \right) \frac{P_i Q_i}{n_i} \)</div>
+                </div>
+
+                <p><em>Corollary 2:</em> If sampling is with replacement:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \frac{P_i Q_i}{n_i} \)</div>
+                </div>
+
+                <p><em>Corollary 3:</em> If \( f_i \) is negligible, the sampling variance reduces to:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \frac{P_i Q_i}{n_i} \)</div>
                 </div>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.5 Estimation of the Population Mean and its Variance (जनसंख्या माध्य और उसके प्रसरण का अनुमान)</h2>
-                <p>मान लीजिए कि \( N \) units की एक आबादी को \( k \) strata में विभाजित किया गया है। प्रति इकाई (per unit) population mean को इस प्रकार लिखा जा सकता है:</p>
+                <h2>3.5 Estimation of the Population Mean and its Variance</h2>
+                <p>Maan lijiye hamari \( N \) units ki population \( k \) strata mein divided hai. Overall population ka mean \( \bar{Y} \) hum strata means ke weighted average ke roop mein likh sakte hain:</p>
                 <div class="derivation-block">
-                    $$ \bar{Y} = \frac{\sum \sum y_{ij}}{N} = \sum \frac{N_i \bar{Y}_i}{N} = \sum W_i \bar{Y}_i $$
-                    <div class="explanation">\( \because \) overall mean, stratum weights \( W_i \) का उपयोग करते हुए, व्यक्तिगत stratum means का भारित औसत (weighted average) है।</div>
+                    <div style="padding: 5px 0;">\( \bar{Y} = \sum_{i=1}^{k} W_i \bar{Y}_i \)</div>
                 </div>
-                <p>Population mean \( \bar{Y} \) के लिए एक estimator \( \bar{y}_{st} \) (stratified के लिए st) इस प्रकार लिखा जा सकता है:</p>
+                <p>Iska estimate nikalne ke liye hum \( \bar{y}_{st} \) (stratified mean) banate hain:</p>
                 <div class="derivation-block">
-                    $$ \bar{y}_{st} = \sum \frac{N_i \bar{y}_i}{N} \quad (3.5.1) $$
+                    <div style="padding: 5px 0;">\( \bar{y}_{st} = \sum_{i=1}^{k} W_i \bar{y}_i \)</div>
                 </div>
-                <p>जो overall unweighted sample mean \( \bar{y} = \frac{\sum n_i \bar{y}_i}{n} \) (3.5.2) से मौलिक रूप से अलग है।</p>
+                <p>Dhyan dein ki ye simple sample mean \( \bar{y} \) se alag hai, kyunki yahan hum population weights \( W_i \) ka use kar rahe hain.</p>
 
-                <h3><strong>Theorem 3.5.1:</strong></h3>
-                <p>यदि हर stratum में sample estimator \( \bar{y}_i \) unbiased है और विभिन्न strata में स्वतंत्र रूप से samples निकाले जाते हैं, तो \( \bar{y}_{st} \) population mean का एक unbiased estimator है और इसका sampling variance इस प्रकार दिया जाता है:</p>
+                <h3><strong>Theorem 3.5.1</strong></h3>
+                <p>Agar har stratum mein sample estimator \( \bar{y}_i \) unbiased hai, aur samples independently draw kiye gaye hain, toh \( \bar{y}_{st} \) bhi \( \bar{Y} \) ka unbiased estimator hota hai. Iska variance hota hai:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \sum \frac{N_i^2 V(\bar{y}_i)}{N^2} = \sum W_i^2 V(\bar{y}_i) \quad (3.5.3) $$
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 V(\bar{y}_i) \)</div>
                 </div>
-                <p><em>Proof:</em></p>
+                <p><strong>Proof (Praman):</strong></p>
                 <div class="derivation-block">
-                    <p>हम पहले expected value लेते हैं:</p>
-                    $$ E(\bar{y}_{st}) = E\left( \sum \frac{N_i \bar{y}_i}{N} \right) = \sum \frac{N_i E(\bar{y}_i)}{N} $$
-                    <div class="explanation">\( \because \) expectation रैखिक रूप से (linearly) वितरित होती है।</div>
-                    $$ = \sum \frac{N_i \bar{Y}_i}{N} = \bar{Y} \quad (3.5.4) $$
-                    <div class="explanation">\( \because \) प्रत्येक \( \bar{y}_i \), \( \bar{Y}_i \) का एक unbiased estimator है। यह दर्शाता है कि \( \bar{y}_{st} \) एक unbiased estimator है।</div>
-                    <p>Sampling variance प्राप्त करने के लिए, हम ध्यान देते हैं कि प्रत्येक stratum में sampling स्वतंत्र रूप से (independently) की जाती है, और इसलिए स्वतंत्र चरों के योग का variance उनके variances का योग होता है:</p>
-                    $$ V(\bar{y}_{st}) = V\left( \sum \frac{N_i \bar{y}_i}{N} \right) = \sum \frac{N_i^2 V(\bar{y}_i)}{N^2} = \sum W_i^2 V(\bar{y}_i) \quad (3.5.5) $$
-                    <div class="explanation">\( \because \) variance ऑपरेटर के बाहर ले जाने पर constants \( N_i/N \) का वर्ग (square) हो जाता है।</div>
+                    <p>Expectation lene par, kyuki samples independent hain aur \( \bar{y}_i \) unbiased hai:</p>
+                    <div style="padding: 5px 0;">\( E(\bar{y}_{st}) = \sum W_i E(\bar{y}_i) = \sum W_i \bar{Y}_i = \bar{Y} \)</div>
+                    <p>Aur variance lene par covariance terms zero ho jayengi, isliye:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum W_i^2 V(\bar{y}_i) \)</div>
                 </div>
 
-                <h3><strong>Theorem 3.5.2:</strong></h3>
-                <p>Stratified random sampling without replacement (wor) के लिए, sample estimator \( \bar{y}_{st} \) unbiased है और इसका sampling variance इस प्रकार दिया गया है:</p>
+                <h3><strong>Theorem 3.5.2</strong></h3>
+                <p>Agar hum Without Replacement (WOR) sampling karte hain, toh:</p>
                 <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \sum \frac{N_i (N_i - n_i) S_i^2}{N^2 n_i} = \sum (1 - f_i)\frac{W_i^2 S_i^2}{n_i} \quad (3.5.6) $$
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \frac{N_i - n_i}{N_i n_i} S_i^2 \)</div>
                 </div>
-                <p><em>Proof:</em></p>
+                <p><strong>Proof:</strong></p>
                 <div class="derivation-block">
-                    <p>चूँकि, प्रत्येक stratum में एक simple random sample लिया जाता है, \( \bar{y}_i \), \( \bar{Y}_i \) का एक unbiased estimator है। इसलिए, Theorem 3.5.1 द्वारा, यह दिखाया जा सकता है कि \( \bar{y}_{st} \), \( \bar{Y} \) का एक unbiased estimator है।</p>
-                    <p>आगे, without replacement एक व्यक्तिगत stratum पर Theorem 2.3.1 लागू करने पर, हमारे पास है:</p>
-                    $$ V(\bar{y}_i) = \frac{(N_i - n_i)S_i^2}{N_i n_i} $$
-                    <div class="explanation">\( \because \) यह without replacement एक simple random sample mean के लिए मानक variance सूत्र है।</div>
-                    <p>इस मान को Theorem 3.5.1 के परिणाम में प्रतिस्थापित (substitute) करने पर, हमें मिलता है:</p>
-                    $$ V(\bar{y}_{st}) = \sum \frac{N_i^2}{N^2} \left[ \frac{(N_i - n_i)S_i^2}{N_i n_i} \right] $$
-                    $$ = \sum \frac{N_i (N_i - n_i) S_i^2}{N^2 n_i} = \sum (1 - f_i)\frac{W_i^2 S_i^2}{n_i} $$
-                    <div class="explanation">\( \because \) \( W_i = N_i/N \) और \( f_i = n_i/N_i \), जो हमें अंतिम व्यंजक (expression) देता है।</div>
+                    <p>Hum jaante hain ki SRSWOR mein ek stratum ka variance hota hai:</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_i) = \frac{N_i - n_i}{N_i n_i} S_i^2 \)</div>
+                    <p>Bas isko Theorem 3.5.1 wale formula mein put kar dijiye, aapko result mil jayega. Isme koi mushkil nahi hai.</p>
                 </div>
 
-                <p><strong>Corollary 1:</strong> यदि \( \widehat{Y}_{st} = N \bar{y}_{st} \) population total \( Y \) का estimator है, तो यह unbiased है और इसका sampling variance है:</p>
-                <div class="derivation-block">$$ V(\widehat{Y}_{st}) = \sum \frac{N_i (N_i - n_i) S_i^2}{n_i} = \sum N_i^2 (1 - f_i)\frac{S_i^2}{n_i} \quad (3.5.7) $$</div>
-
-                <p><strong>Corollary 2:</strong> यदि हर stratum में \( (n_i / n) = (N_i / N) \) है, तो \( \bar{y}_{st} \) का variance घटकर हो जाता है:</p>
-                <div class="derivation-block">$$ V(\bar{y}_{st}) = \frac{(N - n)}{nN^2} \sum N_i S_i^2 = (1 - f)\frac{\sum W_i S_i^2}{n} \quad (3.5.8) $$</div>
-
-                <p><strong>Corollary 3:</strong> यदि हर stratum में \( n_i / n = N_i / N \) है, और सभी strata में variance का मान \( S_w^2 \) समान है, तो परिणाम घटकर हो जाता है:</p>
-                <div class="derivation-block">$$ V(\bar{y}_{st}) = \frac{(N - n)S_w^2}{nN} = (1 - f)\frac{S_w^2}{n} \quad (3.5.9) $$</div>
-
-                <p><strong>Corollary 4:</strong> Stratified random sampling with replacement (wr) के लिए, \( \bar{y}_{st} \) एक unbiased estimator है और इसका sampling variance fpc कारक को छोड़ देता है:</p>
-                <div class="derivation-block">$$ V(\bar{y}_{st}) = \sum \frac{N_i^2 S_i^2}{N^2 n_i} = \sum \frac{W_i^2 S_i^2}{n_i} \quad (3.5.10) $$</div>
-
-                <h3 style="margin-top: 40px;">Estimation of the Population Proportion (जनसंख्या अनुपात का अनुमान)</h3>
-                <p><strong>Theorem 3.5.3:</strong> Stratified random sampling without replacement (wor) में, जहाँ sample size \( \sum n_i = n \) है, population proportion \( P \) का एक unbiased estimator इस प्रकार दिया जाता है:</p>
+                <p>Iske baad 4 choti Corollaries aati hain.</p>
+                <p><strong>Corollary 1</strong> mein Total \( Y \) ke liye variance nikalte hain bas \( N^2 \) se multiply karke.</p>
                 <div class="derivation-block">
-                    $$ P_{st} = \sum \frac{N_i p_i}{N} = \sum W_i p_i \quad (3.5.11) $$
+                    <div style="padding: 5px 0;">\( V(\hat{Y}_{st}) = \sum_{i=1}^{k} N_i (N_i - n_i) \frac{S_i^2}{n_i} \)</div>
                 </div>
-                <p>और इसका सटीक गणितीय variance है:</p>
+
+                <p><strong>Corollary 2</strong> kehti hai ki agar population \( N_i \) bahut badi ho (finite population correction yaani fpc chhod dein), toh variance bachega:</p>
                 <div class="derivation-block">
-                    $$ V(P_{st}) = \sum (1 - f_i)\frac{W_i^2 N_i P_i (1 - P_i)}{(N_i - 1)n_i} \quad (3.5.12) $$
-                    <div class="explanation">\( \because \) जहाँ \( p_i \), \( i \)-th stratum में proportion \( P_i \) का sample estimate है। इसका प्रमाण सीधे तौर पर Theorem 3.5.2 को प्रतिध्वनित (mirrors) करता है।</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) \approx \sum_{i=1}^{k} W_i^2 \frac{S_i^2}{n_i} \)</div>
                 </div>
-                <p><strong>Corollary 1:</strong> यदि \( N_i / (N_i - 1) \) को इकाई (unity) के रूप में लिया जा सकता है (बड़े \( N_i \) के लिए), तो हमारे पास है:</p>
-                <div class="derivation-block">$$ V(P_{st}) = \sum (1 - f_i)\frac{W_i^2 P_i (1 - P_i)}{n_i} \quad (3.5.13) $$</div>
-                <p><strong>Corollary 2:</strong> यदि stratified random sampling with replacement (wr) है, तो finite population correction गायब हो जाता है:</p>
-                <div class="derivation-block">$$ V(P_{st}) = \sum \frac{W_i^2 P_i (1 - P_i)}{n_i} $$</div>
+
+                <p><strong>Corollary 3</strong> kehti hai ki fpc chhodne ke baad agar sab strata ka variance \( S_w^2 \) same ho, toh ye formula aur simple ho jata hai:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) \approx \frac{S_w^2}{n} \sum_{i=1}^{k} \frac{W_i^2}{n_i} \)</div>
+                </div>
+
+                <p><strong>Corollary 4</strong> kehti hai ki With Replacement (WR) ke case mein formula mein \( S_i^2 \) ki jagah \( \sigma_i^2 \) use hota hai.</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \frac{\sigma_i^2}{n_i} \)</div>
+                </div>
+
+                <h3><strong>Theorem 3.5.3</strong></h3>
+                <p>Ye same logic ko Proportions \( P \) (jaise "kitne log pass hue") ke liye apply karti hai. Iska estimator hota hai:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( p_{st} = \sum W_i p_i \)</div>
+                </div>
+                <p>Aur variance mein \( S_i^2 \) ki jagah \( P_i Q_i \) aa jata hai, jo binomial nature dikhata hai:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{N_i - n_i}{N_i - 1} \right) \frac{P_i Q_i}{n_i} \)</div>
+                </div>
+                
+                <p><em>Corollary 1:</em> Jab \( N_i / (N_i - 1) \) approx 1 ho, fpc ke sath:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( 1 - f_i \right) \frac{P_i Q_i}{n_i} \)</div>
+                </div>
+
+                <p><em>Corollary 2:</em> Agar with replacement ho, fpc gayab ho jata hai:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(p_{st}) = \sum_{i=1}^{k} W_i^2 \frac{P_i Q_i}{n_i} \)</div>
+                </div>
             </div>
         </section>
 
         <section id="sec3-6" class="section-card">
+            <div class="english-content">
+                <h2>3.6 Estimate of Variance</h2>
+                <p>In practice, the population parameters \( S_i^2 \) are unknown, so we must estimate \( V(\bar{y}_{st}) \) from our sample data.</p>
+                <p>If a simple random sample is taken within each stratum, an unbiased estimator of \( S_i^2 \) is given by the sample variance \( s_i^2 \):</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \)</div>
+                </div>
 
-              <div class="english-content">
-                  <h2>3.6 Estimate of Variance</h2>
-                  <p>In real-world surveys, we almost never know the true variance of each group (\( S_i^2 \)). So, we have to estimate it using the data from our sample. We use the sample variance (\( s_i^2 \)) as an estimate:</p>
-                  <div class="derivation-block">
-                      $$ s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \quad (3.6.1) $$
-                  </div>
-                  <p>By simply replacing the true variance \( S_i^2 \) with its estimate \( s_i^2 \) in our previous formulas, we get an unbiased estimate of the overall variance:</p>
+                <h3><strong>Theorem 3.6</strong></h3>
+                <p>With stratified random sampling (WOR), an unbiased estimator of the variance of \( \bar{y}_{st} \) (denoted as \( \widehat{V}(\bar{y}_{st}) \) or \( v(\bar{y}_{st}) \)) is given by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \widehat{V}(\bar{y}_{st}) = v(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{1}{n_i} - \frac{1}{N_i} \right) s_i^2 \)</div>
+                </div>
 
-                  <p><strong>Theorem 3.6:</strong> For stratified random sampling (without replacement), our estimate for the variance of \( \bar{y}_{st} \) is:</p>
-                  <div class="derivation-block">
-                      $$ v(\bar{y}_{st}) = \sum_{i=1}^k \frac{W_i^2 (1 - f_i) s_i^2}{n_i} = \sum \frac{W_i^2 s_i^2}{n_i} - \sum \frac{W_i s_i^2}{N} \quad (3.6.2) $$
-                      <div class="explanation">Logic: Since \( s_i^2 \) is an unbiased estimate of \( S_i^2 \), we just plug it into the variance formula from Theorem 3.5.2 to get the estimated variance.</div>
-                  </div>
+                <p><strong>Corollary 1:</strong> With stratified random sampling (WOR), an unbiased estimator of \( V(\hat{Y}_{st}) \) reduces to:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( v(\hat{Y}_{st}) = \sum_{i=1}^{k} N_i (N_i - n_i) \frac{s_i^2}{n_i} \)</div>
+                </div>
 
-                  <p><strong>Corollary 1:</strong> If the population is very large (\( N \to \infty \)), the second term becomes zero, and we get:</p>
-                  <div class="derivation-block">$$ v(\bar{y}_{st}) \approx \sum \frac{W_i^2 s_i^2}{n_i} \quad (3.6.3) $$</div>
+                <p><strong>Corollary 2:</strong> With stratified random sampling (WOR) for proportions, an unbiased estimator of \( V(p_{st}) \) is given by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( v(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{N_i - n_i}{N_i} \right) \frac{p_i q_i}{n_i - 1} \)</div>
+                </div>
+                <p>where \( q_i = 1 - p_i \).</p>
+            </div>
 
-                  <p><strong>Corollary 2:</strong> For proportions, the estimate of variance is:</p>
-                  <div class="derivation-block">$$ v(p_{st}) = \sum \frac{(1 - f_i) W_i^2 p_i q_i}{n_i - 1} \quad (3.6.4) $$</div>
-              </div>
+            <div class="hinglish-content">
+                <h2>3.6 Estimate of Variance</h2>
+                <p>Asli surveys mein humein population ka variance \( S_i^2 \) pata nahi hota. Toh hum uski jagah sample se calculate kiya gaya \( s_i^2 \) use karte hain.</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \)</div>
+                </div>
 
+                <h3><strong>Theorem 3.6</strong></h3>
+                <p>Agar hum SRSWOR use kar rahe hain, toh \( \bar{y}_{st} \) ke variance ka unbiased estimate nikalne ke liye hum seedha \( S_i^2 \) ki jagah \( s_i^2 \) rakh dete hain:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( v(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{1}{n_i} - \frac{1}{N_i} \right) s_i^2 \)</div>
+                </div>
+                <p>Iska proof bahut hi sidha hai kyuki humein pata hai ki \( E(s_i^2) = S_i^2 \) hota hai.</p>
 
-              <div class="hinglish-content">
-                  <h2>3.6 Estimate of Variance (प्रसरण का अनुमान)</h2>
-                  <p>यदि प्रत्येक stratum के भीतर एक simple random sample लिया जाता है, तो \( S_i^2 \) का एक unbiased estimator इस प्रकार दिया जाता है:</p>
-                  <div class="derivation-block">
-                      $$ s_i^2 = \frac{\sum_{j} (y_{ij} - \bar{y}_i)^2}{n_i - 1} \quad (3.6.1) $$
-                  </div>
-                  <p>तब, \( \bar{y}_{st} \) के sampling variance का एक unbiased estimator तार्किक रूप से निम्नानुसार प्राप्त किया जा सकता है:</p>
+                <p><strong>Corollary 1</strong> mein Population Total ke variance ka estimate diya hai jismein wahi \( N^2 \) ka logic lagta hai:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( v(\hat{Y}_{st}) = \sum_{i=1}^{k} N_i (N_i - n_i) \frac{s_i^2}{n_i} \)</div>
+                </div>
 
-                  <p><strong>Theorem 3.6:</strong> Stratified random sampling, wor के साथ, \( \bar{y}_{st} \) के variance का एक unbiased estimator है:</p>
-                  <div class="derivation-block">
-                      $$ v(\bar{y}_{st}) = \sum \frac{N_i(N_i - n_i)s_i^2}{N^2 n_i} = \sum \frac{W_i^2 s_i^2}{n_i} - \sum \frac{W_i s_i^2}{N} \quad (3.6.2) $$
-                      <div class="explanation">\( \because \) प्रमाण (proof) स्पष्ट रूप से Theorem 3.5.2 के variance सूत्र में सीधे \( S_i^2 \) को उसके unbiased estimator \( s_i^2 \) से बदलकर प्राप्त होता है।</div>
-                  </div>
-
-                  <p><strong>Corollary 1:</strong> Stratified random sampling, wor के साथ, \( V(\bar{y}_{st}) \) का एक unbiased estimator गणितीय रूप से कम होकर हो जाता है:</p>
-                  <div class="derivation-block">$$ v(\bar{y}_{st}) = \sum \frac{W_i^2 s_i^2}{n_i} \quad (3.6.3) $$</div>
-
-                  <p><strong>Corollary 2:</strong> Stratified random sampling, wor के साथ, \( V(P_{st}) \) का एक unbiased estimator समान रूप से इस प्रकार दिया जाता है:</p>
-                  <div class="derivation-block">$$ v(P_{st}) = \sum \frac{(1 - f_i)W_i^2 p_i(1 - p_i)}{n_i - 1} \quad (3.6.4) $$</div>
-              </div>
-
-</section>
+                <p><strong>Corollary 2</strong> proportions ke liye batati hai ki variance ko estimate karne ke liye hum \( P_i Q_i \) ki jagah \( p_i q_i \) use karte hain, bas dhyan rahe denominator mein \( n_i - 1 \) aayega unbiasedness maintain karne ke liye:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( v(p_{st}) = \sum_{i=1}^{k} W_i^2 \left( \frac{N_i - n_i}{N_i} \right) \frac{p_i q_i}{n_i - 1} \)</div>
+                </div>
+            </div>
+        </section>
 
     
         <section id="sec3-7" class="section-card">
             <div class="english-content">
-                <h2>3.7 Allocation of Sample Size</h2>
-                <p>One of the most important questions in stratified sampling is: <strong>"How many units should we pick from each group?"</strong> This is called <strong>Allocation</strong>. We want to pick numbers (\( n_i \)) that give us the most accurate results for the lowest possible cost.</p>
-                <p>Usually, we follow three rules of thumb: pick more units from a group if it is larger, more variable (diverse), or cheaper to survey. There are four main ways to do this:</p>
+                <h2>3.7 Allocation of Sample Size in Different Strata</h2>
+                <p>In stratified sampling, allocating the sample \( n \) to different strata depends on three factors:</p>
+                <ol>
+                    <li>The total number of units in the stratum (stratum size \( N_i \)).</li>
+                    <li>The variability within the stratum (\( S_i \)).</li>
+                    <li>The cost in taking observations per unit in the stratum (\( c_i \)).</li>
+                </ol>
+                <p>A good allocation provides maximum precision with minimum resources. There are four methods of allocation:</p>
 
-                <h3>3.7.1 Equal Allocation</h3>
-                <p>This is the simplest method. We just divide the total sample size (\( n \)) equally among all the \( k \) groups:</p>
-                <div class="derivation-block">$$ n_i = n/k \quad (3.7.1) $$</div>
-                <p>This is handy for administrative work but might not be the most accurate method if some groups are much larger than others.</p>
+                <h3>3.7.1 Equal Samples From Each Stratum</h3>
+                <p>For administrative convenience, the total sample size \( n \) is divided equally among all strata.</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_i = \frac{n}{k} \)</div>
+                </div>
 
                 <h3>3.7.2 Proportional Allocation</h3>
-                <p>In this method, we pick samples based on the size of each group. If a group has 20% of the population, we give it 20% of the sample. This is very popular because it is simple and fair:</p>
+                <p>Originally proposed by Bowley (1926). When only the sizes \( N_i \) are known, the sample is allocated proportional to the stratum size:</p>
                 <div class="derivation-block">
-                    $$ n_i = n \frac{N_i}{N} = n W_i \quad (3.7.2) $$
-                    <div class="explanation">This means the sampling fraction (\( f_i = n_i/N_i = n/N \)) is the same for every group. It's like taking a miniature version of the whole population.</div>
+                    <div style="padding: 5px 0;">\( n_i \propto N_i \implies n_i = n \frac{N_i}{N} = n W_i \)</div>
+                </div>
+                <p>This makes the sampling fraction constant (\( f_i = \frac{n_i}{N_i} = \frac{n}{N} \)), leading to a self-weighting sample.</p>
+
+                <h3>3.7.3 Neyman Allocation</h3>
+                <p>Due to Neyman (1934), this is the minimum variance allocation. Assuming cost per unit is the same across strata, it considers both size and variability:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_i \propto N_i S_i \implies n_i = n \frac{N_i S_i}{\sum N_i S_i} \)</div>
+                </div>
+                <p>Minimum variance is achieved here:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st})_{Neyman} = \frac{1}{n} \left( \sum_{i=1}^{k} W_i S_i \right)^2 - \frac{1}{N} \sum_{i=1}^{k} W_i S_i^2 \)</div>
                 </div>
 
-                <h3>3.7.3 Neyman Allocation (Minimum Variance)</h3>
-                <p>If the cost of surveying is the same for all groups, we can minimize the variance by picking more units from groups that are more "spread out" (higher \( S_i \)):</p>
-                <div class="derivation-block">
-                    $$ n_i = n \frac{W_i S_i}{\sum W_i S_i} \quad (3.7.3) $$
-                </div>
-                <p>By using this allocation, the minimum possible variance for a fixed sample size \( n \) is:</p>
-                <div class="derivation-block">
-                    $$ V_{min}(\bar{y}_{st}) = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} \quad (3.7.4) $$
-                </div>
-
-                <h3>3.7.4 Optimum Allocation (Cost and Variance)</h3>
-                <p>What if some groups are more expensive to survey than others? We use a cost function:</p>
-                <div class="derivation-block">$$ C = a + \sum n_i c_i \quad (3.7.5) $$</div>
-                <p>Where \( a \) is the fixed overhead cost and \( c_i \) is the cost per unit in group \( i \). We want to minimize the variance \( V(\bar{y}_{st}) \) for a fixed cost \( C \).</p>
+                <h3>3.7.4 Optimum Allocation</h3>
+                <p>This determines \( n_i \) to minimize variance for a specified cost, or minimize cost for a specified variance.</p>
+                <p>Cost function: \( C = C_0 + \sum_{i=1}^k c_i n_i \) where \( C_0 \) is overhead cost, \( c_i \) is cost per unit.</p>
                 
-                <p><strong>Step-by-Step Derivation using Lagrange Multipliers:</strong></p>
+                <p><strong>Theorem:</strong> Show that in optimum allocation in stratified sampling \( n_i \propto \frac{N_i S_i}{\sqrt{c_i}} \).</p>
+                <p><strong>Proof (Lagrange Multipliers):</strong></p>
                 <div class="derivation-block">
-                    <p>1. First, we set up our objective function \( \Phi \), combining variance and cost:</p>
-                    $$ \Phi = V(\bar{y}_{st}) + \lambda (C - a - \sum n_i c_i) $$
-                    <p>Expanding the variance term (ignoring the constant part):</p>
-                    $$ \Phi = \sum \frac{W_i^2 S_i^2}{n_i} + \lambda ( \sum n_i c_i ) $$
-                    <p>2. Now, we differentiate \( \Phi \) with respect to \( n_i \) and set it to zero:</p>
-                    $$ \frac{\partial \Phi}{\partial n_i} = - \frac{W_i^2 S_i^2}{n_i^2} + \lambda c_i = 0 $$
-                    <p>3. Solving for \( n_i \), we find that \( n_i \) must be proportional to \( W_i S_i / \sqrt{c_i} \):</p>
-                    $$ n_i^2 = \frac{W_i^2 S_i^2}{\lambda c_i} \implies n_i = \frac{W_i S_i}{\sqrt{\lambda c_i}} $$
-                    <p>4. Since the total sample size is \( n = \sum n_i \), we can find the final formula:</p>
-                    $$ n_i = n \frac{W_i S_i / \sqrt{c_i}}{\sum (W_i S_i / \sqrt{c_i})} \quad (3.7.9) $$
-                    <div class="explanation">Teacher's Tip: This formula tells us to sample more from groups that are large (\( W_i \)), variable (\( S_i \)), and cheap (\( 1/\sqrt{c_i} \)).</div>
+                    <p>Let us define Lagrange's multiplier \( \lambda \) and formulate the function \( \phi \):</p>
+                    <div style="padding: 5px 0;">\( \phi = V(\bar{y}_{st}) + \lambda (C - C_0 - \sum c_i n_i) \)</div>
+                    <p>We know that \( V(\bar{y}_{st}) = \sum_{i=1}^{k} W_i^2 S_i^2 \left( \frac{1}{n_i} - \frac{1}{N_i} \right) \).</p>
+                    <p>So,</p>
+                    <div style="padding: 5px 0;">\( \phi = \sum_{i=1}^{k} \frac{W_i^2 S_i^2}{n_i} - \sum_{i=1}^{k} \frac{W_i^2 S_i^2}{N_i} + \lambda \left( \sum_{i=1}^{k} c_i n_i - (C - C_0) \right) \)</div>
+                    <p>Differentiating with respect to \( n_i \) and equating to zero:</p>
+                    <div style="padding: 5px 0;">\( \frac{\partial \phi}{\partial n_i} = - \frac{W_i^2 S_i^2}{n_i^2} + \lambda c_i = 0 \)</div>
+                    <div style="padding: 5px 0;">\( \implies n_i^2 = \frac{W_i^2 S_i^2}{\lambda c_i} \implies n_i = \frac{W_i S_i}{\sqrt{\lambda c_i}} \implies n_i = \frac{1}{\sqrt{\lambda}} \frac{W_i S_i}{\sqrt{c_i}} \)</div>
+                    <p>Taking the summation over all strata:</p>
+                    <div style="padding: 5px 0;">\( \sum_{i=1}^{k} n_i = n = \frac{1}{\sqrt{\lambda}} \sum_{i=1}^{k} \frac{W_i S_i}{\sqrt{c_i}} \)</div>
+                    <p>Therefore,</p>
+                    <div style="padding: 5px 0;">\( \sqrt{\lambda} = \frac{\sum (W_i S_i / \sqrt{c_i})}{n} \)</div>
+                    <p>Substituting \( \sqrt{\lambda} \) back into the equation for \( n_i \):</p>
+                    <div style="padding: 5px 0;">\( n_i = \frac{n (W_i S_i / \sqrt{c_i})}{\sum (W_i S_i / \sqrt{c_i})} \)</div>
+                    <p>Since \( W_i = N_i / N \), the \( N \) cancels out from numerator and denominator, showing that:</p>
+                    <div style="padding: 5px 0;">\( n_i \propto \frac{N_i S_i}{\sqrt{c_i}} \)</div>
+                </div>
+
+                <p>This relation leads to the conclusion that we should take a larger sample in a stratum if:</p>
+                <ol>
+                    <li>The stratum size is larger (\( N_i \) is large).</li>
+                    <li>The stratum has larger variability (\( S_i \) is large).</li>
+                    <li>The cost per unit is cheaper in that stratum (\( c_i \) is small).</li>
+                </ol>
+
+                <p><strong>Determination of sample size \( n \) under Optimum Allocation:</strong></p>
+                <p><strong>Case I:</strong> When cost \( C \) is fixed and we want to minimize variance.</p>
+                <div class="derivation-block">
+                    <p>Substituting \( n_i \) into the cost function \( C = C_0 + \sum c_i n_i \):</p>
+                    <div style="padding: 5px 0;">\( C - C_0 = \sum c_i \left( \frac{n \frac{W_i S_i}{\sqrt{c_i}}}{\sum \frac{W_i S_i}{\sqrt{c_i}}} \right) = \frac{n}{\sum \frac{W_i S_i}{\sqrt{c_i}}} \sum (W_i S_i \sqrt{c_i}) \)</div>
+                    <div style="padding: 5px 0;">\( \implies n = \frac{(C - C_0) \sum (W_i S_i / \sqrt{c_i})}{\sum (W_i S_i \sqrt{c_i})} \)</div>
+                </div>
+
+                <p><strong>Case II:</strong> When variance \( V \) is fixed and we minimize cost.</p>
+                <div class="derivation-block">
+                    <p>Using the variance formula \( V = \sum \frac{W_i^2 S_i^2}{n_i} - \frac{1}{N} \sum W_i S_i^2 \), and substituting \( n_i \), we eventually get:</p>
+                    <div style="padding: 5px 0;">\( n = \frac{\left( \sum W_i S_i \sqrt{c_i} \right) \left( \sum W_i S_i / \sqrt{c_i} \right)}{V + \frac{1}{N} \sum W_i S_i^2} \)</div>
                 </div>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.7 Allocation of Sample Size (प्रतिदर्श आकार का आवंटन)</h2>
-                <p>कुल sample size \( n \) का संबंधित strata में आवंटन तीन प्राथमिक गणितीय विचारों (mathematical considerations) द्वारा नियंत्रित होता है:</p>
-                <ol type="i">
-                    <li>stratum में units की कुल संख्या (stratum size)</li>
-                    <li>stratum के भीतर observations की भिन्नता (variability)</li>
-                    <li>stratum में प्रति sampling unit observation लेने की लागत (cost)</li>
+                <h2>3.7 Allocation of Sample Size</h2>
+                <p>Jab hum stratified sampling karte hain, toh sabse bada sawal ye hota hai ki har stratum se kitna bada sample (\( n_i \)) liya jaye? Ise <strong>Allocation</strong> kehte hain. Ek achha allocation wo hota hai jismein humein kam se kam kharch mein zyada se zyada accuracy mile. Allocation 4 tarike se hota hai:</p>
+                
+                <h3>3.7.1 Equal Allocation</h3>
+                <p>Sabhi strata se barabar sample le lo. Ye tab karte hain jab humein aur koi information nahi hoti aur administration ko simple rakhna hota hai.</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_i = n/k \)</div>
+                </div>
+
+                <h3>3.7.2 Proportional Allocation</h3>
+                <p>Jiska stratum size (\( N_i \)) jitna bada, wahan se utna zyada sample lo. Ye sabse zyada use hota hai.</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_i \propto N_i \implies n_i = n \frac{N_i}{N} = n W_i \)</div>
+                </div>
+
+                <h3>3.7.3 Neyman Allocation</h3>
+                <p>Isme cost sab jagah same maani jati hai. Hum wahan se zyada sample lete hain jahan population size badi ho aur wahan variance (\( S_i \)) bhi zyada ho.</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_i \propto N_i S_i \implies n_i = n \frac{N_i S_i}{\sum N_i S_i} \)</div>
+                </div>
+
+                <h3>3.7.4 Optimum Allocation</h3>
+                <p>Ye sabse detail method hai. Isme hum cost aur variance dono dekhte hain. Lagrange Multipliers ka use karke hum derive karte hain ki:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( n_i \propto \frac{N_i S_i}{\sqrt{c_i}} \)</div>
+                </div>
+                <p>Iska matlab, wahan se bada sample lo jahan:</p>
+                <ol>
+                    <li>Stratum bada ho.</li>
+                    <li>Variability (utha-patak) zyada ho.</li>
+                    <li>Survey karne ka kharcha (\( c_i \)) kam ho.</li>
                 </ol>
-                <p>एक अच्छा आवंटन वह है जहाँ न्यूनतम संसाधनों के साथ अधिकतम precision प्राप्त होती है। आवंटन के लिए गणितीय मानदंड (criterion) एक दिए गए variance के लिए बजट को सख्ती से कम करना है या एक निश्चित बजट के लिए variance को कम करना है। इसके चार मुख्य तरीके हैं:</p>
-
-                <h3>3.7.1 Equal Allocation (समान आवंटन)</h3>
-                <p>यह प्रशासनिक सुविधा के कारणों के लिए व्यावहारिक रुचि (practical interest) की स्थिति है। कुल sample size \( n \) को सभी strata के बीच समान रूप से विभाजित किया जाता है, यानी, \( i \)-th stratum के लिए:</p>
-                <div class="derivation-block">$$ n_i = n/k \quad (3.7.1) $$</div>
-
-                <h3>3.7.2 Proportional Allocation (आनुपातिक आवंटन)</h3>
-                <p>मूल रूप से Bowley (1926) द्वारा प्रस्तावित, यह प्रक्रिया इसकी गणितीय सादगी के कारण व्यवहार में बहुत आम है। विभिन्न strata को size \( n \) के एक दिए गए sample का आवंटन उनके sizes के सख्त अनुपात (proportion) में किया जाता है:</p>
-                <div class="derivation-block">
-                    $$ n_i = n\frac{N_i}{N} \quad \text{या} \quad f_i = f \quad (3.7.2) $$
-                    <div class="explanation">\( \because \) sampling fraction \( f_i \) सभी strata में बिल्कुल समान है। इट एक self-weighting sample देता है।</div>
-                </div>
-
-                <h3>3.7.3 Neyman Allocation (नेमन आवंटन)</h3>
-                <p>इस आवंटन को minimum variance allocation के रूप में जाना जाता है, जिसे Tschuprow (1923) ने खोजा और Neyman (1934) ने फिर से खोजा। यह मानता है कि विभिन्न strata के बीच प्रति इकाई (per unit) sampling cost बिल्कुल समान है, और sample size निश्चित है। Sample sizes इस प्रकार आवंटित किए जाते हैं:</p>
-                <div class="derivation-block">
-                    $$ n_i = n\frac{W_i S_i}{\sum W_i S_i} = n\frac{N_i S_i}{\sum N_i S_i} \quad (3.7.3) $$
-                </div>
-                <p>निश्चित \( n \) के साथ minimum variance के लिए सटीक सूत्र (formula) \( n_i \) को Eqn. (3.5.6) में प्रतिस्थापित (substitute) करके प्राप्त किया जाता है:</p>
-                <div class="derivation-block">
-                    $$ V_m(\bar{y}_{st}) = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} \quad (3.7.4) $$
-                </div>
-
-                <h3>3.7.4 Optimum Allocation (इष्टतम आवंटन)</h3>
-                <p>इस method में, \( n_i \) को गणितीय रूप से एक निर्दिष्ट लागत \( C \) के लिए \( V(\bar{y}_{st}) \) को कम करने के लिए, या एक निर्दिष्ट \( V \) के लिए \( C \) को कम करने के लिए निर्धारित किया जाता है। Cost function है:</p>
-                <div class="derivation-block">$$ C = a + \sum n_i c_i \quad (3.7.5) $$</div>
-                <p>जहाँ \( a \) overhead cost है और \( c_i \), \( i \)-th stratum में एक unit का सर्वेक्षण करने की औसत लागत है। Optimum \( n_i \) निर्धारित करने के लिए, हम Lagrange multipliers का उपयोग करते हैं:</p>
-                <div class="derivation-block">
-                    $$ \Phi = V(\bar{y}_{st}) + \lambda C \quad (3.7.6) $$
-                    <p>\( n_i \) के संबंध में अवकलन (differentiating) करने पर:</p>
-                    $$ -\frac{W_i^2 S_i^2}{n_i^2} + \lambda c_i = 0 $$
-                    $$ n_i = \frac{W_i S_i}{\sqrt{\lambda c_i}} \quad (3.7.7) $$
-                    <div class="explanation">\( \because \) सभी strata पर जोड़ने से \( n = \sum \left( \frac{W_i S_i}{\sqrt{\lambda c_i}} \right) \) (3.7.8) प्राप्त होता है।</div>
-                    $$ n_i = n \frac{W_i S_i / \sqrt{c_i}}{\sum (W_i S_i / \sqrt{c_i})} = n \frac{N_i S_i / \sqrt{c_i}}{\sum (N_i S_i / \sqrt{c_i})} \quad (3.7.9) $$
-                </div>
-                <p>एक निर्दिष्ट लागत \( C \) के लिए आवश्यक कुल sample size \( n \) है:</p>
-                <div class="derivation-block">$$ n = \frac{(C - a)\sum (W_i S_i / \sqrt{c_i})}{\sum W_i S_i c_i} \quad (3.7.10) $$</div>
-                <p>यदि Variance \( V \) निश्चित है, तो:</p>
-                <div class="derivation-block">$$ n = \frac{\left( \sum W_i S_i / \sqrt{c_i} \right)\left( \sum W_i S_i c_i \right)}{V + \sum W_i S_i^2} \quad (3.7.11) $$</div>
             </div>
         </section>
 
         <section id="sec3-8" class="section-card">
             <div class="english-content">
-                <h2>3.8 Relative Precision: Comparing Stratified and Simple Random Sampling</h2>
-                <p>Students often ask: <strong>"Is stratified sampling really better than simple random sampling?"</strong> The answer is a big YES. In this section, we compare the accuracy (variance) of three methods: Simple Random Sampling (\( V_{SR} \)), Proportional Allocation (\( V_{prop} \)), and Optimum Allocation (\( V_{opt} \)).</p>
+                <h2>3.8 RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
+                <p>In this section, we compare the precision of the usual estimators under simple random sampling (without stratification) and stratified random sampling employing proportional and optimum allocations. The variances are denoted by \( V(\bar{y}_n)_{SRS} \), \( V(\bar{y}_{st})_{prop} \), and \( V(\bar{y}_{st})_{opt} \) respectively.</p>
 
-                <h3><strong>Theorem 3.8.1: The Hierarchy of Accuracy</strong></h3>
-                <p>If we ignore the finite population correction (fpc) for simplicity, we can prove that:</p>
-                <div class="derivation-block">$$ V_{opt} \leq V_{prop} \leq V_{SR} \quad (3.8.1) $$</div>
-                <p>This means Optimum Allocation is the most accurate, followed by Proportional, and Simple Random Sampling is the least accurate.</p>
-                
-                <p><strong>Step-by-Step Proof:</strong></p>
+                <p><strong>Theorem 3.8.1:</strong> If finite population correction (f.p.c.) is ignored, show that:</p>
                 <div class="derivation-block">
-                    <p>1. We use a famous math identity (like ANOVA) that breaks down the total population variation (\( S^2 \)) into two parts: variation <strong>within</strong> groups and variation <strong>between</strong> groups:</p>
-                    $$ (N-1)S^2 = \sum (N_i - 1)S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 $$
-                    <p>2. For large populations, we can simplify this to:</p>
-                    $$ NS^2 \approx \sum N_i S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 $$
-                    <p>3. Dividing both sides by \( nN \), we get the relation for variances:</p>
-                    $$ \frac{S^2}{n} = \frac{1}{n}\sum W_i S_i^2 + \frac{1}{n}\sum W_i(\bar{Y}_i - \bar{Y})^2 $$
-                    <p>4. Looking closely, the first term on the right is exactly \( V_{prop} \). So:</p>
-                    $$ V_{SR} = V_{prop} + \frac{1}{n}\sum W_i(\bar{Y}_i - \bar{Y})^2 \quad (3.8.2) $$
-                    <div class="explanation">Teacher's logic: Since the second term is a square (it can't be negative), \( V_{SR} \) is always greater than or equal to \( V_{prop} \). Proportional allocation is better because it removes the "between-group" variation from our error.</div>
-                    
-                    <p>5. Now, comparing Proportional and Optimum:</p>
-                    $$ V_{prop} - V_{opt} = \frac{1}{n} \sum W_i S_i^2 - \frac{1}{n} (\sum W_i S_i)^2 $$
-                    <p>This is actually the mathematical formula for the variance of \( S_i \) values:</p>
-                    $$ = \frac{1}{n} \sum W_i(S_i - \bar{S})^2 \quad (3.8.3) $$
-                    <div class="explanation">Logic: This term is also a square and always positive. So, \( V_{opt} \) is always even smaller than \( V_{prop} \).</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st})_{opt} \le V(\bar{y}_{st})_{prop} \le V(\bar{y}_n)_{SRS} \)</div>
                 </div>
 
-                
-                <h3>Example 3.1: Revenue of Tech Companies</h3>
-                <p>Let's look at 2000 tech companies divided into 7 groups by size. Look at how the accuracy improves:</p>
-                <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
-                    <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Stratum</th><th>Size (\( N_i \))</th><th>Avg Revenue (\( \bar{Y}_i \))</th><th>SD (\( S_i \))</th><th>Weight (\( W_i \))</th><th>\( W_i S_i \)</th><th>\( n_i \) (Prop)</th><th>\( n_i \) (Opt)</th></tr>
-                    <tr><td>1</td><td>394</td><td>5.4</td><td>8.3</td><td>0.1970</td><td>1.64</td><td>40</td><td>19</td></tr>
-                    <tr><td>2</td><td>461</td><td>16.3</td><td>13.3</td><td>0.2305</td><td>3.07</td><td>46</td><td>36</td></tr>
-                    <tr><td>3</td><td>381</td><td>24.3</td><td>15.1</td><td>0.1905</td><td>2.88</td><td>38</td><td>34</td></tr>
-                    <tr><td>4</td><td>334</td><td>34.5</td><td>19.8</td><td>0.1670</td><td>3.31</td><td>33</td><td>39</td></tr>
-                    <tr><td>5</td><td>169</td><td>42.1</td><td>24.5</td><td>0.0845</td><td>2.07</td><td>17</td><td>24</td></tr>
-                    <tr><td>6</td><td>113</td><td>50.1</td><td>26.0</td><td>0.0565</td><td>1.47</td><td>11</td><td>17</td></tr>
-                    <tr><td>7</td><td>148</td><td>63.8</td><td>35.2</td><td>0.0740</td><td>2.61</td><td>15</td><td>31</td></tr>
-                    <tr style="font-weight: bold; background: #f9f9f9;"><td>Total</td><td>2000</td><td>-</td><td>-</td><td>1.0000</td><td>17.05</td><td>200</td><td>200</td></tr>
-                </table>
+                <p><strong>Proof:</strong></p>
+                <p>We know the formulas for these variances:</p>
                 <div class="derivation-block">
-                    <p>1. <strong>Simple Random Sampling:</strong> Variance = 3.0420</p>
-                    <p>2. <strong>Proportional Allocation:</strong> Variance = 1.5492 (Nearly 2 times better!)</p>
-                    <p>3. <strong>Optimum Allocation:</strong> Variance = 1.2813 (The best result!)</p>
-                    <div class="explanation">Summary: By using stratified sampling, we gained nearly 237% more precision compared to simple random sampling.</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st})_{prop} = \sum_{i=1}^k \frac{W_i S_i^2}{n} - \sum_{i=1}^k \frac{W_i S_i^2}{N} \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st})_{opt} = \frac{(\sum W_i S_i)^2}{n} - \sum_{i=1}^k \frac{W_i S_i^2}{N} \)</div>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_n)_{SRS} = \frac{S^2}{n} - \frac{S^2}{N} \)</div>
                 </div>
+
+                <p>Ignoring the f.p.c. (the \( 1/N \) terms), we get:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V_{prop} = \frac{1}{n} \sum W_i S_i^2 \)</div>
+                    <div style="padding: 5px 0;">\( V_{opt} = \frac{1}{n} (\sum W_i S_i)^2 \)</div>
+                    <div style="padding: 5px 0;">\( V_{SRS} = \frac{1}{n} S^2 \)</div>
+                </div>
+
+                <p>Now, let's compare \( V_{prop} \) and \( V_{opt} \):</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V_{prop} - V_{opt} = \frac{1}{n} \left[ \sum W_i S_i^2 - (\sum W_i S_i)^2 \right] \)</div>
+                </div>
+                <p>Let \( \bar{S} = \sum W_i S_i \) (the weighted mean of stratum standard deviations).</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V_{prop} - V_{opt} = \frac{1}{n} \sum W_i (S_i - \bar{S})^2 \)</div>
+                </div>
+                <p>Since a square term is always positive or zero, this is a positive quantity. So, \( V_{opt} \le V_{prop} \).</p>
+
+                <p>Next, let's compare \( V_{SRS} \) and \( V_{prop} \). We know the relation between overall variance and stratum variance:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( (N-1) S^2 = \sum \sum (y_{ij} - \bar{Y})^2 = \sum_{i=1}^k \sum_{j=1}^{N_i} ((y_{ij} - \bar{Y}_i) + (\bar{Y}_i - \bar{Y}))^2 \)</div>
+                    <div style="padding: 5px 0;">\( (N-1) S^2 = \sum_{i=1}^k (N_i - 1) S_i^2 + \sum_{i=1}^k N_i (\bar{Y}_i - \bar{Y})^2 \)</div>
+                </div>
+                <p>Dividing by \( N \) (assuming \( N-1 \approx N \) and \( N_i-1 \approx N_i \) for large populations):</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( S^2 \approx \sum W_i S_i^2 + \sum W_i (\bar{Y}_i - \bar{Y})^2 \)</div>
+                </div>
+                <p>Substituting this into \( V_{SRS} \):</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V_{SRS} = \frac{1}{n} \left[ \sum W_i S_i^2 + \sum W_i (\bar{Y}_i - \bar{Y})^2 \right] \)</div>
+                    <div style="padding: 5px 0;">\( V_{SRS} = V_{prop} + \frac{1}{n} \sum W_i (\bar{Y}_i - \bar{Y})^2 \)</div>
+                </div>
+                <p>Since the second term is positive, \( V_{prop} \le V_{SRS} \).</p>
+
+                <p>Combining these two results, we have:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V_{opt} \le V_{prop} \le V_{SRS} \)</div>
+                </div>
+
+                <p><strong>Conclusion:</strong> The larger the difference between the stratum means (\( \bar{Y}_i \)) and the overall mean (\( \bar{Y} \)), the greater the gain in precision with proportional allocation over simple random sampling. Furthermore, Neyman's optimum allocation gives better results than proportional allocation.</p>
+
+                <p><strong>Example 3.1:</strong></p>
+                <p>2000 cultivators' holdings in Uttar Pradesh (India) were stratified according to their sizes.<br>
+                The number of holdings (\( N_i \)), mean area under wheat per holding (\( \bar{Y}_i \)) and s.d. of area under wheat per holding (\( S_i \)) are given for 7 strata.<br>
+                For a sample of 200 farms, we need to compute the sample size in each stratum under proportional and optimum allocations and compare the sampling variance.</p>
+                <p><em>Calculations Summary:</em><br>
+                \( N = 2000 \), \( n = 200 \).<br>
+                - Proportional Allocation: \( n_i = n (N_i/N) = 200 (N_i/2000) = 0.1 N_i \). Sample sizes obtained are 40, 46, 38, 33, 17, 11, and 15 respectively. The variance \( V(\bar{y}_{st})_{prop} \) is calculated by ignoring fpc.<br>
+                - Optimum Allocation: \( n_i = n \frac{N_i S_i}{\sum N_i S_i} \). Sample sizes obtained are 19, 36, 34, 39, 24, 17, and 31. The variance \( V(\bar{y}_{st})_{opt} \) is calculated by ignoring fpc.<br>
+                - Simple Random Sampling: \( V(\bar{y}_{n})_{SRS} \) is also calculated.<br>
+                The relative precision shows that Optimum allocation is much more efficient than Proportional, which is in turn more efficient than SRS.</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.8 Relative Precision of Stratified Random Sampling with Simple Random Sampling</h2>
-                <p>हम simple random sampling, proportional allocation, और optimum allocation के तहत सामान्य estimators का तुलनात्मक अध्ययन (comparative study) करेंगे। Variances को क्रमशः \( V_{SR} \), \( V_{prop} \) और \( V_{opt} \) द्वारा दर्शाया गया है।</p>
+                <h2>3.8 RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
+                <p>Is section mein hum dekhte hain ki SRS (jismein koi stratification nahi hota), Proportional Allocation, aur Optimum Allocation mein sabse achha (precise) kaun hai. Hum inke variances \( V(\bar{y}_n)_{SRS} \), \( V(\bar{y}_{st})_{prop} \), aur \( V(\bar{y}_{st})_{opt} \) ko compare karte hain.</p>
 
-                <h3><strong>Theorem 3.8.1:</strong></h3>
-                <p>यदि fpc को अनदेखा किया जाता है, तो गणितीय रूप से दिखाएं कि:</p>
-                <div class="derivation-block">$$ V_{opt} \leq V_{prop} \leq V_{SR} \quad (3.8.1) $$</div>
-                <p><em>Proof:</em></p>
+                <p><strong>Theorem 3.8.1:</strong> Agar hum finite population correction (f.p.c.) ko ignore karein, toh prove karo ki:</p>
                 <div class="derivation-block">
-                    <p>जब fpc को पूरी तरह से अनदेखा कर दिया जाता है, तो हमारे पास है:</p>
-                    $$ V_{SR} = \frac{S^2}{n}, \quad V_{prop} = \frac{\sum W_i S_i^2}{n}, \quad V_{opt} = \frac{(\sum W_i S_i)^2}{n} $$
-                    <p>Total sum of squares के मानक बीजीय अपघटन (algebraic decomposition) से:</p>
-                    $$ (N-1)S^2 = \sum (N_i - 1)S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 $$
-                    <p>चूंकि \( 1/N_i \) और \( 1/N \) नगण्य (negligible) हैं, \( NS^2 \approx \sum N_i S_i^2 + \sum N_i(\bar{Y}_i - \bar{Y})^2 \)।</p>
-                    <p>इसलिए, \( nN \) से भाग देने पर:</p>
-                    $$ V_{SR} = \frac{S^2}{n} = \frac{1}{n}\sum W_i S_i^2 + \frac{1}{n}\sum W_i(\bar{Y}_i - \bar{Y})^2 $$
-                    $$ = V_{prop} + \frac{\sum W_i(\bar{Y}_i - \bar{Y})^2}{n} \quad (3.8.2) $$
-                    <div class="explanation">\( \because \) दूसरा term squares का sum है, यह पूरी तरह से positive है। इस प्रकार \( V_{SR} - V_{prop} \geq 0 \), जिसका अर्थ है कि proportional allocation गणितीय रूप से बेहतर है।</div>
-                    
-                    <p>इसी तरह, optimum vs proportional के लिए:</p>
-                    $$ V_{prop} - V_{opt} = \frac{\sum W_i S_i^2}{n} - \frac{(\sum W_i S_i)^2}{n} $$
-                    $$ = \frac{1}{n} \sum W_i(S_i - \bar{S})^2 \quad (3.8.3) $$
-                    <div class="explanation">\( \because \) यह उनके weighted mean \( \bar{S} = \sum W_i S_i \) के चारों ओर stratum standard deviations \( S_i \) का गणितीय variance है। यह पूरी तरह से positive है।</div>
-                    <p>इसलिए, \( V_{opt} \leq V_{prop} \leq V_{SR} \)।</p>
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{st})_{opt} \le V(\bar{y}_{st})_{prop} \le V(\bar{y}_n)_{SRS} \)</div>
                 </div>
 
-                
-                <h3>उदाहरण 3.1 (Example 3.1)</h3>
-                <p>2000 टेक कंपनियों (tech companies) को उनके आकार (कर्मचारियों की संख्या) के अनुसार stratify किया गया था। कंपनियों की संख्या (\( N_i \)), लाखों में औसत वार्षिक राजस्व (mean annual revenue \( \bar{Y}_i \)), और s.d. (\( S_i \)) को गणितीय रूप से नीचे समूहीकृत (grouped) किया गया है (अंग्रेजी अनुभाग में तालिका देखें)।</p>
-                <div class="derivation-block">
-                    <p><strong>Proportional Allocation:</strong> \( V(\bar{y}_{prop})_{wor} = \frac{N-n}{nN}\sum W_i S_i^2 = 1.5492 \)</p>
-                    <p><strong>Optimum Allocation:</strong> \( V(\bar{y}_{opt})_{wor} = \frac{(\sum W_i S_i)^2}{n} - \frac{\sum W_i S_i^2}{N} = 1.2813 \)</p>
-                    <p><strong>Simple Random Sampling:</strong> \( V(\bar{y}_{SR})_{wor} = 3.0420 \)</p>
-                    <p>Proportional की relative precision = \( 3.0420 / 1.5492 = 1.9636 \)</p>
-                    <p>Optimum की relative precision = \( 3.0420 / 1.2813 = 2.3742 \)</p>
-                    <div class="explanation">\( \because \) proportional और optimum allocations unstratified simple random sampling की तुलना में variance को काफी कम कर देते हैं।</div>
-                </div>
+                <p><strong>Proof:</strong></p>
+                <p>Hum teeno ke formulas likhte hain bina f.p.c. ke. <br>
+                Pehle \( V_{prop} \) aur \( V_{opt} \) ko subtract karte hain. Humein \( \frac{1}{n} \sum W_i (S_i - \bar{S})^2 \) milta hai, jo ki ek square term hone ki wajah se positive hota hai. Iska matlab Optimum allocation hamesha Proportional se behtar ya barabar hoga (\( V_{opt} \le V_{prop} \)).</p>
+
+                <p>Fir hum total variance \( S^2 \) ka relation strata variance \( S_i^2 \) aur strata means ke difference \( (\bar{Y}_i - \bar{Y})^2 \) mein split karte hain (jise Analysis of Variance ya ANOVA jaisa samajh sakte hain). Isse pata chalta hai ki \( V_{SRS} \) actually \( V_{prop} \) aur strata ke beech ke means ke difference ka sum hai. Isliye \( V_{prop} \le V_{SRS} \).<br>
+                Dono results ko mila kar prove ho jata hai ki: \( V_{opt} \le V_{prop} \le V_{SRS} \).</p>
+
+                <p><strong>Nishkarsh (Conclusion):</strong> Jitna zyada alag-alag strata ke means honge, proportional allocation utna hi achha perform karega SRS ke comparison mein. Aur Optimum allocation sabse behtar precision deta hai.<br>
+                Example 3.1 mein UP ke 2000 kisaano ka data diya gaya hai jisse ye mathematically prove kiya gaya ki Optimum allocation ka variance sabse kam aata hai.</p>
             </div>
         </section>
 
         <section id="sec3-9" class="section-card">
+            <div class="english-content">
+                <h2>3.9 ESTIMATION OF GAIN IN PRECISION DUE TO STRATIFICATION</h2>
+                <p>In comparing the precision, we assumed the population values (\( S_i^2 \), \( \bar{Y}_i \)) were known. But what if we only have a stratified sample and want to estimate the gain in precision due to stratification?</p>
+                <p>An unbiased estimator of \( V(\bar{y}_{st}) \) is \( v(\bar{y}_{st}) = \sum W_i^2 \left(\frac{1}{n_i} - \frac{1}{N_i}\right) s_i^2 \).</p>
+                <p>To compare, we need an unbiased estimate of \( V(\bar{y}_{n})_{SRS} \) based on the stratified sample.</p>
+                <p>An unbiased estimator of \( V_{SRS} \) based on a stratified sample is given by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \widehat{V}(\bar{y}_{n})_{SRS} = \frac{N-n}{nN} \left[ \sum_{i=1}^k W_i s_i^2 + \sum_{i=1}^k W_i (\bar{y}_i - \bar{y}_{st})^2 - \sum_{i=1}^k W_i (1-W_i) \frac{s_i^2}{n_i} \right] \)</div>
+                </div>
 
-              <div class="english-content">
-                  <h2>3.9 Estimation of Gain in Precision due to Stratification</h2>
-                  <p>After finishing a survey, you might want to know: <strong>"How much accuracy did I really gain by making these groups?"</strong> Since you only have a stratified sample, you have to estimate what the variance <em>would have been</em> if you had used simple random sampling.</p>
-                  
-                  <p>The estimated variance for simple random sampling (\( v(\bar{y}_{SR}) \)) can be calculated from your stratified data using this formula:</p>
-                  <div class="derivation-block">
-                      $$ v(\bar{y}_{SR}) = \frac{N-n}{n(N-1)}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 - \frac{1}{N}\sum \frac{W_i(1-W_i)s_i^2}{n_i} \right] \quad (3.9.1) $$
-                  </div>
-                  <p>Then, the percentage gain is simply:</p>
-                  <div class="derivation-block">
-                      $$ \text{Gain} = \frac{v(\bar{y}_{SR}) - v(\bar{y}_{st})}{v(\bar{y}_{st})} \times 100\% \quad (3.9.2) $$
-                  </div>
+                <p>The estimate of the relative gain in precision due to stratification is obtained by:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( \text{Relative Gain} = \frac{\widehat{V}(\bar{y}_n)_{SRS} - \widehat{V}(\bar{y}_{st})}{\widehat{V}(\bar{y}_{st})} \)</div>
+                </div>
+                <p>If the sample allocation is large enough in each stratum (\( n_i \ge 50 \)), the last term in the bracket is small and the relation reduces to a simpler form.</p>
 
-                  <h3 style="margin-top: 40px;">Example 3.3: Solar Panel Districts</h3>
-                  <p>A survey was done on solar panels in 3 different geographical groups. Here are the results:</p>
-                  <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px;">
-                      <tr style="background: #eee; border-bottom: 1px solid var(--border);"><th>Stratum</th><th>Total Districts (\( N_i \))</th><th>Sampled (\( n_i \))</th><th>Solar Panels Found (\( y_{ij} \))</th></tr>
-                      <tr><td>1</td><td>441</td><td>11</td><td>41, 116, 19, 15, 144, 159, 212, 57, 28, 119, 76</td></tr>
-                      <tr><td>2</td><td>405</td><td>12</td><td>39, 70, 38, 37, 161, 38, 27, 119, 36, 128, 30, 208</td></tr>
-                      <tr><td>3</td><td>103</td><td>7</td><td>252, 385, 192, 296, 115, 159, 120</td></tr>
-                  </table>
-                  <div class="derivation-block">
-                      <p>1. <strong>Total Estimate:</strong> \( \widehat{Y}_{st} = \sum N_i \bar{y}_i = 87,376 \) solar panels.</p>
-                      <p>2. <strong>Stratified Variance:</strong> \( v(\widehat{Y}_{st}) = 153,491,126 \).</p>
-                      <p>3. <strong>Simple Random Var (Estimated):</strong> \( v(\widehat{Y}_{SR}) \approx 239,026,380 \).</p>
-                      <p>4. <strong>Relative Gain:</strong> \( \frac{239 - 153}{153} \approx 55.72\% \).</p>
-                      <div class="explanation">Teacher's Note: Making these geographical groups improved the survey accuracy by more than 55%!</div>
-                  </div>
-              </div>
+                <p><strong>Example 3.3:</strong> The number of pepper standards for selected villages in three strata of Trivandrum zone was recorded. By calculating \( \widehat{V}(\hat{Y}_{st}) \) and \( \widehat{V}(\hat{Y}_{SRS}) \) using the above formula, the percentage gain in precision due to stratification was calculated.</p>
+            </div>
 
-
-              <div class="hinglish-content">
-                  <h2>3.9 Estimation of Gain in Precision due to Stratification (स्तरीकरण के कारण परिशुद्धता में लाभ का अनुमान)</h2>
-                  <p>कभी-कभी एक सर्वेक्षण (survey) से गणितीय रूप से यह जांचना दिलचस्प होता है कि stratification का तरीका कितना उपयोगी रहा है। जो उपलब्ध है वह केवल एक stratified sample है, और सटीक समस्या stratification के कारण precision (परिशुद्धता) में लाभ का अनुमान लगाना है।</p>
-                  <p>सख्ती से एक stratified sample पर आधारित \( V(\bar{y}_{SR}) \) का एक unbiased estimator इस प्रकार दिया गया है:</p>
-                  <div class="derivation-block">
-                      $$ v(\bar{y}_{SR}) = \frac{N-n}{n(N-1)}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 - \frac{1}{N}\sum W_i(1-W_i)s_i^2/n_i \right] \quad (3.9.1) $$
-                  </div>
-                  <p>इस प्रकार stratification के कारण precision में relative gain का अनुमान तार्किक (logically) रूप से प्राप्त किया जाता है:</p>
-                  <div class="derivation-block">
-                      $$ \frac{v(\bar{y}_{SR}) - v(\bar{y}_{st})}{v(\bar{y}_{st})} \quad (3.9.2) $$
-                  </div>
-                  <p>यदि sample allocation प्रत्येक stratum में पर्याप्त रूप से बड़ा है (यानी, \( n_i > 50 \)), तो संबंध (3.9.1) सरलता से (gracefully) घटकर हो जाता है:</p>
-                  <div class="derivation-block">
-                      $$ V(\bar{y}_{SR}) = \frac{N-n}{nN}\left[ \sum W_i s_i^2 + \sum W_i \bar{y}_i^2 - \left(\sum W_i \bar{y}_i\right)^2 \right] \quad (3.9.3) $$
-                  </div>
-
-                  <h3 style="margin-top: 40px;">उदाहरण 3.3 (Example 3.3)</h3>
-                  <p>एक विशिष्ट राज्य के तीन भौगोलिक (geographical) strata में चयनित जिलों में स्थापित high-capacity solar panels की संख्या नीचे दी गई है (अंग्रेजी अनुभाग में तालिका देखें):</p>
-                  <p>गणितीय रूप से solar panels की कुल संख्या के साथ-साथ इसकी सटीक standard error का अनुमान लगाएँ। इसके अलावा, विशुद्ध रूप से stratification के कारण precision में लाभ (gain in precision) का अनुमान लगाएँ।</p>
-                  <div class="derivation-block">
-                      <p>Solar panels की कुल संख्या का एक unbiased estimate सीधे इस प्रकार दिया जाता है:</p>
-                      $$ \widehat{Y}_{st} = \sum N_i \bar{y}_i = 87,376.54 $$
-                      <div class="explanation">\( \because \) sample means के weighted sum की गणना करने से कुल population का अनुमान लगता है।</div>
-                      <p>\( \widehat{Y}_{st} \) के variance का अनुमान scaled व्यक्तिगत variances को जोड़कर प्राप्त किया जाता है:</p>
-                      $$ v(\widehat{Y}_{st}) = \sum N_i(N_i - n_i)\frac{s_i^2}{n_i} = 153,491,126 $$
-                      <p>इस प्रकार, estimated standard error \( \sqrt{153,491,126} \approx 12,389 \) है।</p>
-                      <p>Precision में लाभ की गणना करने के लिए, हम नगण्य (negligible) सुधार पद (correction term) को अनदेखा करते हुए collapsed सूत्र (3.9.1) का उपयोग करके \( v(\widehat{Y}_{SR}) \) की गणना करते हैं:</p>
-                      $$ v(\widehat{Y}_{SR}) \approx \frac{N^2}{n}\left[ \sum W_i s_i^2 + \sum W_i(\bar{y}_i - \bar{y}_{st})^2 \right] = 239,026,380 $$
-                      <p>Precision में Relative gain = \( \frac{239,026,380 - 153,491,126}{153,491,126} \times 100 \approx 55.72\% \)</p>
-                      <div class="explanation">\( \because \) variance में अंतर को stratified variance से भाग देने पर सटीक percentage gain प्राप्त होता है।</div>
-                  </div>
-              </div>
-
-</section>
+            <div class="hinglish-content">
+                <h2>3.9 ESTIMATION OF GAIN IN PRECISION DUE TO STRATIFICATION</h2>
+                <p>Abhi tak humne maan liya tha ki population ke \( S_i^2 \) aur \( \bar{Y}_i \) humein pata hain. Lekin survey ke baad agar humein check karna ho ki stratification se kitna fayda (gain) hua, toh kaise karenge?</p>
+                <p>Stratified variance ka estimate toh humein pata hai \( v(\bar{y}_{st}) \). Par agar humne strata na banaye hote aur SRS kiya hota, toh uska variance kya aata, uska estimate humein usi stratified sample se nikalna padta hai.</p>
+                <p>Iska ek complex formula hota hai jo upar diya gaya hai.</p>
+                <p>Relative gain nikalne ke liye hum dono variance estimates ka difference nikal kar usko stratified variance estimate se divide kar dete hain.</p>
+                <p>Example 3.3 mein Trivandrum ke pepper standards ke survey data se calculate karke dikhaya gaya hai ki kaise strata banane se precision percentage mein gain aata hai.</p>
+            </div>
+        </section>
 
     
         <section id="sec3-10" class="section-card">
             <div class="english-content">
-                <h2>3.10 Formation of Strata</h2>
-                <p>How do we decide where to "cut" the population to form groups? If we have a variable like income, we need to pick cut-off points \( y_1, y_2, \dots \). Our goal is to make the groups as homogeneous as possible inside.</p>
-                <p>The <strong>Optimum Stratification Rule</strong> says that for a given number of groups, we should pick cut-off points such that:</p>
+                <h2>3.10 FORMATION OF STRATA</h2>
+                <p>How do we demarcate the boundaries of strata if the study variable is continuous? The goal is to choose demarcation points \( y_1, y_2, ..., y_{k-1} \) to minimize \( V(\bar{y}_{st}) \).</p>
+                <p>Dalenius showed that with proportional allocation, the optimal points are given by:</p>
                 <div class="derivation-block">
-                    $$ y_i = \frac{\bar{Y}_i + \bar{Y}_{i+1}}{2} \quad (3.10.2) $$
-                    <div class="explanation">This means the boundary point should be exactly halfway between the averages of the two groups it separates.</div>
+                    <div style="padding: 5px 0;">\( y_h = \frac{\bar{Y}_h + \bar{Y}_{h+1}}{2} \)</div>
                 </div>
-                
-                <h3>Practical Rules for Making Groups</h3>
-                <p>Since finding the perfect points is hard, experts have given some easy rules:</p>
-                <ol type="i">
-                    <li><strong>Dalenius and Gurney Rule:</strong> Try to make the product of group size and variation (\( W_i S_i \)) the same for all groups.</li>
-                    <li><strong>Mahalanobis Rule:</strong> Make the group totals (\( W_i \bar{Y}_i \)) equal.</li>
-                    <li><strong>Ekman Rule:</strong> Make the product of weight and range (\( W_i R_i \)) equal.</li>
-                    <li><strong>Cumulative Square Root Rule:</strong> This is a very common one by Dalenius and Hodges. You take the square root of the frequencies and divide them into equal intervals.</li>
+                <p>This means the boundary should be the average of the means of the two strata it separates.</p>
+                <p>However, since applying this is computationally heavy, approximate rules are used:</p>
+                <ol>
+                    <li><strong>Equalization of \( W_h S_h \):</strong> Dalenius and Gurney (1951) suggested making strata such that \( W_h S_h \) is equal for all strata.</li>
+                    <li><strong>Equalization of strata totals:</strong> Mahalanobis (1952) suggested making strata with equal aggregate sizes \( N_h \bar{Y}_h \).</li>
+                    <li><strong>Equalization of \( N_h \times \text{range} \):</strong> Ekman (1959) suggested forming strata where the product of the number of units and the range of the variate is equal.</li>
+                    <li><strong>Equalization of cumulatives of \( \sqrt{f(y)} \):</strong> Dalenius and Hodges (1959) suggested equalizing the cumulative of the square root of the frequency function.</li>
                 </ol>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.10 Formation of Strata (स्तरों का निर्माण)</h2>
-                <p>Strata के निर्माण की समस्या पर Dalenius, Gurney, और Mahalanobis जैसे विशेषज्ञों द्वारा बड़े पैमाने पर चर्चा की गई है। \( k \) strata बनाने के लिए, अध्ययन के तहत मुख्य चर (variates) की सीमा को \( y_1, y_2, \ldots, y_{k-1} \) बिंदुओं पर सख्ती से विभाजित किया जाता है ताकि \( a \leq y_1 < y_2 < \cdots < y_{k-1} < b \)। \( \bar{y}_{st} \) का variance (proportional allocation के साथ) है:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \frac{1}{n}\sum W_i S_i^2 - \frac{1}{N}\sum W_i S_i^2 \quad (3.10.1) $$
-                </div>
-                <p>Stratification का मुख्य उद्देश्य precision को गणितीय रूप से बढ़ाना है, इसलिए \( V(\bar{y}_{st}) \) को कम किया जाना चाहिए। यह मानते हुए कि \( y_i \) को छोड़कर सभी बिंदु निश्चित हैं, इष्टतम (optimum) stratification बिंदु वहां पाए जाते हैं जहां:</p>
-                <div class="derivation-block">
-                    $$ y_i = \frac{\bar{Y}_i + \bar{Y}_{i+1}}{2} \quad (3.10.2) $$
-                    <div class="explanation">\( \because \) दो strata को अलग करने वाला सबसे अच्छा बिंदु \( y_i \) ठीक उनके दो means का औसत (average) है।</div>
-                </div>
-                
-                <h3>व्यावहारिक अनुप्रयोग के लिए अनुमानित समाधान (Approximate Solutions for Practical Application)</h3>
-                <p>चूंकि सटीक पुनरावृत्त प्रक्रियाएं (iterative procedures) कम्प्यूटेशनल रूप से भारी हैं, कुछ अनुमानित गणितीय नियमों का उपयोग किया जाता है:</p>
-                <ol type="i">
-                    <li><strong>\( W_i S_i \) का समीकरण (Equalization):</strong> Dalenius और Gurney (1951) द्वारा सुझाया गया।</li>
-                    <li><strong>Strata Totals का समीकरण:</strong> Mahalanobis (1952) द्वारा प्रस्तावित, बिल्कुल समान कुल आकार \( W_i \bar{Y}_i \) वाले strata बनाना।</li>
-                    <li><strong>\( W_i R_i \) का समीकरण:</strong> Ekman (1959) द्वारा सुझाया गया।</li>
-                    <li><strong>\( \sqrt{f(y)} \) के cumulatives का समीकरण:</strong> Dalenius और Hodges (1959) द्वारा सुझाया गया।</li>
-                </ol>
-            </div>
-        </section>
-
-            <div class="hinglish-content">
-                <h2>3.10 Formation of Strata (स्तरों का निर्माण)</h2>
-                <p>Strata के निर्माण की समस्या पर Dalenius, Gurney, और Mahalanobis जैसे विशेषज्ञों द्वारा बड़े पैमाने पर चर्चा की गई है। \( k \) strata बनाने के लिए, अध्ययन के तहत मुख्य चर (variates) की सीमा को \( y_1, y_2, \ldots, y_{k-1} \) बिंदुओं पर सख्ती से विभाजित किया जाता है ताकि \( a \leq y_1 < y_2 < \cdots < y_{k-1} < b \)। \( \bar{y}_{st} \) का variance (proportional allocation के साथ) है:</p>
-                <div class="derivation-block">
-                    $$ V(\bar{y}_{st}) = \frac{1}{n}\sum W_i S_i^2 - \frac{1}{N}\sum W_i S_i^2 \quad (3.10.1) $$
-                </div>
-                <p>Stratification का मुख्य उद्देश्य precision को गणितीय रूप से बढ़ाना है, इसलिए \( V(\bar{y}_{st}) \) को कम किया जाना चाहिए। यह मानते हुए कि \( y_i \) को छोड़कर सभी बिंदु निश्चित हैं, इष्टतम (optimum) stratification बिंदु वहां पाए जाते हैं जहां:</p>
-                <div class="derivation-block">
-                    $$ y_i = \frac{\bar{Y}_i + \bar{Y}_{i+1}}{2} \quad (3.10.2) $$
-                    <div class="explanation">\( \because \) दो strata को अलग करने वाला सबसे अच्छा बिंदु \( y_i \) ठीक उनके दो means का औसत (average) है।</div>
-                </div>
-                
-                <h3>व्यावहारिक अनुप्रयोग के लिए अनुमानित समाधान (Approximate Solutions for Practical Application)</h3>
-                <p>चूंकि सटीक पुनरावृत्त प्रक्रियाएं (iterative procedures) कम्प्यूटेशनल रूप से भारी हैं, कुछ अनुमानित गणितीय नियमों का उपयोग किया जाता है:</p>
-                <ol type="i">
-                    <li><strong>\( W_i S_i \) का समीकरण (Equalization):</strong> Dalenius और Gurney (1951) द्वारा सुझाया गया।</li>
-                    <li><strong>Strata Totals का समीकरण:</strong> Mahalanobis (1952) द्वारा प्रस्तावित, बिल्कुल समान कुल आकार \( W_i \bar{Y}_i \) वाले strata बनाना।</li>
-                    <li><strong>\( W_i R_i \) का समीकरण:</strong> Ekman (1959) द्वारा सुझाया गया।</li>
-                    <li><strong>\( \sqrt{f(y)} \) के cumulatives का समीकरण:</strong> Dalenius और Hodges (1959) द्वारा सुझाया गया।</li>
+                <h2>3.10 FORMATION OF STRATA</h2>
+                <p>Agar hamara data continuous hai (jaise income ya age), toh hum strata ki boundaries kahan banayein? Hamara maqsad hai ki \( V(\bar{y}_{st}) \) minimize ho.</p>
+                <p>Dalenius ne prove kiya tha ki boundary points \( y_h \) un do strata ke means ka average hona chahiye jinko wo separate kar raha hai.</p>
+                <p>Lekin practical life mein ise calculate karna bahut mushkil hai. Isliye kuch aasan niyam (rules) banaye gaye:</p>
+                <ol>
+                    <li><strong>\( W_h S_h \) ko equal rakhna:</strong> Dalenius aur Gurney ka method.</li>
+                    <li><strong>Strata totals barabar karna:</strong> Mahalanobis ka rule jismein hum har stratum ka total size equal rakhte hain.</li>
+                    <li><strong>Ekman Rule:</strong> Jismein \( N_h \) aur stratum ki range ke product ko barabar rakha jata hai.</li>
+                    <li><strong>\( \sqrt{f(y)} \) ka rule:</strong> Dalenius aur Hodges ka best method, jismein frequency ki square root ko cumulate karke barabar hisso mein baanta jata hai.</li>
                 </ol>
             </div>
         </section>
 
         <section id="sec3-11" class="section-card">
             <div class="english-content">
-                <h2>3.11 How Many Strata Should We Make?</h2>
-                <p>You might think: <strong>"If making groups (strata) is good, why not make 100 or 1000 groups?"</strong> Well, while more groups usually mean more accuracy, they also cost more money and time. Experts have found that after about 6 groups, you don't gain much extra accuracy for the extra effort.</p>
-                <p>Dalenius (1953) suggested a simple relationship between the number of groups (\( k \)) and the variance:</p>
+                <h2>3.11 DETERMINATION OF NUMBER OF STRATA</h2>
+                <p>As we increase the number of strata \( k \), the variance decreases. Dalenius conjectured that the variance of an estimator with \( k \) strata compared to infinite strata is approximately:</p>
                 <div class="derivation-block">
-                    $$ \frac{V_k(\bar{y}_{st})}{V_{k-1}(\bar{y}_{st})} = \frac{(k-1)^2}{k^2} \quad (3.11.1) $$
-                    <div class="explanation">Teacher's Note: This means if you go from 1 to 2 groups, your error drops significantly. But if you go from 10 to 11, the drop is very tiny.</div>
+                    <div style="padding: 5px 0;">\( \frac{V(\bar{y}_k)}{V(\bar{y}_\infty)} = \frac{k^2}{k^2 - 1} \)</div>
                 </div>
-                <p>If we have a cost function \( C = a + k c_1 + n c_2 \) (where \( k \) is the number of groups and \( n \) is the sample size), we can mathematically find the "sweet spot" (optimum number):</p>
-                <div class="derivation-block">
-                    $$ k_{opt} = \sqrt{\frac{2(C-a)}{3c_1}} \quad \text{and} \quad n_{opt} = \frac{C-a}{3c_2} \quad (3.11.4) $$
-                </div>
+                <p>However, increasing the number of strata beyond a certain point is not profitable because the survey cost increases.</p>
+                <p>The cost function is \( C = C_0 + k C_1 + n C_2 \) where \( C_1 \) is cost per stratum and \( C_2 \) is cost per unit. The optimum number of strata balances the reduction in variance with the increase in cost. Sethi (1963) suggested that an increase in \( k \) beyond 6 would seldom be profitable.</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.11 Determination of Number of Strata (स्तरों की संख्या का निर्धारण)</h2>
-                <p>यह आसानी से दिखाया जा सकता है कि यदि strata की संख्या \( k \) बढ़ा दी जाए तो stratification गणितीय रूप से efficiency बढ़ाता है। हालाँकि, एक उचित संख्या से परे strata का गुणा करना लाभदायक नहीं है क्योंकि यह survey की लागत को प्रतिकूल रूप से प्रभावित करता है। Dalenius (1953) ने \( k \) बनाम \( k-1 \) optimum strata के लिए variances का अनुपात इस प्रकार अनुमानित किया:</p>
-                <div class="derivation-block">
-                    $$ \frac{V_k(\bar{y}_{st})}{V_{k-1}(\bar{y}_{st})} = \frac{(k-1)^2}{k^2} \quad (3.11.1) $$
-                </div>
-                <p>Strata की सटीक इष्टतम संख्या के निर्धारण के लिए, cost function \( C = a + k c_1 + n c_2 \) के रूप में परिभाषित किया गया है। इस cost function को देखते हुए variance को कम करने से \( k \) और \( n \) के optimum मान गणितीय रूप से प्राप्त होते हैं:</p>
-                <div class="derivation-block">
-                    $$ k = \sqrt{\frac{2(C-a)}{3c_1}}, \quad n = \frac{C-a}{3c_2} \quad (3.11.4) $$
-                </div>
+                <h2>3.11 DETERMINATION OF NUMBER OF STRATA</h2>
+                <p>Kitne strata banane chahiye? Jab hum strata ki sankhya \( k \) badhate hain, toh variance kam hota hai. Par iska matlab ye nahi ki hum 100 strata bana dein.</p>
+                <p>Strata badhane se survey ka kharcha bhi badhta hai. Cost ka formula hai \( C = C_0 + k C_1 + n C_2 \), jismein \( C_1 \) naye stratum banane ka kharcha hai.</p>
+                <p>Optimum strata ki sankhya wo hai jahan variance kam hone ka fayda, kharch badhne ke nuksan ko balance kare. Sethi ki research ke anusaar, 6 se zyada strata banana shayad hi kabhi faydemand hota hai.</p>
             </div>
         </section>
 
         <section id="sec3-12" class="section-card">
             <div class="english-content">
-                <h2>3.12 Method of Collapsed Strata</h2>
-                <p>Sometimes, we divide the population so much that we only pick <strong>one unit</strong> from each group (\( n_i = 1 \)). But there's a problem: to calculate variance, we need at least two units (\( n_i - 1 \) appears in the denominator, and \( 1-1 = 0 \), which breaks the math!).</p>
-                <p>To solve this, we use a trick called <strong>"Collapsing Strata"</strong>. We pair up two similar groups and pretend they were one bigger group to estimate the variance. This gives us a slightly higher variance than the truth (it "overestimates"), but it's a reliable way to get a safe result when we only have one sample per group.</p>
+                <h2>3.12 METHOD OF COLLAPSED STRATA</h2>
+                <p>Sometimes the population is so heterogeneous that to achieve better representation, stratification is carried to the point that only \( n_i = 1 \) (one unit) is selected from each stratum. In such cases, the variance \( s_i^2 \) cannot be estimated because \( n_i - 1 = 0 \).</p>
+                <p>To estimate the variance, strata are grouped in pairs whose means do not differ much. This is called the <strong>technique of collapsed strata</strong>.</p>
+                <p>By grouping pairs, we get a combined variance estimate. However, this quantity will overestimate the true variance \( V(\bar{y}_{st}) \). The overestimation is small if the paired strata are similar in size and characteristics.</p>
             </div>
 
             <div class="hinglish-content">
-                <h2>3.12 Method of Collapsed Strata (ढहे हुए स्तरों की विधि)</h2>
-                <p>कभी-कभी population इतनी heterogeneous (विषम) होती है कि stratification को उस चरम बिंदु तक ले जाया जाता है जहाँ प्रत्येक stratum से ठीक एक unit (\( n_i = 1 \)) का चयन किया जाता है। ऐसे मामलों में, उस stratum के भीतर variance का अनुमान लगाना गणितीय रूप से असंभव है क्योंकि \( n_i - 1 = 0 \)।</p>
-                <p>एक अनुमानित (approximate) अनुमान strata को तार्किक रूप से उन जोड़ियों (pairs) में समूहीकृत करके प्राप्त किया जाता है जिनके true means ज्यादा भिन्न नहीं होते हैं। इसे <strong>collapsed strata</strong> की तकनीक कहा जाता है। अनुमान के रूप में उपयोग की जाने वाली मात्रा true variance को overestimate करती है, लेकिन यह विश्वसनीय है यदि जोड़ी को इस तरह से व्यवस्थित किया जाता है कि paired strata आकार में समान हों।</p>
+                <h2>3.12 METHOD OF COLLAPSED STRATA</h2>
+                <p>Kabhi-kabhi population itni alag-alag (heterogeneous) hoti hai ki humein itne strata banane padte hain ki har stratum se hum sirf 1 hi unit (\( n_i = 1 \)) select kar paate hain. Aise case mein hum variance \( s_i^2 \) nahi nikal sakte kyuki formula mein \( n_i - 1 = 0 \) ho jayega.</p>
+                <p>Variance estimate karne ke liye, hum un strata ke jode (pairs) bana dete hain jo ek dusre se milte-julte hain. Ise <strong>Collapsed Strata</strong> method kehte hain.</p>
+                <p>Is jode (pair) se jo variance nikalta hai, wo asli variance se thoda zyada (overestimate) hota hai. Lekin agar humne achhe se pair banaye hain toh ye difference bahut kam hota hai.</p>
             </div>
         </section>
 
         
         <section id="sec3-13" class="section-card">
+            <div class="english-content">
+                <h2>3.13 POST-STRATIFICATION (STRATIFICATION AFTER SELECTION OF SAMPLE)</h2>
+                <p>Sometimes, we don't have the frame to stratify before sampling (e.g., we don't have lists of voters by age, but we know their ages after surveying them). We draw a simple random sample, and then classify the selected units into strata. This is called <strong>post-stratification</strong>.</p>
+                <p>The weighted mean \( \bar{y}_{pw} = \sum W_i \bar{y}_i \) is used.</p>
+                <p>Stephan (1945) showed that for large \( n \), the variance is:</p>
+                <div class="derivation-block">
+                    <div style="padding: 5px 0;">\( V(\bar{y}_{pw}) \approx \frac{1}{n} \sum W_i S_i^2 + \frac{1}{n^2} \sum (1 - W_i) S_i^2 \)</div>
+                </div>
+                <p>The first term is the variance with proportional allocation, and the second term is a small adjustment due to post-stratification. Hence, for large samples, post-stratification is almost as precise as proportional stratified sampling.</p>
+            </div>
 
-              <div class="english-content">
-                  <h2>3.13 Post-Stratification: Making Groups After the Survey</h2>
-                  <p>In regular stratified sampling, we make groups <em>before</em> picking the sample. But what if we don't know which group a person belongs to until we talk to them? (For example, age groups in a voter list). In <strong>Post-Stratification</strong>, we take a simple random sample first, and then categorize the units into groups later.</p>
-                  
-                  <p>Let's say we pick a sample of size \( n \), and \( n_i \) units happen to fall into group \( i \). Our estimate is still the weighted mean:</p>
-                  <div class="derivation-block">
-                      $$ \bar{y}_{ps} = \sum W_i \bar{y}_i \quad (3.13.1) $$
-                  </div>
-                  
-                  <p><strong>Proof of Accuracy (Large Sample Case):</strong></p>
-                  <div class="derivation-block">
-                      <p>1. In this method, the sample sizes \( n_i \) are random variables (we don't know them in advance). We use the conditional variance formula:</p>
-                      $$ V(\bar{y}_{ps}) = E[V(\bar{y}_{ps} | n_i)] + V[E(\bar{y}_{ps} | n_i)] $$
-                      <p>2. Since \( E(\bar{y}_{ps} | n_i) = \bar{Y} \) (a constant), the second term is zero. We only need to find the expectation of the internal variance:</p>
-                      $$ V(\bar{y}_{ps}) = E \left[ \sum \left( \frac{1}{n_i} - \frac{1}{N_i} \right)W_i^2 S_i^2 \right] $$
-                      <p>3. For large samples, Stephan (1945) proved that \( E(1/n_i) \approx \frac{1}{n W_i} + \frac{1 - W_i}{n^2 W_i^2} \). Plugging this in, we get:</p>
-                      $$ V(\bar{y}_{ps}) \approx \sum \frac{(1-f)W_i S_i^2}{n} + \frac{1}{n^2}\sum (1-W_i)S_i^2 \quad (3.13.6) $$
-                      <div class="explanation">Teacher's logic: The first part is exactly the same as proportional stratified sampling! The second part is just a tiny "penalty" because we didn't know the groups in advance. So, post-stratification is almost as good as regular stratified sampling.</div>
-                  </div>
-              </div>
-
-
-              <div class="hinglish-content">
-                  <h2>3.13 Post-Stratification (उत्तर-स्तरीकरण)</h2>
-                  <p>शास्त्रीय (classical) stratified sampling में, यह माना जाता है कि sampling frame में stratum sizes पहले से पूरी तरह से उपलब्ध हैं। हालाँकि, ऐसे उदाहरण हैं जहाँ यह संभव नहीं है। <strong>Post-stratification</strong> की तकनीक में sample के random चयन के <em>बाद</em> population और selected sample को दिए गए strata की संख्या में गणितीय रूप से वर्गीकृत करना शामिल है।</p>
-                  <p>मान लीजिए कि size \( N \) की population से size \( n \) का एक simple random sample निकाला जाता है। Sample निकाले जाने के बाद, \( n \) units को \( k \) strata में इस प्रकार वर्गीकृत किया जाता है कि \( i \)-th stratum में \( n_i \) units आती हैं। यहाँ \( n_i \) एक random variable है। Population mean \( \bar{Y} \) का unbiased estimator है:</p>
-                  <div class="derivation-block">
-                      $$ \bar{y}_w = \sum W_i \bar{y}_i \quad (3.13.1) $$
-                  </div>
-                  <p>यह मानते हुए कि सभी \( i \) के लिए \( n_i > 0 \) है, हमारे पास है:</p>
-                  <div class="derivation-block">
-                      $$ E(\bar{y}_w) = \sum W_i E(\bar{y}_i) = \sum W_i \bar{Y}_i = \bar{Y} \quad (3.13.2) $$
-                      <div class="explanation">\( \because \) stratum के भीतर sample mean का expected value ठीक stratum mean होता है।</div>
-                  </div>
-                  <p>मान लीजिए कि sample size इतना बड़ा है कि कोई भी \( n_i \), शून्य नहीं है। यदि \( n_i \) निश्चित (fixed) हैं, तो:</p>
-                  <div class="derivation-block">
-                      $$ V(\bar{y}_w | n_1, \ldots, n_k) = \sum \left( \frac{1}{n_i} - \frac{1}{N_i} \right)W_i^2 S_i^2 \quad (3.13.3) $$
-                  </div>
-                  <p>Conditional variance सूत्र का उपयोग करते हुए, हमारे पास है:</p>
-                  <div class="derivation-block">
-                      $$ V(\bar{y}_w) = E[V(\bar{y}_w | n_1, \dots, n_k)] + V[E(\bar{y}_w | n_1, \dots, n_k)] $$
-                      $$ = E[V(\bar{y}_w | n_1, \dots, n_k)] $$
-                      <div class="explanation">\( \because \) दूसरा term एक constant \( \bar{Y} \) का variance है, जो शून्य है।</div>
-                      $$ = \sum \left[ E\left(\frac{1}{n_i}\right) - \frac{1}{N_i} \right] W_i^2 S_i^2 \quad (3.13.4) $$
-                  </div>
-                  <p>बड़े \( n \) और \( N \) के लिए, Stephan (1945) ने गणितीय रूप से दिखाया है कि:</p>
-                  <div class="derivation-block">
-                      $$ E\left(\frac{1}{n_i}\right) = \frac{1}{n W_i} + \frac{1 - W_i}{n^2 W_i^2} \quad (3.13.5) $$
-                  </div>
-                  <p>इस मान को प्रतिस्थापित करने पर, हमें मिलता है:</p>
-                  <div class="derivation-block">
-                      $$ V(\bar{y}_w) = \sum \frac{(1-f_i)W_i S_i^2}{n} + \frac{1}{n^2}\sum (1-W_i)S_i^2 \quad (3.13.6) $$
-                      <div class="explanation">\( \because \) पहला term बिल्कुल proportional allocation के तहत variance है, और दूसरा term post-stratification के कारण एक छोटा सांख्यिकीय समायोजन है।</div>
-                  </div>
-                  <p>इसलिए post-stratification बड़े samples के लिए आनुपातिक (proportional) stratified sampling के रूप में लगभग सटीक रूप से गणितीय रूप से कुशल (efficient) है।</p>
-              </div>
-
-</section>
+            <div class="hinglish-content">
+                <h2>3.13 POST-STRATIFICATION (STRATIFICATION AFTER SELECTION OF SAMPLE)</h2>
+                <p>Kabhi-kabhi survey se pehle hamare paas strata banane ki jankari nahi hoti (jaise, humein nahi pata kaun kis age group ka hai jab tak hum pooch na lein). Aise mein hum ek simple random sample le lete hain, aur fir sample ke andar logo ko unke age-group (strata) mein baant dete hain. Ise <strong>Post-Stratification</strong> kehte hain.</p>
+                <p>Bade sample size \( n \) ke liye, iska variance lagbhag Proportional Allocation wale variance ke barabar hi aata hai, thode se adjustment ke sath. Iska matlab hai ki agar pehle stratification na ho paye, toh baad mein karne se bhi proportional allocation jaisa hi fayda mil jata hai.</p>
+            </div>
+        </section>
 
         <section id="sec3-14" class="section-card">
             <div class="english-content">
-                <h2>3.14 Deep Stratification</h2>
-                <p>Sometimes one criterion for making groups isn't enough. For example, you might want to group by <strong>State</strong> AND <strong>Income Level</strong> at the same time. This creates a grid (like a table) with rows and columns. This is called <strong>Deep Stratification</strong>. It helps us control multiple factors at once to get the most accurate results possible.</p>
+                <h2>3.14 DEEP STRATIFICATION</h2>
+                <p>If there are two alternative criteria of stratification, we can opt for two-way stratification which yields \( k_1 \) rows and \( k_2 \) columns, making \( k_1 \times k_2 \) strata.</p>
+                <p>If we want to estimate the variance, the minimum sample size must be \( 2 \times k_1 \times k_2 \). A problem arises when the available sample size \( n \) is less than the number of strata, yet we want proportional allocation for each criterion.</p>
+                <p>Bryant, Hartley and Jessen (1960) provided a method called deep stratification or controlled selection. By arranging cells and selecting them such that no two cells belong to the same row or column, original selection probabilities are preserved while maintaining multi-way stratification.</p>
             </div>
             <div class="hinglish-content">
-                <h2>3.14 Deep Stratification (गहरा स्तरीकरण)</h2>
-                <p>जब stratification के दो वैकल्पिक मानदंड होते हैं, तो एक स्पष्ट विकल्प two-way stratification है जिससे \( k \) पंक्तियाँ (rows) और \( k' \) स्तंभ (columns) बनते हैं, जो \( kk' \) strata बनाते हैं। यदि \( n < kk' \) है, तो Bryant, Hartley, और Jessen (1960) ने दोनों मार्जिन में आनुपातिक आवंटन (proportional allocation) बनाए रखने के लिए लैटिन स्क्वायर-जैसे दृष्टिकोण का उपयोग करके sample करने की एक तकनीक विकसित की।</p>
+                <h2>3.14 DEEP STRATIFICATION</h2>
+                <p>Agar hamare paas stratification ke 2 criteria hain (jaise Age aur Income dono), toh hum dono ka use karke 2-way stratification kar sakte hain. Isse \( k_1 \times k_2 \) number of strata banenge.</p>
+                <p>Variance nikalne ke liye humein kam se kam har cell mein 2 observations chahiye. Par problem tab aati hai jab hamara total sample size \( n \), total strata se bhi kam ho.</p>
+                <p>Iska solution Bryant, Hartley aur Jessen ne diya tha jise <strong>Deep Stratification</strong> ya Controlled Selection kehte hain. Isme hum mathematically cells ko is tarah select karte hain ki dono criteria ka proportional representation bhi ho jaye, aur sample size bhi kam lage.</p>
             </div>
         </section>
 
