@@ -913,6 +913,19 @@
                 </div>
                 <p>इस method में इकाइयों को समान संभावना (equal probability) के साथ चुना जाता है और इस variance के components में fsu द्वारा किया गया योगदान fsu totals के बीच भिन्नता (variation) पर निर्भर करता है। यदि units अपने आकार में काफी भिन्न होते हैं, तो यह component बड़ा होगा। Variance का दूसरा component भी बड़ा होने की संभावना है क्योंकि \( M_i \) और \( S_{w_i}^2 \) के बीच सकारात्मक सहसंबंध (positive correlation) होने की संभावना है। अक्सर, यह component इतना बड़ा होता है कि इस estimator को प्राथमिकता नहीं दी जाती है।</p>
 
+                <h3>Corollary 1</h3>
+                <p>दिखाइए कि estimator \( \widehat{Y} = \sum_{i=1}^n NM_i\frac{\bar{y}_{i\cdot}}{n} \) population total \( Y \) को unbiasedly estimate करता है और इसका sampling variance इस प्रकार दिया जाएगा:</p>
+                <div class="derivation-block">
+                    $$ V(\widehat{Y}) = N^2(1 - f_1)\frac{S_b^2}{n} + \sum_{i=1}^N (1 - f_{2i})\frac{NM_i^2}{n\bar{M}^2}\frac{S_{w_i}^2}{m_i} \quad (9.6.5) $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>Relation (9.6.4) में variance का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}) = (1 - f_1)\frac{s_b^2}{n} + \sum_{i=1}^n (1 - f_{2i})\frac{u_i^2s_{w_i}^2}{nNm_i} \quad (9.6.6) $$
+                    <p>जहाँ \( s_b^2 \) और \( s_{w_i}^2 \) के अपने सामान्य अर्थ हैं।</p>
+                </div>
+
                 <h3>Theorem 9.6.2</h3>
                 <p>दिखाइए कि relation (9.6.2) द्वारा दिया गया estimator biased है और इसका bias इस प्रकार दिया गया है:</p>
                 <div class="derivation-block">
@@ -936,7 +949,25 @@
                     $$ = V_1\left[ \frac{1}{n}\sum_{i=1}^n \bar{Y}_i \right] + E_1\left[ \frac{1}{n^2}\sum_{i=1}^n V_2(\bar{y}_{i\cdot}|i) \right] $$
                     $$ = (1 - f_1)\frac{S_b'^2}{n} + \frac{1}{nN}\sum_{i=1}^N (1 - f_{2i})\frac{S_{w_i}^2}{m_i} $$
                 </div>
-                <p>Estimator \( \bar{y}_1 \) में bias इस तथ्य के कारण प्रकट होता है कि ssu के selection की probabilities fsu में उनके असमान आकार (unequal sizes) के कारण एक इकाई से दूसरी इकाई में भिन्न होती है। यदि \( M_i \) काफी भिन्न नहीं होते हैं और अध्ययन चर (study variate) \( M_i \) के साथ सहसंबद्ध (correlated) नहीं है, तो bias बड़ा नहीं हो सकता है।</p>
+                <p>Estimator \( \bar{y}_1 \) में bias इस तथ्य के कारण प्रकट होता है कि ssu के selection की probabilities fsu में उनके असमान आकार (unequal sizes) के कारण एक इकाई से दूसरी इकाई में भिन्न होती है। यदि \( M_i \) काफी भिन्न नहीं होते हैं और अध्ययन चर (study variate) \( M_i \) के साथ सहसंबद्ध (correlated) नहीं है, तो bias बड़ा नहीं हो सकता है। यहाँ, \( \bar{y}_1 \) के MSE में तीन components होंगे: एक bias से, एक fsu के भीतर variation से, और एक fsu के means के बीच variation से उत्पन्न होगा। \( m_i \) के मान निर्दिष्ट नहीं हैं और \( m_i \) का उचित विकल्प इन components को control करने में सहायक हो सकता है।</p>
+
+                <h3>Corollary 1</h3>
+                <p>Bias का एक unbiased estimator इसके द्वारा प्राप्त किया जाता है:</p>
+                <div class="derivation-block">
+                    $$ \widehat{B} = - \frac{N - 1}{N\bar{M}(n - 1)}\sum_{i=1}^n (M_i - \bar{M}')(\bar{y}_{i\cdot} - \bar{y}_1) \quad (9.6.9) $$
+                    <p>जहाँ</p>
+                    $$ \bar{M}' = \frac{\sum_{i=1}^n M_i}{n} $$
+                </div>
+
+                <h3>Corollary 2</h3>
+                <p>Variance का एक unbiased estimator इस प्रकार दिया गया है:</p>
+                <div class="derivation-block">
+                    $$ v(\bar{y}_1) = (1 - f_1)\frac{s_b'^2}{n} + \sum_{i=1}^n (1 - f_{2i})\frac{s_{w_i}^2}{nNm_i} \quad (9.6.10) $$
+                    <p>जहाँ</p>
+                    $$ s_b'^2 = \frac{\sum_{i=1}^n (\bar{y}_{i\cdot} - \bar{y}_1)^2}{(n - 1)} $$
+                    <p>और</p>
+                    $$ s_{w_i}^2 = \frac{\sum_{j=1}^{m_i} (y_{ij} - \bar{y}_{i\cdot})^2}{(m_i - 1)} $$
+                </div>
 
                 <h3>Theorem 9.6.3</h3>
                 <p>दिखाइए कि relation (9.6.3) द्वारा दिया गया estimator biased है और इसका bias इस प्रकार दिया गया है:</p>
@@ -944,10 +975,16 @@
                     $$ \text{Bias }(\bar{y}_2) \cong \left( \frac{1}{n} - \frac{1}{N} \right)\bar{Y}\left( S_M^2 - \frac{S_{My}}{\bar{Y}} \right) \quad (9.6.11) $$
                     <p>और इसका sampling variance द्वारा:</p>
                     $$ V(\bar{y}_2) \cong \left( \frac{1}{n} - \frac{1}{N} \right)S_b''^2 + \frac{1}{nN}\sum_{i=1}^N \frac{M_i^2}{\bar{M}^2}(1 - f_{2i})\frac{S_{w_i}^2}{m_i} \quad (9.6.12) $$
+                    <p>जहाँ</p>
+                    $$ S_M^2 = \frac{\sum_{i=1}^N \left( \frac{M_i}{\bar{M}} - 1 \right)^2}{(N - 1)} $$
+                    $$ S_{My} = \frac{\sum_{i=1}^N \left( \frac{M_i}{\bar{M}} - 1 \right)\left( \frac{M_i\bar{Y}_i}{\bar{M}} - \bar{Y} \right)}{(N - 1)} $$
+                    $$ S_b''^2 = \frac{\sum_{i=1}^N M_i^2(\bar{Y}_i - \bar{Y})^2}{\bar{M}^2(N - 1)} $$
+                    <p>और \( S_{w_i}^2 \) हमेशा की तरह है।</p>
                 </div>
                 <p><em>Proof (प्रमाण):</em></p>
                 <div class="derivation-block">
                     <p>यदि हम \( \sum_{i=1}^n \frac{M_i\bar{y}_{i\cdot}}{\bar{M}} = n\bar{y} \) और \( \sum_{i=1}^n M_i/\bar{M} = n\bar{u} \) लेते हैं, तो estimator \( \bar{y}_2 \) को ratio estimator \( \bar{y}/\bar{u} \) के रूप में लिखा जा सकता है। Relations (6.3.2) और (6.4.1) को लागू करके, हम bias और variance ज्ञात कर सकते हैं।</p>
+                    <p>वास्तव में \( \bar{y}_2 \) ratio to size estimator है, जिसके लिए \( \bar{M} \) का ज्ञान आवश्यक नहीं है। इसी तरह की तर्ज पर, कोई regression estimator और उसके bias को परिभाषित कर सकता है, और sampling variance बिना किसी कठिनाई के निकाला जा सकता है।</p>
                 </div>
             </div>
         </section>
@@ -1032,6 +1069,10 @@
                 <p>Variance expression में \( m_{i(opt)} \) और \( n_{opt} \) के मानों को प्रतिस्थापित करने पर, हमें minimum variance इस प्रकार मिलता है:</p>
                 <div class="derivation-block">
                     $$ V_{\min}(\bar{y}) = A_0' + \frac{(\sqrt{A_1'c_1} + \sqrt{A_2'c_2})^2}{(C_0 - a)} \quad (9.7.8) $$
+                </div>
+                <p>मान लीजिए \( m_i \) इस तरह determine किया गया है कि वह \( M_i \) के proportional हो, मान लीजिए \( m_i = \lambda M_i \) जहाँ \( \lambda \) कोई positive constant है और इसे इस प्रकार प्राप्त किया जा सकता है:</p>
+                <div class="derivation-block">
+                    $$ \lambda = \left( \frac{c_1}{c_2}\sum_{i=1}^N \frac{u_iS_i^2}{\Delta N\bar{M}^2} \right)^{1/2} \quad (9.7.9) $$
                 </div>
             </div>
         </section>
