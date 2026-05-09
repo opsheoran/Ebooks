@@ -75,6 +75,15 @@
 .popup-canvas-container {
     flex: 1;
     position: relative;
+    background-color: #d1d5db; /* Desk color behind paper */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#popup-canvas-wrap {
+    position: relative;
+    width: 100%;
+    height: 4000px;
     /* Notebook Paper Effect */
     background-color: #faf9f6;
     background-image: 
@@ -83,7 +92,7 @@
     background-size: 100% 30px;
     background-position: 0px -1px;
     cursor: crosshair;
-    overflow: hidden; /* Prevent scrollbars during resize */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 #popup-canvas {
@@ -91,6 +100,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    width: 100%;
+    height: 100%;
     touch-action: none; /* Crucial for zero-delay pointer events */
     cursor: crosshair;
 }
@@ -99,20 +110,15 @@
 #text-input-overlay {
     position: absolute;
     display: none;
-    background: rgba(255, 255, 255, 0.85);
+    background: transparent;
     border: 2px dashed #C8922A;
     font-family: 'Source Serif 4', serif;
     outline: none;
-    resize: both;
-    overflow: auto;
-    padding: 8px;
+    resize: none;
+    overflow: hidden;
+    padding: 0;
     margin: 0;
-    z-index: 10000;
-    min-width: 150px;
-    min-height: 50px;
-    border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    pointer-events: auto;
+    z-index: 10;
 }
 
 /* ── TOOLBAR ── */
@@ -125,44 +131,6 @@
     gap: 8px;
     flex-wrap: wrap;
     flex-shrink: 0;
-    position: relative;
-    z-index: 100;
-}
-
-.tool-group {
-    position: relative;
-    display: inline-block;
-}
-
-.tool-dropdown {
-    position: absolute;
-    bottom: calc(100% + 5px);
-    left: 50%;
-    transform: translateX(-50%);
-    display: none;
-    flex-direction: column;
-    gap: 4px;
-    background: #fff;
-    border: 1px solid #DDD8CF;
-    border-radius: 6px;
-    padding: 6px;
-    box-shadow: 0 -4px 12px rgba(27,42,74,0.15);
-    z-index: 200;
-}
-
-.tool-group:hover .tool-dropdown {
-    display: flex;
-}
-
-.tool-dropdown::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    border-width: 6px;
-    border-style: solid;
-    border-color: #fff transparent transparent transparent;
 }
 
 .popup-tool-btn {

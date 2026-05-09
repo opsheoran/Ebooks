@@ -1,9 +1,16 @@
 /**
  * ── PROFESSIONAL TEACHER'S CANVAS ──
- * High-DPI, Ultra-Smooth Ink, and Reliable Eraser.
+ * High-DPI, Ultra-Smooth Ink, Notebook Paper, Rich Tools, Resize-Safe, and PDF Export.
  */
 
 (function() {
+    // 0. Load jsPDF dynamically for PDF Export
+    if (!window.jspdf) {
+        const script = document.createElement('script');
+        script.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+        document.head.appendChild(script);
+    }
+
     // 1. Setup HTML
     const popupHTML = `
         <div id="whiteboard-popup" class="whiteboard-popup">
@@ -11,30 +18,44 @@
                 <h3><i class="fas fa-file-signature"></i> Teacher's Pro Canvas</h3>
                 <button class="popup-close" id="popup-close-btn"><i class="fas fa-times"></i></button>
             </div>
-            
-            <div class="popup-canvas-container" id="popup-canvas-wrap">
-                <canvas id="popup-canvas"></canvas>
+
+            <div class="popup-canvas-container" id="popup-canvas-scroll">
+                <div id="popup-canvas-wrap">
+                    <canvas id="popup-canvas"></canvas>
+                    <textarea id="text-input-overlay" spellcheck="false" placeholder="Type here..."></textarea>
+                </div>
             </div>
-            
+
             <div class="popup-toolbar">
-                <button class="popup-tool-btn active" id="pop-pen" title="Pen Tool (P)"><i class="fas fa-pen-nib"></i></button>
-                <button class="popup-tool-btn" id="pop-eraser" title="Eraser Tool (E)"><i class="fas fa-eraser"></i></button>
-                <button class="popup-tool-btn" id="pop-clear" title="Clear Board"><i class="fas fa-trash-restore"></i></button>
+                <button class="popup-tool-btn active" data-tool="pen" title="Pen (P)"><i class="fas fa-pen-nib"></i></button>
+                <button class="popup-tool-btn" data-tool="highlighter" title="Highlighter (H)"><i class="fas fa-highlighter"></i></button>
+                <button class="popup-tool-btn" data-tool="eraser" title="Eraser (E)"><i class="fas fa-eraser"></i></button>
                 
-                <div style="width:2px; height:28px; background:#DDD8CF; margin:0 8px;"></div>
+                <div class="toolbar-divider"></div>
                 
+                <button class="popup-tool-btn" data-tool="line" title="Straight Line"><i class="fas fa-slash"></i></button>
+                <button class="popup-tool-btn" data-tool="rect" title="Rectangle"><i class="far fa-square"></i></button>
+                <button class="popup-tool-btn" data-tool="circle" title="Circle"><i class="far fa-circle"></i></button>
+                <button class="popup-tool-btn" data-tool="text" title="Text Input"><i class="fas fa-font"></i></button>
+
+                <div class="toolbar-divider"></div>
+
                 <div class="popup-color-dot active" style="background: #000000;" data-color="#000000"></div>
-                <div class="popup-color-dot" style="background: #9B2335;" data-color="#9B2335"></div>
-                <div class="popup-color-dot" style="background: #1B2A4A;" data-color="#1B2A4A"></div>
-                <div class="popup-color-dot" style="background: #3D6B5A;" data-color="#3D6B5A"></div>
+                <div class="popup-color-dot" style="background: #1B2A4A;" data-color="#1B2A4A"></div> <!-- Navy -->
+                <div class="popup-color-dot" style="background: #9B2335;" data-color="#9B2335"></div> <!-- Red -->
+                <div class="popup-color-dot" style="background: #3D6B5A;" data-color="#3D6B5A"></div> <!-- Green -->
+                <div class="popup-color-dot" style="background: #C8922A;" data-color="#C8922A"></div> <!-- Gold -->
+
+                <div class="toolbar-divider"></div>
+
+                <span style="font-size: 0.9rem; color: #1B2A4A; font-weight: 600;">Size</span>
+                <input type="range" min="1" max="40" value="3" class="popup-size-slider" id="pop-size">
+
+                <button class="popup-tool-btn" id="pop-undo" title="Undo (Ctrl+Z)" style="margin-left:auto;"><i class="fas fa-undo"></i></button>
+                <button class="popup-tool-btn" id="pop-clear" title="Clear Board" style="color: #9B2335; margin-right: 15px;"><i class="fas fa-trash-restore"></i></button>
                 
-                <div style="width:2px; height:28px; background:#DDD8CF; margin:0 8px;"></div>
-                
-                <span class="popup-size-label">Size</span>
-                <input type="range" min="1" max="40" value="4" class="popup-size-slider" id="pop-size">
-                
-                <button class="popup-tool-btn" id="pop-save" title="Save as PNG" style="margin-left:auto; background:var(--sage); color:#fff; border:none;">
-                    <i class="fas fa-save"></i>
+                <button class="popup-tool-btn" id="pop-save" title="Export as PDF" style="background:#2E4270; color:#fff; border:none; width:auto; padding: 0 15px; font-weight: 600; font-size: 0.95rem;">
+                    <i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Download PDF
                 </button>
             </div>
         </div>
@@ -45,52 +66,96 @@
     // 2. Elements & State
     const popup = document.getElementById('whiteboard-popup');
     const canvas = document.getElementById('popup-canvas');
-    const ctx = canvas.getContext('2d', { desynchronized: true });
-    const container = document.getElementById('popup-canvas-wrap');
+    const ctx = canvas.getContext('2d', { alpha: true }); // No desynchronized to fix black bg bug
+    const scrollContainer = document.getElementById('popup-canvas-scroll');
+    const wrapContainer = document.getElementById('popup-canvas-wrap');
     const dragHandle = document.getElementById('popup-drag-handle');
+    const textOverlay = document.getElementById('text-input-overlay');
 
-    let isDrawing = false;
     let currentTool = 'pen';
     let currentColor = '#000000';
-    let currentSize = 4;
-    
-    // Smooth drawing points
-    let points = [];
+    let currentSize = 3;
+    let isDrawing = false;
+    let dpr = window.devicePixelRatio || 1;
 
-    // 3. High-DPI Canvas Init
+    // History for Undo
+    let history = [];
+    const MAX_HISTORY = 20;
+
+    // Drawing state
+    let startX = 0, startY = 0;
+    let lastX = 0, lastY = 0;
+    let points = [];
+    let savedImageData = null; // Used for shape preview
+
+    // 3. High-DPI Canvas Init & Resizing
     function initCanvas() {
-        const dpr = window.devicePixelRatio || 1;
-        const rect = container.getBoundingClientRect();
+        resizeCanvas();
+        saveState(); // Initial blank state
+    }
+
+    function resizeCanvas() {
+        const rect = wrapContainer.getBoundingClientRect();
         
+        // Save current ink before resize
+        let tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        let tCtx = tempCanvas.getContext('2d');
+        if (canvas.width > 0 && canvas.height > 0) {
+            tCtx.drawImage(canvas, 0, 0);
+        }
+
         // Scale canvas for sharp ink
         canvas.width = rect.width * dpr;
         canvas.height = rect.height * dpr;
         canvas.style.width = rect.width + 'px';
         canvas.style.height = rect.height + 'px';
-        
+
         ctx.scale(dpr, dpr);
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
-        
-        // Solid white background
-        ctx.fillStyle = "#ffffff";
-        ctx.fillRect(0, 0, rect.width, rect.height);
-        
-        applyBrush();
+
+        // Restore ink
+        ctx.save();
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(tempCanvas, 0, 0);
+        ctx.restore();
     }
 
-    function applyBrush() {
-        ctx.globalCompositeOperation = 'source-over'; // Always use source-over for reliability
+    // Professional Resizer using ResizeObserver
+    const resizeObserver = new ResizeObserver(() => {
+        if (popup.style.display === 'flex' || popup.classList.contains('active')) {
+            resizeCanvas();
+        }
+    });
+    // We observe the scroll container so if popup width changes, wrap width changes
+    resizeObserver.observe(scrollContainer);
+
+    function applyBrush(isTempShape = false) {
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
         if (currentTool === 'eraser') {
-            ctx.strokeStyle = "#ffffff"; // Erase with white
-            ctx.lineWidth = currentSize * 8; // Larger eraser
+            ctx.globalCompositeOperation = 'destination-out';
+            ctx.strokeStyle = "rgba(0,0,0,1)";
+            ctx.lineWidth = currentSize * 8; 
+        } else if (currentTool === 'highlighter') {
+            ctx.globalCompositeOperation = 'source-over';
+            let hex = currentColor;
+            let r = parseInt(hex.slice(1,3), 16), g = parseInt(hex.slice(3,5), 16), b = parseInt(hex.slice(5,7), 16);
+            ctx.strokeStyle = `rgba(${r},${g},${b},0.3)`;
+            ctx.fillStyle = `rgba(${r},${g},${b},0.3)`;
+            ctx.lineWidth = currentSize * 6;
+            ctx.lineCap = 'butt';
         } else {
+            ctx.globalCompositeOperation = 'source-over';
             ctx.strokeStyle = currentColor;
+            ctx.fillStyle = currentColor;
             ctx.lineWidth = currentSize;
         }
     }
 
-    // 4. Ultra-Smooth Drawing Logic (Quadratic Curves)
     function getPos(e) {
         const rect = canvas.getBoundingClientRect();
         return {
@@ -99,180 +164,338 @@
         };
     }
 
-    function startDraw(e) {
-        if (e.button !== undefined && e.button !== 0) return; // Only left click
+    // 4. Input Events (Pointer Events for Zero Delay)
+    canvas.addEventListener('pointerdown', (e) => {
+        if (e.button !== 0 && e.button !== 5) return; 
         isDrawing = true;
-        const pos = getPos(e);
-        points = [pos];
-        
-        // Draw a dot immediately for taps
-        ctx.beginPath();
-        ctx.fillStyle = currentTool === 'eraser' ? '#ffffff' : currentColor;
-        const dotSize = currentTool === 'eraser' ? currentSize * 4 : currentSize / 2;
-        ctx.arc(pos.x, pos.y, dotSize, 0, Math.PI * 2);
-        ctx.fill();
-        
-        applyBrush();
-    }
-
-    function moveDraw(e) {
-        if (!isDrawing) return;
-        if (e.cancelable) e.preventDefault();
+        canvas.setPointerCapture(e.pointerId);
 
         const pos = getPos(e);
-        points.push(pos);
+        startX = pos.x;
+        startY = pos.y;
+        lastX = pos.x;
+        lastY = pos.y;
 
-        if (points.length > 2) {
+        if (e.pointerType === 'pen' && e.button === 5) {
+            let oldTool = currentTool;
+            currentTool = 'eraser';
+            applyBrush();
+            canvas.dataset.revertTool = oldTool;
+        } else {
+            applyBrush();
+        }
+
+        if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'highlighter') {
+            points = [{x: startX, y: startY}];
             ctx.beginPath();
-            // Start at the midpoint of the first two points
-            const start = points[points.length - 3];
-            const mid1 = {
-                x: (start.x + points[points.length - 2].x) / 2,
-                y: (start.y + points[points.length - 2].y) / 2
-            };
-            const mid2 = {
-                x: (points[points.length - 2].x + pos.x) / 2,
-                y: (points[points.length - 2].y + pos.y) / 2
-            };
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(startX, startY);
+            ctx.stroke();
+        } else if (currentTool === 'text') {
+            openTextInput(startX, startY);
+            isDrawing = false;
+        } else {
+            savedImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        }
+    });
 
-            ctx.moveTo(mid1.x, mid1.y);
-            // Curve through the middle point to the next midpoint
-            ctx.quadraticCurveTo(points[points.length - 2].x, points[points.length - 2].y, mid2.x, mid2.y);
+    canvas.addEventListener('pointermove', (e) => {
+        if (!isDrawing) return;
+        const pos = getPos(e);
+
+        if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'highlighter') {
+            points.push({x: pos.x, y: pos.y});
+            
+            if (points.length >= 3) {
+                const lastTwo = points.slice(-2);
+                const controlPoint = lastTwo[0];
+                const endPoint = {
+                    x: (lastTwo[0].x + lastTwo[1].x) / 2,
+                    y: (lastTwo[0].y + lastTwo[1].y) / 2,
+                };
+                
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
+                ctx.stroke();
+                
+                lastX = endPoint.x;
+                lastY = endPoint.y;
+            } else {
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                lastX = pos.x;
+                lastY = pos.y;
+            }
+        } else {
+            ctx.putImageData(savedImageData, 0, 0); 
+            applyBrush(true);
+            ctx.beginPath();
+            if (currentTool === 'line') {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(pos.x, pos.y);
+            } else if (currentTool === 'rect') {
+                ctx.rect(startX, startY, pos.x - startX, pos.y - startY);
+            } else if (currentTool === 'circle') {
+                let radius = Math.sqrt(Math.pow(pos.x - startX, 2) + Math.pow(pos.y - startY, 2));
+                ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            }
             ctx.stroke();
         }
-    }
+    });
 
-    function endDraw() {
+    canvas.addEventListener('pointerup', (e) => {
+        if (!isDrawing) return;
         isDrawing = false;
-        points = [];
+        canvas.releasePointerCapture(e.pointerId);
+
+        if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'highlighter') {
+            const pos = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        if (canvas.dataset.revertTool) {
+            currentTool = canvas.dataset.revertTool;
+            delete canvas.dataset.revertTool;
+        }
+
+        saveState();
+    });
+
+    // 5. Text Tool Implementation
+    function openTextInput(x, y) {
+        textOverlay.style.display = 'block';
+        textOverlay.style.left = x + 'px';
+        textOverlay.style.top = y + 'px';
+        textOverlay.style.color = currentColor;
+        textOverlay.style.fontSize = (currentSize * 8) + 'px';
+        textOverlay.value = '';
+        textOverlay.focus();
     }
 
-    // 5. Dragging Logic
-    let isDragging = false;
-    let dragStartX, dragStartY;
-
-    dragHandle.addEventListener('mousedown', (e) => {
-        if (e.target.closest('.popup-close')) return;
-        isDragging = true;
-        dragStartX = e.clientX - popup.offsetLeft;
-        dragStartY = e.clientY - popup.offsetTop;
-        popup.style.transition = 'none';
-    });
-
-    window.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        popup.style.left = (e.clientX - dragStartX) + 'px';
-        popup.style.top = (e.clientY - dragStartY) + 'px';
-        popup.style.transform = 'none'; // Clear the initial centering transform
-    });
-
-    window.addEventListener('mouseup', () => {
-        isDragging = false;
-        popup.style.transition = '';
-    });
-
-    // 6. Global Event Listeners (PointerEvents for Pen/Mouse/Touch)
-    canvas.addEventListener('pointerdown', startDraw);
-    window.addEventListener('pointermove', moveDraw);
-    window.addEventListener('pointerup', endDraw);
-    canvas.addEventListener('pointerleave', endDraw);
-
-    // ── RESIZE HANDLING ──
-    // Use ResizeObserver to detect when the popup container is resized
-    const resizeObserver = new ResizeObserver(() => {
-        if (popup.classList.contains('active')) {
-            // Save the current canvas content
-            const tempCanvas = document.createElement('canvas');
-            const tempCtx = tempCanvas.getContext('2d');
-            tempCanvas.width = canvas.width;
-            tempCanvas.height = canvas.height;
-            tempCtx.drawImage(canvas, 0, 0);
-
-            // Resize the canvas
-            initCanvas();
-
-            // Restore the content
-            ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width / (window.devicePixelRatio || 1), tempCanvas.height / (window.devicePixelRatio || 1), 0, 0, canvas.width / (window.devicePixelRatio || 1), canvas.height / (window.devicePixelRatio || 1));
+    textOverlay.addEventListener('blur', commitText);
+    textOverlay.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            commitText();
         }
     });
-    resizeObserver.observe(popup);
 
-    // Toggle Button Logic
-    document.addEventListener('click', (e) => {
-        const btn = e.target.closest('#draw-mode-btn');
-        if (btn) {
-            const isActive = popup.classList.toggle('active');
-            btn.classList.toggle('active');
-            if (isActive) {
-                btn.innerHTML = '<i class="fas fa-times"></i> Close Whiteboard';
-                initCanvas();
-            } else {
-                btn.innerHTML = '<i class="fas fa-chalkboard"></i> Open Whiteboard';
+    function commitText() {
+        if (textOverlay.style.display === 'none') return;
+        textOverlay.style.display = 'none';
+        
+        let text = textOverlay.value.trim();
+        if (!text) return;
+
+        let x = parseInt(textOverlay.style.left);
+        let y = parseInt(textOverlay.style.top);
+        let fontSize = currentSize * 8;
+
+        ctx.globalCompositeOperation = 'source-over';
+        ctx.fillStyle = currentColor;
+        ctx.font = `600 ${fontSize}px 'Source Serif 4', serif`;
+        ctx.textBaseline = 'top';
+
+        let lines = text.split('\\n');
+        lines.forEach((line, i) => {
+            ctx.fillText(line, x, y + (i * fontSize * 1.2));
+        });
+
+        saveState();
+    }
+
+    // 6. Undo/Redo State Management
+    function saveState() {
+        if (history.length >= MAX_HISTORY) {
+            history.shift();
+        }
+        history.push(canvas.toDataURL());
+    }
+
+    function undo() {
+        if (history.length > 1) {
+            history.pop(); 
+            let img = new Image();
+            img.src = history[history.length - 1];
+            img.onload = () => {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); 
+                ctx.save();
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.drawImage(img, 0, 0);
+                ctx.restore();
+            };
+        } else if (history.length === 1) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            history = [];
+            saveState();
+        }
+    }
+
+    document.getElementById('pop-undo').addEventListener('click', undo);
+    document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey && e.key === 'z') {
+            if (popup.classList.contains('active') || popup.style.display === 'flex') {
+                undo();
             }
         }
     });
 
-    document.getElementById('popup-close-btn').addEventListener('click', () => {
-        const btn = document.getElementById('draw-mode-btn');
-        if (btn) btn.click();
-    });
-
-    // Toolbar Listeners
-    document.getElementById('pop-pen').addEventListener('click', function() {
-        currentTool = 'pen';
-        setActiveTool(this);
-        applyBrush();
-    });
-
-    document.getElementById('pop-eraser').addEventListener('click', function() {
-        currentTool = 'eraser';
-        setActiveTool(this);
-        applyBrush();
-    });
-
-    function setActiveTool(btn) {
-        document.querySelectorAll('.popup-tool-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-    }
-
-    document.querySelectorAll('.popup-color-dot').forEach(dot => {
-        dot.addEventListener('click', function() {
-            currentColor = this.getAttribute('data-color');
-            document.querySelectorAll('.popup-color-dot').forEach(d => d.classList.remove('active'));
-            this.classList.add('active');
-            currentTool = 'pen';
-            setActiveTool(document.getElementById('pop-pen'));
-            applyBrush();
+    // 7. UI Controls Setup
+    document.querySelectorAll('.popup-tool-btn[data-tool]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.popup-tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentTool = btn.dataset.tool;
         });
     });
 
-    document.getElementById('pop-size').addEventListener('input', function() {
-        currentSize = this.value;
-        applyBrush();
+    document.querySelectorAll('.popup-color-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            document.querySelectorAll('.popup-color-dot').forEach(d => d.classList.remove('active'));
+            dot.classList.add('active');
+            currentColor = dot.dataset.color;
+            if (currentTool === 'eraser') {
+                document.querySelector('.popup-tool-btn[data-tool="pen"]').click();
+            }
+        });
+    });
+
+    document.getElementById('pop-size').addEventListener('input', (e) => {
+        currentSize = parseInt(e.target.value);
     });
 
     document.getElementById('pop-clear').addEventListener('click', () => {
-        if (confirm('Clear the entire board?')) {
-            const rect = container.getBoundingClientRect();
-            ctx.fillStyle = "#ffffff";
-            ctx.fillRect(0, 0, rect.width, rect.height);
-        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        saveState();
     });
 
+    // --- PDF EXPORT LOGIC ---
     document.getElementById('pop-save').addEventListener('click', () => {
-        const link = document.createElement('a');
-        link.download = 'teacher-notes-' + new Date().getTime() + '.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            alert("PDF library is loading. Please try again in a few seconds.");
+            return;
+        }
+        
+        // Show saving state
+        const saveBtn = document.getElementById('pop-save');
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Generating...';
+        
+        // Use setTimeout to allow UI to update before heavy processing
+        setTimeout(() => {
+            // Draw background before saving
+            let tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            let tCtx = tempCanvas.getContext('2d');
+            
+            tCtx.fillStyle = '#faf9f6'; // Match notebook paper color
+            tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            
+            // Draw Notebook Lines
+            tCtx.lineWidth = 1 * dpr;
+            tCtx.strokeStyle = 'rgba(100,150,200,0.2)';
+            for (let y = 0; y < tempCanvas.height; y += 30 * dpr) {
+                tCtx.beginPath();
+                tCtx.moveTo(0, y);
+                tCtx.lineTo(tempCanvas.width, y);
+                tCtx.stroke();
+            }
+            tCtx.lineWidth = 2 * dpr;
+            tCtx.strokeStyle = 'rgba(230,130,130,0.4)';
+            tCtx.beginPath();
+            tCtx.moveTo(79 * dpr, 0);
+            tCtx.lineTo(79 * dpr, tempCanvas.height);
+            tCtx.stroke();
+
+            // Overlay the ink
+            tCtx.drawImage(canvas, 0, 0);
+
+            // Generate PDF
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'pt', 'a4');
+            
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            
+            const canvasWidth = tempCanvas.width;
+            // A4 Aspect Ratio is ~1:1.414
+            const pageCanvasHeight = canvasWidth * (pdfHeight / pdfWidth); 
+            
+            let totalPages = Math.ceil(tempCanvas.height / pageCanvasHeight);
+            
+            for (let i = 0; i < totalPages; i++) {
+                if (i > 0) pdf.addPage();
+                
+                let pageCanvas = document.createElement('canvas');
+                pageCanvas.width = canvasWidth;
+                pageCanvas.height = pageCanvasHeight;
+                let pCtx = pageCanvas.getContext('2d');
+                
+                // Fill white background for empty space at the bottom
+                pCtx.fillStyle = '#faf9f6';
+                pCtx.fillRect(0, 0, canvasWidth, pageCanvasHeight);
+                
+                pCtx.drawImage(
+                    tempCanvas, 
+                    0, i * pageCanvasHeight, canvasWidth, pageCanvasHeight, 
+                    0, 0, canvasWidth, pageCanvasHeight
+                );
+                
+                const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
+                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+            }
+
+            pdf.save('Teacher_Notes_' + new Date().getTime() + '.pdf');
+            
+            // Restore button
+            saveBtn.innerHTML = originalText;
+        }, 100);
     });
 
-    // Keyboard Shortcuts
-    window.addEventListener('keydown', (e) => {
-        if (!popup.classList.contains('active')) return;
-        const key = e.key.toLowerCase();
-        if (key === 'p') document.getElementById('pop-pen').click();
-        if (key === 'e') document.getElementById('pop-eraser').click();
-        if (key === 'escape') document.getElementById('popup-close-btn').click();
+    // 8. Draggable Popup Logic
+    let isDragging = false, dragStartX, dragStartY, popupStartLeft, popupStartTop;
+    
+    dragHandle.addEventListener('mousedown', (e) => {
+        if(e.target.closest('button')) return;
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        const rect = popup.getBoundingClientRect();
+        popupStartLeft = rect.left;
+        popupStartTop = rect.top;
+        popup.style.transform = 'none'; 
+        popup.style.left = popupStartLeft + 'px';
+        popup.style.top = popupStartTop + 'px';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        popup.style.left = (popupStartLeft + e.clientX - dragStartX) + 'px';
+        popup.style.top = (popupStartTop + e.clientY - dragStartY) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => { isDragging = false; });
+
+    // 9. Toggle Logic
+    document.getElementById('popup-close-btn').addEventListener('click', () => {
+        popup.classList.remove('active');
+        popup.style.display = 'none';
+    });
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('.draw-mode-toggle')) {
+            if (!canvas.width) initCanvas(); 
+            popup.style.display = 'flex';
+            popup.classList.add('active');
+            resizeCanvas(); 
+        }
     });
 
 })();
