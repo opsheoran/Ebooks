@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Chapter — Measures of Dispersion</title>
+    <link rel="stylesheet" href="styles/book_style.css">
+    <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<main class="content">
+    <section class="section" id="sec1">
+        <div class="head">
+            <div class="num">1</div>
+            <div class="title-group">
+                <h2 class="title">Dispersion</h2>
+            </div>
+        </div>
+        <div class="body">
+            <p>
+                Averages (or measures of central tendency) indicate the typical value of a variable, but they do not reveal how the observations are spread around that typical value. The limitation becomes clear when we examine three agricultural data sets from Haryana, India, each having the same mean but different degrees of variability.
+            </p>
+            <ol type="i">
+                <li>Wheat yield (quintals per hectare): 8, 9, 10, 11, 12</li>
+                <li>Millet yield (quintals per hectare): 4, 7, 9, 11, 14</li>
+                <li>Barley yield (quintals per hectare): 2, 5, 9, 13, 16</li>
+            </ol>
+            <p>
+                Each series contains five observations, and the arithmetic mean of each series is 10 quintals/ha (the total of each series is 50). From the mean alone we cannot determine whether the data represent wheat, millet, or barley yields, or any other set of five observations that also total 50. Consequently, measures of central tendency alone are insufficient to describe the distribution of agricultural yields.
+            </p>
+            <p>
+                To obtain a fuller picture we consider <em>measures of dispersion</em>, which quantify the “scatteredness’’ or heterogeneity of the data. In the example above:
+            </p>
+            <ul>
+                <li>Series (i) – wheat yields – is relatively homogeneous (low dispersion).</li>
+                <li>Series (ii) – millet yields – shows moderate dispersion.</li>
+                <li>Series (iii) – barley yields – is the most heterogeneous (high dispersion).</li>
+            </ul>
+            <p>
+                Common numerical measures of dispersion include:
+            </p>
+            <ul>
+                <li>Range: \(R = \max(x_i) - \min(x_i)\)</li>
+                <li>Mean absolute deviation: \(\displaystyle \text{MAD} = \frac{1}{n}\sum_{i=1}^{n}\bigl|x_i-\bar{x}\bigr|\)</li>
+                <li>Variance: \(\displaystyle s^{2} = \frac{1}{n-1}\sum_{i=1}^{n}(x_i-\bar{x})^{2}\)</li>
+                <li>Standard deviation: \(s = \sqrt{s^{2}}\)</li>
+            </ul>
+            <p>
+                These statistics describe how far individual observations tend to deviate from the mean, allowing us to distinguish between agricultural data sets that share the same average yield but differ in their spread.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="sec2">
+        <div class="head">
+            <div class="num">2</div>
+            <div class="title-group">
+                <h2 class="title">Criteria for an Effective Measure of Dispersion</h2>
+            </div>
+        </div>
+        <div class="body">
+            <p>
+                An ideal dispersion statistic should possess the same properties required of an ideal measure of central tendency. Specifically, it should:
+            </p>
+            <ol type="i">
+                <li><strong>Be well‑defined:</strong> The formula must be unambiguous and applicable to any data set that meets the required conditions.</li>
+                <li><strong>Be easy to calculate and interpret:</strong> Practitioners should be able to compute the value without excessive effort and understand what the number conveys about the data.</li>
+                <li><strong>Rely solely on the observed values:</strong> No external constants or parameters should be needed.</li>
+                <li><strong>Be amenable to further mathematical treatment:</strong> The measure should integrate smoothly into algebraic manipulations, hypothesis testing, and comparison across samples.</li>
+                <li><strong>Exhibit stability against sampling variation:</strong> Small changes in the sample should not cause large, erratic shifts in the value.</li>
+            </ol>
+        </div>
+    </section>
+
+    <section class="section" id="sec3">
+        <div class="head">
+            <div class="num">3</div>
+            <div class="title-group">
+                <h2 class="title">Measures of Dispersion</h2>
+            </div>
+        </div>
+        <div class="body">
+            <ol type="i">
+                <li><strong>Range</strong></li>
+                <li><strong>Inter‑quartile deviation (Semi‑inter‑quartile range)</strong></li>
+                <li><strong>Mean deviation</strong></li>
+                <li><strong>Standard deviation</strong></li>
+            </ol>
+
+            <h3>The Range</h3>
+            <p>
+                The range is the simplest measure of spread. It is defined as the difference between the largest and the smallest observation in the data set:
+            </p>
+            \[
+            \text{Range}= \max(x_i) - \min(x_i)
+            \]
+            <p>
+                Because the range depends only on two extreme values, it is highly sensitive to out‑of‑line observations and to sampling fluctuations. Consequently, while it is easy to compute, it is considered a crude indicator of dispersion and is rarely used alone for rigorous statistical analysis.
+            </p>
+
+            <h3>3.5 Quartile Deviation (Semi-Interquartile Range)</h3>
+            <p>
+                The quartile deviation \( Q \), also called the semi-interquartile range, is defined as:
+            </p>
+            \[
+            Q = \frac{1}{2} (Q_3 - Q_1) \quad 
+            \]
+            <ul>
+                <li>\( Q_1 \): First quartile (25th percentile).</li>
+                <li>\( Q_3 \): Third quartile (75th percentile).</li>
+            </ul>
+            <p><strong>Advantages:</strong></p>
+            <ul>
+                <li>Superior to the range as it uses the middle 50% of the data.</li>
+            </ul>
+            <p><strong>Limitations:</strong></p>
+            <ul>
+                <li>Discards the remaining 50% of observations, limiting its reliability.</li>
+            </ul>
+
+            <h3>3.6 Mean Deviation</h3>
+            <p>
+                For a frequency distribution \( (x_i, f_i) \), where \( i = 1, 2, \ldots, n \), the mean deviation about an average \( A \) (typically the mean, median, or mode) is:
+            </p>
+            \[
+            \text{Mean Deviation} = \frac{1}{N} \sum_{i=1}^n f_i |x_i - A| \quad \text{where } N = \sum f_i \quad 
+            \]
+            <p><strong>Key Properties:</strong></p>
+            <ul>
+                <li>Based on <em>all</em> observations, making it more comprehensive than range or quartile deviation.</li>
+                <li>The use of absolute values (\( |x_i - A| \)) avoids cancellation of positive and negative deviations.</li>
+                <li>Lacks mathematical tractability for advanced analysis due to non-differentiability at zero.</li>
+                <li>Minimized when \( A \) is the median.</li>
+            </ul>
+
+            <h3>3.7 Standard Deviation and Root Mean Square Deviation</h3>
+            <h4>Standard Deviation (\(\sigma\))</h4>
+            <p>
+                The standard deviation is the positive square root of the arithmetic mean of the squared deviations from the arithmetic mean. For a frequency distribution \((x_i, f_i)\):
+            </p>
+            \[
+            \sigma = \sqrt{\frac{1}{N} \sum_{i=1}^n f_i (x_i - \bar{x})^2} \quad \text{where } N = \sum f_i \quad 
+            \]
+            <p><strong>Properties:</strong></p>
+            <ul>
+                <li>Squares deviations to avoid sign cancellation, unlike mean deviation.</li>
+                <li>Amenable to further mathematical analysis (e.g., variance, skewness).</li>
+                <li>Less affected by sampling fluctuations than other dispersion measures.</li>
+                <li>More sensitive to extreme values than quartile-based measures.</li>
+            </ul>
+
+            <h4>Variance (\(\sigma^2\))</h4>
+            <p>
+                Variance is the square of the standard deviation:
+            </p>
+            \[
+            \sigma^2 = \frac{1}{N} \sum_{i=1}^n f_i (x_i - \bar{x})^2
+            \]
+
+            <h4>Root Mean Square Deviation (\(s\))</h4>
+            <p>
+                The root mean square deviation is defined with respect to an arbitrary value \(A\):
+            </p>
+            \[
+            s = \sqrt{\frac{1}{N} \sum_{i=1}^n f_i (x_i - A)^2} \quad 
+            \]
+            <p>
+                Here, \(s^2\) is called the <em>mean square deviation</em>.
+            </p>
+
+            <h4>3.7.1 Relation Between \(\sigma\) and \(s\)</h4>
+            <p>
+                By expanding \(s^2\):
+            </p>
+            \[
+            s^2 = \frac{1}{N} \sum f_i (x_i - A)^2 = \frac{1}{N} \sum f_i \left[(x_i - \bar{x}) + (\bar{x} - A)\right]^2
+            \]
+            \[
+            = \sigma^2 + (\bar{x} - A)^2 = \sigma^2 + d^2 \quad \text{where } d = \bar{x} - A \quad 
+            \]
+            <p><strong>Key Implications:</strong></p>
+            <ul>
+                <li>\(s^2\) is minimized when \(d = 0\) (i.e., \(A = \bar{x}\)), at which point \(s^2 = \sigma^2\).</li>
+                <li>Thus, <em>standard deviation is the minimum possible root mean square deviation</em>.</li>
+                <li>This aligns with the property that \(\sum f_i (x_i - A)^2\) is minimized when \(A = \bar{x}\).</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="section" id="sec4">
+        <div class="head">
+            <div class="num">4</div>
+            <div class="title-group">
+                <h2 class="title">Different Formulas for Calculating Variance</h2>
+            </div>
+        </div>
+        <div class="body">
+            <p>
+                Variance, denoted as \(\sigma_x^2\), quantifies the average squared deviation from the mean. The definitional formula is:
+            </p>
+            \[
+            \sigma_x^2 = \frac{1}{N} \sum_{i=1}^n f_i (x_i - \bar{x})^2 \quad \text{where } N = \sum f_i \quad 
+            \]
+            <p>
+                When \(\bar{x}\) is fractional or the values are large, direct computation is cumbersome. Alternative forms simplify the arithmetic.
+            </p>
+
+            <h4>Raw Moments Form </h4>
+            <p>Expanding the definitional formula:</p>
+            \[
+            \sigma_x^2 = \frac{1}{N} \sum f_i x_i^2 - \bar{x}^2 \quad 
+            \]
+            <p>Equivalently:</p>
+            \[
+            \sigma_x^2 = \frac{1}{N} \sum f_i x_i^2 - \left( \frac{1}{N} \sum f_i x_i \right)^2 \quad 
+            \]
+
+            <h4>Shifted Deviations Form </h4>
+            <p>
+                For large \(x_i\) or \(f_i\), compute deviations from an arbitrary point \(A\) (often near the middle of the distribution), where \(d_i = x_i - A\):
+            </p>
+            \[
+            \bar{x} = A + \frac{1}{N} \sum f_i d_i = A + \bar{d}
+            \]
+            \[
+            \sigma_x^2 = \frac{1}{N} \sum f_i (x_i - \bar{x})^2 = \frac{1}{N} \sum f_i (d_i - \bar{d})^2
+            \]
+            <p>Expanding:</p>
+            \[
+            \sigma_x^2 = \frac{1}{N} \sum f_i d_i^2 - \bar{d}^2 \quad 
+            \]
+            <p>
+                This is equivalent to the variance of the \(d_i\) values (\(\sigma_d^2\)), since variance is invariant under translation (\(\sigma_x^2 = \sigma_d^2\)).
+            </p>
+            <p>
+                This form reduces computation by working with smaller \(d_i\) values.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="sec5">
+        <div class="head">
+            <div class="num">5</div>
+            <div class="title-group">
+                <h2 class="title">Variance and Standard Deviation: Effect of Change of Origin and Scale</h2>
+            </div>
+        </div>
+        <div class="body">
+            <p>
+                Variance and, consequently, standard deviation exhibit specific behaviors when data undergoes a change of origin (shifting the data) or a change of scale (scaling the data).
+            </p>
+
+            <h4>Properties of Variance Under Transformation</h4>
+            <p>
+                If a new variable \( d_i \) is defined as \( d_i = \frac{x_i - A}{h} \), where \( A \) is the assumed origin and \( h \) is the common scale factor (class width), then:
+            </p>
+            <p>
+                We know that \( x_i - A = h d_i \). Also, the mean of \( x \) can be expressed as \( \bar{x} = A + h \bar{d} \), where \( \bar{d} = \frac{1}{N} \sum f_i d_i \).
+            </p>
+            <p>
+                The deviation of \( x_i \) from its mean \( \bar{x} \) can be written as:
+            </p>
+            \[
+            x_i - \bar{x} = (x_i - A) - (\bar{x} - A) = h d_i - h \bar{d} = h (d_i - \bar{d})
+            \]
+            <p>
+                Now, substituting this into the variance formula for \( x \):
+            </p>
+            \[
+            \sigma_x^2 = \frac{1}{N} \sum_{i=1}^n f_i (x_i - \bar{x})^2
+            \]
+            \[
+            = \frac{1}{N} \sum_{i=1}^n f_i [h (d_i - \bar{d})]^2
+            \]
+            \[
+            = \frac{1}{N} \sum_{i=1}^n f_i h^2 (d_i - \bar{d})^2
+            \]
+            <p>Factoring out \( h^2 \) (since it's a constant):</p>
+            \[
+            \sigma_x^2 = h^2 \left[ \frac{1}{N} \sum_{i=1}^n f_i (d_i - \bar{d})^2 \right]
+            \]
+            <p>
+                The term in the square brackets is the variance of the \( d \) values, denoted as \( \sigma_d^2 \). Thus, we get:
+            </p>
+            \[
+            \sigma_x^2 = h^2 \sigma_d^2 \quad 
+            \]
+            <p>This relationship demonstrates that:</p>
+            <ul>
+                <li><strong>Variance is independent of change of origin (\(A\)):</strong> The term \(A\) does not appear in the final formula for \( \sigma_x^2 \) directly, only through its effect on \(d_i\) and subsequently \(\bar{d}\). The variance of the transformed variable \(d\) is unaffected by the choice of origin \(A\).</li>
+                <li><strong>Variance is NOT independent of change of scale (\(h\)):</strong> The variance of \( x \) is \( h^2 \) times the variance of \( d \). This means scaling the data by \( h \) multiplies the variance by \( h^2 \) and the standard deviation by \( |h| \).</li>
+            </ul>
+
+            <div class="example">
+                <h4>Example 3.1: Calculation of Mean and Standard Deviation for Wheat Yield in Haryana</h4>
+                <p>
+                    Calculate the mean and standard deviation for the following distribution of wheat yield (in quintals per acre) from 542 farms in a district of Haryana, India:
+                </p>
+                <table class="calculation-data">
+                    <thead>
+                        <tr>
+                            <th>Wheat Yield (Quintals/Acre)</th>
+                            <th>Mid-value (x)</th>
+                            <th>Number of Farms (f)</th>
+                            <th>\(d = \frac{x-55}{10}\)</th>
+                            <th>\(fd\)</th>
+                            <th>\(fd^2\)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>20–30</td>
+                            <td>25</td>
+                            <td>3</td>
+                            <td>-3</td>
+                            <td>-9</td>
+                            <td>27</td>
+                        </tr>
+                        <tr>
+                            <td>30–40</td>
+                            <td>35</td>
+                            <td>61</td>
+                            <td>-2</td>
+                            <td>-122</td>
+                            <td>244</td>
+                        </tr>
+                        <tr>
+                            <td>40–50</td>
+                            <td>45</td>
+                            <td>132</td>
+                            <td>-1</td>
+                            <td>-132</td>
+                            <td>132</td>
+                        </tr>
+                        <tr>
+                            <td>50–60</td>
+                            <td>55</td>
+                            <td>153</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>60–70</td>
+                            <td>65</td>
+                            <td>140</td>
+                            <td>1</td>
+                            <td>140</td>
+                            <td>140</td>
+                        </tr>
+                        <tr>
+                            <td>70–80</td>
+                            <td>75</td>
+                            <td>51</td>
+                            <td>2</td>
+                            <td>102</td>
+                            <td>204</td>
+                        </tr>
+                        <tr>
+                            <td>80–90</td>
+                            <td>85</td>
+                            <td>2</td>
+                            <td>3</td>
+                            <td>6</td>
+                            <td>18</td>
+                        </tr>
+                        <tfoot>
+                            <tr>
+                                <td><strong>Total</strong></td>
+                                <td></td>
+                                <td>\(N = \sum f = 542\)</td>
+                                <td></td>
+                                <td>\(\sum fd = -15\)</td>
+                                <td>\(\sum fd^2 = 765\)</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                <p><strong>Solution:</strong><br/>
+                    We use the assumed mean \(A = 55\) quintals/acre and the class width \(h = 10\) quintals/acre.
+                </p>
+
+                <p><strong>1. Calculation of Mean (\(\bar{x}\)):</strong></p>
+                \[
+                \bar{x} = A + h \frac{\sum fd}{N}
+                \]
+                \[
+                \bar{x} = 55 + 10 \times \frac{-15}{542}
+                \]
+                \[
+                \bar{x} = 55 - \frac{150}{542}
+                \]
+                \[
+                \bar{x} = 55 - 0.27675... \approx 54.72 \text{ quintals/acre}
+                \]
+
+                <p><strong>2. Calculation of Variance (\(\sigma^2\)) and Standard Deviation (\(\sigma\)):</strong></p>
+                <p>Using the formula for variance derived under change of origin and scale:</p>
+                \[
+                \sigma^2 = h^2 \left[ \frac{\sum fd^2}{N} - \left( \frac{\sum fd}{N} \right)^2 \right]
+                \]
+                \[
+                \sigma^2 = 10^2 \left[ \frac{765}{542} - \left( \frac{-15}{542} \right)^2 \right]
+                \]
+                \[
+                \sigma^2 = 100 \left[ 1.411439114 - ( -0.027675276 )^2 \right]
+                \]
+                \[
+                \sigma^2 = 100 \left[ 1.411439114 - 0.000765911 \right]
+                \]
+                \[
+                \sigma^2 = 100 \left[ 1.410673203 \right] \approx 141.07
+                \]
+                <p>Therefore, the standard deviation is:</p>
+                \[
+                \sigma = \sqrt{141.0673203} \approx 11.88 \text{ quintals/acre}
+                \]
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="sec6">
+        <div class="head">
+            <div class="num">6</div>
+            <div class="title-group">
+                <h2 class="title">Advanced Topics in Dispersion</h2>
+            </div>
+        </div>
+        <div class="body">
+            <div class="example">
+                <h4>Example 3.2: Relationship Between Standard Deviation and Mean Deviation</h4>
+                <p><strong>Problem:</strong> Prove that for any discrete distribution, the standard deviation is not less than the mean deviation from the mean.</p>
+                <p>
+                    <strong>Contextual Relevance:</strong> This fundamental statistical relationship is crucial when comparing different measures of dispersion, such as in analyzing the variability of crop yields across various regions in India, or the consistency of milk production in dairy farms in Haryana. Understanding that standard deviation is always at least as large as mean deviation helps in interpreting the spread of agricultural data, especially when considering the impact of outliers.
+                </p>
+                <p><strong>Solution:</strong><br/>
+                    Let \(x_i\) be the values of a discrete distribution with corresponding frequencies \(f_i\), for \(i = 1, 2, \ldots, n\). Let \(N = \sum f_i\) be the total frequency. We need to prove that:
+                </p>
+                \[
+                \text{S.D.} \ge \text{Mean Deviation from Mean (M.D.)}
+                \]
+                <p>Squaring both sides, we aim to prove:</p>
+                \[
+                (\text{S.D.})^2 \ge (\text{M.D. from mean})^2
+                \]
+                <p>In terms of formulas:</p>
+                \[
+                \frac{1}{N} \sum f_i (x_i - \bar{x})^2 \ge \left( \frac{1}{N} \sum f_i |x_i - \bar{x}| \right)^2
+                \]
+                <p>Let \(z_i = |x_i - \bar{x}|\). Then we need to prove:</p>
+                \[
+                \frac{1}{N} \sum f_i z_i^2 \ge \left( \frac{1}{N} \sum f_i z_i \right)^2
+                \]
+                <p>Rearranging the inequality, this is equivalent to proving:</p>
+                \[
+                \frac{1}{N} \sum f_i z_i^2 - \left( \frac{1}{N} \sum f_i z_i \right)^2 \ge 0
+                \]
+                <p>This expression is precisely the formula for the variance of the variable \(z\), i.e., \( \sigma_z^2 \).</p>
+                \[
+                \frac{1}{N} \sum f_i (z_i - \bar{z})^2 \ge 0
+                \]
+                <p>
+                    Since the variance (or sum of squared deviations) can never be negative, this inequality is always true. Hence, the result is proven: standard deviation is always greater than or equal to the mean deviation from the mean.
+                </p>
+            </div>
+
+            <div class="example">
+                <h4>Example 3.3: Mean Deviation and Standard Deviation for an Arithmetic Progression</h4>
+                <p><strong>Problem:</strong> Find the mean deviation from the mean and the standard deviation for a series in Arithmetic Progression (A.P.): \(a, a+d, a+2d, \ldots, a+2nd\). Verify that the standard deviation is greater than the mean deviation.</p>
+                <p>
+                    <strong>Contextual Relevance:</strong> Consider the yields of a new variety of fodder crop from \(2n+1\) experimental plots in Haryana, where the yields increase consistently with an additional input (e.g., specific fertilizer dose) in each successive plot. Here, \(a\) represents the base yield (e.g., from the control plot), and \(d\) represents the consistent increase in yield per unit of additional input. Analyzing such data helps agricultural scientists understand the variability and central tendency of yields under specific experimental conditions.
+                </p>
+                <p><strong>Solution:</strong><br/>
+                    The given series is an A.P. with \( (2n+1) \) terms. The terms are \(a, a+d, a+2d, \ldots, a+2nd\). Each term has a frequency of 1.
+                    The mean of an A.P. series is the mean of its first and last term:
+                </p>
+                \[
+                \bar{x} = \frac{1}{2} (a + (a+2nd)) = \frac{1}{2} (2a + 2nd) = a + nd
+                \]
+                <p>
+                    Now, we calculate \(|x - \bar{x}|\) and \((x - \bar{x})^2\) for each term:
+                </p>
+                <table class="calculation-data">
+                    <thead>
+                        <tr>
+                            <th>\(x\)</th>
+                            <th>\(|x - \bar{x}|\)</th>
+                            <th>\((x - \bar{x})^2\)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>\(a\)</td>
+                            <td>\(|a - (a+nd)| = nd\)</td>
+                            <td>\((nd)^2 = n^2d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+d\)</td>
+                            <td>\(|(a+d) - (a+nd)| = |(1-n)d|\) (or \((n-1)d\))</td>
+                            <td>\((1-n)^2d^2 = (n-1)^2d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+2d\)</td>
+                            <td>\(|(a+2d) - (a+nd)| = |(2-n)d|\) (or \((n-2)d\))</td>
+                            <td>\((2-n)^2d^2 = (n-2)^2d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(\vdots\)</td>
+                            <td>\(\vdots\)</td>
+                            <td>\(\vdots\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+(n-2)d\)</td>
+                            <td>\(|(a+(n-2)d) - (a+nd)| = |-2d| = 2d\)</td>
+                            <td>\((-2d)^2 = 4d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+(n-1)d\)</td>
+                            <td>\(|(a+(n-1)d) - (a+nd)| = |-d| = d\)</td>
+                            <td>\((-d)^2 = d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+nd\)</td>
+                            <td>\(|(a+nd) - (a+nd)| = 0\)</td>
+                            <td>\(0^2 = 0\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+(n+1)d\)</td>
+                            <td>\(|(a+(n+1)d) - (a+nd)| = |d| = d\)</td>
+                            <td>\(d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+(n+2)d\)</td>
+                            <td>\(|(a+(n+2)d) - (a+nd)| = |2d| = 2d\)</td>
+                            <td>\((2d)^2 = 4d^2\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(\vdots\)</td>
+                            <td>\(\vdots\)</td>
+                            <td>\(\vdots\)</td>
+                        </tr>
+                        <tr>
+                            <td>\(a+2nd\)</td>
+                            <td>\(|(a+2nd) - (a+nd)| = |nd| = nd\)</td>
+                            <td>\((nd)^2 = n^2d^2\)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>The total number of terms is \(N = 2n+1\).</p>
+
+                <h4>Calculation of Mean Deviation (M.D.) from the Mean:</h4>
+                \[
+                \sum |x - \bar{x}| = 2 \sum_{k=1}^n kd = 2d \sum_{k=1}^n k = 2d \frac{n(n+1)}{2} = dn(n+1)
+                \]
+                <p>Mean Deviation \(= \frac{\sum |x - \bar{x}|}{N} = \frac{dn(n+1)}{2n+1}\)</p>
+
+                <h4>Calculation of Standard Deviation (S.D.):</h4>
+                \[
+                \sum (x - \bar{x})^2 = 2 \sum_{k=1}^n (kd)^2 = 2d^2 \sum_{k=1}^n k^2 = 2d^2 \frac{n(n+1)(2n+1)}{6} = d^2 \frac{n(n+1)(2n+1)}{3}
+                \]
+                <p>\[ \text{Variance} (\sigma^2) = \frac{\sum (x - \bar{x})^2}{N} = \frac{d^2 \frac{n(n+1)(2n+1)}{3}}{2n+1} = \frac{d^2 n(n+1)}{3}\]</p>
+                <p>\[ \therefore \text{Standard Deviation} (\sigma) = \sqrt{\frac{d^2 n(n+1)}{3}} = |d| \sqrt{\frac{n(n+1)}{3}}\]</p>
+
+                <h4>Verification: S.D. \( \ge \) M.D.</h4>
+                <p>We need to check if \( |d| \sqrt{\frac{n(n+1)}{3}} \ge \frac{dn(n+1)}{2n+1} \).</p>
+                    <p>Assuming \(d > 0\), we compare \( \sqrt{\frac{n(n+1)}{3}} \) with \( \frac{n(n+1)}{2n+1} \).</p>
+                    <p>Squaring both sides (which is valid for positive numbers):
+                </p>
+                <p>Compare \( \frac{n(n+1)}{3} \) with \( \left( \frac{n(n+1)}{2n+1} \right)^2 \).
+                    Compare \( \frac{1}{3} \) with \( \frac{n(n+1)}{(2n+1)^2} \).</p>
+                <p>Consider the ratio: \( \frac{n(n+1)}{(2n+1)^2} \times 3 = \frac{3n^2 + 3n}{4n^2 + 4n + 1} \).
+                    For \(n=1\), the ratio is \( \frac{3(1)^2 + 3(1)}{4(1)^2 + 4(1) + 1} = \frac{6}{9} = \frac{2}{3} \).
+                    Since \( \frac{2}{3} < 1 \), it means \( \frac{n(n+1)}{(2n+1)^2} < \frac{1}{3} \) for small \(n\).
+                    Let's re-evaluate the direct comparison:
+                    We want to show \( \frac{1}{3} \ge \frac{n(n+1)}{(2n+1)^2} \) (this inequality seems to be inverted from the original proof's expectation if S.D. > M.D. is true).
+                </p>
+                <p>Let's use the established result \( \sigma_z^2 \ge 0 \) from Example 3.2.
+                    For a discrete series with unit frequencies,
+                    S.D. \( = \sqrt{\frac{\sum (x_i - \bar{x})^2}{N}} \)
+                    M.D. \( = \frac{\sum |x_i - \bar{x}|}{N} \)
+                    Let \( |x_i - \bar{x}| = y_i \).
+                    We need to prove \( \sqrt{\frac{\sum y_i^2}{N}} \ge \frac{\sum y_i}{N} \).
+                    This is equivalent to proving \( \frac{\sum y_i^2}{N} \ge \left( \frac{\sum y_i}{N} \right)^2 \), which is \( \text{Variance}(y) \ge 0 \), which is always true.
+                </p>
+                <p>
+                    Therefore, for this specific A.P. series, the calculated standard deviation \( |d| \sqrt{\frac{n(n+1)}{3}} \) will always be greater than or equal to the mean deviation \( \frac{dn(n+1)}{2n+1} \), verifying the general statistical principle.
+                </p>
+            </div>
+
+            <h3>3.7.3 Theorem: Variance of the Combined Series</h3>
+            <p><strong>Statement of the Theorem:</strong><br/>
+                If there are two series or groups of data, with sizes \(n_1\) and \(n_2\), means \(\bar{x}_1\) and \(\bar{x}_2\), and standard deviations \(\sigma_1\) and \(\sigma_2\) respectively, then the variance (\(\sigma^2\)) of the combined series of total size \(N = n_1 + n_2\) is given by:
+            </p>
+            \[
+            \sigma^2 = \frac{1}{n_1 + n_2} [n_1 (\sigma_1^2 + d_1^2) + n_2 (\sigma_2^2 + d_2^2)] \quad 
+            \]
+            <p>where:</p>
+            <ul>
+                <li>\(d_1 = \bar{x}_1 - \bar{X}\) (deviation of the first group's mean from the combined mean)</li>
+                <li>\(d_2 = \bar{x}_2 - \bar{X}\) (deviation of the second group's mean from the combined mean)</li>
+                <li>\(\bar{X} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}\) (the mean of the combined series)</li>
+            </ul>
+
+            <p><strong>Proof Overview:</strong><br/>
+                The proof begins by defining the individual means and variances for each series. The mean of the combined series (\(\bar{X}\)) is then established as the weighted average of the individual means. The total variance of the combined series (\(\sigma^2\)) is derived from the sum of squared deviations of all observations from the combined mean. By expanding \( (x_i - \bar{X})^2 \) for each group using \( (x_i - \bar{x}_j + \bar{x}_j - \bar{X})^2 \), and knowing that the sum of deviations from a group's own mean is zero (\(\sum f_i (x_i - \bar{x}_j) = 0\)), the expression for \(\sigma^2\) can be simplified to the stated formula .
+            </p>
+
+            <p><strong>Simplified Formula  and Generalization as given above :</strong><br/>
+                The formula  can be further simplified to:
+            </p>
+            \[
+            \sigma^2 = \frac{1}{n_1+n_2} \left[ n_1 \sigma_1^2 + n_2 \sigma_2^2 + \frac{n_1 n_2 (\bar{x}_1 - \bar{x}_2)^2}{n_1 + n_2} \right] \quad 
+            \]
+            <p>
+                This formula is often more convenient as it directly uses the difference between the group means. For \(k\) component series, the variance of the combined series is generalized as:
+            </p>
+            \[
+            \sigma^2 = \frac{1}{N} \left[ \sum_{i=1}^k n_i (\sigma_i^2 + d_i^2) \right] \quad 
+            \]
+            <p>
+                where \(N = \sum n_i\) and \(d_i = \bar{x}_i - \bar{X}\).
+            </p>
+
+            <div class="example">
+                <h4>Example 3.6: Combining Data from Two Agricultural Regions</h4>
+                <p><strong>Problem:</strong> The first sample of 100 farms in a specific region of Haryana shows an average wheat yield of 15 quintals/acre with a standard deviation of 3 quintals/acre. If a whole group of 250 farms, including these 100, has a combined average yield of 15.6 quintals/acre and a combined standard deviation of \( \sqrt{13.44} \) quintals/acre, find the standard deviation of the second group of farms (the remaining 150 farms).</p>
+                <p><strong>Solution:</strong><br/>
+                    Let's denote the first group (100 farms) as Group 1 and the second group (the remaining 150 farms) as Group 2. The combined group is the total of 250 farms.
+                </p>
+
+                <p>Given for Group 1:</p>
+                
+                    <p>Size, \(n_1 = 100\)</p>
+                    <p>Mean yield, \(\bar{x}_1 = 15\) quintals/acre</p>
+                    <p>Standard deviation, \(\sigma_1 = 3\) quintals/acre, so variance \(\sigma_1^2 = 3^2 = 9\)</p>
+                
+
+                <p>Given for the Combined Group:</p>
+                
+                    <p>Total size, \(N = 250\)</p>
+                    <p>Combined mean yield, \(\bar{X} = 15.6\) quintals/acre</p>
+                    <p>Combined standard deviation, \(\sigma = \sqrt{13.44}\) quintals/acre, so combined variance \(\sigma^2 = 13.44\)</p>
+               
+
+                <p>We need to find the standard deviation of Group 2, \(\sigma_2\).</p>
+
+                <p>First, find the size of Group 2:<br/>
+                    \(n_2 = N - n_1 = 250 - 100 = 150\) farms
+                </p>
+
+                <p>Next, find the mean of Group 2, \(\bar{x}_2\), using the formula for the combined mean:</p>
+                \[
+                \bar{X} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}
+                \]
+                \[
+                15.6 = \frac{(100)(15) + (150)\bar{x}_2}{250}
+                \]
+                \[
+                15.6 \times 250 = 1500 + 150 \bar{x}_2
+                \]
+                \[
+                3900 = 1500 + 150 \bar{x}_2
+                \]
+                \[
+                2400 = 150 \bar{x}_2
+                \]
+                \[
+                \bar{x}_2 = \frac{2400}{150} = 16 \text{ quintals/acre}
+                \]
+
+                <p>Now, use the formula for the combined variance :</p>
+                \[
+                \sigma^2 = \frac{1}{n_1+n_2} \left[ n_1 \sigma_1^2 + n_2 \sigma_2^2 + \frac{n_1 n_2 (\bar{x}_1 - \bar{x}_2)^2}{n_1 + n_2} \right]
+                \]
+                <p>Substitute the known values:</p>
+                \[
+                13.44 = \frac{1}{250} \left[ (100)(9) + (150)\sigma_2^2 + \frac{(100)(150)(15 - 16)^2}{250} \right]
+                \]
+                \[
+                13.44 \times 250 = 900 + 150 \sigma_2^2 + \frac{15000(-1)^2}{250}
+                \]
+                \[
+                3360 = 900 + 150 \sigma_2^2 + 60
+                \]
+                \[
+                3360 = 960 + 150 \sigma_2^2
+                \]
+                \[
+                2400 = 150 \sigma_2^2
+                \]
+                \[
+                \sigma_2^2 = \frac{2400}{150} = 16
+                \]
+                <p>So, the standard deviation of the second group is:</p>
+                \[
+                \sigma_2 = \sqrt{16} = 4 \text{ quintals/acre}
+                \]
+            </div>
+
+            <div class="example">
+                <h4>Example 3.5: Correcting Mean and Standard Deviation of Crop Yield Data</h4>
+                <p><strong>Problem:</strong> For a data set of 200 rice fields in a district of India, the mean yield was calculated as 40 quintals/hectare and the standard deviation as 15 quintals/hectare. Later, it was discovered that two yield figures, 43 and 53 quintals/hectare, were misread as 34 and 35 quintals/hectare respectively. Find the corrected mean and standard deviation corresponding to the corrected figures.</p>
+                <p><strong>Solution:</strong><br/>
+                    Let \(x\) be the variable representing rice yield.
+                </p>
+
+                <p>Initial (Incorrect) Data:</p>
+                
+                    <p>Number of fields, \(n = 200\)</p>
+                    <p>Incorrect mean, \(\bar{x}_{inc} = 40\) quintals/hectare</p>
+                    <p>Incorrect standard deviation, \(\sigma_{inc} = 15\) quintals/hectare</p>
+                
+
+                <p>Misread values:</p>
+                
+                    <p>Incorrect values (to be removed): 34, 35</p>
+                    <p>Correct values (to be added): 43, 53</p>
+                </ul>
+
+                <p><strong>1. Calculate the Incorrect Sum of Observations (\(\sum x_{inc}\)):</strong><br/>
+                    From the definition of mean, \(\bar{x} = \frac{\sum x}{n}\), so \(\sum x = n \bar{x}\).
+                </p>
+                \[
+                \sum x_{inc} = n \times \bar{x}_{inc} = 200 \times 40 = 8000 \text{ quintals}
+                \]
+
+                <p><strong>2. Calculate the Incorrect Sum of Squares of Observations (\(\sum x_{inc}^2\)):</strong><br/>
+                    From the variance formula, \(\sigma^2 = \frac{\sum x^2}{n} - \bar{x}^2\), so \(\sum x^2 = n (\sigma^2 + \bar{x}^2)\).
+                </p>
+                \[
+                \sigma_{inc}^2 = 15^2 = 225
+                \]
+                \[
+                \sum x_{inc}^2 = n (\sigma_{inc}^2 + \bar{x}_{inc}^2) = 200 (225 + 40^2) = 200 (225 + 1600) = 200 (1825) = 365000
+                \]
+
+                <p><strong>3. Calculate the Corrected Sum of Observations (\(\sum x_{corr}\)):</strong><br/>
+                    To correct the sum, subtract the incorrect values and add the correct values:
+                </p>
+                \[
+                \sum x_{corr} = \sum x_{inc} - (\text{sum of incorrect values}) + (\text{sum of correct values})
+                \]
+                \[
+                \sum x_{corr} = 8000 - (34 + 35) + (43 + 53)
+                \]
+                \[
+                \sum x_{corr} = 8000 - 69 + 96
+                \]
+                \[
+                \sum x_{corr} = 7931 \text{ quintals}
+                \]
+
+                <p><strong>4. Calculate the Corrected Sum of Squares of Observations (\(\sum x_{corr}^2\)):</strong><br/>
+                    To correct the sum of squares, subtract the squares of incorrect values and add the squares of correct values:
+                </p>
+                \[
+                \sum x_{corr}^2 = \sum x_{inc}^2 - (34^2 + 35^2) + (43^2 + 53^2)
+                \]
+                \[
+                \sum x_{corr}^2 = 365000 - (1156 + 1225) + (1849 + 2809)
+                \]
+                \[
+                \sum x_{corr}^2 = 365000 - 2381 + 4658
+                \]
+                \[
+                \sum x_{corr}^2 = 367277
+                \]
+
+                <p><strong>5. Calculate the Corrected Mean (\(\bar{x}_{corr}\)):</strong><br/>
+                    The number of observations \(n\) remains the same (200).
+                </p>
+                \[
+                \bar{x}_{corr} = \frac{\sum x_{corr}}{n} = \frac{7931}{200} = 39.655 \text{ quintals/hectare}
+                \]
+
+                <p><strong>6. Calculate the Corrected Variance (\(\sigma_{corr}^2\)) and Standard Deviation (\(\sigma_{corr}\)):</strong></p>
+                \[
+                \sigma_{corr}^2 = \frac{\sum x_{corr}^2}{n} - \bar{x}_{corr}^2
+                \]
+                \[
+                \sigma_{corr}^2 = 1836.385 - 1572.515025
+                \]
+                \[
+                \sigma_{corr}^2 = 263.869975
+                \]
+                \[
+                \sigma_{corr} = \sqrt{263.869975} \approx 16.244 \text{ quintals/hectare}
+                \]
+            </div>
+
+            <h3>3.8 Coefficient of Dispersion and Coefficient of Variation</h3>
+            <p>
+                Whenever we want to compare the variability of two series which differ widely in their averages or which are measured in different units, we do not merely calculate the measures of dispersion. Instead, we calculate the coefficient of dispersion, which are pure numbers independent of the units of measurement. The coefficients of dispersion (C.D.) based on different measures are as follows:
+            </p>
+
+            <ol>
+                <li><strong>Based upon Range:</strong> \( C.D. = \frac{A - B}{A + B} \), where \(A\) and \(B\) are the greatest and the smallest items in the series.</li>
+                <li><strong>Based upon Quartile Deviation:</strong> \( C.D. = \frac{Q_3 - Q_1}{Q_3 + Q_1} \)</li>
+                <li><strong>Based upon Mean Deviation:</strong> \( C.D. = \frac{\text{Average from Mean Deviation}}{\text{Mean}} \)</li>
+                <li><strong>Based upon Standard Deviation:</strong> \( C.D. = \frac{\sigma}{\bar{x}} \)</li>
+            </ol>
+
+            <p><strong>3.8.1 Coefficient of Variation.</strong> 100 times the coefficient of dispersion based upon standard deviation is called co-efficient of variation (C.V.),</p>
+            \[
+            C.V. = 100 \times \frac{\sigma}{\bar{x}} \quad 
+            \]
+
+            <p>
+                According to Professor Karl Pearson who suggested this measure, C.V. is the percentage variation in the mean, standard deviation being considered as the total variation in the mean.
+            </p>
+
+            <p>
+                For comparing the variability of two series, we calculate the coefficient of variation for each series. The series having greater C.V. is said to be more variable than the other and the series having lesser C.V. is said to be more consistent.
+            </p>
+
+            <div class="example">
+                <h4>Example 3.7: Analysis of Monthly Farm Incomes in Haryana</h4>
+                <p>
+                    An analysis of monthly incomes from farming activities in two agricultural cooperatives in Haryana reveals the following data:
+                </p>
+                <table class="calculation-data">
+                    <thead>
+                        <tr>
+                            <th>Cooperative</th>
+                            <th>Average Monthly Income (₹)</th>
+                            <th>Standard Deviation (₹)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>A</td>
+                            <td>500</td>
+                            <td>186</td>
+                        </tr>
+                        <tr>
+                            <td>B</td>
+                            <td>600</td>
+                            <td>175</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p>(i) Which cooperative exhibits a larger variation in individual farm incomes?<br/>
+                    (ii) Calculate the average monthly income, wage, and the variance of the distribution of wages in the two cooperatives taken together.
+                </p>
+
+                <p><strong>Solution:</strong></p>
+
+                <p>No. of farmers in cooperative A = 500 (say), in cooperative B = 600 (say).<br/>
+                    Average monthly income (say) \(\bar{x}_1 = \text{₹} 500\) for A, \(\bar{x}_2 = \text{₹} 600\) for B.<br/>
+                    Standard deviation \(\sigma_1 = \text{₹} 186\) for A, \(\sigma_2 = \text{₹} 175\) for B.
+                </p>
+
+                <p><strong>Firm A paid to the workers ₹ 500 × 186 = ₹ 93,000</strong><br/>
+                    No. of wage-earners (say) \(n_1 = 500\), \(\bar{x}_1 = 500\).<br/>
+                    Average monthly wage \(= \frac{\text{Total wages paid}}{n_1} = \frac{93,000}{500} = \text{₹} 186\).
+                </p>
+
+                <p><strong>Firm B paid to the workers ₹ 600 × 175 = ₹ 105,000</strong><br/>
+                    Total wages paid to the workers in B = ₹ 105,000.<br/>
+                    This we see that the firm B has larger wage bill.
+                </p>
+
+                <p>(i) <strong>Variance of distribution of wages in firm A (say) \(\sigma_1^2 = 81\)</strong><br/>
+                    C.V. of distribution of wages in firm A = 100 × \(\frac{\sigma_1}{\bar{x}_1} = 100 \times \frac{9}{186} = 4.84\)</p>
+
+                <p>C.V. of distribution of wages in firm B = 100 × \(\frac{\sigma_2}{\bar{x}_2} = 100 \times \frac{10}{175} = 5.71\)</p>
+
+                <p>
+                    Since C.V. for firm B is greater than C.V. for firm A, firm B has greater variability in individual wages.
+                </p>
+
+                <p>(ii) <strong>The average monthly wage (say) \(\bar{x}\), of firm the workers in the two cooperatives taken together:</strong><br/>
+                    Total no. of farmers \(n = n_1 + n_2 = 500 + 600 = 1,100\)<br/>
+                    Total wages paid in the given month = \text{₹} 93,000 + \text{₹} 105,000 = ₹ 198,000<br/>
+                    \(\bar{x} = \frac{198,000}{1,100} = \text{₹} 180\)
+                </p>
+
+                <p>(b) <strong>The combined variance \(\sigma^2\) of the formula:</strong></p>
+                \[
+                \sigma^2 = \frac{n_1 (\sigma_1^2 + d_1^2) + n_2 (\sigma_2^2 + d_2^2)}{n_1 + n_2}
+                \]
+                <p>where \(d_1 = \bar{x}_1 - \bar{x}\), \(d_2 = \bar{x}_2 - \bar{x}\).</p>
+
+                <p>Here \(d_1 = 186 - 180 = 6\), \(d_2 = 175 - 180 = -5\)</p>
+
+                <p>\(\sigma_1^2 = 81\), \(\sigma_2^2 = 100\)</p>
+
+                \[
+                \sigma^2 = \frac{500 (81 + 36) + 600 (100 + 25)}{1,100} = \frac{500 \times 117 + 600 \times 125}{1,100} = \frac{58,500 + 75,000}{1,100} = \frac{133,500}{1,100} = 121.36
+                \]
+                <p>
+                    Hence, the combined standard deviation \(\sigma = \sqrt{121.36} \approx 11.02\) ₹.
+                </p>
+            </div>
+        </div>
+    </section>
+</main>
+        <footer class="site" role="contentinfo">
+            <div>Developed by : Prof. O.P. Sheoran <br> Department of Mathematics & Statistics,<br> CCS Haryana Agricultural University, Hisar <br> &copy; 2025 CCS HAU, Hisar</div>
+        </footer>
+    </div>
+</body>
+</html>

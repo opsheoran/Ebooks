@@ -1,0 +1,3000 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chapter — Measures of Dispersion</title>
+  <link rel="stylesheet" href="/web_book/public/styles/book_style.css">
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+</head>
+<body>
+  <div class="page" role="document" aria-label="Measures of Dispersion">
+    <header class="site" role="banner">
+      <div class="title">Chapter 4 <br>Measures of Dispersion</div>
+    </header>
+
+<div class="toc" role="navigation" aria-label="Table of contents">
+      <div class="toc-container">
+        <nav>
+          <h2>Index</h2>
+          <ol>
+            <li><a href="#sec1">Introduction</a></li>
+            <li><a href="#sec2">Characteristics of a good measure of dispersion</a></li>
+            <li><a href="#sec3">Absolute and Relative Measures</a></li>
+            <li><a href="#sec4">Range and Coefficient of Range</a></li>
+            <li><a href="#sec5">Quartile Deviation and Coefficient of Quartile Deviation</a></li>
+            <li><a href="#sec6">Mean Deviation and Coefficient of Mean Deviation</a></li>
+            <li><a href="#sec7">Standard Deviation and Coefficient of Variation</a></li>
+            <li><a href="#standard-deviation-properties">Additional Notes on Properties of Standard Deviations</a></li>
+            <li><a href="#moments-properties">Moments and its Properties</a></li>
+            <li><a href="#sec10_alt">Different Formulas for Calculating Variance</a></li>
+            <li><a href="#sec11_alt">Variance and Standard Deviation: Effect of Change of Origin and Scale</a></li>
+            <li><a href="#sec12_alt">Advanced Topics in Dispersion</a></li>
+          <li><a href="#exercises">Exercises</a></li>
+      </ol>
+        </nav>
+      </div>
+    </div>
+<main class="content">
+      <section class="section" id="sec1">
+        <div class="head">
+          <div class="num">1</div>
+          <div class="title-group">
+            <h2 class="title">Introduction</h2>
+          </div>
+        </div>
+        <div class="body">
+          <p>
+            The measures of central tendency serve to locate the center of the distribution, but they do not reveal how the items are spread out on either side of the center. This characteristic of a frequency distribution is commonly referred to as <strong>dispersion</strong>. In any series, all the items are not equal; there is a difference or variation among the values. The degree of this variation is evaluated by various measures of dispersion. Small dispersion indicates high uniformity of the items, while large dispersion indicates less uniformity.
+          </p>
+          <div class="example">
+            <h4>Example 1</h4>
+            <p>Consider the following marks of two students:</p>
+            <table class="calculation-data">
+              <thead>
+                <tr>
+                  <th>Student I</th>
+                  <th>Student II</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>68</td>
+                  <td>85</td>
+                </tr>
+                <tr>
+                  <td>75</td>
+                  <td>90</td>
+                </tr>
+                <tr>
+                  <td>65</td>
+                  <td>80</td>
+                </tr>
+                <tr>
+                  <td>67</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>70</td>
+                  <td>65</td>
+                </tr>
+              </tbody>
+            </table>
+            <p>
+              Both students have a total of 345 marks and an average of 69 each. The fact is that the second student has failed in one paper (25 marks). When only the averages are considered, the two students appear to be equal. However, the first student has less variation in marks than the second, which is a desirable characteristic.
+            </p>
+          </div>
+          <div class="example">
+            <h4>Example 2 </h4>
+            <p>Imagine two different varieties of wheat, A and B. The yield in quintals per acre for 5 experimental plots is recorded for each:</p>
+            <table class="calculation-data">
+              <thead>
+                <tr>
+                  <th>Variety A</th>
+                  <th>Variety B</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>15</td>
+                  <td>20</td>
+                </tr>
+                <tr>
+                  <td>16</td>
+                  <td>10</td>
+                </tr>
+                <tr>
+                  <td>14</td>
+                  <td>15</td>
+                </tr>
+                <tr>
+                  <td>17</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>18</td>
+                  <td>15</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Mean: 16</th>
+                  <th>Mean: 17</th>
+                </tr>
+              </tfoot>
+            </table>
+            <p>
+              While the average yield of Variety B is slightly higher, the yields for Variety B are much more spread out (25 quintals vs. 10 quintals). Variety A shows greater consistency. For a farmer, a consistent yield (less dispersion) might be more valuable than a slightly higher but unpredictable yield.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="section" id="sec2">
+        <div class="head">
+          <div class="num">2</div>
+          <div class="title-group">
+            <h2 class="title">Characteristics of a Good Measure of Dispersion</h2>
+          </div>
+        </div>
+        <div class="body">
+          <p>
+            An ideal dispersion statistic should possess the same properties required of an ideal measure of central tendency. Specifically, it should:
+          </p>
+            <ol type="i">
+              <li><strong>Be well‑defined:</strong> The formula must be unambiguous and applicable to any data set that meets the required conditions.</li>
+              <li><strong>Be easy to calculate and interpret:</strong> Practitioners should be able to compute the value without excessive effort and understand what the number conveys about the data.</li>
+              <li><strong>Rely solely on the observed values:</strong> No external constants or parameters should be needed.</li>
+              <li><strong>Be amenable to further mathematical treatment:</strong> The measure should integrate smoothly into algebraic manipulations, hypothesis testing, and comparison across samples.</li>
+              <li><strong>Exhibit stability against sampling variation:</strong> Small changes in the sample should not cause large, erratic shifts in the value.</li>
+            </ol>
+        </div>
+      </section>
+      <section class="section" id="sec3">
+        <div class="head">
+          <div class="num">3</div>
+          <div class="title-group">
+            <h2 class="title">Absolute and Relative Measures</h2>
+            <h3 class="subtitle">Understanding the two types of dispersion measures</h3>
+          </div>
+        </div>
+        <div class="body">
+          <p>There are two kinds of measures of dispersion, namely:</p>
+          <ol>
+            <li><strong>Absolute measure of dispersion</strong></li>
+            <li><strong>Relative measure of dispersion</strong></li>
+          </ol>
+          <p>
+            An <strong>absolute measure of dispersion</strong> indicates the amount of variation in a set of values in terms of the units of observation. For example, if rainfall on different days is measured in mm, any absolute measure of dispersion (like standard deviation) will give the variation in rainfall in mm.
+          </p>
+          <p>
+            On the other hand, <strong>relative measures of dispersion</strong> are free from the units of measurement of the observations. They are pure numbers and are used to compare the variation in two or more sets which have different units of measurement.
+          </p>
+          <p>The various absolute and relative measures of dispersion are listed below:</p>
+          <table class="calculation-data">
+            <thead>
+              <tr>
+                <th>Absolute Measure</th>
+                <th>Relative Measure</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Range</td>
+                <td>Coefficient of Range</td>
+              </tr>
+              <tr>
+                <td>Quartile Deviation</td>
+                <td>Coefficient of Quartile Deviation</td>
+              </tr>
+              <tr>
+                <td>Mean Deviation</td>
+                <td>Coefficient of Mean Deviation</td>
+              </tr>
+              <tr>
+                <td>Standard Deviation</td>
+                <td>Coefficient of Variation</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+  <section class="section" id="sec4">
+    <div class="head">
+      <div class="num">4</div>
+      <div class="title-group">
+        <h2 class="title">Range and Coefficient of Range</h2>
+        <h3 class="subtitle">The simplest measure of dispersion</h3>
+      </div>
+    </div>
+    <div class="body">
+      <h3>Range</h3>
+      <p>
+        The range is the simplest possible measure of dispersion and is defined as the difference between the largest and smallest values of the variable.
+      </p>
+      <div class="formula">
+        <p>Range = \(L - S\)</p>
+        <p>Where, \(L\) = Largest value and \(S\) = Smallest value.</p>
+      </div>
+      <p>
+        In individual observations and discrete series, \(L\) and \(S\) are easily identified. In continuous series, one of the following two methods is used:
+      </p>
+      <ul>
+        <li><strong>Method 1:</strong> \(L\) = Upper boundary of the highest class; \(S\) = Lower boundary of the lowest class.</li>
+        <li><strong>Method 2:</strong> \(L\) = Mid-value of the highest class; \(S\) = Mid-value of the lowest class.</li>
+      </ul>
+      <h3>Coefficient of Range</h3>
+      <p>
+        The coefficient of range is a relative measure of dispersion, used to compare the spread of two different datasets.
+      </p>
+      <div class="formula">
+        <p>Coefficient of Range = \(\frac{L - S}{L + S}\)</p>
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>Find the value of range and its coefficient for the following data: 7, 9, 6, 8, 11, 10, 4.</p>
+        <p><strong>Solution:</strong></p>
+        <p>Largest value (\(L\)) = 11</p>
+        <p>Smallest value (\(S\)) = 4</p>
+        \[ \text{Range} = L - S = 11 - 4 = 7 \]
+        \[ \text{Coefficient of Range} = \frac{L - S}{L + S} = \frac{11 - 4}{11 + 4} = \frac{7}{15} \approx 0.4667 \]
+      </div>
+      <div class="example">
+        <h4>Example (Continuous Series)</h4>
+        <p>Calculate the range and its coefficient from the following distribution.</p>
+        <table class="calculation-data" >
+          <thead>
+            <tr>
+              <th>Size</th>
+              <th>60-63</th>
+              <th>63-66</th>
+              <th>66-69</th>
+              <th>69-72</th>
+              <th>72-75</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Number</td>
+              <td>5</td>
+              <td>18</td>
+              <td>42</td>
+              <td>27</td>
+              <td>8</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p>Using Method 1:</p>
+        <p>Largest value (\(L\)) = Upper boundary of the highest class = 75</p>
+        <p>Smallest value (\(S\)) = Lower boundary of the lowest class = 60</p>
+        \[ \text{Range} = L - S = 75 - 60 = 15 \]
+        \[ \text{Coefficient of Range} = \frac{L - S}{L + S} = \frac{75 - 60}{75 + 60} = \frac{15}{135} \approx 0.1111 \]
+      </div>
+    </div>
+  </section>
+  <section class="section" id="sec5">
+    <div class="head">
+      <div class="num">5</div>
+      <div class="title-group">
+        <h2 class="title">Quartile Deviation and Coefficient of Quartile Deviation</h2>
+        <h3 class="subtitle">A measure based on inner quartiles</h3>
+      </div>
+    </div>
+    <div class="body">
+      <h3>Quartile Deviation (Q.D.)</h3>
+      <p>
+        Quartile Deviation is half of the difference between the third and first quartiles. Hence, it is also known as the <strong>Semi-Interquartile Range</strong>.
+      </p>
+      <div class="formula">
+        <p>Q.D. = \(\frac{Q_3 - Q_1}{2}\)</p>
+      </div>
+      <p>
+        The range \((Q_3 - Q_1)\) is called the <strong>interquartile range</strong>, and \(\frac{Q_3 - Q_1}{2}\) is the semi-interquartile range.
+      </p>
+      <h3>Coefficient of Quartile Deviation</h3>
+      <p>
+        The coefficient of quartile deviation is a relative measure that can be used for comparing the dispersion of different distributions.
+      </p>
+      <div class="formula">
+        <p>Coefficient of Quartile Deviation = \(\frac{Q_3 - Q_1}{Q_3 + Q_1}\)</p>
+      </div>
+      <div class="example">
+        <h4>Example (Individual Observations)</h4>
+        <p>Find the Quartile Deviation for the following data:</p>
+        <p>391, 384, 591, 407, 672, 522, 777, 733, 1490, 2488</p>
+        <p><strong>Solution:</strong></p>
+        <p>Arrange the given values in ascending order:</p>
+        <p>384, 391, 407, 522, 591, 672, 733, 777, 1490, 2488</p>
+        \[ \text{Position of } Q_1 = \frac{N + 1}{4} = \frac{10 + 1}{4} = 2.75^{\text{th}} \text{ item} \]
+        \[
+        \begin{aligned}
+        Q_1 &= 2^{\text{nd}} \text{ value} + 0.75 (3^{\text{rd}} \text{ value} - 2^{\text{nd}} \text{ value}) \\
+        &= 391 + 0.75(407 - 391) \\
+        &= 391 + 0.75 \times 16 \\
+        &= 391 + 12 \\
+        &= 403
+        \end{aligned}
+        \]
+        \[ \text{Position of } Q_3 = 3 \left( \frac{N + 1}{4} \right) = 3 \times 2.75 = 8.25^{\text{th}} \text{ item} \]
+        \[
+        \begin{aligned}
+        Q_3 &= 8^{\text{th}} \text{ value} + 0.25 (9^{\text{th}} \text{ value} - 8^{\text{th}} \text{ value}) \\
+        &= 777 + 0.25(1490 - 777) \\
+        &= 777 + 0.25 \times 713 \\
+        &= 777 + 178.25 \\
+        &= 955.25
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Q.D.} &= \frac{Q_3 - Q_1}{2} \\
+        &= \frac{955.25 - 403}{2} \\
+        &= \frac{552.25}{2} \\
+        &= 276.125
+        \end{aligned}
+        \]
+      </div>
+      <div class="example">
+        <h4>Example (Discrete Series)</h4>
+        <p>Weekly wages of laborers are given below. Calculate Q.D. and Coefficient of Q.D.</p>
+        <table class="calculation-data" >
+          <thead>
+            <tr>
+              <th>Weekly Wage (Rs.)</th>
+              <th>No. of Weeks (f)</th>
+              <th>Cumulative Frequency (cf)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>100</td>
+              <td>5</td>
+              <td>5</td>
+            </tr>
+            <tr>
+              <td>200</td>
+              <td>8</td>
+              <td>13</td>
+            </tr>
+            <tr>
+              <td>400</td>
+              <td>21</td>
+              <td>34</td>
+            </tr>
+            <tr>
+              <td>500</td>
+              <td>12</td>
+              <td>46</td>
+            </tr>
+            <tr>
+              <td>600</td>
+              <td>6</td>
+              <td>52</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>\(N=52\)</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        \[ \text{Position of } Q_1 = \frac{N + 1}{4} = \frac{52 + 1}{4} = 13.25^{\text{th}} \text{ item} \]
+        <p>\(Q_1\) lies at the \(14^{\text{th}}\) item.</p>
+        \[
+        \begin{aligned}
+        Q_1 &= 200 + 0.25 (400 - 200) \\
+        &= 200 + 0.25 \times 200 \\
+        &= 200 + 50 \\
+        &= 250
+        \end{aligned}
+        \]
+        \[ \text{Position of } Q_3 = 3 \left( \frac{N + 1}{4} \right) = 3 \times 13.25 = 39.75^{\text{th}} \text{ item} \]
+        <p>\(Q_3\) lies at the \(40^{\text{th}}\) item.</p>
+        \[
+        \begin{aligned}
+        Q_3 &= 500 + 0.75 (500 - 500) \\
+        &= 500 + 0 \\
+        &= 500
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Q.D.} &= \frac{Q_3 - Q_1}{2} \\
+        &= \frac{500 - 250}{2} \\
+        &= \frac{250}{2} \\
+        &= 125
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of Quartile Deviation} &= \frac{Q_3 - Q_1}{Q_3 + Q_1} \\
+        &= \frac{500 - 250}{500 + 250} \\
+        &= \frac{250}{750} \\
+        &\approx 0.3333
+        \end{aligned}
+        \]
+      </div>
+      <div class="example">
+        <h4>Example (Continuous Series)</h4>
+        <p>For the data given below, find the quartile deviation and coefficient of quartile deviation.</p>
+        <table class="calculation-data" >
+          <thead>
+            <tr>
+              <th>X</th>
+              <th>351–500</th>
+              <th>501–650</th>
+              <th>651–800</th>
+              <th>801–950</th>
+              <th>951–1100</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>f</td>
+              <td>48</td>
+              <td>189</td>
+              <td>88</td>
+              <td>47</td>
+              <td>28</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data" >
+          <thead>
+            <tr>
+              <th>Class Interval (X)</th>
+              <th>Frequency (f)</th>
+              <th>True Class Intervals</th>
+              <th>Cumulative Frequency (cf)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>351-500</td>
+              <td>48</td>
+              <td>350.5-500.5</td>
+              <td>48</td>
+            </tr>
+            <tr>
+              <td>501-650</td>
+              <td>189</td>
+              <td>500.5-650.5</td>
+              <td>237</td>
+            </tr>
+            <tr>
+              <td>651-800</td>
+              <td>88</td>
+              <td>650.5-800.5</td>
+              <td>325</td>
+            </tr>
+            <tr>
+              <td>801-950</td>
+              <td>47</td>
+              <td>800.5-950.5</td>
+              <td>372</td>
+            </tr>
+            <tr>
+              <td>951-1100</td>
+              <td>28</td>
+              <td>950.5-1100.5</td>
+              <td>400</td>
+            </tr>
+
+            <tr>
+              <th>Total</th>
+              <th>\(N = 400\)</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Calculating \(Q_1\):</strong></p>
+        \[ \text{Position of } Q_1 = \frac{N}{4} = \frac{400}{4} = 100^{\text{th}} \text{ item. This falls in the 500.5-650.5 class.} \]
+        <div class="formula">
+          <p>\(Q_1 = l_1 + \frac{\frac{N}{4} - cf_1}{f_1} \times h_1\)</p>
+        </div>
+        <p>Where, \(l_1 = 500.5\), \(\frac{N}{4} = 100\), \(cf_1 = 48\), \(f_1 = 189\), \(h_1 = 150\)</p>
+        \[
+        \begin{aligned}
+        Q_1 &= 500.5 + \frac{100 - 48}{189} \times 150 \\
+        &= 500.5 + \frac{52}{189} \times 150 \\
+        &= 500.5 + 41.27 \\
+        &= 541.77
+        \end{aligned}
+        \]
+        <p><strong>Calculating \(Q_3\):</strong></p>
+        \[ \text{Position of } Q_3 = 3 \left( \frac{N}{4} \right) = 3 \times 100 = 300^{\text{th}} \text{ item. This falls in the 650.5-800.5 class.} \]
+        <div class="formula">
+          <p>\(Q_3 = l_3 + \frac{3\frac{N}{4} - cf_3}{f_3} \times h_3\)</p>
+        </div>
+        <p>Where, \(l_3 = 650.5\), \(3\frac{N}{4} = 300\), \(cf_3 = 237\), \(f_3 = 88\), \(h_3 = 150\)</p>
+        \[
+        \begin{aligned}
+        Q_3 &= 650.5 + \frac{300 - 237}{88} \times 150 \\
+        &= 650.5 + \frac{63}{88} \times 150 \\
+        &= 650.5 + 107.4 \\
+        &= 757.9
+        \end{aligned}
+        \]
+        <p><strong>Calculating Q.D. and Coefficient of Q.D.:</strong></p>
+        \[
+        \begin{aligned}
+        \text{Q.D.} &= \frac{Q_3 - Q_1}{2} \\
+        &= \frac{757.9 - 541.77}{2} \\
+        &= \frac{216.13}{2} \\
+        &= 108.065
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of Quartile Deviation} &= \frac{Q_3 - Q_1}{Q_3 + Q_1} \\
+        &= \frac{757.9 - 541.77}{757.9 + 541.77} \\
+        &= \frac{216.13}{1299.67} \\
+        &\approx 0.1663
+        \end{aligned}
+        \]
+      </div>
+    </div>
+  </section>
+  <section class="section" id="sec6">
+    <div class="head">
+      <div class="num">6</div>
+      <div class="title-group">
+        <h2 class="title">Mean Deviation and Coefficient of Mean Deviation</h2>
+        <h3 class="subtitle">A measure based on all observations</h3>
+      </div>
+    </div>
+    <div class="body">
+      <h3>Definition</h3>
+      <p>
+        Mean Deviation is the arithmetic mean of the absolute deviations of a series computed from any measure of central tendency (mean, median, or mode). The deviations are taken as positive (ignoring signs). We usually compute mean deviation about the mean or median.
+      </p>
+      <h3>Coefficient of Mean Deviation</h3>
+      <p>
+        The coefficient of mean deviation is a relative measure used for comparing the variation among different series. It is obtained by dividing the mean deviation by the average used for its calculation.
+      </p>
+      <div class="formula">
+        <p>Coefficient of Mean Deviation = \(\frac{\text{Mean Deviation (M.D.)}}{\text{Mean or Median or Mode}}\)</p>
+      </div>
+      <h3>Computation of Mean Deviation - Individual Series</h3>
+      <p><strong>Steps:</strong></p>
+      <ol>
+        <li>Calculate the average (mean, median, or mode) of the series.</li>
+        <li>Find the absolute deviations of each item from the chosen average, denoted by \(|D|\).</li>
+        <li>Compute the sum of these deviations, \(\sum |D|\).</li>
+        <li>Divide the sum by the number of items, \(n\).</li>
+      </ol>
+      <div class="formula">
+        <p>M.D. = \(\frac{\sum |D|}{n}\)</p>
+      </div>
+      <div class="example">
+        <h4>Example (General)</h4>
+        <p>Calculate mean deviation from the mean and median for the following data: 100, 150, 200, 250, 360, 490, 500, 600, and 671. Also calculate the coefficient of M.D.</p>
+        <p><strong>Solution:</strong></p>
+        <p>First, calculate the mean and median.</p>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{100+150+200+250+360+490+500+600+671}{9} \\
+        &= \frac{3321}{9} \\
+        &= 369
+        \end{aligned}
+        \]
+        <p>To find the median, arrange the data in ascending order: 100, 150, 200, 250, 360, 490, 500, 600, 671.</p>
+        \[ \text{Median } (M_d) = \text{Value of } \left( \frac{N+1}{2} \right)^{\text{th}} \text{ item} = \left( \frac{9+1}{2} \right)^{\text{th}} \text{ item} = 5^{\text{th}} \text{ item} = 360 \]
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X</th>
+              <th>\(|D| = |X - \text{Mean}| \text{ i.e. } |X - 369|\)</th>
+              <th>\(|D| = |X - \text{Md}| \text{ i.e } |X - 360|\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>100</td><td>269</td><td>260</td></tr>
+            <tr><td>150</td><td>219</td><td>210</td></tr>
+            <tr><td>200</td><td>169</td><td>160</td></tr>
+            <tr><td>250</td><td>119</td><td>110</td></tr>
+            <tr><td>360</td><td>9</td><td>0</td></tr>
+            <tr><td>490</td><td>121</td><td>130</td></tr>
+            <tr><td>500</td><td>131</td><td>140</td></tr>
+            <tr><td>600</td><td>231</td><td>240</td></tr>
+            <tr><td>671</td><td>302</td><td>311</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>\(\sum X = 3321\)</th>
+              <th>\(\sum|D| = 1570\)</th>
+              <th>\(\sum|D| = 1561\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \text{M.D. from Mean} &= \frac{\sum|D|}{n} \\
+        &= \frac{1570}{9} \\
+        &\approx 174.44
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Mean} &= \frac{174.44}{369} \\
+        &\approx 0.47
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{M.D. from Median} &= \frac{\sum|D|}{n} \\
+        &= \frac{1561}{9} \\
+        &\approx 173.44
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Median} &= \frac{173.44}{360} \\
+        &\approx 0.48
+        \end{aligned}
+        \]
+      </div>
+      <div class="example">
+        <h4>Example </h4>
+        <p>The yield of basmati rice (in quintals per acre) from 9 different farms in a village in Haryana is recorded as: 25, 28, 30, 32, 35, 38, 40, 42, 45. Calculate the mean deviation from the mean and its coefficient.</p>
+        <p><strong>Solution:</strong></p>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{25+28+30+32+35+38+40+42+45}{9} \\
+        &= \frac{315}{9} \\
+        &= 35 \text{ quintals/acre}
+        \end{aligned}
+        \]
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X (Yield)</th>
+              <th>\(|D| = |X - \text{Mean}| = |X - 35|\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>25</td><td>10</td></tr>
+            <tr><td>28</td><td>7</td></tr>
+            <tr><td>30</td><td>5</td></tr>
+            <tr><td>32</td><td>3</td></tr>
+            <tr><td>35</td><td>0</td></tr>
+            <tr><td>38</td><td>3</td></tr>
+            <tr><td>40</td><td>5</td></tr>
+            <tr><td>42</td><td>7</td></tr>
+            <tr><td>45</td><td>10</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>\(\sum X = 315\)</th>
+              <th>\(\sum|D| = 50\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \text{M.D. from Mean} &= \frac{\sum|D|}{n} \\
+        &= \frac{50}{9} \\
+        &\approx 5.56
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Mean} &= \frac{5.56}{35} \\
+        &\approx 0.1588
+        \end{aligned}
+        \]
+        <p>This result shows the average deviation of the rice yield from the mean yield. A low value indicates a high degree of consistency in yield across the farms.</p>
+      </div>
+      <h3>Mean Deviation - Discrete Series</h3>
+      <div class="formula">
+        <p>\[M.D. = \frac{\sum f|D|}{\sum f}\]</p>
+      </div>
+      <div class="example">
+        <h4>Example (General)</h4>
+        <p>Compute Mean Deviation from mean and median from the following data. Also, compute the coefficient of mean deviation.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Height (cm)</th>
+              <th>158</th>
+              <th>159</th>
+              <th>160</th>
+              <th>161</th>
+              <th>162</th>
+              <th>163</th>
+              <th>164</th>
+              <th>165</th>
+              <th>166</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>No. of persons</td>
+              <td>15</td>
+              <td>20</td>
+              <td>32</td>
+              <td>35</td>
+              <td>33</td>
+              <td>22</td>
+              <td>20</td>
+              <td>10</td>
+              <td>8</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X (Height)</th>
+              <th>f (No. of Persons)</th>
+              <th>\(X \cdot f\)</th>
+              <th>\(|D| = |X - \text{Mean}| = |X - 161.51|\)</th>
+              <th>\(f|D|\)</th>
+              <th>\(|D| = |X - \text{Md}| = |X - 161|\)</th>
+              <th>\(f|D|\)</th>
+              <th>Cumulative Frequency (cf)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>158</td><td>15</td><td>2370</td><td>3.51</td><td>52.65</td><td>3</td><td>45</td><td>15</td></tr>
+            <tr><td>159</td><td>20</td><td>3180</td><td>2.51</td><td>50.20</td><td>2</td><td>40</td><td>35</td></tr>
+            <tr><td>160</td><td>32</td><td>5120</td><td>1.51</td><td>48.32</td><td>1</td><td>32</td><td>67</td></tr>
+            <tr><td>161</td><td>35</td><td>5635</td><td>0.51</td><td>17.85</td><td>0</td><td>0</td><td>102</td></tr>
+            <tr><td>162</td><td>33</td><td>5346</td><td>0.49</td><td>16.17</td><td>1</td><td>33</td><td>135</td></tr>
+            <tr><td>163</td><td>22</td><td>3586</td><td>1.49</td><td>32.78</td><td>2</td><td>44</td><td>157</td></tr>
+            <tr><td>164</td><td>20</td><td>3280</td><td>2.49</td><td>49.80</td><td>3</td><td>60</td><td>177</td></tr>
+            <tr><td>165</td><td>10</td><td>1650</td><td>3.49</td><td>34.90</td><td>4</td><td>40</td><td>187</td></tr>
+            <tr><td>166</td><td>8</td><td>1328</td><td>4.49</td><td>35.92</td><td>5</td><td>40</td><td>195</td></tr>
+            <tr>
+              <th>Total</th>
+              <th>\(N = 195\)</th>
+              <th>\(\sum Xf = 31495\)</th>
+              <th></th>
+              <th>\(\sum f|D| = 338.59\)</th>
+              <th></th>
+              <th>\(\sum f|D| = 334\)</th>
+              <th></th>
+            </tr>
+          </tbody>
+        </table>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{\sum Xf}{N} \\
+        &= \frac{31495}{195} \\
+        &\approx 161.51 \text{ cm}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Median } (M_d) &= \text{Value of } \left( \frac{N+1}{2} \right)^{\text{th}} \text{ item} \\
+        &= \left( \frac{195+1}{2} \right)^{\text{th}} \text{ item} \\
+        &= 98^{\text{th}} \text{ item. From the cf column, the } 98^{\text{th}} \text{ item falls in the class with X=161. So, } M_d = 161 \text{ cm.}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{M.D. from Mean} &= \frac{\sum f|D|}{N} \\
+        &= \frac{338.59}{195} \\
+        &\approx 1.74 \text{ cm}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Mean} &= \frac{1.74}{161.51} \\
+        &\approx 0.0108
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{M.D. from Median} &= \frac{\sum f|D|}{N} \\
+        &= \frac{334}{195} \\
+        &\approx 1.71 \text{ cm}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Median} &= \frac{1.71}{161} \\
+        &\approx 0.0106
+        \end{aligned}
+        \]
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>A survey was conducted on the number of mango trees per farm in a district in India. Calculate the mean deviation from the mean for this discrete series.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>No. of Trees (X)</th>
+              <th>No. of Farms (f)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>10</td><td>8</td></tr>
+            <tr><td>15</td><td>12</td></tr>
+            <tr><td>20</td><td>25</td></tr>
+            <tr><td>25</td><td>15</td></tr>
+            <tr><td>30</td><td>10</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p>First, we need to calculate the mean of the distribution.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X (No. of Trees)</th>
+              <th>f (No. of Farms)</th>
+              <th>\(X \cdot f\)</th>
+              <th>\(|D| = |X - \text{Mean}| = |X - 20.5|\)</th>
+              <th>\(f|D|\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>10</td><td>8</td><td>80</td><td>10.5</td><td>84.0</td></tr>
+            <tr><td>15</td><td>12</td><td>180</td><td>5.5</td><td>66.0</td></tr>
+            <tr><td>20</td><td>25</td><td>500</td><td>0.5</td><td>12.5</td></tr>
+            <tr><td>25</td><td>15</td><td>375</td><td>4.5</td><td>67.5</td></tr>
+            <tr><td>30</td><td>10</td><td>300</td><td>9.5</td><td>95.0</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th>\(N = 70\)</th>
+              <th>\(\sum Xf = 1435\)</th>
+              <th></th>
+              <th>\(\sum f|D| = 325.0\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{\sum Xf}{N} \\
+        &= \frac{1435}{70} \\
+        &= 20.5 \text{ trees/farm}
+        \end{aligned}
+        \]
+        <p>Now, we calculate the mean deviation from the calculated mean.</p>
+        \[
+        \begin{aligned}
+        \text{M.D. from Mean} &= \frac{\sum f|D|}{N} \\
+        &= \frac{325}{70} \\
+        &\approx 4.64 \text{ trees/farm}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Mean} &= \frac{4.64}{20.5} \\
+        &\approx 0.226
+        \end{aligned}
+        \]
+      </div>
+      <h3>Mean Deviation - Continuous Series</h3>
+      <div class="formula">
+        <p>\[M.D. = \frac{\sum f|D|}{N}\]</p>
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>Find the mean deviation from the mean and median from the following series. Also, compute the coefficient of mean deviation.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Age in years</th>
+              <th>No. of persons (f)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0-10</td><td>20</td></tr>
+            <tr><td>10-20</td><td>25</td></tr>
+            <tr><td>20-30</td><td>32</td></tr>
+            <tr><td>30-40</td><td>40</td></tr>
+            <tr><td>40-50</td><td>42</td></tr>
+            <tr><td>50-60</td><td>35</td></tr>
+            <tr><td>60-70</td><td>10</td></tr>
+            <tr><td>70-80</td><td>8</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Age (X)</th>
+              <th>Mid-point (m)</th>
+              <th>f</th>
+              <th>\(m \cdot f\)</th>
+              <th>\(|D| = |m - \text{Mean}|\) <br> \( = |m - 36.51|\)</th>
+              <th>\(f|D|\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0-10</td><td>5</td><td>20</td><td>100</td><td>31.51</td><td>630.2</td></tr>
+            <tr><td>10-20</td><td>15</td><td>25</td><td>375</td><td>21.51</td><td>537.75</td></tr>
+            <tr><td>20-30</td><td>25</td><td>32</td><td>800</td><td>11.51</td><td>368.32</td></tr>
+            <tr><td>30-40</td><td>35</td><td>40</td><td>1400</td><td>1.51</td><td>60.4</td></tr>
+            <tr><td>40-50</td><td>45</td><td>42</td><td>1890</td><td>8.49</td><td>356.58</td></tr>
+            <tr><td>50-60</td><td>55</td><td>35</td><td>1925</td><td>18.49</td><td>647.15</td></tr>
+            <tr><td>60-70</td><td>65</td><td>10</td><td>650</td><td>28.49</td><td>284.9</td></tr>
+            <tr><td>70-80</td><td>75</td><td>8</td><td>600</td><td>38.49</td><td>307.92</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th></th>
+              <th>\(N=212\)</th>
+              <th>\(\sum mf = 7740\)</th>
+              <th></th>
+              <th>\(\sum f|D| = 3193.22\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{\sum mf}{N} \\
+        &= \frac{7740}{212} \\
+        &\approx 36.51 \text{ years}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{M.D. from Mean} &= \frac{\sum f|D|}{N} \\
+        &= \frac{3193.22}{212} \\
+        &\approx 15.06 \text{ years}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Mean} &= \frac{15.06}{36.51} \\
+        &\approx 0.4125
+        \end{aligned}
+        \]
+        <p><strong>Calculation of Median and M.D. from Median:</strong></p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Age (X)</th>
+              <th>Mid-point (m)</th>
+              <th>f</th>
+              <th>Cumulative Frequency (cf)</th>
+              <th>\(|D| = |m - \text{Md}| \) <br> \(= |m - 37.25|\)</th>
+              <th>\(f|D|\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0-10</td><td>5</td><td>20</td><td>20</td><td>32.25</td><td>645.00</td></tr>
+            <tr><td>10-20</td><td>15</td><td>25</td><td>45</td><td>22.25</td><td>556.25</td></tr>
+            <tr><td>20-30</td><td>25</td><td>32</td><td>77</td><td>12.25</td><td>392.00</td></tr>
+            <tr><td>30-40</td><td>35</td><td>40</td><td>117</td><td>2.25</td><td>90.00</td></tr>
+            <tr><td>40-50</td><td>45</td><td>42</td><td>159</td><td>7.75</td><td>325.50</td></tr>
+            <tr><td>50-60</td><td>55</td><td>35</td><td>194</td><td>17.75</td><td>621.25</td></tr>
+            <tr><td>60-70</td><td>65</td><td>10</td><td>204</td><td>27.75</td><td>277.50</td></tr>
+            <tr><td>70-80</td><td>75</td><td>8</td><td>212</td><td>37.75</td><td>302.00</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th></th>
+              <th>\(N=212\)</th>
+              <th></th>
+              <th></th>
+              <th>\(\sum f|D| = 3209.50\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[ \text{The median class is where } \frac{N}{2} = \frac{212}{2} = 106 \text{ falls, which is the 30-40 class.} \]
+        \[
+        \begin{aligned}
+        \text{Median } (M_d) &= l + \frac{\frac{N}{2} - cf}{f} \times h \\
+        &= 30 + \frac{106 - 77}{40} \times 10 \\
+        &= 30 + \frac{29}{40} \times 10 \\
+        &= 30 + 7.25 \\
+        &= 37.25 \text{ years}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{M.D. from Median} &= \frac{\sum f|D|}{N} \\
+        &= \frac{3209.50}{212} \\
+        &\approx 15.14 \text{ years}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Median} &= \frac{15.14}{37.25} \\
+        &\approx 0.41
+        \end{aligned}
+        \]
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>A study was conducted to understand the distribution of land holdings (in acres) among farmers in a state in India. Calculate the mean deviation from the mean.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Land Holding (acres)</th>
+              <th>No. of Farmers (f)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0-5</td><td>50</td></tr>
+            <tr><td>5-10</td><td>75</td></tr>
+            <tr><td>10-15</td><td>100</td></tr>
+            <tr><td>15-20</td><td>80</td></tr>
+            <tr><td>20-25</td><td>45</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Land Holding (X)</th>
+              <th>Mid-point (m)</th>
+              <th>f</th>
+              <th>\(m \cdot f\)</th>
+              <th>\(|D| = |m - \text{Mean}|\)</th>
+              <th>\(f|D|\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>0-5</td><td>2.5</td><td>50</td><td>125</td><td>10.5</td><td>525</td></tr>
+            <tr><td>5-10</td><td>7.5</td><td>75</td><td>562.5</td><td>5.5</td><td>412.5</td></tr>
+            <tr><td>10-15</td><td>12.5</td><td>100</td><td>1250</td><td>0.5</td><td>50</td></tr>
+            <tr><td>15-20</td><td>17.5</td><td>80</td><td>1400</td><td>4.5</td><td>360</td></tr>
+            <tr><td>20-25</td><td>22.5</td><td>45</td><td>1012.5</td><td>9.5</td><td>427.5</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th></th>
+              <th>\(N=350\)</th>
+              <th>\(\sum mf = 4350\)</th>
+              <th></th>
+              <th>\(\sum f|D| = 1775\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{\sum mf}{N} \\
+        &= \frac{4350}{350} \\
+        &\approx 12.43 \text{ acres}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{M.D. from Mean} &= \frac{\sum f|D|}{N} \\
+        &= \frac{1775}{350} \\
+        &\approx 5.07 \text{ acres}
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{Coefficient of M.D. from Mean} &= \frac{5.07}{12.43} \\
+        &\approx 0.408
+        \end{aligned}
+        \]
+      </div>
+      <h3>Merits and Demerits of Mean Deviation</h3>
+      <h4>Merits:</h4>
+      <ul>
+        <li>It is simple to understand and easy to compute.</li>
+        <li>It is rigidly defined.</li>
+        <li>It is based on all items of the series.</li>
+        <li>It is not much affected by the fluctuations of sampling.</li>
+        <li>It is less affected by extreme items.</li>
+        <li>It is flexible, as it can be calculated from any average.</li>
+        <li>It is a better measure of comparison than range and quartile deviation.</li>
+      </ul>
+      <h4>Demerits:</h4>
+      <ul>
+        <li>It is not a very accurate measure of dispersion.</li>
+        <li>It is not suitable for further mathematical calculation.</li>
+        <li>It is rarely used; it is not as popular as standard deviation.</li>
+        <li>Ignoring algebraic signs is mathematically illogical and unsound.</li>
+      </ul>
+    </div>
+  </section>
+  <section class="section" id="sec7">
+    <div class="head">
+      <div class="num">7</div>
+      <div class="title-group">
+        <h2 class="title">Standard Deviation, Variance and Coefficient of Variation</h2>
+        <h3 class="subtitle">The most important measure of dispersion</h3>
+      </div>
+    </div>
+    <div class="body">
+      <h3>Standard Deviation</h3>
+      <p>
+        Introduced by Karl Pearson in 1893, the standard deviation is the most important measure of dispersion and is widely used in statistical analysis. It is also known as the <strong>Root-Mean Square Deviation</strong> because it is the square root of the mean of the squared deviations from the arithmetic mean. Its square is called <strong>Variance</strong>.
+      </p>
+      <p>
+        <strong>Definition:</strong> Standard deviation (\(\sigma\)) is defined as the positive square root of the arithmetic mean of the squared deviations of the given observations from their arithmetic mean.
+      </p>
+      <h3>Calculation of Standard Deviation - Individual Series</h3>
+      <p>There are two primary methods for calculation:</p>
+      <h4>Deviations taken from the Actual Mean</h4>
+      <p>This method is best when the mean is a whole number.</p>
+      <div class="formula">
+        <p>\(\sigma = \sqrt{\frac{\sum (X - \bar{X})^2}{N}}\)</p>
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>Calculate the standard deviation from the following data: 14, 22, 9, 15, 20, 17, 12, 11.</p>
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Value (X)</th>
+              <th>\(d = X - \bar{X} = X - 15\)</th>
+              <th>\(d^2 = (X - \bar{X})^2\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>14</td><td>-1</td><td>1</td></tr>
+            <tr><td>22</td><td>7</td><td>49</td></tr>
+            <tr><td>9</td><td>-6</td><td>36</td></tr>
+            <tr><td>15</td><td>0</td><td>0</td></tr>
+            <tr><td>20</td><td>5</td><td>25</td></tr>
+            <tr><td>17</td><td>2</td><td>4</td></tr>
+            <tr><td>12</td><td>-3</td><td>9</td></tr>
+            <tr><td>11</td><td>-4</td><td>16</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>\(\sum X = 120\)</th>
+              <th>\(\sum d = 0\)</th>
+              <th>\(\sum d^2 = 140\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{\sum X}{N} \\
+        &= \frac{120}{8} \\
+        &= 15
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \sigma &= \sqrt{\frac{\sum (X - \bar{X})^2}{N}} \\
+        &= \sqrt{\frac{140}{8}} \\
+        &= \sqrt{17.5} \\
+        &\approx 4.18
+        \end{aligned}
+        \]
+      </div>
+      <h4>Deviations taken from the Assumed Mean (Short-cut method)</h4>
+      <p>This method is used when the actual mean is a fractional value, as it simplifies calculations.</p>
+      <div class="formula">
+        <p>\[\sigma = \sqrt{\frac{\sum d^2}{N} - \left(\frac{\sum d}{N}\right)^2}\]</p>
+        <p>Where \(d = X - A\) (A is the assumed mean)</p>
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>The table below gives the marks obtained by 10 students in statistics. Calculate the standard deviation.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Student No.</th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
+              <th>6</th>
+              <th>7</th>
+              <th>8</th>
+              <th>9</th>
+              <th>10</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Marks (X)</td>
+              <td>43</td>
+              <td>48</td>
+              <td>65</td>
+              <td>57</td>
+              <td>31</td>
+              <td>60</td>
+              <td>37</td>
+              <td>48</td>
+              <td>78</td>
+              <td>59</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p>We'll use the assumed mean method. Let the Assumed Mean (A) = 57.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X (Marks)</th>
+              <th>\(d = X - A = X - 57\)</th>
+              <th>\(d^2\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>43</td><td>-14</td><td>196</td></tr>
+            <tr><td>48</td><td>-9</td><td>81</td></tr>
+            <tr><td>65</td><td>8</td><td>64</td></tr>
+            <tr><td>57</td><td>0</td><td>0</td></tr>
+            <tr><td>31</td><td>-26</td><td>676</td></tr>
+            <tr><td>60</td><td>3</td><td>9</td></tr>
+            <tr><td>37</td><td>-20</td><td>400</td></tr>
+            <tr><td>48</td><td>-9</td><td>81</td></tr>
+            <tr><td>78</td><td>21</td><td>441</td></tr>
+            <tr><td>59</td><td>2</td><td>4</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th></th>
+              <th>\(\sum d = -44\)</th>
+              <th>\(\sum d^2 = 1952\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \sigma &= \sqrt{\frac{\sum d^2}{N} - \left(\frac{\sum d}{N}\right)^2} \\
+        &= \sqrt{\frac{1952}{10} - \left(\frac{-44}{10}\right)^2} \\
+        &= \sqrt{195.2 - (-4.4)^2} \\
+        &= \sqrt{195.2 - 19.36} \\
+        &= \sqrt{175.84} \\
+        &\approx 13.26
+        \end{aligned}
+        \]
+      </div>
+      <hr>
+      <h3>Calculation of Standard Deviation - Discrete Series</h3>
+      <p>Three methods exist: Actual Mean, Assumed Mean, and Step-Deviation.</p>
+      <h4>Assumed Mean Method</h4>
+      <div class="formula">
+        <p>\[\sigma = \sqrt{\frac{\sum fd^2}{\sum f} - \left(\frac{\sum fd}{\sum f}\right)^2}\]</p>
+        <p>Where \(d = X - A\)</p>
+      </div>
+      <div class="example">
+        <h4>Example</h4>
+        <p>Calculate the standard deviation from the following data.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X</th>
+              <th>20</th>
+              <th>22</th>
+              <th>25</th>
+              <th>31</th>
+              <th>35</th>
+              <th>40</th>
+              <th>42</th>
+              <th>45</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>f</td>
+              <td>5</td>
+              <td>12</td>
+              <td>15</td>
+              <td>20</td>
+              <td>25</td>
+              <td>14</td>
+              <td>10</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p>Let the Assumed Mean (A) = 31.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>X</th>
+              <th>f</th>
+              <th>\(d = X - A = X - 31\)</th>
+              <th>\(d^2\)</th>
+              <th>\(fd\)</th>
+              <th>\(fd^2\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>20</td><td>5</td><td>-11</td><td>121</td><td>-55</td><td>605</td></tr>
+            <tr><td>22</td><td>12</td><td>-9</td><td>81</td><td>-108</td><td>972</td></tr>
+            <tr><td>25</td><td>15</td><td>-6</td><td>36</td><td>-90</td><td>540</td></tr>
+            <tr><td>31</td><td>20</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>35</td><td>25</td><td>4</td><td>16</td><td>100</td><td>400</td></tr>
+            <tr><td>40</td><td>14</td><td>9</td><td>81</td><td>126</td><td>1134</td></tr>
+            <tr><td>42</td><td>10</td><td>11</td><td>121</td><td>110</td><td>1210</td></tr>
+            <tr><td>45</td><td>6</td><td>14</td><td>196</td><td>84</td><td>1176</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Total</th>
+              <th>\(\sum f = 107\)</th>
+              <th></th>
+              <th></th>
+              <th>\(\sum fd = 167\)</th>
+              <th>\(\sum fd^2 = 6037\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        \[
+        \begin{aligned}
+        \sigma &= \sqrt{\frac{\sum fd^2}{\sum f} - \left(\frac{\sum fd}{\sum f}\right)^2} \\
+        &= \sqrt{\frac{6037}{107} - \left(\frac{167}{107}\right)^2} \\
+        &= \sqrt{56.42 - (1.56)^2} \\
+        &= \sqrt{56.42 - 2.44} \\
+        &= \sqrt{53.98} \\
+        &\approx 7.35
+        \end{aligned}
+        \]
+      </div>
+
+      <hr>
+      <h3>Coefficient of Variation (C.V.)</h3>
+      <p>
+        The standard deviation is an absolute measure of dispersion. To compare the variability of two or more datasets with different units (e.g., heights in cm and weights in kg), we use a relative measure called the <strong>Coefficient of Variation</strong>.
+      </p>
+      <div class="formula">
+        <p>C.V. = \(\frac{\text{Standard Deviation}}{\text{Mean}} \times 100 = \frac{\sigma}{\bar{X}} \times 100\)</p>
+      </div>
+      <p>
+        A higher C.V. indicates greater variability, meaning the data is less stable, less uniform, or less consistent. A lower C.V. indicates the opposite.
+      </p>
+      <div class="example">
+        <h4>Example</h4>
+        <p>In two factories, A and B, the average weekly wages and standard deviations are given. Compare the total wages and the variability.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Factory</th>
+              <th>Average Wage (\(\bar{X}\))</th>
+              <th>Standard Deviation (\(\sigma\))</th>
+              <th>No. of Workers (N)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>A</td><td>34.50 SR</td><td>5 SR</td><td>476</td></tr>
+            <tr><td>B</td><td>28.25 SR</td><td>4.50 SR</td><td>524</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p><strong>1. Total Wages:</strong></p>
+        <ul>
+          <li>Total wages for Factory A = \(34.50 \times 476 = 16,422\) SR</li>
+          <li>Total wages for Factory B = \(28.25 \times 524 = 14,819\) SR</li>
+        </ul>
+        <p>Factory A pays out a larger amount as weekly wages.</p>
+        <p><strong>2. Variability:</strong></p>
+        <ul>
+          <li>
+            \[
+            \begin{aligned}
+            \text{C.V. (Factory A)} &= \frac{\sigma_A}{\bar{X}_A} \times 100 \\
+            &= \frac{5}{34.5} \times 100 \\
+            &\approx 14.49\%
+            \end{aligned}
+            \]
+          </li>
+          <li>
+            \[
+            \begin{aligned}
+            \text{C.V. (Factory B)} &= \frac{\sigma_B}{\bar{X}_B} \times 100 \\
+            &= \frac{4.5}{28.25} \times 100 \\
+            &\approx 15.93\%
+            \end{aligned}
+            \]
+          </li>
+        </ul>
+        <p>Since the C.V. of Factory B is greater than that of Factory A, Factory B has greater variability in individual wages.</p>
+      </div>
+      <div class="example">
+        <h4>Example </h4>
+        <p>The yield of two varieties of rice, Sona Masuri and Pusa 1121, were recorded for 5 plots each in a village in Haryana. Which variety has a more stable yield?</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Yield (quintals/acre) of Sona Masuri (X)</th>
+              <th>Yield (quintals/acre) of Pusa 1121 (Y)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>20</td><td>10</td></tr>
+            <tr><td>22</td><td>20</td></tr>
+            <tr><td>19</td><td>18</td></tr>
+            <tr><td>23</td><td>12</td></tr>
+            <tr><td>16</td><td>15</td></tr>
+          </tbody>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p>To compare stability, we calculate the Coefficient of Variation for each variety.</p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Prices (X)</th>
+              <th>\(d_x = X - \bar{X} = X - 20\)</th>
+              <th>\(d_x^2\)</th>
+              <th>Prices (Y)</th>
+              <th>\(d_y = Y - \bar{Y} = Y - 15\)</th>
+              <th>\(d_y^2\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>20</td><td>0</td><td>0</td><td>10</td><td>-5</td><td>25</td></tr>
+            <tr><td>22</td><td>2</td><td>4</td><td>20</td><td>5</td><td>25</td></tr>
+            <tr><td>19</td><td>-1</td><td>1</td><td>18</td><td>3</td><td>9</td></tr>
+            <tr><td>23</td><td>3</td><td>9</td><td>12</td><td>-3</td><td>9</td></tr>
+            <tr><td>16</td><td>-4</td><td>16</td><td>15</td><td>0</td><td>0</td></tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>\(\sum X = 100\)</th>
+              <th>\(\sum d_x = 0\)</th>
+              <th>\(\sum d_x^2 = 30\)</th>
+              <th>\(\sum Y = 75\)</th>
+              <th>\(\sum d_y = 0\)</th>
+              <th>\(\sum d_y^2 = 68\)</th>
+            </tr>
+          </tfoot>
+        </table>
+        <p><strong>Sona Masuri (Variety X):</strong></p>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{X}) &= \frac{100}{5} = 20
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{SD } (\sigma_x) &= \sqrt{\frac{\sum d_x^2}{N}} \\
+        &= \sqrt{\frac{30}{5}} \\
+        &= \sqrt{6} \\
+        &\approx 2.45
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{C.V. (Sona Masuri)} &= \frac{\sigma_x}{\bar{X}} \times 100 \\
+        &= \frac{2.45}{20} \times 100 \\
+        &= 12.25\%
+        \end{aligned}
+        \]
+        <p><strong>Pusa 1121 (Variety Y):</strong></p>
+        \[
+        \begin{aligned}
+        \text{Mean } (\bar{Y}) &= \frac{75}{5} = 15
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{SD } (\sigma_y) &= \sqrt{\frac{\sum d_y^2}{N}} \\
+        &= \sqrt{\frac{68}{5}} \\
+        &= \sqrt{13.6} \\
+        &\approx 3.69
+        \end{aligned}
+        \]
+        \[
+        \begin{aligned}
+        \text{C.V. (Pusa 1121)} &= \frac{\sigma_y}{\bar{Y}} \times 100 \\
+        &= \frac{3.69}{15} \times 100 \\
+        &= 24.6\%
+        \end{aligned}
+        \]
+        <p>
+          Since the C.V. for Sona Masuri (12.25%) is less than the C.V. for Pusa 1121 (24.6%), the <strong>Sona Masuri</strong> variety has a more stable yield.
+        </p>
+      </div>
+    </div>
+  </section>
+<section id="standard-deviation-properties" class="section">
+  <div class="head">
+    <div class="num">8</div>
+    <div class="title-group">
+      <h2 class="title">Additional Notes on Properties of Standard Deviations</h2>
+    </div>
+  </div>
+
+  <div class="body">
+    <section id="change-of-origin" class="subsection">
+      <h3>A. Change of Origin</h3>
+      <p>When we add a constant to all observations, the standard deviation remains unchanged.</p>
+
+      <div class="formula">
+        <h4>Property:</h4>
+        <p>If \(y_i = x_i + b\) (where \(b\) is a constant), then \(\sigma_y = \sigma_x\)</p>
+      </div>
+
+      <div class="formula">
+        <h4>Proof:</h4>
+        <p>Let \(y_i = x_i + b\) for all \(i = 1, 2, \dots, n\)</p>
+        <p>From the property of arithmetic mean, we know:
+          \(\bar{y} = \bar{x} + b\)</p>
+        \[
+        \begin{aligned}
+        \sigma_y^2 &= \frac{1}{n}\sum_{i=1}^{n}(y_i - \bar{y})^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}((x_i + b) - (\bar{x} + b))^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2\\
+        &= \sigma_x^2
+        \end{aligned}
+        \]
+        <p>Therefore, \(\sigma_y = \sigma_x\)</p>
+      </div>
+    </section>
+
+    <section id="change-of-scale" class="subsection">
+      <h3>B. Change of Scale</h3>
+      <p>When we multiply all observations by a constant, the standard deviation gets multiplied by the absolute value of that constant.</p>
+
+      <div class="formula">
+        <h4>Property:</h4>
+        <p>If \(y_i = ax_i\) (where \(a\) is a constant), then \(\sigma_y = |a|\sigma_x\)</p>
+      </div>
+
+      <div class="formula">
+        <h4>Proof:</h4>
+        <p>Let \(y_i = ax_i\) for all \(i = 1, 2, \dots, n\)</p>
+        <p>From the property of arithmetic mean, we know:
+          \(\bar{y} = a\bar{x}\)</p>
+        \[
+        \begin{aligned}
+        \sigma_y^2 &= \frac{1}{n}\sum_{i=1}^{n}(y_i - \bar{y})^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}(ax_i - a\bar{x})^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}a^2(x_i - \bar{x})^2\\
+        &= a^2\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2\\
+        &= a^2\sigma_x^2
+        \end{aligned}
+        \]
+        <p>Therefore, \(\sigma_y = |a|\sigma_x\)</p>
+      </div>
+       </section>
+      <section id="change-of-scale" class="subsection">
+       <h3>C. Relation Between \(\sigma\) and \(s\)</h3>
+      <p>
+        By expanding \(s^2\):
+      </p>
+      <div class="formula">
+      \[
+      s^2 = \frac{1}{N} \sum f_i (x_i - A)^2 = \frac{1}{N} \sum f_i \left[(x_i - \bar{x}) + (\bar{x} - A)\right]^2
+      \]
+      \[
+      = \sigma^2 + (\bar{x} - A)^2 = \sigma^2 + d^2 \quad \text{where } d = \bar{x} - A \quad
+      \]
+        </div>
+      <p><strong>Key Implications:</strong></p>
+      <ul>
+        <li>\(s^2\) is minimized when \(d = 0\) (i.e., \(A = \bar{x}\)), at which point \(s^2 = \sigma^2\).</li>
+        <li>Thus, <em>standard deviation is the minimum possible root mean square deviation</em>.</li>
+        <li>This aligns with the property that \(\sum f_i (x_i - A)^2\) is minimized when \(A = \bar{x}\).</li>
+      </ul>
+  </section>
+   
+
+    <section id="linear-transformation" class="subsection">
+      <h3>D. Linear Transformation (Both Change of Scale and Origin)</h3>
+      <p>When we apply a linear transformation to all observations, the standard deviation gets multiplied by the absolute value of the scaling factor.</p>
+
+      <div class="formula">
+        <h4>Property:</h4>
+        <p>If \(y_i = ax_i + b\) (where \(a\) and \(b\) are constants, \(a \neq 0\)), then \(\sigma_y = |a|\sigma_x\)</p>
+      </div>
+
+      <div class="formula">
+        <h4>Proof:</h4>
+        <p>Let \(y_i = ax_i + b\) for all \(i = 1, 2, \dots, n\)</p>
+        <p>From the property of arithmetic mean, we know:
+          \(\bar{y} = a\bar{x} + b\)</p>
+        \[
+        \begin{aligned}
+        \sigma_y^2 &= \frac{1}{n}\sum_{i=1}^{n}(y_i - \bar{y})^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}((ax_i + b) - (a\bar{x} + b))^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}(ax_i - a\bar{x})^2\\
+        &= \frac{1}{n}\sum_{i=1}^{n}a^2(x_i - \bar{x})^2\\
+        &= a^2\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^2\\
+        &= a^2\sigma_x^2
+        \end{aligned}
+        \]
+        <p>Therefore, \(\sigma_y = |a|\sigma_x\)</p>
+      </div>
+
+      <div class="example">
+        <h4>Example 1:</h4>
+        <p>Suppose the marks obtained by 9 student in test are:
+        45, 32, 37, 46, 39, 36, 41, 48, 36</p>
+        <p>The mean is 40 marks and standard deviation is approximately 5.5 marks.</p>
+        <p>If we add 10 marks to each student (change of origin), the new data becomes:
+        55, 42, 47, 56, 49, 46, 51, 58, 46</p>
+        <p>The new mean will be 50 marks, but the standard deviation remains 5.5 marks.</p>
+        <p>If we multiply each mark by 2 (change of scale), the new data becomes:
+        90, 64, 74, 92, 78, 72, 82, 96, 72</p>
+        <p>The new mean will be 80 marks, and the standard deviation becomes \(2 \times 5.5 = 11\) marks.</p>
+      </div>
+    </section>
+    <section id="practical-use" class="subsection">
+      <h3>Practical Use of Change of Origin and Scale</h3>
+      <p>As these properties provide the basis for the "coding method" used to simplify calculations. For example, when computing moments from grouped data, we can use the transformation:</p>
+      \[ u_i = \frac{x_i - a}{h} \]
+      <p>Where:
+      <ul>
+       <li>\(a\) is an arbitrary origin (usually chosen to be a class midpoint)</li>
+       <li>\(h\) is the class width</li>
+      </ul></p>
+      <p>This transformation simplifies calculations by working with smaller numbers, and the results can be transformed back using the properties established above.</p>
+    </section>
+  </div>
+</section>
+
+<section id="moments-properties" class="section">
+  <div class="head">
+    <div class="num">9</div>
+    <div class="title-group">
+      <h2 class="title">Moments and its Properties</h2>
+    </div>
+  </div>
+
+  <div class="body">
+    <section id="raw-moments" class="subsection">
+      <h3>A. Raw Moments</h3>
+      \[ \text{The rth raw moment is defined as:} \quad \mu'_r = \frac{1}{n}\sum_{i=1}^{n}x_i^r \]
+
+      <h4>Change of Origin and Scale:</h4>
+      <p>If \(y_i = ax_i + b\), then:</p>
+
+      <div class="formula">
+        <h4>Property for 1st Raw Moment:</h4>
+        <p>\(\mu'_1(y) = a\mu'_1(x) + b\)</p>
+        <p>This is simply the property of the mean under linear transformation.</p>
+      </div>
+
+      <div class="formula">
+        <h4>Property for Higher Raw Moments:</h4>
+        \[
+        \text{For } r \geq 2: \quad
+        \mu'_r(y) = \frac{1}{n}\sum_{i=1}^{n}(ax_i + b)^r\\
+        = \frac{1}{n}\sum_{i=1}^{n}\sum_{k=0}^{r}{r \choose k}(ax_i)^k b^{r-k}
+        \]
+        <p>This uses the binomial theorem to expand \((ax_i + b)^r\).</p>
+      </div>
+    </section>
+
+    <section id="central-moments" class="subsection">
+      <h3>B. Central Moments</h3>
+      \[ \text{The rth central moment is defined as:} \quad \mu_r = \frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^r \]
+
+      <h4>Change of Origin and Scale:</h4>
+      <p>If \(y_i = ax_i + b\), then:</p>
+
+      <div class="formula">
+        <h4>Property for 2nd Central Moment (Variance):</h4>
+        <p>\(\mu_2(y) = a^2\mu_2(x)\)</p>
+        <p>This follows from our standard deviation result, since \(\mu_2 = \sigma^2\).</p>
+      </div>
+
+      <div class="formula">
+        <h4>Property for Higher Central Moments:</h4>
+        <p>For \(r \geq 2\):
+        \(\mu_r(y) = a^r\mu_r(x)\)</p>
+      </div>
+
+      <div class="formula">
+        <h4>Proof:</h4>
+        \[
+        \begin{aligned}
+        \mu_r(y) &= \frac{1}{n}\sum_{i=1}^{n}(y_i - \bar{y})^r\\
+        &= \frac{1}{n}\sum_{i=1}^{n}((ax_i + b) - (a\bar{x} + b))^r\\
+        &= \frac{1}{n}\sum_{i=1}^{n}(ax_i - a\bar{x})^r\\
+        &= \frac{1}{n}\sum_{i=1}^{n}a^r(x_i - \bar{x})^r\\
+        &= a^r\frac{1}{n}\sum_{i=1}^{n}(x_i - \bar{x})^r\\
+        &= a^r\mu_r(x)
+        \end{aligned}
+        \]
+      </div>
+    </section>
+
+    <section id="standardized-moments" class="subsection">
+      <h3>C. Standardized Moments</h3>
+      <p>The standardized moments like skewness (\(\beta_1\)) and kurtosis (\(\beta_2\)) are invariant under linear transformations.</p>
+
+      <div class="formula">
+        <h4>Property for Skewness:</h4>
+        <p>\(\beta_1(y) = \beta_1(x)\) where \(\beta_1 = \frac{\mu_3}{\mu_2^{3/2}}\)</p>
+      </div>
+
+      <div class="formula">
+        <h4>Property for Kurtosis:</h4>
+        <p>\(\beta_2(y) = \beta_2(x)\) where \(\beta_2 = \frac{\mu_4}{\mu_2^2}\)</p>
+      </div>
+
+      <div class="formula">
+        <h4>Proof for Skewness:</h4>
+        \[
+        \begin{aligned}
+        \beta_1(y) &= \frac{\mu_3(y)}{\mu_2(y)^{3/2}}\\
+        &= \frac{a^3\mu_3(x)}{(a^2\mu_2(x))^{3/2}}\\
+        &= \frac{a^3\mu_3(x)}{a^3\mu_2(x)^{3/2}}\\
+        &= \frac{\mu_3(x)}{\mu_2(x)^{3/2}}\\
+        &= \beta_1(x)
+        \end{aligned}
+        \]
+      </div>
+
+      <div class="formula">
+        <h4>Proof for Kurtosis:</h4>
+        \[
+        \begin{aligned}
+        \beta_2(y) &= \frac{\mu_4(y)}{\mu_2(y)^2}\\
+        &= \frac{a^4\mu_4(x)}{(a^2\mu_2(x))^2}\\
+        &= \frac{a^4\mu_4(x)}{a^4\mu_2(x)^2}\\
+        &= \frac{\mu_4(x)}{\mu_2(x)^2}\\
+        &= \beta_2(x)
+        \end{aligned}
+        \]
+      </div>
+
+      <div class="example">
+        <h4>Example 2:</h4>
+        <p>For the examination marks data , the distribution has:
+        <ul>
+         <li>Mean = 65 marks</li>
+         <li>Standard deviation = 15 marks</li>
+         <li>Skewness coefficient = 0.3 (slightly positively skewed)</li>
+         <li>Kurtosis = 2.8 (slightly platykurtic)</li>
+        </ul></p>
+
+        <p>If we transform the data by adding 5 marks and multiplying by 2 (i.e., \(y_i = 2x_i + 5\)), then:
+        <ul>
+         <li>New mean = \(2(65) + 5 = 135\) marks</li>
+         <li>New standard deviation = \(2(15) = 30\) marks</li>
+         <li>Skewness coefficient remains 0.3</li>
+         <li>Kurtosis remains 2.8</li>
+        </ul></p>
+      </div>
+    </section>
+
+
+  </div>
+</section>
+
+
+  <section class="section" id="sec10_alt">
+    <div class="head">
+      <div class="num">10</div>
+      <div class="title-group">
+        <h2 class="title">Different Formulas for Calculating Variance</h2>
+      </div>
+    </div>
+    <div class="body">
+      <p>
+        Variance, denoted as \(\sigma_x^2\), quantifies the average squared deviation from the mean. The definitional formula is:
+      </p>
+      \[
+      \sigma_x^2 = \frac{1}{N} \sum_{i=1}^n f_i (x_i - \bar{x})^2 \quad \text{where } N = \sum f_i \quad
+      \]
+      <p>
+        When \(\bar{x}\) is fractional or the values are large, direct computation is cumbersome. Alternative forms simplify the arithmetic.
+      </p>
+
+      <h4>Raw Moments Form </h4>
+      <p>Expanding the definitional formula:</p>
+      \[
+      \sigma_x^2 = \frac{1}{N} \sum f_i x_i^2 - \bar{x}^2 \quad
+      \]
+      <p>Equivalently:</p>
+      \[
+      \sigma_x^2 = \frac{1}{N} \sum f_i x_i^2 - \left( \frac{1}{N} \sum f_i x_i \right)^2 \quad
+      \]
+
+      <h4>Shifted Deviations Form </h4>
+      <p>
+        For large \(x_i\) or \(f_i\), compute deviations from an arbitrary point \(A\) (often near the middle of the distribution), where \(d_i = x_i - A\):
+      </p>
+      \[
+      \bar{x} = A + \frac{1}{N} \sum f_i d_i = A + \bar{d}
+      \]
+      \[
+      \sigma_x^2 = \frac{1}{N} \sum f_i (x_i - \bar{x})^2 = \frac{1}{N} \sum f_i (d_i - \bar{d})^2
+      \]
+      <p>Expanding:</p>
+      \[
+      \sigma_x^2 = \frac{1}{N} \sum f_i d_i^2 - \bar{d}^2 \quad
+      \]
+      <p>
+        This is equivalent to the variance of the \(d_i\) values (\(\sigma_d^2\)), since variance is invariant under translation (\(\sigma_x^2 = \sigma_d^2\)).
+      </p>
+      <p>
+        This form reduces computation by working with smaller \(d_i\) values.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" id="sec11_alt">
+    <div class="head">
+      <div class="num">11</div>
+      <div class="title-group">
+        <h2 class="title">Variance and Standard Deviation: Effect of Change of Origin and Scale</h2>
+      </div>
+    </div>
+    <div class="body">
+      <p>
+        Variance and, consequently, standard deviation exhibit specific behaviors when data undergoes a change of origin (shifting the data) or a change of scale (scaling the data).
+      </p>
+
+      <h4>Properties of Variance Under Transformation</h4>
+      <p>
+        If a new variable \( d_i \) is defined as \( d_i = \frac{x_i - A}{h} \), where \( A \) is the assumed origin and \( h \) is the common scale factor (class width), then:
+      </p>
+      <p>
+        We know that \( x_i - A = h d_i \). Also, the mean of \( x \) can be expressed as \( \bar{x} = A + h \bar{d} \), where \( \bar{d} = \frac{1}{N} \sum f_i d_i \).
+      </p>
+      <p>
+        The deviation of \( x_i \) from its mean \( \bar{x} \) can be written as:
+      </p>
+      \[
+      x_i - \bar{x} = (x_i - A) - (\bar{x} - A) = h d_i - h \bar{d} = h (d_i - \bar{d})
+      \]
+      <p>
+        Now, substituting this into the variance formula for \( x \):
+      </p>
+      \[
+      \sigma_x^2 = \frac{1}{N} \sum_{i=1}^n f_i (x_i - \bar{x})^2
+      \]
+      \[
+      = \frac{1}{N} \sum_{i=1}^n f_i [h (d_i - \bar{d})]^2
+      \]
+      \[
+      = \frac{1}{N} \sum_{i=1}^n f_i h^2 (d_i - \bar{d})^2
+      \]
+      <p>Factoring out \( h^2 \) (since it's a constant):</p>
+      \[
+      \sigma_x^2 = h^2 \left[ \frac{1}{N} \sum_{i=1}^n f_i (d_i - \bar{d})^2 \right]
+      \]
+      <p>
+        The term in the square brackets is the variance of the \( d \) values, denoted as \( \sigma_d^2 \). Thus, we get:
+      </p>
+      \[
+      \sigma_x^2 = h^2 \sigma_d^2 \quad
+      \]
+      <p>This relationship demonstrates that:</p>
+      <ul>
+        <li><strong>Variance is independent of change of origin (\(A\)):</strong> The term \(A\) does not appear in the final formula for \( \sigma_x^2 \) directly, only through its effect on \(d_i\) and subsequently \(\bar{d}\). The variance of the transformed variable \(d\) is unaffected by the choice of origin \(A\).</li>
+        <li><strong>Variance is NOT independent of change of scale (\(h\)):</strong> The variance of \( x \) is \( h^2 \) times the variance of \( d \). This means scaling the data by \( h \) multiplies the variance by \( h^2 \) and the standard deviation by \( |h| \).</li>
+      </ul>
+
+      <div class="example">
+        <h4>Example: Calculation of Mean and Standard Deviation for Wheat Yield in Haryana</h4>
+        <p>
+          Calculate the mean and standard deviation for the following distribution of wheat yield (in quintals per acre) from 542 farms in a district of Haryana, India:
+        </p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Wheat Yield (Quintals/Acre)</th>
+              <th>Mid-value (x)</th>
+              <th>Number of Farms (f)</th>
+              <th>\(d = \frac{x-55}{10}\)</th>
+              <th>\(fd\)</th>
+              <th>\(fd^2\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>20–30</td>
+              <td>25</td>
+              <td>3</td>
+              <td>-3</td>
+              <td>-9</td>
+              <td>27</td>
+            </tr>
+            <tr>
+              <td>30–40</td>
+              <td>35</td>
+              <td>61</td>
+              <td>-2</td>
+              <td>-122</td>
+              <td>244</td>
+            </tr>
+            <tr>
+              <td>40–50</td>
+              <td>45</td>
+              <td>132</td>
+              <td>-1</td>
+              <td>-132</td>
+              <td>132</td>
+            </tr>
+            <tr>
+              <td>50–60</td>
+              <td>55</td>
+              <td>153</td>
+              <td>0</td>
+              <td>0</td>
+              <td>0</td>
+            </tr>
+            <tr>
+              <td>60–70</td>
+              <td>65</td>
+              <td>140</td>
+              <td>1</td>
+              <td>140</td>
+              <td>140</td>
+            </tr>
+            <tr>
+              <td>70–80</td>
+              <td>75</td>
+              <td>51</td>
+              <td>2</td>
+              <td>102</td>
+              <td>204</td>
+            </tr>
+            <tr>
+              <td>80–90</td>
+              <td>85</td>
+              <td>2</td>
+              <td>3</td>
+              <td>6</td>
+              <td>18</td>
+            </tr>
+            <tfoot>
+              <tr>
+                <td><strong>Total</strong></td>
+                <td></td>
+                <td>\(N = \sum f = 542\)</td>
+                <td></td>
+                <td>\(\sum fd = -15\)</td>
+                <td>\(\sum fd^2 = 765\)</td>
+              </tr>
+            </tfoot>
+          </table>
+
+        <p><strong>Solution:</strong><br/>
+          We use the assumed mean \(A = 55\) quintals/acre and the class width \(h = 10\) quintals/acre.
+        </p>
+
+        <p><strong>1. Calculation of Mean (\(\bar{x}\)):</strong></p>
+        \[
+        \bar{x} = A + h \frac{\sum fd}{N}
+        \]
+        \[
+        \bar{x} = 55 + 10 \times \frac{-15}{542}
+        \]
+        \[
+        \bar{x} = 55 - \frac{150}{542}
+        \]
+        \[
+        \bar{x} = 55 - 0.27675... \approx 54.72 \text{ quintals/acre}
+        \]
+
+        <p><strong>2. Calculation of Variance (\(\sigma^2\)) and Standard Deviation (\(\sigma\)):</strong></p>
+        <p>Using the formula for variance derived under change of origin and scale:</p>
+        \[
+        \sigma^2 = h^2 \left[ \frac{\sum fd^2}{N} - \left( \frac{\sum fd}{N} \right)^2 \right]
+        \]
+        \[
+        \sigma^2 = 10^2 \left[ \frac{765}{542} - \left( \frac{-15}{542} \right)^2 \right]
+        \]
+        \[
+        \sigma^2 = 100 \left[ 1.411439114 - ( -0.027675276 )^2 \right]
+        \]
+        \[
+        \sigma^2 = 100 \left[ 1.411439114 - 0.000765911 \right]
+        \]
+        \[
+        \sigma^2 = 100 \left[ 1.410673203 \right] \approx 141.07
+        \]
+        <p>Therefore, the standard deviation is:</p>
+        \[
+        \sigma = \sqrt{141.0673203} \approx 11.88 \text{ quintals/acre}
+        \]
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="sec12_alt">
+    <div class="head">
+      <div class="num">12</div>
+      <div class="title-group">
+        <h2 class="title">Advanced Topics in Dispersion</h2>
+      </div>
+    </div>
+    <div class="body">
+      <div class="example">
+        <h4>Example: Relationship Between Standard Deviation and Mean Deviation</h4>
+        <p><strong>Problem:</strong> Prove that for any discrete distribution, the standard deviation is not less than the mean deviation from the mean.</p>
+        <p>
+          <strong>Contextual Relevance:</strong> This fundamental statistical relationship is crucial when comparing different measures of dispersion, such as in analyzing the variability of crop yields across various regions in India, or the consistency of milk production in dairy farms in Haryana. Understanding that standard deviation is always at least as large as mean deviation helps in interpreting the spread of agricultural data, especially when considering the impact of outliers.
+        </p>
+        <p><strong>Solution:</strong><br/>
+          Let \(x_i\) be the values of a discrete distribution with corresponding frequencies \(f_i\), for \(i = 1, 2, \ldots, n\). Let \(N = \sum f_i\) be the total frequency. We need to prove that:
+        </p>
+        \[
+        \text{S.D.} \ge \text{Mean Deviation from Mean (M.D.)}
+        \]
+        <p>Squaring both sides, we aim to prove:</p>
+        \[
+        (\text{S.D.})^2 \ge (\text{M.D. from mean})^2
+        \]
+        <p>In terms of formulas:</p>
+        \[
+        \frac{1}{N} \sum f_i (x_i - \bar{x})^2 \ge \left( \frac{1}{N} \sum f_i |x_i - \bar{x}| \right)^2
+        \]
+        <p>Let \(z_i = |x_i - \bar{x}|\). Then we need to prove:</p>
+        \[
+        \frac{1}{N} \sum f_i z_i^2 \ge \left( \frac{1}{N} \sum f_i z_i \right)^2
+        \]
+        <p>Rearranging the inequality, this is equivalent to proving:</p>
+        \[
+        \frac{1}{N} \sum f_i z_i^2 - \left( \frac{1}{N} \sum f_i z_i \right)^2 \ge 0
+        \]
+        <p>This expression is precisely the formula for the variance of the variable \(z\), i.e., \( \sigma_z^2 \).</p>
+        \[
+        \frac{1}{N} \sum f_i (z_i - \bar{z})^2 \ge 0
+        \]
+        <p>
+          Since the variance (or sum of squared deviations) can never be negative, this inequality is always true. Hence, the result is proven: standard deviation is always greater than or equal to the mean deviation from the mean.
+        </p>
+      </div>
+
+      <div class="example">
+        <h4>Example: Mean Deviation and Standard Deviation for an Arithmetic Progression</h4>
+        <p><strong>Problem:</strong> Find the mean deviation from the mean and the standard deviation for a series in Arithmetic Progression (A.P.): \(a, a+d, a+2d, \ldots, a+2nd\). Verify that the standard deviation is greater than the mean deviation.</p>
+        <p>
+          <strong>Contextual Relevance:</strong> Consider the yields of a new variety of fodder crop from \(2n+1\) experimental plots in Haryana, where the yields increase consistently with an additional input (e.g., specific fertilizer dose) in each successive plot. Here, \(a\) represents the base yield (e.g., from the control plot), and \(d\) represents the consistent increase in yield per unit of additional input. Analyzing such data helps agricultural scientists understand the variability and central tendency of yields under specific experimental conditions.
+        </p>
+        <p><strong>Solution:</strong><br/>
+          The given series is an A.P. with \( (2n+1) \) terms. The terms are \(a, a+d, a+2d, \ldots, a+2nd\). Each term has a frequency of 1.
+          The mean of an A.P. series is the mean of its first and last term:
+        </p>
+        \[
+        \bar{x} = \frac{1}{2} (a + (a+2nd)) = \frac{1}{2} (2a + 2nd) = a + nd
+        \]
+        <p>
+          Now, we calculate \(|x - \bar{x}|\) and \((x - \bar{x})^2\) for each term:
+        </p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>\(x\)</th>
+              <th>\(|x - \bar{x}|\)</th>
+              <th>\((x - \bar{x})^2\)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>\(a\)</td>
+              <td>\(|a - (a+nd)| = nd\)</td>
+              <td>\((nd)^2 = n^2d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(a+d\)</td>
+              <td>\(|(a+d) - (a+nd)| = |(1-n)d|\) (or \((n-1)d\))</td>
+              <td>\((1-n)^2d^2 = (n-1)^2d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(a+2d\)</td>
+              <td>\(|(a+2d) - (a+nd)| = |(2-n)d|\) (or \((n-2)d\))</td>
+              <td>\((2-n)^2d^2 = (n-2)^2d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(\vdots\)</td>
+              <td>\(\vdots\)</td>
+              <td>\(\vdots\)</td>
+            </tr>
+            <tr>
+              <td>\(a+(n-2)d\)</td>
+              <td>\(|(a+(n-2)d) - (a+nd)| = |-2d| = 2d\)</td>
+              <td>\((-2d)^2 = 4d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(a+(n-1)d\)</td>
+              <td>\(|(a+(n-1)d) - (a+nd)| = |-d| = d\)</td>
+              <td>\((-d)^2 = d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(a+nd\)</td>
+              <td>\(|(a+nd) - (a+nd)| = 0\)</td>
+              <td>\(0^2 = 0\)</td>
+            </tr>
+            <tr>
+              <td>\(a+(n+1)d\)</td>
+              <td>\(|(a+(n+1)d) - (a+nd)| = |d| = d\)</td>
+              <td>\(d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(a+(n+2)d\)</td>
+              <td>\(|(a+(n+2)d) - (a+nd)| = |2d| = 2d\)</td>
+              <td>\((2d)^2 = 4d^2\)</td>
+            </tr>
+            <tr>
+              <td>\(\vdots\)</td>
+              <td>\(\vdots\)</td>
+              <td>\(\vdots\)</td>
+            </tr>
+            <tr>
+              <td>\(a+2nd\)</td>
+              <td>\(|(a+2nd) - (a+nd)| = |nd| = nd\)</td>
+              <td>\((nd)^2 = n^2d^2\)</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>The total number of terms is \(N = 2n+1\).</p>
+
+        <h4>Calculation of Mean Deviation (M.D.) from the Mean:</h4>
+        \[
+        \sum |x - \bar{x}| = 2 \sum_{k=1}^n kd = 2d \sum_{k=1}^n k = 2d \frac{n(n+1)}{2} = dn(n+1)
+        \]
+        <p>Mean Deviation \(= \frac{\sum |x - \bar{x}|}{N} = \frac{dn(n+1)}{2n+1}\)</p>
+
+        <h4>Calculation of Standard Deviation (S.D.):</h4>
+        \[
+        \sum (x - \bar{x})^2 = 2 \sum_{k=1}^n (kd)^2 = 2d^2 \sum_{k=1}^n k^2 = 2d^2 \frac{n(n+1)(2n+1)}{6} = d^2 \frac{n(n+1)(2n+1)}{3}
+        \]
+        <p>\[ \text{Variance} (\sigma^2) = \frac{\sum (x - \bar{x})^2}{N} = \frac{d^2 \frac{n(n+1)(2n+1)}{3}}{2n+1} = \frac{d^2 n(n+1)}{3}\]</p>
+        <p>\[ \therefore \text{Standard Deviation} (\sigma) = \sqrt{\frac{d^2 n(n+1)}{3}} = |d| \sqrt{\frac{n(n+1)}{3}}\]</p>
+
+        <h4>Verification: S.D. \( \ge \) M.D.</h4>
+        <p>We need to check if \( |d| \sqrt{\frac{n(n+1)}{3}} \ge \frac{dn(n+1)}{2n+1} \).</p>
+          <p>Assuming \(d > 0\), we compare \( \sqrt{\frac{n(n+1)}{3}} \) with \( \frac{n(n+1)}{2n+1} \).</p>
+          <p>Squaring both sides (which is valid for positive numbers):
+        </p>
+        <p>Compare \( \frac{n(n+1)}{3} \) with \( \left( \frac{n(n+1)}{2n+1} \right)^2 \).
+          Compare \( \frac{1}{3} \) with \( \frac{n(n+1)}{(2n+1)^2} \).</p>
+        <p>Consider the ratio: \( \frac{n(n+1)}{(2n+1)^2} \times 3 = \frac{3n^2 + 3n}{4n^2 + 4n + 1} \).
+          For \(n=1\), the ratio is \( \frac{3(1)^2 + 3(1)}{4(1)^2 + 4(1) + 1} = \frac{6}{9} = \frac{2}{3} \).
+          Since \( \frac{2}{3} < 1 \), it means \( \frac{n(n+1)}{(2n+1)^2} < \frac{1}{3} \) for small \(n\).
+          Let's re-evaluate the direct comparison:
+          We want to show \( \frac{1}{3} \ge \frac{n(n+1)}{(2n+1)^2} \) (this inequality seems to be inverted from the original proof's expectation if S.D. > M.D. is true).
+        </p>
+        <p>Let's use the established result \( \sigma_z^2 \ge 0 \) from Example 3.2.
+          For a discrete series with unit frequencies,
+          S.D. \( = \sqrt{\frac{\sum (x_i - \bar{x})^2}{N}} \)
+          M.D. \( = \frac{\sum |x_i - \bar{x}|}{N} \)
+          Let \( |x_i - \bar{x}| = y_i \).
+          We need to prove \( \sqrt{\frac{\sum y_i^2}{N}} \ge \frac{\sum y_i}{N} \).
+          This is equivalent to proving \( \frac{\sum y_i^2}{N} \ge \left( \frac{\sum y_i}{N} \right)^2 \), which is \( \text{Variance}(y) \ge 0 \), which is always true.
+        </p>
+        <p>
+          Therefore, for this specific A.P. series, the calculated standard deviation \( |d| \sqrt{\frac{n(n+1)}{3}} \) will always be greater than or equal to the mean deviation \( \frac{dn(n+1)}{2n+1} \), verifying the general statistical principle.
+        </p>
+      </div>
+
+      <h3>Theorem: Variance of the Combined Series</h3>
+      <p><strong>Statement of the Theorem:</strong><br/>
+        If there are two series or groups of data, with sizes \(n_1\) and \(n_2\), means \(\bar{x}_1\) and \(\bar{x}_2\), and standard deviations \(\sigma_1\) and \(\sigma_2\) respectively, then the variance (\(\sigma^2\)) of the combined series of total size \(N = n_1 + n_2\) is given by:
+      </p>
+      \[
+      \sigma^2 = \frac{1}{n_1 + n_2} [n_1 (\sigma_1^2 + d_1^2) + n_2 (\sigma_2^2 + d_2^2)] \quad
+      \]
+      <p>where:</p>
+      <ul>
+        <li>\(d_1 = \bar{x}_1 - \bar{X}\) (deviation of the first group's mean from the combined mean)</li>
+        <li>\(d_2 = \bar{x}_2 - \bar{X}\) (deviation of the second group's mean from the combined mean)</li>
+        <li>\(\bar{X} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}\) (the mean of the combined series)</li>
+      </ul>
+
+      <p><strong>Proof Overview:</strong><br/>
+        The proof begins by defining the individual means and variances for each series. The mean of the combined series (\(\bar{X}\)) is then established as the weighted average of the individual means. The total variance of the combined series (\(\sigma^2\)) is derived from the sum of squared deviations of all observations from the combined mean. By expanding \( (x_i - \bar{X})^2 \) for each group using \( (x_i - \bar{x}_j + \bar{x}_j - \bar{X})^2 \), and knowing that the sum of deviations from a group's own mean is zero (\(\sum f_i (x_i - \bar{x}_j) = 0\)), the expression for \(\sigma^2\) can be simplified to the stated formula .
+      </p>
+
+      <p><strong>Simplified Formula and Generalization as given above :</strong><br/>
+        The formula can be further simplified to:
+      </p>
+      \[
+      \sigma^2 = \frac{1}{n_1+n_2} \left[ n_1 \sigma_1^2 + n_2 \sigma_2^2 + \frac{n_1 n_2 (\bar{x}_1 - \bar{x}_2)^2}{n_1 + n_2} \right] \quad
+      \]
+      <p>
+        This formula is often more convenient as it directly uses the difference between the group means. For \(k\) component series, the variance of the combined series is generalized as:
+      </p>
+      \[
+      \sigma^2 = \frac{1}{N} \left[ \sum_{i=1}^k n_i (\sigma_i^2 + d_i^2) \right] \quad
+      \]
+      <p>
+        where \(N = \sum n_i\) and \(d_i = \bar{x}_i - \bar{X}\).
+      </p>
+
+      <div class="example">
+        <h4>Example: Combining Data from Two Agricultural Regions</h4>
+        <p><strong>Problem:</strong> The first sample of 100 farms in a specific region of Haryana shows an average wheat yield of 15 quintals/acre with a standard deviation of 3 quintals/acre. If a whole group of 250 farms, including these 100, has a combined average yield of 15.6 quintals/acre and a combined standard deviation of \( \sqrt{13.44} \) quintals/acre, find the standard deviation of the second group of farms (the remaining 150 farms).</p>
+        <p><strong>Solution:</strong><br/>
+          Let's denote the first group (100 farms) as Group 1 and the second group (the remaining 150 farms) as Group 2. The combined group is the total of 250 farms.
+        </p>
+
+        <p>Given for Group 1:</p>
+       
+          <p>Size, \(n_1 = 100\)</p>
+          <p>Mean yield, \(\bar{x}_1 = 15\) quintals/acre</p>
+          <p>Standard deviation, \(\sigma_1 = 3\) quintals/acre, so variance \(\sigma_1^2 = 3^2 = 9\)</p>
+       
+
+        <p>Given for the Combined Group:</p>
+       
+          <p>Total size, \(N = 250\)</p>
+          <p>Combined mean yield, \(\bar{X} = 15.6\) quintals/acre</p>
+          <p>Combined standard deviation, \(\sigma = \sqrt{13.44}\) quintals/acre, so combined variance \(\sigma^2 = 13.44\)</p>
+       
+
+        <p>We need to find the standard deviation of Group 2, \(\sigma_2\).</p>
+
+        <p>First, find the size of Group 2:<br/>
+          \(n_2 = N - n_1 = 250 - 100 = 150\) farms
+        </p>
+
+        <p>Next, find the mean of Group 2, \(\bar{x}_2\), using the formula for the combined mean:</p>
+        \[
+        \bar{X} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}
+        \]
+        \[
+        15.6 = \frac{(100)(15) + (150)\bar{x}_2}{250}
+        \]
+        \[
+        15.6 \times 250 = 1500 + 150 \bar{x}_2
+        \]
+        \[
+        3900 = 1500 + 150 \bar{x}_2
+        \]
+        \[
+        2400 = 150 \bar{x}_2
+        \]
+        \[
+        \bar{x}_2 = \frac{2400}{150} = 16 \text{ quintals/acre}
+        \]
+
+        <p>Now, use the formula for the combined variance :</p>
+        \[
+        \sigma^2 = \frac{1}{n_1+n_2} \left[ n_1 \sigma_1^2 + n_2 \sigma_2^2 + \frac{n_1 n_2 (\bar{x}_1 - \bar{x}_2)^2}{n_1 + n_2} \right]
+        \]
+        <p>Substitute the known values:</p>
+        \[
+        13.44 = \frac{1}{250} \left[ (100)(9) + (150)\sigma_2^2 + \frac{(100)(150)(15 - 16)^2}{250} \right]
+        \]
+        \[
+        13.44 \times 250 = 900 + 150 \sigma_2^2 + \frac{15000(-1)^2}{250}
+        \]
+        \[
+        3360 = 900 + 150 \sigma_2^2 + 60
+        \]
+        \[
+        3360 = 960 + 150 \sigma_2^2
+        \]
+        \[
+        2400 = 150 \sigma_2^2
+        \]
+        \[
+        \sigma_2^2 = \frac{2400}{150} = 16
+        \]
+        <p>So, the standard deviation of the second group is:</p>
+        \[
+        \sigma_2 = \sqrt{16} = 4 \text{ quintals/acre}
+        \]
+      </div>
+
+      <div class="example">
+        <h4>Example: Correcting Mean and Standard Deviation of Crop Yield Data</h4>
+        <p><strong>Problem:</strong> For a data set of 200 rice fields in a district of India, the mean yield was calculated as 40 quintals/hectare and the standard deviation as 15 quintals/hectare. Later, it was discovered that two yield figures, 43 and 53 quintals/hectare, were misread as 34 and 35 quintals/hectare respectively. Find the corrected mean and standard deviation corresponding to the corrected figures.</p>
+        <p><strong>Solution:</strong><br/>
+          Let \(x\) be the variable representing rice yield.
+        </p>
+
+        <p>Initial (Incorrect) Data:</p>
+       
+          <p>Number of fields, \(n = 200\)</p>
+          <p>Incorrect mean, \(\bar{x}_{inc} = 40\) quintals/hectare</p>
+          <p>Incorrect standard deviation, \(\sigma_{inc} = 15\) quintals/hectare</p>
+       
+
+        <p>Misread values:</p>
+       
+          <p>Incorrect values (to be removed): 34, 35</p>
+          <p>Correct values (to be added): 43, 53</p>
+
+        <p><strong>1. Calculate the Incorrect Sum of Observations (\(\sum x_{inc}\)):</strong><br/>
+          From the definition of mean, \(\bar{x} = \frac{\sum x}{n}\), so \(\sum x = n \bar{x}\).
+        </p>
+        \[
+        \sum x_{inc} = n \times \bar{x}_{inc} = 200 \times 40 = 8000 \text{ quintals}
+        \]
+
+        <p><strong>2. Calculate the Incorrect Sum of Squares of Observations (\(\sum x_{inc}^2\)):</strong><br/>
+          From the variance formula, \(\sigma^2 = \frac{\sum x^2}{n} - \bar{x}^2\), so \(\sum x^2 = n (\sigma^2 + \bar{x}^2)\).
+        </p>
+        \[
+        \sigma_{inc}^2 = 15^2 = 225
+        \]
+        \[
+        \sum x_{inc}^2 = n (\sigma_{inc}^2 + \bar{x}_{inc}^2) = 200 (225 + 40^2) = 200 (225 + 1600) = 200 (1825) = 365000
+        \]
+
+        <p><strong>3. Calculate the Corrected Sum of Observations (\(\sum x_{corr}\)):</strong><br/>
+          To correct the sum, subtract the incorrect values and add the correct values:
+        </p>
+        \[
+        \sum x_{corr} = \sum x_{inc} - (\text{sum of incorrect values}) + (\text{sum of correct values})
+        \]
+        \[
+        \sum x_{corr} = 8000 - (34 + 35) + (43 + 53)
+        \]
+        \[
+        \sum x_{corr} = 8000 - 69 + 96
+        \]
+        \[
+        \sum x_{corr} = 7931 \text{ quintals}
+        \]
+
+        <p><strong>4. Calculate the Corrected Sum of Squares of Observations (\(\sum x_{corr}^2\)):</strong><br/>
+          To correct the sum of squares, subtract the squares of incorrect values and add the squares of correct values:
+        </p>
+        \[
+        \sum x_{corr}^2 = \sum x_{inc}^2 - (34^2 + 35^2) + (43^2 + 53^2)
+        \]
+        \[
+        \sum x_{corr}^2 = 365000 - (1156 + 1225) + (1849 + 2809)
+        \]
+        \[
+        \sum x_{corr}^2 = 365000 - 2381 + 4658
+        \]
+        \[
+        \sum x_{corr}^2 = 367277
+        \]
+
+        <p><strong>5. Calculate the Corrected Mean (\(\bar{x}_{corr}\)):</strong><br/>
+          The number of observations \(n\) remains the same (200).
+        </p>
+        \[
+        \bar{x}_{corr} = \frac{\sum x_{corr}}{n} = \frac{7931}{200} = 39.655 \text{ quintals/hectare}
+        \]
+
+        <p><strong>6. Calculate the Corrected Variance (\(\sigma_{corr}^2\)) and Standard Deviation (\(\sigma_{corr}\)):</strong></p>
+        \[
+        \sigma_{corr}^2 = \frac{\sum x_{corr}^2}{n} - \bar{x}_{corr}^2
+        \]
+        \[
+        \sigma_{corr}^2 = 1836.385 - 1572.515025
+        \]
+        \[
+        \sigma_{corr}^2 = 263.869975
+        \]
+        \[
+        \sigma_{corr} = \sqrt{263.869975} \approx 16.244 \text{ quintals/hectare}
+        \]
+      </div>
+
+      <h3>Coefficient of Dispersion and Coefficient of Variation</h3>
+      <p>
+        Whenever we want to compare the variability of two series which differ widely in their averages or which are measured in different units, we do not merely calculate the measures of dispersion. Instead, we calculate the coefficient of dispersion, which are pure numbers independent of the units of measurement. The coefficients of dispersion (C.D.) based on different measures are as follows:
+      </p>
+
+      <ol>
+        <li><strong>Based upon Range:</strong> \( C.D. = \frac{A - B}{A + B} \), where \(A\) and \(B\) are the greatest and the smallest items in the series.</li>
+        <li><strong>Based upon Quartile Deviation:</strong> \( C.D. = \frac{Q_3 - Q_1}{Q_3 + Q_1} \)</li>
+        <li><strong>Based upon Mean Deviation:</strong> \( C.D. = \frac{\text{Average from Mean Deviation}}{\text{Mean}} \)</li>
+        <li><strong>Based upon Standard Deviation:</strong> \( C.D. = \frac{\sigma}{\bar{x}} \)</li>
+      </ol>
+
+      <p><strong>Coefficient of Variation.</strong> 100 times the coefficient of dispersion based upon standard deviation is called co-efficient of variation (C.V.),</p>
+      \[
+      C.V. = 100 \times \frac{\sigma}{\bar{x}} \quad
+      \]
+
+      <p>
+        According to Professor Karl Pearson who suggested this measure, C.V. is the percentage variation in the mean, standard deviation being considered as the total variation in the mean.
+      </p>
+
+      <p>
+        For comparing the variability of two series, we calculate the coefficient of variation for each series. The series having greater C.V. is said to be more variable than the other and the series having lesser C.V. is said to be more consistent.
+      </p>
+
+      <div class="example">
+        <h4>Example: Analysis of Monthly Farm Incomes in Haryana</h4>
+        <p>
+          An analysis of monthly incomes from farming activities in two agricultural cooperatives in Haryana reveals the following data:
+        </p>
+        <table class="calculation-data">
+          <thead>
+            <tr>
+              <th>Cooperative</th>
+              <th>Average Monthly Income (₹)</th>
+              <th>Standard Deviation (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>A</td>
+              <td>500</td>
+              <td>186</td>
+            </tr>
+            <tr>
+              <td>B</td>
+              <td>600</td>
+              <td>175</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>(i) Which cooperative exhibits a larger variation in individual farm incomes?<br/>
+          (ii) Calculate the average monthly income, wage, and the variance of the distribution of wages in the two cooperatives taken together.
+        </p>
+
+        <p><strong>Solution:</strong></p>
+
+        <p>No. of farmers in cooperative A = 500 (say), in cooperative B = 600 (say).<br/>
+          Average monthly income (say) \(\bar{x}_1 = \text{₹} 500\) for A, \(\bar{x}_2 = \text{₹} 600\) for B.<br/>
+          Standard deviation \(\sigma_1 = \text{₹} 186\) for A, \(\sigma_2 = \text{₹} 175\) for B.
+        </p>
+
+        <p><strong>Firm A paid to the workers ₹ 500 × 186 = ₹ 93,000</strong><br/>
+          No. of wage-earners (say) \(n_1 = 500\), \(\bar{x}_1 = 500\).<br/>
+          Average monthly wage \(= \frac{\text{Total wages paid}}{n_1} = \frac{93,000}{500} = \text{₹} 186\).
+        </p>
+
+        <p><strong>Firm B paid to the workers ₹ 600 × 175 = ₹ 105,000</strong><br/>
+          Total wages paid to the workers in B = ₹ 105,000.<br/>
+          This we see that the firm B has larger wage bill.
+        </p>
+
+        <p>(i) <strong>Variance of distribution of wages in firm A (say) \(\sigma_1^2 = 81\)</strong><br/>
+          C.V. of distribution of wages in firm A = 100 × \(\frac{\sigma_1}{\bar{x}_1} = 100 \times \frac{9}{186} = 4.84\)</p>
+
+        <p>C.V. of distribution of wages in firm B = 100 × \(\frac{\sigma_2}{\bar{x}_2} = 100 \times \frac{10}{175} = 5.71\)</p>
+
+        <p>
+          Since C.V. for firm B is greater than C.V. for firm A, firm B has greater variability in individual wages.
+        </p>
+
+        <p>(ii) <strong>The average monthly wage (say) \(\bar{x}\), of firm the workers in the two cooperatives taken together:</strong><br/>
+          Total no. of farmers \(n = n_1 + n_2 = 500 + 600 = 1,100\)<br/>
+          Total wages paid in the given month = \text{₹} 93,000 + \text{₹} 105,000 = ₹ 198,000<br/>
+          \(\bar{x} = \frac{198,000}{1,100} = \text{₹} 180\)
+        </p>
+
+        <p>(b) <strong>The combined variance \(\sigma^2\) of the formula:</strong></p>
+        \[
+        \sigma^2 = \frac{n_1 (\sigma_1^2 + d_1^2) + n_2 (\sigma_2^2 + d_2^2)}{n_1 + n_2}
+        \]
+        <p>where \(d_1 = \bar{x}_1 - \bar{x}\), \(d_2 = \bar{x}_2 - \bar{x}\).</p>
+
+        <p>Here \(d_1 = 186 - 180 = 6\), \(d_2 = 175 - 180 = -5\)</p>
+
+        <p>\(\sigma_1^2 = 81\), \(\sigma_2^2 = 100\)</p>
+
+        \[
+        \sigma^2 = \frac{500 (81 + 36) + 600 (100 + 25)}{1,100} = \frac{500 \times 117 + 600 \times 125}{1,100} = \frac{58,500 + 75,000}{1,100} = \frac{133,500}{1,100} = 121.36
+        \]
+        <p>
+          Hence, the combined standard deviation \(\sigma = \sqrt{121.36} \approx 11.02\) ₹.
+        </p>
+      </div>
+    </div>
+  </section>
+<section class="section" id="exercises">
+                <div class="head">
+                    <div class="num">13</div>
+                    <div class="title-group">
+                        <h2 class="title">Exercises</h2>
+                        <h3 class="subtitle">Test your knowledge on Measures of Dispersion</h3>
+                    </div>
+                </div>
+                <div class="body">
+                    <h3>13.1 Multiple Choice Questions (MCQ)</h3>
+                    <ol class="mcq">
+                        <li>Which of the following is an absolute measure of dispersion?
+                            <div class="option-group"><div>A) Coefficient of Variation</div><div>B) Coefficient of Range</div><div>C) Standard Deviation</div><div>D) Coefficient of Q.D.</div></div>
+                        </li>
+                        <li>The square of the standard deviation is called the:
+                            <div class="option-group"><div>A) Variance</div><div>B) Range</div><div>C) Mean Deviation</div><div>D) Median</div></div>
+                        </li>
+                        <li>If the Coefficient of Variation is low, the data is:
+                            <div class="option-group"><div>A) More variable</div><div>B) More homogeneous/consistent</div><div>C) Positively skewed</div><div>D) Negatively skewed</div></div>
+                        </li>
+                        <li>What is the formula for Quartile Deviation?
+                            <div class="option-group"><div>A) \((Q_3 - Q_1)\)</div><div>B) \((Q_3 + Q_1)/2\)</div><div>C) \((Q_3 - Q_1)/2\)</div><div>D) \((Q_3 - Q_1)/(Q_3 + Q_1)\)</div></div>
+                        </li>
+                        <li>The Range is calculated by which formula?
+                            <div class="option-group"><div>A) \(L - S\)</div><div>B) \((L - S)/(L + S)\)</div><div>C) \(L \times S\)</div><div>D) \(L + S\)</div></div>
+                        </li>
+                        <li>Mean deviation is the arithmetic mean of the deviations taken as:
+                            <div class="option-group"><div>A) Negative</div><div>B) Positive (absolute)</div><div>C) Zero</div><div>D) Fractional</div></div>
+                        </li>
+                        <li>Which measure of dispersion is also known as the Semi-Interquartile Range?
+                            <div class="option-group"><div>A) Mean Deviation</div><div>B) Quartile Deviation</div><div>C) Standard Deviation</div><div>D) Range</div></div>
+                        </li>
+                        <li>Which of the following is NOT a characteristic of a good measure of dispersion?
+                            <div class="option-group"><div>A) Rigidly defined</div><div>B) Based on all items</div><div>C) Unduly affected by extreme items</div><div>D) Easy to calculate</div></div>
+                        </li>
+                        <li>If the standard deviation is 15 and the mean is 75, what is the Coefficient of Variation?
+                            <div class="option-group"><div>A) 5%</div><div>B) 15%</div><div>C) 20%</div><div>D) 50%</div></div>
+                        </li>
+                        <li>The positive square-root of the arithmetic mean of the squared deviations from the mean is:
+                            <div class="option-group"><div>A) Quartile Deviation</div><div>B) Mean Deviation</div><div>C) Standard Deviation</div><div>D) Range</div></div>
+                        </li>
+                        <li>Which measure is most suitable for comparing the variability of two datasets with different units?
+                            <div class="option-group"><div>A) Range</div><div>B) Standard Deviation</div><div>C) Mean Deviation</div><div>D) Coefficient of Variation</div></div>
+                        </li>
+                        <li>What is the relationship between Standard Deviation and Variance?
+                            <div class="option-group"><div>A) S.D. = Variance$^2$</div><div>B) Variance = S.D.\(^2\)</div><div>C) They are the same</div><div>D) Variance = 1 / S.D.</div></div>
+                        </li>
+                        <li>If a distribution is highly uniform, its measures of dispersion will be:
+                            <div class="option-group"><div>A) Large</div><div>B) Small</div><div>C) Negative</div><div>D) Maximum</div></div>
+                        </li>
+                        <li>Mean deviation is theoretically minimum when calculated from the:
+                            <div class="option-group"><div>A) Mean</div><div>B) Median</div><div>C) Mode</div><div>D) Geometric Mean</div></div>
+                        </li>
+                        <li>Standard Deviation is independent of change of:
+                            <div class="option-group"><div>A) Origin only</div><div>B) Scale only</div><div>C) Both origin and scale</div><div>D) Neither origin nor scale</div></div>
+                        </li>
+                        <li>If every observation is multiplied by 2, the variance will be multiplied by:
+                            <div class="option-group"><div>A) 2</div><div>B) 4</div><div>C) 8</div><div>D) Remains unchanged</div></div>
+                        </li>
+                        <li>If every observation is increased by 5, the standard deviation will:
+                            <div class="option-group"><div>A) Increase by 5</div><div>B) Decrease by 5</div><div>C) Multiply by 5</div><div>D) Remain unchanged</div></div>
+                        </li>
+                        <li>The sum of squared deviations is minimum when taken from the:
+                            <div class="option-group"><div>A) Mean</div><div>B) Median</div><div>C) Mode</div><div>D) Origin</div></div>
+                        </li>
+                        <li>The second central moment \(\mu_2\) is identical to:
+                            <div class="option-group"><div>A) Mean</div><div>B) Variance</div><div>C) Standard Deviation</div><div>D) Skewness</div></div>
+                        </li>
+                        <li>Which of the following is a relative measure?
+                            <div class="option-group"><div>A) Range</div><div>B) Variance</div><div>C) Coefficient of Range</div><div>D) Quartile Deviation</div></div>
+                        </li>
+                        <li>For any discrete distribution, the relation between S.D. and M.D. about mean is:
+                            <div class="option-group"><div>A) S.D. < M.D.</div><div>B) S.D. > M.D.</div><div>C) S.D. \(\ge\) M.D.</div><div>D) S.D. = M.D.</div></div>
+                        </li>
+                        <li>The formula \((L - S)/(L + S)/) calculates:
+                            <div class="option-group"><div>A) Coefficient of Range</div><div>B) Range</div><div>C) Coefficient of Q.D.</div><div>D) C.V.</div></div>
+                        </li>
+                        <li>Which measure ignores 50% of the data?
+                            <div class="option-group"><div>A) S.D.</div><div>B) M.D.</div><div>C) Q.D.</div><div>D) Range</div></div>
+                        </li>
+                        <li>The coefficient of Quartile Deviation is given by:
+                            <div class="option-group"><div>A) \((Q_3-Q_1)/2\)</div><div>B) \((Q_3+Q_1)/2\)</div><div>C) \((Q_3-Q_1)/(Q_3+Q_1)\)</div><div>D) \(Q_3-Q_1\)</div></div>
+                        </li>
+                        <li>Which dispersion measure is best for open-ended continuous series?
+                            <div class="option-group"><div>A) Standard Deviation</div><div>B) Range</div><div>C) Quartile Deviation</div><div>D) Mean Deviation</div></div>
+                        </li>
+                        <li>What is the standard deviation of the values: 5, 5, 5, 5, 5?
+                            <div class="option-group"><div>A) 5</div><div>B) 25</div><div>C) 0</div><div>D) 1</div></div>
+                        </li>
+                        <li>Root mean square deviation is minimum when the deviations are taken from the:
+                            <div class="option-group"><div>A) Median</div><div>B) Origin</div><div>C) Arbitrary value A</div><div>D) Arithmetic Mean</div></div>
+                        </li>
+                        <li>A distribution has mean 50 and standard deviation 10. The C.V. is:
+                            <div class="option-group"><div>A) 20%</div><div>B) 500%</div><div>C) 5%</div><div>D) 10%</div></div>
+                        </li>
+                        <li>If the combined variance of two groups is calculated, which formula is correct?
+                            <div class="option-group"><div>A) \(\frac{n_1\sigma_1^2 + n_2\sigma_2^2}{n_1+n_2}\)</div><div>B) \(\frac{n_1(\sigma_1^2+d_1^2) + n_2(\sigma_2^2+d_2^2)}{n_1+n_2}\)</div><div>C) \(\sigma_1^2 + \sigma_2^2\)</div><div>D) \(\sigma_1 + \sigma_2\)</div></div>
+                        </li>
+                        <li>Skewness and kurtosis are invariant under change of:
+                            <div class="option-group"><div>A) Origin only</div><div>B) Scale only</div><div>C) Both origin and scale</div><div>D) Neither</div></div>
+                        </li>
+                    </ol>
+
+                    <h3>13.2 Fill in the Blanks</h3>
+                    <ol class="fill-in">
+                        <li>Dispersion reveals how the items are _________ around the center.</li>
+                        <li>The simplest measure of dispersion is the _________.</li>
+                        <li>The square of standard deviation is called _________.</li>
+                        <li>Relative measures of dispersion are pure _________ used for comparison.</li>
+                        <li>Mean Deviation is based on _________ items in a distribution.</li>
+                        <li>The Range is the difference between the _________ and _________ values.</li>
+                        <li>The standard deviation is denoted by the Greek letter _________.</li>
+                        <li>The Quartile Deviation is half the difference between the _________ and _________ quartiles.</li>
+                        <li>The Coefficient of Variation is obtained by dividing the S.D. by the _________ and multiplying by 100.</li>
+                        <li>Small dispersion indicates _________ uniformity of the items.</li>
+                        <li>If the coefficient of variation is greater, the group is more _________.</li>
+                        <li>Mean Deviation can be calculated from the mean, _________, or mode.</li>
+                        <li>The formula for the Coefficient of Range is _________.</li>
+                        <li>Karl Pearson introduced the concept of _________ in 1893.</li>
+                        <li>To compare variability across different units, we must use a _________ measure.</li>
+                        <li>The term \((Q_3 - Q_1)\) is called the _________ range.</li>
+                        <li>The formula for Mean Deviation from the mean is _________.</li>
+                        <li>Standard Deviation is also known as the _________ Deviation.</li>
+                        <li>The coefficient of Quartile Deviation is a _________ measure.</li>
+                        <li>A good measure of dispersion should not be unduly affected by _________ items.</li>
+                        <li>Standard deviation is independent of change of _________ but not scale.</li>
+                        <li>If all values are multiplied by \(a\), the variance is multiplied by _________.</li>
+                        <li>The second central moment \(\mu_2\) represents the _________.</li>
+                        <li>The sum of squared deviations from the mean is always _________.</li>
+                        <li>The sum of absolute deviations is minimum when taken from the _________.</li>
+                        <li>Quartile deviation ignores the top and bottom _________ percent of the data.</li>
+                        <li>An ideal measure of dispersion should be amenable to further _________ treatment.</li>
+                        <li>For discrete data, S.D. is always greater than or equal to _________.</li>
+                        <li>The coefficient of mean deviation from the median is calculated by dividing M.D. by the _________.</li>
+                        <li>If all observations are identical (e.g., 8, 8, 8, 8), the variance is _________.</li>
+                    </ol>
+
+                    <h3>13.3 True or False</h3>
+                    <ol class="true-false">
+                        <li>Measures of central tendency alone fully reveal how items are spread out.</li>
+                        <li>Mean Deviation is always computed exclusively from the mean.</li>
+                        <li>The Range is not based on all observations in a series.</li>
+                        <li>A higher Coefficient of Variation indicates greater consistency/stability.</li>
+                        <li>Standard Deviation is also known as Root-Mean Square Deviation.</li>
+                        <li>Relative measures of dispersion are free from units of measurement.</li>
+                        <li>Quartile Deviation is also called the Interquartile Range.</li>
+                        <li>A good measure of dispersion should be rigidly defined.</li>
+                        <li>The Coefficient of Variation is used to compare variability between series with different units.</li>
+                        <li>Standard deviation is less affected by extreme values than quartile deviation.</li>
+                        <li>The Coefficient of Quartile Deviation is \((Q_3 - Q_1)/(Q_3 + Q_1)\).</li>
+                        <li>Range is the most accurate mathematical measure of dispersion.</li>
+                        <li>Mean Deviation is highly suitable for further mathematical algebra.</li>
+                        <li>A small standard deviation indicates low uniformity of data.</li>
+                        <li>The variance is the square root of the standard deviation.</li>
+                        <li>The concept of standard deviation was introduced by Karl Pearson.</li>
+                        <li>The Coefficient of Mean Deviation can only be calculated from the mean.</li>
+                        <li>Mean deviation takes absolute values, ignoring algebraic signs.</li>
+                        <li>If City A has C.V. = 12% and City B has C.V. = 8%, City B has more stable prices.</li>
+                        <li>Standard Deviation is an absolute measure of dispersion.</li>
+                        <li>Adding a constant \(b\) to all observations changes the standard deviation.</li>
+                        <li>Multiplying all observations by a constant \(a\) multiplies the variance by \(a^2\).</li>
+                        <li>The standard deviation can be negative.</li>
+                        <li>The combined variance of two groups simply equals the sum of their individual variances.</li>
+                        <li>Root mean square deviation is minimized when calculated about the arithmetic mean.</li>
+                        <li>The second raw moment \(\mu'_2\) is identical to the variance.</li>
+                        <li>Skewness and kurtosis coefficients (\(\beta_1\) and \(\beta_2\) change when you shift the origin.</li>
+                        <li>For an Arithmetic Progression, standard deviation is always greater than mean deviation.</li>
+                        <li>Quartile Deviation is best suited for distributions with open-ended classes.</li>
+                        <li>Standard deviation is based on all observations in the dataset.</li>
+                    </ol>
+
+                    <div class="controls">
+                        <button class="btn" id="show-answers-btn" onclick="toggleAnswers()">Show Answers</button>
+                        <button class="btn secondary" id="hide-answers-btn" style="display: none;" onclick="toggleAnswers()">Hide Answers</button>
+                    </div>
+
+                    <div id="objective-answers-container" class="answer-block" style="display: none;">
+                        <h4>Answers</h4>
+                        <div style="display: flex; gap: 40px; flex-wrap: wrap;">
+                            <div>
+                                <h5>MCQ Answers</h5>
+                                <ol style="list-style-type: lower-alpha;">
+                                    <li>C</li><li>A</li><li>B</li><li>C</li><li>A</li>
+                                    <li>B</li><li>B</li><li>C</li><li>C</li><li>C</li>
+                                    <li>D</li><li>B</li><li>B</li><li>B</li><li>A</li>
+                                    <li>B</li><li>D</li><li>A</li><li>B</li><li>C</li>
+                                    <li>C</li><li>A</li><li>C</li><li>C</li><li>C</li>
+                                    <li>C</li><li>D</li><li>A</li><li>B</li><li>C</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h5>Fill-in-the-Blank Answers</h5>
+                                <ol>
+                                    <li>spread / scattered</li><li>Range</li><li>Variance</li><li>numbers</li><li>all</li>
+                                    <li>largest, smallest</li><li>\(\sigma\) (sigma)</li><li>third, first</li><li>Mean</li><li>high</li>
+                                    <li>variable</li><li>Median</li><li>\((L-S)/(L+S)\)</li><li>Standard Deviation</li><li>Relative</li>
+                                    <li>Interquartile</li><li>\(\sum|X-\bar{X}|/N\)</li><li>Root-Mean Square</li><li>Relative</li><li>extreme</li>
+                                    <li>origin</li><li>\(a^2\)</li><li>Variance</li><li>minimum</li><li>Median</li>
+                                    <li>25</li><li>mathematical</li><li>Mean Deviation</li><li>Median</li><li>zero</li>
+                                </ol>
+                            </div>
+                            <div>
+                                <h5>True/False Answers</h5>
+                                <ol>
+                                    <li>F</li><li>F</li><li>T</li><li>F</li><li>T</li>
+                                    <li>T</li><li>F</li><li>T</li><li>T</li><li>F</li>
+                                    <li>T</li><li>F</li><li>F</li><li>F</li><li>F</li>
+                                    <li>T</li><li>F</li><li>T</li><li>T</li><li>T</li>
+                                    <li>F</li><li>T</li><li>F</li><li>F</li><li>T</li>
+                                    <li>F</li><li>F</li><li>T</li><li>T</li><li>T</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>13.4 Subjective Questions</h3>
+                    <div class="subjective">
+                        <ol>
+                            <li>Define dispersion and explain why measures of central tendency are insufficient alone to describe agricultural data in Haryana.
+                                <button class="get-solution-btn" data-question-id="subj-1">Get Solution</button>
+                                <div class="solution" id="solution-subj-1"></div>
+                            </li>
+                            <li>State the essential characteristics of an ideal measure of dispersion. Which measure best satisfies these?
+                                <button class="get-solution-btn" data-question-id="subj-2">Get Solution</button>
+                                <div class="solution" id="solution-subj-2"></div>
+                            </li>
+                            <li>Distinguish between absolute and relative measures of dispersion with appropriate examples from farm yield data.
+                                <button class="get-solution-btn" data-question-id="subj-3">Get Solution</button>
+                                <div class="solution" id="solution-subj-3"></div>
+                            </li>
+                            <li>Define the Range and Coefficient of Range. State their merits and limitations.
+                                <button class="get-solution-btn" data-question-id="subj-4">Get Solution</button>
+                                <div class="solution" id="solution-subj-4"></div>
+                            </li>
+                            <li>Compute the Range and its coefficient for the following paddy yields (q/ha) from 8 farms: 45, 52, 38, 60, 48, 55, 41, 59.
+                                <button class="get-solution-btn" data-question-id="subj-5">Get Solution</button>
+                                <div class="solution" id="solution-subj-5"></div>
+                            </li>
+                            <li>Explain Quartile Deviation. Why is it considered superior to the Range for skewed agricultural data?
+                                <button class="get-solution-btn" data-question-id="subj-6">Get Solution</button>
+                                <div class="solution" id="solution-subj-6"></div>
+                            </li>
+                            <li>Calculate the Quartile Deviation and its coefficient for the marks: 40, 45, 50, 52, 55, 60, 65, 70, 75, 80.
+                                <button class="get-solution-btn" data-question-id="subj-7">Get Solution</button>
+                                <div class="solution" id="solution-subj-7"></div>
+                            </li>
+                            <li>Define Mean Deviation. Why do we ignore algebraic signs while calculating it?
+                                <button class="get-solution-btn" data-question-id="subj-8">Get Solution</button>
+                                <div class="solution" id="solution-subj-8"></div>
+                            </li>
+                            <li>Calculate the Mean Deviation about the mean for the dataset: 12, 15, 18, 20, 25.
+                                <button class="get-solution-btn" data-question-id="subj-9">Get Solution</button>
+                                <div class="solution" id="solution-subj-9"></div>
+                            </li>
+                            <li>A Haryana dairy farm records milk yields (liters/day) as: 10, 15, 20, 25, 30. Find the mean deviation from the median.
+                                <button class="get-solution-btn" data-question-id="subj-10">Get Solution</button>
+                                <div class="solution" id="solution-subj-10"></div>
+                            </li>
+                            <li>Define Standard Deviation and Variance. Why is standard deviation preferred over mean deviation?
+                                <button class="get-solution-btn" data-question-id="subj-11">Get Solution</button>
+                                <div class="solution" id="solution-subj-11"></div>
+                            </li>
+                            <li>Prove that standard deviation is independent of the change of origin but not of scale.
+                                <button class="get-solution-btn" data-question-id="subj-12">Get Solution</button>
+                                <div class="solution" id="solution-subj-12"></div>
+                            </li>
+                            <li>Find the standard deviation of the numbers: 5, 8, 10, 12, 15.
+                                <button class="get-solution-btn" data-question-id="subj-13">Get Solution</button>
+                                <div class="solution" id="solution-subj-13"></div>
+                            </li>
+                            <li>What is the Coefficient of Variation (C.V.)? How is it useful in comparing the consistency of two wheat varieties?
+                                <button class="get-solution-btn" data-question-id="subj-14">Get Solution</button>
+                                <div class="solution" id="solution-subj-14"></div>
+                            </li>
+                            <li>Factory A has Mean Wage = 34.50, S.D = 5. Factory B has Mean Wage = 28.25, S.D = 4.50. Which factory has greater variability in wages?
+                                <button class="get-solution-btn" data-question-id="subj-15">Get Solution</button>
+                                <div class="solution" id="solution-subj-15"></div>
+                            </li>
+                            <li>Derive the formula for the variance of the combined series of two datasets.
+                                <button class="get-solution-btn" data-question-id="subj-16">Get Solution</button>
+                                <div class="solution" id="solution-subj-16"></div>
+                            </li>
+                            <li>Group 1 (n=100) has mean=15, variance=9. The combined group (N=250) has mean=15.6, variance=13.44. Find the variance of Group 2.
+                                <button class="get-solution-btn" data-question-id="subj-17">Get Solution</button>
+                                <div class="solution" id="solution-subj-17"></div>
+                            </li>
+                            <li>Define Raw Moments and Central Moments. Provide the formula for the \(r\)-th central moment.
+                                <button class="get-solution-btn" data-question-id="subj-18">Get Solution</button>
+                                <div class="solution" id="solution-subj-18"></div>
+                            </li>
+                            <li>Prove that the second central moment is equal to the variance.
+                                <button class="get-solution-btn" data-question-id="subj-19">Get Solution</button>
+                                <div class="solution" id="solution-subj-19"></div>
+                            </li>
+                            <li>Express the variance (\(\mu_2\) in terms of raw moments (\(\mu'_1\) and \(\mu'_2\).
+                                <button class="get-solution-btn" data-question-id="subj-20">Get Solution</button>
+                                <div class="solution" id="solution-subj-20"></div>
+                            </li>
+                            <li>Show that skewness (\(\beta_1\) and kurtosis (\(\beta_2\) are invariant under a linear transformation \(y_i = ax_i + b\).
+                                <button class="get-solution-btn" data-question-id="subj-21">Get Solution</button>
+                                <div class="solution" id="solution-subj-21"></div>
+                            </li>
+                            <li>A set of 200 observations has mean 40 and S.D. 15. Two values (34 and 35) were recorded incorrectly and must be replaced by 43 and 53. Find the corrected mean and standard deviation.
+                                <button class="get-solution-btn" data-question-id="subj-22">Get Solution</button>
+                                <div class="solution" id="solution-subj-22"></div>
+                            </li>
+                            <li>Prove that for any discrete distribution, the standard deviation is never less than the mean deviation from the mean.
+                                <button class="get-solution-btn" data-question-id="subj-23">Get Solution</button>
+                                <div class="solution" id="solution-subj-23"></div>
+                            </li>
+                            <li>Calculate the mean deviation from the mean and the standard deviation for the sequence \(a, a+d, a+2d, \ldots, a+2nd\).
+                                <button class="get-solution-btn" data-question-id="subj-24">Get Solution</button>
+                                <div class="solution" id="solution-subj-24"></div>
+                            </li>
+                            <li>Find the standard deviation of the first \(n\) natural numbers.
+                                <button class="get-solution-btn" data-question-id="subj-25">Get Solution</button>
+                                <div class="solution" id="solution-subj-25"></div>
+                            </li>
+                            <li>The mean and standard deviation of a sample of 100 observations were calculated as 40 and 5.1 respectively. It was later found that one observation 50 was misread as 40. Calculate the correct mean and S.D.
+                                <button class="get-solution-btn" data-question-id="subj-26">Get Solution</button>
+                                <div class="solution" id="solution-subj-26"></div>
+                            </li>
+                            <li>Compute the Mean Deviation from the median for the classes (0-10, 10-20, 20-30, 30-40, 40-50, 50-60, 60-70, 70-80) with frequencies (5, 15, 25, 35, 45, 55, 65, 75).
+                                <button class="get-solution-btn" data-question-id="subj-27">Get Solution</button>
+                                <div class="solution" id="solution-subj-27"></div>
+                            </li>
+                            <li>Why do we say Root Mean Square Deviation is minimum when calculated about the arithmetic mean? Provide a brief proof.
+                                <button class="get-solution-btn" data-question-id="subj-28">Get Solution</button>
+                                <div class="solution" id="solution-subj-28"></div>
+                            </li>
+                            <li>Given Market A prices (120, 125, 118, 130, 128) and Market B prices (110, 130, 105, 140, 115). Calculate S.D. using the assumed mean method for both and find which is more stable.
+                                <button class="get-solution-btn" data-question-id="subj-29">Get Solution</button>
+                                <div class="solution" id="solution-subj-29"></div>
+                            </li>
+                            <li>Describe the "coding method" (step-deviation method) for calculating standard deviation. How do the properties of change of origin and scale justify this method?
+                                <button class="get-solution-btn" data-question-id="subj-30">Get Solution</button>
+                                <div class="solution" id="solution-subj-30"></div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="custom-question-container" style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #ddd;">
+                        <h3>Solve Your Own Question</h3>
+                        <p>Enter any question related to Measures of Dispersion.</p>
+                        <textarea id="custom-question" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; min-height: 100px; font-family: inherit; box-sizing: border-box;" placeholder="Type your question here..."></textarea>
+                        <button id="custom-solve-btn" class="get-solution-btn" data-question-id="custom" style="position: static; margin-top: 10px; width: auto; text-indent: 0; line-height: normal; padding: 8px 16px;">
+                            Solve Question
+                        </button>
+                        <div class="solution" id="solution-custom"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="site" role="contentinfo">
+            <div>Developed by : Prof. O.P. Sheoran <br> Department of Mathematics & Statistics,<br> CCS Haryana Agricultural University, Hisar <br> &copy; 2026 CCS HAU, Hisar</div>
+        </footer>
+    </div>
+
+    <script>
+        function toggleAnswers() {
+            var answerContainer = document.getElementById('objective-answers-container');
+            var showBtn = document.getElementById('show-answers-btn');
+            var hideBtn = document.getElementById('hide-answers-btn');
+
+            if (answerContainer.style.display === 'none' || answerContainer.style.display === '') {
+                answerContainer.style.display = 'block';
+                showBtn.style.display = 'none';
+                hideBtn.style.display = 'inline-block';
+            } else {
+                answerContainer.style.display = 'none';
+                showBtn.style.display = 'inline-block';
+                hideBtn.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const CHAPTER_CONTEXT = "Chapter 4: Measures of Dispersion. Covers range, quartile deviation, mean deviation, standard deviation, variance, coefficient of variation, properties of standard deviation, and moments.";
+
+            async function solveProblem(button, questionId) {
+                const userQuota = await checkQuota();
+                if (!userQuota.allowed) {
+                    alert(`You have reached your daily limit of ${userQuota.total} solutions.`);
+                    return;
+                }
+
+                const questionElement = button.parentElement;
+                const solutionDiv = document.getElementById(`solution-${questionId}`);
+                let questionText = "";
+                if(questionId === "custom") {
+                    questionText = document.getElementById('custom-question').value.trim();
+                    if(!questionText) return;
+                } else {
+                    questionText = getQuestionText(questionElement);
+                }
+                
+                solutionDiv.style.display = "block";
+                solutionDiv.innerHTML = '<p class="loading">Generating solution, please wait...</p>';
+                button.disabled = true;
+                button.innerText = "Solving...";
+
+                const formData = new URLSearchParams();
+                formData.append('problemText', questionText);
+                formData.append('chapterContext', CHAPTER_CONTEXT);
+
+                try {
+                    const response = await fetch('/web_book/api/solve', {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    if (!response.ok) throw new Error(result.error || 'An unknown server error occurred.');
+                    
+                    displaySolution(solutionDiv, questionId, result.solution);
+                    saveSolutionToCache(questionId, result.solution);
+                    
+                    button.innerText = "Solved";
+                    button.disabled = true;
+
+                } catch (error) {
+                    solutionDiv.innerHTML = `<p class="error">Failed to get solution: ${error.message}</p>`;
+                    button.disabled = false;
+                    button.innerText = "Get Solution";
+                }
+            }
+
+            function getQuestionText(parentElement) {
+                const clone = parentElement.cloneNode(true);
+                clone.querySelector('button')?.remove();
+                clone.querySelector('.solution')?.remove();
+                return clone.innerHTML.trim();
+            }
+
+            function displaySolution(solutionDiv, questionId, solutionText) {
+                solutionDiv.innerHTML = solutionText;
+                const controlsContainer = document.createElement('div');
+                controlsContainer.style.marginTop = '15px';
+                
+                const hideBtn = document.createElement('button');
+                hideBtn.innerText = 'Hide Solution';
+                hideBtn.className = 'hide-btn';
+                hideBtn.onclick = () => { solutionDiv.style.display = 'none'; };
+                
+                const downloadBtn = document.createElement('button');
+                downloadBtn.innerText = 'Download as Word';
+                downloadBtn.className = 'toggle-btn';
+                downloadBtn.style.marginLeft = '10px';
+                downloadBtn.onclick = () => downloadAsWord(solutionText);
+                
+                controlsContainer.append(hideBtn, downloadBtn);
+                solutionDiv.appendChild(controlsContainer);
+                
+                if (window.MathJax) {
+                    MathJax.typesetPromise([solutionDiv]).catch(err => console.error('MathJax error:', err));
+                }
+            }
+
+            async function downloadAsWord(solutionHtml) {
+                const formData = new URLSearchParams();
+                formData.append('solutionHtml', solutionHtml);
+                try {
+                    const response = await fetch('/web_book/api/download', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    if (!response.ok) throw new Error('Failed to create document on server.');
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = url;
+                    a.download = 'solution.docx';
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+                } catch (error) {
+                    alert(`Could not download file: ${error.message}`);
+                }
+            }
+
+            function saveSolutionToCache(questionId, solutionHtml) {
+                localStorage.setItem(`solution-cache-${questionId}`, solutionHtml);
+            }
+
+            async function checkQuota() {
+                try {
+                    const response = await fetch('/web_book/api/quota');
+                    const quota = await response.json();
+                    return { allowed: quota.remaining > 0 || String(quota.remaining).toLowerCase() === 'unlimited', ...quota };
+                } catch {
+                    return { allowed: false, remaining: 0, total: 0 };
+                }
+            }
+            
+            function initializePage() {
+                document.querySelectorAll('.get-solution-btn').forEach(button => {
+                    const questionId = button.dataset.questionId;
+                    if (!questionId || questionId === "custom") return;
+
+                    const cachedSolution = localStorage.getItem(`solution-cache-${questionId}`);
+                    const solutionDiv = document.getElementById(`solution-${questionId}`);
+
+                    if (cachedSolution) {
+                        button.innerText = "Show Solution";
+                        button.onclick = (event) => {
+                            event.preventDefault();
+                            solutionDiv.style.display = 'block';
+                            displaySolution(solutionDiv, questionId, cachedSolution);
+                        };
+                    } else {
+                        button.addEventListener('click', (event) => {
+                            event.preventDefault();
+                            solveProblem(event.currentTarget, questionId);
+                        });
+                    }
+                });
+
+                const customSolveBtn = document.getElementById('custom-solve-btn');
+                if (customSolveBtn) {
+                    const questionId = customSolveBtn.dataset.questionId;
+                    customSolveBtn.addEventListener('click', (event) => {
+                        event.preventDefault();
+                        solveProblem(event.currentTarget, questionId);
+                    });
+                }
+            }
+            
+            initializePage();
+        });
+    </script>
+</body>
+</html>

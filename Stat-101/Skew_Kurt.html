@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skewness and Kurtosis</title>
+    
+    <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)'], ['$', '$']],
+        displayMath: [['\\[', '\\]'], ['$$', '$$']],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+      }
+    };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/core-js@3.32.2/minified.min.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* --- Color Palette & Base Styles --- */
+        :root {
+            --primary-blue: #0056b3;
+            --secondary-green: #28a745;
+            --text-dark: #212529;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --paper-white: #ffffff;
+            --border-light: #e9ecef;
+            --header-bg: linear-gradient(90deg, #004085, #0056b3);
+            --footer-bg: linear-gradient(90deg, #004085, #0056b3);
+            --section-header-bg: linear-gradient(90deg, rgba(0, 86, 179, 0.08), rgba(0, 86, 179, 0.02));
+            --example-bg: linear-gradient(180deg, rgba(40, 167, 69, 0.05), rgba(40, 167, 69, 0.01));
+            --formula-bg: linear-gradient(180deg, #f0f8ff, #fdfdff);
+            --table-header-bg: #e9f5ff;
+            --table-solution-header-bg: #e6ffe6;
+            --toc-bg: #ffffff;
+            --notebook-bg: #fffde7;
+            --notebook-line: #e0d6b8;
+            --font-family-body: 'Arial', 'Helvetica', sans-serif;
+            --font-family-heading: 'Arial', 'Helvetica', sans-serif;
+            --font-family-math: 'Times New Roman', 'Cambria Math', serif;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: var(--font-family-body);
+            background: var(--bg-light);
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        /* --- Page Layout --- */
+        .page {
+            max-width: 1000px;
+            margin: 30px auto;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background: var(--paper-white);
+        }
+        
+        /* --- Header --- */
+        header.site {
+            background: var(--header-bg);
+            color: #fff;
+            padding: 20px 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            text-align: center;
+        }
+
+        header .title {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: 0.5px;
+        }
+        
+        header .meta {
+            font-size: 14px;
+            opacity: 0.9;
+            text-align: center;
+        }
+        
+        /* --- Table of Contents (Index) - COMPLETELY REVISED --- */
+        .toc {
+            padding: 25px;
+            background: var(--toc-bg);
+            border-bottom: 1px solid var(--border-light);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .toc-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .toc nav {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .toc h2 {
+            margin: 0 0 20px 0;
+            color: var(--primary-blue);
+            font-size: 18px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 8px;
+            display: block;
+            width: 100%;
+        }
+
+        .toc ol {
+            margin: 0;
+            padding-left: 10px;
+            list-style: none;
+            counter-reset: toc-counter;
+            font-size: 15px;
+        }
+
+        .toc ol li {
+            position: relative;
+            padding: 8px 0 8px 35px;
+            margin-bottom: 5px;
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .toc ol li:hover {
+            background: rgba(0, 86, 179, 0.03);
+            border-left: 2px solid var(--primary-blue);
+            transform: translateX(3px);
+        }
+
+        .toc ol li::before {
+            content: counter(toc-counter);
+            counter-increment: toc-counter;
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 25px;
+            height: 25px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .toc ol li:hover::before {
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.2s ease;
+            display: block;
+            position: relative;
+        }
+
+        .toc a:hover {
+            color: var(--primary-blue);
+        }
+
+        .toc a::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .toc a:hover::after {
+            width: 100%;
+        }
+
+        .toc .quick-notes {
+            min-width: 280px;
+            padding: 18px;
+            background: #f8f9ff;
+            border-left: 3px solid var(--primary-blue);
+            border-radius: 5px;
+            font-size: 14px;
+            color: var(--text-dark);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .toc .quick-notes h3 {
+            margin: 0 0 12px 0;
+            color: var(--primary-blue);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* --- Main Content Area --- */
+        main.content {
+            padding: 30px;
+        }
+
+        /* --- Section Styling --- */
+        .section {
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--paper-white);
+            border: 1px solid var(--border-light);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            scroll-margin-top: 70px;
+        }
+
+        .section .head {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: var(--section-header-bg);
+            border-bottom: 1px solid rgba(0, 86, 179, 0.1);
+        }
+
+        .section .head .num {
+            min-width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            box-shadow: 0 5px 15px rgba(0, 86, 179, 0.2);
+        }
+
+        .section .head .title-group {
+            flex: 1;
+        }
+
+        .section .head .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin: 0;
+        }
+
+        .section .head .subtitle {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .section .body {
+            padding: 20px;
+            color: var(--text-dark);
+        }
+
+        .section h3 {
+            font-size: 18px;
+            color: var(--primary-blue);
+            margin-top: 25px;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--border-light);
+            padding-bottom: 5px;
+        }
+
+        .section h4 {
+            font-size: 16px;
+            color: var(--text-dark);
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+
+        .section p {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .section ul, .section ol {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding-left: 25px;
+        }
+
+        .section ul li, .section ol li {
+            margin-bottom: 8px;
+        }
+        
+        .definition-box {
+            background-color: var(--formula-bg);
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .definition-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .definition-box p {
+            margin: 0;
+        }
+        
+        .example-box {
+            border-left: 5px solid var(--secondary-green);
+            padding: 15px 20px;
+            margin: 20px 0;
+            background: var(--example-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .example-title {
+            margin: 0 0 10px 0;
+            color: var(--secondary-green);
+            font-size: 16px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .example-box p {
+            margin-bottom: 10px;
+        }
+
+        /* --- Formula Blocks --- */
+        .formula-box {
+            background: var(--formula-bg);
+            border-left: 5px solid var(--primary-blue);
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            font-size: 16px;
+            font-family: var(--font-family-math);
+            text-align: center;
+        }
+
+        .formula-title {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .formula-box p {
+            margin: 0;
+            text-align: center;
+        }
+
+        .formula {
+            font-family: var(--font-family-math);
+            font-size: 1.2rem;
+            margin: 15px 0;
+        }
+
+        /* --- Notebook-Style Tables --- */
+        table.calculation-data {
+            width: auto;
+            max-width: 95%;
+            margin: 15px auto;
+            border-collapse: collapse;
+            font-size: 14px;
+            background: var(--notebook-bg);
+            border: 1px solid var(--notebook-line);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        table.calculation-data th, table.calculation-data td {
+            border: 1px solid var(--notebook-line);
+            padding: 6px 10px;
+            text-align: center;
+            vertical-align: top;
+            position: relative;
+        }
+
+        table.calculation-data thead th {
+            background: var(--table-header-bg);
+            color: var(--primary-blue);
+            font-weight: 700;
+            border-bottom: 2px solid var(--primary-blue);
+        }
+        
+        /* Notebook lines effect */
+        table.calculation-data tbody tr {
+            border-bottom: 1px dashed var(--notebook-line);
+        }
+
+        table.calculation-data tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        table.calculation-data tbody tr:nth-child(odd) {
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        table.calculation-data tbody tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Subtle notebook margin line */
+        table.calculation-data::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+            background: var(--notebook-line);
+            opacity: 0.7;
+        }
+        
+        /* --- General styles not in original --- */
+        .curve-illustration { text-align: center; margin: 30px 0; }
+        .curve-types { display: flex; justify-content: space-around; flex-wrap: wrap; margin: 20px 0; }
+        .curve-type { text-align: center; margin: 10px; padding: 15px; border: 2px solid var(--border-light); border-radius: 8px; background: #fff; min-width: 200px; }
+        .curve-image { width: 150px; height: 100px; margin: 10px auto; border: 1px solid #ddd; display: flex; align-items: center; justify-content: center; background: #f8f9fa; border-radius: 4px; }
+        
+        /* --- Exercise Section styles --- */
+        .exercises {
+            background-color: #f0f8ff;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid var(--primary-blue);
+        }
+        
+        .exercises h4 {
+            font-size: 1.4rem;
+            color: var(--primary-blue);
+            margin-bottom: 15px;
+            font-weight: 700;
+            border-bottom: 1px dashed var(--border-light);
+            padding-bottom: 8px;
+        }
+
+        .exercises ol {
+            list-style: decimal;
+            padding-left: 25px;
+            margin-top: 15px;
+        }
+
+        .exercises li {
+            margin-bottom: 15px;
+        }
+
+        .exercises .solution {
+            background-color: var(--table-solution-header-bg);
+            border-left: 3px solid var(--secondary-green);
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .mcq .option {
+            padding: 8px 12px;
+            margin: 6px 0;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+            transition: background 0.2s ease;
+        }
+
+        .mcq .option:hover {
+            background: #f0f8ff;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: var(--primary-blue);
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .btn:hover {
+            background: #004085;
+            transform: translateY(-1px);
+        }
+
+        .btn.secondary {
+            background: #e9ecef;
+            color: var(--primary-blue);
+            border: 1px solid var(--primary-blue);
+        }
+
+        .btn.secondary:hover {
+            background: #dee2e6;
+            color: #004085;
+        }
+        
+        .answer-block {
+            display: none;
+            background: #e6ffe6;
+            border-left: 5px solid var(--secondary-green);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 14px;
+            color: var(--text-dark);
+        }
+        
+        .answer-block ol {
+            list-style: decimal;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .answer-block li {
+            margin-bottom: 5px;
+        }
+        
+        .copyright {
+            background-color: var(--primary-blue);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: 50px;
+        }
+        
+        .copyright p {
+            margin: 5px 0;
+            text-align: center;
+        }
+.curve-illustration {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .section-title {
+            color: #333;
+            margin-top: 0;
+        }
+        .curve-type {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+.curve-image {
+    margin: 25px auto;
+    text-align: center;
+    width: 100%;
+}
+
+canvas {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    max-width: 90%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* This centers the canvas */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+/* Style for the legends */
+.color-normal, .color-positive, .color-negative {
+    font-size: 10px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin: 8px 0;
+}
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="site">
+            <h1 class="title">Chapter-4 <br> Skewness and Kurtosis</h1>
+            <p class="meta">Measures of the Shape of Distribution</p>
+        </header>
+
+        <div class="toc" role="navigation" aria-label="Table of contents">
+            <div class="toc-container">
+                <nav>
+                    <h2>Index</h2>
+                    <ol>
+                        <li><a href="#introduction">Introduction to Skewness</a></li>
+                        <li><a href="#skewness-types">Types of Skewness</a></li>
+                        <li><a href="#skewness-measures">Measures of Skewness</a></li>
+                        <li><a href="#kurtosis">Kurtosis</a></li>
+                        <li><a href="#interactive-calculator">Interactive Calculator</a></li>
+                        <li><a href="#exercises">Exercises</a></li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <main class="content">
+            <section id="introduction" class="section">
+                <div class="head">
+                    <div class="num">1</div>
+                    <div class="title-group">
+                        <h2 class="title">Introduction to Skewness</h2>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="definition-box">
+                        <div class="definition-title">Meaning of Skewness</div>
+                        <p><span class="index-marker">Skewness</span> means 'lack of symmetry'. We study skewness to get an idea about the shape of the curve that can be drawn with the given data. If in a distribution, Mean = Median = Mode, then that distribution is called a <span class="index-marker">symmetrical distribution</span>. If in a distribution, Mean ≠ Median ≠ Mode, then it is not a symmetrical distribution and is called a <span class="index-marker">skewed distribution</span>, and such a distribution can either be positively skewed or negatively skewed.</p>
+                    </div>
+
+                    <p>Understanding the shape of the distribution is very important in statistics because it provides us with valuable information about the pattern and behavior of the data. Skewness tells us on which side the data is concentrated and in which direction the outliers are.</p>
+
+                    <div class="example-box">
+                        <div class="example-title">Example of agricultural income in Haryana</div>
+                        <p>A survey of the monthly income of farmers in a district of Haryana was conducted. If the income of the majority of farmers is low but the income of some large farmers is very high, then this distribution will be positively skewed. This means that Mean > Median > Mode will hold. For example, if out of 100 farmers, the income of 70 farmers is between ₹15,000-₹25,000, the income of 20 farmers is between ₹25,000-₹35,000, and the income of 10 farmers is more than ₹50,000, then this distribution will be right-skewed.</p>
+                    </div>
+                </div>
+            </section>          
+            <section id="skewness-types" class="section">
+                <div class="head">
+                    <div class="num">2</div>
+                    <div class="title-group">
+                        <h2 class="title">Introduction to Skewness</h2>
+                    </div>
+                </div>
+ 
+                <section class="subsection">
+                    <h3>Symmetrical Distribution</h3>
+                    <p>It is clear from the above diagrams that in a symmetrical distribution, the values of the mean, median, and mode coincide. The spread of frequencies is equal on both sides of the center point of the curve.</p>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Example: Height of students in Haryana</div>
+                        <p>The heights of students in a college in Haryana were measured. If the height of the majority of students is around the average and very few students are very tall or very short, then this distribution will be approximately symmetrical.</p>
+                        <div class="table-container">
+                            <table class="calculation-data">
+                                <thead>
+                                    <tr>
+                                        <th>Height (cm)</th>
+                                        <th>150-155</th>
+                                        <th>155-160</th>
+                                        <th>160-165</th>
+                                        <th>165-170</th>
+                                        <th>170-175</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Students</td>
+                                        <td>8</td>
+                                        <td>22</td>
+                                        <td>40</td>
+                                        <td>22</td>
+                                        <td>8</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>In this example, the distribution is approximately symmetrical because the frequencies are almost equal on both sides of the center.</p>
+                    </div>
+                </section>
+                    
+                <section class="subsection">
+                    <h3>Positively Skewed Distribution</h3>
+                    <p>It is clear from the above diagrams that in a positively skewed distribution, the value of the mean is the maximum and the mode is the least, and the median is in between the two. In a positively skewed distribution, the frequencies are spread out over a greater range of values on the right-hand side as compared to the left-hand side.</p>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Example: Household income in Haryana</div>
+                        <p>A survey of the monthly income of households in a village in Haryana:</p>
+                        <div class="table-container">
+                            <table class="calculation-data">
+                                <thead>
+                                    <tr>
+                                        <th>Income (₹)</th>
+                                        <th>10,000-20,000</th>
+                                        <th>20,000-30,000</th>
+                                        <th>30,000-40,000</th>
+                                        <th>40,000-60,000</th>
+                                        <th>60,000-100,000</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Families</td>
+                                        <td>45</td>
+                                        <td>35</td>
+                                        <td>15</td>
+                                        <td>8</td>
+                                        <td>2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>This distribution is positively skewed because the majority of families have a low income, but the income of some families is very high, which stretches the distribution to the right side.</p>
+                    </div>
+                </section>
+                    
+                <section class="subsection">
+                    <h3>Negatively Skewed Distribution</h3>
+                    <p>It is clear from the above diagrams that in a negatively skewed distribution, the value of the mode is the maximum and the mean is the least. The median is in between the two. In a negatively skewed distribution, the frequencies are spread out over a greater range of values on the left-hand side as compared to the right-hand side.</p>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Example: Exam scores</div>
+                        <p>If an exam is very easy and the majority of students get high marks, but a few students perform poorly:</p>
+                        <div class="table-container">
+                            <table class="calculation-data">
+                                <thead>
+                                    <tr>
+                                        <th>Marks</th>
+                                        <th>0-20</th>
+                                        <th>20-40</th>
+                                        <th>40-60</th>
+                                        <th>60-80</th>
+                                        <th>80-100</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Students</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>12</td>
+                                        <td>35</td>
+                                        <td>45</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>This distribution is negatively skewed because the majority of students have received high marks, but the low marks of some students create a tail on the left side of the distribution.</p>
+                    </div>
+                </section>
+            </section>
+                    <canvas id="skewnessCanvas" width="600" height="300"></canvas>
+             
+        <section id="skewness-measures" class="section">
+            <div class="head">
+                <div class="num">3</div>
+                <div class="title-group">
+                    <h2 class="title">Measures of Skewness</h2>
+                </div>
+            </div>
+            <div class="body">
+                <p>The important measures of skewness are:</p>
+                <ul>
+                    <li><span class="index-marker">Karl-Pearson's coefficient of skewness</span></li>
+                    <li><span class="index-marker">Bowley's coefficient of skewness</span></li>
+                </ul>
+                    
+                <section class="subsection">
+                    <h3>Karl-Pearson's Coefficient of Skewness</h3>
+                    
+                    <p>According to Karl-Pearson, the absolute measure of skewness = Mean - Mode. This measure is not suitable for a valid comparison of skewness in two or more distributions because the unit of measurement may be different for different series. To avoid this difficulty, the relative measure of skewness called Karl-Pearson's coefficient of skewness is used:</p>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Formula for Karl-Pearson's Coefficient of Skewness</div>
+                        <div class="formula">
+                            <p>Karl-Pearson's Coefficient of Skewness = \(\frac{\text{Mean} - \text{Mode}}{\text{Standard Deviation}}\)</p>
+                        </div>
+                    </div>
+                    
+                    <p>When the mode is ill-defined, the coefficient can be determined by the following formula:</p>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Alternative Formula (when Mode is ill-defined)</div>
+                        <div class="formula">
+                            <p>Karl-Pearson's Coefficient of Skewness = \(\frac{3(\text{Mean} - \text{Median})}{\text{Standard Deviation}}\)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Example 1: Calculation of Karl-Pearson's Coefficient</div>
+                        <p>Data of monthly income of farmers in a district of Haryana:</p>
+                        <div class="table-container">
+                            <table class="calculation-data">
+                                <thead>
+                                    <tr>
+                                        <th>Income (in thousands of ₹)</th>
+                                        <th>10-15</th>
+                                        <th>15-20</th>
+                                        <th>20-25</th>
+                                        <th>25-30</th>
+                                        <th>30-35</th>
+                                        <th>35-40</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Number of Farmers</td>
+                                        <td>25</td>
+                                        <td>35</td>
+                                        <td>40</td>
+                                        <td>30</td>
+                                        <td>15</td>
+                                        <td>5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><strong>Solution:</strong></p>
+                        <p>Mean = ₹22,500<br>
+                        Median = ₹21,800<br>
+                        Standard Deviation = ₹6,200</p>
+                        <p>Karl-Pearson's Sk = \(\frac{3(22,500 - 21,800)}{6,200}\) = \(\frac{3 \times 700}{6,200}\) = \(\frac{2,100}{6,200}\) = 0.34</p>
+                        <p>Since the coefficient is positive, the distribution is positively skewed.</p>
+                    </div>
+                </section>
+                    
+                <section class="subsection">
+                    <h3>Bowley's Coefficient of Skewness</h3>
+                    
+                    <p>In Karl-Pearson's method, the entire series is needed to measure skewness. Prof. Bowley suggested a formula based on the relative position of quartiles. In a symmetrical distribution, the quartiles are equidistant from the value of the median; that is,</p>
+                    <p>Median - Q₁ = Q₃ - Median</p>
+                    <p>But in a skewed distribution, the quartiles are not equidistant from the median. Therefore, Bowley suggested the following formula:</p>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Formula for Bowley's Coefficient of Skewness</div>
+                        <div class="formula">
+                            <p>Bowley's Coefficient of Skewness (Sk) = \(\frac{Q_3 + Q_1 - 2\text{Median}}{Q_3 - Q_1}\)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Example 2: Calculation of Bowley's Coefficient</div>
+                        <p>Distribution of marks of students of Haryana Agricultural University:</p>
+                        <div class="table-container">
+                            <table class="calculation-data">
+                                <thead>
+                                    <tr>
+                                        <th>Marks</th>
+                                        <th>0-20</th>
+                                        <th>20-40</th>
+                                        <th>40-60</th>
+                                        <th>60-80</th>
+                                        <th>80-100</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Students</td>
+                                        <td>5</td>
+                                        <td>15</td>
+                                        <td>30</td>
+                                        <td>35</td>
+                                        <td>15</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><strong>Solution:</strong></p>
+                        <p>N = 100</p>
+                        <p>$Q_1$ position = N/4 = 25th item = 43.33 marks<br>
+                        $Q_3$ position = 3N/4 = 75th item = 72.86 marks<br>
+                        Median position = N/2 = 50th item = 58 marks</p>
+                        <p>Bowley's Sk = \(\frac{72.86 + 43.33 - 2(58)}{72.86 - 43.33}\) = \(\frac{116.19 - 116}{29.53}\) = \(\frac{0.19}{29.53}\) = 0.006</p>
+                        <p>Since the coefficient is approximately zero, the distribution is approximately symmetrical.</p>
+                    </div>
+                </section>
+                    
+                <section class="subsection">
+                    <h3>Interpretation of Skewness</h3>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Interpretation of Skewness Values</div>
+                        <ul>
+                            <li><strong>Sk = 0:</strong> The distribution is perfectly symmetrical</li>
+                            <li><strong>Sk > 0:</strong> The distribution is positively skewed (right-tailed)</li>
+                            <li><strong>Sk < 0:</strong> The distribution is negatively skewed (left-tailed)</li>
+                            <li><strong>|Sk| < 0.5:</strong> Approximately symmetrical</li>
+                            <li><strong>0.5 ≤ |Sk| < 1:</strong> Moderately skewed</li>
+                            <li><strong>|Sk| ≥ 1:</strong> Highly skewed</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+        </section>
+            
+        <section id="kurtosis" class="section">
+            <div class="head">
+                <div class="num">4</div>
+                <div class="title-group">
+                    <h2 class="title">Kurtosis</h2>
+                </div>
+            </div>
+            <div class="body">
+                <div class="definition-box">
+                    <div class="definition-title">Meaning of Kurtosis</div>
+                    <p>The expression <span class="index-marker">Kurtosis</span> is used to describe the peakedness of a curve. The three measures - central tendency, dispersion, and skewness - describe the characteristics of frequency distributions. But these studies do not give us a clear picture of the characteristics of the distribution.</p>
+                </div>
+                
+                <p>As far as the measurement of shape is concerned, we have two characteristics - skewness, which refers to the asymmetry of the series, and kurtosis, which measures the peakedness of the normal curve. All frequency curves expose different degrees of flatness or peakedness. This characteristic of a frequency curve is termed as kurtosis. The measure of kurtosis denotes the shape of the top of the frequency curve.</p>
+                
+                <p>The measure of kurtosis tells us how much more peaked or more flat-topped the distribution is compared to the normal curve. The normal curve, which is symmetrical and bell-shaped, is designated as <span class="index-marker">Mesokurtic</span>. If the curve is relatively more narrow and peaked at the top, it is designated as <span class="index-marker">Leptokurtic</span>. If the frequency curve is more flat than the normal curve, it is designated as <span class="index-marker">Platykurtic</span>.</p>
+                
+              <h4>Distribution Kurtosis Comparison</h4>
+                     <canvas id="kurtosisCanvas" width="600" height="300"></canvas>
+                <section class="subsection">
+                    <h3>Measure of Kurtosis</h3>
+                    
+                    <p>The measure of kurtosis of a frequency distribution is based on moments and is denoted by β₂:</p>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Formula for Kurtosis</div>
+                        <div class="formula">
+                            <p>β₂ = \(\frac{\mu_4}{\mu_2^2}\)</p>
+                            <p>Where μ₄ = fourth central moment, μ₂ = second central moment</p>
+                        </div>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">Interpretation of Kurtosis</div>
+                        <ul>
+                            <li><strong>If β₂ = 3:</strong> The distribution is normal and the curve is mesokurtic</li>
+                            <li><strong>If β₂ > 3:</strong> The distribution is more peaked and the curve is leptokurtic</li>
+                            <li><strong>If β₂ < 3:</strong> The distribution is flat-topped and the curve is platykurtic</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">Example: Kurtosis of crop yield in Haryana</div>
+                        <p>Analysis of per hectare yield of wheat in different districts of Haryana:</p>
+                        <div class="table-container">
+                            <table class="calculation-data">
+                                <thead>
+                                    <tr>
+                                        <th>Yield (Quintals/hectare)</th>
+                                        <th>Number of Districts</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>35-40</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40-45</td>
+                                        <td>5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>45-50</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50-55</td>
+                                        <td>12</td>
+                                    </tr>
+                                    <tr>
+                                        <td>55-60</td>
+                                        <td>8</td>
+                                    </tr>
+                                    <tr>
+                                        <td>60-65</td>
+                                        <td>3</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p><strong>Solution:</strong></p>
+                        <p>On calculating the central moments:<br>
+                        μ₂ = 42.5<br>
+                        μ₄ = 110,250</p>
+                        <p>β₂ = \(\frac{110,250}{(42.5)^2}\) = \(\frac{110,250}{1,806.25}\) = 61.04</p>
+                        <p>Since β₂ = 61.04 > 3, the distribution is leptokurtic, i.e., it is more peaked compared to the normal distribution.</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+            
+            <section id="interactive-calculator" class="section">
+                <div class="head">
+                    <div class="num">5</div>
+                    <div class="title-group">
+                        <h2 class="title">Interactive Calculator</h2>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="exercises">
+                        <h3>Skewness and Kurtosis Calculator</h3>
+                        <p>Enter your data in the text area below (comma-separated values):</p>
+                        
+                        <div class="input-section">
+                            <textarea id="dataInput" class="data-input" placeholder="Example: 12, 15, 18, 20, 22, 25, 28, 30, 35, 40
+Or for frequency data:
+Class,Frequency
+10-20,5
+20-30,10
+30-40,15
+40-50,8
+50-60,3"></textarea>
+                        </div>
+                        
+                        <div class="controls" style="text-align: center; margin: 20px 0;">
+                            <button class="btn" onclick="calculateSkewnessKurtosis()">Calculate Skewness & Kurtosis</button>
+                            <button class="btn secondary" onclick="generateVisualization()">Generate Visualization</button>
+                            <button class="btn secondary" onclick="clearData()">Clear Data</button>
+                        </div>
+                        
+                        <div id="results" class="answer-block" style="display: none;">
+                            <h4>Results:</h4>
+                            <div id="statisticsResults"></div>
+                            <div id="skewnessResults"></div>
+                            <div id="kurtosisResults"></div>
+                            <div id="interpretation"></div>
+                        </div>
+                        
+                        <div class="example-box">
+                            <p><strong>Visualization:</strong></p>
+                            <div class="chart-container">
+                                <canvas id="distributionChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="exercises" class="section">
+                <div class="head">
+                    <div class="num">6</div>
+                    <div class="title-group">
+                        <h2 class="title">Exercises</h2>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="exercises">
+                        <h3>Questions</h3>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">1.</span> What is <span class="index-marker">Skewness</span>? What are its main types? State the relationship between the mean, median, and mode for each type.
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">2.</span> Compare <span class="index-marker">Karl-Pearson's coefficient of skewness</span> and <span class="index-marker">Bowley's coefficient of skewness</span>. Which method is more reliable and why?
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">3.</span> Calculate Karl-Pearson's coefficient of skewness for the following data:
+                            <div class="table-container">
+                                <table class="calculation-data">
+                                    <thead>
+                                        <tr>
+                                            <th>Values</th>
+                                            <th>10</th>
+                                            <th>20</th>
+                                            <th>30</th>
+                                            <th>40</th>
+                                            <th>50</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Frequency</td>
+                                            <td>5</td>
+                                            <td>12</td>
+                                            <td>18</td>
+                                            <td>10</td>
+                                            <td>3</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">4.</span> What is <span class="index-marker">Kurtosis</span>? What are its three types? How are they identified based on the values of β₂?
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">5.</span> The distribution of farmers' income in a district of Haryana is as follows. Calculate Bowley's coefficient of skewness:
+                            <div class="table-container">
+                                <table class="calculation-data">
+                                    <thead>
+                                        <tr>
+                                            <th>Income (in thousands of ₹)</th>
+                                            <th>15-25</th>
+                                            <th>25-35</th>
+                                            <th>35-45</th>
+                                            <th>45-55</th>
+                                            <th>55-65</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Farmers</td>
+                                            <td>20</td>
+                                            <td>35</td>
+                                            <td>25</td>
+                                            <td>15</td>
+                                            <td>5</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">6.</span> What are the practical implications of skewness and kurtosis of a distribution? Give real-life examples.
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">7.</span> In a distribution, Mean = 50, Median = 45, Mode = 40 and Standard Deviation = 10. Calculate Karl-Pearson's coefficient of skewness and state the nature of the distribution.
+                        </div>
+                        
+                        <div class="question standard-question">
+                            <span class="question-number">8.</span> For the following data, calculate the skewness coefficient using both methods:
+                            <p>12, 15, 18, 20, 20, 22, 25, 28, 30, 35</p>
+                        </div>
+                        
+                        <h3>Multiple Choice Questions</h3>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">1.</span> In a symmetrical distribution:
+                            <div class="options">
+                                <div class="option">A) Mean > Median > Mode</div>
+                                <div class="option">B) Mode > Median > Mean</div>
+                                <div class="option">C) Mean = Median = Mode</div>
+                                <div class="option">D) None of these</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">2.</span> In a positively skewed distribution:
+                            <div class="options">
+                                <div class="option">A) Mean < Mode</div>
+                                <div class="option">B) Mean > Mode</div>
+                                <div class="option">C) Mean = Mode</div>
+                                <div class="option">D) Mode is undefined</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">3.</span> The alternative formula for Karl-Pearson's coefficient of skewness is:
+                            <div class="options">
+                                <div class="option">A) \(\frac{\text{Mean} - \text{Mode}}{\text{SD}}\)</div>
+                                <div class="option">B) \(\frac{3(\text{Mean} - \text{Median})}{\text{SD}}\)</div>
+                                <div class="option">C) \(\frac{\text{Mode} - \text{Mean}}{\text{SD}}\)</div>
+                                <div class="option">D) \(\frac{\text{Mean} + \text{Mode}}{\text{SD}}\)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">4.</span> The formula for Bowley's coefficient of skewness is:
+                            <div class="options">
+                                <div class="option">A) \(\frac{Q_3 - Q_1}{Q_3 + Q_1}\)</div>
+                                <div class="option">B) \(\frac{Q_3 + Q_1 - 2M_d}{Q_3 - Q_1}\)</div>
+                                <div class="option">C) \(\frac{Q_3 - Q_1}{2}\)</div>
+                                <div class="option">D) \(\frac{Q_3 + Q_1}{2}\)</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">5.</span> The value of β₂ for a normal distribution is:
+                            <div class="options">
+                                <div class="option">A) 0</div>
+                                <div class="option">B) 1</div>
+                                <div class="option">C) 3</div>
+                                <div class="option">D) 5</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">6.</span> In a leptokurtic distribution:
+                            <div class="options">
+                                <div class="option">A) β₂ < 3</div>
+                                <div class="option">B) β₂ = 3</div>
+                                <div class="option">C) β₂ > 3</div>
+                                <div class="option">D) β₂ = 0</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">7.</span> If in a distribution, most of the values are high but there are a few very low values, the distribution will be:
+                            <div class="options">
+                                <div class="option">A) Positively skewed</div>
+                                <div class="option">B) Negatively skewed</div>
+                                <div class="option">C) Symmetrical</div>
+                                <div class="option">D) Normal</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">8.</span> Kurtosis measures the:
+                            <div class="options">
+                                <div class="option">A) Asymmetry of the distribution</div>
+                                <div class="option">B) Peakedness of the distribution</div>
+                                <div class="option">C) Central tendency</div>
+                                <div class="option">D) Dispersion</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">9.</span> A platykurtic curve is:
+                            <div class="options">
+                                <div class="option">A) More peaked than the normal curve</div>
+                                <div class="option">B) Flatter than the normal curve</div>
+                                <div class="option">C) Similar to the normal curve</div>
+                                <div class="option">D) None of these</div>
+                            </div>
+                        </div>
+                        
+                        <div class="question mcq-question">
+                            <span class="question-number">10.</span> If Mean = 40, Median = 35, the distribution is:
+                            <div class="options">
+                                <div class="option">A) Symmetrical</div>
+                                <div class="option">B) Positively skewed</div>
+                                <div class="option">C) Negatively skewed</div>
+                                <div class="option">D) Cannot be determined</div>
+                            </div>
+                        </div>
+                        
+                        <h3>Fill in the Blanks</h3>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">1.</span> In a symmetrical distribution, Mean = ________ = Mode.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">2.</span> In a positively skewed distribution, the value of the Mean is ________.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">3.</span> Karl-Pearson's coefficient of skewness = \(\frac{\text{Mean} - \text{Mode}}{?}\)
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">4.</span> Bowley's method is based on ________.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">5.</span> For a normal distribution, β₂ = ________.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">6.</span> In a leptokurtic distribution, β₂ is ________ 3.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">7.</span> The measure of kurtosis denotes the shape of the ________ of the frequency curve.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">8.</span> In a negatively skewed distribution, ________ > Median > Mean.
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">9.</span> β₂ = \(\mu_4/(?)\)
+                        </div>
+                        
+                        <div class="question fill-question">
+                            <span class="question-number">10.</span> A platykurtic curve is more ________ than the normal curve.
+                        </div>
+                        
+                        <h3>True or False</h3>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">1.</span> In a symmetrical distribution, skewness is zero.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">2.</span> Karl-Pearson's method is based on the entire series.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">3.</span> Bowley's method is based only on quartiles.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">4.</span> Positive skewness means that the distribution is right-tailed.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">5.</span> Kurtosis measures the symmetry of the distribution.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">6.</span> A normal distribution is mesokurtic.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">7.</span> If β₂ < 3, the distribution is leptokurtic.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">8.</span> Income distributions are usually positively skewed.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">9.</span> The coefficient of skewness is always between -1 and +1.
+                        </div>
+                        
+                        <div class="question tf-question">
+                            <span class="question-number">10.</span> When the mode is ill-defined, Karl-Pearson's alternative formula is used.
+                        </div>
+                        
+                        <h3>Answers</h3>
+                        
+                        <div class="answers-section">
+                            <h4>Answers to Descriptive Questions</h4>
+                            
+                            <div class="answer">
+                                <span class="answer-number">1.</span>
+                                <span class="answer-text"><strong>Skewness</strong> means 'lack of symmetry'. Its three main types are:<br>
+                                <strong>a) Symmetrical Distribution:</strong> Mean = Median = Mode<br>
+                                <strong>b) Positively Skewed:</strong> Mean > Median > Mode<br>
+                                <strong>c) Negatively Skewed:</strong> Mode > Median > Mean</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">2.</span>
+                                <span class="answer-text"><strong>Comparison:</strong><br>
+                                <strong>Karl-Pearson's Method:</strong> Based on the entire series, uses mean/mode/SD, affected by extreme values.<br>
+                                <strong>Bowley's Method:</strong> Based only on quartiles, less affected by extreme values, easier to calculate.<br>
+                                Bowley's method is more reliable because it is less affected by extreme values.</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">3.</span>
+                                <span class="answer-text">Mean = (10×5 + 20×12 + 30×18 + 40×10 + 50×3)/48 = 28.33<br>
+                                Mode = 30 (highest frequency)<br>
+                                On calculating SD, it is 11.24<br>
+                                Karl-Pearson's Sk = (28.33 - 30)/11.24 = -0.149<br>
+                                The distribution is slightly negatively skewed.</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">4.</span>
+                                <span class="answer-text"><strong>Kurtosis</strong> measures the peakedness of a curve. The three types are:<br>
+                                <strong>a) Mesokurtic:</strong> β₂ = 3 (Normal distribution)<br>
+                                <strong>b) Leptokurtic:</strong> β₂ > 3 (More peaked)<br>
+                                <strong>c) Platykurtic:</strong> β₂ < 3 (Flatter)</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">5.</span>
+                                <span class="answer-text">N = 100<br>
+                                Q₁ = 30.71 thousand rupees<br>
+                                Q₃ = 42.00 thousand rupees<br>
+                                Median = 35.71 thousand rupees<br>
+                                Bowley's Sk = (42 + 30.71 - 2×35.71)/(42 - 30.71) = 0.1<br>
+                                The distribution is slightly positively skewed.</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">7.</span>
+                                <span class="answer-text">Karl-Pearson's Sk = (Mean - Mode)/SD = (50 - 40)/10 = 1.0<br>
+                                The distribution is highly positively skewed.</span>
+                            </div>
+                            
+                            <h4>Answers to Multiple Choice Questions</h4>
+                            
+                            <div class="answer">
+                                <span class="answer-number">1.</span>
+                                <span class="answer-text">C) Mean = Median = Mode</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">2.</span>
+                                <span class="answer-text">B) Mean > Mode</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">3.</span>
+                                <span class="answer-text">B) \(\frac{3(\text{Mean} - \text{Median})}{\text{SD}}\)</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">4.</span>
+                                <span class="answer-text">B) \(\frac{Q_3 + Q_1 - 2M_d}{Q_3 - Q_1}\)</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">5.</span>
+                                <span class="answer-text">C) 3</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">6.</span>
+                                <span class="answer-text">C) β₂ > 3</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">7.</span>
+                                <span class="answer-text">B) Negatively skewed</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">8.</span>
+                                <span class="answer-text">B) Peakedness of the distribution</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">9.</span>
+                                <span class="answer-text">B) Flatter than the normal curve</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">10.</span>
+                                <span class="answer-text">B) Positively skewed</span>
+                            </div>
+                            
+                            <h4>Answers to Fill in the Blanks</h4>
+                            
+                            <div class="answer">
+                                <span class="answer-number">1.</span>
+                                <span class="answer-text">Median</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">2.</span>
+                                <span class="answer-text">maximum</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">3.</span>
+                                <span class="answer-text">Standard Deviation</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">4.</span>
+                                <span class="answer-text">quartiles</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">5.</span>
+                                <span class="answer-text">3</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">6.</span>
+                                <span class="answer-text">greater than</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">7.</span>
+                                <span class="answer-text">top</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">8.</span>
+                                <span class="answer-text">Mode</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">9.</span>
+                                <span class="answer-text">μ₂²</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">10.</span>
+                                <span class="answer-text">flat</span>
+                            </div>
+                            
+                            <h4>Answers to True or False</h4>
+                            
+                            <div class="answer">
+                                <span class="answer-number">1.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">2.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">3.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">4.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">5.</span>
+                                <span class="answer-text">False</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">6.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">7.</span>
+                                <span class="answer-text">False</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">8.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">9.</span>
+                                <span class="answer-text">False</span>
+                            </div>
+                            
+                            <div class="answer">
+                                <span class="answer-number">10.</span>
+                                <span class="answer-text">True</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <footer class="site">
+                <div>
+                    <p>Designed by: Prof. O.P. Sheoran</p>
+                    <p>Department of Mathematics and Statistics</p>
+                    <p>Chaudhary Charan Singh Haryana Agricultural University, Hisar</p>
+                    <p>&copy; CCS HAU 2025</p>
+                </div>
+            </footer>
+        </main>
+    </div>
+    
+<script>
+    // Wait for DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("DOM loaded, drawing graphs...");
+        
+        // Draw the skewness and kurtosis graphs
+        drawSkewnessGraph();
+        drawKurtosisGraph();
+    });
+
+    // Draw skewness graph
+    function drawSkewnessGraph() {
+        console.log("Drawing skewness graph...");
+        const canvas = document.getElementById('skewnessCanvas');
+        if (!canvas) {
+            console.error("Skewness canvas not found!");
+            return;
+        }
+        
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        
+        console.log(`Canvas dimensions: ${width}x${height}`);
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Draw background grid
+        drawGrid(ctx, width, height);
+        
+        // Draw axes
+        drawAxes(ctx, width, height, "Value", "Frequency");
+        
+        // Draw title
+        drawTitle(ctx, width, "Distribution Shapes: Skewness");
+        
+        // Define distribution types
+        const distributions = [
+            { type: 'symmetrical', color: '#2980b9', name: 'Normal (Symmetrical)' },
+            { type: 'positive', color: '#e74c3c', name: 'Positively Skewed' },
+            { type: 'negative', color: '#27ae60', name: 'Negatively Skewed' }
+        ];
+        
+        // Draw each distribution curve
+        distributions.forEach(dist => {
+            drawSkewnessCurve(ctx, width, height, dist);
+        });
+        
+        // Draw markers for central tendency measures
+        drawCentralTendencyMarkers(ctx, width, height);
+        
+        // Draw legend
+        drawLegend(ctx, distributions);
+        
+        console.log("Skewness graph drawing complete");
+    }
+
+    // Draw kurtosis graph
+    function drawKurtosisGraph() {
+        console.log("Drawing kurtosis graph...");
+        const canvas = document.getElementById('kurtosisCanvas');
+        if (!canvas) {
+            console.error("Kurtosis canvas not found!");
+            return;
+        }
+        
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Draw background grid
+        drawGrid(ctx, width, height);
+        
+        // Draw axes
+        drawAxes(ctx, width, height, "Value", "Frequency");
+        
+        // Draw title
+        drawTitle(ctx, width, "Distribution Shapes: Kurtosis");
+        
+        // Define kurtosis types
+        const kurtosisTypes = [
+            { type: 'mesokurtic', color: '#2980b9', name: 'Mesokurtic (β₂=3)' },
+            { type: 'leptokurtic', color: '#e74c3c', name: 'Leptokurtic (β₂>3)' },
+            { type: 'platykurtic', color: '#27ae60', name: 'Platykurtic (β₂<3)' }
+        ];
+        
+        // Draw each kurtosis curve
+        kurtosisTypes.forEach(kurt => {
+            drawKurtosisCurve(ctx, width, height, kurt);
+        });
+        
+        // Draw legend
+        drawLegend(ctx, kurtosisTypes);
+        
+        console.log("Kurtosis graph drawing complete");
+    }
+
+    // Helper function to draw grid
+    function drawGrid(ctx, width, height) {
+        ctx.strokeStyle = '#f0f0f0';
+        ctx.lineWidth = 0.5;
+        
+        // Vertical lines
+        for (let x = 0; x < width; x += 50) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        
+        // Horizontal lines
+        for (let y = 0; y < height; y += 50) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+    }
+
+    // Helper function to draw axes
+    function drawAxes(ctx, width, height, xLabel, yLabel) {
+        const xAxis = height - 60;
+        const yAxis = 70;
+        
+        // X-axis
+        ctx.strokeStyle = '#666';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(yAxis, xAxis);
+        ctx.lineTo(width - 40, xAxis);
+        ctx.stroke();
+        
+        // Y-axis
+        ctx.beginPath();
+        ctx.moveTo(yAxis, 30);
+        ctx.lineTo(yAxis, xAxis);
+        ctx.stroke();
+        
+        // Axis labels
+        ctx.fillStyle = '#333';
+        ctx.font = 'bold 14px Arial';
+        
+        // X-axis label
+        ctx.textAlign = 'center';
+        ctx.fillText(xLabel, width/2, xAxis + 30);
+        
+        // Y-axis label
+        ctx.save();
+        ctx.translate(25, height/2 - 30);
+        ctx.rotate(-Math.PI/2);
+        ctx.textAlign = 'center';
+        ctx.fillText(yLabel, 0, 0);
+        ctx.restore();
+        
+        // Add some tick marks
+        ctx.strokeStyle = '#999';
+        ctx.lineWidth = 1;
+        
+        // X-axis ticks
+        for (let x = yAxis + 50; x < width - 40; x += 50) {
+            ctx.beginPath();
+            ctx.moveTo(x, xAxis);
+            ctx.lineTo(x, xAxis + 5);
+            ctx.stroke();
+        }
+        
+        // Y-axis ticks
+        for (let y = xAxis - 50; y > 30; y -= 50) {
+            ctx.beginPath();
+            ctx.moveTo(yAxis - 5, y);
+            ctx.lineTo(yAxis, y);
+            ctx.stroke();
+        }
+    }
+
+    // Helper function to draw title
+    function drawTitle(ctx, width, title) {
+        ctx.fillStyle = '#000';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText(title, width/2, 30);
+    }
+
+    // Draw skewness curve
+    function drawSkewnessCurve(ctx, width, height, dist) {
+        const xAxis = height - 60;
+        const yAxis = 70;
+        const graphWidth = width - yAxis - 40;
+        const graphHeight = xAxis - 60;
+        const centerX = yAxis + graphWidth/2;
+        
+        ctx.strokeStyle = dist.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        
+        for (let x = 0; x < graphWidth; x++) {
+            let y;
+            const normalizedX = (x - graphWidth/2) / (graphWidth/5);
+            
+            if (dist.type === 'symmetrical') {
+                y = Math.exp(-normalizedX * normalizedX / 2);
+            } else if (dist.type === 'positive') {
+                y = Math.exp(-Math.pow(normalizedX + 1, 2) / 2) * (1 + 0.4 * normalizedX);
+            } else if (dist.type === 'negative') {
+                y = Math.exp(-Math.pow(normalizedX - 1, 2) / 2) * (1 - 0.4 * normalizedX);
+            }
+            
+            // Scale y to fit graph height
+            y = xAxis - (y * graphHeight);
+            
+            if (x === 0) {
+                ctx.moveTo(yAxis + x, y);
+            } else {
+                ctx.lineTo(yAxis + x, y);
+            }
+        }
+        
+        ctx.stroke();
+    }
+
+    // Draw kurtosis curve
+    function drawKurtosisCurve(ctx, width, height, kurt) {
+        const xAxis = height - 60;
+        const yAxis = 70;
+        const graphWidth = width - yAxis - 40;
+        const graphHeight = xAxis - 60;
+        
+        ctx.strokeStyle = kurt.color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        
+        for (let x = 0; x < graphWidth; x++) {
+            let y;
+            const normalizedX = (x - graphWidth/2) / (graphWidth/5);
+            
+            if (kurt.type === 'mesokurtic') {
+                y = Math.exp(-normalizedX * normalizedX / 2);
+            } else if (kurt.type === 'leptokurtic') {
+                y = Math.exp(-normalizedX * normalizedX / 1);
+            } else if (kurt.type === 'platykurtic') {
+                y = Math.exp(-normalizedX * normalizedX / 3);
+            }
+            
+            // Scale y to fit graph height
+            y = xAxis - (y * graphHeight);
+            
+            if (x === 0) {
+                ctx.moveTo(yAxis + x, y);
+            } else {
+                ctx.lineTo(yAxis + x, y);
+            }
+        }
+        
+        ctx.stroke();
+    }
+
+    // Draw markers for central tendency measures (mean, median, mode)
+    function drawCentralTendencyMarkers(ctx, width, height) {
+        const xAxis = height - 60; // Moved down a bit
+        const yAxis = 70; // Moved right a bit
+        const graphWidth = width - yAxis - 40;
+        const centerX = yAxis + graphWidth/2;
+        
+        // For symmetrical (all measures at center)
+        ctx.fillStyle = '#2980b9';
+        ctx.beginPath();
+        ctx.arc(centerX, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.font = 'bold 12px Arial';
+        ctx.fillText("Mean, Median, Mode", centerX - 70, xAxis + 25);
+        
+        // For positive skew
+        ctx.fillStyle = '#e74c3c';
+        // Mode (left of center)
+        const posMode = centerX - 100;
+        ctx.beginPath();
+        ctx.arc(posMode, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText("Mode", posMode - 15, xAxis + 15);
+        
+        // Median (middle)
+        const posMedian = centerX - 50;
+        ctx.beginPath();
+        ctx.arc(posMedian, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText("Median", posMedian - 20, xAxis + 15);
+        
+        // Mean (right)
+        const posMean = centerX;
+        ctx.beginPath();
+        ctx.arc(posMean, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText("Mean", posMean - 15, xAxis + 15);
+        
+        // For negative skew (reverse of positive)
+        ctx.fillStyle = '#27ae60';
+        // Mode (right of center)
+        const negMode = centerX + 100;
+        ctx.beginPath();
+        ctx.arc(negMode, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText("Mode", negMode - 15, xAxis + 15);
+        
+        // Median (middle)
+        const negMedian = centerX + 50;
+        ctx.beginPath();
+        ctx.arc(negMedian, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText("Median", negMedian - 20, xAxis + 15);
+        
+        // Mean (left)
+        const negMean = centerX;
+        ctx.beginPath();
+        ctx.arc(negMean, xAxis, 6, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.fillText("Mean", negMean - 15, xAxis + 15);
+    }
+
+    // Draw legend - MODIFIED to position in top right corner
+    function drawLegend(ctx, items) {
+        const width = ctx.canvas.width;
+        const height = ctx.canvas.height;
+        
+        // Position legend in top right corner
+        const legendWidth = 200;
+        const legendX = width - legendWidth - 20; // 20px from right edge
+        const legendY = 50; // 50px from top
+        
+        // Calculate legend box height
+        const lineHeight = 25;
+        const padding = 20;
+        const legendHeight = (items.length * lineHeight) + padding;
+        
+        // Draw a background for the legend
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+        ctx.fillRect(legendX, legendY, legendWidth, legendHeight);
+        ctx.strokeStyle = '#ddd';
+        ctx.strokeRect(legendX, legendY, legendWidth, legendHeight);
+        
+        // Legend title
+        ctx.font = 'bold 14px Arial';
+        ctx.fillStyle = '#333';
+        ctx.textAlign = 'left';
+        ctx.fillText('Types:', legendX + 10, legendY + 20);
+        
+        let currentY = legendY + 40; // Start items below title
+        
+        items.forEach(item => {
+            // Draw line sample
+            ctx.strokeStyle = item.color;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(legendX + 15, currentY - 5);
+            ctx.lineTo(legendX + 45, currentY - 5);
+            ctx.stroke();
+            
+            // Draw label
+            ctx.fillStyle = item.color;
+            ctx.font = '13px Arial';
+            ctx.textAlign = 'left';
+            ctx.fillText(item.name, legendX + 55, currentY);
+            currentY += lineHeight;
+        });
+    }
+
+    // Statistical functions
+    function mean(data) {
+        return data.reduce((sum, val) => sum + val, 0) / data.length;
+    }
+
+    function median(data) {
+        const sorted = [...data].sort((a, b) => a - b);
+        const n = sorted.length;
+        return n % 2 === 0 ? (sorted[n/2 - 1] + sorted[n/2]) / 2 : sorted[Math.floor(n/2)];
+    }
+
+    function mode(data) {
+        const freq = {};
+        data.forEach(val => freq[val] = (freq[val] || 0) + 1);
+        const maxFreq = Math.max(...Object.values(freq));
+        const modes = Object.keys(freq).filter(key => freq[key] === maxFreq);
+        return modes.length === data.length ? null : parseFloat(modes[0]);
+    }
+
+    function standardDeviation(data) {
+        const avg = mean(data);
+        const squared = data.map(val => Math.pow(val - avg, 2));
+        return Math.sqrt(mean(squared));
+    }
+
+    function quartiles(data) {
+        const sorted = [...data].sort((a, b) => a - b);
+        const n = sorted.length;
+        
+        const q1Index = Math.floor(n * 0.25);
+        const q3Index = Math.floor(n * 0.75);
+        
+        return {
+            q1: sorted[q1Index],
+            q3: sorted[q3Index]
+        };
+    }
+
+    function karlPearsonSkewness(data) {
+        const avg = mean(data);
+        const med = median(data);
+        const sd = standardDeviation(data);
+        
+        // Using alternative formula: 3(Mean - Median)/SD
+        return sd === 0 ? 0 : (3 * (avg - med)) / sd;
+    }
+
+    function bowleySkewness(data) {
+        const med = median(data);
+        const {q1, q3} = quartiles(data);
+        
+        const denominator = q3 - q1;
+        return denominator === 0 ? 0 : (q3 + q1 - 2 * med) / denominator;
+    }
+
+    function moment(data, order, central = true) {
+        const avg = central ? mean(data) : 0;
+        return mean(data.map(val => Math.pow(val - avg, order)));
+    }
+
+    function kurtosis(data) {
+        const m2 = moment(data, 2);
+        const m4 = moment(data, 4);
+        
+        return m2 === 0 ? 0 : m4 / (m2 * m2);
+    }
+
+    // Parse input data
+    function parseData(input) {
+        const lines = input.trim().split('\n');
+        
+        // Check if it's frequency data
+        if (lines.length > 1 && lines[0].toLowerCase().includes('class')) {
+            // Frequency data format
+            const data = [];
+            for (let i = 1; i < lines.length; i++) {
+                const parts = lines[i].split(',');
+                if (parts.length >= 2) {
+                    let classValue, frequency;
+                    
+                    if (parts[0].includes('-')) {
+                        // Class interval like "10-20"
+                        const range = parts[0].split('-');
+                        classValue = (parseFloat(range[0]) + parseFloat(range[1])) / 2;
+                    } else {
+                        classValue = parseFloat(parts[0]);
+                    }
+                    
+                    frequency = parseInt(parts[1]);
+                    
+                    if (!isNaN(classValue) && !isNaN(frequency)) {
+                        for (let j = 0; j < frequency; j++) {
+                            data.push(classValue);
+                        }
+                    }
+                }
+            }
+            return data;
+        } else {
+            // Simple comma-separated values
+            return input.split(',').map(val => parseFloat(val.trim())).filter(val => !isNaN(val));
+        }
+    }
+
+    // Calculate skewness and kurtosis with step-by-step explanation
+    function calculateSkewnessKurtosis() {
+        const input = document.getElementById('dataInput').value;
+        const resultsDiv = document.getElementById('results');
+        
+        // Create calculation steps div safely
+        let stepsDiv = document.getElementById('calculationSteps');
+        if (!stepsDiv) {
+            stepsDiv = document.createElement('div');
+            stepsDiv.id = 'calculationSteps';
+            stepsDiv.className = 'card mt-4';
+            
+            // Find a suitable parent element to append to
+            const parentElement = document.querySelector('.exercises') || document.querySelector('.body');
+            if (parentElement) {
+                parentElement.appendChild(stepsDiv);
+            } else {
+                // If we can't find a parent, add it after the results div
+                if (resultsDiv && resultsDiv.parentNode) {
+                    resultsDiv.parentNode.insertBefore(stepsDiv, resultsDiv.nextSibling);
+                }
+            }
+        }
+        
+        if (!input.trim()) {
+            alert('Please enter data!');
+            return;
+        }
+        
+        try {
+            const data = parseData(input);
+            
+            if (data.length < 3) {
+                alert('At least 3 values are required!');
+                return;
+            }
+            
+            // Calculate basic statistics
+            const avg = mean(data);
+            const med = median(data);
+            const mod = mode(data);
+            const sd = standardDeviation(data);
+            const kpSkew = karlPearsonSkewness(data);
+            const bowSkew = bowleySkewness(data);
+            const kurt = kurtosis(data);
+            
+            // Display results
+            document.getElementById('statisticsResults').innerHTML = `
+                <h5>Basic Statistics:</h5>
+                <p><strong>Mean:</strong> ${avg.toFixed(3)}</p>
+                <p><strong>Median:</strong> ${med.toFixed(3)}</p>
+                <p><strong>Mode:</strong> ${mod ? mod.toFixed(3) : 'Not unique'}</p>
+                <p><strong>Standard Deviation:</strong> ${sd.toFixed(3)}</p>
+            `;
+            
+            document.getElementById('skewnessResults').innerHTML = `
+                <h5>Skewness:</h5>
+                <p><strong>Karl-Pearson's Coefficient:</strong> ${kpSkew.toFixed(3)}</p>
+                <p><strong>Bowley's Coefficient:</strong> ${bowSkew.toFixed(3)}</p>
+            `;
+            
+            document.getElementById('kurtosisResults').innerHTML = `
+                <h5>Kurtosis:</h5>
+                <p><strong>β₂:</strong> ${kurt.toFixed(3)}</p>
+            `;
+            
+            // Interpretation
+            let skewInterpretation = '';
+            if (Math.abs(kpSkew) < 0.5) {
+                skewInterpretation = 'The distribution is approximately symmetrical';
+            } else if (kpSkew > 0.5) {
+                skewInterpretation = 'The distribution is positively skewed (right-tailed)';
+            } else {
+                skewInterpretation = 'The distribution is negatively skewed (left-tailed)';
+            }
+            
+            let kurtInterpretation = '';
+            if (Math.abs(kurt - 3) < 0.5) {
+                kurtInterpretation = 'The distribution is mesokurtic (normal peakedness)';
+            } else if (kurt > 3) {
+                kurtInterpretation = 'The distribution is leptokurtic (more peaked)';
+            } else {
+                kurtInterpretation = 'The distribution is platykurtic (flatter)';
+            }
+            
+            document.getElementById('interpretation').innerHTML = `
+                <h5>Interpretation:</h5>
+                <p><strong>Skewness:</strong> ${skewInterpretation}</p>
+                <p><strong>Kurtosis:</strong> ${kurtInterpretation}</p>
+            `;
+            
+            // Generate step-by-step explanation
+            const stepByStepHTML = generateStepByStepCalculations(data);
+            
+            // Display step-by-step calculations
+            if (stepsDiv) {
+                stepsDiv.innerHTML = `
+                    <div class="card-header">
+                        <h5>Step-by-Step Calculations</h5>
+                    </div>
+                    <div class="card-body">
+                        ${stepByStepHTML}
+                    </div>
+                `;
+                stepsDiv.style.display = 'block';
+            }
+            
+            resultsDiv.style.display = 'block';
+            
+        } catch (error) {
+            alert('Error in data parsing: ' + error.message);
+        }
+    }
+
+    // Generate step-by-step calculations with formulas and explanations
+    function generateStepByStepCalculations(data) {
+        const sorted = [...data].sort((a, b) => a - b);
+        const n = data.length;
+        
+        // Mean calculation steps
+        const sum = data.reduce((a, b) => a + b, 0);
+        const avg = sum / n;
+        
+        // Median calculation steps
+        let med;
+        let medianSteps;
+        if (n % 2 === 0) {
+            // Even number of elements
+            const pos1 = n/2 - 1;
+            const pos2 = n/2;
+            med = (sorted[pos1] + sorted[pos2]) / 2;
+            medianSteps = `
+                <p>Since the number of observations (n = ${n}) is even, we take the average of the middle two values:</p>
+                <p>Position of middle values: n/2 = ${n}/2 = ${n/2}</p>
+                <p>Values at positions ${pos1+1} and ${pos2+1}: ${sorted[pos1]} and ${sorted[pos2]}</p>
+                <p>Median = (${sorted[pos1]} + ${sorted[pos2]}) / 2 = ${med.toFixed(3)}</p>
+            `;
+        } else {
+            // Odd number of elements
+            const pos = Math.floor(n/2);
+            med = sorted[pos];
+            medianSteps = `
+                <p>Since the number of observations (n = ${n}) is odd, we take the middle value:</p>
+                <p>Position of middle value: (n+1)/2 = (${n}+1)/2 = ${(n+1)/2}</p>
+                <p>Value at position ${pos+1}: ${med}</p>
+                <p>Median = ${med}</p>
+            `;
+        }
+        
+        // Mode calculation steps
+        const freqMap = {};
+        data.forEach(val => {
+            freqMap[val] = (freqMap[val] || 0) + 1;
+        });
+        
+        let modeTable = '<table class="table table-sm"><thead><tr><th>Value</th><th>Frequency</th></tr></thead><tbody>';
+        for (const [val, freq] of Object.entries(freqMap)) {
+            modeTable += `<tr><td>${val}</td><td>${freq}</td></tr>`;
+        }
+        modeTable += '</tbody></table>';
+        
+        const maxFreq = Math.max(...Object.values(freqMap));
+        const modes = Object.keys(freqMap).filter(key => freqMap[key] === maxFreq);
+        const mod = modes.length === n ? null : modes.map(m => parseFloat(m));
+        
+        // Standard deviation steps
+        const deviations = data.map(val => val - avg);
+        const squaredDeviations = deviations.map(d => d * d);
+        const sumSquaredDev = squaredDeviations.reduce((a, b) => a + b, 0);
+        const variance = sumSquaredDev / n;
+        const sd = Math.sqrt(variance);
+        
+        // Create a small sample of the calculation for display
+        const sampleSize = Math.min(5, n);
+        let deviationTable = `
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Value (x<sub>i</sub>)</th>
+                        <th>Deviation (x<sub>i</sub> - x̄)</th>
+                        <th>Squared Deviation (x<sub>i</sub> - x̄)<sup>2</sup></th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        
+        for (let i = 0; i < sampleSize; i++) {
+            deviationTable += `
+                <tr>
+                    <td>${data[i]}</td>
+                    <td>${deviations[i].toFixed(3)}</td>
+                    <td>${squaredDeviations[i].toFixed(3)}</td>
+                </tr>
+            `;
+        }
+        
+        if (n > sampleSize) {
+            deviationTable += `<tr><td colspan="3">... (${n-sampleSize} more rows)</td></tr>`;
+        }
+        
+        deviationTable += `
+                <tr>
+                    <td><strong>Sum</strong></td>
+                    <td></td>
+                    <td><strong>${sumSquaredDev.toFixed(3)}</strong></td>
+                </tr>
+            </tbody>
+            </table>
+        `;
+        
+        // Skewness calculations
+        const kpSkew = karlPearsonSkewness(data);
+        const {q1, q3} = quartiles(data);
+        const bowSkew = bowleySkewness(data);
+        
+        // Kurtosis calculations
+        const m2 = moment(data, 2);
+        const m4 = moment(data, 4);
+        const kurt = m4 / (m2 * m2);
+        
+        // Combine all steps
+        return `
+            <div class="accordion" id="calculationAccordion">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingMean">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMean" aria-expanded="true" aria-controls="collapseMean">
+                            Mean Calculation
+                        </button>
+                    </h2>
+                    <div id="collapseMean" class="accordion-collapse collapse show" aria-labelledby="headingMean" data-bs-parent="#calculationAccordion">
+                        <div class="accordion-body">
+                            <div class="formula-box">
+                                <p><strong>Formula:</strong> Mean (x̄) = ∑x<sub>i</sub> / n</p>
+                            </div>
+                            <p><strong>Step 1:</strong> Sum all the values: ∑x<sub>i</sub> = ${sum.toFixed(3)}</p>
+                            <p><strong>Step 2:</strong> Divide by the number of observations (n = ${n}):</p>
+                            <p>x̄ = ${sum.toFixed(3)} / ${n} = ${avg.toFixed(3)}</p>
+                            <p><strong>Interpretation:</strong> The mean represents the average value of the dataset.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingMedian">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMedian" aria-expanded="false" aria-controls="collapseMedian">
+                            Median Calculation
+                        </button>
+                    </h2>
+                    <div id="collapseMedian" class="accordion-collapse collapse" aria-labelledby="headingMedian" data-bs-parent="#calculationAccordion">
+                        <div class="accordion-body">
+                            <div class="formula-box">
+                                <p><strong>Method:</strong> Arrange values in ascending order and find the middle value</p>
+                            </div>
+                            <p><strong>Step 1:</strong> Sort the data in ascending order:</p>
+                            <p>${sorted.slice(0, 10).join(', ')}${n > 10 ? ', ...' : ''}</p>
+                            <p><strong>Step 2:</strong> Find the middle value:</p>
+                            ${medianSteps}
+                            <p><strong>Interpretation:</strong> The median is the value that separates the higher half from the lower half of the dataset.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingMode">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMode" aria-expanded="false" aria-controls="collapseMode">
+                            Mode Calculation
+                        </button>
+                    </h2>
+                    <div id="collapseMode" class="accordion-collapse collapse" aria-labelledby="headingMode" data-bs-parent="#calculationAccordion">
+                        <div class="accordion-body">
+                            <div class="formula-box">
+                                <p><strong>Method:</strong> Find the value(s) that occur most frequently</p>
+                            </div>
+                            <p><strong>Step 1:</strong> Count the frequency of each value:</p>
+                            ${modeTable}
+                            <p><strong>Step 2:</strong> Find the value(s) with the highest frequency:</p>
+                            <p>Highest frequency: ${maxFreq}</p>
+                            <p>Mode: ${mod ? mod.join(', ') : 'No unique mode (all values appear with the same frequency)'}</p>
+                            <p><strong>Interpretation:</strong> The mode represents the most common value(s) in the dataset.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSD">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSD" aria-expanded="false" aria-controls="collapseSD">
+                            Standard Deviation Calculation
+                        </button>
+                    </h2>
+                    <div id="collapseSD" class="accordion-collapse collapse" aria-labelledby="headingSD" data-bs-parent="#calculationAccordion">
+                        <div class="accordion-body">
+                            <div class="formula-box">
+                                <p><strong>Formula:</strong> Standard Deviation (σ) = √[∑(x<sub>i</sub> - x̄)<sup>2</sup> / n]</p>
+                            </div>
+                            <p><strong>Step 1:</strong> Calculate the mean (x̄): ${avg.toFixed(3)}</p>
+                            <p><strong>Step 2:</strong> Calculate the deviations from the mean and square them:</p>
+                            ${deviationTable}
+                            <p><strong>Step 3:</strong> Calculate the variance (average of squared deviations):</p>
+                            <p>Variance = ∑(x<sub>i</sub> - x̄)<sup>2</sup> / n = ${sumSquaredDev.toFixed(3)} / ${n} = ${variance.toFixed(3)}</p>
+                            <p><strong>Step 4:</strong> Calculate the standard deviation (square root of variance):</p>
+                            <p>Standard Deviation = √${variance.toFixed(3)} = ${sd.toFixed(3)}</p>
+                            <p><strong>Interpretation:</strong> The standard deviation measures the amount of variation or dispersion in the dataset.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSkewness">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkewness" aria-expanded="false" aria-controls="collapseSkewness">
+                            Skewness Calculation
+                        </button>
+                    </h2>
+                    <div id="collapseSkewness" class="accordion-collapse collapse" aria-labelledby="headingSkewness" data-bs-parent="#calculationAccordion">
+                        <div class="accordion-body">
+                            <div class="formula-box">
+                                <p><strong>Karl Pearson's Formula:</strong> Skewness = 3(Mean - Median) / Standard Deviation</p>
+                            </div>
+                            <p><strong>Step 1:</strong> Calculate Mean (${avg.toFixed(3)}), Median (${med.toFixed(3)}), and Standard Deviation (${sd.toFixed(3)})</p>
+                            <p><strong>Step 2:</strong> Apply Karl Pearson's formula:</p>
+                            <p>Skewness = 3(${avg.toFixed(3)} - ${med.toFixed(3)}) / ${sd.toFixed(3)} = 3(${(avg-med).toFixed(3)}) / ${sd.toFixed(3)} = ${kpSkew.toFixed(3)}</p>
+                            <p><strong>Interpretation:</strong></p>
+                            <ul>
+                                <li>If skewness > 0: Positively skewed (right-tailed)</li>
+                                <li>If skewness < 0: Negatively skewed (left-tailed)</li>
+                                <li>If skewness = 0: Symmetrical</li>
+                            </ul>
+                            <p>In this case, the distribution is ${kpSkew > 0.5 ? 'positively skewed' : (kpSkew < -0.5 ? 'negatively skewed' : 'approximately symmetrical')}.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingKurtosis">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKurtosis" aria-expanded="false" aria-controls="collapseKurtosis">
+                            Kurtosis Calculation
+                        </button>
+                    </h2>
+                    <div id="collapseKurtosis" class="accordion-collapse collapse" aria-labelledby="headingKurtosis" data-bs-parent="#calculationAccordion">
+                        <div class="accordion-body">
+                            <div class="formula-box">
+                                <p><strong>Formula:</strong> β₂ = μ₄ / (μ₂)²</p>
+                                <p>where μ₂ is the second central moment and μ₄ is the fourth central moment</p>
+                            </div>
+                            <p><strong>Step 1:</strong> Calculate the second central moment (μ₂):</p>
+                            <p>μ₂ = ∑(x<sub>i</sub> - x̄)² / n = ${m2.toFixed(3)}</p>
+                            <p><strong>Step 2:</strong> Calculate the fourth central moment (μ₄):</p>
+                            <p>μ₄ = ∑(x<sub>i</sub> - x̄)⁴ / n = ${m4.toFixed(3)}</p>
+                            <p><strong>Step 3:</strong> Calculate kurtosis:</p>
+                            <p>β₂ = ${m4.toFixed(3)} / (${m2.toFixed(3)})² = ${m4.toFixed(3)} / ${(m2*m2).toFixed(3)} = ${kurt.toFixed(3)}</p>
+                            <p><strong>Interpretation:</strong></p>
+                            <ul>
+                                <li>If β₂ = 3: Mesokurtic (normal distribution)</li>
+                                <li>If β₂ > 3: Leptokurtic (more peaked than normal)</li>
+                                <li>If β₂ < 3: Platykurtic (flatter than normal)</li>
+                            </ul>
+                            <p>In this case, the distribution is ${Math.abs(kurt-3) < 0.5 ? 'mesokurtic' : (kurt > 3 ? 'leptokurtic' : 'platykurtic')}.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    // Generate visualization
+    function generateVisualization() {
+        const input = document.getElementById('dataInput').value;
+        
+        if (!input.trim()) {
+            alert('Please enter data!');
+            return;
+        }
+        
+        try {
+            const data = parseData(input);
+            
+            if (data.length < 3) {
+                alert('At least 3 values are required!');
+                return;
+            }
+            
+            // Create histogram
+            const canvas = document.getElementById('distributionChart');
+            if (!canvas) {
+                alert('Chart canvas not found!');
+                return;
+            }
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Clear existing chart
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Create bins for histogram
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const binCount = Math.min(10, Math.ceil(Math.sqrt(data.length)));
+            const binWidth = (max - min) / binCount;
+            
+            const bins = new Array(binCount).fill(0);
+            const binLabels = [];
+            
+            // Fill bins
+            data.forEach(val => {
+                const binIndex = Math.min(Math.floor((val - min) / binWidth), binCount - 1);
+                bins[binIndex]++;
+            });
+            
+            // Create bin labels
+            for (let i = 0; i < binCount; i++) {
+                binLabels.push(`${(min + i * binWidth).toFixed(1)}-${(min + (i + 1) * binWidth).toFixed(1)}`);
+            }
+            
+            // Check if Chart.js is available
+            if (typeof Chart !== 'undefined') {
+                // Create Chart.js chart
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: binLabels,
+                        datasets: [{
+                            label: 'Frequency',
+                            data: bins,
+                            backgroundColor: 'rgba(41, 128, 185, 0.7)',
+                            borderColor: 'rgba(41, 128, 185, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Frequency'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Value Range'
+                                }
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Data Distribution Histogram'
+                            },
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            } else {
+                // Fall back to basic canvas drawing if Chart.js is not available
+                drawBasicHistogram(ctx, canvas.width, canvas.height, bins, binLabels, min, max);
+            }
+            
+        } catch (error) {
+            alert('Error in visualization generation: ' + error.message);
+        }
+    }
+
+    // Basic histogram drawing without Chart.js
+    function drawBasicHistogram(ctx, width, height, bins, binLabels, min, max) {
+        const padding = 50;
+        const chartWidth = width - 2 * padding;
+        const chartHeight = height - 2 * padding;
+        const barWidth = chartWidth / bins.length;
+        
+        // Clear canvas
+        ctx.clearRect(0, 0, width, height);
+        
+        // Draw axes
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, height - padding);
+        ctx.lineTo(width - padding, height - padding);
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        
+        // Find max bin value
+        const maxBin = Math.max(...bins);
+        
+        // Draw bars
+        for (let i = 0; i < bins.length; i++) {
+            const barHeight = (bins[i] / maxBin) * chartHeight;
+            const x = padding + i * barWidth;
+            const y = height - padding - barHeight;
+            
+            // Draw bar
+            ctx.fillStyle = 'rgba(41, 128, 185, 0.7)';
+            ctx.fillRect(x, y, barWidth - 5, barHeight);
+            
+            // Draw label
+            ctx.fillStyle = '#333';
+            ctx.font = '10px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(binLabels[i], x + barWidth/2, height - padding + 15);
+        }
+        
+        // Y-axis labels
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'middle';
+        for (let i = 0; i <= 5; i++) {
+            const value = Math.round(maxBin * i / 5);
+            const y = height - padding - (i / 5) * chartHeight;
+            ctx.fillText(value.toString(), padding - 5, y);
+        }
+        
+        // Title
+        ctx.fillStyle = '#333';
+        ctx.font = 'bold 16px Arial';
+        ctx.textAlign = 'center';
+        ctx.fillText('Data Distribution Histogram', width / 2, padding / 2);
+    }
+
+    // Clear data
+    function clearData() {
+        document.getElementById('dataInput').value = '';
+        document.getElementById('results').style.display = 'none';
+        
+        // Clear calculation steps if present
+        const stepsDiv = document.getElementById('calculationSteps');
+        if (stepsDiv) {
+            stepsDiv.style.display = 'none';
+        }
+        
+        // Clear chart
+        const canvas = document.getElementById('distributionChart');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    // Add CSS for formula boxes
+    document.addEventListener('DOMContentLoaded', function() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .formula-box {
+                background-color: #f8f9fa;
+                border-left: 4px solid #2980b9;
+                padding: 10px;
+                margin-bottom: 15px;
+                border-radius: 0 4px 4px 0;
+            }
+            
+            .formula-box p {
+                margin: 0;
+            }
+            
+            canvas {
+                border: 1px solid #ddd;
+                background-color: #fff;
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 0 auto;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+
+    // Force redraw of graphs when window is fully loaded
+    window.onload = function() {
+        console.log("Window fully loaded - forcing redraw of graphs");
+        
+        // Small delay to ensure everything is rendered
+        setTimeout(function() {
+            // Check if canvases exist
+            const skewnessCanvas = document.getElementById('skewnessCanvas');
+            const kurtosisCanvas = document.getElementById('kurtosisCanvas');
+            
+            console.log("Found skewness canvas:", !!skewnessCanvas);
+            console.log("Found kurtosis canvas:", !!kurtosisCanvas);
+            
+            // Redraw graphs
+            if (typeof drawSkewnessGraph === 'function') drawSkewnessGraph();
+            if (typeof drawKurtosisGraph === 'function') drawKurtosisGraph();
+        }, 1000);
+    };
+</script>
+<script>
+    // Function to toggle answers visibility
+    function toggleAnswers() {
+        const answersSection = document.querySelector('.answers-section');
+        if (answersSection) {
+            if (answersSection.style.display === 'none') {
+                answersSection.style.display = 'block';
+                document.getElementById('toggleAnswersBtn').textContent = 'Hide Answers';
+            } else {
+                answersSection.style.display = 'none';
+                document.getElementById('toggleAnswersBtn').textContent = 'Show Answers';
+            }
+        }
+    }
+    
+    // Initialize when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Apply styles to footer
+        const footer = document.querySelector('footer.site');
+        if (footer) {
+            footer.style.background = 'linear-gradient(90deg, #004085, #0056b3)';
+            footer.style.color = 'white';
+            footer.style.padding = '20px';
+            footer.style.textAlign = 'center';
+            footer.style.marginTop = '50px';
+            footer.style.borderRadius = '0 0 10px 10px';
+        }
+        
+        // Add toggle button for answers
+        const exercisesSection = document.querySelector('#exercises .body');
+        if (exercisesSection) {
+            const answersSection = document.querySelector('.answers-section');
+            if (answersSection) {
+                // Create and insert toggle button
+                const toggleBtn = document.createElement('button');
+                toggleBtn.id = 'toggleAnswersBtn';
+                toggleBtn.className = 'btn';
+                toggleBtn.textContent = 'Show Answers';
+                toggleBtn.onclick = toggleAnswers;
+                
+                // Insert before answers section
+                answersSection.parentNode.insertBefore(toggleBtn, answersSection);
+                
+                // Initially hide answers
+                answersSection.style.display = 'none';
+            }
+        }
+    });
+</script>
+
+<style>
+    /* Fix for footer styling */
+    footer.site {
+        background: linear-gradient(90deg, #004085, #0056b3) !important;
+        color: white !important;
+        padding: 20px !important;
+        text-align: center !important;
+        margin-top: 50px !important;
+        border-radius: 0 0 10px 10px !important;
+    }
+    
+    footer.site p {
+        margin: 5px 0;
+        color: white;
+        text-align: center;
+    }
+    
+    /* Styling for toggle answers button */
+    #toggleAnswersBtn {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: var(--primary-blue);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    #toggleAnswersBtn:hover {
+        background-color: #004085;
+    }
+    
+    /* Additional styling for answers section */
+    .answers-section {
+        background-color: #f0f8ff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 20px;
+        border-left: 5px solid var(--primary-blue);
+    }
+    
+    .answer {
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 1px dashed #ddd;
+    }
+    
+    .answer-number {
+        font-weight: bold;
+        margin-right: 10px;
+        background-color: var(--primary-blue);
+        color: white;
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        line-height: 25px;
+        border-radius: 50%;
+    }
+</style>
+</body>
+</html>

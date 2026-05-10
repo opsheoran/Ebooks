@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit I – Introduction & Data Collection | STAT-M-101</title>
+    
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../common_style.css">
+    <link rel="stylesheet" href="../whiteboard/whiteboard.css">
+
+    <style>
+        .chapter-header { position: relative; }
+        .header-lang-toggle {
+            position: absolute; top: 20px; right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff; padding: 6px 14px; border-radius: 20px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
+        /* ── EXERCISE SPECIFIC CSS FROM STAT-102 ─────────────────────── */
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .question strong { color: var(--navy); }
+        .mcq-options p { margin: 8px 0 0; color: var(--text-mid); font-size: .95rem; }
+
+        .toggle-btn {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 8px;
+            letter-spacing: .3px;
+        }
+
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
+        .answer {
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 12px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
+        }
+        
+        .answer.show { display: block; }
+
+        .section-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 40px 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .section-card h3, .section-card h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--navy-light);
+            margin: 28px 0 12px;
+        }
+        .section-card h3 { font-size: 1.35rem; font-weight: 700; }
+        .section-card h4 { font-size: 1.15rem; font-weight: 600; }
+        
+        .section-card p, .section-card ul, .section-card ol {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-mid);
+            margin-bottom: 16px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table th, table td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: left;
+        }
+        table th { background: var(--navy-light); color: white; }
+    </style>
+</head>
+<body>
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">📈</div>
+        <div class="header-text">
+            <h1>Statistical Methods-I</h1>
+            <div class="subtitle">UNIT I · INTRODUCTION & DATA COLLECTION</div>
+        </div>
+        
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+        <button class="draw-mode-toggle" id="draw-mode-btn">
+            <i class="fas fa-chalkboard"></i> Open Whiteboard
+        </button>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>Unit I</h2>
+            <p>Introduction & Data<br>CCS Haryana Agricultural University</p>
+        </div>
+        <div class="sidebar-author">
+            <img src="../Stat-102/opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <p>Author & Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Navigation</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;"><span class="nav-num">🏠</span> Course Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 5px;"><span class="nav-num">📚</span> Back to Library</a></li>
+        </ul>
+
+        <div class="nav-group-label">Theory Sections</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link active" href="#introduction" onclick="showTopic('introduction');return false;"><span class="nav-num">1.1</span> Introduction</a></li>
+            <li class="nav-item"><a class="nav-link" href="#historical-development" onclick="showTopic('historical-development');return false;"><span class="nav-num">1.2</span> Historical Development</a></li>
+            <li class="nav-item"><a class="nav-link" href="#what-is-statistics" onclick="showTopic('what-is-statistics');return false;"><span class="nav-num">1.3</span> What is Statistics?</a></li>
+            <li class="nav-item"><a class="nav-link" href="#scope-of-statistics" onclick="showTopic('scope-of-statistics');return false;"><span class="nav-num">1.4</span> Scope of Statistics</a></li>
+            <li class="nav-item"><a class="nav-link" href="#advantages-of-statistics" onclick="showTopic('advantages-of-statistics');return false;"><span class="nav-num">1.5</span> Advantages of Statistics</a></li>
+            <li class="nav-item"><a class="nav-link" href="#limitations-of-statistics" onclick="showTopic('limitations-of-statistics');return false;"><span class="nav-num">1.6</span> Limitations of Statistics</a></li>
+            <li class="nav-item"><a class="nav-link" href="#areas-of-application" onclick="showTopic('areas-of-application');return false;"><span class="nav-num">1.7</span> Areas of Application</a></li>
+            <li class="nav-item"><a class="nav-link" href="#conclusion" onclick="showTopic('conclusion');return false;"><span class="nav-num">1.8</span> Conclusion</a></li>
+        </ul>
+        
+        <div class="nav-group-label">Exercises</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#mcq" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> Multiple Choice</a></li>
+            <li class="nav-item"><a class="nav-link" href="#fib" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tf" onclick="showTopic('tf');return false;"><span class="nav-num">✅</span> True / False</a></li>
+            <li class="nav-item"><a class="nav-link" href="#subj" onclick="showTopic('subj');return false;"><span class="nav-num">📝</span> Subjective Qs</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="chapter-header">
+            <button id="lang-toggle-btn" class="header-lang-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+            </button>
+            <h1>Unit I: Introduction & Data Collection</h1>
+            <div class="author">By Prof. O.P. Sheoran</div>
+            <div class="syllabus-tag">
+                <strong>Syllabus:</strong> Origin, development, definition, scope, uses, limitations. Types of Data. Collection and Scrutiny of Data.
+            </div>
+        </div>
+
+        <!-- VERBATIM THEORY SECTIONS INJECTED HERE -->
+        
+        <div class="topic-section" id="introduction">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.1 Introduction</h2>
+<div class="body">
+<p>Hello students, welcome to the BSc First Year <strong>Statistics</strong> course. This subject has become an extremely important part of the modern scientific and business world. In today's digital era, where a vast amount of <strong>data</strong> is generated every day, the need for statistical knowledge and skills is greater than ever before.</p>
+<p>Through this course, you will learn what statistics is, what its scope is, what its advantages and limitations are, and how it is used in various fields. We will understand these concepts through examples from India and specifically Haryana, so you can see how statistics plays a crucial role in our daily lives and national development.</p>
+</div>
+</div>
+ <div class="hinglish-content" style="display:none;">
+<h2>1.1 परिचय</h2>
+<div class="body">
+<p>नमस्कार विद्यार्थियों, B.Sc. प्रथम वर्ष <strong>Statistics</strong> course में आपका स्वागत है। यह विषय आधुनिक वैज्ञानिक और व्यापारिक जगत का बेहद महत्वपूर्ण हिस्सा बन चुका है। आज के डिजिटल युग में, जहाँ हर दिन बहुत सारा <strong>data</strong> generate होता है, वहाँ statistical knowledge और skills की ज़रूरत पहले से कहीं ज़्यादा है।</p>
+<p>इस course के ज़रिए आप सीखेंगे कि Statistics क्या है, इसका scope क्या है, इसके फायदे और limitations क्या हैं, और अलग‑अलग fields में इसका use कैसे होता है। हम इन concepts को भारत और खासकर हरियाणा के examples के ज़रिए समझेंगे, ताकि आप देख सकें कि Statistics हमारे daily life और national development में कितनी crucial role निभाती है।</p>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="historical-development">
+            <section class="section-card">
+                <div class="english-content">
+<h3>1.1.1 Historical Development</h3>
+<div class="body">
+<p>The roots of statistics stretch back to ancient civilizations, where governments meticulously collected data concerning population, taxation, and military strength to manage their empires effectively. In India, for instance, Kautilya's Arthashastra, dating back to approximately 300 BCE, provides historical evidence of data collection practices related to agriculture, trade, and the sophisticated tax systems of that era.</p>
+<p>As we moved into the 17th and 18th centuries, a discipline known as 'Political Arithmetic' emerged in Europe. This field primarily focused on studying vital statistics such as birth and death records, laying foundational groundwork for modern demography. The 19th century witnessed a pivotal shift with the substantial development of Probability Theory, which rigorously established statistics as a scientific discipline, moving it beyond mere data tabulation to a realm of scientific inquiry and prediction. The 20th century was a period of accelerated growth, with pioneering scientists like R.A. Fisher, Karl Pearson, and Jerzy Neyman developing groundbreaking modern statistical theories and methodologies. In today's era of unprecedented computational power and the proliferation of 'big data', the field of statistics continues to evolve at a remarkable pace, becoming increasingly indispensable.</p>
+<h4 id="development-of-statistics-in-india">1.1.1.1 Development of Statistics in India</h4>
+<p>India boasts a rich and ancient history in the realm of statistics, with early references in texts like Kautilya's Arthashastra highlighting the collection of data for state administration. In modern India, key institutions such as the National Sample Survey Office (NSSO) and the Central Statistical Office (CSO) play a crucial role in gathering essential data, which forms the backbone for the formulation of economic and social policies across the country.</p>
+<p>Following India's independence, the systematic development of statistics gained significant momentum. Professor P.C. Mahalanobis (1893-1972), widely regarded as the father of Indian statistics, founded the prestigious Indian Statistical Institute (ISI) in Kolkata in 1931. His profound contributions extended to playing a vital role in formulating India's Second Five-Year Plan and developing the concept of 'Mahalanobis distance', a fundamental tool in multivariate statistics. In 1950, the Government of India further solidified this commitment by establishing the National Sample Survey Organization (NSSO), which is responsible for conducting some of the nation's largest socio-economic surveys. Presently, India is home to numerous esteemed institutions dedicated to statistical education and research, including the ISI, IASRI (Indian Agricultural Statistics Research Institute), and various statistics departments within universities, all contributing significantly to the field.</p>
+<p>Within the state of Haryana, the State Statistics Department actively gathers data pertinent to agricultural production, industrial development, education, public health, and other critical sectors. This meticulously collected data is subsequently utilized by the state government for the formulation of various development plans and for a robust evaluation of their real-world impact.</p>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h3>1.1.1 ऐतिहासिक विकास</h3>
+<div class="body">
+<p>Statistics की जड़ें प्राचीन सभ्यताओं तक जाती हैं, जहाँ सरकारें अपने साम्राज्य को सही ढंग से चलाने के लिए population, taxation और military strength से जुड़ा data सावधानी से collect करती थीं। भारत में, उदाहरण के तौर पर, कौटिल्य का अर्थशास्त्र (लगभग 300 ईसा पूर्व) कृषि, व्यापार और उस समय की advanced tax systems से जुड़े data collection का ऐतिहासिक प्रमाण देता है।</p>
+<p>17वीं और 18वीं शताब्दी में यूरोप में 'Political Arithmetic' नाम का एक discipline शुरू हुआ। यह field मुख्य रूप से जन्म और मृत्यु के records जैसे vital statistics का अध्ययन करता था और modern demography की नींव रखता था। 19वीं शताब्दी में Probability Theory के बड़े विकास ने Statistics को एक scientific discipline के रूप में establish किया, जिससे यह सिर्फ data tabulation से आगे बढ़कर scientific inquiry और prediction का हिस्सा बन गया। 20वीं सदी तेज़ी से growth का समय था, जिसमें R.A. Fisher, Karl Pearson और Jerzy Neyman जैसे वैज्ञानिकों ने modern statistical theories और methodologies develop कीं। आज के समय में, जब computational power और 'big data' बहुत तेजी से बढ़ रहे हैं, Statistics का field लगातार evolve हो रहा है और और भी ज़्यादा indispensable बन गया है।</p>
+<h4 id="development-of-statistics-in-india">1.1.1.1 भारत में Statistics का विकास</h4>
+<p>भारत का Statistics में एक समृद्ध और प्राचीन इतिहास है। कौटिल्य के अर्थशास्त्र जैसे ग्रंथों में राज्य प्रशासन के लिए data collection का ज़िक्र मिलता है। आधुनिक भारत में, National Sample Survey Office (NSSO) और Central Statistical Office (CSO) जैसे संस्थान ज़रूरी data collect करते हैं, जो देश की आर्थिक और सामाजिक policies बनाने की रीढ़ है।</p>
+<p>स्वतंत्रता के बाद Statistics का systematic development तेज़ी से बढ़ा। प्रोफेसर पी.सी. महालनोबिस (1893–1972), जिन्हें भारतीय Statistics का जनक कहा जाता है, ने 1931 में कोलकाता में Indian Statistical Institute (ISI) की स्थापना की। उनका योगदान भारत की दूसरी पंचवर्षीय योजना बनाने और multivariate statistics में 'Mahalanobis distance' की अवधारणा देने तक फैला। 1950 में भारत सरकार ने NSSO की स्थापना की, जो देश के सबसे बड़े socio-economic surveys करती है। आज भारत में ISI, IASRI (Indian Agricultural Statistics Research Institute) और कई विश्वविद्यालयों के Statistics departments जैसे संस्थान शिक्षा और research में बड़ा योगदान दे रहे हैं।</p>
+<p>हरियाणा राज्य में, State Statistics Department कृषि उत्पादन, औद्योगिक विकास, शिक्षा, सार्वजनिक स्वास्थ्य और अन्य sectors से जुड़ा data actively collect करता है। यह data राज्य सरकार द्वारा development plans बनाने और उनके वास्तविक प्रभाव का evaluation करने में उपयोग किया जाता है।</p>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="what-is-statistics">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.2 What is Statistics?</h2>
+<div class="body">
+<p>Statistics is a science that deals with the collection, organization, analysis, interpretation, and presentation of data. The word "Statistics" is derived from the Latin word "status" and the Italian word "statista," which means "related to the state."</p>
+<div class="definition">
+<h4>Definition of Statistics</h4>
+<p>Statistics is a science that deals with the collection, organization, analysis, interpretation, and presentation of data, with the aim of assisting in decision-making and drawing conclusions in situations of uncertainty.</p>
+</div>
+<p>In the modern context, statistics can be viewed in two forms:</p>
+<ol>
+<li><strong>Numerical facts:</strong> In this sense, statistics refers to the collection of numerical data, such as census data, cricket player scores, or a company's sales figures.</li>
+<li><strong>Analytical method:</strong> In this sense, statistics is a method that uses mathematical principles and techniques for data analysis, interpretation, and drawing conclusions.</li>
+</ol>
+<h4 id="types-of-statistics">1.2.1 Types of Statistics</h4>
+<p>Statistics can be broadly divided into two parts:</p>
+<ul>
+<li><strong>A. Descriptive Statistics:</strong> This aims to summarize and illustrate data. It helps us understand the main patterns and characteristics of the data. This includes:
+                            <ol type="a">
+<li>Measures of Central Tendency: Mean, Median, Mode</li>
+<li>Measures of Dispersion: Range, Variance, Standard Deviation</li>
+<li>Measures of Shape: Skewness, Kurtosis</li>
+<li>Data Visualization: Histograms, Bar Charts, Pie Charts, Scatter Plots</li>
+</ol>
+</li>
+<li><strong>B. Inferential Statistics:</strong> It aims to draw conclusions about the overall population based on sample data. It helps us make decisions in situations of uncertainty. This includes:
+                            <ol type="a">
+<li>Hypothesis Testing: t-test, chi-square test, ANOVA</li>
+<li>Estimation: Point Estimation, Interval Estimation</li>
+<li>Regression Analysis: Linear Regression, Multiple Regression</li>
+<li>Probability Distributions: Normal Distribution, Binomial Distribution, Poisson Distribution</li>
+</ol>
+</li>
+</ul>
+<div class="example">
+<h4>Example: Study of Crop Production in Haryana</h4>
+<p>The Haryana Agriculture Department needs to estimate the state's paddy production. It is not practical to survey all fields across the entire state, so they select a sample of 500 fields from various districts of the state.</p>
+<p><strong>Descriptive Statistics:</strong> They calculate the average yield per hectare (5.2 tons) and standard deviation (0.8 tons) from this sample. They also represent the distribution of yield through a histogram.</p>
+<p><strong>Inferential Statistics:</strong> Based on this sample data, they calculate a 95% confidence interval and conclude that the average paddy yield in Haryana is between 5.1 and 5.3 tons per hectare. They also test whether this year's yield is higher than last year's.</p>
+</div>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2>1.2 Statistics क्या है?</h2>
+<div class="body">
+<p>Statistics एक science है जो data के collection, organization, analysis, interpretation और presentation से जुड़ी है। "Statistics" शब्द Latin शब्द "status" और Italian शब्द "statista" से आया है, जिसका मतलब है "राज्य से संबंधित।"</p>
+<div class="definition">
+<h4>Statistics की परिभाषा</h4>
+<p>Statistics एक science है जो data के collection, organization, analysis, interpretation और presentation से जुड़ी है, जिसका उद्देश्य uncertainty की situations में decision लेने और conclusion निकालने में मदद करना है।</p>
+</div>
+<p>Modern context में Statistics को दो रूपों में देखा जा सकता है:</p>
+<ol>
+<li><strong>Numerical facts:</strong> इस sense में, Statistics numerical data के collection को refer करती है, जैसे census data, cricket players के scores, या किसी company की sales figures।</li>
+<li><strong>Analytical method:</strong> इस sense में, Statistics एक method है जो mathematical principles और techniques का use करके data analysis, interpretation और conclusions निकालती है।</li>
+</ol>
+<h4 id="types-of-statistics">1.2.1 Statistics के प्रकार</h4>
+<p>Statistics को broadly दो parts में divide किया जा सकता है:</p>
+<ul>
+<li><strong>A. Descriptive Statistics:</strong> इसका aim data को summarize और illustrate करना है। यह हमें data के main patterns और characteristics समझने में help करता है। इसमें शामिल हैं: <ol type="a">
+<li>Measures of Central Tendency: Mean, Median, Mode</li>
+<li>Measures of Dispersion: Range, Variance, Standard Deviation</li>
+<li>Measures of Shape: Skewness, Kurtosis</li>
+<li>Data Visualization: Histogram, Bar Chart, Pie Chart, Scatter Plot</li>
+</ol>
+</li>
+<li><strong>B. Inferential Statistics:</strong> इसका aim sample data के आधार पर पूरी population के बारे में conclusions निकालना है। यह uncertainty की situations में decisions लेने में help करता है। इसमें शामिल हैं: <ol type="a">
+<li>Hypothesis Testing: t-test, chi-square test, ANOVA</li>
+<li>Estimation: Point Estimation, Interval Estimation</li>
+<li>Regression Analysis: Linear Regression, Multiple Regression</li>
+<li>Probability Distributions: Normal Distribution, Binomial Distribution, Poisson Distribution</li>
+</ol>
+</li>
+</ul>
+<div class="example">
+<h4>Example: हरियाणा में फसल उत्पादन का अध्ययन</h4>
+<p>हरियाणा Agriculture Department को राज्य के paddy production का estimate करना है। पूरे राज्य के सभी fields का survey करना practical नहीं है, इसलिए वे अलग-अलग जिलों से 500 fields का sample चुनते हैं।</p>
+<p><strong>Descriptive Statistics:</strong> वे इस sample से average yield per hectare (5.2 tons) और standard deviation (0.8 tons) calculate करते हैं। वे histogram के ज़रिए yield distribution को भी represent करते हैं।</p>
+<p><strong>Inferential Statistics:</strong> इस sample data के आधार पर, वे 95% confidence interval निकालते हैं और conclude करते हैं कि हरियाणा में average paddy yield 5.1 और 5.3 tons per hectare के बीच है। वे यह भी test करते हैं कि इस साल की yield पिछले साल से ज़्यादा है या नहीं।</p>
+</div>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="scope-of-statistics">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.3 Scope of Statistics</h2>
+<div class="body">
+<p>The scope of statistics is extremely broad and is constantly expanding. It is used in science, social sciences, business, government, and almost every area of life. The main areas of statistical work are:</p>
+<h3 id="data-collection">1.3.1 Data Collection</h3>
+<p>The first step in any statistical study is to collect appropriate data. Statistics teaches us sampling methods, which allow us to obtain samples that represent the population.</p>
+<ul>
+<li><strong>A. Sampling Methods:</strong> There are several methods of sampling:
+                            <ol type="a">
+<li>Random Sampling: In this, units are chosen randomly from the population.</li>
+<li>Stratified Sampling: In this, the population is divided into homogeneous groups, and then samples are taken from each group.</li>
+<li>Cluster Sampling: In this, the population is divided into natural clusters, and then some clusters are randomly selected.</li>
+<li>Systematic Sampling: In this, units are selected at a fixed interval.</li>
+</ol>
+</li>
+<li><strong>B. Methods of Data Collection:</strong> There are several methods of data collection:
+                            <ol type="a">
+<li>Questionnaires: A set of written questions answered by respondents.</li>
+<li>Interviews: Face-to-face or telephonic conversations in which information is obtained from interviewees.</li>
+<li>Observation: Collecting information through direct observation.</li>
+<li>Experiments: Collecting data under controlled conditions.</li>
+<li>Secondary Sources: Obtaining information from pre-existing data sources.</li>
+</ol>
+</li>
+</ul>
+<div class="example">
+<h4>Example: Household Consumer Expenditure Survey by NSSO in India</h4>
+<p>The National Sample Survey Office (NSSO) conducts the household consumer expenditure survey in India. In this survey, they use stratified multi-stage random sampling:</p>
+<ol>
+<li>First, they divide the country into rural and urban sectors.</li>
+<li>Then, in each state, they select villages (for rural areas) and urban blocks (for urban areas) as primary sampling units.</li>
+<li>Finally, they select a sample of households from the chosen villages and urban blocks.</li>
+</ol>
+<p>Using this sampling design, NSSO can estimate consumption patterns across different states and socio-economic groups in India. In Haryana, this survey has shown that rural households spend approximately 53% of their income on food items, while urban households spend approximately 42%.</p>
+</div>
+<h3 id="data-organization">1.3.2 Data Organization</h3>
+<p>It is necessary to organize and summarize collected data so that it can be understood and analyzed. Statistics teaches us various ways to organize and present data.</p>
+<ul>
+<li><strong>A. Classification and Tabulation of Data:</strong> Data can be classified in several ways:
+                            <ol type="a">
+<li>Qualitative Classification: Classifying data based on attributes, such as gender, religion, or occupation.</li>
+<li>Quantitative Classification: Classifying data based on numerical values, such as age, income, or marks.</li>
+<li>Temporal Classification: Classifying data based on time period, such as monthly, quarterly, or yearly.</li>
+<li>Spatial Classification: Classifying data based on geographical location, such as district, state, or country.</li>
+</ol>
+</li>
+<li><strong>B. Data Visualization:</strong> Presenting data in a graphical form helps in understanding it. Some common visualization techniques are:
+                            <ol type="a">
+<li>Bar Charts: For comparing categorical data.</li>
+<li>Histograms: For showing the distribution of continuous data.</li>
+<li>Pie Charts: For showing parts of a whole.</li>
+<li>Line Graphs: For showing trends over time.</li>
+<li>Scatter Plots: For showing the relationship between two variables.</li>
+</ol>
+</li>
+</ul>
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Year</th>
+<th>Wheat Production in Haryana (in Lakh Tons)</th>
+<th>Paddy Production in Haryana (in Lakh Tons)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2018-19</td>
+<td>120.5</td>
+<td>45.8</td>
+</tr>
+<tr>
+<td>2019-20</td>
+<td>124.2</td>
+<td>48.3</td>
+</tr>
+<tr>
+<td>2020-21</td>
+<td>128.7</td>
+<td>50.2</td>
+</tr>
+<tr>
+<td>2021-22</td>
+<td>133.5</td>
+<td>52.6</td>
+</tr>
+<tr>
+<td>2022-23</td>
+<td>136.8</td>
+<td>54.1</td>
+</tr>
+</tbody>
+</table>
+<p>The table above shows the data for wheat and paddy production in Haryana. From this, we can see that the production of both crops has consistently increased over the last five years.</p>
+<h3 id="data-analysis">1.3.3 Data Analysis</h3>
+<p>After organizing the data, the next step is to analyze it. Statistics provides us with several tools and techniques for data analysis.</p>
+<ul>
+<li><strong>A. Descriptive Statistical Analysis:</strong> Descriptive statistics helps us summarize the main features of the data:
+                            <ol type="a">
+<li>Measures of Central Tendency: Mean, Median, Mode</li>
+<li>Measures of Dispersion: Range, Variance, Standard Deviation, Quartile Deviation</li>
+<li>Measures of Shape: Skewness, Kurtosis</li>
+</ol>
+</li>
+<li><strong>B. Inferential Statistical Analysis:</strong> Inferential statistics helps us draw inferences about the population from a sample:
+                            <ol type="a">
+<li>Hypothesis Testing: Testing hypotheses based on sample evidence.</li>
+<li>Estimation: Estimating population parameters (e.g., mean, proportion, variance) based on sample data.</li>
+<li>Regression Analysis: Modeling relationships between variables.</li>
+<li>Correlation Analysis: Measuring the strength and direction of a linear relationship between variables.</li>
+</ol>
+</li>
+<li><strong>C. Advanced Statistical Methods:</strong> Modern statistics also includes several advanced methods:
+                            <ol type="a">
+<li>Time Series Analysis: Analysis of patterns and trends in data over time.</li>
+<li>Multivariate Analysis: Analysis of relationships between multiple variables.</li>
+<li>Non-parametric Statistics: Methods that do not make assumptions about data distribution.</li>
+<li>Bayesian Statistics: An approach based on the subjective interpretation of probability.</li>
+</ol>
+</li>
+</ul>
+<div class="example">
+<h4>Example: Analysis of Education Level in Haryana</h4>
+<p>The Haryana government studied the mathematics scores of 10th-grade students in various districts of the state. They took a random sample of 100 students from each district and analyzed their mathematics scores.</p>
+<p><strong>Descriptive Analysis:</strong></p>
+<ol type="a">
+<li>Mean mathematics scores in the state: 72.5%</li>
+<li>Standard deviation: 12.3%</li>
+<li>Median: 74%</li>
+<li>Range of scores: 35% to 98%</li>
+</ol>
+<p><strong>Inferential Analysis:</strong> Researchers found that the average performance of students in Ambala district (76.8%) was significantly better than the state average (p-value &lt; 0.05). They also found that students in urban areas performed significantly better than students in rural areas.</p>
+<p><strong>Regression Analysis:</strong> The analysis showed a positive correlation (r = 0.68) between the number of teachers in a school and students' mathematics scores. The regression equation found that for every 5 additional teachers, students' scores increased by an average of 3.2%.</p>
+</div>
+<h3 id="inference-and-decision-making">1.3.4 Inference and Decision Making</h3>
+<p>A crucial objective of statistics is to help make informed decisions in situations of uncertainty. Using statistical methods, we can quantify uncertainty and present our conclusions with confidence levels.</p>
+<ul>
+<li><strong>A. Statistical Inference:</strong> is the process of drawing conclusions about a population based on sample data. It involves two main approaches:
+                            <ol type="a">
+<li>Estimation: Estimating population parameters (such as mean, proportion, variance). This can be in the form of point estimation or interval estimation.</li>
+<li>Hypothesis Testing: Testing claims about population parameters based on statistical evidence.</li>
+</ol>
+</li>
+<li><strong>B. Statistical Decision Theory:</strong> provides a mathematical framework for making optimal decisions under uncertainty. This includes:
+                            <ol type="a">
+<li>Bayesian Decision Theory: Making decisions by combining prior knowledge and new evidence.</li>
+<li>Risk Analysis: Evaluation of potential outcomes and probabilities of various actions.</li>
+<li>Utility Theory: Using mathematical functions to represent decision makers' preferences.</li>
+</ol>
+</li>
+</ul>
+<div class="example">
+<h4>Example: Statistical Decisions for Agricultural Policy in Haryana</h4>
+<ol>
+<li>The Haryana government needs to decide which crop cultivation to promote. They analyzed data collected from various districts of the state:
+                                <ol type="a">
+<li>Average wheat yield: 4.8 tons/hectare (95% confidence interval: 4.6-5.0 tons/hectare)</li>
+<li>Average paddy yield: 3.9 tons/hectare (95% confidence interval: 3.7-4.1 tons/hectare)</li>
+<li>Average maize yield: 3.2 tons/hectare (95% confidence interval: 3.0-3.4 tons/hectare)</li>
+</ol>
+</li>
+<li>Wheat yield is significantly higher than paddy and maize (p-value &lt; 0.01). However, other factors were also taken into consideration:
+                                <ol type="a">
+<li>Water consumption in wheat cultivation: 4500 liters/kg</li>
+<li>Water consumption in paddy cultivation: 5400 liters/kg</li>
+<li>Water consumption in maize cultivation: 1800 liters/kg</li>
+</ol>
+</li>
+</ol>
+<p>To balance water conservation and good yield, the government used decision analysis and decided to promote maize cultivation, especially in areas where water is scarce.</p>
+</div>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2>1.3 Statistics का दायरा</h2>
+<div class="body">
+<p>Statistics का दायरा बहुत व्यापक है और लगातार बढ़ रहा है। इसका use science, social sciences, business, government और जीवन के लगभग हर field में होता है। Statistical work के मुख्य areas हैं:</p>
+
+<h3 id="data-collection">1.3.1 Data Collection</h3>
+<p>किसी भी statistical study का पहला step होता है सही data collect करना। Statistics हमें sampling methods सिखाती है, जिससे population को represent करने वाले samples मिलते हैं।</p>
+<ul>
+<li><strong>A. Sampling Methods:</strong> Sampling के कई तरीके हैं: <ol type="a">
+<li>Random Sampling: Population से units को random तरीके से चुनना।</li>
+<li>Stratified Sampling: Population को homogeneous groups में divide करके हर group से sample लेना।</li>
+<li>Cluster Sampling: Population को natural clusters में divide करके कुछ clusters को random चुनना।</li>
+<li>Systematic Sampling: Fixed interval पर units select करना।</li>
+</ol>
+</li>
+<li><strong>B. Data Collection Methods:</strong> Data collect करने के कई तरीके हैं: <ol type="a">
+<li>Questionnaires: Respondents द्वारा लिखित questions के answers।</li>
+<li>Interviews: Face-to-face या telephonic बातचीत से information लेना।</li>
+<li>Observation: Direct observation से information collect करना।</li>
+<li>Experiments: Controlled conditions में data collect करना।</li>
+<li>Secondary Sources: पहले से मौजूद data sources से information लेना।</li>
+</ol>
+</li>
+</ul>
+<div class="example">
+<h4>Example: NSSO Household Consumer Expenditure Survey</h4>
+<p>NSSO भारत में household consumer expenditure survey करता है। इसमें stratified multi-stage random sampling use होती है:</p>
+<ol>
+<li>देश को rural और urban sectors में divide करना।</li>
+<li>हर state में villages (rural) और urban blocks (urban) को primary sampling units बनाना।</li>
+<li>फिर इनसे households का sample चुनना।</li>
+</ol>
+<p>इस design से NSSO consumption patterns का estimate करता है। हरियाणा में survey से पता चला कि rural households अपनी income का लगभग 53% food items पर खर्च करते हैं, जबकि urban households लगभग 42%।</p>
+</div>
+
+<h3 id="data-organization">1.3.2 Data Organization</h3>
+<p>Collected data को organize और summarize करना ज़रूरी है ताकि उसे समझा और analyze किया जा सके। Statistics हमें data organize और present करने के तरीके सिखाती है।</p>
+<ul>
+<li><strong>A. Classification and Tabulation:</strong> Data को classify करने के तरीके: <ol type="a">
+<li>Qualitative Classification: Gender, religion, occupation जैसे attributes पर।</li>
+<li>Quantitative Classification: Age, income, marks जैसे numerical values पर।</li>
+<li>Temporal Classification: Time period जैसे monthly, quarterly, yearly।</li>
+<li>Spatial Classification: Location जैसे district, state, country।</li>
+</ol>
+</li>
+<li><strong>B. Data Visualization:</strong> Data को graphical form में present करना। Common techniques: <ol type="a">
+<li>Bar Charts</li>
+<li>Histograms</li>
+<li>Pie Charts</li>
+<li>Line Graphs</li>
+<li>Scatter Plots</li>
+</ol>
+</li>
+</ul>
+<p>Example table हरियाणा में wheat और paddy production दिखाती है। पिछले पाँच सालों में दोनों crops का production लगातार बढ़ा है।</p>
+
+<h3 id="data-analysis">1.3.3 Data Analysis</h3>
+<p>Data organize करने के बाद अगला step होता है उसका analysis। Statistics इसके लिए कई tools और techniques देती है।</p>
+<ul>
+<li><strong>A. Descriptive Analysis:</strong> Data की main features summarize करना।</li>
+<li><strong>B. Inferential Analysis:</strong> Sample data से population के बारे में conclusions निकालना।</li>
+<li><strong>C. Advanced Methods:</strong> Time Series, Multivariate Analysis, Non-parametric, Bayesian Statistics।</li>
+</ul>
+<div class="example">
+<h4>Example: Haryana Education Level Analysis</h4>
+<p>हरियाणा सरकार ने 10वीं कक्षा के students के mathematics scores का study किया। Random sample लेकर descriptive, inferential और regression analysis किया।</p>
+<p>Result: Ambala district का average performance (76.8%) state average से significantly better था। Urban students ने rural students से बेहतर प्रदर्शन किया। Regression analysis ने teachers की संख्या और scores में positive correlation (r = 0.68) दिखाया।</p>
+</div>
+
+<h3 id="inference-and-decision-making">1.3.4 Inference और Decision Making</h3>
+<p>Statistics का main उद्देश्य है uncertainty में informed decisions लेना।</p>
+<ul>
+<li><strong>A. Statistical Inference:</strong> Sample data से population parameters का estimation और hypothesis testing।</li>
+<li><strong>B. Statistical Decision Theory:</strong> Optimal decisions लेने का mathematical framework। इसमें Bayesian Decision Theory, Risk Analysis और Utility Theory शामिल हैं।</li>
+</ul>
+<div class="example">
+<h4>Example: Haryana Agricultural Policy Decision</h4>
+<p>Government ने wheat, paddy और maize yields और water consumption analyze किया।</p>
+<p>Result: Wheat yield सबसे ज़्यादा थी लेकिन water consumption भी बहुत था। Decision analysis से maize cultivation को promote करने का फैसला लिया गया, खासकर water-scarce areas में।</p>
+</div>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="advantages-of-statistics">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.4 Advantages of Statistics</h2>
+<div class="body">
+<p>Statistics has several important advantages that make it indispensable in various fields:</p>
+<ol type="i">
+<li><strong>Quantification of Information:</strong> Statistics enables us to convert qualitative observations into numerical values, allowing for objective analysis. For example, we can turn abstract concepts like student performance, consumer satisfaction, or health outcomes into measurable variables.</li>
+<li><strong>Evidence-Based Decision Making:</strong> Statistics helps us make decisions based on objective evidence rather than subjective opinions. This is particularly important in scientific, medical, and policy research.</li>
+<li><strong>Managing Uncertainty:</strong> Our world is inherently uncertain, and statistics provides us with tools to measure and manage this uncertainty. Probability theory and statistical inference help us make rational decisions based on incomplete information.</li>
+<li><strong>Identifying Patterns and Trends:</strong> Statistics helps us identify patterns and trends from large datasets. The human brain is limited in identifying patterns from large amounts of data, but statistical methods help us discover hidden patterns.</li>
+<li><strong>Forecasting Future Events:</strong> Statistics helps us predict future events. Techniques like time series analysis and predictive modeling allow us to forecast future trends based on historical data.</li>
+<li><strong>Understanding Complex Systems:</strong> Statistics helps us better understand complex systems. Advanced techniques like multivariate analysis and structural equation modeling help us unravel relationships between multiple interacting variables.</li>
+</ol>
+<div class="example">
+<h4>Example: Importance of Statistics in COVID-19 Management in India</h4>
+<p>During the COVID-19 pandemic, statistical analysis played a crucial role in India:</p>
+<ol type="I">
+<li>Quantification: By tracking daily cases, deaths, recoveries, and testing rates, authorities quantified the severity of the outbreak.</li>
+<li>Pattern Identification: Data analysis helped in identifying hotspots and high-risk areas. In Haryana, high case counts were observed in Gurugram and Faridabad, enabling targeted interventions.</li>
+<li>Forecasting: Using statistical models, researchers predicted future cases and demands for healthcare resources. A model from the Indian Institute of Science (IISc) accurately predicted the peak of the second wave in June 2021.</li>
+<li>Evidence-Based Policy: By analyzing the correlation between vaccination rates and infection rates, health officials prioritized vaccination drives. In Haryana, data analysis showed an 85% reduction in hospitalization rates after 70% vaccination coverage.</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2>1.4 Statistics के लाभ</h2>
+<div class="body">
+<p>Statistics के कई महत्वपूर्ण फायदे हैं, जो इसे अलग‑अलग fields में ज़रूरी बनाते हैं:</p>
+<ol type="i">
+<li><strong>Information को Quantify करना:</strong> Statistics qualitative observations को numerical values में बदलने में मदद करती है, जिससे objective analysis possible होता है। Example: हम student performance, consumer satisfaction या health outcomes जैसी abstract concepts को measurable variables में बदल सकते हैं।</li>
+<li><strong>Evidence‑Based Decision Making:</strong> Statistics हमें subjective opinions के बजाय objective evidence पर decisions लेने में मदद करती है। यह science, medicine और policy research में बहुत ज़रूरी है।</li>
+<li><strong>Uncertainty को Manage करना:</strong> दुनिया स्वाभाविक रूप से uncertain है। Statistics हमें tools देती है जिससे हम uncertainty को measure और manage कर सकें। Probability theory और statistical inference incomplete information पर भी rational decisions लेने में मदद करते हैं।</li>
+<li><strong>Patterns और Trends पहचानना:</strong> Statistics बड़े datasets से patterns और trends निकालने में मदद करती है। Human brain इतनी बड़ी मात्रा में data से patterns नहीं पहचान सकता, लेकिन statistical methods hidden patterns discover कर लेते हैं।</li>
+<li><strong>Future Events का Forecast करना:</strong> Statistics हमें future trends predict करने में मदद करती है। Time series analysis और predictive modeling historical data के आधार पर future forecast देती है।</li>
+<li><strong>Complex Systems को समझना:</strong> Statistics complex systems को समझने में मदद करती है। Multivariate analysis और structural equation modeling जैसी advanced techniques multiple variables के relationships को reveal करती हैं।</li>
+</ol>
+<div class="example">
+<h4>Example: भारत में COVID‑19 Management में Statistics का महत्व</h4>
+<p>COVID‑19 pandemic के दौरान, statistical analysis ने भारत में बहुत अहम भूमिका निभाई:</p>
+<ol type="I">
+<li>Quantification: Authorities ने daily cases, deaths, recoveries और testing rates track करके outbreak की severity quantify की।</li>
+<li>Pattern Identification: Data analysis से hotspots और high‑risk areas पता चले। हरियाणा में Gurugram और Faridabad में high case counts मिले, जिससे targeted interventions possible हुए।</li>
+<li>Forecasting: Statistical models से researchers ने future cases और healthcare demand predict की। IISc के एक model ने June 2021 में second wave का peak accurately predict किया।</li>
+<li>Evidence‑Based Policy: Vaccination rates और infection rates का correlation analyze करके health officials ने vaccination drives को priority दी। हरियाणा में data analysis से पता चला कि 70% vaccination coverage के बाद hospitalization rates में 85% reduction हुआ।</li>
+</ol>
+</div>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="limitations-of-statistics">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.5 Limitations of Statistics</h2>
+<div class="body">
+<p>Statistics is a powerful tool, but it has some inherent limitations that users should be aware of:</p>
+<ol type="i">
+<li><strong>Dependency on Data Quality:</strong> The quality of statistical results depends on the quality of the input data. If the data is biased, incomplete, or inaccurate, the results of the analysis will also be misleading. This is often known as the "garbage in, garbage out" principle.
+                            <p><em>Example:</em> In 2011, in a household survey in India, female literacy rates were underreported in some rural areas because many women had not received formal education but possessed basic reading and writing skills.</p>
+</li>
+<li><strong>Statistical vs. Practical Significance:</strong> A difference might be statistically significant in statistical tests, but it may not be meaningful in the real world. For example, a new drug might show a statistically significant improvement, but if the improvement is very small, it may not be clinically relevant.
+                            <p><em>Example:</em> In an agricultural experiment in Haryana, a new fertilizer showed a statistically significant increase of 2% in crop yield (p-value &lt; 0.05). However, the cost of achieving this improvement was so high that it was not economically viable for farmers.</p>
+</li>
+<li><strong>Misuse and Misinterpretation:</strong> Statistics can be easily misused or misinterpreted. Selective reporting, use of inappropriate methods, or misleading presentation of results can lead to incorrect conclusions.
+                            <p><em>Example:</em> A political party claimed that under their rule, the unemployment rate decreased from 8% to 6%. However, they did not mention that this decrease was because many people had given up job searching and were no longer part of the labor force.</p>
+</li>
+<li><strong>Correlation vs. Causation:</strong> Statistics cannot distinguish between correlation and causation. There might be a strong correlation between two variables, but this does not mean that one variable causes the other.
+                            <p><em>Example:</em> A study in India found a positive correlation between ice cream consumption and drowning incidents. This is not causation; rather, both occur more often in summer months—a common third factor (heat) affects both.</p>
+</li>
+<li><strong>Simplification of Models:</strong> Statistical models are always simplifications of reality. They are based on certain assumptions that may not be fully valid in the real world.
+                            <p><em>Example:</em> Statistical models for predicting monsoon rainfall in India often rely on historical patterns. However, due to climate change, these historical patterns may no longer be reliable, leading to less accurate predictions.</p>
+</li>
+<li><strong>Need for Domain Knowledge:</strong> Statistics is not a substitute for domain knowledge. For statistical analysis to be meaningful, it must be combined with context and subject matter expertise.
+                            <p><em>Example:</em> In the analysis of agricultural yield in Haryana, without an understanding of agricultural practices and local soil conditions, statisticians might draw incorrect conclusions. For instance, a yield difference between two districts cannot be understood solely by statistical comparison—it might be due to differences in soil quality, irrigation access, or farming techniques.</p>
+</li>
+<li><strong>Ethical Considerations:</strong> Ethical considerations can limit the use of statistics. Privacy concerns, the need for informed consent, and ethical implications of working with vulnerable populations can affect the design and implementation of statistical research.
+                            <p><em>Example:</em> In the collection of census data in India, some tribal communities refused to share personal information, leading to incomplete statistics. To address this issue, the Census Bureau had to collaborate with community leaders and adapt data collection methods.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2>1.5 Statistics की सीमाएँ</h2>
+<div class="body">
+<p>Statistics एक powerful tool है, लेकिन इसकी कुछ limitations हैं जिनके बारे में users को aware रहना चाहिए:</p>
+<ol type="i">
+<li><strong>Data Quality पर Dependence:</strong> Statistical results पूरी तरह input data की quality पर depend करते हैं। अगर data biased, incomplete या inaccurate है, तो analysis के results भी misleading होंगे। इसे "Garbage in, Garbage out" principle कहते हैं। <p><em>Example:</em> 2011 में भारत के एक household survey में कुछ rural areas में female literacy rates underreport हुए क्योंकि कई महिलाओं ने formal education नहीं ली थी, लेकिन उनके पास basic पढ़ने‑लिखने की skill थी।</p>
+</li>
+<li><strong>Statistical vs Practical Significance:</strong> कोई difference statistical tests में significant हो सकता है, लेकिन real world में meaningful न हो। <p><em>Example:</em> हरियाणा के एक agricultural experiment में नए fertilizer से crop yield में 2% increase हुआ (p-value &lt; 0.05)। लेकिन इसकी cost इतनी ज़्यादा थी कि farmers के लिए economically viable नहीं था।</p>
+</li>
+<li><strong>Misuse और Misinterpretation:</strong> Statistics का misuse या गलत interpretation आसानी से हो सकता है। Selective reporting, गलत methods या misleading presentation गलत conclusions दे सकते हैं। <p><em>Example:</em> एक political party ने कहा कि उनके शासन में unemployment rate 8% से घटकर 6% हुआ। लेकिन उन्होंने यह नहीं बताया कि कई लोग job search छोड़ चुके थे और labor force का हिस्सा नहीं थे।</p>
+</li>
+<li><strong>Correlation vs Causation:</strong> Statistics correlation और causation में फर्क नहीं कर सकती। दो variables में strong correlation हो सकता है, लेकिन इसका मतलब यह नहीं कि एक दूसरे का कारण है। <p><em>Example:</em> भारत में एक study में ice cream consumption और drowning incidents में positive correlation मिला। असल कारण गर्मी था — summer में दोनों ज़्यादा होते हैं।</p>
+</li>
+<li><strong>Models का Simplification:</strong> Statistical models हमेशा reality का simplification होते हैं। ये assumptions पर based होते हैं जो real world में valid न भी हों। <p><em>Example:</em> भारत में monsoon rainfall predict करने वाले models historical patterns पर depend करते हैं। लेकिन climate change से ये patterns reliable नहीं रहे, जिससे predictions inaccurate हो सकती हैं।</p>
+</li>
+<li><strong>Domain Knowledge की ज़रूरत:</strong> Statistics domain knowledge का substitute नहीं है। Analysis meaningful तभी होगा जब context और subject expertise साथ हो। <p><em>Example:</em> हरियाणा में agricultural yield analysis करते समय soil quality, irrigation और farming techniques की समझ ज़रूरी है। सिर्फ statistical comparison से सही conclusion नहीं निकलेगा।</p>
+</li>
+<li><strong>Ethical Considerations:</strong> Ethics भी Statistics के use को limit करते हैं। Privacy, informed consent और vulnerable populations के साथ काम करने के ethical issues research design को प्रभावित करते हैं। <p><em>Example:</em> भारत की census data collection में कुछ tribal communities ने personal information देने से मना कर दिया। Census Bureau को community leaders के साथ मिलकर data collection methods बदलने पड़े।</p>
+</li>
+</ol>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="areas-of-application">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.6 Areas of Application</h2>
+<div class="body">
+<p>Statistics is used in almost every field. Let's discuss some major areas in detail:</p>
+<h3 id="science-and-research">1.6.1 Science and Research</h3>
+<p>Statistical methods are used in almost every field of science:</p>
+<ul>
+<li><strong>a) Natural Sciences</strong>
+<ol type="i">
+<li>Physics: Physicists use statistical methods for the analysis of experimental data. Quantum mechanics is heavily based on probability theory.</li>
+<li>Chemistry: Chemists use statistics for the analysis of reaction rates and yield distributions. In statistical thermodynamics, statistical methods are used to describe the behavior of large systems.</li>
+<li>Biology: Biologists rely on statistical models to understand genetic variations, species distributions, and ecological interactions. In genomics, advanced statistical methods are used for the analysis of large-scale gene expression data.</li>
+</ol>
+</li>
+<li><strong>b) Medical Research</strong>
+<p>In medical research, statistics is fundamental for the design and analysis of clinical trials. Researchers use randomized controlled trials and statistical hypothesis testing to evaluate the effectiveness of new treatments. Epidemiologists use statistical methods to identify disease patterns and risk factors.</p>
+<p><em>Example:</em> In clinical trials of COVID-19 vaccines, researchers statistically analyzed the differences in infection rates between the treatment group and the control group to measure vaccine efficacy.</p>
+</li>
+<li><strong>c) Research Methodology</strong>
+<p>In research methodology, statistics plays a central role. Sampling theory, experimental design, and data analysis techniques help researchers obtain reliable and valid results. Techniques like meta-analysis help in combining results from multiple studies to draw broader conclusions.</p>
+<div class="example">
+<h4>Example: Study of Water Quality in Haryana</h4>
+<p>In Haryana, researchers studied the groundwater quality in various regions of the state. They collected 480 water samples from 24 districts using stratified random sampling.</p>
+<p>Levels of fluoride, arsenic, nitrate, and heavy metals were measured in each sample. Statistical analysis revealed that:</p>
+<ol type="i">
+<li>Fluoride levels in 35% of samples in Hisar, Bhiwani, and Sirsa districts were higher than WHO's safe limits (p &lt; 0.01).</li>
+<li>The risk of heavy metals contamination was 3.2 times higher in areas around industrial zones (95% CI: 2.7-3.8).</li>
+<li>There was a strong positive correlation (r = 0.78) between nitrate levels and agricultural activities.</li>
+</ol>
+<p>Based on this statistical evidence, the state pollution control board recommended establishing water treatment facilities in affected areas and strengthening regulations for industrial waste disposal.</p>
+</div>
+</li>
+</ul>
+<h3 id="social-sciences">1.6.2 Social Sciences</h3>
+<p>In social sciences, statistics is essential for understanding human behavior and social phenomena:</p>
+<ul>
+<li><strong>a) Economics:</strong> In economics, econometrics is the application of statistical methods to economic data. Economists use time series analysis and regression techniques to model economic growth, inflation, unemployment, and market behavior.
+                            <p><em>Example:</em> The Reserve Bank of India (RBI) uses econometric models to understand relationships between interest rates, inflation, and GDP growth, which informs monetary policy decisions.</p>
+</li>
+<li><strong>b) Psychology:</strong> In psychology, researchers perform statistical analysis of experimental data to understand human behavior and mental processes. Techniques like factor analysis help in measuring latent constructs such as personality traits and cognitive abilities.
+                            <p><em>Example:</em> Indian psychologists have used structural equation modeling to study the relationship between cultural factors and stress management.</p>
+</li>
+<li><strong>c) Sociology:</strong> In sociology, statisticians analyze social trends, demographic patterns, and group behaviors. Survey methodology and statistical sampling are essential for obtaining representative measurements of societal attitudes and behaviors.
+                            <p><em>Example:</em> The National Family Health Survey (NFHS) in India provides data on key social indicators like family planning, nutrition, and healthcare access.</p>
+<div class="example">
+<h4>Example: Haryana is historically known for its low sex ratio. Social scientists used statistical methods to study this issue:</h4>
+<ol type="i">
+<li>Time Series Analysis: Analysis of census data shows that the child sex ratio (0-6 years) in Haryana increased from 819 girls per 1000 boys in 2001 to 834 in 2011, and according to preliminary estimates, is around 920 in 2021.</li>
+<li>Regression Analysis: Multiple regression analysis showed that female literacy rate, urbanization, and government interventions were significant predictors of the sex ratio (R² = 0.68).</li>
+<li>Spatial Statistics: Using Geographic Information Systems (GIS), researchers identified significant spatial variations between districts, which helped in identifying hotspots for targeted interventions.</li>
+<li>Causal Analysis: Difference-in-difference analysis showed that government programs like "Beti Bachao, Beti Padhao" contributed to a significant increase of 45 points in the child sex ratio in participating districts (p &lt; 0.01).</li>
+</ol>
+</div>
+</li>
+</ul>
+<h3 id="business-and-finance">1.6.3 Business and Finance</h3>
+<p>In the field of business and finance, statistical analysis is crucial for informed decision-making:</p>
+<ul>
+<li><strong>a) Business Analytics:</strong> In business analytics, companies use statistical methods to understand customer behavior, market trends, and operational efficiency. Data-driven decision making has become a central component of modern business strategy.
+                            <p><em>Example:</em> India's e-commerce companies use predictive analytics to understand customer preferences and provide personalized recommendations.</p>
+</li>
+<li><strong>b) Marketing:</strong> In marketing, statisticians analyze consumer preferences, advertising effectiveness, and market segmentation. Techniques like A/B testing and conjoint analysis help optimize products and marketing campaigns.
+                            <p><em>Example:</em> Indian telecom companies use logistic regression models to predict customer churn and develop retention strategies.</p>
+</li>
+<li><strong>c) Finance:</strong> In finance, statistical models are essential for risk management, portfolio optimization, and asset pricing. Time series forecasting, volatility modeling, and Monte Carlo simulations are widely used to inform financial decisions.
+                            <p><em>Example:</em> Indian banks use statistical models to assess credit risk and estimate loan default probabilities.</p>
+<div class="example">
+<h4>Example: A dairy company located in Haryana used statistical analysis to optimize its distribution network:</h4>
+<ol type="i">
+<li>Demand Forecasting: Using time series analysis, the company predicted seasonal demand patterns in different regions, achieving 92% forecast accuracy with Winters' exponential smoothing model.</li>
+<li>Market Basket Analysis: Using association rule mining, the company found that customers buying milk also buy curd in 68% of cases, providing an opportunity to create bundled products.</li>
+<li>Route Optimization: Using simulation and linear programming, the company optimized delivery routes, resulting in a 23% reduction in transportation costs and a 17% increase in on-time delivery.</li>
+<li>Quality Control: Using statistical process control charts, the company monitored and reduced variations in the manufacturing process, leading to improved product quality and a 15% reduction in waste.</li>
+<li>Customer Segmentation: Using cluster analysis, the company divided customers into different segments based on their purchasing behavior. This helped in designing targeted marketing campaigns, which increased customer retention rate by 28%.</li>
+<li>Inventory Management: Using probabilistic modeling, the company calculated optimal inventory levels, reducing stock-outs by 67% and decreasing inventory holding costs by 31%.</li>
+</ol>
+</div>
+</li>
+</ul>
+<h3 id="government-and-policy">1.6.4 Government and Policy</h3>
+<p>Governments widely use statistics in policy formulation and public administration:</p>
+<ul>
+<li><strong>a) Official Statistics:</strong> Official statistics like census data, unemployment rates, and economic indicators provide the foundation for policy decisions. Government agencies collect and disseminate these statistics.
+                            <p><em>Example:</em> In India, the National Statistical Office (NSO) under the Ministry of Statistics and Programme Implementation (MoSPI) collects and publishes official statistics such as national accounts, industrial statistics, and socio-economic surveys.</p>
+</li>
+<li><strong>b) Policy Analysis:</strong> In policy analysis, researchers use statistical methods to evaluate the impacts of policy interventions. Causal inference techniques like difference-in-differences and regression discontinuity designs help measure policy effectiveness.
+                            <p><em>Example:</em> The Government of India has used statistical analysis to evaluate the impact of welfare programs like MGNREGA (Mahatma Gandhi National Rural Employment Guarantee Act). Data analysis has shown that this program has played a significant role in reducing rural poverty.</p>
+</li>
+<li><strong>c) Public Health:</strong> In public health, statistics is essential for disease surveillance, risk factor identification, and health intervention evaluation. Biostatistics provides specialized statistical methodology for medical research and public health practice.
+                            <p><em>Example:</em> The National Family Health Survey (NFHS) in India uses statistical sampling and analysis for tracking maternal and child health indicators. Its findings help design and modify government health policies and programs.</p>
+<div class="example">
+<h4>Example: Evaluation of a Government Scheme in Haryana</h4>
+<p>The Haryana government used statistical analysis to evaluate the impact of the "Saksham Yuva Scheme," which provides temporary employment and skill training to educated unemployed youth:</p>
+<ol type="i">
+<li>Quasi-Experimental Design: Using propensity score matching, evaluators compared program participants with a similar control group.</li>
+<li>Difference-in-Differences Analysis: Analysis showed that the employment rates of youth participating in the program were 24 percentage points higher compared to the control group (p &lt; 0.01).</li>
+<li>Heterogeneous Effects: Subgroup analysis revealed that the program's impact was particularly strong for female participants, whose employment rates increased by 31 percentage points.</li>
+<li>Cost-Benefit Analysis: Statistical modeling estimated that every ₹1 of government investment generated a social return of ₹2.8, including increased tax revenue and reduced welfare expenditure.</li>
+<li>Longitudinal Follow-up: Analysis of three-year follow-up data showed that 72% of participants transitioned to permanent employment, with an average income increase of 45%.</li>
+</ol>
+<p>Based on this evidence, the government decided to expand the program and provide additional support for female participants.</p>
+</div>
+</li>
+<li><strong>d) Economic Policy:</strong> In economic policy formulation, governments use statistical models to understand relationships between various economic variables and to predict the potential effects of policy interventions.
+                            <p><em>Example:</em> In India, before implementing GST (Goods and Services Tax), policymakers used statistical simulations to estimate the potential revenue and distributional impacts of different tax rates.</p>
+</li>
+<li><strong>e) Electoral Analysis:</strong> In elections, political parties and analysts use statistical methods to analyze voting patterns and predict election outcomes.
+                            <p><em>Example:</em> In India, exit polls and opinion surveys use statistical sampling and inference to estimate voters' preferences and voting intentions.</p>
+</li>
+</ul>
+<h3 id="technology-and-computing">1.6.5 Technology and Computing</h3>
+<p>Modern technology and computing rely heavily on statistical principles:</p>
+<ul>
+<li><strong>a) Data Science and Machine Learning:</strong> Data science and machine learning heavily rely on the principles of statistics. Statistical learning theory, pattern recognition, and predictive modeling are the foundations of artificial intelligence.
+                            <p><em>Example:</em> In India, companies and research institutions are using statistical machine learning to develop image recognition, natural language processing, and recommendation systems. Researchers at the Indian Institute of Technology (IIT) Delhi have developed natural language processing algorithms for Hindi text analysis, which perform text summarization and sentiment analysis using statistical patterns.</p>
+</li>
+<li><strong>b) Big Data Analytics:</strong> Big data analytics uses statistical methods to extract insights from high-volume, high-velocity data. Distributed computing and parallel processing techniques make large-scale statistical analyses feasible.
+                            <p><em>Example:</em> India's e-commerce and telecom companies use big data analytics to analyze customer behavior and network performance. Telecom companies like Reliance Jio use distributed statistical computing to process massive amounts of network data, leading to network optimization and service improvement.</p>
+</li>
+<li><strong>c) Quality Control:</strong> In quality control, statistical process control methods are used for monitoring and improving manufacturing processes. Design of experiments provides a systematic approach for product and process optimization.
+                            <p><em>Example:</em> In India's automobile manufacturing sector, companies use the Six Sigma methodology to reduce product defects and improve process efficiency. At Maruti Suzuki's Gurugram plant, the implementation of statistical quality control techniques is helping to reduce defect rates by 85%.</p>
+<div class="example">
+<h4>Example: AI and Statistics for Agriculture in Haryana</h4>
+<p>An agricultural technology startup based in Haryana has developed a smart farming solution for farmers, which uses statistics and AI:</p>
+<ol type="i">
+<li>Crop Yield Prediction: Using machine learning algorithms, the system predicts crop yields based on soil parameters, weather data, and historical yields, achieving 89% accuracy.</li>
+<li>Pest Detection: Using computer vision and statistical pattern recognition, early detection of crop diseases and pest infestations is performed from drone-captured images. The system can identify 12 common crop diseases with 94% accuracy.</li>
+<li>Optimal Resource Allocation: Using Bayesian optimization, the system recommends optimal irrigation and fertilizer application schedules for each field, resulting in a 30% reduction in water usage and a 22% increase in yields.</li>
+<li>Weather Forecasting: Using data from local weather stations, the system uses ensemble statistical models for micro-climate predictions, which are 40% more accurate than standard forecasts.</li>
+<li>Market Price Prediction: Using time series forecasting models, the system predicts future crop prices, helping farmers determine the best time to sell their produce. The model considers historical price data, supply-demand factors, and seasonal patterns.</li>
+<li>Soil Health Monitoring: Using multivariate statistical analysis, the system continuously monitors soil health and predicts nutrient deficiencies before they affect crop growth.</li>
+</ol>
+<p>In collaboration with Haryana Agricultural University, this solution is being used by over 5,000 farmers in 12 districts of the state, resulting in a 35% increase in average farm profitability.</p>
+</div>
+</li>
+<li><strong>d) Internet of Things (IoT):</strong> In IoT applications, statistical methods are used to analyze sensor data and to identify patterns, anomalies, and trends.
+                            <p><em>Example:</em> In India, under smart cities initiatives, statistical methods are used to analyze data collected from IoT sensors for traffic management, energy optimization, and pollution monitoring. In Gurugram, Haryana, the smart traffic management system performs statistical analysis of real-time data to identify congestion patterns and optimize traffic flow.</p>
+</li>
+<li><strong>e) Cybersecurity:</strong> In cybersecurity, statistical methods are used to model normal network behavior and to identify potential security threats.
+                            <p><em>Example:</em> Indian banks and financial institutions use anomaly detection algorithms, which detect fraudulent transactions by identifying deviations from statistical patterns. Major banks like the State Bank of India use advanced statistical models for real-time fraud detection, which significantly helps in reducing financial losses.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2>1.6 Statistics के उपयोग के क्षेत्र</h2>
+<div class="body">
+<p>Statistics का use लगभग हर field में होता है। आइए कुछ major areas detail में देखें:</p>
+
+<h3 id="science-and-research">1.6.1 Science और Research</h3>
+<p>Science के लगभग हर field में statistical methods का use होता है:</p>
+<ul>
+<li><strong>a) Natural Sciences</strong>
+<ol type="i">
+<li>Physics: Physicists experimental data के analysis के लिए statistical methods use करते हैं। Quantum mechanics पूरी तरह probability theory पर आधारित है।</li>
+<li>Chemistry: Chemists reaction rates और yield distributions analyze करने के लिए statistics use करते हैं। Statistical thermodynamics में बड़ी systems के behavior को describe करने के लिए methods use होते हैं।</li>
+<li>Biology: Biologists genetic variations, species distributions और ecological interactions समझने के लिए statistical models use करते हैं। Genomics में large-scale gene expression data analyze करने के लिए advanced statistical methods use होते हैं।</li>
+</ol>
+</li>
+<li><strong>b) Medical Research</strong>
+<p>Medical research में clinical trials design और analyze करने के लिए statistics ज़रूरी है। Researchers randomized controlled trials और hypothesis testing use करके new treatments की effectiveness measure करते हैं। Epidemiologists disease patterns और risk factors identify करने के लिए statistical methods use करते हैं।</p>
+<p><em>Example:</em> COVID-19 vaccine trials में researchers ने treatment और control groups के infection rates compare करके vaccine efficacy measure की।</p>
+</li>
+<li><strong>c) Research Methodology</strong>
+<p>Research methodology में statistics central role निभाती है। Sampling theory, experimental design और data analysis techniques reliable और valid results देती हैं। Meta-analysis जैसी techniques कई studies के results combine करके broader conclusions देती हैं।</p>
+<div class="example">
+<h4>Example: हरियाणा में Water Quality Study</h4>
+<p>Researchers ने Haryana के 24 districts से stratified random sampling द्वारा 480 groundwater samples collect किए।</p>
+<p>Fluoride, arsenic, nitrate और heavy metals levels measure किए गए। Statistical analysis से पता चला:</p>
+<ol type="i">
+<li>Hisar, Bhiwani और Sirsa के 35% samples में fluoride WHO limits से ज़्यादा था (p &lt; 0.01)।</li>
+<li>Industrial zones के आसपास heavy metal contamination का risk 3.2 times ज़्यादा था (95% CI: 2.7–3.8)।</li>
+<li>Nitrate levels और agricultural activities में strong positive correlation (r = 0.78) था।</li>
+</ol>
+<p>Evidence के आधार पर Pollution Control Board ने water treatment facilities और industrial waste disposal regulations strengthen करने की recommendation दी।</p>
+</div>
+</li>
+</ul>
+
+<h3 id="social-sciences">1.6.2 Social Sciences</h3>
+<p>Social sciences में human behavior और social phenomena समझने के लिए statistics ज़रूरी है:</p>
+<ul>
+<li><strong>a) Economics:</strong> Econometrics economic data पर statistical methods का application है। Economists time series analysis और regression techniques use करके growth, inflation, unemployment और market behavior model करते हैं। <p><em>Example:</em> RBI econometric models use करके interest rates, inflation और GDP growth के relationships समझता है और monetary policy decisions लेता है।</p></li>
+<li><strong>b) Psychology:</strong> Psychology में researchers experimental data analyze करके human behavior और mental processes समझते हैं। Factor analysis जैसी techniques personality traits और cognitive abilities measure करती हैं। <p><em>Example:</em> Indian psychologists ने cultural factors और stress management के relationship study करने के लिए structural equation modeling use किया।</p></li>
+<li><strong>c) Sociology:</strong> Sociology में statisticians social trends, demographic patterns और group behaviors analyze करते हैं। Surveys और sampling representative measurements देते हैं। <p><em>Example:</em> NFHS India में family planning, nutrition और healthcare access पर data provide करता है।</p>
+<div class="example">
+<h4>Example: Haryana Sex Ratio Study</h4>
+<ol type="i">
+<li>Time Series Analysis: Census data से पता चला कि child sex ratio (0–6 years) 2001 में 819 से बढ़कर 2011 में 834 हुआ और 2021 में लगभग 920 है।</li>
+<li>Regression Analysis: Female literacy, urbanization और government interventions sex ratio के predictors थे (R² = 0.68)।</li>
+<li>Spatial Statistics: GIS से districts में spatial variations identify हुए और hotspots मिले।</li>
+<li>Causal Analysis: Difference-in-differences से पता चला कि "Beti Bachao, Beti Padhao" program ने participating districts में sex ratio 45 points improve किया (p &lt; 0.01)।</li>
+</ol>
+</div>
+</li>
+</ul>
+
+<h3 id="business-and-finance">1.6.3 Business और Finance</h3>
+<p>Business और finance में informed decisions लेने के लिए statistical analysis बहुत important है:</p>
+<ul>
+<li><strong>a) Business Analytics:</strong> Companies customer behavior, market trends और efficiency समझने के लिए statistics use करती हैं। <p><em>Example:</em> India की e-commerce companies predictive analytics use करके personalized recommendations देती हैं।</p></li>
+<li><strong>b) Marketing:</strong> Marketing में consumer preferences, advertising effectiveness और market segmentation analyze होते हैं। A/B testing और conjoint analysis campaigns optimize करते हैं। <p><em>Example:</em> Indian telecom companies logistic regression use करके customer churn predict करती हैं।</p></li>
+<li><strong>c) Finance:</strong> Finance में risk management, portfolio optimization और asset pricing के लिए statistical models ज़रूरी हैं। <p><em>Example:</em> Indian banks credit risk और loan default probabilities assess करने के लिए models use करते हैं।</p></li>
+</ul>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+        <div class="topic-section" id="conclusion">
+            <section class="section-card">
+                <div class="english-content">
+<h2>1.7 Conclusion</h2>
+<div class="body">
+<p>In this chapter, we have studied various aspects of statistics. We have seen that statistics is a broad and multifaceted subject that deals with the collection, organization, analysis, interpretation, and presentation of data. Statistics is used in almost every field of life, including science, social sciences, business, government, and technology.</p>
+<p>We learned about the two main types of statistics – descriptive statistics and inferential statistics. Descriptive statistics helps us summarize the main characteristics of data, while inferential statistics helps us draw conclusions about the population from a sample.</p>
+<p>Statistics has many advantages, such as quantification of information, evidence-based decision making, managing uncertainty, identifying patterns and trends, forecasting future events, and understanding complex systems. However, it also has some limitations, such as dependency on data quality, the difference between statistical significance and practical significance, potential for misuse and misinterpretation, confusion between correlation and causation, simplification of models, need for domain knowledge, and ethical considerations.</p>
+<div class="pull-quote">
+                        "Statistics gives us the power to tell stories through numbers and to understand complex realities. It is a guiding lighthouse in the sea of uncertainty." — Prof. C.R. Rao
+                    </div>
+<p>The examples we have seen in the context of India and Haryana show how important statistics is for the development of our country and our daily lives. From Professor P.C. Mahalanobis (who founded the Indian Statistical Institute) to today's data scientists, Indian statisticians have made significant contributions in this field.</p>
+<p>In today's data-driven age, statistical literacy is an essential skill. An understanding of statistical principles and methods will help you work more effectively in your field and make informed decisions. As the volume and complexity of data increase, the role of statistics will become even more crucial.</p>
+<p>In further study, you will learn more about statistical concepts and methods in detail, and develop practical skills using various statistical software and tools such as R, Python, SPSS, and SAS. You will also study advanced topics such as multivariate analysis, time series forecasting, experimental design, and Bayesian statistics.</p>
+<p>We hope that this introduction inspires you for the exciting and important subject of statistics. Remember, to become a good statistician, not only an understanding of mathematical concepts is necessary, but also critical thinking, curiosity, and accurate communication skills are important. The study of statistics not only teaches you to analyze data, but also to understand and communicate the stories behind the data.</p>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2>1.7 निष्कर्ष</h2>
+<div class="body">
+<p>इस chapter में हमने Statistics के अलग‑अलग पहलुओं का अध्ययन किया। हमने देखा कि Statistics एक broad और multi‑faceted subject है जो data के collection, organization, analysis, interpretation और presentation से जुड़ा है। इसका use science, social sciences, business, government और technology सहित जीवन के लगभग हर field में होता है।</p>
+<p>हमने Statistics के दो main types सीखे – Descriptive Statistics और Inferential Statistics। Descriptive statistics data की main characteristics summarize करता है, जबकि Inferential statistics sample से population के बारे में conclusions निकालने में मदद करता है।</p>
+<p>Statistics के कई फायदे हैं – जैसे information को quantify करना, evidence‑based decisions लेना, uncertainty manage करना, patterns और trends पहचानना, future events forecast करना और complex systems समझना। लेकिन इसकी कुछ limitations भी हैं – जैसे data quality पर dependence, statistical significance और practical significance में फर्क, misuse और misinterpretation की संभावना, correlation और causation में confusion, models का simplification, domain knowledge की ज़रूरत और ethical considerations।</p>
+<div class="pull-quote">
+"Statistics हमें numbers के ज़रिए stories बताने और complex realities समझने की ताकत देती है। यह uncertainty के समंदर में एक lighthouse है।" — प्रो. सी.आर. राव
+</div>
+<p>India और Haryana के examples से हमने देखा कि Statistics हमारे देश के development और daily life के लिए कितनी important है। प्रो. पी.सी. महालनोबिस (जिन्होंने Indian Statistical Institute की स्थापना की) से लेकर आज के data scientists तक, Indian statisticians ने इस field में बड़ा योगदान दिया है।</p>
+<p>आज के data‑driven age में statistical literacy एक essential skill है। Statistical principles और methods की समझ आपको अपने field में ज़्यादा effective बनाएगी और informed decisions लेने में मदद करेगी। जैसे‑जैसे data की मात्रा और complexity बढ़ेगी, Statistics की role और भी crucial होगी।</p>
+<p>आगे के study में आप statistical concepts और methods detail में सीखेंगे, और R, Python, SPSS, SAS जैसे software tools से practical skills develop करेंगे। आप advanced topics जैसे multivariate analysis, time series forecasting, experimental design और Bayesian statistics भी पढ़ेंगे।</p>
+<p>हम उम्मीद करते हैं कि यह introduction आपको Statistics जैसे exciting और important subject के लिए inspire करेगा। याद रखें, एक अच्छे statistician बनने के लिए सिर्फ mathematical concepts की समझ ही नहीं, बल्कि critical thinking, curiosity और clear communication skills भी ज़रूरी हैं। Statistics का study आपको data analyze करना ही नहीं, बल्कि data के पीछे की stories समझना और communicate करना भी सिखाता है।</p>
+</div>
+</div>
+
+            </section>
+        </div>
+    
+
+        <!-- EXERCISES INJECTED HERE -->
+        
+        <div id="mcq" class="topic-section">
+            <section class="section-card">
+                <div class="english-content">
+        <h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            Click <em>Show Answer</em> to reveal the correct option and explanation.
+        </p>
+    
+        <div class="question">
+            <strong>Q1.</strong> The word 'Statistics' is derived from the Latin word:
+            <div class="mcq-options">
+                <p>(a) Statista &nbsp;&nbsp; (b) Status &nbsp;&nbsp; (c) Statistik &nbsp;&nbsp; (d) Stat</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-1">
+            <strong>Answer:</strong> (b) Status
+        </div>
+        
+        <div class="question">
+            <strong>Q2.</strong> Statistics deals with:
+            <div class="mcq-options">
+                <p>(a) Isolated individuals &nbsp;&nbsp; (b) Qualitative data only &nbsp;&nbsp; (c) Aggregates of facts &nbsp;&nbsp; (d) Mathematical certainty</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-2')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-2">
+            <strong>Answer:</strong> (c) Aggregates of facts
+        </div>
+        
+        <div class="question">
+            <strong>Q3.</strong> Data collected originally by the investigator is called:
+            <div class="mcq-options">
+                <p>(a) Secondary Data &nbsp;&nbsp; (b) Grouped Data &nbsp;&nbsp; (c) Primary Data &nbsp;&nbsp; (d) Published Data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-3')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-3">
+            <strong>Answer:</strong> (c) Primary Data
+        </div>
+        
+        <div class="question">
+            <strong>Q4.</strong> Number of students in a class is an example of:
+            <div class="mcq-options">
+                <p>(a) Continuous data &nbsp;&nbsp; (b) Qualitative data &nbsp;&nbsp; (c) Discrete data &nbsp;&nbsp; (d) Nominal data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-4')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-4">
+            <strong>Answer:</strong> (c) Discrete data
+        </div>
+        
+        <div class="question">
+            <strong>Q5.</strong> Yield of wheat per acre is an example of:
+            <div class="mcq-options">
+                <p>(a) Discrete data &nbsp;&nbsp; (b) Continuous data &nbsp;&nbsp; (c) Ordinal data &nbsp;&nbsp; (d) Secondary data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-5')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-5">
+            <strong>Answer:</strong> (b) Continuous data
+        </div>
+        
+        <div class="question">
+            <strong>Q6.</strong> Eye color of a person is an example of:
+            <div class="mcq-options">
+                <p>(a) Quantitative data &nbsp;&nbsp; (b) Continuous data &nbsp;&nbsp; (c) Qualitative data &nbsp;&nbsp; (d) Discrete data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-6')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-6">
+            <strong>Answer:</strong> (c) Qualitative data
+        </div>
+        
+        <div class="question">
+            <strong>Q7.</strong> Census of India reports are a source of:
+            <div class="mcq-options">
+                <p>(a) Primary Data &nbsp;&nbsp; (b) Secondary Data &nbsp;&nbsp; (c) Experimental Data &nbsp;&nbsp; (d) Unpublished Data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-7')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-7">
+            <strong>Answer:</strong> (b) Secondary Data
+        </div>
+        
+        <div class="question">
+            <strong>Q8.</strong> Data collected over different points in time is known as:
+            <div class="mcq-options">
+                <p>(a) Cross-sectional data &nbsp;&nbsp; (b) Time series data &nbsp;&nbsp; (c) Geographical data &nbsp;&nbsp; (d) Nominal data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-8')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-8">
+            <strong>Answer:</strong> (b) Time series data
+        </div>
+        
+        <div class="question">
+            <strong>Q9.</strong> Classification of data based on geographical location is:
+            <div class="mcq-options">
+                <p>(a) Chronological &nbsp;&nbsp; (b) Geographical &nbsp;&nbsp; (c) Qualitative &nbsp;&nbsp; (d) Quantitative</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-9')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-9">
+            <strong>Answer:</strong> (b) Geographical
+        </div>
+        
+        <div class="question">
+            <strong>Q10.</strong> Which of the following is NOT a limitation of statistics?
+            <div class="mcq-options">
+                <p>(a) It deals with aggregates only &nbsp;&nbsp; (b) It is exact like mathematical laws &nbsp;&nbsp; (c) It can be misused &nbsp;&nbsp; (d) It deals only with quantitative characteristics</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-10')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-10">
+            <strong>Answer:</strong> (b) It is exact like mathematical laws
+        </div>
+        
+        <div class="question">
+            <strong>Q11.</strong> Data which have already been collected by someone are called:
+            <div class="mcq-options">
+                <p>(a) Primary data &nbsp;&nbsp; (b) Secondary data &nbsp;&nbsp; (c) Raw data &nbsp;&nbsp; (d) Fictitious data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-11')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-11">
+            <strong>Answer:</strong> (b) Secondary data
+        </div>
+        
+        <div class="question">
+            <strong>Q12.</strong> Arranging data in rows and columns is called:
+            <div class="mcq-options">
+                <p>(a) Classification &nbsp;&nbsp; (b) Tabulation &nbsp;&nbsp; (c) Scrutiny &nbsp;&nbsp; (d) Editing</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-12')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-12">
+            <strong>Answer:</strong> (b) Tabulation
+        </div>
+        
+        <div class="question">
+            <strong>Q13.</strong> Checking data for internal consistency is called:
+            <div class="mcq-options">
+                <p>(a) Collection &nbsp;&nbsp; (b) Scrutiny &nbsp;&nbsp; (c) Tabulation &nbsp;&nbsp; (d) Presentation</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-13')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-13">
+            <strong>Answer:</strong> (b) Scrutiny
+        </div>
+        
+        <div class="question">
+            <strong>Q14.</strong> The grades A, B, C, D awarded to students represent:
+            <div class="mcq-options">
+                <p>(a) Nominal data &nbsp;&nbsp; (b) Ordinal data &nbsp;&nbsp; (c) Interval data &nbsp;&nbsp; (d) Ratio data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-14')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-14">
+            <strong>Answer:</strong> (b) Ordinal data
+        </div>
+        
+        <div class="question">
+            <strong>Q15.</strong> Blood groups of individuals represent:
+            <div class="mcq-options">
+                <p>(a) Ordinal data &nbsp;&nbsp; (b) Nominal data &nbsp;&nbsp; (c) Discrete data &nbsp;&nbsp; (d) Continuous data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-15')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-15">
+            <strong>Answer:</strong> (b) Nominal data
+        </div>
+        
+        <div class="question">
+            <strong>Q16.</strong> Which of the following is true about statistical laws?
+            <div class="mcq-options">
+                <p>(a) They are exact &nbsp;&nbsp; (b) They are true on average &nbsp;&nbsp; (c) They are always completely false &nbsp;&nbsp; (d) None of the above</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-16')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-16">
+            <strong>Answer:</strong> (b) They are true on average
+        </div>
+        
+        <div class="question">
+            <strong>Q17.</strong> Data collected from various countries in the year 2025 is:
+            <div class="mcq-options">
+                <p>(a) Time series data &nbsp;&nbsp; (b) Cross-sectional data &nbsp;&nbsp; (c) Ordinal data &nbsp;&nbsp; (d) Primary data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-17')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-17">
+            <strong>Answer:</strong> (b) Cross-sectional data
+        </div>
+        
+        <div class="question">
+            <strong>Q18.</strong> Which of these is a method of collecting primary data?
+            <div class="mcq-options">
+                <p>(a) Direct personal interview &nbsp;&nbsp; (b) RBI Bulletins &nbsp;&nbsp; (c) WHO reports &nbsp;&nbsp; (d) Statistical abstracts</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-18')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-18">
+            <strong>Answer:</strong> (a) Direct personal interview
+        </div>
+        
+        <div class="question">
+            <strong>Q19.</strong> A variable that can take any value between two given points is called a:
+            <div class="mcq-options">
+                <p>(a) Discrete variable &nbsp;&nbsp; (b) Continuous variable &nbsp;&nbsp; (c) Qualitative variable &nbsp;&nbsp; (d) Attribute</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-19')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-19">
+            <strong>Answer:</strong> (b) Continuous variable
+        </div>
+        
+        <div class="question">
+            <strong>Q20.</strong> The process of grouping data according to common characteristics is:
+            <div class="mcq-options">
+                <p>(a) Tabulation &nbsp;&nbsp; (b) Classification &nbsp;&nbsp; (c) Scrutiny &nbsp;&nbsp; (d) Editing</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-20')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-20">
+            <strong>Answer:</strong> (b) Classification
+        </div>
+        
+        <div class="question">
+            <strong>Q21.</strong> In agriculture, statistics is primarily used to:
+            <div class="mcq-options">
+                <p>(a) Determine the exact number of pests &nbsp;&nbsp; (b) Evaluate treatment effects through designed experiments &nbsp;&nbsp; (c) Predict weather with 100% accuracy &nbsp;&nbsp; (d) Avoid the use of fertilizers</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-21')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-21">
+            <strong>Answer:</strong> (b) Evaluate treatment effects through designed experiments
+        </div>
+        
+        <div class="question">
+            <strong>Q22.</strong> Which of the following is quantitative data?
+            <div class="mcq-options">
+                <p>(a) Religion &nbsp;&nbsp; (b) Gender &nbsp;&nbsp; (c) Height &nbsp;&nbsp; (d) Nationality</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-22')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-22">
+            <strong>Answer:</strong> (c) Height
+        </div>
+        
+        <div class="question">
+            <strong>Q23.</strong> Which data type cannot be subjected to meaningful arithmetic operations?
+            <div class="mcq-options">
+                <p>(a) Continuous &nbsp;&nbsp; (b) Discrete &nbsp;&nbsp; (c) Nominal &nbsp;&nbsp; (d) Time series</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-23')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-23">
+            <strong>Answer:</strong> (c) Nominal
+        </div>
+        
+        <div class="question">
+            <strong>Q24.</strong> Temperature recorded every hour constitutes:
+            <div class="mcq-options">
+                <p>(a) Cross-sectional data &nbsp;&nbsp; (b) Time series data &nbsp;&nbsp; (c) Nominal data &nbsp;&nbsp; (d) Ordinal data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-24')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-24">
+            <strong>Answer:</strong> (b) Time series data
+        </div>
+        
+        <div class="question">
+            <strong>Q25.</strong> A statistical table should ideally have:
+            <div class="mcq-options">
+                <p>(a) A title &nbsp;&nbsp; (b) Headings and subheadings &nbsp;&nbsp; (c) Source note &nbsp;&nbsp; (d) All of the above</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-25')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-25">
+            <strong>Answer:</strong> (d) All of the above
+        </div>
+        
+        <div class="question">
+            <strong>Q26.</strong> Errors committed during data collection are called:
+            <div class="mcq-options">
+                <p>(a) Sampling errors &nbsp;&nbsp; (b) Non-sampling errors &nbsp;&nbsp; (c) Standard errors &nbsp;&nbsp; (d) Systematic errors</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-26')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-26">
+            <strong>Answer:</strong> (b) Non-sampling errors
+        </div>
+        
+        <div class="question">
+            <strong>Q27.</strong> Unpublished data can be found in:
+            <div class="mcq-options">
+                <p>(a) Research journals &nbsp;&nbsp; (b) Government publications &nbsp;&nbsp; (c) Internal office records &nbsp;&nbsp; (d) Newspapers</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-27')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-27">
+            <strong>Answer:</strong> (c) Internal office records
+        </div>
+        
+        <div class="question">
+            <strong>Q28.</strong> Checking if the 'age of son > age of father' is a part of:
+            <div class="mcq-options">
+                <p>(a) Scrutiny for internal consistency &nbsp;&nbsp; (b) Tabulation &nbsp;&nbsp; (c) Data collection &nbsp;&nbsp; (d) Sampling</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-28')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-28">
+            <strong>Answer:</strong> (a) Scrutiny for internal consistency
+        </div>
+        
+        <div class="question">
+            <strong>Q29.</strong> Number of petals on a flower is:
+            <div class="mcq-options">
+                <p>(a) Continuous &nbsp;&nbsp; (b) Discrete &nbsp;&nbsp; (c) Qualitative &nbsp;&nbsp; (d) Nominal</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-29')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-29">
+            <strong>Answer:</strong> (b) Discrete
+        </div>
+        
+        <div class="question">
+            <strong>Q30.</strong> Statistics refers to both statistical data and:
+            <div class="mcq-options">
+                <p>(a) Statistical methods &nbsp;&nbsp; (b) Statistical errors &nbsp;&nbsp; (c) Statistical limitations &nbsp;&nbsp; (d) Statistical formulas</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-30')">Show Answer ▼</button>
+        <div class="answer" id="mcq-eng-30">
+            <strong>Answer:</strong> (a) Statistical methods
+        </div>
+        </div>
+                <div class="hinglish-content" style="display:none;">
+        <h2><span class="section-num">❓</span> Multiple Choice Questions (बहुविकल्पीय प्रश्न) — 30 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            सही विकल्प देखने के लिए <em>Show Answer</em> पर क्लिक करें।
+        </p>
+    
+        <div class="question">
+            <strong>Q1.</strong> 'Statistics' शब्द लैटिन शब्द से लिया गया है:
+            <div class="mcq-options">
+                <p>(ए) स्टेटिस्टा &nbsp;&nbsp; (बी) स्थिति &nbsp;&nbsp; (सी) Statistics &nbsp;&nbsp; (डी) स्टेट</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-1')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-1">
+            <strong>Answer:</strong> (बी) स्थिति
+        </div>
+        
+        <div class="question">
+            <strong>Q2.</strong> Statistics associationित है:
+            <div class="mcq-options">
+                <p>(ए) अलग-थलग व्यक्ति &nbsp;&nbsp; (बी) केवल qualitative data &nbsp;&nbsp; (सी) facts का समुच्चय &nbsp;&nbsp; (डी) mathematical निश्चितता</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-2')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-2">
+            <strong>Answer:</strong> (सी) facts का समुच्चय
+        </div>
+        
+        <div class="question">
+            <strong>Q3.</strong> अन्वेषक द्वारा मूल रूप से एकत्र किए गए data को कहा जाता है:
+            <div class="mcq-options">
+                <p>(ए) secondary data &nbsp;&nbsp; (बी) समूहीकृत data &nbsp;&nbsp; (सी) primary data &nbsp;&nbsp; (डी) प्रकाशित data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-3')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-3">
+            <strong>Answer:</strong> (सी) primary data
+        </div>
+        
+        <div class="question">
+            <strong>Q4.</strong> एक कक्षा में विद्यार्थियों की संख्या इसका example है:
+            <div class="mcq-options">
+                <p>(ए) सतत data &nbsp;&nbsp; (बी) qualitative data &nbsp;&nbsp; (सी) अलग data &nbsp;&nbsp; (डी) नाममात्र data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-4')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-4">
+            <strong>Answer:</strong> (सी) अलग data
+        </div>
+        
+        <div class="question">
+            <strong>Q5.</strong> प्रति एकड़ गेहूँ की पैदावार इसका example है:
+            <div class="mcq-options">
+                <p>(ए) अलग data &nbsp;&nbsp; (बी) सतत data &nbsp;&nbsp; (सी) सामान्य data &nbsp;&nbsp; (डी) meanमिक data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-5')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-5">
+            <strong>Answer:</strong> (बी) सतत data
+        </div>
+        
+        <div class="question">
+            <strong>Q6.</strong> किसी व्यक्ति की आँखों का रंग इसका example है:
+            <div class="mcq-options">
+                <p>(ए) quantitative data &nbsp;&nbsp; (बी) सतत data &nbsp;&nbsp; (सी) qualitative data &nbsp;&nbsp; (डी) अलग data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-6')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-6">
+            <strong>Answer:</strong> (सी) qualitative data
+        </div>
+        
+        <div class="question">
+            <strong>Q7.</strong> भारत की जनगणना रिपोर्टें इसका स्रोत हैं:
+            <div class="mcq-options">
+                <p>(ए) primary data &nbsp;&nbsp; (बी) secondary data &nbsp;&nbsp; (सी) प्रायोगिक data &nbsp;&nbsp; (डी) अप्रकाशित data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-7')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-7">
+            <strong>Answer:</strong> (बी) secondary data
+        </div>
+        
+        <div class="question">
+            <strong>Q8.</strong> समय में विभिन्न बिंदुओं पर एकत्र किए गए data को कहा जाता है:
+            <div class="mcq-options">
+                <p>(ए) क्रॉस-अनुभागीय data &nbsp;&nbsp; (बी) समय श्रृंखला data &nbsp;&nbsp; (सी) भौगोलिक data &nbsp;&nbsp; (डी) नाममात्र data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-8')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-8">
+            <strong>Answer:</strong> (बी) समय श्रृंखला data
+        </div>
+        
+        <div class="question">
+            <strong>Q9.</strong> भौगोलिक स्थिति के आधार पर data का classification है:
+            <div class="mcq-options">
+                <p>(ए) कालानुक्रमिक &nbsp;&nbsp; (बी) भौगोलिक &nbsp;&nbsp; (सी) qualitative &nbsp;&nbsp; (डी) quantitative</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-9')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-9">
+            <strong>Answer:</strong> (बी) भौगोलिक
+        </div>
+        
+        <div class="question">
+            <strong>Q10.</strong> निम्नलिखित में से कौन Statistics की सीमा नहीं है?
+            <div class="mcq-options">
+                <p>(ए) यह केवल समुच्चय से associationित है &nbsp;&nbsp; (बी) यह बिल्कुल mathematical नियमों की तरह है &nbsp;&nbsp; (सी) इसका दुरुपयोग किया जा सकता है &nbsp;&nbsp; (डी) यह केवल quantitative attributes से associationित है</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-10')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-10">
+            <strong>Answer:</strong> (बी) यह बिल्कुल mathematical नियमों की तरह है
+        </div>
+        
+        <div class="question">
+            <strong>Q11.</strong> वह data जो पहले ही किसी के द्वारा एकत्र कर लिया गया हो, कहलाता है:
+            <div class="mcq-options">
+                <p>(ए) primary data &nbsp;&nbsp; (बी) secondary data &nbsp;&nbsp; (सी) कच्चा data &nbsp;&nbsp; (डी) काल्पनिक data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-11')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-11">
+            <strong>Answer:</strong> (बी) secondary data
+        </div>
+        
+        <div class="question">
+            <strong>Q12.</strong> data को पंक्तियों और स्तंभों में systematic करना कहलाता है:
+            <div class="mcq-options">
+                <p>(ए) classification &nbsp;&nbsp; (बी) tabulation &nbsp;&nbsp; (सी) जांच &nbsp;&nbsp; (डी) संपादन</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-12')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-12">
+            <strong>Answer:</strong> (बी) tabulation
+        </div>
+        
+        <div class="question">
+            <strong>Q13.</strong> आंतरिक स्थिरता के लिए data की जाँच करना कहलाता है:
+            <div class="mcq-options">
+                <p>(ए) संग्रह &nbsp;&nbsp; (बी) जांच &nbsp;&nbsp; (सी) tabulation &nbsp;&nbsp; (डी) प्रस्तुति</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-13')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-13">
+            <strong>Answer:</strong> (बी) जांच
+        </div>
+        
+        <div class="question">
+            <strong>Q14.</strong> छात्रों को दिए गए ग्रेड ए, बी, सी, डी दर्शाते हैं:
+            <div class="mcq-options">
+                <p>(ए) नाममात्र data &nbsp;&nbsp; (बी) सामान्य data &nbsp;&nbsp; (सी) अंतराल data &nbsp;&nbsp; (डी) अनुपात data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-14')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-14">
+            <strong>Answer:</strong> (बी) सामान्य data
+        </div>
+        
+        <div class="question">
+            <strong>Q15.</strong> व्यक्तियों के रक्त समूह दर्शाते हैं:
+            <div class="mcq-options">
+                <p>(ए) सामान्य data &nbsp;&nbsp; (बी) नाममात्र data &nbsp;&nbsp; (सी) अलग data &nbsp;&nbsp; (डी) सतत data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-15')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-15">
+            <strong>Answer:</strong> (बी) नाममात्र data
+        </div>
+        
+        <div class="question">
+            <strong>Q16.</strong> statistical कानूनों के बारे में निम्नलिखित में से कौन सा सत्य है?
+            <div class="mcq-options">
+                <p>(ए) वे सटीक हैं &nbsp;&nbsp; (बी) वे averageन सत्य हैं &nbsp;&nbsp; (सी) वे हमेशा पूरी तरह से झूठे होते हैं &nbsp;&nbsp; (डी) उपरोक्त में से कोई नहीं</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-16')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-16">
+            <strong>Answer:</strong> (बी) वे averageन सत्य हैं
+        </div>
+        
+        <div class="question">
+            <strong>Q17.</strong> वर्ष 2025 में विभिन्न देशों से एकत्र किया गया data है:
+            <div class="mcq-options">
+                <p>(ए) समय श्रृंखला data &nbsp;&nbsp; (बी) क्रॉस-अनुभागीय data &nbsp;&nbsp; (सी) सामान्य data &nbsp;&nbsp; (डी) primary data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-17')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-17">
+            <strong>Answer:</strong> (बी) क्रॉस-अनुभागीय data
+        </div>
+        
+        <div class="question">
+            <strong>Q18.</strong> इनमें से कौन primary data एकत्र करने की एक method है?
+            <div class="mcq-options">
+                <p>(ए) प्रत्यक्ष व्यक्तिगत interview &nbsp;&nbsp; (बी) आरबीआई बुलेटिन &nbsp;&nbsp; (सी) डब्ल्यूएचओ की रिपोर्ट &nbsp;&nbsp; (डी) statistical सार</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-18')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-18">
+            <strong>Answer:</strong> (ए) प्रत्यक्ष व्यक्तिगत interview
+        </div>
+        
+        <div class="question">
+            <strong>Q19.</strong> एक वेरिएबल जो दो दिए गए बिंदुओं के बीच कोई भी मान ले सकता है, कहलाता है:
+            <div class="mcq-options">
+                <p>(ए) असतत variable &nbsp;&nbsp; (बी) निरंतर परिवर्तनशील &nbsp;&nbsp; (सी) qualitative variable &nbsp;&nbsp; (डी) विशेषता</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-19')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-19">
+            <strong>Answer:</strong> (बी) निरंतर परिवर्तनशील
+        </div>
+        
+        <div class="question">
+            <strong>Q20.</strong> सामान्य attributes के अनुसार data को समूहीकृत करने की process है:
+            <div class="mcq-options">
+                <p>(ए) tabulation &nbsp;&nbsp; (बी) classification &nbsp;&nbsp; (सी) जांच &nbsp;&nbsp; (डी) संपादन</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-20')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-20">
+            <strong>Answer:</strong> (बी) classification
+        </div>
+        
+        <div class="question">
+            <strong>Q21.</strong> कृषि में, Statistics का मुख्य रूप से उपयोग किया जाता है:
+            <div class="mcq-options">
+                <p>(ए) कीटों की सटीक संख्या निर्धारित करें &nbsp;&nbsp; (बी) design किए गए प्रयोगों के meanम से उपचार प्रभावों का evaluation करें &nbsp;&nbsp; (सी) 100% accuracy के साथ मौसम की भविष्यवाणी करें &nbsp;&nbsp; (घ) उर्वरकों के प्रयोग से बचें</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-21')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-21">
+            <strong>Answer:</strong> (बी) design किए गए प्रयोगों के meanम से उपचार प्रभावों का evaluation करें
+        </div>
+        
+        <div class="question">
+            <strong>Q22.</strong> निम्नलिखित में से कौन सा quantitative data है?
+            <div class="mcq-options">
+                <p>(ए) धर्म &nbsp;&nbsp; (बी) लिंग &nbsp;&nbsp; (सी) ऊँचाई &nbsp;&nbsp; (डी) राष्ट्रीयता</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-22')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-22">
+            <strong>Answer:</strong> (सी) ऊँचाई
+        </div>
+        
+        <div class="question">
+            <strong>Q23.</strong> किस data प्रकार को सार्थक अंकmathematical परिचालन के अधीन नहीं किया जा सकता है?
+            <div class="mcq-options">
+                <p>(ए) सतत &nbsp;&nbsp; (बी) असतत &nbsp;&nbsp; (सी) नाममात्र &nbsp;&nbsp; (डी) समय श्रृंखला</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-23')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-23">
+            <strong>Answer:</strong> (सी) नाममात्र
+        </div>
+        
+        <div class="question">
+            <strong>Q24.</strong> हर घंटे दर्ज किया गया तापमान होता है:
+            <div class="mcq-options">
+                <p>(ए) क्रॉस-अनुभागीय data &nbsp;&nbsp; (बी) समय श्रृंखला data &nbsp;&nbsp; (सी) नाममात्र data &nbsp;&nbsp; (डी) सामान्य data</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-24')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-24">
+            <strong>Answer:</strong> (बी) समय श्रृंखला data
+        </div>
+        
+        <div class="question">
+            <strong>Q25.</strong> एक statistical तालिका में आदर्श रूप से होना चाहिए:
+            <div class="mcq-options">
+                <p>(ए) एक शीर्षक &nbsp;&nbsp; (बी) शीर्षक और उपशीर्षक &nbsp;&nbsp; (सी) स्रोत नोट &nbsp;&nbsp; (D । उपरोक्त सभी</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-25')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-25">
+            <strong>Answer:</strong> (D । उपरोक्त सभी
+        </div>
+        
+        <div class="question">
+            <strong>Q26.</strong> data संग्रहण के दौरान होने वाली errorयाँ कहलाती हैं:
+            <div class="mcq-options">
+                <p>(ए) sampleकरण errorयां &nbsp;&nbsp; (बी) गैर-sample errorयाँ &nbsp;&nbsp; (सी) मानक errorयाँ &nbsp;&nbsp; (डी) systematic errorयाँ</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-26')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-26">
+            <strong>Answer:</strong> (बी) गैर-sample errorयाँ
+        </div>
+        
+        <div class="question">
+            <strong>Q27.</strong> अप्रकाशित data यहां पाया जा सकता है:
+            <div class="mcq-options">
+                <p>(ए) research पत्रिकाएँ &nbsp;&nbsp; (बी) सरकारी प्रकाशन &nbsp;&nbsp; (सी) आंतरिक कार्यालय रिकॉर्ड &nbsp;&nbsp; (डी) समाचार पत्र</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-27')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-27">
+            <strong>Answer:</strong> (सी) आंतरिक कार्यालय रिकॉर्ड
+        </div>
+        
+        <div class="question">
+            <strong>Q28.</strong> यह जांचना कि क्या 'बेटे की उम्र > पिता की उम्र' इसका हिस्सा है:
+            <div class="mcq-options">
+                <p>(ए) आंतरिक स्थिरता के लिए जांच &nbsp;&nbsp; (बी) tabulation &nbsp;&nbsp; (सी) data संग्रह &nbsp;&nbsp; (डी) sampleकरण</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-28')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-28">
+            <strong>Answer:</strong> (ए) आंतरिक स्थिरता के लिए जांच
+        </div>
+        
+        <div class="question">
+            <strong>Q29.</strong> एक फूल पर पंखुड़ियों की संख्या है:
+            <div class="mcq-options">
+                <p>(ए) सतत &nbsp;&nbsp; (बी) असतत &nbsp;&nbsp; (सी) qualitative &nbsp;&nbsp; (डी) नाममात्र</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-29')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-29">
+            <strong>Answer:</strong> (बी) असतत
+        </div>
+        
+        <div class="question">
+            <strong>Q30.</strong> Statistics statistical data और दोनों को संदर्भित करती है:
+            <div class="mcq-options">
+                <p>(ए) statistical तरीके &nbsp;&nbsp; (बी) statistical errorयाँ &nbsp;&nbsp; (सी) statistical सीमाएँ &nbsp;&nbsp; (डी) statistical सूत्र</p>
+            </div>
+        </div>
+        <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-30')">Show Answer ▼</button>
+        <div class="answer" id="mcq-hin-30">
+            <strong>Answer:</strong> (ए) statistical तरीके
+        </div>
+        </div>
+            </section>
+        </div>
+    
+        <div id="fib" class="topic-section">
+            <section class="section-card">
+                <div class="english-content">
+        <h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            Click <em>Show Answer</em> to reveal the correct word.
+        </p>
+    
+        <div class="question"><strong>Q1.</strong> The word 'Statistics' comes from the Latin word ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-1')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-1"><strong>Answer:</strong> Status</div>
+        
+        <div class="question"><strong>Q2.</strong> Data originally collected by the investigator is called ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-2')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-2"><strong>Answer:</strong> Primary</div>
+        
+        <div class="question"><strong>Q3.</strong> Data that has been previously collected and processed is ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-3')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-3"><strong>Answer:</strong> Secondary</div>
+        
+        <div class="question"><strong>Q4.</strong> Height of students in a class is a ____ variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-4')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-4"><strong>Answer:</strong> Continuous</div>
+        
+        <div class="question"><strong>Q5.</strong> Number of cars in a parking lot is a ____ variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-5')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-5"><strong>Answer:</strong> Discrete</div>
+        
+        <div class="question"><strong>Q6.</strong> Classification of data according to time is called ____ classification.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-6')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-6"><strong>Answer:</strong> Chronological</div>
+        
+        <div class="question"><strong>Q7.</strong> Classification based on attributes like gender or religion is ____ classification.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-7')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-7"><strong>Answer:</strong> Qualitative</div>
+        
+        <div class="question"><strong>Q8.</strong> Arranging data in systematic rows and columns is called ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-8')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-8"><strong>Answer:</strong> Tabulation</div>
+        
+        <div class="question"><strong>Q9.</strong> Statistics deals only with aggregates of facts, not with ____ individuals.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-9')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-9"><strong>Answer:</strong> Isolated</div>
+        
+        <div class="question"><strong>Q10.</strong> Statistical laws are true only on ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-10')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-10"><strong>Answer:</strong> Average</div>
+        
+        <div class="question"><strong>Q11.</strong> Blood type is an example of ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-11')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-11"><strong>Answer:</strong> Nominal</div>
+        
+        <div class="question"><strong>Q12.</strong> Letter grades (A, B, C) represent ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-12')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-12"><strong>Answer:</strong> Ordinal</div>
+        
+        <div class="question"><strong>Q13.</strong> Data collected across different locations at one point in time is ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-13')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-13"><strong>Answer:</strong> Cross-sectional</div>
+        
+        <div class="question"><strong>Q14.</strong> Checking raw data for errors and inconsistencies is called ____ of data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-14')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-14"><strong>Answer:</strong> Scrutiny</div>
+        
+        <div class="question"><strong>Q15.</strong> ____ is a major source of secondary data published by the Government of India.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-15')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-15"><strong>Answer:</strong> Census of India</div>
+        
+        <div class="question"><strong>Q16.</strong> Number of accidents on a highway is an example of a ____ variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-16')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-16"><strong>Answer:</strong> Discrete</div>
+        
+        <div class="question"><strong>Q17.</strong> The process of categorizing raw data into homogeneous groups is called ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-17')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-17"><strong>Answer:</strong> Classification</div>
+        
+        <div class="question"><strong>Q18.</strong> A qualitative characteristic, like honesty, is called an ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-18')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-18"><strong>Answer:</strong> Attribute</div>
+        
+        <div class="question"><strong>Q19.</strong> Yield of a crop in kg/hectare is a ____ variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-19')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-19"><strong>Answer:</strong> Continuous</div>
+        
+        <div class="question"><strong>Q20.</strong> Data used for the first time by its collector is called ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-20')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-20"><strong>Answer:</strong> Primary Data</div>
+        
+        <div class="question"><strong>Q21.</strong> A statistical table's column headings are also known as ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-21')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-21"><strong>Answer:</strong> Captions</div>
+        
+        <div class="question"><strong>Q22.</strong> The Italian word for statistics is ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-22')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-22"><strong>Answer:</strong> Statista</div>
+        
+        <div class="question"><strong>Q23.</strong> Data which cannot be quantified numerically is called ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-23')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-23"><strong>Answer:</strong> Qualitative</div>
+        
+        <div class="question"><strong>Q24.</strong> The process of verifying that the age of a son is not recorded as greater than his father's is checking for ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-24')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-24"><strong>Answer:</strong> Internal consistency</div>
+        
+        <div class="question"><strong>Q25.</strong> Information on population size is generally derived from ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-25')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-25"><strong>Answer:</strong> Census</div>
+        
+        <div class="question"><strong>Q26.</strong> Observations taken sequentially over time constitute a ____ series.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-26')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-26"><strong>Answer:</strong> Time</div>
+        
+        <div class="question"><strong>Q27.</strong> A variable that assumes only specific isolated values is ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-27')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-27"><strong>Answer:</strong> Discrete</div>
+        
+        <div class="question"><strong>Q28.</strong> The German word for statistics is ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-28')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-28"><strong>Answer:</strong> Statistik</div>
+        
+        <div class="question"><strong>Q29.</strong> When a researcher uses data from an RBI bulletin, they are using ____ data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-29')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-29"><strong>Answer:</strong> Secondary</div>
+        
+        <div class="question"><strong>Q30.</strong> Statistics is a science of making decisions in the face of ____.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-eng-30')">Show Answer ▼</button>
+        <div class="answer" id="fib-eng-30"><strong>Answer:</strong> Uncertainty</div>
+        </div>
+                <div class="hinglish-content" style="display:none;">
+        <h2><span class="section-num">✏️</span> Fill in the Blanks (रिक्त स्थान भरें) — 30 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            सही शब्द देखने के लिए <em>Show Answer</em> पर क्लिक करें।
+        </p>
+    
+        <div class="question"><strong>Q1.</strong> 'Statistics' शब्द लैटिन शब्द ____ से आया है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-1')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-1"><strong>Answer:</strong> स्थिति</div>
+        
+        <div class="question"><strong>Q2.</strong> मूल रूप से अन्वेषक द्वारा एकत्र किए गए data को ____ data कहा जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-2')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-2"><strong>Answer:</strong> primary</div>
+        
+        <div class="question"><strong>Q3.</strong> जो data पहले एकत्र और संसाधित किया गया है वह ____ data है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-3')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-3"><strong>Answer:</strong> meanमिक</div>
+        
+        <div class="question"><strong>Q4.</strong> एक कक्षा में छात्रों की ऊंचाई ____ variable होती है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-4')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-4"><strong>Answer:</strong> निरंतर</div>
+        
+        <div class="question"><strong>Q5.</strong> पार्किंग स्थल में कारों की संख्या ____ variable होती है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-5')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-5"><strong>Answer:</strong> अलग</div>
+        
+        <div class="question"><strong>Q6.</strong> समय के अनुसार data का classification ____ classification कहलाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-6')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-6"><strong>Answer:</strong> कालक्रमबद्ध</div>
+        
+        <div class="question"><strong>Q7.</strong> लिंग या धर्म जैसी attributes के आधार पर classification ____ classification है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-7')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-7"><strong>Answer:</strong> qualitative</div>
+        
+        <div class="question"><strong>Q8.</strong> data को systematic पंक्तियों और स्तंभों में systematic करना ____ कहलाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-8')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-8"><strong>Answer:</strong> तालिका बनाना</div>
+        
+        <div class="question"><strong>Q9.</strong> Statistics केवल facts के समुच्चय से associationित है, ____ व्यक्तियों से नहीं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-9')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-9"><strong>Answer:</strong> एकाकी</div>
+        
+        <div class="question"><strong>Q10.</strong> statistical कानून केवल ____ पर सत्य हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-10')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-10"><strong>Answer:</strong> average</div>
+        
+        <div class="question"><strong>Q11.</strong> रक्त प्रकार ____ data का एक example है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-11')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-11"><strong>Answer:</strong> नाममात्र</div>
+        
+        <div class="question"><strong>Q12.</strong> अक्षर ग्रेड (ए, बी, सी) ____ data का प्रतिनिधित्व करते हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-12')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-12"><strong>Answer:</strong> क्रमवाचक</div>
+        
+        <div class="question"><strong>Q13.</strong> एक समय में विभिन्न स्थानों से एकत्र किया गया data ____ data है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-13')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-13"><strong>Answer:</strong> क्रॉस-सेक्शनल</div>
+        
+        <div class="question"><strong>Q14.</strong> errors और विconsistencyयों के लिए कच्चे data की जाँच करना data का ____ कहलाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-14')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-14"><strong>Answer:</strong> जांच</div>
+        
+        <div class="question"><strong>Q15.</strong> ____ भारत सरकार द्वारा प्रकाशित secondary data का एक प्रमुख स्रोत है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-15')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-15"><strong>Answer:</strong> भारत की जनगणना</div>
+        
+        <div class="question"><strong>Q16.</strong> किसी राजमार्ग पर दुर्घटनाओं की संख्या ____ variable का एक example है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-16')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-16"><strong>Answer:</strong> अलग</div>
+        
+        <div class="question"><strong>Q17.</strong> कच्चे data को सजातीय समूहों में वर्गीकृत करने की process को ____ कहा जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-17')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-17"><strong>Answer:</strong> classification</div>
+        
+        <div class="question"><strong>Q18.</strong> ईमानदारी जैसी qualitative विशेषता को ____ कहा जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-18')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-18"><strong>Answer:</strong> attribute</div>
+        
+        <div class="question"><strong>Q19.</strong> किसी फसल की yield किग्रा/हेक्टेयर में एक ____ variable है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-19')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-19"><strong>Answer:</strong> निरंतर</div>
+        
+        <div class="question"><strong>Q20.</strong> इसके संग्राहक द्वारा पहली बार उपयोग किए गए data को ____ कहा जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-20')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-20"><strong>Answer:</strong> primary data</div>
+        
+        <div class="question"><strong>Q21.</strong> एक statistical तालिका के स्तंभ शीर्षकों को ____ के रूप में भी जाना जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-21')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-21"><strong>Answer:</strong> कैप्शन</div>
+        
+        <div class="question"><strong>Q22.</strong> Statistics के लिए इटालियन शब्द ____ है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-22')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-22"><strong>Answer:</strong> स्टेटिस्टा</div>
+        
+        <div class="question"><strong>Q23.</strong> वह data जिसे संख्यात्मक रूप से परिमाणित नहीं किया जा सकता, ____ data कहलाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-23')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-23"><strong>Answer:</strong> qualitative</div>
+        
+        <div class="question"><strong>Q24.</strong> यह सत्यापित करने की process कि बेटे की उम्र उसके पिता की उम्र से अधिक दर्ज नहीं की गई है, ____ की जाँच कर रही है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-24')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-24"><strong>Answer:</strong> आंतरिक field</div>
+        
+        <div class="question"><strong>Q25.</strong> population size की information आम तौर पर ____ से प्राप्त होती है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-25')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-25"><strong>Answer:</strong> जनगणना</div>
+        
+        <div class="question"><strong>Q26.</strong> समय के साथ क्रमिक रूप से लिए गए observation एक ____ श्रृंखला बनाते हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-26')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-26"><strong>Answer:</strong> समय</div>
+        
+        <div class="question"><strong>Q27.</strong> एक वेरिएबल जो केवल विशिष्ट पृथक मान मानता है ____ है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-27')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-27"><strong>Answer:</strong> अलग</div>
+        
+        <div class="question"><strong>Q28.</strong> Statistics के लिए जर्मन शब्द ____ है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-28')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-28"><strong>Answer:</strong> Statistics</div>
+        
+        <div class="question"><strong>Q29.</strong> जब कोई researcher आरबीआई बुलेटिन से data का उपयोग करता है, तो वे ____ data का उपयोग कर रहे होते हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-29')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-29"><strong>Answer:</strong> meanमिक</div>
+        
+        <div class="question"><strong>Q30.</strong> Statistics ____ के समक्ष decision लेने का science है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('fib-hin-30')">Show Answer ▼</button>
+        <div class="answer" id="fib-hin-30"><strong>Answer:</strong> अनिश्चितता</div>
+        </div>
+            </section>
+        </div>
+    
+        <div id="tf" class="topic-section">
+            <section class="section-card">
+                <div class="english-content">
+        <h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            Click <em>Show Answer</em> to reveal the correct statement.
+        </p>
+    
+        <div class="question"><strong>Q1.</strong> Statistics deals with isolated individual facts.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-1')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-1"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q2.</strong> Primary data is more reliable than secondary data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-2')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-2"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q3.</strong> Continuous data can take only integer values.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-3')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-3"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q4.</strong> Gender is an example of quantitative data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-4')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-4"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q5.</strong> Secondary data is data that has already been collected by someone else.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-5')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-5"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q6.</strong> Statistical laws are exact and universally true in every individual case.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-6')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-6"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q7.</strong> Classification must precede tabulation.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-7')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-7"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q8.</strong> Nominal data has a natural ordering.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-8')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-8"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q9.</strong> Time series data is collected at a single point in time.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-9')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-9"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q10.</strong> Number of leaves on a plant is a continuous variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-10')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-10"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q11.</strong> Scrutiny of data is done to detect recording errors and inconsistencies.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-11')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-11"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q12.</strong> Yield of wheat is a continuous variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-12')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-12"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q13.</strong> Qualitative data cannot be analyzed statistically without quantification.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-13')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-13"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q14.</strong> Statistics is useful in agriculture to evaluate fertilizer effects.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-14')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-14"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q15.</strong> A Census report is a primary source of data for a researcher using it.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-15')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-15"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q16.</strong> Cross-sectional data is collected from multiple entities at the same time.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-16')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-16"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q17.</strong> Ordinal data allows for ranking.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-17')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-17"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q18.</strong> Discrete variables can take any fractional value.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-18')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-18"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q19.</strong> Tabulation involves grouping data into classes.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-19')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-19"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q20.</strong> The word Statistics can mean both data and statistical methods.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-20')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-20"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q21.</strong> Height is a qualitative variable.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-21')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-21"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q22.</strong> The Italian origin of Statistics is 'Statistik'.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-22')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-22"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q23.</strong> Unpublished records can serve as secondary data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-23')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-23"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q24.</strong> An attribute is a measurable characteristic.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-24')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-24"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q25.</strong> The primary objective of scrutiny is to make data look better.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-25')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-25"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q26.</strong> Data collected via direct personal interview is primary data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-26')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-26"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q27.</strong> Statistics can be misused if analyzed by an untrained person.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-27')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-27"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q28.</strong> A statistical table must have a title.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-28')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-28"><strong>Answer:</strong> True</div>
+        
+        <div class="question"><strong>Q29.</strong> Age is an example of an attribute.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-29')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-29"><strong>Answer:</strong> False</div>
+        
+        <div class="question"><strong>Q30.</strong> Statistics provides 100% certainty in decision making.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-eng-30')">Show Answer ▼</button>
+        <div class="answer" id="tf-eng-30"><strong>Answer:</strong> False</div>
+        </div>
+                <div class="hinglish-content" style="display:none;">
+        <h2><span class="section-num">✅</span> True / False (सही/गलत) — 30 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            सही कथन देखने के लिए <em>Show Answer</em> पर क्लिक करें।
+        </p>
+    
+        <div class="question"><strong>Q1.</strong> Statistics अलग-अलग व्यक्तिगत facts से associationित है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-1')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-1"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q2.</strong> primary data secondary data की तुलना में अधिक विश्वसनीय होता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-2')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-2"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q3.</strong> सतत data केवल पूर्णांक मान ले सकता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-3')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-3"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q4.</strong> लिंग quantitative data का एक example है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-4')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-4"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q5.</strong> secondary data वह data है जो पहले ही किसी अन्य व्यक्ति द्वारा एकत्र किया जा चुका है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-5')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-5"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q6.</strong> statistical कानून प्रत्येक व्यक्तिगत मामले में सटीक और सार्वभौमिक रूप से सत्य हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-6')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-6"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q7.</strong> classification tabulation से पहले होना चाहिए।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-7')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-7"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q8.</strong> नाममात्र data में प्राकृतिक क्रम होता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-8')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-8"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q9.</strong> समय श्रृंखला data को समय में एक ही बिंदु पर एकत्र किया जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-9')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-9"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q10.</strong> किसी पौधे पर पत्तियों की संख्या निरंतर परिवर्तनशील होती है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-10')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-10"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q11.</strong> रिकॉर्डिंग errors और विconsistencyयों का पता लगाने के लिए data की जांच की जाती है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-11')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-11"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q12.</strong> गेहूँ की yield एक सतत परिवर्तनशील है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-12')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-12"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q13.</strong> qualitative data का परिमाणीकरण के बिना statistical रूप से analysis नहीं किया जा सकता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-13')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-13"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q14.</strong> उर्वरक प्रभावों का evaluation करने के लिए Statistics कृषि में उपयोगी है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-14')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-14"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q15.</strong> जनगणना रिपोर्ट इसका उपयोग करने वाले researcher के लिए data का primary स्रोत है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-15')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-15"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q16.</strong> क्रॉस-सेक्शनल data एक ही समय में कई संस्थाओं से एकत्र किया जाता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-16')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-16"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q17.</strong> सामान्य data रैंकिंग की अनुमति देता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-17')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-17"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q18.</strong> असतत variable कोई भी भिन्नात्मक मान ले सकते हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-18')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-18"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q19.</strong> tabulation में data को वर्गों में समूहित करना शामिल है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-19')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-19"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q20.</strong> Statistics शब्द का अर्थ data और statistical पद्धति दोनों हो सकता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-20')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-20"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q21.</strong> ऊंचाई एक qualitative variable है.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-21')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-21"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q22.</strong> Statistics का इतालवी मूल 'स्टेटिस्टिक' है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-22')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-22"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q23.</strong> अप्रकाशित रिकॉर्ड secondary data के रूप में काम कर सकते हैं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-23')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-23"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q24.</strong> एक विशेषता एक measurementे योग्य विशेषता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-24')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-24"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q25.</strong> जांच का primary उद्देश्य data को बेहतर दिखाना है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-25')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-25"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q26.</strong> प्रत्यक्ष व्यक्तिगत interview के meanम से एकत्र किया गया data primary data है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-26')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-26"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q27.</strong> किसी अप्रशिक्षित व्यक्ति से analysis कराने पर Statistics का दुरुपयोग हो सकता है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-27')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-27"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q28.</strong> एक statistical तालिका में एक शीर्षक होना चाहिए।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-28')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-28"><strong>Answer:</strong> सही (True)</div>
+        
+        <div class="question"><strong>Q29.</strong> आयु एक attribute का example है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-29')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-29"><strong>Answer:</strong> गलत (False)</div>
+        
+        <div class="question"><strong>Q30.</strong> Statistics decision लेने में 100% निश्चितता provide करती है।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('tf-hin-30')">Show Answer ▼</button>
+        <div class="answer" id="tf-hin-30"><strong>Answer:</strong> गलत (False)</div>
+        </div>
+            </section>
+        </div>
+    
+        <div id="subj" class="topic-section">
+            <section class="section-card">
+                <div class="english-content">
+        <h2><span class="section-num">📝</span> Subjective Questions — 20 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            Answer the following questions in detail. Think about the concepts and real-life examples before clicking <em>Show Answer</em>.
+        </p>
+    
+        <div class="question"><strong>Q1.</strong> Define Statistics and discuss its scope in Agriculture.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-1')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-1"><p>Statistics is the science of collecting, organizing, presenting, analyzing, and interpreting numerical data to make decisions under uncertainty. In Agriculture, it is used to evaluate the impact of different fertilizers, seed varieties, or farming practices through properly designed experiments.</p></div>
+        
+        <div class="question"><strong>Q2.</strong> Differentiate between Qualitative and Quantitative data with examples.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-2')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-2"><p>Qualitative data refers to attributes that cannot be measured numerically (e.g., eye color, gender, religion). Quantitative data refers to measurable quantities that can be expressed numerically (e.g., height, weight, crop yield).</p></div>
+        
+        <div class="question"><strong>Q3.</strong> What is the difference between Discrete and Continuous variables? Give two examples of each.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-3')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-3"><p>A discrete variable can only take specific, whole values (e.g., number of students, number of cars). A continuous variable can take any value within a range, including decimals (e.g., temperature, weight of a person).</p></div>
+        
+        <div class="question"><strong>Q4.</strong> Explain the difference between Primary and Secondary data. State two sources of Secondary data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-4')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-4"><p>Primary data is fresh data collected for the first time by a researcher. Secondary data is data already collected by someone else. Sources of secondary data include government census reports and hospital records.</p></div>
+        
+        <div class="question"><strong>Q5.</strong> Discuss the limitations of Statistics.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-5')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-5"><p>Limitations include: 1) It only deals with numbers. 2) It studies groups, not single individuals. 3) Its rules are true only on average. 4) It can be misused by people who do not understand it well.</p></div>
+        
+        <div class="question"><strong>Q6.</strong> What do you mean by scrutiny of data? Why is it necessary?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-6')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-6"><p>Scrutiny of data means checking raw data carefully for mistakes and missing details. It is necessary to fix errors early so that the final analysis is correct and reliable.</p></div>
+        
+        <div class="question"><strong>Q7.</strong> Explain Nominal and Ordinal data with examples.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-7')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-7"><p>Nominal data has no logical order (e.g., blood groups: A, B, O). Ordinal data has a clear order or rank (e.g., grades: A, B, C, or satisfaction: Low, Medium, High).</p></div>
+        
+        <div class="question"><strong>Q8.</strong> Define Time Series Data and Cross-Sectional Data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-8')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-8"><p>Time Series data is collected over different time periods (e.g., monthly rainfall in 2023). Cross-Sectional data is collected at a single point in time from different groups (e.g., height of all students in class today).</p></div>
+        
+        <div class="question"><strong>Q9.</strong> Describe the process of Tabulation. What are its main components?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-9')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-9"><p>Tabulation is arranging data neatly into rows and columns. A good table has a table number, a title, column headings, row headings, the main body of numbers, and a source note.</p></div>
+        
+        <div class="question"><strong>Q10.</strong> How is statistics useful in State Administration?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-10')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-10"><p>Governments use statistics to make good plans. They look at data on population, jobs, and income to build roads, schools, and hospitals where they are needed most.</p></div>
+        
+        <div class="question"><strong>Q11.</strong> A researcher wants to study the impact of a new teaching method. Should they use primary or secondary data? Justify your answer.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-11')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-11"><p>They should use primary data. Since the teaching method is new, there is no old data available. The researcher must collect fresh data directly from the students to see if it works.</p></div>
+        
+        <div class="question"><strong>Q12.</strong> Identify the type of data for the following: a) Temperature b) Marital status c) Ranking of players d) Number of cars produced.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-12')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-12"><p>a) Continuous Quantitative b) Qualitative (Nominal) c) Qualitative (Ordinal) d) Discrete Quantitative.</p></div>
+        
+        <div class="question"><strong>Q13.</strong> Why is it said that 'Statistics deals with aggregates of facts'?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-13')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-13"><p>Because a single number tells us very little. We cannot compare one person's height. But if we have the heights of all students in a class, we can find the average and compare them. This group of numbers is an aggregate.</p></div>
+        
+        <div class="question"><strong>Q14.</strong> What are internal consistencies during data scrutiny? Give an example.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-14')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-14"><p>Internal consistency checks if two related answers make sense together. For example, if a form says a person is 10 years old and has been married for 5 years, it is a clear mistake. They do not match.</p></div>
+        
+        <div class="question"><strong>Q15.</strong> Can qualitative attributes be subjected to statistical analysis? If so, how?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-15')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-15"><p>Yes. We can count how many people fit into each category. For example, we can count how many people have brown eyes or blue eyes. We can also assign numbers, like 1 for Yes and 0 for No.</p></div>
+        
+        <div class="question"><strong>Q16.</strong> A government publication provides the agricultural yield data of a state for the last 10 years. What type of data is this for a researcher analyzing it?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-16')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-16"><p>For the researcher, this is Secondary data because the government already collected it. It is also Time Series data because it covers 10 years.</p></div>
+        
+        <div class="question"><strong>Q17.</strong> What is meant by the 'misuse of statistics'?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-17')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-17"><p>Misuse happens when people change numbers or show only half the truth to prove their point. For example, a company might show a graph that makes a tiny increase in sales look like a huge jump.</p></div>
+        
+        <div class="question"><strong>Q18.</strong> List three methods of collecting primary data.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-18')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-18"><p>1) Direct personal interviews. 2) Telephone surveys. 3) Questionnaires filled out by the public.</p></div>
+        
+        <div class="question"><strong>Q19.</strong> Distinguish between Classification and Tabulation.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-19')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-19"><p>Classification is sorting data into groups based on their similarities (like sorting boys and girls). Tabulation is putting those sorted groups neatly into a table with rows and columns.</p></div>
+        
+        <div class="question"><strong>Q20.</strong> Why is the concept of 'uncertainty' central to the definition of statistics?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-eng-20')">Show Answer ▼</button>
+        <div class="answer" id="subj-eng-20"><p>In real life, we cannot check everyone or everything. We only check a sample. Because we do not check everything, we are never 100% sure. Statistics gives us tools to guess the correct answer and know how much error might be there.</p></div>
+        </div>
+                <div class="hinglish-content" style="display:none;">
+        <h2><span class="section-num">📝</span> Subjective Questions (विषयपरक प्रश्न) — 20 Questions</h2>
+        <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+            निम्नलिखित प्रश्नों के उत्तर विस्तार से दें। <em>Show Answer</em> पर क्लिक करने से पहले Concepts और वास्तविक जीवन के उदाहरणों के बारे में सोचें।
+        </p>
+    
+        <div class="question"><strong>Q1.</strong> Statistics को परिभाषित करें और कृषि में इसके दायरे पर variable्चा करें।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-1')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-1"><p>Statistics अनिश्चितता के तहत decision लेने के लिए संख्यात्मक data एकत्र करने, systematic करने, प्रस्तुत करने, analysis करने और व्याख्या करने का science है। कृषि में, इसका उपयोग उचित रूप से design किए गए प्रयोगों के meanम से विभिन्न उर्वरकों, बीज किस्मों या कृषि पद्धतियों के प्रभाव का evaluation करने के लिए किया जाता है।</p></div>
+        
+        <div class="question"><strong>Q2.</strong> example सहित qualitative और quantitative data के बीच अंतर बताएं।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-2')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-2"><p>qualitative data उन attributes को संदर्भित करता है जिन्हें संख्यात्मक रूप से नहीं मापा जा सकता है (example के लिए, आंखों का रंग, लिंग, धर्म)। quantitative data measurementे योग्य मात्रा को संदर्भित करता है जिसे संख्यात्मक रूप से व्यक्त किया जा सकता है (जैसे, ऊंचाई, वजन, फसल की yield)।</p></div>
+        
+        <div class="question"><strong>Q3.</strong> असतत और सतत variable के बीच क्या अंतर है? प्रत्येक के दो example दीजिए।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-3')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-3"><p>एक असतत variable केवल विशिष्ट, संपूर्ण मान (जैसे, छात्रों की संख्या, कारों की संख्या) ले सकता है। एक सतत variable एक सीमा के भीतर कोई भी मान ले सकता है, जिसमें दशमलव (जैसे, तापमान, किसी व्यक्ति का वजन) शामिल है।</p></div>
+        
+        <div class="question"><strong>Q4.</strong> primary और secondary data के बीच अंतर स्पष्ट करें। secondary data के दो स्रोत बताइये।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-4')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-4"><p>primary data एक researcher द्वारा पहली बार एकत्र किया गया ताजा data है। secondary data वह data है जो पहले से ही किसी अन्य व्यक्ति द्वारा एकत्र किया गया है। secondary data के स्रोतों में सरकारी जनगणना रिपोर्ट और अस्पताल के रिकॉर्ड शामिल हैं।</p></div>
+        
+        <div class="question"><strong>Q5.</strong> Statistics की सीमाओं पर variable्चा करें।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-5')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-5"><p>सीमाओं में शामिल हैं: 1) यह केवल संख्याओं से associationित है। 2) यह समूहों का अध्ययन करता है, एकल व्यक्तियों का नहीं। 3) इसके नियम averageन ही सही होते हैं. 4) इसका दुरुपयोग उन लोगों द्वारा किया जा सकता है जो इसे अच्छी तरह से नहीं समझते हैं।</p></div>
+        
+        <div class="question"><strong>Q6.</strong> data की जांच से आपका क्या मतलब है? यह क्यों आवश्यक है?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-6')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-6"><p>data की जांच का अर्थ है गलतियों और गायब विवरणों के लिए कच्चे data की सावधानीपूर्वक जांच करना। errors को शीघ्र ठीक करना आवश्यक है ताकि अंतिम analysis सही और विश्वसनीय हो।</p></div>
+        
+        <div class="question"><strong>Q7.</strong> नाममात्र और क्रमवाचक data को example सहित समझाइए।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-7')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-7"><p>नाममात्र data का कोई तार्किक क्रम नहीं है (example के लिए, रक्त समूह: ए, बी, ओ)। सामान्य data में एक स्पष्ट क्रम या रैंक होता है (example के लिए, ग्रेड: ए, बी, सी, या संतुष्टि: निम्न, मध्यम, उच्च)।</p></div>
+        
+        <div class="question"><strong>Q8.</strong> समय श्रृंखला data और क्रॉस-अनुभागीय data को परिभाषित करें।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-8')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-8"><p>समय श्रृंखला data अलग-अलग समय अवधि (example के लिए, 2023 में मासिक वर्षा) में एकत्र किया जाता है। क्रॉस-सेक्शनल data विभिन्न समूहों से एक ही समय में एकत्र किया जाता है (example के लिए, आज कक्षा में सभी छात्रों की ऊंचाई)।</p></div>
+        
+        <div class="question"><strong>Q9.</strong> tabulation की process का वर्णन करें। इसके मुख्य घटक क्या हैं?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-9')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-9"><p>tabulation data को पंक्तियों और स्तंभों में बड़े करीने से systematic करना है। एक अच्छी तालिका में एक तालिका संख्या, एक शीर्षक, स्तंभ शीर्षक, पंक्ति शीर्षक, संख्याओं का मुख्य भाग और एक स्रोत नोट होता है।</p></div>
+        
+        <div class="question"><strong>Q10.</strong> राज्य प्रशासन में Statistics किस प्रकार उपयोगी है?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-10')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-10"><p>सरकारें अच्छी योजनाएँ बनाने के लिए आँकड़ों का उपयोग करती हैं। वे सड़कें, स्कूल और अस्पताल बनाने के लिए population , नौकरियों और आय के data को देखते हैं जहां उनकी सबसे ज्यादा जरूरत होती है।</p></div>
+        
+        <div class="question"><strong>Q11.</strong> एक researcher एक नई शिक्षण पद्धति के प्रभाव का अध्ययन करना चाहता है। क्या उन्हें primary या secondary data का उपयोग करना चाहिए? अपने उत्तर का औचित्य सिद्ध करें।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-11')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-11"><p>उन्हें primary data का उपयोग करना चाहिए. चूंकि शिक्षण पद्धति नई है, इसलिए कोई पुराना data उपलब्ध नहीं है। यह देखने के लिए कि क्या यह काम करता है, researcher को सीधे छात्रों से ताज़ा data एकत्र करना चाहिए।</p></div>
+        
+        <div class="question"><strong>Q12.</strong> निम्नलिखित के लिए data के प्रकार की पहचान करें: ए) तापमान बी) वैवाहिक स्थिति सी) खिलाड़ियों की रैंकिंग डी) उत्पादित कारों की संख्या।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-12')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-12"><p>ए) सतत quantitative बी) qualitative (नाममात्र) सी) qualitative (क्रमिक) डी) असतत quantitative ।</p></div>
+        
+        <div class="question"><strong>Q13.</strong> ऐसा क्यों कहा जाता है कि 'Statistics facts के समुच्चय से associationित है'?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-13')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-13"><p>क्योंकि एक संख्या हमें बहुत कम बताती है। हम किसी एक व्यक्ति की ऊंचाई की तुलना नहीं कर सकते. लेकिन यदि हमारे पास कक्षा के सभी विद्यार्थियों की लंबाई है, तो हम average ज्ञात कर सकते हैं और उनकी तुलना कर सकते हैं। संख्याओं का यह समूह एक समुच्चय है।</p></div>
+        
+        <div class="question"><strong>Q14.</strong> data जांच के दौरान आंतरिक स्थिरता क्या हैं? एक example दीजिए.</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-14')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-14"><p>आंतरिक स्थिरता जाँचती है कि क्या दो associationित उत्तर एक साथ समझ में आते हैं। example के लिए, यदि किसी फॉर्म में कहा गया है कि कोई व्यक्ति 10 साल का है और उसकी शादी को 5 साल हो गए हैं, तो यह एक स्पष्ट गलती है। वे मेल नहीं खाते.</p></div>
+        
+        <div class="question"><strong>Q15.</strong> क्या qualitative attributes को statistical analysis के अधीन किया जा सकता है? यदि हां, तो कैसे?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-15')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-15"><p>हाँ। हम गिन सकते हैं कि प्रत्येक श्रेणी में कितने लोग फिट बैठते हैं। example के लिए, हम गिन सकते हैं कि कितने लोगों की आंखें भूरी या नीली हैं। हम संख्याएँ भी निर्दिष्ट कर सकते हैं, जैसे हाँ के लिए 1 और नहीं के लिए 0।</p></div>
+        
+        <div class="question"><strong>Q16.</strong> एक सरकारी प्रकाशन पिछले 10 वर्षों के लिए एक राज्य की कृषि yield का data provide करता है। इसका analysis करने वाले researcher के लिए यह किस प्रकार का data है?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-16')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-16"><p>researcher के लिए, यह secondary data है क्योंकि सरकार ने इसे पहले ही एकत्र कर लिया है। यह टाइम सीरीज़ data भी है क्योंकि इसमें 10 साल शामिल हैं।</p></div>
+        
+        <div class="question"><strong>Q17.</strong> 'Statistics के दुरुपयोग' से क्या तात्पर्य है?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-17')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-17"><p>दुरुपयोग तब होता है जब लोग अपनी बात साबित करने के लिए data बदल देते हैं या आधा सच ही दिखा देते हैं। example के लिए, कोई कंपनी एक graph़ दिखा सकती है जो बिक्री में थोड़ी सी वृद्धि को एक बड़ी छलांग की तरह दिखाता है।</p></div>
+        
+        <div class="question"><strong>Q18.</strong> primary data एकत्र करने की तीन methodयाँ सूचीबद्ध करें।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-18')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-18"><p>1) प्रत्यक्ष व्यक्तिगत interview । 2) टेलीफोन survey . 3) जनता द्वारा भरी गई questionnaire ।</p></div>
+        
+        <div class="question"><strong>Q19.</strong> classification और tabulation के बीच अंतर बताइये।</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-19')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-19"><p>classification data को उनकी समानता के आधार पर समूहों में क्रमबद्ध करना है (जैसे लड़कों और लड़कियों को क्रमबद्ध करना)। tabulation उन क्रमबद्ध समूहों को पंक्तियों और स्तंभों के साथ एक तालिका में बड़े करीने से रखना है।</p></div>
+        
+        <div class="question"><strong>Q20.</strong> Statistics की परिभाषा में 'अनिश्चितता' की अवधारणा केंद्रीय क्यों है?</div>
+        <button class="toggle-btn" onclick="toggleAnswer('subj-hin-20')">Show Answer ▼</button>
+        <div class="answer" id="subj-hin-20"><p>वास्तविक जीवन में, हम हर किसी या हर चीज़ की जाँच नहीं कर सकते। हम केवल एक sample जांचते हैं। चूँकि हम हर चीज़ की जाँच नहीं करते हैं, हम कभी भी 100% निश्चित नहीं होते हैं। Statistics हमें सही उत्तर का estimation लगाने और यह जानने के लिए उपकरण provide करती है कि कितनी error हो सकती है।</p></div>
+        </div>
+            </section>
+        </div>
+    
+
+    </main>
+
+    <script>
+        // Ensure ONLY the selected section is active to prevent blank screens
+        document.addEventListener('DOMContentLoaded', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash && document.getElementById(hash)) {
+                showTopic(hash);
+            } else {
+                showTopic('introduction');
+            }
+        });
+
+        let isHinglish = false;
+        function toggleLanguage() {
+            isHinglish = !isHinglish;
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+
+            if (isHinglish) {
+                btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+            } else {
+                btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+            }
+        }
+
+        function showTopic(id) {
+            document.querySelectorAll('.topic-section').forEach(el => {
+                el.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-link').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            const targetSection = document.getElementById(id);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // Fixed the active link selector to avoid crashes
+            const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            window.scrollTo(0,0);
+            
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+            
+            // update history state without jumping
+            history.replaceState(null, null, '#' + id);
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        /* ── TOGGLE ANSWER LOGIC FROM STAT-102 ───────────────────────── */
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            const btn = event.target;
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                btn.innerHTML = 'Show Answer ▼';
+            } else {
+                answer.classList.add('show');
+                btn.innerHTML = 'Hide Answer ▲';
+            }
+        }
+    </script>
+    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+</body>
+</html>
