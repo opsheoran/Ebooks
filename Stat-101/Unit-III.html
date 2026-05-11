@@ -9,10 +9,10 @@
     <!-- MathJax -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-
+    
     <link rel="stylesheet" href="../common_style.css">
     <link rel="stylesheet" href="stat101_style.css">
     <link rel="stylesheet" href="../whiteboard/whiteboard.css">
@@ -33,14 +33,14 @@
 </head>
 <body>
     <header class="book-header">
-        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>  
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
         <div class="header-icon">📉</div>
         <div class="header-text">
             <h1>Statistical Methods-I</h1>
             <div class="subtitle">UNIT III · DISPERSION & MOMENTS</div>
         </div>
         <div class="header-badge">Prof. O.P. Sheoran</div>
-        <button class="draw-mode-toggle" id="draw-mode-btn"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>       
+        <button class="draw-mode-toggle" id="draw-mode-btn"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>
     </header>
 
     <nav class="sidebar" id="sidebar">
@@ -55,13 +55,13 @@
             </div>
         </div>
 
-        <div class="nav-group-label" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="var ul = this.nextElementSibling; if(ul.style.display === 'none') { ul.style.display = 'block'; this.querySelector('i').className = 'fas fa-chevron-down'; } else { ul.style.display = 'none'; this.querySelector('i').className = 'fas fa-chevron-right'; }">Navigation <i class="fas fa-chevron-down" style="font-size: 0.8rem; opacity: 0.7;"></i></div>
+        <div class="nav-group-label">Navigation</div>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;"><span class="nav-num">🏠</span> Course Home</a></li>
             <li class="nav-item"><a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 5px;"><span class="nav-num">📚</span> Back to Library</a></li>
         </ul>
 
-        <div class="nav-group-label" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="var ul = this.nextElementSibling; if(ul.style.display === 'none') { ul.style.display = 'block'; this.querySelector('i').className = 'fas fa-chevron-down'; } else { ul.style.display = 'none'; this.querySelector('i').className = 'fas fa-chevron-right'; }">Theory Topics <i class="fas fa-chevron-down" style="font-size: 0.8rem; opacity: 0.7;"></i></div>
+        <div class="nav-group-label">Theory Topics</div>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link" href="#introduction" onclick="showTopic('introduction');return false;"><span class="nav-num">3.1</span> INTRODUCTION</a></li>
             <li class="nav-item"><a class="nav-link" href="#characteristics" onclick="showTopic('characteristics');return false;"><span class="nav-num">3.2</span> Characteristics of a Good Measure of Dispersion</a></li>
@@ -76,8 +76,8 @@
             <li class="nav-item"><a class="nav-link" href="#effect-origin-scale" onclick="showTopic('effect-origin-scale');return false;"><span class="nav-num">3.11</span> Effect of Change of Origin and Scale</a></li>
             <li class="nav-item"><a class="nav-link" href="#advanced-topics" onclick="showTopic('advanced-topics');return false;"><span class="nav-num">3.12</span> Advanced Topics in Dispersion</a></li>
         </ul>
-
-        <div class="nav-group-label" style="cursor: pointer; display: flex; justify-content: space-between; align-items: center;" onclick="var ul = this.nextElementSibling; if(ul.style.display === 'none') { ul.style.display = 'block'; this.querySelector('i').className = 'fas fa-chevron-down'; } else { ul.style.display = 'none'; this.querySelector('i').className = 'fas fa-chevron-right'; }">Practice Exercises <i class="fas fa-chevron-down" style="font-size: 0.8rem; opacity: 0.7;"></i></div>
+        
+        <div class="nav-group-label">Practice Exercises</div>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link" href="#mcq" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> Multiple Choice</a></li>
             <li class="nav-item"><a class="nav-link" href="#fib" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks</a></li>
@@ -97,14 +97,10 @@
                 <strong>Syllabus:</strong> Measures of Dispersion. Moments. Sheppard's correction for moments. Charlier's checks.
             </div>
         </div>
-      <section class="section" id="sec1">
-        <div class="head">
-          <div class="num">1</div>
-          <div class="title-group">
-            <h2 class="title english-content">Introduction</h2>
-            <h2 class="title hinglish-content" style="display: none;">Introduction</h2>
-          </div>
-        </div>
+      <div class="topic-section active" id="introduction">
+      <section class="section-card">
+            <h2 class="english-content">3.1 INTRODUCTION</h2>
+            <h2 class="hinglish-content" style="display: none;">3.1 परिचय</h2>
         <div class="body">
           <p class="english-content">
             The measures of central tendency serve to locate the center of the distribution, but they do not reveal how the items are spread out on either side of the center. This characteristic of a frequency distribution is commonly referred to as <strong>dispersion</strong>. In any series, all the items are not equal; there is a difference or variation among the values. The degree of this variation is evaluated by various measures of dispersion. Small dispersion indicates high uniformity of the items, while large dispersion indicates less uniformity.
@@ -202,14 +198,16 @@
           </div>
         </div>
       </section>
-      <section class="section" id="sec2">
-        <div class="head">
-          <div class="num">2</div>
-          <div class="title-group">
-            <h2 class="title english-content">Characteristics of a Good Measure of Dispersion</h2>
-            <h2 class="title hinglish-content" style="display: none;">Characteristics of a Good Measure of Dispersion</h2>
-          </div>
+      </div>
+      
         </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="characteristics">
+      <section class="section-card">
+            <h2 class="english-content">3.2 Characteristics of a Good Measure of Dispersion</h2>
+            <h2 class="hinglish-content" style="display: none;">3.2 Characteristics of a Good Measure of Dispersion</h2>
         <div class="body">
           <p class="english-content">
             An ideal dispersion statistic should possess the same properties required of an ideal measure of central tendency. Specifically, it should:
@@ -234,16 +232,15 @@
         </div>
       </section>
       </div>
-      <div class="topic-section" id="absolute-relative">
-      <section class="section-card">
-        <div class="head">
-          <div class="num">3</div>
-          <div class="title-group">
-            <h2 class="title english-content">3.3 Absolute and Relative Measures</h2>
-            <h2 class="title hinglish-content" style="display: none;">3.3 Absolute and Relative Measures</h2>
-            <h3 class="subtitle">Understanding the two types of dispersion measures</h3>
-          </div>
+      
         </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="absolute-relative">
+      <section class="section-card">
+            <h2 class="english-content">3.3 Absolute and Relative Measures</h2>
+            <h2 class="hinglish-content" style="display: none;">3.3 Absolute and Relative Measures</h2>
         <div class="body">
           <p class="english-content">There are two kinds of measures of dispersion, namely:</p>
           <p class="hinglish-content" style="display: none;">Dispersion के measures दो प्रकार के होते हैं, अर्थात्:</p>
@@ -297,17 +294,17 @@
           </table>
         </div>
       </section>
-  <section class="section" id="sec4">
-    <div class="head">
-      <div class="num">4</div>
-      <div class="title-group">
-        <h2 class="title english-content">Range and Coefficient of Range</h2>
-        <h2 class="title hinglish-content" style="display: none;">Range and Coefficient of Range</h2>
-        <h3 class="subtitle english-content">The simplest measure of dispersion</h3>
-        <h3 class="subtitle hinglish-content" style="display: none;">The simplest measure of dispersion</h3>
       </div>
+      
+        </div>
+      </section>
     </div>
-    <div class="body">
+
+<div class="topic-section" id="range">
+      <section class="section-card">
+            <h2 class="english-content">3.4 Range and Coefficient of Range</h2>
+            <h2 class="hinglish-content" style="display: none;">3.4 Range and Coefficient of Range</h2>
+        <div class="body">
       <h3 class="english-content">Range</h3>
       <h3 class="hinglish-content" style="display: none;">Range</h3>
       <p class="english-content">
@@ -392,14 +389,16 @@
       </div>
     </div>
   </section>
-  <section class="section" id="sec5">
-    <div class="head">
-      <div class="num">5</div>
-      <div class="title-group">
-        <h2 class="title">Quartile Deviation and Coefficient of Quartile Deviation</h2>
-        <h3 class="subtitle">A measure based on inner quartiles</h3>
       </div>
+      
+        </div>
+      </section>
     </div>
+
+<div class="topic-section" id="quartile-deviation">
+  <section class="section-card">
+    <h2 class="english-content">3.5 Quartile Deviation and Coefficient of Quartile Deviation</h2>
+    <h2 class="hinglish-content" style="display: none;">3.5 Quartile Deviation and Coefficient of Quartile Deviation</h2>
     <div class="body">
       <h3>Quartile Deviation (Q.D.)</h3>
       <p>
@@ -664,16 +663,16 @@
       </div>
     </div>
   </section>
-  <section class="section" id="sec6">
-    <div class="head">
-      <div class="num">6</div>
-      <div class="title-group">
-        <h2 class="title english-content">Mean Deviation and Coefficient of Mean Deviation</h2>
-        <h2 class="title hinglish-content" style="display: none;">Mean Deviation and Coefficient of Mean Deviation</h2>
-        <h3 class="subtitle english-content">A measure based on all observations</h3>
-        <h3 class="subtitle hinglish-content" style="display: none;">A measure based on all observations</h3>
       </div>
+      
+        </div>
+      </section>
     </div>
+
+<div class="topic-section" id="mean-deviation">
+  <section class="section-card">
+    <h2 class="english-content">3.6 Mean Deviation and Coefficient of Mean Deviation</h2>
+    <h2 class="hinglish-content" style="display: none;">3.6 Mean Deviation and Coefficient of Mean Deviation</h2>
     <div class="body">
       <h3 class="english-content">Definition</h3>
       <h3 class="hinglish-content" style="display: none;">Definition</h3>
@@ -1237,14 +1236,16 @@
       </ul>
     </div>
   </section>
-  <section class="section" id="sec7">
-    <div class="head">
-      <div class="num">7</div>
-      <div class="title-group">
-        <h2 class="title">Standard Deviation, Variance and Coefficient of Variation</h2>
-        <h3 class="subtitle">The most important measure of dispersion</h3>
       </div>
+      
+        </div>
+      </section>
     </div>
+
+<div class="topic-section" id="standard-deviation">
+  <section class="section-card">
+    <h2 class="english-content">3.7 Standard Deviation, Variance and Coefficient of Variation</h2>
+    <h2 class="hinglish-content" style="display: none;">3.7 Standard Deviation, Variance and Coefficient of Variation</h2>
     <div class="body">
       <h3>Standard Deviation</h3>
       <p>
@@ -1628,15 +1629,13 @@
       </div>
     </div>
   </section>
-<section id="standard-deviation-properties" class="section">
-  <div class="head">
-    <div class="num">8</div>
-    <div class="title-group">
-      <h2 class="title">Additional Notes on Properties of Standard Deviations</h2>
+      </div>
+      
+        </div>
+      </section>
     </div>
-  </div>
 
-  <div class="body">
+<div class="topic-section" id="standard-deviation-properties"><section class="section-card"><h2 class="english-content">3.8 Properties of Standard Deviations</h2><div class="body">
     <section id="change-of-origin" class="subsection">
       <h3>A. Change of Origin</h3>
       <p>When we add a constant to all observations, the standard deviation remains unchanged.</p>
@@ -1764,16 +1763,16 @@
     </section>
     </div>
   </section>
-  </div>
+      </div>
+      
+        </div>
+      </section>
+    </div>
 
 <div class="topic-section" id="moments">
 <section class="section-card">
-  <div class="head">
-    <div class="num">9</div>
-    <div class="title-group">
-      <h2 class="title">3.9 Moments and its Properties</h2>
-    </div>
-  </div>
+    <h2 class="english-content">3.9 Moments and its Properties</h2>
+    <h2 class="hinglish-content" style="display: none;">3.9 Moments और इसके Properties</h2>
 
   <div class="body">
     <section id="raw-moments" class="subsection">
@@ -1971,16 +1970,13 @@
 
   </div>
 </section>
-</div>
-<div class="topic-section" id="variance-formulas">
-<section class="section-card">
-<div class="head">
-  <div class="num">10</div>
-  <div class="title-group">
-    <h2 class="title">3.10 Different Formulas for Calculating Variance</h2>
-  </div>
-</div>
-    <div class="body">
+      </div>
+      
+        </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="variance-formulas"><section class="section-card"><h2 class="english-content">3.10 Different Formulas for Calculating Variance</h2><div class="body">
       <p>
         Variance, denoted as \(\sigma_x^2\), quantifies the average squared deviation from the mean. The definitional formula is:
       </p>
@@ -2023,15 +2019,13 @@
       </p>
     </div>
   </section>
-
-  <section class="section" id="sec11_alt">
-    <div class="head">
-      <div class="num">11</div>
-      <div class="title-group">
-        <h2 class="title">Variance and Standard Deviation: Effect of Change of Origin and Scale</h2>
       </div>
+      
+        </div>
+      </section>
     </div>
-    <div class="body">
+
+<div class="topic-section" id="effect-origin-scale"><section class="section-card"><h2 class="english-content">3.11 Effect of Change of Origin and Scale</h2><div class="body">
       <p>
         Variance and, consequently, standard deviation exhibit specific behaviors when data undergoes a change of origin (shifting the data) or a change of scale (scaling the data).
       </p>
@@ -2204,15 +2198,13 @@
       </div>
     </div>
   </section>
-
-  <section class="section" id="sec12_alt">
-    <div class="head">
-      <div class="num">12</div>
-      <div class="title-group">
-        <h2 class="title">Advanced Topics in Dispersion</h2>
       </div>
+      
+        </div>
+      </section>
     </div>
-    <div class="body">
+
+<div class="topic-section" id="advanced-topics"><section class="section-card"><h2 class="english-content">3.12 Advanced Topics in Dispersion</h2><div class="body">
       <div class="example">
         <h4>Example: Relationship Between Standard Deviation and Mean Deviation</h4>
         <p><strong>Problem:</strong> Prove that for any discrete distribution, the standard deviation is not less than the mean deviation from the mean.</p>
@@ -2681,16 +2673,15 @@
       </div>
     </div>
   </section>
-<section class="section" id="exercises">
-                <div class="head">
-                    <div class="num">13</div>
-                    <div class="title-group">
-                        <h2 class="title">Exercises</h2>
-                        <h3 class="subtitle">Test your knowledge on Measures of Dispersion</h3>
-                    </div>
-                </div>
-                <div class="body">
-                    <h3>13.1 Multiple Choice Questions (MCQ)</h3>
+
+                    </div></section>
+      </div>
+      
+        </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="mcq"><section class="section-card"><h2 class="english-content"><span class="section-num">❓</span> Multiple Choice Questions</h2><div class="body">
                     <ol class="mcq">
                         <li>Which of the following is an absolute measure of dispersion?
                             <div class="option-group"><div>A) Coefficient of Variation</div><div>B) Coefficient of Range</div><div>C) Standard Deviation</div><div>D) Coefficient of Q.D.</div></div>
@@ -2784,7 +2775,14 @@
                         </li>
                     </ol>
 
-                    <h3>13.2 Fill in the Blanks</h3>
+                    </div></section>
+      </div>
+      
+        </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="fib"><section class="section-card"><h2 class="english-content"><span class="section-num">✏️</span> Fill in the Blanks</h2><div class="body">
                     <ol class="fill-in">
                         <li>Dispersion reveals how the items are _________ around the center.</li>
                         <li>The simplest measure of dispersion is the _________.</li>
@@ -2818,7 +2816,14 @@
                         <li>If all observations are identical (e.g., 8, 8, 8, 8), the variance is _________.</li>
                     </ol>
 
-                    <h3>13.3 True or False</h3>
+                    </div></section>
+      </div>
+      
+        </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="tf"><section class="section-card"><h2 class="english-content"><span class="section-num">✅</span> True or False</h2><div class="body">
                     <ol class="true-false">
                         <li>Measures of central tendency alone fully reveal how items are spread out.</li>
                         <li>Mean Deviation is always computed exclusively from the mean.</li>
@@ -2896,7 +2901,14 @@
                         </div>
                     </div>
 
-                    <h3>13.4 Subjective Questions</h3>
+                    </div></section>
+      </div>
+      
+        </div>
+      </section>
+    </div>
+
+<div class="topic-section" id="subj"><section class="section-card"><h2 class="english-content"><span class="section-num">📝</span> Subjective Questions</h2><div class="body">
                     <div class="subjective">
                         <ol>
                             <li>Define dispersion and explain why measures of central tendency are insufficient alone to describe agricultural data in Haryana.
@@ -3019,131 +3031,128 @@
                                 <button class="get-solution-btn" data-question-id="subj-30">Get Solution</button>
                                 <div class="solution" id="solution-subj-30"></div>
                             </li>
-                        </ol>
-                    </div>
-
-                    <div class="custom-question-container" style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid #ddd;">
-                        <h3>Solve Your Own Question</h3>
-                        <p>Enter any question related to Measures of Dispersion.</p>
-                        <textarea id="custom-question" style="width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; min-height: 100px; font-family: inherit; box-sizing: border-box;" placeholder="Type your question here..."></textarea>
-                        <button id="custom-solve-btn" class="get-solution-btn" data-question-id="custom" style="position: static; margin-top: 10px; width: auto; text-indent: 0; line-height: normal; padding: 8px 16px;">
-                            Solve Question
-                        </button>
-                        <div class="solution" id="solution-custom"></div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer class="site" role="contentinfo">
-            <div>Developed by : Prof. O.P. Sheoran <br> Department of Mathematics & Statistics,<br> CCS Haryana Agricultural University, Hisar <br> &copy; 2026 CCS HAU, Hisar</div>
-        </footer>
+                        </ol></div></section>
+      </div>
+      
+        </div>
+      </section>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const hash = window.location.hash.substring(1);
-            if (hash && document.getElementById(hash)) {
-                showTopic(hash);
-            } else {
-                const firstSec = document.querySelector('.topic-section');
-                if(firstSec) showTopic(firstSec.id);
-            }
-        });
+    </main>
 
-        let isHinglish = false;
-        function toggleLanguage() {
-            isHinglish = !isHinglish;
-            const btnText = document.getElementById('lang-toggle-text');
-            const engContents = document.querySelectorAll('.english-content');
-            const hinContents = document.querySelectorAll('.hinglish-content');
+    <footer class="site" role="contentinfo">
+        <div>Developed by : Prof. O.P. Sheoran <br> Department of Mathematics & Statistics,<br> CCS Haryana Agricultural University, Hisar <br> &copy; 2026 CCS HAU, Hisar</div>
+    </footer>
+</div>
 
-            if (isHinglish) {
-                btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
-                engContents.forEach(el => el.style.display = 'none');
-                hinContents.forEach(el => el.style.display = 'block');
-            } else {
-                btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
-                hinContents.forEach(el => el.style.display = 'none');
-                engContents.forEach(el => el.style.display = 'block');
-            }
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) {
+            showTopic(hash);
+        } else {
+            const firstSec = document.querySelector('.topic-section');
+            if(firstSec) showTopic(firstSec.id);
         }
+    });
 
-        function showTopic(id) {
-            document.querySelectorAll('.topic-section').forEach(el => {
-                el.classList.remove('active');
-            });
-            document.querySelectorAll('.nav-link').forEach(el => {
-                el.classList.remove('active');
-            });
-            
-            const targetSection = document.getElementById(id);
-            if (targetSection) {
-                targetSection.classList.add('active');
-            }
-            
-            const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
-            if (activeLink) {
-                activeLink.classList.add('active');
-            }
-            
-            window.scrollTo(0,0);
-            
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
-            }
-            
+    let isHinglish = false;
+    function toggleLanguage() {
+        isHinglish = !isHinglish;
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+
+        if (isHinglish) {
+            btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+        } else {
+            btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+        }
+    }
+
+    function showTopic(id) {
+        document.querySelectorAll('.topic-section').forEach(el => {
+            el.classList.remove('active');
+        });
+        document.querySelectorAll('.nav-link').forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        const targetSection = document.getElementById(id);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+        
+        const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+        
+        window.scrollTo(0,0);
+        
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+        
+        try {
             history.replaceState(null, null, '#' + id);
+        } catch (e) {
+            console.warn('History state update failed:', e);
         }
+    }
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
-            navItems.forEach(item => {
-                let nextEl = item.nextElementSibling;
-                const subItems = [];
-                while (nextEl && nextEl.classList.contains('nav-sub')) {
-                    subItems.push(nextEl);
-                    nextEl.style.display = 'none'; // Initially hide sub-items
-                    nextEl = nextEl.nextElementSibling;
-                }
-
-                if (subItems.length > 0) {
-                    const link = item.querySelector('.nav-link');
-                    if (link) {
-                        const arrow = document.createElement('span');
-                        arrow.innerHTML = ' &#9660;';
-                        arrow.style.fontSize = '0.8em';
-                        arrow.style.float = 'right';
-                        arrow.style.marginTop = '2px';
-                        arrow.style.transition = 'transform 0.3s';
-                        link.appendChild(arrow);
-
-                        link.addEventListener('click', function(e) {
-                            const isHidden = subItems[0].style.display === 'none';
-                            arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-                            subItems.forEach(sub => {
-                                sub.style.display = isHidden ? 'list-item' : 'none';
-                            });
-                        });
-                    }
-                }
-            });
-        });
-
-        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-
-        function toggleAnswer(id) {
-            const answer = document.getElementById(id);
-            const btn = event.target;
-            if (answer.classList.contains('show')) {
-                answer.classList.remove('show');
-                btn.innerHTML = 'Show Answer ▼';
-            } else {
-                answer.classList.add('show');
-                btn.innerHTML = 'Hide Answer ▲';
+    document.addEventListener("DOMContentLoaded", function() {
+        const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
+        navItems.forEach(item => {
+            let nextEl = item.nextElementSibling;
+            const subItems = [];
+            while (nextEl && nextEl.classList.contains('nav-sub')) {
+                subItems.push(nextEl);
+                nextEl.style.display = 'none'; // Initially hide sub-items
+                nextEl = nextEl.nextElementSibling;
             }
+
+            if (subItems.length > 0) {
+                const link = item.querySelector('.nav-link');
+                if (link) {
+                    const arrow = document.createElement('span');
+                    arrow.innerHTML = ' &#9660;';
+                    arrow.style.fontSize = '0.8em';
+                    arrow.style.float = 'right';
+                    arrow.style.marginTop = '2px';
+                    arrow.style.transition = 'transform 0.3s';
+                    link.appendChild(arrow);
+
+                    link.addEventListener('click', function(e) {
+                        const isHidden = subItems[0].style.display === 'none';
+                        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                        subItems.forEach(sub => {
+                            sub.style.display = isHidden ? 'list-item' : 'none';
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+    function toggleAnswer(id) {
+        const answer = document.getElementById(id);
+        const btn = event.target;
+        if (answer.classList.contains('show')) {
+            answer.classList.remove('show');
+            btn.innerHTML = 'Show Answer ▼';
+        } else {
+            answer.classList.add('show');
+            btn.innerHTML = 'Hide Answer ▲';
         }
-    </script>
-    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    }
+</script>
+<script src="../whiteboard/whiteboard.js?v=2.0"></script>
 </body>
 </html>
