@@ -1,6 +1,6 @@
 /**
- * ── PROFESSIONAL TEACHER'S CANVAS ──
- * High-DPI, Ultra-Smooth Ink, Notebook Paper, Rich Tools, Resize-Safe, and PDF Export.
+ * ── PROFESSIONAL TEACHER'S CANVAS (MULTI-PAGE) ──
+ * High-DPI, Ultra-Smooth Ink, Notebook Paper, Rich Tools (Grouped), Resize-Safe, and PDF Export.
  */
 
 (function() {
@@ -19,10 +19,24 @@
                 <button class="popup-close" id="popup-close-btn"><i class="fas fa-times"></i></button>
             </div>
 
-            <div class="popup-canvas-container" id="popup-canvas-scroll">
-                <div id="popup-canvas-wrap">
-                    <canvas id="popup-canvas"></canvas>
-                    <textarea id="text-input-overlay" spellcheck="false" placeholder="Type here..."></textarea>
+            <div class="popup-canvas-container" id="popup-canvas-wrap">
+                <canvas id="popup-canvas"></canvas>
+                <textarea id="text-input-overlay" spellcheck="false" placeholder="Type here..."></textarea>
+            </div>
+
+            <!-- PAGE NAVIGATION BAR -->
+            <div style="background: #e8e6df; border-top: 1px solid #DDD8CF; padding: 6px 20px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; font-size: 0.9rem; color: #1B2A4A;">
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="popup-tool-btn" id="pop-page-prev" title="Previous Page" style="width: 30px; height: 30px;"><i class="fas fa-chevron-left"></i></button>
+                    <span id="pop-page-indicator" style="font-weight: 600; min-width: 80px; text-align: center;">Page 1 of 1</span>
+                    <button class="popup-tool-btn" id="pop-page-next" title="Next Page" style="width: 30px; height: 30px;"><i class="fas fa-chevron-right"></i></button>
+                    <button class="popup-tool-btn" id="pop-page-add" title="Add New Page" style="width: 30px; height: 30px; margin-left: 10px; color: #3D6B5A;"><i class="fas fa-plus"></i></button>
+                    <button class="popup-tool-btn" id="pop-page-del" title="Delete Current Page" style="width: 30px; height: 30px; color: #9B2335;"><i class="fas fa-trash"></i></button>
+                </div>
+                <div>
+                    <button class="popup-tool-btn" id="pop-save" title="Export All Pages as PDF" style="background:#2E4270; color:#fff; border:none; width:auto; padding: 0 15px; font-weight: 600; height: 30px;">
+                        <i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Download PDF
+                    </button>
                 </div>
             </div>
 
@@ -33,9 +47,37 @@
                 
                 <div class="toolbar-divider"></div>
                 
-                <button class="popup-tool-btn" data-tool="line" title="Straight Line"><i class="fas fa-slash"></i></button>
-                <button class="popup-tool-btn" data-tool="rect" title="Rectangle"><i class="far fa-square"></i></button>
-                <button class="popup-tool-btn" data-tool="circle" title="Circle"><i class="far fa-circle"></i></button>
+                <!-- Group: Lines & Graphs -->
+                <div class="tool-group">
+                    <button class="popup-tool-btn group-parent" title="Lines & Graphs"><i class="fas fa-slash"></i></button>
+                    <div class="tool-dropdown">
+                        <button class="popup-tool-btn" data-tool="line" title="Straight Line"><i class="fas fa-slash"></i></button>
+                        <button class="popup-tool-btn" data-tool="arrow" title="Arrow"><i class="fas fa-long-arrow-alt-right"></i></button>
+                        <button class="popup-tool-btn" data-tool="axes" title="Graph Axes"><i class="fas fa-chart-line"></i></button>
+                    </div>
+                </div>
+
+                <!-- Group: Basic Shapes -->
+                <div class="tool-group">
+                    <button class="popup-tool-btn group-parent" title="Shapes"><i class="far fa-square"></i></button>
+                    <div class="tool-dropdown">
+                        <button class="popup-tool-btn" data-tool="rect" title="Rectangle"><i class="far fa-square"></i></button>
+                        <button class="popup-tool-btn" data-tool="square" title="Square"><i class="fas fa-square-full"></i></button>
+                        <button class="popup-tool-btn" data-tool="circle" title="Circle"><i class="far fa-circle"></i></button>
+                        <button class="popup-tool-btn" data-tool="ellipse" title="Ellipse"><i class="fas fa-bullseye"></i></button>
+                    </div>
+                </div>
+
+                <!-- Group: Triangles -->
+                <div class="tool-group">
+                    <button class="popup-tool-btn group-parent" title="Triangles"><i class="fas fa-caret-up"></i></button>
+                    <div class="tool-dropdown">
+                        <button class="popup-tool-btn" data-tool="tri-iso" title="Isosceles Triangle"><i class="fas fa-caret-up"></i></button>
+                        <button class="popup-tool-btn" data-tool="tri-right" title="Right Triangle"><i class="fas fa-play"></i></button>
+                        <button class="popup-tool-btn" data-tool="tri-equi" title="Equilateral Triangle"><i class="fas fa-mountain"></i></button>
+                    </div>
+                </div>
+
                 <button class="popup-tool-btn" data-tool="text" title="Text Input"><i class="fas fa-font"></i></button>
 
                 <div class="toolbar-divider"></div>
@@ -52,11 +94,7 @@
                 <input type="range" min="1" max="40" value="3" class="popup-size-slider" id="pop-size">
 
                 <button class="popup-tool-btn" id="pop-undo" title="Undo (Ctrl+Z)" style="margin-left:auto;"><i class="fas fa-undo"></i></button>
-                <button class="popup-tool-btn" id="pop-clear" title="Clear Board" style="color: #9B2335; margin-right: 15px;"><i class="fas fa-trash-restore"></i></button>
-                
-                <button class="popup-tool-btn" id="pop-save" title="Export as PDF" style="background:#2E4270; color:#fff; border:none; width:auto; padding: 0 15px; font-weight: 600; font-size: 0.95rem;">
-                    <i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Download PDF
-                </button>
+                <button class="popup-tool-btn" id="pop-clear" title="Clear Board" style="color: #9B2335;"><i class="fas fa-eraser"></i> Clear</button>
             </div>
         </div>
     `;
@@ -67,8 +105,7 @@
     const popup = document.getElementById('whiteboard-popup');
     const canvas = document.getElementById('popup-canvas');
     const ctx = canvas.getContext('2d', { alpha: true }); // No desynchronized to fix black bg bug
-    const scrollContainer = document.getElementById('popup-canvas-scroll');
-    const wrapContainer = document.getElementById('popup-canvas-wrap');
+    const container = document.getElementById('popup-canvas-wrap');
     const dragHandle = document.getElementById('popup-drag-handle');
     const textOverlay = document.getElementById('text-input-overlay');
 
@@ -78,7 +115,11 @@
     let isDrawing = false;
     let dpr = window.devicePixelRatio || 1;
 
-    // History for Undo
+    // Multi-page State
+    let bookPages = [null]; // Array of image dataURLs
+    let currentPageIndex = 0;
+
+    // History for Undo (current page only)
     let history = [];
     const MAX_HISTORY = 20;
 
@@ -86,16 +127,16 @@
     let startX = 0, startY = 0;
     let lastX = 0, lastY = 0;
     let points = [];
-    let savedImageData = null; // Used for shape preview
+    let savedImageData = null;
 
     // 3. High-DPI Canvas Init & Resizing
     function initCanvas() {
         resizeCanvas();
-        saveState(); // Initial blank state
+        saveHistoryState(); // Initial blank state
     }
 
     function resizeCanvas() {
-        const rect = wrapContainer.getBoundingClientRect();
+        const rect = container.getBoundingClientRect();
         
         // Save current ink before resize
         let tempCanvas = document.createElement('canvas');
@@ -123,14 +164,17 @@
         ctx.restore();
     }
 
-    // Professional Resizer using ResizeObserver
     const resizeObserver = new ResizeObserver(() => {
         if (popup.style.display === 'flex' || popup.classList.contains('active')) {
             resizeCanvas();
+            // Important: we need to update the saved snapshot for this page 
+            // after resize so it doesn't get squished if we switch pages later.
+            if(canvas.width > 0) {
+                bookPages[currentPageIndex] = canvas.toDataURL();
+            }
         }
     });
-    // We observe the scroll container so if popup width changes, wrap width changes
-    resizeObserver.observe(scrollContainer);
+    resizeObserver.observe(container);
 
     function applyBrush(isTempShape = false) {
         ctx.lineJoin = 'round';
@@ -164,17 +208,35 @@
         };
     }
 
-    // 4. Input Events (Pointer Events for Zero Delay)
+    // 4. Input Events
     canvas.addEventListener('pointerdown', (e) => {
         if (e.button !== 0 && e.button !== 5) return; 
-        isDrawing = true;
-        canvas.setPointerCapture(e.pointerId);
-
+        
         const pos = getPos(e);
         startX = pos.x;
         startY = pos.y;
         lastX = pos.x;
         lastY = pos.y;
+
+        if (currentTool === 'text') {
+            // Text tool should immediately place the text box and not capture the pointer
+            if (textOverlay.style.display === 'block') {
+                // Clicking canvas while text is open commits the text
+                commitText();
+            } else {
+                openTextInput(startX, startY);
+            }
+            isDrawing = false;
+            return;
+        }
+
+        // If clicking elsewhere while text is open (and not using text tool), commit it
+        if (textOverlay.style.display === 'block') {
+            commitText();
+        }
+
+        isDrawing = true;
+        canvas.setPointerCapture(e.pointerId);
 
         if (e.pointerType === 'pen' && e.button === 5) {
             let oldTool = currentTool;
@@ -191,9 +253,6 @@
             ctx.moveTo(startX, startY);
             ctx.lineTo(startX, startY);
             ctx.stroke();
-        } else if (currentTool === 'text') {
-            openTextInput(startX, startY);
-            isDrawing = false;
         } else {
             savedImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         }
@@ -236,11 +295,70 @@
             if (currentTool === 'line') {
                 ctx.moveTo(startX, startY);
                 ctx.lineTo(pos.x, pos.y);
+            } else if (currentTool === 'arrow') {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(pos.x, pos.y);
+                let angle = Math.atan2(pos.y - startY, pos.x - startX);
+                let headlen = currentSize * 5;
+                if (headlen < 15) headlen = 15;
+                ctx.lineTo(pos.x - headlen * Math.cos(angle - Math.PI / 6), pos.y - headlen * Math.sin(angle - Math.PI / 6));
+                ctx.moveTo(pos.x, pos.y);
+                ctx.lineTo(pos.x - headlen * Math.cos(angle + Math.PI / 6), pos.y - headlen * Math.sin(angle + Math.PI / 6));
             } else if (currentTool === 'rect') {
                 ctx.rect(startX, startY, pos.x - startX, pos.y - startY);
+            } else if (currentTool === 'square') {
+                let side = Math.min(Math.abs(pos.x - startX), Math.abs(pos.y - startY));
+                let dirX = (pos.x > startX) ? 1 : -1;
+                let dirY = (pos.y > startY) ? 1 : -1;
+                ctx.rect(startX, startY, side * dirX, side * dirY);
             } else if (currentTool === 'circle') {
                 let radius = Math.sqrt(Math.pow(pos.x - startX, 2) + Math.pow(pos.y - startY, 2));
                 ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+            } else if (currentTool === 'ellipse') {
+                let rx = Math.abs(pos.x - startX) / 2;
+                let ry = Math.abs(pos.y - startY) / 2;
+                let cx = startX + (pos.x - startX) / 2;
+                let cy = startY + (pos.y - startY) / 2;
+                ctx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+            } else if (currentTool === 'tri-iso') {
+                ctx.moveTo(startX + (pos.x - startX) / 2, startY);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.lineTo(startX, pos.y);
+                ctx.closePath();
+            } else if (currentTool === 'tri-right') {
+                ctx.moveTo(startX, startY);
+                ctx.lineTo(startX, pos.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.closePath();
+            } else if (currentTool === 'tri-equi') {
+                let side = pos.x - startX;
+                let height = side * Math.sqrt(3) / 2;
+                let dir = (pos.y > startY) ? 1 : -1;
+                ctx.moveTo(startX + side / 2, startY);
+                ctx.lineTo(pos.x, startY + height * dir);
+                ctx.lineTo(startX, startY + height * dir);
+                ctx.closePath();
+            } else if (currentTool === 'axes') {
+                let dx = Math.abs(pos.x - startX);
+                let dy = Math.abs(pos.y - startY);
+                let headlen = currentSize * 4;
+                if (headlen < 12) headlen = 12;
+                
+                // Y axis
+                ctx.moveTo(startX, startY + dy);
+                ctx.lineTo(startX, startY - dy);
+                // Top Arrow
+                ctx.lineTo(startX - headlen*0.4, startY - dy + headlen);
+                ctx.moveTo(startX, startY - dy);
+                ctx.lineTo(startX + headlen*0.4, startY - dy + headlen);
+                
+                // X axis
+                ctx.moveTo(startX - dx, startY);
+                ctx.lineTo(startX + dx, startY);
+                // Right Arrow
+                ctx.lineTo(startX + dx - headlen, startY - headlen*0.4);
+                ctx.moveTo(startX + dx, startY);
+                ctx.lineTo(startX + dx - headlen, startY + headlen*0.4);
             }
             ctx.stroke();
         }
@@ -264,10 +382,10 @@
             delete canvas.dataset.revertTool;
         }
 
-        saveState();
+        saveHistoryState();
     });
 
-    // 5. Text Tool Implementation
+    // 5. Text Tool
     function openTextInput(x, y) {
         textOverlay.style.display = 'block';
         textOverlay.style.left = x + 'px';
@@ -275,11 +393,12 @@
         textOverlay.style.color = currentColor;
         textOverlay.style.fontSize = (currentSize * 8) + 'px';
         textOverlay.value = '';
-        textOverlay.focus();
+        setTimeout(() => textOverlay.focus(), 10);
     }
 
     textOverlay.addEventListener('blur', commitText);
     textOverlay.addEventListener('keydown', (e) => {
+        // Shift+Enter allows new lines, Enter alone commits.
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             commitText();
@@ -302,38 +421,35 @@
         ctx.font = `600 ${fontSize}px 'Source Serif 4', serif`;
         ctx.textBaseline = 'top';
 
-        let lines = text.split('\\n');
+        let lines = text.split('\n');
         lines.forEach((line, i) => {
-            ctx.fillText(line, x, y + (i * fontSize * 1.2));
+            // Draw text directly on canvas
+            ctx.fillText(line, x + 8, y + 8 + (i * fontSize * 1.2)); // +8 padding adjustment
         });
 
-        saveState();
+        saveHistoryState();
     }
 
-    // 6. Undo/Redo State Management
-    function saveState() {
+    // 6. Undo History & Page State Management
+    function saveHistoryState() {
         if (history.length >= MAX_HISTORY) {
             history.shift();
         }
-        history.push(canvas.toDataURL());
+        let data = canvas.toDataURL();
+        history.push(data);
+        bookPages[currentPageIndex] = data; // Sync the multi-page array
     }
 
     function undo() {
         if (history.length > 1) {
             history.pop(); 
-            let img = new Image();
-            img.src = history[history.length - 1];
-            img.onload = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height); 
-                ctx.save();
-                ctx.setTransform(1, 0, 0, 1, 0, 0);
-                ctx.drawImage(img, 0, 0);
-                ctx.restore();
-            };
+            let data = history[history.length - 1];
+            bookPages[currentPageIndex] = data; // Sync the multi-page array
+            loadPageData(data);
         } else if (history.length === 1) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             history = [];
-            saveState();
+            saveHistoryState();
         }
     }
 
@@ -346,12 +462,171 @@
         }
     });
 
-    // 7. UI Controls Setup
+    // 7. Multi-Page Logic
+    function updatePageIndicator() {
+        document.getElementById('pop-page-indicator').textContent = `Page ${currentPageIndex + 1} of ${bookPages.length}`;
+    }
+
+    function loadPageData(dataUrl) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (dataUrl) {
+            let img = new Image();
+            img.src = dataUrl;
+            img.onload = () => {
+                ctx.save();
+                ctx.setTransform(1, 0, 0, 1, 0, 0);
+                ctx.drawImage(img, 0, 0);
+                ctx.restore();
+            };
+        }
+    }
+
+    function switchPage(index) {
+        // Ensure current page is saved
+        bookPages[currentPageIndex] = canvas.toDataURL();
+        
+        currentPageIndex = index;
+        history = []; // Reset undo history for the new page
+        
+        loadPageData(bookPages[currentPageIndex]);
+        
+        // Push to history to allow undo to clear page
+        history.push(bookPages[currentPageIndex] || canvas.toDataURL());
+        
+        updatePageIndicator();
+    }
+
+    document.getElementById('pop-page-prev').addEventListener('click', () => {
+        if (currentPageIndex > 0) switchPage(currentPageIndex - 1);
+    });
+
+    document.getElementById('pop-page-next').addEventListener('click', () => {
+        if (currentPageIndex < bookPages.length - 1) {
+            switchPage(currentPageIndex + 1);
+        } else {
+            // Auto add page if at end
+            document.getElementById('pop-page-add').click();
+        }
+    });
+
+    document.getElementById('pop-page-add').addEventListener('click', () => {
+        bookPages[currentPageIndex] = canvas.toDataURL(); // Save current
+        bookPages.push(null); // Add blank page
+        switchPage(bookPages.length - 1);
+    });
+
+    document.getElementById('pop-page-del').addEventListener('click', () => {
+        if (bookPages.length === 1) {
+            // If only one page, just clear it
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            saveHistoryState();
+            return;
+        }
+        
+        if (confirm("Are you sure you want to delete this page?")) {
+            bookPages.splice(currentPageIndex, 1);
+            if (currentPageIndex >= bookPages.length) {
+                currentPageIndex = bookPages.length - 1;
+            }
+            switchPage(currentPageIndex);
+        }
+    });
+
+
+    // 8. PDF Export Logic
+    document.getElementById('pop-save').addEventListener('click', () => {
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            alert("PDF library is loading. Please try again in a few seconds.");
+            return;
+        }
+        
+        const saveBtn = document.getElementById('pop-save');
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Exporting...';
+        
+        // Save active page
+        bookPages[currentPageIndex] = canvas.toDataURL();
+
+        setTimeout(() => {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('l', 'pt', [canvas.width / dpr, canvas.height / dpr]); // Landscape exact fit
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+
+            let loadPromises = bookPages.map((pageData, index) => {
+                return new Promise((resolve) => {
+                    let tempCanvas = document.createElement('canvas');
+                    tempCanvas.width = canvas.width;
+                    tempCanvas.height = canvas.height;
+                    let tCtx = tempCanvas.getContext('2d');
+                    
+                    // Draw Paper Background
+                    tCtx.fillStyle = '#faf9f6'; 
+                    tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+                    
+                    tCtx.lineWidth = 1 * dpr;
+                    tCtx.strokeStyle = 'rgba(100,150,200,0.2)';
+                    for (let y = 0; y < tempCanvas.height; y += 30 * dpr) {
+                        tCtx.beginPath();
+                        tCtx.moveTo(0, y);
+                        tCtx.lineTo(tempCanvas.width, y);
+                        tCtx.stroke();
+                    }
+                    tCtx.lineWidth = 2 * dpr;
+                    tCtx.strokeStyle = 'rgba(230,130,130,0.4)';
+                    tCtx.beginPath();
+                    tCtx.moveTo(79 * dpr, 0);
+                    tCtx.lineTo(79 * dpr, tempCanvas.height);
+                    tCtx.stroke();
+
+                    if (!pageData) {
+                        resolve(tempCanvas);
+                        return;
+                    }
+
+                    let img = new Image();
+                    img.src = pageData;
+                    img.onload = () => {
+                        tCtx.drawImage(img, 0, 0);
+                        resolve(tempCanvas);
+                    };
+                });
+            });
+
+            Promise.all(loadPromises).then(canvases => {
+                canvases.forEach((c, idx) => {
+                    if (idx > 0) pdf.addPage();
+                    const imgData = c.toDataURL('image/jpeg', 0.95);
+                    pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
+                });
+                pdf.save('Teacher_Notebook_' + new Date().getTime() + '.pdf');
+                saveBtn.innerHTML = originalText;
+            });
+        }, 100);
+    });
+
+
+    // 9. UI Controls Setup
     document.querySelectorAll('.popup-tool-btn[data-tool]').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', (e) => {
+            // Remove active from all tool buttons
             document.querySelectorAll('.popup-tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTool = btn.dataset.tool;
+
+            // Handle Group Parent Icons
+            const group = btn.closest('.tool-group');
+            if (group) {
+                const parentBtn = group.querySelector('.group-parent');
+                if (parentBtn) {
+                    parentBtn.innerHTML = btn.innerHTML; // Inherit icon
+                    document.querySelectorAll('.group-parent').forEach(b => b.classList.remove('active'));
+                    parentBtn.classList.add('active'); // Highlight parent
+                }
+            } else {
+                // If a non-grouped tool is clicked, de-highlight all parents
+                document.querySelectorAll('.group-parent').forEach(b => b.classList.remove('active'));
+            }
         });
     });
 
@@ -372,94 +647,10 @@
 
     document.getElementById('pop-clear').addEventListener('click', () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        saveState();
+        saveHistoryState();
     });
 
-    // --- PDF EXPORT LOGIC ---
-    document.getElementById('pop-save').addEventListener('click', () => {
-        if (!window.jspdf || !window.jspdf.jsPDF) {
-            alert("PDF library is loading. Please try again in a few seconds.");
-            return;
-        }
-        
-        // Show saving state
-        const saveBtn = document.getElementById('pop-save');
-        const originalText = saveBtn.innerHTML;
-        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i> Generating...';
-        
-        // Use setTimeout to allow UI to update before heavy processing
-        setTimeout(() => {
-            // Draw background before saving
-            let tempCanvas = document.createElement('canvas');
-            tempCanvas.width = canvas.width;
-            tempCanvas.height = canvas.height;
-            let tCtx = tempCanvas.getContext('2d');
-            
-            tCtx.fillStyle = '#faf9f6'; // Match notebook paper color
-            tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-            
-            // Draw Notebook Lines
-            tCtx.lineWidth = 1 * dpr;
-            tCtx.strokeStyle = 'rgba(100,150,200,0.2)';
-            for (let y = 0; y < tempCanvas.height; y += 30 * dpr) {
-                tCtx.beginPath();
-                tCtx.moveTo(0, y);
-                tCtx.lineTo(tempCanvas.width, y);
-                tCtx.stroke();
-            }
-            tCtx.lineWidth = 2 * dpr;
-            tCtx.strokeStyle = 'rgba(230,130,130,0.4)';
-            tCtx.beginPath();
-            tCtx.moveTo(79 * dpr, 0);
-            tCtx.lineTo(79 * dpr, tempCanvas.height);
-            tCtx.stroke();
-
-            // Overlay the ink
-            tCtx.drawImage(canvas, 0, 0);
-
-            // Generate PDF
-            const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF('p', 'pt', 'a4');
-            
-            const pdfWidth = pdf.internal.pageSize.getWidth();
-            const pdfHeight = pdf.internal.pageSize.getHeight();
-            
-            const canvasWidth = tempCanvas.width;
-            // A4 Aspect Ratio is ~1:1.414
-            const pageCanvasHeight = canvasWidth * (pdfHeight / pdfWidth); 
-            
-            let totalPages = Math.ceil(tempCanvas.height / pageCanvasHeight);
-            
-            for (let i = 0; i < totalPages; i++) {
-                if (i > 0) pdf.addPage();
-                
-                let pageCanvas = document.createElement('canvas');
-                pageCanvas.width = canvasWidth;
-                pageCanvas.height = pageCanvasHeight;
-                let pCtx = pageCanvas.getContext('2d');
-                
-                // Fill white background for empty space at the bottom
-                pCtx.fillStyle = '#faf9f6';
-                pCtx.fillRect(0, 0, canvasWidth, pageCanvasHeight);
-                
-                pCtx.drawImage(
-                    tempCanvas, 
-                    0, i * pageCanvasHeight, canvasWidth, pageCanvasHeight, 
-                    0, 0, canvasWidth, pageCanvasHeight
-                );
-                
-                const imgData = pageCanvas.toDataURL('image/jpeg', 0.95);
-                pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
-            }
-
-            pdf.save('Teacher_Notes_' + new Date().getTime() + '.pdf');
-            
-            // Restore button
-            saveBtn.innerHTML = originalText;
-        }, 100);
-    });
-
-    // 8. Draggable Popup Logic
+    // 10. Draggable Popup Logic
     let isDragging = false, dragStartX, dragStartY, popupStartLeft, popupStartTop;
     
     dragHandle.addEventListener('mousedown', (e) => {
@@ -483,7 +674,7 @@
 
     document.addEventListener('mouseup', () => { isDragging = false; });
 
-    // 9. Toggle Logic
+    // 11. Toggle Logic
     document.getElementById('popup-close-btn').addEventListener('click', () => {
         popup.classList.remove('active');
         popup.style.display = 'none';
