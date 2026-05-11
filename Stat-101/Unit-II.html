@@ -7208,9 +7208,15 @@
             }
             
             window.scrollTo(0,0);
+            
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
             }
+            
+            history.replaceState(null, null, '#' + id);
+        }
 
-            document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", function() {
             const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
             navItems.forEach(item => {
                 let nextEl = item.nextElementSibling;
@@ -7242,13 +7248,7 @@
                     }
                 }
             });
-            });
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
-            }
-            
-            history.replaceState(null, null, '#' + id);
-        }
+        });
 
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
 
