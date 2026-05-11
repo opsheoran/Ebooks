@@ -2392,6 +2392,41 @@
             }
         }
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
+            navItems.forEach(item => {
+                let nextEl = item.nextElementSibling;
+                const subItems = [];
+                while (nextEl && nextEl.classList.contains('nav-sub')) {
+                    subItems.push(nextEl);
+                    nextEl.style.display = 'none'; // Initially hide sub-items
+                    nextEl = nextEl.nextElementSibling;
+                }
+                
+                if (subItems.length > 0) {
+                    const link = item.querySelector('.nav-link');
+                    if (link) {
+                        const arrow = document.createElement('span');
+                        arrow.innerHTML = ' &#9660;';
+                        arrow.style.fontSize = '0.8em';
+                        arrow.style.float = 'right';
+                        arrow.style.marginTop = '2px';
+                        arrow.style.transition = 'transform 0.3s';
+                        link.appendChild(arrow);
+                        
+                        link.addEventListener('click', function(e) {
+                            const isHidden = subItems[0].style.display === 'none';
+                            arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                            subItems.forEach(sub => {
+                                sub.style.display = isHidden ? 'list-item' : 'none';
+                            });
+                        });
+                    }
+                }
+            });
+        });
+    </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
 </body>
 </html>
