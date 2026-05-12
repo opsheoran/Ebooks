@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV: Moments, Skewness and Kurtosis - Statistical Methods-I</title>
+    <!-- MathJax -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="stylesheet" href="stat101_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="main-header">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu"><i class="fas fa-bars"></i></button>
+        <div class="header-icon">📊</div>
+        <div class="header-text">
+            <h1>Statistical Methods-I</h1>
+            <div class="subtitle">UNIT IV · MOMENTS, SKEWNESS & KURTOSIS</div>
+        </div>
+        <button class="draw-mode-toggle" id="draw-mode-btn"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">📊</div>
+            <div class="brand-name">
+                <p>Moments & Skewness<br>CCS Haryana Agricultural University</p>
+            </div>
+        </div>
+        <div class="sidebar-author">
+            <img src="../Stat-102/opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="author-info">
+                <p class="name">Prof. O.P. Sheoran</p>
+                <p class="desig">Dept. of Math & Stats</p>
+            </div>
+        </div>
+        <ul class="nav-menu">
+            <li class="nav-item"><a class="nav-link active" href="#introduction" onclick="showTopic('introduction');return false;"><span class="nav-num">4.1</span> Introduction to Moments</a></li>
+            <li class="nav-item"><a class="nav-link" href="#central-moments" onclick="showTopic('central-moments');return false;"><span class="nav-num">4.2</span> Central Moments</a></li>
+            <li class="nav-item"><a class="nav-link" href="#raw-moments" onclick="showTopic('raw-moments');return false;"><span class="nav-num">4.3</span> Raw Moments</a></li>
+            <li class="nav-item"><a class="nav-link" href="#moments-relationship" onclick="showTopic('moments-relationship');return false;"><span class="nav-num">4.4</span> Relationship Between Moments</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sheppard-correction" onclick="showTopic('sheppard-correction');return false;"><span class="nav-num">4.5</span> Sheppard's Correction</a></li>
+            <li class="nav-item"><a class="nav-link" href="#skewness" onclick="showTopic('skewness');return false;"><span class="nav-num">4.6</span> Skewness</a></li>
+            <li class="nav-item"><a class="nav-link" href="#kurtosis" onclick="showTopic('kurtosis');return false;"><span class="nav-num">4.7</span> Kurtosis</a></li>
+            <li class="nav-item"><a class="nav-link" href="#exercises" onclick="showTopic('exercises');return false;"><span class="nav-num">4.8</span> Exercises</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <!-- Topic 4.1: Introduction to Moments -->
+        <section id="introduction" class="topic-section active">
+            <div class="section-card">
+                <h2><span class="section-num">4.1</span> Introduction to Moments</h2>
+                <div class="english-content">
+                    <p>In statistics, <strong>Moments</strong> are a set of statistical measures used to describe the characteristics of a distribution. Just as the mean and standard deviation describe the center and spread, moments provide a systematic way to quantify the shape, skewness, and peakedness of the data.</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p>Statistics में, <strong>Moments</strong> statistical measures का एक set है जिसका उपयोग distribution की विशेषताओं (characteristics) को describe करने के लिए किया जाता है। जिस तरह mean और standard deviation center और spread को describe करते हैं, moments data की shape, skewness और peakedness को quantify करने का एक व्यवस्थित (systematic) तरीका प्रदान करते हैं।</p>
+                </div>
+
+                <div class="definition">
+                    <h4>Definition of Moments</h4>
+                    <div class="english-content">
+                        <p>The \(r^{th}\) moment of a variable \(X\) about any point \(A\) is the arithmetic mean of the \(r^{th}\) powers of the deviations of the observations from \(A\).</p>
+                    </div>
+                    <div class="hinglish-content" style="display:none;">
+                        <p>किसी भी point \(A\) के परितः (about) variable \(X\) का \(r^{th}\) moment, \(A\) से observations के deviations की \(r^{th}\) powers का arithmetic mean होता है।</p>
+                    </div>
+                    <div class="formula-box">
+                        \[ \mu'_r = \frac{1}{N} \sum f_i (X_i - A)^r \]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.2: Central Moments -->
+        <section id="central-moments" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.2</span> Central Moments</h2>
+                <div class="english-content">
+                    <p><strong>Central Moments</strong> (also called Moments about the Mean) are calculated by taking deviations from the arithmetic mean (\(\bar{X}\)). These are the most important moments as they describe the internal structure of the distribution independent of the origin.</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p><strong>Central Moments</strong> (जिन्हें Mean के परितः moments भी कहा जाता है) arithmetic mean (\(\bar{X}\)) से deviations लेकर calculate किए जाते हैं। ये सबसे महत्वपूर्ण moments हैं क्योंकि ये origin से स्वतंत्र distribution के internal structure को describe करते हैं।</p>
+                </div>
+
+                <div class="formula-box">
+                    <h4>Formula for Central Moments (\(\mu_r\))</h4>
+                    \[ \mu_r = \frac{1}{N} \sum f_i (X_i - \bar{X})^r \]
+                </div>
+
+                <div class="key-point">
+                    <h4>Important Properties:</h4>
+                    <ul>
+                        <li>\(\mu_0 = 1\) (Always)</li>
+                        <li>\(\mu_1 = 0\) (The first central moment is always zero)</li>
+                        <li>\(\mu_2 = \sigma^2\) (The second central moment is the Variance)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.6: Skewness -->
+        <section id="skewness" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.6</span> Skewness</h2>
+                <div class="english-content">
+                    <p><strong>Skewness</strong> means 'lack of symmetry'. We study skewness to get an idea about the shape of the curve that can be drawn with the given data. If in a distribution, Mean = Median = Mode, then that distribution is called a <strong>symmetrical distribution</strong>.</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p><strong>Skewness</strong> का अर्थ है 'symmetry की कमी' (lack of symmetry)। हम skewness का अध्ययन दिए गए data के साथ खींचे जा सकने वाले curve के shape के बारे में विचार प्राप्त करने के लिए करते हैं। यदि किसी distribution में, Mean = Median = Mode है, तो उस distribution को <strong>symmetrical distribution</strong> कहा जाता है।</p>
+                </div>
+
+                <div class="theorem">
+                    <h4>Karl Pearson's Coefficient of Skewness</h4>
+                    <div class="formula-box">
+                        \[ S_k = \frac{\text{Mean} - \text{Mode}}{\sigma} \]
+                        <p>Or if Mode is ill-defined:</p>
+                        \[ S_k = \frac{3(\text{Mean} - \text{Median})}{\sigma} \]
+                    </div>
+                </div>
+
+                <div class="example">
+                    <h4>Example: Calculation of Karl-Pearson's Coefficient</h4>
+                    <p>Data of monthly income of farmers in a district of Haryana:</p>
+                    <table class="calculation-data">
+                        <thead>
+                            <tr>
+                                <th>Income (in thousands of ₹)</th>
+                                <th>10-15</th>
+                                <th>15-20</th>
+                                <th>20-25</th>
+                                <th>25-30</th>
+                                <th>30-35</th>
+                                <th>35-40</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Number of Farmers</td>
+                                <td>25</td>
+                                <td>35</td>
+                                <td>40</td>
+                                <td>30</td>
+                                <td>15</td>
+                                <td>5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p><strong>Solution:</strong></p>
+                    <div class="english-content">
+                        <p>Mean = ₹22,500, Median = ₹21,800, \(\sigma\) = ₹6,200</p>
+                        <p>Karl-Pearson's \(S_k = \frac{3(22,500 - 21,800)}{6,200} = 0.34\)</p>
+                        <p>Since the coefficient is positive, the distribution is <strong>positively skewed</strong>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.7: Kurtosis -->
+        <section id="kurtosis" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.7</span> Kurtosis</h2>
+                <div class="english-content">
+                    <p><strong>Kurtosis</strong> is used to describe the peakedness of a curve. It measures how much more peaked or more flat-topped the distribution is compared to the normal curve.</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p><strong>Kurtosis</strong> का उपयोग curve की peakedness को describe करने के लिए किया जाता है। यह मापता है कि normal curve की तुलना में distribution कितना अधिक peaked या अधिक flat-topped है।</p>
+                </div>
+
+                <div class="definition">
+                    <h4>Types of Kurtosis</h4>
+                    <ul>
+                        <li><strong>Mesokurtic:</strong> Normal curve (\(\beta_2 = 3\))</li>
+                        <li><strong>Leptokurtic:</strong> More peaked (\(\beta_2 > 3\))</li>
+                        <li><strong>Platykurtic:</strong> Flatter (\(\beta_2 < 3\))</li>
+                    </ul>
+                </div>
+
+                <div class="formula-box">
+                    \[ \beta_2 = \frac{\mu_4}{\mu_2^2} \quad \text{and} \quad \gamma_2 = \beta_2 - 3 \]
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.8: Exercises -->
+        <section id="exercises" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.8</span> Exercises</h2>
+                
+                <div class="question">
+                    <p>1. In a symmetrical distribution, Mean = 50. What are the values of Median and Mode?</p>
+                    <div class="mcq-options">
+                        <div class="option">A) 50 and 50</div>
+                        <div class="option">B) 40 and 60</div>
+                        <div class="option">C) 0 and 100</div>
+                        <div class="option">D) Cannot be determined</div>
+                    </div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer ▼</button>
+                    <div class="answer">
+                        <p>Correct Answer: <strong>A) 50 and 50</strong></p>
+                        <p>In a symmetrical distribution, Mean = Median = Mode.</p>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <p>2. If \(\beta_2 > 3\), the distribution is:</p>
+                    <div class="mcq-options">
+                        <div class="option">A) Mesokurtic</div>
+                        <div class="option">B) Leptokurtic</div>
+                        <div class="option">C) Platykurtic</div>
+                        <div class="option">D) Symmetrical</div>
+                    </div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer ▼</button>
+                    <div class="answer">
+                        <p>Correct Answer: <strong>B) Leptokurtic</strong></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="book-footer">
+            <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+            CCS Haryana Agricultural University, Hisar</p>
+            <p class="university">Unit IV – Moments, Skewness & Kurtosis · STAT-M-101</p>
+        </footer>
+    </main>
+
+    <script>
+        function showTopic(id) {
+            document.querySelectorAll('.topic-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+            
+            const link = document.querySelector(`.nav-link[href="#${id}"]`);
+            if (link) link.classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            if (window.innerWidth < 1024) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+
+        function toggleAnswer(btn) {
+            const answer = btn.nextElementSibling;
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                btn.innerHTML = 'Show Answer ▼';
+            } else {
+                answer.classList.add('show');
+                btn.innerHTML = 'Hide Answer ▲';
+            }
+        }
+
+        document.getElementById('menu-toggle').addEventListener('click', () => {
+            document.getElementById('sidebar').classList.toggle('open');
+        });
+
+        // Initialize with hash if present
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1);
+            if (hash) showTopic(hash);
+        });
+    </script>
+    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+</body>
+</html>
