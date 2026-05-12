@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit IV: Moments, Skewness and Kurtosis - Statistical Methods-I</title>
+    <title>Unit IV: Moments, Skewness & Kurtosis - Statistical Methods-I</title>
     <!-- MathJax -->
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="stylesheet" href="stat101_style.css">
@@ -12,17 +12,21 @@
 <body>
     <header class="main-header">
         <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation menu"><i class="fas fa-bars"></i></button>
-        <div class="header-icon">📊</div>
+        <div class="header-icon">📈</div>
         <div class="header-text">
             <h1>Statistical Methods-I</h1>
             <div class="subtitle">UNIT IV · MOMENTS, SKEWNESS & KURTOSIS</div>
+        </div>
+        <div class="language-toggle">
+            <button class="lang-btn active" onclick="setLanguage('english')">English</button>
+            <button class="lang-btn" onclick="setLanguage('hinglish')">Hinglish</button>
         </div>
         <button class="draw-mode-toggle" id="draw-mode-btn"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>
     </header>
 
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-brand">
-            <div class="brand-logo">📊</div>
+            <div class="brand-logo">📈</div>
             <div class="brand-name">
                 <p>Moments & Skewness<br>CCS Haryana Agricultural University</p>
             </div>
@@ -47,27 +51,27 @@
     </nav>
 
     <main class="main-content">
-        <!-- Topic 4.1: Introduction to Moments -->
+        <!-- Topic 4.1: Introduction -->
         <section id="introduction" class="topic-section active">
             <div class="section-card">
                 <h2><span class="section-num">4.1</span> Introduction to Moments</h2>
                 <div class="english-content">
-                    <p>In statistics, <strong>Moments</strong> are a set of statistical measures used to describe the characteristics of a distribution. Just as the mean and standard deviation describe the center and spread, moments provide a systematic way to quantify the shape, skewness, and peakedness of the data.</p>
+                    <p>In statistics, the term <strong>'Moment'</strong> is used to describe the characteristics of a frequency distribution. Just as arithmetic mean and standard deviation are used to measure central tendency and dispersion, moments provide a systematic method to analyze the shape (Symmetry and Peakedness) of a distribution. The name 'Moment' is borrowed from Physics, where it refers to the product of a force and its distance from a point.</p>
                 </div>
                 <div class="hinglish-content" style="display:none;">
-                    <p>Statistics में, <strong>Moments</strong> statistical measures का एक set है जिसका उपयोग distribution की विशेषताओं (characteristics) को describe करने के लिए किया जाता है। जिस तरह mean और standard deviation center और spread को describe करते हैं, moments data की shape, skewness और peakedness को quantify करने का एक व्यवस्थित (systematic) तरीका प्रदान करते हैं।</p>
+                    <p>Statistics में, <strong>'Moment'</strong> शब्द का उपयोग frequency distribution की विशेषताओं (characteristics) को describe करने के लिए किया जाता है। जिस तरह arithmetic mean और standard deviation का उपयोग central tendency और dispersion को मापने के लिए किया जाता है, moments distribution के shape (Symmetry और Peakedness) का विश्लेषण करने के लिए एक व्यवस्थित (systematic) तरीका प्रदान करते हैं। 'Moment' नाम Physics से लिया गया है, जहाँ यह एक force और एक point से उसकी दूरी के गुणनफल (product) को संदर्भित करता है।</p>
                 </div>
 
                 <div class="definition">
-                    <h4>Definition of Moments</h4>
+                    <h4>Basic Definition</h4>
                     <div class="english-content">
-                        <p>The \(r^{th}\) moment of a variable \(X\) about any point \(A\) is the arithmetic mean of the \(r^{th}\) powers of the deviations of the observations from \(A\).</p>
+                        <p>The \(r^{th}\) moment of a variable \(X\) about any arbitrary point \(A\) is the arithmetic mean of the \(r^{th}\) powers of the deviations of the observations from \(A\). It is denoted by \(\mu'_r\).</p>
                     </div>
                     <div class="hinglish-content" style="display:none;">
-                        <p>किसी भी point \(A\) के परितः (about) variable \(X\) का \(r^{th}\) moment, \(A\) से observations के deviations की \(r^{th}\) powers का arithmetic mean होता है।</p>
+                        <p>किसी भी arbitrary point \(A\) के परितः (about) variable \(X\) का \(r^{th}\) moment, \(A\) से observations के deviations की \(r^{th}\) powers का arithmetic mean होता है। इसे \(\mu'_r\) द्वारा दर्शाया जाता है।</p>
                     </div>
                     <div class="formula-box">
-                        \[ \mu'_r = \frac{1}{N} \sum f_i (X_i - A)^r \]
+                        \[ \mu'_r = \frac{\sum f_i (X_i - A)^r}{N} \]
                     </div>
                 </div>
             </div>
@@ -78,23 +82,105 @@
             <div class="section-card">
                 <h2><span class="section-num">4.2</span> Central Moments</h2>
                 <div class="english-content">
-                    <p><strong>Central Moments</strong> (also called Moments about the Mean) are calculated by taking deviations from the arithmetic mean (\(\bar{X}\)). These are the most important moments as they describe the internal structure of the distribution independent of the origin.</p>
+                    <p>When deviations are taken from the arithmetic mean (\(\bar{X}\)), the moments are called <strong>Central Moments</strong> or Moments about the Mean. These moments are purely independent of the origin of measurement and describe the internal structure of the distribution.</p>
                 </div>
                 <div class="hinglish-content" style="display:none;">
-                    <p><strong>Central Moments</strong> (जिन्हें Mean के परितः moments भी कहा जाता है) arithmetic mean (\(\bar{X}\)) से deviations लेकर calculate किए जाते हैं। ये सबसे महत्वपूर्ण moments हैं क्योंकि ये origin से स्वतंत्र distribution के internal structure को describe करते हैं।</p>
+                    <p>जब deviations arithmetic mean (\(\bar{X}\)) से लिए जाते हैं, तो moments को <strong>Central Moments</strong> या Mean के परितः moments कहा जाता है। ये moments measurement के origin से पूरी तरह स्वतंत्र होते हैं और distribution के internal structure को describe करते हैं।</p>
                 </div>
 
                 <div class="formula-box">
-                    <h4>Formula for Central Moments (\(\mu_r\))</h4>
-                    \[ \mu_r = \frac{1}{N} \sum f_i (X_i - \bar{X})^r \]
+                    \[ \mu_r = \frac{\sum f_i (X_i - \bar{X})^r}{N} \]
                 </div>
 
                 <div class="key-point">
-                    <h4>Important Properties:</h4>
+                    <h4>Properties of Central Moments:</h4>
                     <ul>
-                        <li>\(\mu_0 = 1\) (Always)</li>
-                        <li>\(\mu_1 = 0\) (The first central moment is always zero)</li>
-                        <li>\(\mu_2 = \sigma^2\) (The second central moment is the Variance)</li>
+                        <li><strong>\(\mu_0 = 1\):</strong> The zero-order central moment is always 1.</li>
+                        <li><strong>\(\mu_1 = 0\):</strong> The first central moment is always zero (since the sum of deviations from the mean is zero).</li>
+                        <li><strong>\(\mu_2 = \sigma^2\):</strong> The second central moment is the <strong>Variance</strong>.</li>
+                        <li><strong>\(\mu_3\):</strong> Used to measure Skewness.</li>
+                        <li><strong>\(\mu_4\):</strong> Used to measure Kurtosis.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.3: Raw Moments -->
+        <section id="raw-moments" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.3</span> Raw Moments</h2>
+                <div class="english-content">
+                    <p><strong>Raw Moments</strong> (or Moments about any point \(A\)) are calculated when the arithmetic mean is not a whole number or when we want to calculate moments about zero. Moments about zero are specifically called <strong>Moments about Origin</strong>.</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p><strong>Raw Moments</strong> (या किसी भी point \(A\) के परितः moments) तब calculate किए जाते हैं जब arithmetic mean एक whole number नहीं होता है या जब हम zero के परितः moments calculate करना चाहते हैं। zero के परितः moments को विशेष रूप से <strong>Moments about Origin</strong> कहा जाता है।</p>
+                </div>
+
+                <div class="formula-box">
+                    \[ \mu'_r = \frac{\sum f_i d_i^r}{N} \quad \text{where } d_i = X_i - A \]
+                </div>
+
+                <div class="example">
+                    <h4>Example: Moments about Origin</h4>
+                    <div class="english-content">
+                        <p>When \(A = 0\), the raw moments (\(\mu'_r\)) represent the arithmetic mean of the \(r^{th}\) power of the observations. For example, \(\mu'_1 = \frac{\sum f_i X_i}{N}\), which is the <strong>Arithmetic Mean</strong>.</p>
+                    </div>
+                    <div class="hinglish-content" style="display:none;">
+                        <p>जब \(A = 0\) होता है, तो raw moments (\(\mu'_r\)) observations की \(r^{th}\) power के arithmetic mean को represent करते हैं। उदाहरण के लिए, \(\mu'_1 = \frac{\sum f_i X_i}{N}\), जो कि <strong>Arithmetic Mean</strong> है।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.4: Relationship -->
+        <section id="moments-relationship" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.4</span> Relationship Between Central & Raw Moments</h2>
+                <div class="english-content">
+                    <p>It is often easier to calculate moments about an arbitrary point \(A\) and then convert them to central moments. The general relationship between central moments (\(\mu\)) and raw moments (\(\mu'\)) is given by the binomial expansion:</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p>अक्सर एक arbitrary point \(A\) के परितः moments calculate करना और फिर उन्हें central moments में बदलना आसान होता है। central moments (\(\mu\)) और raw moments (\(\mu'\)) के बीच सामान्य संबंध binomial expansion द्वारा दिया जाता है:</p>
+                </div>
+
+                <div class="formula-box">
+                    <p><strong>First Four Central Moments:</strong></p>
+                    <ol>
+                        <li>\(\mu_1 = 0\)</li>
+                        <li>\(\mu_2 = \mu'_2 - (\mu'_1)^2\)</li>
+                        <li>\(\mu_3 = \mu'_3 - 3\mu'_2\mu'_1 + 2(\mu'_1)^3\)</li>
+                        <li>\(\mu_4 = \mu'_4 - 4\mu'_3\mu'_1 + 6\mu'_2(\mu'_1)^2 - 3(\mu'_1)^4\)</li>
+                    </ol>
+                </div>
+
+                <div class="note">
+                    <div class="english-content">
+                        <p>Note: \(\mu'_1\) is the deviation of the mean from the arbitrary point \(A\), i.e., \(\mu'_1 = \bar{X} - A\).</p>
+                    </div>
+                    <div class="hinglish-content" style="display:none;">
+                        <p>Note: \(\mu'_1\) arbitrary point \(A\) से mean का deviation है, यानी, \(\mu'_1 = \bar{X} - A\).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Topic 4.5: Sheppard's Correction -->
+        <section id="sheppard-correction" class="topic-section">
+            <div class="section-card">
+                <h2><span class="section-num">4.5</span> Sheppard's Correction for Moments</h2>
+                <div class="english-content">
+                    <p>When calculating moments for grouped frequency distributions, we assume that the frequencies are concentrated at the mid-points of the classes. This assumption introduces a grouping error. <strong>Sheppard's Correction</strong> is applied to adjust these errors, provided the frequency distribution is continuous and tails off to zero at both ends.</p>
+                </div>
+                <div class="hinglish-content" style="display:none;">
+                    <p>Grouped frequency distributions के लिए moments calculate करते समय, हम मान लेते हैं कि frequencies classes के mid-points पर केंद्रित (concentrated) हैं। यह धारणा एक grouping error पैदा करती है। इन errors को adjust करने के लिए <strong>Sheppard's Correction</strong> लागू किया जाता है, बशर्ते frequency distribution continuous हो और दोनों सिरों पर zero तक कम हो जाए।</p>
+                </div>
+
+                <div class="formula-box">
+                    <p>Let \(h\) be the class interval width:</p>
+                    <ul>
+                        <li>Corrected \(\mu_2 = \mu_2(\text{obs}) - \frac{h^2}{12}\)</li>
+                        <li>Corrected \(\mu_3 = \mu_3(\text{obs})\) (No correction for odd moments)</li>
+                        <li>Corrected \(\mu_4 = \mu_4(\text{obs}) - \frac{h^2}{2}\mu_2(\text{obs}) + \frac{7h^4}{240}\)</li>
                     </ul>
                 </div>
             </div>
@@ -105,53 +191,46 @@
             <div class="section-card">
                 <h2><span class="section-num">4.6</span> Skewness</h2>
                 <div class="english-content">
-                    <p><strong>Skewness</strong> means 'lack of symmetry'. We study skewness to get an idea about the shape of the curve that can be drawn with the given data. If in a distribution, Mean = Median = Mode, then that distribution is called a <strong>symmetrical distribution</strong>.</p>
+                    <p><strong>Skewness</strong> is the measure of the asymmetry of a frequency distribution. A distribution is said to be skewed if it is not symmetrical. In a symmetrical distribution, Mean, Median, and Mode are all equal and coincide at the center.</p>
                 </div>
                 <div class="hinglish-content" style="display:none;">
-                    <p><strong>Skewness</strong> का अर्थ है 'symmetry की कमी' (lack of symmetry)। हम skewness का अध्ययन दिए गए data के साथ खींचे जा सकने वाले curve के shape के बारे में विचार प्राप्त करने के लिए करते हैं। यदि किसी distribution में, Mean = Median = Mode है, तो उस distribution को <strong>symmetrical distribution</strong> कहा जाता है।</p>
+                    <p><strong>Skewness</strong> frequency distribution की asymmetry (असममिति) का माप है। एक distribution को skewed कहा जाता है यदि वह symmetrical नहीं है। एक symmetrical distribution में, Mean, Median और Mode सभी समान होते हैं और केंद्र में एक साथ होते हैं।</p>
+                </div>
+
+                <div class="definition">
+                    <h4>Types of Skewness:</h4>
+                    <ol>
+                        <li><strong>Positive Skewness:</strong> Long tail on the right side. (Mean > Median > Mode)</li>
+                        <li><strong>Negative Skewness:</strong> Long tail on the left side. (Mode > Median > Mean)</li>
+                    </ol>
                 </div>
 
                 <div class="theorem">
-                    <h4>Karl Pearson's Coefficient of Skewness</h4>
+                    <h4>Measures of Skewness</h4>
+                    <div class="english-content">
+                        <p>The two most commonly used measures are based on Mean/Mode/SD (Karl Pearson) and Quartiles (Bowley).</p>
+                    </div>
+                    <div class="hinglish-content" style="display:none;">
+                        <p>सबसे अधिक उपयोग किए जाने वाले दो माप Mean/Mode/SD (Karl Pearson) और Quartiles (Bowley) पर आधारित हैं।</p>
+                    </div>
+
                     <div class="formula-box">
+                        <p><strong>1. Karl Pearson's Coefficient (\(S_k\)):</strong></p>
                         \[ S_k = \frac{\text{Mean} - \text{Mode}}{\sigma} \]
-                        <p>Or if Mode is ill-defined:</p>
-                        \[ S_k = \frac{3(\text{Mean} - \text{Median})}{\sigma} \]
+                        <p><strong>2. Bowley's Coefficient (\(S_b\)):</strong></p>
+                        \[ S_b = \frac{Q_3 + Q_1 - 2\text{Md}}{Q_3 - Q_1} \]
+                        <p><strong>3. Based on Moments (\(\beta_1\)):</strong></p>
+                        \[ \beta_1 = \frac{\mu_3^2}{\mu_2^3} \quad \text{and} \quad \gamma_1 = \sqrt{\beta_1} = \frac{\mu_3}{\sigma^3} \]
                     </div>
                 </div>
 
                 <div class="example">
-                    <h4>Example: Calculation of Karl-Pearson's Coefficient</h4>
-                    <p>Data of monthly income of farmers in a district of Haryana:</p>
-                    <table class="calculation-data">
-                        <thead>
-                            <tr>
-                                <th>Income (in thousands of ₹)</th>
-                                <th>10-15</th>
-                                <th>15-20</th>
-                                <th>20-25</th>
-                                <th>25-30</th>
-                                <th>30-35</th>
-                                <th>35-40</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Number of Farmers</td>
-                                <td>25</td>
-                                <td>35</td>
-                                <td>40</td>
-                                <td>30</td>
-                                <td>15</td>
-                                <td>5</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p><strong>Solution:</strong></p>
+                    <h4>Example: Skewness Analysis</h4>
                     <div class="english-content">
-                        <p>Mean = ₹22,500, Median = ₹21,800, \(\sigma\) = ₹6,200</p>
-                        <p>Karl-Pearson's \(S_k = \frac{3(22,500 - 21,800)}{6,200} = 0.34\)</p>
-                        <p>Since the coefficient is positive, the distribution is <strong>positively skewed</strong>.</p>
+                        <p>Consider a distribution of farmers' income in Haryana. If the majority of farmers have low income but a few have exceptionally high income, the tail will extend to the right, indicating <strong>Positive Skewness</strong>.</p>
+                    </div>
+                    <div class="hinglish-content" style="display:none;">
+                        <p>हरियाणा में किसानों की आय (income) के distribution पर विचार करें। यदि अधिकांश किसानों की आय कम है लेकिन कुछ की आय बहुत अधिक है, तो tail दाईं (right) ओर बढ़ जाएगी, जो <strong>Positive Skewness</strong> का संकेत देती है।</p>
                     </div>
                 </div>
             </div>
@@ -162,23 +241,25 @@
             <div class="section-card">
                 <h2><span class="section-num">4.7</span> Kurtosis</h2>
                 <div class="english-content">
-                    <p><strong>Kurtosis</strong> is used to describe the peakedness of a curve. It measures how much more peaked or more flat-topped the distribution is compared to the normal curve.</p>
+                    <p>While skewness measures the asymmetry, <strong>Kurtosis</strong> measures the 'peakedness' or 'flatness' of the distribution curve relative to the Normal Curve. The word is derived from the Greek 'Kurtos' meaning 'bulging' or 'curved'.</p>
                 </div>
                 <div class="hinglish-content" style="display:none;">
-                    <p><strong>Kurtosis</strong> का उपयोग curve की peakedness को describe करने के लिए किया जाता है। यह मापता है कि normal curve की तुलना में distribution कितना अधिक peaked या अधिक flat-topped है।</p>
+                    <p>जहाँ skewness asymmetry को मापती है, वहीं <strong>Kurtosis</strong> Normal Curve के सापेक्ष distribution curve की 'peakedness' (नुकीलापन) या 'flatness' (चपटापन) को मापती है। यह शब्द Greek के 'Kurtos' से लिया गया है जिसका अर्थ है 'bulging' या 'curved'।</p>
                 </div>
 
                 <div class="definition">
-                    <h4>Types of Kurtosis</h4>
+                    <h4>Three Types of Curves:</h4>
                     <ul>
-                        <li><strong>Mesokurtic:</strong> Normal curve (\(\beta_2 = 3\))</li>
-                        <li><strong>Leptokurtic:</strong> More peaked (\(\beta_2 > 3\))</li>
-                        <li><strong>Platykurtic:</strong> Flatter (\(\beta_2 < 3\))</li>
+                        <li><strong>Leptokurtic:</strong> Very peaked and narrow top. (\(\beta_2 > 3\))</li>
+                        <li><strong>Mesokurtic:</strong> Normal peakedness. (\(\beta_2 = 3\))</li>
+                        <li><strong>Platykurtic:</strong> Flat-topped and wide. (\(\beta_2 < 3\))</li>
                     </ul>
                 </div>
 
                 <div class="formula-box">
+                    <h4>Measure of Kurtosis (\(\beta_2\))</h4>
                     \[ \beta_2 = \frac{\mu_4}{\mu_2^2} \quad \text{and} \quad \gamma_2 = \beta_2 - 3 \]
+                    <p>If \(\gamma_2 > 0\), it's Leptokurtic. If \(\gamma_2 < 0\), it's Platykurtic. If \(\gamma_2 = 0\), it's Mesokurtic.</p>
                 </div>
             </div>
         </section>
@@ -188,32 +269,63 @@
             <div class="section-card">
                 <h2><span class="section-num">4.8</span> Exercises</h2>
                 
+                <!-- Q1 -->
                 <div class="question">
-                    <p>1. In a symmetrical distribution, Mean = 50. What are the values of Median and Mode?</p>
+                    <p><strong>1.</strong> The value of the first central moment (\(\mu_1\)) is always:</p>
                     <div class="mcq-options">
-                        <div class="option">A) 50 and 50</div>
-                        <div class="option">B) 40 and 60</div>
-                        <div class="option">C) 0 and 100</div>
-                        <div class="option">D) Cannot be determined</div>
+                        <div class="option">A) One (1)</div>
+                        <div class="option">B) Zero (0)</div>
+                        <div class="option">C) Variance</div>
+                        <div class="option">D) Standard Deviation</div>
                     </div>
                     <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer ▼</button>
                     <div class="answer">
-                        <p>Correct Answer: <strong>A) 50 and 50</strong></p>
-                        <p>In a symmetrical distribution, Mean = Median = Mode.</p>
+                        <p>Correct Answer: <strong>B) Zero (0)</strong></p>
+                        <p>The sum of deviations from the arithmetic mean is always zero, hence \(\mu_1 = 0\).</p>
                     </div>
                 </div>
 
+                <!-- Q2 -->
                 <div class="question">
-                    <p>2. If \(\beta_2 > 3\), the distribution is:</p>
+                    <p><strong>2.</strong> For a Mesokurtic distribution, the value of \(\beta_2\) is:</p>
                     <div class="mcq-options">
-                        <div class="option">A) Mesokurtic</div>
-                        <div class="option">B) Leptokurtic</div>
-                        <div class="option">C) Platykurtic</div>
-                        <div class="option">D) Symmetrical</div>
+                        <div class="option">A) 0</div>
+                        <div class="option">B) < 3</div>
+                        <div class="option">C) 3</div>
+                        <div class="option">D) > 3</div>
                     </div>
                     <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer ▼</button>
                     <div class="answer">
-                        <p>Correct Answer: <strong>B) Leptokurtic</strong></p>
+                        <p>Correct Answer: <strong>C) 3</strong></p>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="question">
+                    <p><strong>3.</strong> If Mean = 45, Median = 48, and \(\sigma\) = 10, the Karl Pearson's Coefficient of Skewness is:</p>
+                    <div class="mcq-options">
+                        <div class="option">A) 0.9</div>
+                        <div class="option">B) -0.9</div>
+                        <div class="option">C) 0.3</div>
+                        <div class="option">D) -0.3</div>
+                    </div>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">Show Answer ▼</button>
+                    <div class="answer">
+                        <p>Correct Answer: <strong>B) -0.9</strong></p>
+                        <p>Calculation: \(S_k = \frac{3(\text{Mean} - \text{Median})}{\sigma} = \frac{3(45 - 48)}{10} = \frac{-9}{10} = -0.9\).</p>
+                    </div>
+                </div>
+
+                <!-- Descriptive Q -->
+                <div class="example">
+                    <h4>Numerical Exercise:</h4>
+                    <p>For a distribution, the first four moments about the point \(A = 5\) are 2, 20, 40, and 50. Calculate the central moments (\(\mu_2, \mu_3, \mu_4\)).</p>
+                    <button class="toggle-btn" onclick="toggleAnswer(this)">Show Solution ▼</button>
+                    <div class="answer">
+                        <p>Given: \(\mu'_1=2, \mu'_2=20, \mu'_3=40, \mu'_4=50\)</p>
+                        <p>1. \(\mu_2 = \mu'_2 - (\mu'_1)^2 = 20 - (2)^2 = 16\)</p>
+                        <p>2. \(\mu_3 = \mu'_3 - 3\mu'_2\mu'_1 + 2(\mu'_1)^3 = 40 - 3(20)(2) + 2(2)^3 = 40 - 120 + 16 = -64\)</p>
+                        <p>3. \(\mu_4 = \mu'_4 - 4\mu'_3\mu'_1 + 6\mu'_2(\mu'_1)^2 - 3(\mu'_1)^4 = 50 - 4(40)(2) + 6(20)(4) - 3(16) = 50 - 320 + 480 - 48 = 162\)</p>
                     </div>
                 </div>
             </div>
@@ -227,6 +339,14 @@
     </main>
 
     <script>
+        function setLanguage(lang) {
+            document.querySelectorAll('.english-content').forEach(el => el.style.display = lang === 'english' ? 'block' : 'none');
+            document.querySelectorAll('.hinglish-content').forEach(el => el.style.display = lang === 'hinglish' ? 'block' : 'none');
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.textContent.toLowerCase() === lang);
+            });
+        }
+
         function showTopic(id) {
             document.querySelectorAll('.topic-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
@@ -248,10 +368,10 @@
             const answer = btn.nextElementSibling;
             if (answer.classList.contains('show')) {
                 answer.classList.remove('show');
-                btn.innerHTML = 'Show Answer ▼';
+                btn.innerHTML = btn.innerHTML.includes('Solution') ? 'Show Solution ▼' : 'Show Answer ▼';
             } else {
                 answer.classList.add('show');
-                btn.innerHTML = 'Hide Answer ▲';
+                btn.innerHTML = btn.innerHTML.includes('Solution') ? 'Hide Solution ▲' : 'Hide Answer ▲';
             }
         }
 
