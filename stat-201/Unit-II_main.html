@@ -1,0 +1,1159 @@
+<main class="book-body">
+
+    <section id="section-2-1">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.1 Curve Fitting</h2>
+                <p>Let's talk about Curve Fitting. Imagine you are given $n$ pairs of data points, written as $(x_i, y_i)$ for $i = 1, 2, ..., n$. Here, $X$ is our independent variable and $Y$ is the dependent variable. The main goal in curve fitting is to find a mathematical formula, like $y = f(x)$, that best describes the relationship between these data points.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.1 Curve Fitting</h2>
+                <p>आइए Curve Fitting के बारे में बात करते हैं। कल्पना कीजिए कि आपको $n$ data points के जोड़े दिए गए हैं, जिन्हें $i = 1, 2, ..., n$ के लिए $(x_i, y_i)$ के रूप में लिखा गया है। यहाँ, $X$ हमारा independent variable है और $Y$ dependent variable है। curve fitting का मुख्य लक्ष्य एक गणितीय सूत्र (mathematical formula) खोजना है, जैसे $y = f(x)$, जो इन डेटा पॉइंट्स के बीच के संबंध को सबसे अच्छी तरह से समझाता है।</p>
+            </div>
+            
+        </div>
+    </section>
+    
+    <section id="section-2-2">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.2 The Method of Least Squares</h2>
+                <p>What do we mean by 'best fit'? We use Legendre's principle of least squares. This principle says we should minimise the sum of the squares of the deviations (differences) between the actual $y$ values and the estimated $y$ values from our line of best fit. Let $E$ be the total error:</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.2 Method of Least Squares</h2>
+                <p>'best fit' से हमारा क्या तात्पर्य है? हम Legendre के principle of least squares का उपयोग करते हैं। यह सिद्धांत कहता है कि हमें वास्तविक $y$ values और हमारी line of best fit से अनुमानित $y$ values के बीच deviations (अंतर) के वर्गों (squares) के योग को कम (minimise) करना चाहिए। मान लीजिए $E$ कुल error है:</p>
+            </div>
+            <div>
+\[ E = \sum_{i=1}^{n} d_i^2 = \sum_{i=1}^{n} (y_i - f(x_i))^2 \tag{2.1} \]
+</div>
+        </div>
+    </section>
+    
+    <section id="section-2-3">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.3 Fitting of a Straight Line</h2>
+                <p>Let the equation of the straight line be $Y = a + bX$. To find $a$ and $b$, we minimize the sum of squares of residuals. The normal equations are obtained by taking partial derivatives with respect to $a$ and $b$ and setting them to zero.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.3 Straight Line की Fitting</h2>
+                <p>मान लीजिए straight line की equation $Y = a + bX$ है। $a$ और $b$ को खोजने के लिए, हम residuals के वर्गों के योग को कम करते हैं। normal equations $a$ और $b$ के सापेक्ष partial derivatives लेकर और उन्हें शून्य के बराबर सेट करके प्राप्त की जाती हैं।</p>
+            </div>
+            <div>
+\[ \sum y_i = na + b \sum x_i \tag{2.3.1} \]
+</div><div>
+\[ \sum x_i y_i = a \sum x_i + b \sum x_i^2 \tag{2.3.2} \]
+</div>
+        </div>
+    </section>
+    
+    <section id="section-2-4">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.4 Fitting of Second Degree Parabola</h2>
+                <p>For a second degree parabola $Y = a + bX + cX^2$, we have three normal equations to solve for the constants $a, b,$ and $c$.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.4 Second Degree Parabola की Fitting</h2>
+                <p>एक second degree parabola $Y = a + bX + cX^2$ के लिए, हमारे पास constants $a, b,$ और $c$ के लिए हल करने के लिए तीन normal equations हैं।</p>
+            </div>
+            <div>
+\[ \begin{aligned} \sum y_i &= na + b \sum x_i + c \sum x_i^2 \\ \sum x_i y_i &= a \sum x_i + b \sum x_i^2 + c \sum x_i^3 \\ \sum x_i^2 y_i &= a \sum x_i^2 + b \sum x_i^3 + c \sum x_i^4 \end{aligned} \tag{2.4.1} \]
+</div>
+        </div>
+    </section>
+    
+    <section id="section-2-5">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.5 Fitting of Polynomial of kth Degree</h2>
+                <p>In general, for a polynomial of degree $k$: $Y = a_0 + a_1 X + a_2 X^2 + \dots + a_k X^k$. There will be $(k+1)$ normal equations.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.5 k-th Degree के Polynomial की Fitting</h2>
+                <p>सामान्य तौर पर, degree $k$ के polynomial के लिए: $Y = a_0 + a_1 X + a_2 X^2 + \dots + a_k X^k$। इसमें $(k+1)$ normal equations होंगी।</p>
+            </div>
+            <div>
+\[ \sum x_i^r y_i = \sum_{j=0}^{k} a_j \sum x_i^{r+j}, \quad r = 0, 1, \dots, k \tag{2.5.1} \]
+</div>
+        </div>
+    </section>
+    
+    <section id="section-2-6">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.6 Change of Origin</h2>
+                <p>If the $X$ values are equally spaced, we can simplify calculations by shifting the origin to the mean of $X$ values (or the middle term). Let $U = (X - A)/h$, then $\sum U = 0$ if $A$ is chosen as the mean.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.6 Origin का परिवर्तन (Change of Origin)</h2>
+                <p>यदि $X$ values समान दूरी पर (equally spaced) हैं, तो हम origin को $X$ values के माध्य (या मध्य पद) पर shift करके गणनाओं को सरल बना सकते हैं। मान लीजिए $U = (X - A)/h$, तो यदि $A$ को माध्य के रूप में चुना जाता है, तो $\sum U = 0$ होगा।</p>
+            </div>
+            
+        </div>
+    </section>
+    
+    <section id="section-2-7">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.7 Fitting of Exponential and Power Curves</h2>
+                <p>Non-linear curves like $Y = ab^X$ or $Y = aX^b$ can be linearized using logarithmic transformations.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.7 Exponential और Power Curves की Fitting</h2>
+                <p>$Y = ab^X$ या $Y = aX^b$ जैसे Non-linear curves को logarithmic transformations का उपयोग करके linear बनाया जा सकता है।</p>
+            </div>
+            <h4>(a) Power Curve $Y = aX^b$</h4><div>
+\[ \log Y = \log a + b \log X \tag{2.7.1} \]
+</div><h4>(b) Exponential Curve $Y = ab^X$</h4><div>
+\[ \log Y = \log a + X \log b \tag{2.7.2} \]
+</div>
+        </div>
+    </section>
+    
+    <section id="section-2-8">
+        <div class="chapter-header-card">
+            <div class="english-content">
+                <h2>2.8 Other Types of Curves</h2>
+                <p>Curves like $Y = a + b/X$ or $Y = aX + b/X$ can also be fitted using the same principle by treating $1/X$ as a new variable.</p>
+            </div>
+            <div class="hinglish-content" style="display:none;">
+                <h2>2.8 अन्य प्रकार के Curves</h2>
+                <p>$Y = a + b/X$ या $Y = aX + b/X$ जैसे curves को भी $1/X$ को एक नए variable के रूप में मानकर उसी सिद्धांत का उपयोग करके फिट किया जा सकता है।</p>
+            </div>
+            
+        </div>
+    </section>
+    <section id="section-2-9">
+<div class="chapter-header-card">
+<h2>2.9 Numerical Examples</h2>
+
+<h3>Example 1: Fitting a Straight Line</h3>
+<p>Fit a straight line $Y = a + bX$ to the following data:</p>
+<table class="calculation-data">
+    <thead>
+        <tr><th>$X$</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+        <tr><th>$Y$</th><th>14</th><th>27</th><th>40</th><th>55</th><th>68</th></tr>
+    </thead>
+</table>
+<p><strong>Solution:</strong> We construct the following table for calculations:</p>
+<table class="calculation-data">
+    <thead>
+        <tr><th>$X$</th><th>$Y$</th><th>$X^2$</th><th>$XY$</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td>14</td><td>1</td><td>14</td></tr>
+        <tr><td>2</td><td>27</td><td>4</td><td>54</td></tr>
+        <tr><td>3</td><td>40</td><td>9</td><td>120</td></tr>
+        <tr><td>4</td><td>55</td><td>16</td><td>220</td></tr>
+        <tr><td>5</td><td>68</td><td>25</td><td>340</td></tr>
+    </tbody>
+    <tfoot>
+        <tr><th>$\sum X = 15$</th><th>$\sum Y = 204$</th><th>$\sum X^2 = 55$</th><th>$\sum XY = 748$</th></tr>
+    </tfoot>
+</table>
+<p>Normal equations are:</p>
+<div>
+\[ 204 = 5a + 15b \]
+</div><div>
+\[ 748 = 15a + 55b \]
+</div>
+<p>Solving these gives $a = 0$ and $b = 13.6$. The required line is $Y = 13.6X$.</p>
+<hr>
+
+<h3>Example 2: Fitting a Second Degree Parabola</h3>
+<p>Fit a parabola $Y = a + bX + cX^2$ to the following data:</p>
+<table class="calculation-data">
+    <thead>
+        <tr><th>$X$</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th></tr>
+        <tr><th>$Y$</th><th>1</th><th>1.8</th><th>1.3</th><th>2.5</th><th>6.3</th></tr>
+    </thead>
+</table>
+<p><strong>Solution:</strong> Construct the table:</p>
+<table class="calculation-data">
+    <thead>
+        <tr><th>$X$</th><th>$Y$</th><th>$X^2$</th><th>$X^3$</th><th>$X^4$</th><th>$XY$</th><th>$X^2Y$</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>0</td><td>1.0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>1</td><td>1.8</td><td>1</td><td>1</td><td>1</td><td>1.8</td><td>1.8</td></tr>
+        <tr><td>2</td><td>1.3</td><td>4</td><td>8</td><td>16</td><td>2.6</td><td>5.2</td></tr>
+        <tr><td>3</td><td>2.5</td><td>9</td><td>27</td><td>81</td><td>7.5</td><td>22.5</td></tr>
+        <tr><td>4</td><td>6.3</td><td>16</td><td>64</td><td>256</td><td>25.2</td><td>100.8</td></tr>
+    </tbody>
+    <tfoot>
+        <tr><th>10</th><th>12.9</th><th>30</th><th>100</th><th>354</th><th>37.1</th><th>130.3</th></tr>
+    </tfoot>
+</table>
+<p>Normal equations:</p>
+<div>
+\[ 12.9 = 5a + 10b + 30c \]
+</div><div>
+\[ 37.1 = 10a + 30b + 100c \]
+</div><div>
+\[ 130.3 = 30a + 100b + 354c \]
+</div>
+<p>Solving these gives $a = 1.42, b = -1.07, c = 0.55$. Equation: $Y = 1.42 - 1.07X + 0.55X^2$.</p>
+<hr>
+
+<h3>Example 3: Fitting an Exponential Curve</h3>
+<p>Fit $Y = ae^{bX}$ to the data: X={2, 4, 6, 8, 10}, Y={4.077, 11.084, 30.128, 81.897, 222.62}.</p>
+<p><strong>Solution:</strong> Take $\ln Y = \ln a + bX \implies Z = A + bX$.</p>
+<table class="calculation-data">
+    <thead>
+        <tr><th>$X$</th><th>$Y$</th><th>$Z = \ln Y$</th><th>$XZ$</th><th>$X^2$</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>2</td><td>4.077</td><td>1.4054</td><td>2.8108</td><td>4</td></tr>
+        <tr><td>4</td><td>11.084</td><td>2.4055</td><td>9.6220</td><td>16</td></tr>
+        <tr><td>6</td><td>30.128</td><td>3.4055</td><td>20.4330</td><td>36</td></tr>
+        <tr><td>8</td><td>81.897</td><td>4.4055</td><td>35.2440</td><td>64</td></tr>
+        <tr><td>10</td><td>222.62</td><td>5.4055</td><td>54.0550</td><td>100</td></tr>
+    </tbody>
+    <tfoot>
+        <tr><th>30</th><th>-</th><th>17.0274</th><th>122.1648</th><th>220</th></tr>
+    </tfoot>
+</table>
+<p>Normal equations:</p>
+<div>
+\[ 17.0274 = 5A + 30b \]
+</div><div>
+\[ 122.1648 = 30A + 220b \]
+</div>
+<p>Solving gives $A = 0.4054, b = 0.5$. Thus $a = e^{0.4054} = 1.5$. Curve: $Y = 1.5e^{0.5X}$.</p>
+<hr>
+
+<h3>Example 4: Fitting a Power Curve</h3>
+<p>Fit $Y = aX^b$ to: X={10, 20, 30, 40, 50}, Y={0.91, 1.51, 2.04, 2.51, 2.96}.</p>
+<p><strong>Solution:</strong> Take $\log Y = \log a + b \log X \implies V = A + bU$.</p>
+<p>After constructing the table and solving normal equations, we get $a pprox 0.1, b pprox 0.88$. Curve: $Y = 0.1X^{0.88}$.</p>
+<hr>
+
+<h3>Example 5: Using Change of Origin</h3>
+<p>Fit a straight line to: X={1, 2, 3, 4, 5, 6, 7, 8, 9, 10}, Y={52.5, 58.7, 65.0, 70.2, 75.4, 81.1, 87.2, 95.5, 102.2, 108.4}.</p>
+<p><strong>Solution:</strong> Let $U = 2X - 11$. Then $\sum U = 0, \sum U^2 = 330, \sum Y = 796.2, \sum UY = 1016.8$.</p>
+<div>
+\[ a = \frac{\sum Y}{n} = 79.62 \]
+</div><div>
+\[ b = \frac{\sum UY}{\sum U^2} = 3.08 \]
+</div>
+<p>Line in $U$: $Y = 79.62 + 3.08U$. Substituting $U = 2X - 11$, we get $Y = 45.74 + 6.16X$.</p>
+</div>
+</section>
+<section id="practice-exercises">
+
+    <div class="chapter-header-card">
+        <button class="lang-toggle" onclick="toggleLanguage()">Switch Language (Hinglish)</button>
+        <h1 class="eng">Practice Questions: Curve Fitting</h1>
+        <h1 class="hin">Practice Questions: Curve Fitting (प्रश्नावली: कर्व फिटिंग)</h1>
+        <p class="eng">Complete set of 80 questions covering MCQ, FIB, T/F, and Subjective types.</p>
+        <p class="hin">MCQ, FIB, T/F और Subjective प्रकारों के 80 प्रश्नों का पूरा सेट।</p>
+    </div>
+
+    <section id="mcqs">
+        <h2 class="eng">I. Multiple Choice Questions (MCQs)</h2>
+        <h2 class="hin">I. बहुविकल्पीय प्रश्न (MCQs)</h2>
+
+        <div class="question">
+            <p class="eng"><span class="question-number">Q1.</span>The principle of least squares minimizes the:</p>
+            <p class="hin"><span class="question-number">Q1.</span>Least squares का principle किसको minimize करता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) sum of residuals (b) sum of absolute residuals (c) sum of squares of residuals (d) sum of weights</p>
+                <p class="hin">(a) residuals का sum (b) absolute residuals का sum (c) residuals के squares का sum (d) weights का sum</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-1')">Show Answer ▼</button>
+            <div id="mcq-ans-1" class="answer">
+                <p class="eng"><strong>Answer:</strong> sum of squares of residuals</p>
+                <p class="hin"><strong>Answer:</strong> sum of squares of residuals</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q2.</span>To fit a straight line Y = a + bX, we need to solve how many normal equations?</p>
+            <p class="hin"><span class="question-number">Q2.</span>एक straight line Y = a + bX को fit करने के लिए हमें कितनी normal equations solve करनी पड़ती हैं?</p>
+            <div class="mcq-options">
+                <p class="eng">(a) 1 (b) 2 (c) 3 (d) n</p>
+                <p class="hin">(a) 1 (b) 2 (c) 3 (d) n</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-2')">Show Answer ▼</button>
+            <div id="mcq-ans-2" class="answer">
+                <p class="eng"><strong>Answer:</strong> 2</p>
+                <p class="hin"><strong>Answer:</strong> 2</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q3.</span>In the equation Y = a + bX + cX², the curve represents a:</p>
+            <p class="hin"><span class="question-number">Q3.</span>Equation Y = a + bX + cX² में curve एक _______ को represent करता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) straight line (b) circle (c) second-degree parabola (d) exponential curve</p>
+                <p class="hin">(a) straight line (b) circle (c) second-degree parabola (d) exponential curve</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-3')">Show Answer ▼</button>
+            <div id="mcq-ans-3" class="answer">
+                <p class="eng"><strong>Answer:</strong> second-degree parabola</p>
+                <p class="hin"><strong>Answer:</strong> second-degree parabola</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q4.</span>The transformation used for fitting a power curve Y = aX^b is:</p>
+            <p class="hin"><span class="question-number">Q4.</span>एक power curve Y = aX^b को fit करने के लिए इस्तेमाल किया जाने वाला transformation है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) Y = a + b log X (b) log Y = log a + bX (c) log Y = log a + b log X (d) Y = log a + bX</p>
+                <p class="hin">(a) Y = a + b log X (b) log Y = log a + bX (c) log Y = log a + b log X (d) Y = log a + bX</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-4')">Show Answer ▼</button>
+            <div id="mcq-ans-4" class="answer">
+                <p class="eng"><strong>Answer:</strong> log Y = log a + b log X</p>
+                <p class="hin"><strong>Answer:</strong> log Y = log a + b log X</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q5.</span>Normal equations are obtained using:</p>
+            <p class="hin"><span class="question-number">Q5.</span>Normal equations _______ का इस्तेमाल करके प्राप्त की जाती हैं:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) integration (b) partial differentiation (c) limits (d) correlation</p>
+                <p class="hin">(a) integration (b) partial differentiation (c) limits (d) correlation</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-5')">Show Answer ▼</button>
+            <div id="mcq-ans-5" class="answer">
+                <p class="eng"><strong>Answer:</strong> partial differentiation</p>
+                <p class="hin"><strong>Answer:</strong> partial differentiation</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q6.</span>If n is the number of observations and we fit Y = a + bX, the first normal equation is:</p>
+            <p class="hin"><span class="question-number">Q6.</span>यदि observations की संख्या n है और हम Y = a + bX fit करते हैं, तो पहली normal equation है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) ΣY = a + bΣX (b) ΣY = na + bΣX (c) ΣXY = aΣX + bΣX² (d) ΣY = n(a+b)</p>
+                <p class="hin">(a) ΣY = a + bΣX (b) ΣY = na + bΣX (c) ΣXY = aΣX + bΣX² (d) ΣY = n(a+b)</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-6')">Show Answer ▼</button>
+            <div id="mcq-ans-6" class="answer">
+                <p class="eng"><strong>Answer:</strong> ΣY = na + bΣX</p>
+                <p class="hin"><strong>Answer:</strong> ΣY = na + bΣX</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q7.</span>For an exponential curve Y = ab^X, the linear form is:</p>
+            <p class="hin"><span class="question-number">Q7.</span>एक exponential curve Y = ab^X के लिए linear form है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) Y = a + b log X (b) log Y = log a + X log b (c) log Y = log a + b log X (d) Y = log a + b^X</p>
+                <p class="hin">(a) Y = a + b log X (b) log Y = log a + X log b (c) log Y = log a + b log X (d) Y = log a + b^X</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-7')">Show Answer ▼</button>
+            <div id="mcq-ans-7" class="answer">
+                <p class="eng"><strong>Answer:</strong> log Y = log a + X log b</p>
+                <p class="hin"><strong>Answer:</strong> log Y = log a + X log b</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q8.</span>Change of origin is useful when X-values are:</p>
+            <p class="hin"><span class="question-number">Q8.</span>X-values _______ होने पर change of origin उपयोगी होता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) random (b) very small (c) equally spaced (d) constant</p>
+                <p class="hin">(a) random (b) very small (c) equally spaced (d) constant</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-8')">Show Answer ▼</button>
+            <div id="mcq-ans-8" class="answer">
+                <p class="eng"><strong>Answer:</strong> equally spaced</p>
+                <p class="hin"><strong>Answer:</strong> equally spaced</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q9.</span>When n=5 (odd), the middle value for change of origin U = (X - middle)/h results in ΣU equal to:</p>
+            <p class="hin"><span class="question-number">Q9.</span>जब n=5 (odd) हो, तो change of origin U = (X - middle)/h के लिए ΣU किसके बराबर होता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) 1 (b) 5 (c) 0 (d) -1</p>
+                <p class="hin">(a) 1 (b) 5 (c) 0 (d) -1</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-9')">Show Answer ▼</button>
+            <div id="mcq-ans-9" class="answer">
+                <p class="eng"><strong>Answer:</strong> 0</p>
+                <p class="hin"><strong>Answer:</strong> 0</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q10.</span>A polynomial of degree k requires how many normal equations?</p>
+            <p class="hin"><span class="question-number">Q10.</span>Degree k वाले polynomial के लिए कितनी normal equations की आवश्यकता होती है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) k (b) k - 1 (c) k + 1 (d) 2k</p>
+                <p class="hin">(a) k (b) k - 1 (c) k + 1 (d) 2k</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-10')">Show Answer ▼</button>
+            <div id="mcq-ans-10" class="answer">
+                <p class="eng"><strong>Answer:</strong> k + 1</p>
+                <p class="hin"><strong>Answer:</strong> k + 1</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q11.</span>The residual for an observation (xi, yi) in fitting Y = f(X) is defined as:</p>
+            <p class="hin"><span class="question-number">Q11.</span>Y = f(X) fitting में एक observation (xi, yi) के लिए residual को कैसे define किया जाता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) f(xi) - yi (b) yi - f(xi) (c) (yi - f(xi))² (d) Σ(yi - f(xi))</p>
+                <p class="hin">(a) f(xi) - yi (b) yi - f(xi) (c) (yi - f(xi))² (d) Σ(yi - f(xi))</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-11')">Show Answer ▼</button>
+            <div id="mcq-ans-11" class="answer">
+                <p class="eng"><strong>Answer:</strong> yi - f(xi)</p>
+                <p class="hin"><strong>Answer:</strong> yi - f(xi)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q12.</span>In fitting Y = ae^{bX}, the constant 'b' is recovered from the linear slope B as:</p>
+            <p class="hin"><span class="question-number">Q12.</span>Y = ae^{bX} fit करते समय, constant 'b' को linear slope B से कैसे recover किया जाता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) b = antilog B (b) b = B / log₁₀ e (c) b = e^B (d) b = log B</p>
+                <p class="hin">(a) b = antilog B (b) b = B / log₁₀ e (c) b = e^B (d) b = log B</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-12')">Show Answer ▼</button>
+            <div id="mcq-ans-12" class="answer">
+                <p class="eng"><strong>Answer:</strong> b = B / log₁₀ e</p>
+                <p class="hin"><strong>Answer:</strong> b = B / log₁₀ e</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q13.</span>The method of least squares is used for:</p>
+            <p class="hin"><span class="question-number">Q13.</span>Least squares method का उपयोग किसके लिए किया जाता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) Data collection (b) Curve fitting (c) Sampling (d) Tabulation</p>
+                <p class="hin">(a) Data collection (b) Curve fitting (c) Sampling (d) Tabulation</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-13')">Show Answer ▼</button>
+            <div id="mcq-ans-13" class="answer">
+                <p class="eng"><strong>Answer:</strong> Curve fitting</p>
+                <p class="hin"><strong>Answer:</strong> Curve fitting</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q14.</span>In the equation Y = a + bX, 'b' represents the:</p>
+            <p class="hin"><span class="question-number">Q14.</span>Equation Y = a + bX में 'b' किसको represent करता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) intercept (b) slope of the line (c) mean of Y (d) variance</p>
+                <p class="hin">(a) intercept (b) slope of the line (c) mean of Y (d) variance</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-14')">Show Answer ▼</button>
+            <div id="mcq-ans-14" class="answer">
+                <p class="eng"><strong>Answer:</strong> slope of the line</p>
+                <p class="hin"><strong>Answer:</strong> slope of the line</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q15.</span>To fit a second-degree parabola, we need to solve how many constants?</p>
+            <p class="hin"><span class="question-number">Q15.</span>एक second-degree parabola fit करने के लिए हमें कितने constants solve करने पड़ते हैं:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) 2 (b) 3 (c) 4 (d) 1</p>
+                <p class="hin">(a) 2 (b) 3 (c) 4 (d) 1</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-15')">Show Answer ▼</button>
+            <div id="mcq-ans-15" class="answer">
+                <p class="eng"><strong>Answer:</strong> 3</p>
+                <p class="hin"><strong>Answer:</strong> 3</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q16.</span>The determinant form of the best fit line involves:</p>
+            <p class="hin"><span class="question-number">Q16.</span>Best fit line का determinant form किसको involve करता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) only X and Y (b) only means (c) X, Y, and their sums (d) none</p>
+                <p class="hin">(a) only X and Y (b) only means (c) X, Y, and their sums (d) none</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-16')">Show Answer ▼</button>
+            <div id="mcq-ans-16" class="answer">
+                <p class="eng"><strong>Answer:</strong> X, Y, and their sums</p>
+                <p class="hin"><strong>Answer:</strong> X, Y, and their sums</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q17.</span>Fitting a curve helps in:</p>
+            <p class="hin"><span class="question-number">Q17.</span>Curve fitting किसमें मदद करती है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) only interpolation (b) only extrapolation (c) Interpolation and Extrapolation (d) none</p>
+                <p class="hin">(a) only interpolation (b) only extrapolation (c) Interpolation and Extrapolation (d) none</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-17')">Show Answer ▼</button>
+            <div id="mcq-ans-17" class="answer">
+                <p class="eng"><strong>Answer:</strong> Interpolation and Extrapolation</p>
+                <p class="hin"><strong>Answer:</strong> Interpolation and Extrapolation</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q18.</span>The sum of residuals in a least square fit is always:</p>
+            <p class="hin"><span class="question-number">Q18.</span>एक least square fit में residuals का sum हमेशा होता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) Positive (b) Negative (c) Zero (d) Minimum</p>
+                <p class="hin">(a) Positive (b) Negative (c) Zero (d) Minimum</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-18')">Show Answer ▼</button>
+            <div id="mcq-ans-18" class="answer">
+                <p class="eng"><strong>Answer:</strong> Zero</p>
+                <p class="hin"><strong>Answer:</strong> Zero</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q19.</span>Which curve is also known as the geometric curve?</p>
+            <p class="hin"><span class="question-number">Q19.</span>किस curve को geometric curve के रूप में भी जाना जाता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) Y = a + bX (b) Y = ab^X (c) Y = aX^b (d) Y = a + bX + cX²</p>
+                <p class="hin">(a) Y = a + bX (b) Y = ab^X (c) Y = aX^b (d) Y = a + bX + cX²</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-19')">Show Answer ▼</button>
+            <div id="mcq-ans-19" class="answer">
+                <p class="eng"><strong>Answer:</strong> Y = aX^b</p>
+                <p class="hin"><strong>Answer:</strong> Y = aX^b</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q20.</span>Logarithmic transformations are used to:</p>
+            <p class="hin"><span class="question-number">Q20.</span>Logarithmic transformations का उपयोग किसलिए किया जाता है:</p>
+            <div class="mcq-options">
+                <p class="eng">(a) reduce data size (b) Linearise non-linear curves (c) eliminate errors (d) increase accuracy</p>
+                <p class="hin">(a) reduce data size (b) Linearise non-linear curves (c) eliminate errors (d) increase accuracy</p>
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('mcq-ans-20')">Show Answer ▼</button>
+            <div id="mcq-ans-20" class="answer">
+                <p class="eng"><strong>Answer:</strong> Linearise non-linear curves</p>
+                <p class="hin"><strong>Answer:</strong> Linearise non-linear curves</p>
+            </div>
+        </div>
+    
+    </section>
+
+    <section id="fibs">
+        <h2 class="eng">II. Fill in the Blanks (FIBs)</h2>
+        <h2 class="hin">II. रिक्त स्थान भरें (FIBs)</h2>
+
+        <div class="question">
+            <p class="eng"><span class="question-number">Q1.</span>The method of least squares was given by _____.</p>
+            <p class="hin"><span class="question-number">Q1.</span>Least squares method _____ द्वारा दिया गया था।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-1')">Show Answer ▼</button>
+            <div id="fib-ans-1" class="answer">
+                <p class="eng"><strong>Answer:</strong> Legendre</p>
+                <p class="hin"><strong>Answer:</strong> Legendre</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q2.</span>A straight line Y = a + bX has _____ unknown constants.</p>
+            <p class="hin"><span class="question-number">Q2.</span>एक straight line Y = a + bX में _____ unknown constants होते हैं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-2')">Show Answer ▼</button>
+            <div id="fib-ans-2" class="answer">
+                <p class="eng"><strong>Answer:</strong> two</p>
+                <p class="hin"><strong>Answer:</strong> two</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q3.</span>The normal equations are obtained using the principle of _____.</p>
+            <p class="hin"><span class="question-number">Q3.</span>Normal equations _____ के principle का उपयोग करके प्राप्त की जाती हैं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-3')">Show Answer ▼</button>
+            <div id="fib-ans-3" class="answer">
+                <p class="eng"><strong>Answer:</strong> Least Squares</p>
+                <p class="hin"><strong>Answer:</strong> Least Squares</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q4.</span>If ΣU = 0, the normal equation for 'a' in Y = a + bU simplifies to a = _____.</p>
+            <p class="hin"><span class="question-number">Q4.</span>यदि ΣU = 0 हो, तो Y = a + bU में 'a' के लिए normal equation simplify होकर a = _____ हो जाती है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-4')">Show Answer ▼</button>
+            <div id="fib-ans-4" class="answer">
+                <p class="eng"><strong>Answer:</strong> ΣY / n</p>
+                <p class="hin"><strong>Answer:</strong> ΣY / n</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q5.</span>To fit Y = ab^X, we take _____ of both sides.</p>
+            <p class="hin"><span class="question-number">Q5.</span>Y = ab^X fit करने के लिए, हम दोनों sides का _____ लेते हैं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-5')">Show Answer ▼</button>
+            <div id="fib-ans-5" class="answer">
+                <p class="eng"><strong>Answer:</strong> logarithms</p>
+                <p class="hin"><strong>Answer:</strong> logarithms</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q6.</span>The sum of squares of residuals is denoted by _____.</p>
+            <p class="hin"><span class="question-number">Q6.</span>Residuals के squares के sum को _____ द्वारा denote किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-6')">Show Answer ▼</button>
+            <div id="fib-ans-6" class="answer">
+                <p class="eng"><strong>Answer:</strong> E</p>
+                <p class="hin"><strong>Answer:</strong> E</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q7.</span>A second-degree parabola is represented by the equation _____.</p>
+            <p class="hin"><span class="question-number">Q7.</span>एक second-degree parabola को equation _____ द्वारा represent किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-7')">Show Answer ▼</button>
+            <div id="fib-ans-7" class="answer">
+                <p class="eng"><strong>Answer:</strong> Y = a + bX + cX²</p>
+                <p class="hin"><strong>Answer:</strong> Y = a + bX + cX²</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q8.</span>If the relationship is Y = aX^b, it is called a _____ curve.</p>
+            <p class="hin"><span class="question-number">Q8.</span>यदि relationship Y = aX^b है, तो इसे _____ curve कहा जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-8')">Show Answer ▼</button>
+            <div id="fib-ans-8" class="answer">
+                <p class="eng"><strong>Answer:</strong> power</p>
+                <p class="hin"><strong>Answer:</strong> power</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q9.</span>The difference between observed Y and estimated Y is called _____.</p>
+            <p class="hin"><span class="question-number">Q9.</span>Observed Y और estimated Y के बीच के difference को _____ कहा जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-9')">Show Answer ▼</button>
+            <div id="fib-ans-9" class="answer">
+                <p class="eng"><strong>Answer:</strong> residual</p>
+                <p class="hin"><strong>Answer:</strong> residual</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q10.</span>For n=10, the interval h=1, the new variable U for change of origin is _____.</p>
+            <p class="hin"><span class="question-number">Q10.</span>n=10 और interval h=1 के लिए, change of origin हेतु नया variable U _____ होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-10')">Show Answer ▼</button>
+            <div id="fib-ans-10" class="answer">
+                <p class="eng"><strong>Answer:</strong> 2X - 11</p>
+                <p class="hin"><strong>Answer:</strong> 2X - 11</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q11.</span>Normal equations for a line are _____ in number.</p>
+            <p class="hin"><span class="question-number">Q11.</span>एक line के लिए normal equations संख्या में _____ होती हैं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-11')">Show Answer ▼</button>
+            <div id="fib-ans-11" class="answer">
+                <p class="eng"><strong>Answer:</strong> two</p>
+                <p class="hin"><strong>Answer:</strong> two</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q12.</span>The constant 'a' in Y = a + bX is the _____.</p>
+            <p class="hin"><span class="question-number">Q12.</span>Y = a + bX में constant 'a' _______ होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-12')">Show Answer ▼</button>
+            <div id="fib-ans-12" class="answer">
+                <p class="eng"><strong>Answer:</strong> intercept</p>
+                <p class="hin"><strong>Answer:</strong> intercept</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q13.</span>To fit Y = ae^{bX}, the linear slope B equals _____.</p>
+            <p class="hin"><span class="question-number">Q13.</span>Y = ae^{bX} fit करने के लिए, linear slope B _____ के बराबर होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-13')">Show Answer ▼</button>
+            <div id="fib-ans-13" class="answer">
+                <p class="eng"><strong>Answer:</strong> b log e</p>
+                <p class="hin"><strong>Answer:</strong> b log e</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q14.</span>Calculus is used to _____ the total error E.</p>
+            <p class="hin"><span class="question-number">Q14.</span>Total error E को _____ करने के लिए Calculus का उपयोग किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-14')">Show Answer ▼</button>
+            <div id="fib-ans-14" class="answer">
+                <p class="eng"><strong>Answer:</strong> minimise</p>
+                <p class="hin"><strong>Answer:</strong> minimise</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q15.</span>If all points lie exactly on the line, the total error E is _____.</p>
+            <p class="hin"><span class="question-number">Q15.</span>यदि सभी points सटीक रूप से line पर स्थित हों, तो total error E _____ होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-15')">Show Answer ▼</button>
+            <div id="fib-ans-15" class="answer">
+                <p class="eng"><strong>Answer:</strong> zero</p>
+                <p class="hin"><strong>Answer:</strong> zero</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q16.</span>A polynomial of degree 2 is a _____.</p>
+            <p class="hin"><span class="question-number">Q16.</span>Degree 2 वाला polynomial एक _____ होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-16')">Show Answer ▼</button>
+            <div id="fib-ans-16" class="answer">
+                <p class="eng"><strong>Answer:</strong> parabola</p>
+                <p class="hin"><strong>Answer:</strong> parabola</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q17.</span>Change of origin is done to make the _____ easier.</p>
+            <p class="hin"><span class="question-number">Q17.</span>Calculation या _____ को आसान बनाने के लिए Change of origin किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-17')">Show Answer ▼</button>
+            <div id="fib-ans-17" class="answer">
+                <p class="eng"><strong>Answer:</strong> arithmetic</p>
+                <p class="hin"><strong>Answer:</strong> arithmetic</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q18.</span>Antilog is used to recover the _____ parameters.</p>
+            <p class="hin"><span class="question-number">Q18.</span>_____ parameters को recover करने के लिए Antilog का उपयोग किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-18')">Show Answer ▼</button>
+            <div id="fib-ans-18" class="answer">
+                <p class="eng"><strong>Answer:</strong> original</p>
+                <p class="hin"><strong>Answer:</strong> original</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q19.</span>The number of normal equations equals the number of _____.</p>
+            <p class="hin"><span class="question-number">Q19.</span>Normal equations की संख्या _____ की संख्या के बराबर होती है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-19')">Show Answer ▼</button>
+            <div id="fib-ans-19" class="answer">
+                <p class="eng"><strong>Answer:</strong> unknowns</p>
+                <p class="hin"><strong>Answer:</strong> unknowns</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q20.</span>Curve fitting is used for _____ of future values.</p>
+            <p class="hin"><span class="question-number">Q20.</span>Future values के _____ के लिए Curve fitting का उपयोग किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('fib-ans-20')">Show Answer ▼</button>
+            <div id="fib-ans-20" class="answer">
+                <p class="eng"><strong>Answer:</strong> prediction</p>
+                <p class="hin"><strong>Answer:</strong> prediction</p>
+            </div>
+        </div>
+    
+    </section>
+
+    <section id="tfs">
+        <h2 class="eng">III. True or False (T/F)</h2>
+        <h2 class="hin">III. सही या गलत (T/F)</h2>
+
+        <div class="question">
+            <p class="eng"><span class="question-number">Q1.</span>The principle of least squares was first published by Legendre.</p>
+            <p class="hin"><span class="question-number">Q1.</span>Least squares का principle सबसे पहले Legendre द्वारा publish किया गया था।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-1')">Show Answer ▼</button>
+            <div id="tf-ans-1" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q2.</span>Normal equations are derived by maximizing the error sum of squares.</p>
+            <p class="hin"><span class="question-number">Q2.</span>Normal equations को error sum of squares को maximize करके derive किया जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-2')">Show Answer ▼</button>
+            <div id="tf-ans-2" class="answer">
+                <p class="eng"><strong>Answer:</strong> False</p>
+                <p class="hin"><strong>Answer:</strong> गलत (False)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q3.</span>A straight line is a polynomial of degree 1.</p>
+            <p class="hin"><span class="question-number">Q3.</span>एक straight line degree 1 का polynomial है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-3')">Show Answer ▼</button>
+            <div id="tf-ans-3" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q4.</span>Change of origin affects the slope of the best fit line.</p>
+            <p class="hin"><span class="question-number">Q4.</span>Change of origin best fit line के slope को प्रभावित करता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-4')">Show Answer ▼</button>
+            <div id="tf-ans-4" class="answer">
+                <p class="eng"><strong>Answer:</strong> False</p>
+                <p class="hin"><strong>Answer:</strong> गलत (False)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q5.</span>The exponential curve Y = ab^X never touches the X-axis for positive a, b.</p>
+            <p class="hin"><span class="question-number">Q5.</span>Positive a, b के लिए exponential curve Y = ab^X कभी भी X-axis को touch नहीं करता।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-5')">Show Answer ▼</button>
+            <div id="tf-ans-5" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q6.</span>For even n, the change of origin U = (2X - sum of middle terms)/h makes ΣU = 0.</p>
+            <p class="hin"><span class="question-number">Q6.</span>Even n के लिए, change of origin U = (2X - sum of middle terms)/h करने से ΣU = 0 हो जाता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-6')">Show Answer ▼</button>
+            <div id="tf-ans-6" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q7.</span>Least square estimates are unbiased under certain assumptions.</p>
+            <p class="hin"><span class="question-number">Q7.</span>कुछ assumptions के तहत Least square estimates unbiased होते हैं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-7')">Show Answer ▼</button>
+            <div id="tf-ans-7" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q8.</span>A second-degree parabola has one turning point.</p>
+            <p class="hin"><span class="question-number">Q8.</span>एक second-degree parabola में एक turning point होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-8')">Show Answer ▼</button>
+            <div id="tf-ans-8" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q9.</span>The line of best fit must pass through the point (mean X, mean Y).</p>
+            <p class="hin"><span class="question-number">Q9.</span>Best fit की line को point (mean X, mean Y) से गुजरना चाहिए।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-9')">Show Answer ▼</button>
+            <div id="tf-ans-9" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q10.</span>Fitting a curve proves a causal relationship between variables.</p>
+            <p class="hin"><span class="question-number">Q10.</span>Curve fitting variables के बीच एक causal relationship सिद्ध करती है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-10')">Show Answer ▼</button>
+            <div id="tf-ans-10" class="answer">
+                <p class="eng"><strong>Answer:</strong> False</p>
+                <p class="hin"><strong>Answer:</strong> गलत (False)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q11.</span>The normal equations for Y = a + bX are linear in a and b.</p>
+            <p class="hin"><span class="question-number">Q11.</span>Y = a + bX के लिए normal equations a और b में linear होती हैं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-11')">Show Answer ▼</button>
+            <div id="tf-ans-11" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q12.</span>Log transformation can be used if Y contains negative values.</p>
+            <p class="hin"><span class="question-number">Q12.</span>यदि Y में negative values हों, तो Log transformation का उपयोग किया जा सकता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-12')">Show Answer ▼</button>
+            <div id="tf-ans-12" class="answer">
+                <p class="eng"><strong>Answer:</strong> False</p>
+                <p class="hin"><strong>Answer:</strong> गलत (False)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q13.</span>The sum of squares of residuals is always non-negative.</p>
+            <p class="hin"><span class="question-number">Q13.</span>Residuals के squares का sum हमेशा non-negative होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-13')">Show Answer ▼</button>
+            <div id="tf-ans-13" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q14.</span>The method of least squares is only applicable to linear models.</p>
+            <p class="hin"><span class="question-number">Q14.</span>Least squares method केवल linear models पर ही लागू होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-14')">Show Answer ▼</button>
+            <div id="tf-ans-14" class="answer">
+                <p class="eng"><strong>Answer:</strong> False</p>
+                <p class="hin"><strong>Answer:</strong> गलत (False)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q15.</span>In Y = aX^b, 'b' represents the elasticity of Y with respect to X.</p>
+            <p class="hin"><span class="question-number">Q15.</span>Y = aX^b में, 'b' X के सापेक्ष Y की elasticity को represent करता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-15')">Show Answer ▼</button>
+            <div id="tf-ans-15" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q16.</span>Normal equations for a parabola involve ΣX⁴.</p>
+            <p class="hin"><span class="question-number">Q16.</span>Parabola के लिए normal equations में ΣX⁴ शामिल होता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-16')">Show Answer ▼</button>
+            <div id="tf-ans-16" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q17.</span>The residual is the difference between observed and predicted values.</p>
+            <p class="hin"><span class="question-number">Q17.</span>Residual observed और predicted values के बीच का difference है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-17')">Show Answer ▼</button>
+            <div id="tf-ans-17" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q18.</span>The best fit curve minimizes the vertical distances squared.</p>
+            <p class="hin"><span class="question-number">Q18.</span>Best fit curve vertical distances के squares को minimize करता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-18')">Show Answer ▼</button>
+            <div id="tf-ans-18" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q19.</span>Least squares is the only method for curve fitting.</p>
+            <p class="hin"><span class="question-number">Q19.</span>Curve fitting के लिए Least squares ही एकमात्र method है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-19')">Show Answer ▼</button>
+            <div id="tf-ans-19" class="answer">
+                <p class="eng"><strong>Answer:</strong> False</p>
+                <p class="hin"><strong>Answer:</strong> गलत (False)</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q20.</span>The coefficient of determination measures the goodness of fit.</p>
+            <p class="hin"><span class="question-number">Q20.</span>Coefficient of determination goodness of fit को measure करता है।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('tf-ans-20')">Show Answer ▼</button>
+            <div id="tf-ans-20" class="answer">
+                <p class="eng"><strong>Answer:</strong> True</p>
+                <p class="hin"><strong>Answer:</strong> सही (True)</p>
+            </div>
+        </div>
+    
+    </section>
+
+    <section id="subjective">
+        <h2 class="eng">IV. Subjective Questions</h2>
+        <h2 class="hin">IV. वर्णनात्मक प्रश्न (Subjective)</h2>
+
+        <div class="question">
+            <p class="eng"><span class="question-number">Q1.</span>Find a least-squares line to the data: x={3,5,6,8,9,11}, y={2,3,4,6,5,8}.</p>
+            <p class="hin"><span class="question-number">Q1.</span>दिए गए data: x={3,5,6,8,9,11}, y={2,3,4,6,5,8} के लिए एक least-squares line प्राप्त करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-1')">Show Answer ▼</button>
+            <div id="subj-ans-1" class="answer">
+                <p class="eng"><strong>Solution:</strong> To find the line y = a + bx, we use normal equations: Σy = na + bΣx and Σxy = aΣx + bΣx². For n=6, calculate Σx=42, Σy=28, Σxy=231, Σx²=352. Solving the equations gives a ≈ 0.54 and b ≈ 0.63. Line: y = 0.54 + 0.63x.</p>
+                <p class="hin"><strong>Solution:</strong> To find the line y = a + bx, we use normal equations: Σy = na + bΣx and Σxy = aΣx + bΣx². For n=6, calculate Σx=42, Σy=28, Σxy=231, Σx²=352. Solving the equations gives a ≈ 0.54 and b ≈ 0.63. Line: y = 0.54 + 0.63x.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q2.</span>Find the best values of a and b so that y = a e^{bx} fits the data: x={5,10,15,20,25}, y={1.09,2.09,4,7.67,14.70}.</p>
+            <p class="hin"><span class="question-number">Q2.</span>a और b की best values निकालें ताकि y = a e^{bx} दिए गए data x={5,10,15,20,25}, y={1.09,2.09,4,7.67,14.70} पर fit हो सके।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-2')">Show Answer ▼</button>
+            <div id="subj-ans-2" class="answer">
+                <p class="eng"><strong>Solution:</strong> Transform to ln y = ln a + bx. Solve normal equations for A=ln a and b. Recover a = exp(A).</p>
+                <p class="hin"><strong>Solution:</strong> Transform to ln y = ln a + bx. Solve normal equations for A=ln a and b. Recover a = exp(A).</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q3.</span>Find the best values of a and b so that y = a b^x fits the data: x={5,7,10,15,20}, y={630.06,455.24,279.56,124.04,55.04}.</p>
+            <p class="hin"><span class="question-number">Q3.</span>a और b की best values निकालें ताकि y = a b^x दिए गए data x={5,7,10,15,20}, y={630.06,455.24,279.56,124.04,55.04} पर fit हो सके।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-3')">Show Answer ▼</button>
+            <div id="subj-ans-3" class="answer">
+                <p class="eng"><strong>Solution:</strong> Transform to log y = log a + x log b. Solve for log a and log b, then use antilog.</p>
+                <p class="hin"><strong>Solution:</strong> Transform to log y = log a + x log b. Solve for log a and log b, then use antilog.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q4.</span>Find the best values of a and b so that y = a x^b fits the data: x={10,20,30,40,50}, y={0.91,1.51,2.04,2.51,2.96}.</p>
+            <p class="hin"><span class="question-number">Q4.</span>a और b की best values निकालें ताकि y = a x^b दिए गए data x={10,20,30,40,50}, y={0.91,1.51,2.04,2.51,2.96} पर fit हो सके।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-4')">Show Answer ▼</button>
+            <div id="subj-ans-4" class="answer">
+                <p class="eng"><strong>Solution:</strong> Transform to log y = log a + b log x. Solve for log a and b.</p>
+                <p class="hin"><strong>Solution:</strong> Transform to log y = log a + b log x. Solve for log a and b.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q5.</span>Find the best values of γ and C so that P V^γ = C fits the data: V={54.3, 61.8, 72.4, 88.7, 118.6, 194}, P={61.2, 49.5, 37.6, 28.4, 19.2, 10.1}.</p>
+            <p class="hin"><span class="question-number">Q5.</span>γ और C की best values निकालें ताकि P V^γ = C दिए गए data: V={54.3, 61.8, 72.4, 88.7, 118.6, 194}, P={61.2, 49.5, 37.6, 28.4, 19.2, 10.1} पर fit हो सके।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-5')">Show Answer ▼</button>
+            <div id="subj-ans-5" class="answer">
+                <p class="eng"><strong>Solution:</strong> Transform to log P + γ log V = log C or log P = log C - γ log V. Let Y = log P, A = log C, X = log V. Then Y = A - γX.</p>
+                <p class="hin"><strong>Solution:</strong> Transform to log P + γ log V = log C or log P = log C - γ log V. Let Y = log P, A = log C, X = log V. Then Y = A - γX.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q6.</span>Define Curve Fitting and state its importance.</p>
+            <p class="hin"><span class="question-number">Q6.</span>Curve Fitting को define करें और इसका importance बताएं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-6')">Show Answer ▼</button>
+            <div id="subj-ans-6" class="answer">
+                <p class="eng"><strong>Answer:</strong> Curve fitting is the process of finding a mathematical equation that best describes the relationship between an independent variable X and a dependent variable Y. It is important for trend analysis, interpolation, extrapolation, and data summarisation.</p>
+                <p class="hin"><strong>Answer:</strong> Curve fitting is the process of finding a mathematical equation that best describes the relationship between an independent variable X and a dependent variable Y. It is important for trend analysis, interpolation, extrapolation, and data summarisation.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q7.</span>State and explain the Principle of Least Squares.</p>
+            <p class="hin"><span class="question-number">Q7.</span>Least Squares के Principle को बताएं और explain करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-7')">Show Answer ▼</button>
+            <div id="subj-ans-7" class="answer">
+                <p class="eng"><strong>Answer:</strong> The principle of least squares states that the best-fit curve is the one that minimises the sum of the squares of the deviations (residuals) between the observed values and the estimated values from the curve.</p>
+                <p class="hin"><strong>Answer:</strong> The principle of least squares states that the best-fit curve is the one that minimises the sum of the squares of the deviations (residuals) between the observed values and the estimated values from the curve.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q8.</span>Derive the normal equations for fitting a straight line Y = a + bX.</p>
+            <p class="hin"><span class="question-number">Q8.</span>एक straight line Y = a + bX को fit करने के लिए normal equations derive करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-8')">Show Answer ▼</button>
+            <div id="subj-ans-8" class="answer">
+                <p class="eng"><strong>Answer:</strong> We minimise E = Σ(yi - a - bxi)². Setting ∂E/∂a = 0 gives Σyi = na + bΣxi. Setting ∂E/∂b = 0 gives Σxiyi = aΣxi + bΣxi². These are the two normal equations.</p>
+                <p class="hin"><strong>Answer:</strong> We minimise E = Σ(yi - a - bxi)². Setting ∂E/∂a = 0 gives Σyi = na + bΣxi. Setting ∂E/∂b = 0 gives Σxiyi = aΣxi + bΣxi². These are the two normal equations.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q9.</span>Explain the method of change of origin for equally spaced X-values.</p>
+            <p class="hin"><span class="question-number">Q9.</span>Equally spaced X-values के लिए change of origin के method को explain करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-9')">Show Answer ▼</button>
+            <div id="subj-ans-9" class="answer">
+                <p class="eng"><strong>Answer:</strong> When X-values are equally spaced, we can transform X to U = (X - A)/h, where A is the middle value or mean of middle values. This makes ΣU = 0 and ΣU³ = 0, simplifying the normal equations significantly.</p>
+                <p class="hin"><strong>Answer:</strong> When X-values are equally spaced, we can transform X to U = (X - A)/h, where A is the middle value or mean of middle values. This makes ΣU = 0 and ΣU³ = 0, simplifying the normal equations significantly.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q10.</span>How do you fit a power curve of the form Y = aX^b?</p>
+            <p class="hin"><span class="question-number">Q10.</span>Y = aX^b form के power curve को आप कैसे fit करेंगे?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-10')">Show Answer ▼</button>
+            <div id="subj-ans-10" class="answer">
+                <p class="eng"><strong>Answer:</strong> We take logarithms: log Y = log a + b log X. Letting V = log Y, A = log a, and U = log X, we get the linear form V = A + bU. We solve for A and b using normal equations, then a = antilog(A).</p>
+                <p class="hin"><strong>Answer:</strong> We take logarithms: log Y = log a + b log X. Letting V = log Y, A = log a, and U = log X, we get the linear form V = A + bU. We solve for A and b using normal equations, then a = antilog(A).</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q11.</span>Discuss the fitting of an exponential curve Y = ae^{bX}.</p>
+            <p class="hin"><span class="question-number">Q11.</span>एक exponential curve Y = ae^{bX} की fitting पर discuss करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-11')">Show Answer ▼</button>
+            <div id="subj-ans-11" class="answer">
+                <p class="eng"><strong>Answer:</strong> Taking natural logs: ln Y = ln a + bX. In base 10: log Y = log a + (b log e)X. This is linear in X and log Y. After finding the slope B = b log e, we calculate b = B / log e.</p>
+                <p class="hin"><strong>Answer:</strong> Taking natural logs: ln Y = ln a + bX. In base 10: log Y = log a + (b log e)X. This is linear in X and log Y. After finding the slope B = b log e, we calculate b = B / log e.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q12.</span>What are normal equations? Why are they called 'normal'?</p>
+            <p class="hin"><span class="question-number">Q12.</span>Normal equations क्या हैं? इन्हें 'normal' क्यों कहा जाता है?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-12')">Show Answer ▼</button>
+            <div id="subj-ans-12" class="answer">
+                <p class="eng"><strong>Answer:</strong> Normal equations are the set of simultaneous linear equations obtained by setting the partial derivatives of the squared error sum to zero. They are called 'normal' because they represent the projection of the data onto the model space in a perpendicular (normal) sense.</p>
+                <p class="hin"><strong>Answer:</strong> Normal equations are the set of simultaneous linear equations obtained by setting the partial derivatives of the squared error sum to zero. They are called 'normal' because they represent the projection of the data onto the model space in a perpendicular (normal) sense.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q13.</span>State the normal equations for a second-degree parabola Y = a + bX + cX².</p>
+            <p class="hin"><span class="question-number">Q13.</span>एक second-degree parabola Y = a + bX + cX² के लिए normal equations बताएं।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-13')">Show Answer ▼</button>
+            <div id="subj-ans-13" class="answer">
+                <p class="eng"><strong>Answer:</strong> The three normal equations are: 1) Σy = na + bΣx + cΣx², 2) Σxy = aΣx + bΣx² + cΣx³, 3) Σx²y = aΣx² + bΣx³ + cΣx⁴.</p>
+                <p class="hin"><strong>Answer:</strong> The three normal equations are: 1) Σy = na + bΣx + cΣx², 2) Σxy = aΣx + bΣx² + cΣx³, 3) Σx²y = aΣx² + bΣx³ + cΣx⁴.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q14.</span>When is a second-degree parabola preferred over a straight line?</p>
+            <p class="hin"><span class="question-number">Q14.</span>एक second-degree parabola को straight line की तुलना में कब prefer किया जाता है?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-14')">Show Answer ▼</button>
+            <div id="subj-ans-14" class="answer">
+                <p class="eng"><strong>Answer:</strong> A parabola is preferred when the scatter diagram shows a curved trend (increasing then decreasing, or vice versa) rather than a linear one, indicating a non-constant rate of change.</p>
+                <p class="hin"><strong>Answer:</strong> A parabola is preferred when the scatter diagram shows a curved trend (increasing then decreasing, or vice versa) rather than a linear one, indicating a non-constant rate of change.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q15.</span>Explain the utility of the determinant form in curve fitting.</p>
+            <p class="hin"><span class="question-number">Q15.</span>Curve fitting में determinant form की utility को explain करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-15')">Show Answer ▼</button>
+            <div id="subj-ans-15" class="answer">
+                <p class="eng"><strong>Answer:</strong> The determinant form provides a direct way to express the equation of the best-fit curve by eliminating the constants a, b, etc., from the model equation and the normal equations simultaneously.</p>
+                <p class="hin"><strong>Answer:</strong> The determinant form provides a direct way to express the equation of the best-fit curve by eliminating the constants a, b, etc., from the model equation and the normal equations simultaneously.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q16.</span>What is a residual? What does a zero sum of residuals indicate?</p>
+            <p class="hin"><span class="question-number">Q16.</span>Residual क्या है? Residuals का zero sum क्या indicate करता है?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-16')">Show Answer ▼</button>
+            <div id="subj-ans-16" class="answer">
+                <p class="eng"><strong>Answer:</strong> A residual is the difference between the observed value and the value predicted by the fitted model. A zero sum of residuals (Σe = 0) is a property of least square fits, indicating that the positive and negative errors cancel out.</p>
+                <p class="hin"><strong>Answer:</strong> A residual is the difference between the observed value and the value predicted by the fitted model. A zero sum of residuals (Σe = 0) is a property of least square fits, indicating that the positive and negative errors cancel out.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q17.</span>Why do we minimise the 'square' of deviations instead of just deviations?</p>
+            <p class="hin"><span class="question-number">Q17.</span>हम सिर्फ deviations के बजाय deviations के 'square' को ही क्यों minimize करते हैं?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-17')">Show Answer ▼</button>
+            <div id="subj-ans-17" class="answer">
+                <p class="eng"><strong>Answer:</strong> Minimising just deviations could result in a zero sum even for a very poor fit (due to signs cancelling). Using absolute deviations is mathematically difficult (not differentiable). Squared deviations are always positive and easier to handle using calculus.</p>
+                <p class="hin"><strong>Answer:</strong> Minimising just deviations could result in a zero sum even for a very poor fit (due to signs cancelling). Using absolute deviations is mathematically difficult (not differentiable). Squared deviations are always positive and easier to handle using calculus.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q18.</span>Describe the procedure for fitting a polynomial of degree k.</p>
+            <p class="hin"><span class="question-number">Q18.</span>Degree k के polynomial को fit करने की procedure describe करें।</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-18')">Show Answer ▼</button>
+            <div id="subj-ans-18" class="answer">
+                <p class="eng"><strong>Answer:</strong> We write Y = a₀ + a₁X + ... + aₖXᵏ. We form k+1 normal equations by multiplying the model by 1, X, X², ..., Xᵏ and summing. The resulting linear system is solved for the k+1 coefficients.</p>
+                <p class="hin"><strong>Answer:</strong> We write Y = a₀ + a₁X + ... + aₖXᵏ. We form k+1 normal equations by multiplying the model by 1, X, X², ..., Xᵏ and summing. The resulting linear system is solved for the k+1 coefficients.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q19.</span>What is the difference between interpolation and extrapolation?</p>
+            <p class="hin"><span class="question-number">Q19.</span>Interpolation और extrapolation में क्या अंतर है?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-19')">Show Answer ▼</button>
+            <div id="subj-ans-19" class="answer">
+                <p class="eng"><strong>Answer:</strong> Interpolation is estimating values within the range of observed data. Extrapolation is estimating values outside the observed range. Extrapolation is generally more risky as the trend may not continue.</p>
+                <p class="hin"><strong>Answer:</strong> Interpolation is estimating values within the range of observed data. Extrapolation is estimating values outside the observed range. Extrapolation is generally more risky as the trend may not continue.</p>
+            </div>
+        </div>
+    
+        <div class="question">
+            <p class="eng"><span class="question-number">Q20.</span>How does the number of observations n affect the accuracy of curve fitting?</p>
+            <p class="hin"><span class="question-number">Q20.</span>Observations की संख्या n, curve fitting की accuracy को कैसे प्रभावित करती है?</p>
+            <button class="toggle-btn" onclick="toggleAnswer('subj-ans-20')">Show Answer ▼</button>
+            <div id="subj-ans-20" class="answer">
+                <p class="eng"><strong>Answer:</strong> Larger n generally leads to more stable estimates of the parameters and reduces the impact of random errors or outliers, provided the underlying model is correct.</p>
+                <p class="hin"><strong>Answer:</strong> Larger n generally leads to more stable estimates of the parameters and reduces the impact of random errors or outliers, provided the underlying model is correct.</p>
+            </div>
+        </div>
+    
+    </section>
+
+</section>
+</main>

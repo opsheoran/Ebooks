@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Unit III – Linear Regression | STAT-M-201</title>
+<!-- MathJax -->
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,400&amp;family=Source+Serif+4:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="../whiteboard/whiteboard.css" rel="stylesheet"/>
+<style>
+
+        /* ============================================================
+           DESIGN SYSTEM — Professional Textbook
+           Palette: Deep Navy · Warm Ivory · Golden Amber · Sage Green
+        ============================================================ */
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
+        }
+
+        .book-header .menu-toggle {
+            display: none;
+            background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 42px; height: 42px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(200,146,42,.4); border-radius: 4px; }
+
+        .sidebar-brand {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 3px;
+        }
+
+        .sidebar-author {
+            padding: 20px 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
+
+        .sidebar-author-info h3 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sidebar-author-info p {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            color: rgba(255,255,255,.55);
+            line-height: 1.4;
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-item { margin: 1px 0; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            font-weight: 400;
+            transition: all .2s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-left-color: rgba(200,146,42,.6);
+        }
+
+        .nav-link.active {
+            background: rgba(200,146,42,.18);
+            color: var(--gold-light);
+            border-left-color: var(--gold);
+            font-weight: 500;
+        }
+
+        .nav-link .nav-num {
+            font-size: .7rem;
+            background: rgba(255,255,255,.12);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-weight: 600;
+            min-width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link.active .nav-num {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .nav-sub .nav-link {
+            padding-left: 28px;
+            font-size: .835rem;
+            color: rgba(255,255,255,.55);
+        }
+
+        .nav-sub .nav-link:hover,
+        .nav-sub .nav-link.active {
+            color: var(--gold-light);
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 860px);
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        /* ── PAGE HEADER (chapter intro) ──────────────────────────── */
+        .chapter-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            padding: 32px 36px;
+            border-radius: var(--radius);
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute; top: -30px; right: -30px;
+            width: 180px; height: 180px;
+            background: rgba(200,146,42,.12);
+            border-radius: 50%;
+        }
+
+        .chapter-header::after {
+            content: '';
+            position: absolute; bottom: -50px; right: 60px;
+            width: 120px; height: 120px;
+            background: rgba(200,146,42,.07);
+            border-radius: 50%;
+        }
+
+        .chapter-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .chapter-header .author {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .95rem;
+            color: rgba(255,255,255,.7);
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .chapter-header .syllabus-tag {
+            display: inline-block;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,.85);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── TOPIC SECTION SHOW/HIDE ──────────────────────────────── */
+        .topic-section {
+            display: none;
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .topic-section.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SECTION CARD ─────────────────────────────────────────── */
+        .section-card {
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+        }
+
+        /* ── TYPOGRAPHY ───────────────────────────────────────────── */
+        .section-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: baseline; gap: 10px;
+        }
+
+        .section-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 32px 0 14px;
+        }
+
+        .section-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 20px 0 8px;
+        }
+
+        .section-card h5 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .95rem;
+            font-weight: 500;
+            color: var(--sky);
+            margin: 14px 0 6px;
+            font-style: italic;
+        }
+
+        .section-card p {
+            margin-bottom: 12px;
+            text-align: justify;
+            font-size: 1.02rem;
+            color: var(--text-mid);
+            line-height: 1.82;
+        }
+
+        .section-card ul,
+        .section-card ol {
+            margin: 10px 0 14px 28px;
+            line-height: 1.75;
+        }
+
+        .section-card li {
+            margin-bottom: 5px;
+            color: var(--text-mid);
+            font-size: .99rem;
+        }
+
+        .section-num {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 700;
+            background: var(--navy);
+            color: var(--gold-light);
+            padding: 2px 10px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note, .warning, .key-point {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .definition {
+            background: #F3F0FB;
+            border-left: 5px solid #6B4FC8;
+            box-shadow: 0 2px 10px rgba(107,79,200,.1);
+        }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+
+        .theorem {
+            background: var(--sage-light);
+            border-left: 5px solid var(--sage);
+            box-shadow: 0 2px 10px rgba(61,107,90,.1);
+        }
+
+        .theorem h4::before { content: "Theorem — "; color: var(--sage); }
+
+        .example {
+            background: #FFFBF0;
+            border-left: 5px solid var(--gold);
+            box-shadow: 0 2px 10px rgba(200,146,42,.1);
+        }
+
+        .example h4::before { content: ""; }
+
+        .note {
+            background: var(--sky-light);
+            border-left: 5px solid var(--sky);
+            box-shadow: 0 2px 10px rgba(29,111,164,.1);
+        }
+
+        .note h4::before { content: "📘 "; }
+
+        .warning {
+            background: var(--crimson-light);
+            border-left: 5px solid var(--crimson);
+            color: #5a1020;
+            box-shadow: 0 2px 10px rgba(155,35,53,.1);
+        }
+
+        .warning strong { color: var(--crimson); }
+
+        .key-point {
+            background: linear-gradient(135deg, #EAF8F4 0%, #E0F3FF 100%);
+            border-left: 5px solid #0E9E6F;
+            box-shadow: 0 2px 10px rgba(14,158,111,.1);
+        }
+
+        .key-point strong { color: #0E6650; }
+
+        .definition h4, .theorem h4, .example h4,
+        .note h4, .warning h4, .key-point h4 {
+            margin-top: 0; margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        /* ── FORMULA BOX ──────────────────────────────────────────── */
+        .formula-box {
+            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
+            border: 2px dashed var(--navy-light);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.12rem;
+        }
+
+        /* ── DERIVATION & PROOF ───────────────────────────────────── */
+        .derivation {
+            background: #F8FAFC;
+            border-left: 3px solid var(--sky);
+            padding: 12px 16px;
+            margin: 10px 0;
+            border-radius: 0 6px 6px 0;
+            font-family: 'Source Serif 4', serif;
+            line-height: 1.85;
+            color: var(--text-mid);
+        }
+
+        .proof-step {
+            margin: 5px 0 5px 20px;
+            padding-left: 12px;
+            border-left: 2px solid var(--border);
+            color: var(--text-mid);
+            font-size: .97rem;
+        }
+
+        /* ── TABLES ───────────────────────────────────────────────── */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 18px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th {
+            background: var(--navy);
+            color: #fff;
+            padding: 12px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+
+        td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: .95rem;
+            color: var(--text-mid);
+            background: #fff;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:nth-child(even) td { background: #FAFAF8; }
+
+        tr:hover td { background: var(--gold-pale); transition: background .15s; }
+
+        /* ── VENN DIAGRAMS ────────────────────────────────────────── */
+        .venn-container {
+            display: flex;
+            justify-content: center;
+            margin: 18px 0;
+            padding: 16px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .venn-diagram { width: 300px; height: 200px; }
+        .venn-diagram svg { width: 100%; height: 100%; }
+
+        .venn-circle {
+            fill-opacity: .38;
+            stroke: #334;
+            stroke-width: 2;
+        }
+
+        .venn-label {
+            font-family: 'Source Serif 4', serif;
+            font-size: 14px;
+            font-weight: 600;
+            fill: #1B2A4A;
+        }
+
+        .venn-shaded {
+            fill: rgba(59,130,246,.55);
+            stroke: #1e40af;
+            stroke-width: 2;
+        }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .exercise-section {
+            background: transparent;
+            border-left: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .exercise-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            padding: 24px 30px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 0;
+        }
+
+        .exercise-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            border: none;
+            padding: 0; margin: 0 0 4px;
+        }
+
+        .exercise-header p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .85rem;
+            color: rgba(255,255,255,.7);
+            margin: 0;
+        }
+
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .question strong { color: var(--navy); }
+
+        /* ── TOGGLE ANSWER BUTTON ─────────────────────────────────── */
+        .toggle-btn {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 8px;
+            letter-spacing: .3px;
+        }
+
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
+        /* ── ANSWER REVEAL ────────────────────────────────────────── */
+        .answer {
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 12px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
+        }
+
+        .answer.show { display: block; }
+
+        .answer p, .answer ul, .answer ol,
+        .answer li, .answer strong, .answer em,
+        .answer .derivation, .answer .proof-step {
+            color: var(--text-dark) !important;
+        }
+
+        .answer .derivation {
+            background: #EFF8F4;
+            border-left-color: var(--sage);
+            color: var(--text-dark) !important;
+        }
+
+        .answer strong { font-weight: 700; }
+
+        /* ── MCQ OPTIONS ──────────────────────────────────────────── */
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+            font-size: .95rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
+        /* ── ANSWER KEY BOX ───────────────────────────────────────── */
+        .answer-key {
+            background: rgba(255,255,255,.15);
+            padding: 14px 18px;
+            border-radius: 7px;
+            margin-top: 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.8;
+        }
+
+        .answer-key strong { color: var(--gold-light); }
+
+        /* ── BADGE ────────────────────────────────────────────────── */
+        .badge {
+            display: inline-block;
+            background: var(--crimson);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* ── QUICK REF TABLE ──────────────────────────────────────── */
+        .quick-ref-table th { background: var(--navy-light); }
+
+        /* ── FOOTER ───────────────────────────────────────────────── */
+        .book-footer {
+            background: var(--navy);
+            color: rgba(255,255,255,.75);
+            text-align: center;
+            padding: 24px;
+            margin-top: 48px;
+            border-radius: 12px 12px 0 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+        .book-footer strong { color: var(--gold-light); }
+        .book-footer .university {
+            margin-top: 6px;
+            font-size: .82rem;
+            opacity: .7;
+        }
+
+        /* ── MATHJAX ──────────────────────────────────────────────── */
+        .MathJax { font-size: 1.06em !important; }
+        mjx-container { display: inline-block !important; }
+
+        /* ── SCROLLBAR ────────────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: var(--paper); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b0a89a; }
+
+        /* ── RESPONSIVE ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+            :root { --sidebar-w: 260px; }
+            .main-content { padding: 28px 30px 50px; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --sidebar-w: 280px; }
+            .book-header .menu-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-content {
+                margin-left: 0;
+                padding: 20px 18px 40px;
+                max-width: 100%;
+            }
+            .chapter-header h1 { font-size: 1.6rem; }
+            .section-card { padding: 22px 20px; }
+        }
+
+        /* ── EXERCISE SECTION OVERRIDES ──────────────────────────── */
+        .section-card .exercise-section {
+            background: transparent;
+            padding: 0;
+        }
+
+        .section-card h2:has(.section-num) + * { margin-top: 8px; }
+
+        /* Progress bar decoration for exercise headers */
+        .section-card > h2 {
+            position: relative;
+        }
+    
+.chapter-header { position: relative; }
+.header-lang-toggle {
+    position: absolute; top: 20px; right: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff; padding: 6px 14px; border-radius: 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 6px;
+}
+.header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+<!-- TOP HEADER -->
+<header class="book-header">
+<button aria-label="Toggle menu" class="menu-toggle" onclick="toggleSidebar()">
+<i class="fas fa-bars"></i>
+</button>
+<div class="header-icon">📉</div>
+<div class="header-text">
+<h1>Statistical Methods-II</h1>
+<div class="subtitle">UNIT III · LINEAR REGRESSION ANALYSIS</div>
+</div>
+<div class="header-badge">Prof. O.P. Sheoran</div>
+<button class="draw-mode-toggle" id="draw-mode-btn">
+<i class="fas fa-chalkboard"></i> Open Whiteboard
+        </button>
+</header>
+<!-- SIDEBAR NAVIGATION -->
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-brand">
+<h2>Unit III</h2>
+<p>Linear Regression<br/>CCS Haryana Agricultural University</p>
+</div>
+<div class="sidebar-author">
+<img alt="Prof. O.P. Sheoran" class="sidebar-photo" src="../Stat-102/opsheoran.png"/>
+<div class="sidebar-author-info">
+<h3>Prof. O.P. Sheoran</h3>
+<p>Author &amp; Instructor</p>
+</div>
+</div>
+<div class="nav-group-label">Navigation</div>
+<ul class="nav-list">
+<li class="nav-item">
+<a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;">
+<span class="nav-num">🏠</span> Course Home
+                </a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 5px;">
+<span class="nav-num">📚</span> Back to Library
+                </a>
+</li>
+</ul>
+<div class="nav-group-label">Theory Topics</div>
+<ul class="nav-list">
+<li class="nav-item"><a class="nav-link active" href="#" onclick="showTopic('intro'); return false;"><span class="nav-num">3.1</span> Concept of Linear Regression</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('two-lines'); return false;"><span class="nav-num">3.2</span> Two Lines of Regression</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('coeff-properties'); return false;"><span class="nav-num">3.3</span> Regression Coefficients &amp; Properties</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('angle-lines'); return false;"><span class="nav-num">3.4</span> Angle Between Regression Lines</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('std-error'); return false;"><span class="nav-num">3.5</span> Standard Error of Estimate</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('obs-est'); return false;"><span class="nav-num">3.6</span> Observed vs Estimated Values</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('comparison'); return false;"><span class="nav-num">3.7</span> Correlation vs Regression</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('examples'); return false;"><span class="nav-num">3.8</span> Solved Numerical Examples</a></li>
+</ul>
+<div class="nav-group-label">Practice Exercises</div>
+<ul class="nav-list">
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('mcq'); return false;"><span class="nav-num">❓</span> Multiple Choice (30 Q)</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('fibs'); return false;"><span class="nav-num">✏️</span> Fill in Blanks (30 Q)</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('tfs'); return false;"><span class="nav-num">✅</span> True / False (30 Q)</a></li>
+<li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('subjective'); return false;"><span class="nav-num">📝</span> Subjective Qs (30 Q)</a></li>
+</ul>
+</nav>
+<!-- MAIN CONTENT -->
+<main class="main-content">
+<!-- Chapter Banner -->
+<div class="chapter-header">
+<button class="header-lang-toggle" id="lang-toggle-btn" onclick="toggleLanguage()">
+<i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+</button>
+<h1>Unit III: Linear Regression Analysis</h1>
+<div class="author">By Prof. O.P. Sheoran · Department of Mathematics &amp; Statistics</div>
+<div class="syllabus-tag">
+<strong>Syllabus:</strong> Two lines of regression: Regression of Y on X and X on Y · Regression coefficients: Properties, interpretation, and calculation · Angle between two regression lines · Standard error of estimate · Correlation between observed and estimated values · Distinction between correlation and regression.
+            </div>
+</div>
+<!-- TOPIC 1: INTRO -->
+<div class="topic-section active" id="intro">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.1</span> Concept of Linear Regression</h2>
+<p>While correlation measures the degree and direction of linear association between two variables, it does not imply functional dependence or enable prediction. <strong>Regression</strong> is the mathematical technique used to estimate or predict the unknown value of one variable (dependent variable) from the known value of another (independent variable).</p>
+<p>The word <em>regression</em> (meaning "stepping back" or returning to mediocrity) was first used by <strong>Sir Francis Galton</strong> in 1877 while studying human inheritance—observing that tall parents tend to have sons who are taller than average, but shorter than their parents (regressing towards the population mean).</p>
+<div class="definition">
+<h4>Definition: Linear Regression</h4>
+<p><strong>Linear Regression</strong> models the expected value of a dependent variable \(Y\) as a linear function of an independent variable \(X\):</p>
+                        \[ E[Y | X] = a + bX \]
+                        <p>where \(a\) is the intercept and \(b\) is the regression coefficient (slope).</p>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.1</span> Linear Regression का परिचय</h2>
+<p>जहाँ correlation दो variables के बीच linear association की degree को मापता है, वहीं <strong>Regression</strong> वह mathematical technique है जिसका उपयोग एक variable (independent) की known value से दूसरे variable (dependent) की unknown value को predict करने के लिए किया जाता है।</p>
+<p>शब्द <em>regression</em> का सर्वप्रथम प्रयोग <strong>Sir Francis Galton</strong> द्वारा 1877 में वंशानुक्रम (inheritance) के अध्ययन के दौरान किया गया था।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 2: TWO LINES -->
+<div class="topic-section" id="two-lines">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.2</span> Two Lines of Regression</h2>
+<p>For a bivariate distribution \((X, Y)\), there are <strong>two distinct lines of regression</strong>:</p>
+<ol>
+<li><strong>Regression line of Y on X:</strong> Used to estimate \(Y\) for a given value of \(X\).</li>
+<li><strong>Regression line of X on Y:</strong> Used to estimate \(X\) for a given value of \(Y\).</li>
+</ol>
+<div class="formula-box">
+<strong>1. Line of Regression of Y on X:</strong><br/>
+                        \[ (Y - ar{Y}) = b_{yx} (X - ar{X}) \]
+                        <p>where \(b_{yx}\) is the regression coefficient of Y on X:</p>
+                        \[ b_{yx} = rac{	ext{Cov}(X,Y)}{\sigma_x^2} = r rac{\sigma_y}{\sigma_x} \]
+                    </div>
+<div class="formula-box">
+<strong>2. Line of Regression of X on Y:</strong><br/>
+                        \[ (X - ar{X}) = b_{xy} (Y - ar{Y}) \]
+                        <p>where \(b_{xy}\) is the regression coefficient of X on Y:</p>
+                        \[ b_{xy} = rac{	ext{Cov}(X,Y)}{\sigma_y^2} = r rac{\sigma_x}{\sigma_y} \]
+                    </div>
+<div class="figure-box">
+<div class="figure-title">Figure 3.1: Two Lines of Regression Intersecting at Means (\(ar{X}, ar{Y}\))</div>
+<svg class="book-fig" viewbox="0 0 600 320" xmlns="http://www.w3.org/2000/svg">
+<line stroke="#1B2A4A" stroke-width="2" x1="50" x2="550" y1="270" y2="270"></line>
+<line stroke="#1B2A4A" stroke-width="2" x1="50" x2="50" y1="270" y2="30"></line>
+<text font-family="DM Sans" font-size="14" x="560" y="275">X</text>
+<text font-family="DM Sans" font-size="14" x="45" y="20">Y</text>
+<line stroke="#C8922A" stroke-width="3" x1="100" x2="500" y1="220" y2="80"></line>
+<text fill="#C8922A" font-family="DM Sans" font-size="13" x="510" y="85">Y on X</text>
+<line stroke="#1D6FA4" stroke-width="3" x1="150" x2="450" y1="250" y2="50"></line>
+<text fill="#1D6FA4" font-family="DM Sans" font-size="13" x="460" y="55">X on Y</text>
+<circle cx="300" cy="150" fill="#9B2335" r="6"></circle>
+<text fill="#9B2335" font-family="Source Serif 4" font-size="14" x="310" y="165">Intersection (x̄, ȳ)</text>
+</svg>
+<div class="figure-caption">The two lines intersect at the point of means (\(ar{X}, ar{Y}\)).</div>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.2</span> Two Lines of Regression</h2>
+<p>Bivariate distribution \((X, Y)\) के लिए <strong>दो अलग-अलग regression lines</strong> होती हैं।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 3: COEFF PROPERTIES -->
+<div class="topic-section" id="coeff-properties">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.3</span> Properties of Regression Coefficients</h2>
+<p>The regression coefficients \(b_{yx}\) and \(b_{xy}\) possess five fundamental properties:</p>
+<div class="theorem">
+<h4>Property 1: Geometric Mean equals Correlation Coefficient</h4>
+<p>The correlation coefficient \(r\) is the geometric mean of the two regression coefficients:</p>
+                        \[ r = \pm \sqrt{b_{yx} \cdot b_{xy}} \]
+                    </div>
+<div class="theorem">
+<h4>Property 2: Same Sign Rule</h4>
+<p>Both regression coefficients \(b_{yx}\) and \(b_{xy}\) must have the exact same algebraic sign as the correlation coefficient \(r\).</p>
+</div>
+<div class="theorem">
+<h4>Property 3: Arithmetic Mean Inequality</h4>
+<p>The arithmetic mean of the two regression coefficients is greater than or equal to the absolute correlation coefficient:</p>
+                        \[ rac{b_{yx} + b_{xy}}{2} \geq |r| \]
+                    </div>
+<div class="theorem">
+<h4>Property 4: Magnitude Reciprocity</h4>
+<p>If one regression coefficient is greater than unity (\(|b_{yx}| &gt; 1\)), the other must be less than unity (\(|b_{xy}| &lt; 1\)).</p>
+</div>
+<div class="theorem">
+<h4>Property 5: Independence of Origin but Dependence on Scale</h4>
+<p>If \(U = rac{X - a}{h}\) and \(V = rac{Y - b}{k}\), then \(b_{YX} = \left(rac{k}{h}
+ight) b_{VU}\).</p>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.3</span> Regression Coefficients के गुण (Properties)</h2>
+<p>Regression coefficients के 5 महत्वपूर्ण गुण ऊपर English tab में विस्तार से प्रस्तुत किए गए हैं।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 4: ANGLE LINES -->
+<div class="topic-section" id="angle-lines">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.4</span> Angle Between Two Regression Lines</h2>
+<p>Let \(	heta\) be the acute angle between the two lines of regression:</p>
+<div class="formula-box">
+                        \[ 	an 	heta = \left| rac{1 - r^2}{r} 
+ight| \cdot rac{\sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2} \]
+                    </div>
+<ul>
+<li><strong>Case 1 (\(r = \pm 1\)):</strong> \(	an 	heta = 0 \implies 	heta = 0^\circ\) (lines coincide).</li>
+<li><strong>Case 2 (\(r = 0\)):</strong> \(	an 	heta = \infty \implies 	heta = 90^\circ\) (lines are perpendicular).</li>
+</ul>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.4</span> Regression Lines के बीच का कोण (\(	heta\))</h2>
+<p>जब \(r = \pm 1\), दोनों रेखाएं coincide (\(	heta = 0^\circ\)) होती हैं। जब \(r = 0\), रेखाएं लंबवत (\(	heta = 90^\circ\)) होती हैं।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 5: STD ERROR -->
+<div class="topic-section" id="std-error">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.5</span> Standard Error of Estimate</h2>
+<div class="formula-box">
+<strong>Standard Error of Estimate of Y on X:</strong><br/>
+                        \[ S_{yx} = \sigma_y \sqrt{1 - r^2} \]
+                        <br/>
+<strong>Standard Error of Estimate of X on Y:</strong><br/>
+                        \[ S_{xy} = \sigma_x \sqrt{1 - r^2} \]
+                    </div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.5</span> Standard Error of Estimate</h2>
+<p>Standard Error of Estimate \(S_{yx} = \sigma_y \sqrt{1 - r^2}\) residual scatter को मापता है।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 6: OBS EST -->
+<div class="topic-section" id="obs-est">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.6</span> Correlation Between Observed and Estimated Values</h2>
+<div class="theorem">
+<h4>Theorem</h4>
+<p>The correlation coefficient between actual observed values \(Y\) and estimated values \(\hat{Y}\) is equal to \(|r|\):</p>
+                        \[ r(Y, \hat{Y}) = |r(X, Y)| \]
+                    </div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.6</span> Observed और Estimated Values के बीच Correlation</h2>
+<p>Observed values \(Y\) और estimated values \(\hat{Y}\) के बीच correlation coefficient \(|r|\) होता है।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 7: COMPARISON -->
+<div class="topic-section" id="comparison">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.7</span> Distinction Between Correlation and Regression</h2>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Correlation Analysis</th>
+<th>Regression Analysis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Purpose</strong></td>
+<td>Measures degree and direction of linear association.</td>
+<td>Predicts value of dependent variable from independent variable.</td>
+</tr>
+<tr>
+<td><strong>Symmetry</strong></td>
+<td>Symmetric: \(r_{XY} = r_{YX}\).</td>
+<td>Asymmetric: \(b_{yx} 
+eq b_{xy}\) in general.</td>
+</tr>
+<tr>
+<td><strong>Units</strong></td>
+<td>Pure unitless number (\(-1 \le r \le 1\)).</td>
+<td>Has physical units (unit of Y / unit of X).</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.7</span> Correlation और Regression में अंतर</h2>
+<p>Correlation association मापता है, जबकि regression prediction प्रदान करता है।</p>
+</div>
+</section>
+</div>
+<!-- TOPIC 8: EXAMPLES -->
+<div class="topic-section" id="examples">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">3.8</span> Solved Numerical Examples</h2>
+<div class="example">
+<h4>Example 3.1: Calculation of Regression Lines</h4>
+<p>Given \(ar{X} = 36\), \(ar{Y} = 85\), \(\sigma_x = 11\), \(\sigma_y = 8\), \(r = 0.66\). Obtain the regression lines and estimate \(Y\) when \(X = 50\).</p>
+<p><strong>Solution:</strong> \(b_{yx} = 0.66 	imes (8/11) = 0.48\). Line: \(Y - 85 = 0.48 (X - 36) \implies Y = 0.48 X + 67.72\). For \(X = 50\): \(Y = 91.72\).</p>
+</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">3.8</span> Solved Examples</h2>
+<p>Solved examples are presented in the English tab.</p>
+</div>
+</section>
+</div>
+<!-- EXERCISES: MCQ -->
+<div class="topic-section" id="mcq">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>The term 'Regression' was introduced in statistics by:<div class="mcq-options"><p>(a) Karl Pearson    (b) Francis Galton    (c) R.A. Fisher    (d) Charles Spearman</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button><div class="answer" id="mcq-eng-1"><strong>Answer: </strong>Francis Galton</div><div class="question"><strong>Q2. </strong>The regression line of Y on X is used to estimate:<div class="mcq-options"><p>(a) Value of X for given Y    (b) Value of Y for given X    (c) Both X and Y    (d) Neither X nor Y</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-2')">Show Answer ▼</button><div class="answer" id="mcq-eng-2"><strong>Answer: </strong>Value of Y for given X</div><div class="question"><strong>Q3. </strong>The slope of the regression line of Y on X is represented by:<div class="mcq-options"><p>(a) b_xy    (b) b_yx    (c) r    (d) σ_y / σ_x</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-3')">Show Answer ▼</button><div class="answer" id="mcq-eng-3"><strong>Answer: </strong>b_yx</div><div class="question"><strong>Q4. </strong>The geometric mean of two regression coefficients b_yx and b_xy is equal to:<div class="mcq-options"><p>(a) Correlation coefficient r    (b) Variance ratio    (c) Standard error    (d) Covariance</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-4')">Show Answer ▼</button><div class="answer" id="mcq-eng-4"><strong>Answer: </strong>Correlation coefficient r</div><div class="question"><strong>Q5. </strong>If b_yx = 0.8 and b_xy = 0.45, the correlation coefficient r is:<div class="mcq-options"><p>(a) 0.6    (b) 0.36    (c) 0.8    (d) 0.5</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-5')">Show Answer ▼</button><div class="answer" id="mcq-eng-5"><strong>Answer: </strong>0.6</div><div class="question"><strong>Q6. </strong>Both regression coefficients b_yx and b_xy must have:<div class="mcq-options"><p>(a) Opposite signs    (b) Same sign as r    (c) Positive sign always    (d) Zero value</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-6')">Show Answer ▼</button><div class="answer" id="mcq-eng-6"><strong>Answer: </strong>Same sign as r</div><div class="question"><strong>Q7. </strong>If one regression coefficient is greater than 1, the other must be:<div class="mcq-options"><p>(a) Greater than 1    (b) Equal to 1    (c) Less than 1    (d) Zero</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-7')">Show Answer ▼</button><div class="answer" id="mcq-eng-7"><strong>Answer: </strong>Less than 1</div><div class="question"><strong>Q8. </strong>The arithmetic mean of b_yx and b_xy is always:<div class="mcq-options"><p>(a) Equal to r    (b) Less than r    (c) Greater than or equal to |r|    (d) Zero</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-8')">Show Answer ▼</button><div class="answer" id="mcq-eng-8"><strong>Answer: </strong>Greater than or equal to |r|</div><div class="question"><strong>Q9. </strong>Regression coefficients are independent of change of:<div class="mcq-options"><p>(a) Scale only    (b) Origin only    (c) Both origin and scale    (d) Neither origin nor scale</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-9')">Show Answer ▼</button><div class="answer" id="mcq-eng-9"><strong>Answer: </strong>Origin only</div><div class="question"><strong>Q10. </strong>The two regression lines intersect at the point:<div class="mcq-options"><p>(a) (0, 0)    (b) (x̄, ȳ)    (c) (σ_x, σ_y)    (d) (1, 1)</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-10')">Show Answer ▼</button><div class="answer" id="mcq-eng-10"><strong>Answer: </strong>(x̄, ȳ)</div><div class="question"><strong>Q11. </strong>If r = 0, the two regression lines are:<div class="mcq-options"><p>(a) Coincident    (b) Parallel    (c) Perpendicular to each other    (d) Intersecting at 45 degrees</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-11')">Show Answer ▼</button><div class="answer" id="mcq-eng-11"><strong>Answer: </strong>Perpendicular to each other</div><div class="question"><strong>Q12. </strong>If r = +1 or -1, the two regression lines:<div class="mcq-options"><p>(a) Are perpendicular    (b) Coincide into a single line    (c) Are parallel    (d) Do not intersect</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-12')">Show Answer ▼</button><div class="answer" id="mcq-eng-12"><strong>Answer: </strong>Coincide into a single line</div><div class="question"><strong>Q13. </strong>The formula for regression coefficient b_yx in terms of r and standard deviations is:<div class="mcq-options"><p>(a) r (σ_x / σ_y)    (b) r (σ_y / σ_x)    (c) r² (σ_y / σ_x)    (d) Cov(X,Y) / σ_y²</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-13')">Show Answer ▼</button><div class="answer" id="mcq-eng-13"><strong>Answer: </strong>r (σ_y / σ_x)</div><div class="question"><strong>Q14. </strong>Standard Error of Estimate of Y on X, S_yx, is given by:<div class="mcq-options"><p>(a) σ_y √(1 - r²)    (b) σ_x √(1 - r²)    (c) σ_y (1 - r)    (d) σ_x (1 - r²)</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-14')">Show Answer ▼</button><div class="answer" id="mcq-eng-14"><strong>Answer: </strong>σ_y √(1 - r²)</div><div class="question"><strong>Q15. </strong>The correlation coefficient between observed values Y and estimated values Ŷ is:<div class="mcq-options"><p>(a) r²    (b) |r|    (c) 1 - r²    (d) Zero</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-15')">Show Answer ▼</button><div class="answer" id="mcq-eng-15"><strong>Answer: </strong>|r|</div><div class="question"><strong>Q16. </strong>The angle θ between two regression lines is zero when:<div class="mcq-options"><p>(a) r = 0    (b) r = ±1    (c) r = 0.5    (d) r = -0.5</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-16')">Show Answer ▼</button><div class="answer" id="mcq-eng-16"><strong>Answer: </strong>r = ±1</div><div class="question"><strong>Q17. </strong>Regression analysis measures:<div class="mcq-options"><p>(a) Degree of linear association only    (b) Cause and effect functional relationship    (c) Non-linear rank correlation    (d) Independence</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-17')">Show Answer ▼</button><div class="answer" id="mcq-eng-17"><strong>Answer: </strong>Cause and effect functional relationship</div><div class="question"><strong>Q18. </strong>If b_yx = 1.2 and b_xy = 0.3, the correlation coefficient r is:<div class="mcq-options"><p>(a) 0.6    (b) 0.36    (c) -0.6    (d) 0.75</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-18')">Show Answer ▼</button><div class="answer" id="mcq-eng-18"><strong>Answer: </strong>0.6</div><div class="question"><strong>Q19. </strong>If U = (X - a)/h and V = (Y - b)/k, then b_YX is equal to:<div class="mcq-options"><p>(a) (k/h) b_VU    (b) (h/k) b_VU    (c) b_VU    (d) (hk) b_VU</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-19')">Show Answer ▼</button><div class="answer" id="mcq-eng-19"><strong>Answer: </strong>(k/h) b_VU</div><div class="question"><strong>Q20. </strong>When r = 0, the regression line of Y on X becomes:<div class="mcq-options"><p>(a) Y = x̄    (b) Y = ȳ    (c) X = ȳ    (d) Y = 0</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-20')">Show Answer ▼</button><div class="answer" id="mcq-eng-20"><strong>Answer: </strong>Y = ȳ</div><div class="question"><strong>Q21. </strong>If the two regression equations are Y = 2X + 3 and X = 0.2Y + 1, then x̄ and ȳ are:<div class="mcq-options"><p>(a) (2, 7)    (b) (5, 13)    (c) (2.5, 8)    (d) (1, 5)</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-21')">Show Answer ▼</button><div class="answer" id="mcq-eng-21"><strong>Answer: </strong>(2.5, 8)</div><div class="question"><strong>Q22. </strong>In the regression equation Y = a + bX, 'a' represents:<div class="mcq-options"><p>(a) Slope    (b) Y-intercept    (c) Correlation coefficient    (d) Standard error</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-22')">Show Answer ▼</button><div class="answer" id="mcq-eng-22"><strong>Answer: </strong>Y-intercept</div><div class="question"><strong>Q23. </strong>If r = 0, the Standard Error of Estimate S_yx is equal to:<div class="mcq-options"><p>(a) 0    (b) σ_y    (c) σ_x    (d) 1</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-23')">Show Answer ▼</button><div class="answer" id="mcq-eng-23"><strong>Answer: </strong>σ_y</div><div class="question"><strong>Q24. </strong>If r = ±1, the Standard Error of Estimate S_yx is equal to:<div class="mcq-options"><p>(a) 0    (b) σ_y    (c) 1    (d) Infinite</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-24')">Show Answer ▼</button><div class="answer" id="mcq-eng-24"><strong>Answer: </strong>0</div><div class="question"><strong>Q25. </strong>Which of the following is NOT symmetric?<div class="mcq-options"><p>(a) Correlation coefficient r    (b) Regression coefficient b_yx    (c) Covariance Cov(X,Y)    (d) Scatter diagram pattern</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-25')">Show Answer ▼</button><div class="answer" id="mcq-eng-25"><strong>Answer: </strong>Regression coefficient b_yx</div><div class="question"><strong>Q26. </strong>The regression line of X on Y minimizes the sum of squares of:<div class="mcq-options"><p>(a) Vertical deviations    (b) Horizontal deviations    (c) Perpendicular deviations    (d) Total deviations</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-26')">Show Answer ▼</button><div class="answer" id="mcq-eng-26"><strong>Answer: </strong>Horizontal deviations</div><div class="question"><strong>Q27. </strong>If b_yx = -0.8 and b_xy = -0.45, then r is:<div class="mcq-options"><p>(a) +0.6    (b) -0.6    (c) -0.36    (d) +0.36</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-27')">Show Answer ▼</button><div class="answer" id="mcq-eng-27"><strong>Answer: </strong>-0.6</div><div class="question"><strong>Q28. </strong>The tangent of the angle between two regression lines tan θ is proportional to:<div class="mcq-options"><p>(a) (1 - r²)/|r|    (b) r / (1 - r²)    (c) 1 + r²    (d) r²</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-28')">Show Answer ▼</button><div class="answer" id="mcq-eng-28"><strong>Answer: </strong>(1 - r²)/|r|</div><div class="question"><strong>Q29. </strong>The equation (Y - ȳ) = b_yx (X - x̄) is called:<div class="mcq-options"><p>(a) Regression of X on Y    (b) Regression of Y on X    (c) Correlation equation    (d) Normal equation</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-29')">Show Answer ▼</button><div class="answer" id="mcq-eng-29"><strong>Answer: </strong>Regression of Y on X</div><div class="question"><strong>Q30. </strong>Regression coefficients are affected by change of:<div class="mcq-options"><p>(a) Origin    (b) Scale    (c) Both origin and scale    (d) Neither origin nor scale</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-eng-30')">Show Answer ▼</button><div class="answer" id="mcq-eng-30"><strong>Answer: </strong>Scale</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>The term 'Regression' was introduced in statistics by:<div class="mcq-options"><p>(a) Karl Pearson    (b) Francis Galton    (c) R.A. Fisher    (d) Charles Spearman</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-1')">Show Answer ▼</button><div class="answer" id="mcq-hin-1"><strong>Answer: </strong>Francis Galton</div><div class="question"><strong>Q2. </strong>The regression line of Y on X is used to estimate:<div class="mcq-options"><p>(a) Value of X for given Y    (b) Value of Y for given X    (c) Both X and Y    (d) Neither X nor Y</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-2')">Show Answer ▼</button><div class="answer" id="mcq-hin-2"><strong>Answer: </strong>Value of Y for given X</div><div class="question"><strong>Q3. </strong>The slope of the regression line of Y on X is represented by:<div class="mcq-options"><p>(a) b_xy    (b) b_yx    (c) r    (d) σ_y / σ_x</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-3')">Show Answer ▼</button><div class="answer" id="mcq-hin-3"><strong>Answer: </strong>b_yx</div><div class="question"><strong>Q4. </strong>The geometric mean of two regression coefficients b_yx and b_xy is equal to:<div class="mcq-options"><p>(a) Correlation coefficient r    (b) Variance ratio    (c) Standard error    (d) Covariance</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-4')">Show Answer ▼</button><div class="answer" id="mcq-hin-4"><strong>Answer: </strong>Correlation coefficient r</div><div class="question"><strong>Q5. </strong>If b_yx = 0.8 and b_xy = 0.45, the correlation coefficient r is:<div class="mcq-options"><p>(a) 0.6    (b) 0.36    (c) 0.8    (d) 0.5</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-5')">Show Answer ▼</button><div class="answer" id="mcq-hin-5"><strong>Answer: </strong>0.6</div><div class="question"><strong>Q6. </strong>Both regression coefficients b_yx and b_xy must have:<div class="mcq-options"><p>(a) Opposite signs    (b) Same sign as r    (c) Positive sign always    (d) Zero value</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-6')">Show Answer ▼</button><div class="answer" id="mcq-hin-6"><strong>Answer: </strong>Same sign as r</div><div class="question"><strong>Q7. </strong>If one regression coefficient is greater than 1, the other must be:<div class="mcq-options"><p>(a) Greater than 1    (b) Equal to 1    (c) Less than 1    (d) Zero</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-7')">Show Answer ▼</button><div class="answer" id="mcq-hin-7"><strong>Answer: </strong>Less than 1</div><div class="question"><strong>Q8. </strong>The arithmetic mean of b_yx and b_xy is always:<div class="mcq-options"><p>(a) Equal to r    (b) Less than r    (c) Greater than or equal to |r|    (d) Zero</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-8')">Show Answer ▼</button><div class="answer" id="mcq-hin-8"><strong>Answer: </strong>Greater than or equal to |r|</div><div class="question"><strong>Q9. </strong>Regression coefficients are independent of change of:<div class="mcq-options"><p>(a) Scale only    (b) Origin only    (c) Both origin and scale    (d) Neither origin nor scale</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-9')">Show Answer ▼</button><div class="answer" id="mcq-hin-9"><strong>Answer: </strong>Origin only</div><div class="question"><strong>Q10. </strong>The two regression lines intersect at the point:<div class="mcq-options"><p>(a) (0, 0)    (b) (x̄, ȳ)    (c) (σ_x, σ_y)    (d) (1, 1)</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-10')">Show Answer ▼</button><div class="answer" id="mcq-hin-10"><strong>Answer: </strong>(x̄, ȳ)</div><div class="question"><strong>Q11. </strong>If r = 0, the two regression lines are:<div class="mcq-options"><p>(a) Coincident    (b) Parallel    (c) Perpendicular to each other    (d) Intersecting at 45 degrees</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-11')">Show Answer ▼</button><div class="answer" id="mcq-hin-11"><strong>Answer: </strong>Perpendicular to each other</div><div class="question"><strong>Q12. </strong>If r = +1 or -1, the two regression lines:<div class="mcq-options"><p>(a) Are perpendicular    (b) Coincide into a single line    (c) Are parallel    (d) Do not intersect</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-12')">Show Answer ▼</button><div class="answer" id="mcq-hin-12"><strong>Answer: </strong>Coincide into a single line</div><div class="question"><strong>Q13. </strong>The formula for regression coefficient b_yx in terms of r and standard deviations is:<div class="mcq-options"><p>(a) r (σ_x / σ_y)    (b) r (σ_y / σ_x)    (c) r² (σ_y / σ_x)    (d) Cov(X,Y) / σ_y²</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-13')">Show Answer ▼</button><div class="answer" id="mcq-hin-13"><strong>Answer: </strong>r (σ_y / σ_x)</div><div class="question"><strong>Q14. </strong>Standard Error of Estimate of Y on X, S_yx, is given by:<div class="mcq-options"><p>(a) σ_y √(1 - r²)    (b) σ_x √(1 - r²)    (c) σ_y (1 - r)    (d) σ_x (1 - r²)</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-14')">Show Answer ▼</button><div class="answer" id="mcq-hin-14"><strong>Answer: </strong>σ_y √(1 - r²)</div><div class="question"><strong>Q15. </strong>The correlation coefficient between observed values Y and estimated values Ŷ is:<div class="mcq-options"><p>(a) r²    (b) |r|    (c) 1 - r²    (d) Zero</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-15')">Show Answer ▼</button><div class="answer" id="mcq-hin-15"><strong>Answer: </strong>|r|</div><div class="question"><strong>Q16. </strong>The angle θ between two regression lines is zero when:<div class="mcq-options"><p>(a) r = 0    (b) r = ±1    (c) r = 0.5    (d) r = -0.5</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-16')">Show Answer ▼</button><div class="answer" id="mcq-hin-16"><strong>Answer: </strong>r = ±1</div><div class="question"><strong>Q17. </strong>Regression analysis measures:<div class="mcq-options"><p>(a) Degree of linear association only    (b) Cause and effect functional relationship    (c) Non-linear rank correlation    (d) Independence</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-17')">Show Answer ▼</button><div class="answer" id="mcq-hin-17"><strong>Answer: </strong>Cause and effect functional relationship</div><div class="question"><strong>Q18. </strong>If b_yx = 1.2 and b_xy = 0.3, the correlation coefficient r is:<div class="mcq-options"><p>(a) 0.6    (b) 0.36    (c) -0.6    (d) 0.75</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-18')">Show Answer ▼</button><div class="answer" id="mcq-hin-18"><strong>Answer: </strong>0.6</div><div class="question"><strong>Q19. </strong>If U = (X - a)/h and V = (Y - b)/k, then b_YX is equal to:<div class="mcq-options"><p>(a) (k/h) b_VU    (b) (h/k) b_VU    (c) b_VU    (d) (hk) b_VU</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-19')">Show Answer ▼</button><div class="answer" id="mcq-hin-19"><strong>Answer: </strong>(k/h) b_VU</div><div class="question"><strong>Q20. </strong>When r = 0, the regression line of Y on X becomes:<div class="mcq-options"><p>(a) Y = x̄    (b) Y = ȳ    (c) X = ȳ    (d) Y = 0</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-20')">Show Answer ▼</button><div class="answer" id="mcq-hin-20"><strong>Answer: </strong>Y = ȳ</div><div class="question"><strong>Q21. </strong>If the two regression equations are Y = 2X + 3 and X = 0.2Y + 1, then x̄ and ȳ are:<div class="mcq-options"><p>(a) (2, 7)    (b) (5, 13)    (c) (2.5, 8)    (d) (1, 5)</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-21')">Show Answer ▼</button><div class="answer" id="mcq-hin-21"><strong>Answer: </strong>(2.5, 8)</div><div class="question"><strong>Q22. </strong>In the regression equation Y = a + bX, 'a' represents:<div class="mcq-options"><p>(a) Slope    (b) Y-intercept    (c) Correlation coefficient    (d) Standard error</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-22')">Show Answer ▼</button><div class="answer" id="mcq-hin-22"><strong>Answer: </strong>Y-intercept</div><div class="question"><strong>Q23. </strong>If r = 0, the Standard Error of Estimate S_yx is equal to:<div class="mcq-options"><p>(a) 0    (b) σ_y    (c) σ_x    (d) 1</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-23')">Show Answer ▼</button><div class="answer" id="mcq-hin-23"><strong>Answer: </strong>σ_y</div><div class="question"><strong>Q24. </strong>If r = ±1, the Standard Error of Estimate S_yx is equal to:<div class="mcq-options"><p>(a) 0    (b) σ_y    (c) 1    (d) Infinite</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-24')">Show Answer ▼</button><div class="answer" id="mcq-hin-24"><strong>Answer: </strong>0</div><div class="question"><strong>Q25. </strong>Which of the following is NOT symmetric?<div class="mcq-options"><p>(a) Correlation coefficient r    (b) Regression coefficient b_yx    (c) Covariance Cov(X,Y)    (d) Scatter diagram pattern</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-25')">Show Answer ▼</button><div class="answer" id="mcq-hin-25"><strong>Answer: </strong>Regression coefficient b_yx</div><div class="question"><strong>Q26. </strong>The regression line of X on Y minimizes the sum of squares of:<div class="mcq-options"><p>(a) Vertical deviations    (b) Horizontal deviations    (c) Perpendicular deviations    (d) Total deviations</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-26')">Show Answer ▼</button><div class="answer" id="mcq-hin-26"><strong>Answer: </strong>Horizontal deviations</div><div class="question"><strong>Q27. </strong>If b_yx = -0.8 and b_xy = -0.45, then r is:<div class="mcq-options"><p>(a) +0.6    (b) -0.6    (c) -0.36    (d) +0.36</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-27')">Show Answer ▼</button><div class="answer" id="mcq-hin-27"><strong>Answer: </strong>-0.6</div><div class="question"><strong>Q28. </strong>The tangent of the angle between two regression lines tan θ is proportional to:<div class="mcq-options"><p>(a) (1 - r²)/|r|    (b) r / (1 - r²)    (c) 1 + r²    (d) r²</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-28')">Show Answer ▼</button><div class="answer" id="mcq-hin-28"><strong>Answer: </strong>(1 - r²)/|r|</div><div class="question"><strong>Q29. </strong>The equation (Y - ȳ) = b_yx (X - x̄) is called:<div class="mcq-options"><p>(a) Regression of X on Y    (b) Regression of Y on X    (c) Correlation equation    (d) Normal equation</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-29')">Show Answer ▼</button><div class="answer" id="mcq-hin-29"><strong>Answer: </strong>Regression of Y on X</div><div class="question"><strong>Q30. </strong>Regression coefficients are affected by change of:<div class="mcq-options"><p>(a) Origin    (b) Scale    (c) Both origin and scale    (d) Neither origin nor scale</p></div></div><button class="toggle-btn" onclick="toggleAnswer('mcq-hin-30')">Show Answer ▼</button><div class="answer" id="mcq-hin-30"><strong>Answer: </strong>Scale</div>
+</div>
+</section>
+</div>
+<!-- EXERCISES: FIB -->
+<div class="topic-section" id="fibs">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>The line of regression of Y on X minimizes the sum of squared _______ deviations.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-1')">Show Answer ▼</button><div class="answer" id="fib-eng-1"><strong>Answer: </strong>vertical</div><div class="question"><strong>Q2. </strong>The line of regression of X on Y minimizes the sum of squared _______ deviations.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-2')">Show Answer ▼</button><div class="answer" id="fib-eng-2"><strong>Answer: </strong>horizontal</div><div class="question"><strong>Q3. </strong>The point of intersection of the two lines of regression is (_______, _______).</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-3')">Show Answer ▼</button><div class="answer" id="fib-eng-3"><strong>Answer: </strong>x̄, ȳ</div><div class="question"><strong>Q4. </strong>The geometric mean of b_yx and b_xy is equal to the correlation coefficient _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-4')">Show Answer ▼</button><div class="answer" id="fib-eng-4"><strong>Answer: </strong>r</div><div class="question"><strong>Q5. </strong>If one regression coefficient is greater than 1, the other must be less than _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-5')">Show Answer ▼</button><div class="answer" id="fib-eng-5"><strong>Answer: </strong>1</div><div class="question"><strong>Q6. </strong>Regression coefficients are independent of change of _______ but dependent on change of scale.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-6')">Show Answer ▼</button><div class="answer" id="fib-eng-6"><strong>Answer: </strong>origin</div><div class="question"><strong>Q7. </strong>When r = 0, the two regression lines are _______ to each other.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-7')">Show Answer ▼</button><div class="answer" id="fib-eng-7"><strong>Answer: </strong>perpendicular</div><div class="question"><strong>Q8. </strong>When r = ±1, the two regression lines _______ into a single line.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-8')">Show Answer ▼</button><div class="answer" id="fib-eng-8"><strong>Answer: </strong>coincide</div><div class="question"><strong>Q9. </strong>The slope of the regression line of Y on X is denoted by _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-9')">Show Answer ▼</button><div class="answer" id="fib-eng-9"><strong>Answer: </strong>b_yx</div><div class="question"><strong>Q10. </strong>The Standard Error of Estimate S_yx is equal to σ_y * _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-10')">Show Answer ▼</button><div class="answer" id="fib-eng-10"><strong>Answer: </strong>√(1 - r²)</div><div class="question"><strong>Q11. </strong>If r = ±1, the Standard Error of Estimate S_yx is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-11')">Show Answer ▼</button><div class="answer" id="fib-eng-11"><strong>Answer: </strong>zero</div><div class="question"><strong>Q12. </strong>The correlation coefficient between observed values Y and predicted values Ŷ is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-12')">Show Answer ▼</button><div class="answer" id="fib-eng-12"><strong>Answer: </strong>|r|</div><div class="question"><strong>Q13. </strong>If b_yx and b_xy are both negative, then r must be _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-13')">Show Answer ▼</button><div class="answer" id="fib-eng-13"><strong>Answer: </strong>negative</div><div class="question"><strong>Q14. </strong>The formula for b_yx in terms of covariance is Cov(X,Y) / _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-14')">Show Answer ▼</button><div class="answer" id="fib-eng-14"><strong>Answer: </strong>σ_x²</div><div class="question"><strong>Q15. </strong>The formula for b_xy in terms of covariance is Cov(X,Y) / _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-15')">Show Answer ▼</button><div class="answer" id="fib-eng-15"><strong>Answer: </strong>σ_y²</div><div class="question"><strong>Q16. </strong>The arithmetic mean of b_yx and b_xy is greater than or equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-16')">Show Answer ▼</button><div class="answer" id="fib-eng-16"><strong>Answer: </strong>|r|</div><div class="question"><strong>Q17. </strong>The regression equation of Y on X is (Y - ȳ) = _______ (X - x̄).</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-17')">Show Answer ▼</button><div class="answer" id="fib-eng-17"><strong>Answer: </strong>b_yx</div><div class="question"><strong>Q18. </strong>The regression equation of X on Y is (X - x̄) = _______ (Y - ȳ).</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-18')">Show Answer ▼</button><div class="answer" id="fib-eng-18"><strong>Answer: </strong>b_xy</div><div class="question"><strong>Q19. </strong>If U = (X - a)/h and V = (Y - b)/k, then b_YX = (k/h) * _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-19')">Show Answer ▼</button><div class="answer" id="fib-eng-19"><strong>Answer: </strong>b_VU</div><div class="question"><strong>Q20. </strong>In Y = a + bX, 'b' indicates the change in Y per unit change in _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-20')">Show Answer ▼</button><div class="answer" id="fib-eng-20"><strong>Answer: </strong>X</div><div class="question"><strong>Q21. </strong>Correlation indicates association, while regression indicates _______ relationship.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-21')">Show Answer ▼</button><div class="answer" id="fib-eng-21"><strong>Answer: </strong>cause and effect / functional</div><div class="question"><strong>Q22. </strong>When r = 0, the angle between the two regression lines is _______ degrees.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-22')">Show Answer ▼</button><div class="answer" id="fib-eng-22"><strong>Answer: </strong>90</div><div class="question"><strong>Q23. </strong>When r = ±1, the angle between the two regression lines is _______ degrees.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-23')">Show Answer ▼</button><div class="answer" id="fib-eng-23"><strong>Answer: </strong>0</div><div class="question"><strong>Q24. </strong>The product of the two regression coefficients b_yx * b_xy is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-24')">Show Answer ▼</button><div class="answer" id="fib-eng-24"><strong>Answer: </strong>r²</div><div class="question"><strong>Q25. </strong>If r = 0.8, standard error of estimate is _______ percent of σ_y.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-25')">Show Answer ▼</button><div class="answer" id="fib-eng-25"><strong>Answer: </strong>60</div><div class="question"><strong>Q26. </strong>Regression coefficient is a _______ measure of relationship.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-26')">Show Answer ▼</button><div class="answer" id="fib-eng-26"><strong>Answer: </strong>directional / absolute</div><div class="question"><strong>Q27. </strong>Correlation coefficient r is _______ under interchange of variables.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-27')">Show Answer ▼</button><div class="answer" id="fib-eng-27"><strong>Answer: </strong>symmetric</div><div class="question"><strong>Q28. </strong>Regression coefficient is _______ under interchange of variables.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-28')">Show Answer ▼</button><div class="answer" id="fib-eng-28"><strong>Answer: </strong>asymmetric / non-symmetric</div><div class="question"><strong>Q29. </strong>The sign of r is always the same as the sign of _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-29')">Show Answer ▼</button><div class="answer" id="fib-eng-29"><strong>Answer: </strong>regression coefficients</div><div class="question"><strong>Q30. </strong>The estimated value of Y for X = x̄ is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-eng-30')">Show Answer ▼</button><div class="answer" id="fib-eng-30"><strong>Answer: </strong>ȳ</div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>The line of regression of Y on X minimizes the sum of squared _______ deviations.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-1')">Show Answer ▼</button><div class="answer" id="fib-hin-1"><strong>Answer: </strong>vertical</div><div class="question"><strong>Q2. </strong>The line of regression of X on Y minimizes the sum of squared _______ deviations.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-2')">Show Answer ▼</button><div class="answer" id="fib-hin-2"><strong>Answer: </strong>horizontal</div><div class="question"><strong>Q3. </strong>The point of intersection of the two lines of regression is (_______, _______).</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-3')">Show Answer ▼</button><div class="answer" id="fib-hin-3"><strong>Answer: </strong>x̄, ȳ</div><div class="question"><strong>Q4. </strong>The geometric mean of b_yx and b_xy is equal to the correlation coefficient _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-4')">Show Answer ▼</button><div class="answer" id="fib-hin-4"><strong>Answer: </strong>r</div><div class="question"><strong>Q5. </strong>If one regression coefficient is greater than 1, the other must be less than _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-5')">Show Answer ▼</button><div class="answer" id="fib-hin-5"><strong>Answer: </strong>1</div><div class="question"><strong>Q6. </strong>Regression coefficients are independent of change of _______ but dependent on change of scale.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-6')">Show Answer ▼</button><div class="answer" id="fib-hin-6"><strong>Answer: </strong>origin</div><div class="question"><strong>Q7. </strong>When r = 0, the two regression lines are _______ to each other.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-7')">Show Answer ▼</button><div class="answer" id="fib-hin-7"><strong>Answer: </strong>perpendicular</div><div class="question"><strong>Q8. </strong>When r = ±1, the two regression lines _______ into a single line.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-8')">Show Answer ▼</button><div class="answer" id="fib-hin-8"><strong>Answer: </strong>coincide</div><div class="question"><strong>Q9. </strong>The slope of the regression line of Y on X is denoted by _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-9')">Show Answer ▼</button><div class="answer" id="fib-hin-9"><strong>Answer: </strong>b_yx</div><div class="question"><strong>Q10. </strong>The Standard Error of Estimate S_yx is equal to σ_y * _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-10')">Show Answer ▼</button><div class="answer" id="fib-hin-10"><strong>Answer: </strong>√(1 - r²)</div><div class="question"><strong>Q11. </strong>If r = ±1, the Standard Error of Estimate S_yx is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-11')">Show Answer ▼</button><div class="answer" id="fib-hin-11"><strong>Answer: </strong>zero</div><div class="question"><strong>Q12. </strong>The correlation coefficient between observed values Y and predicted values Ŷ is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-12')">Show Answer ▼</button><div class="answer" id="fib-hin-12"><strong>Answer: </strong>|r|</div><div class="question"><strong>Q13. </strong>If b_yx and b_xy are both negative, then r must be _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-13')">Show Answer ▼</button><div class="answer" id="fib-hin-13"><strong>Answer: </strong>negative</div><div class="question"><strong>Q14. </strong>The formula for b_yx in terms of covariance is Cov(X,Y) / _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-14')">Show Answer ▼</button><div class="answer" id="fib-hin-14"><strong>Answer: </strong>σ_x²</div><div class="question"><strong>Q15. </strong>The formula for b_xy in terms of covariance is Cov(X,Y) / _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-15')">Show Answer ▼</button><div class="answer" id="fib-hin-15"><strong>Answer: </strong>σ_y²</div><div class="question"><strong>Q16. </strong>The arithmetic mean of b_yx and b_xy is greater than or equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-16')">Show Answer ▼</button><div class="answer" id="fib-hin-16"><strong>Answer: </strong>|r|</div><div class="question"><strong>Q17. </strong>The regression equation of Y on X is (Y - ȳ) = _______ (X - x̄).</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-17')">Show Answer ▼</button><div class="answer" id="fib-hin-17"><strong>Answer: </strong>b_yx</div><div class="question"><strong>Q18. </strong>The regression equation of X on Y is (X - x̄) = _______ (Y - ȳ).</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-18')">Show Answer ▼</button><div class="answer" id="fib-hin-18"><strong>Answer: </strong>b_xy</div><div class="question"><strong>Q19. </strong>If U = (X - a)/h and V = (Y - b)/k, then b_YX = (k/h) * _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-19')">Show Answer ▼</button><div class="answer" id="fib-hin-19"><strong>Answer: </strong>b_VU</div><div class="question"><strong>Q20. </strong>In Y = a + bX, 'b' indicates the change in Y per unit change in _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-20')">Show Answer ▼</button><div class="answer" id="fib-hin-20"><strong>Answer: </strong>X</div><div class="question"><strong>Q21. </strong>Correlation indicates association, while regression indicates _______ relationship.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-21')">Show Answer ▼</button><div class="answer" id="fib-hin-21"><strong>Answer: </strong>cause and effect / functional</div><div class="question"><strong>Q22. </strong>When r = 0, the angle between the two regression lines is _______ degrees.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-22')">Show Answer ▼</button><div class="answer" id="fib-hin-22"><strong>Answer: </strong>90</div><div class="question"><strong>Q23. </strong>When r = ±1, the angle between the two regression lines is _______ degrees.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-23')">Show Answer ▼</button><div class="answer" id="fib-hin-23"><strong>Answer: </strong>0</div><div class="question"><strong>Q24. </strong>The product of the two regression coefficients b_yx * b_xy is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-24')">Show Answer ▼</button><div class="answer" id="fib-hin-24"><strong>Answer: </strong>r²</div><div class="question"><strong>Q25. </strong>If r = 0.8, standard error of estimate is _______ percent of σ_y.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-25')">Show Answer ▼</button><div class="answer" id="fib-hin-25"><strong>Answer: </strong>60</div><div class="question"><strong>Q26. </strong>Regression coefficient is a _______ measure of relationship.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-26')">Show Answer ▼</button><div class="answer" id="fib-hin-26"><strong>Answer: </strong>directional / absolute</div><div class="question"><strong>Q27. </strong>Correlation coefficient r is _______ under interchange of variables.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-27')">Show Answer ▼</button><div class="answer" id="fib-hin-27"><strong>Answer: </strong>symmetric</div><div class="question"><strong>Q28. </strong>Regression coefficient is _______ under interchange of variables.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-28')">Show Answer ▼</button><div class="answer" id="fib-hin-28"><strong>Answer: </strong>asymmetric / non-symmetric</div><div class="question"><strong>Q29. </strong>The sign of r is always the same as the sign of _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-29')">Show Answer ▼</button><div class="answer" id="fib-hin-29"><strong>Answer: </strong>regression coefficients</div><div class="question"><strong>Q30. </strong>The estimated value of Y for X = x̄ is equal to _______.</div><button class="toggle-btn" onclick="toggleAnswer('fib-hin-30')">Show Answer ▼</button><div class="answer" id="fib-hin-30"><strong>Answer: </strong>ȳ</div>
+</div>
+</section>
+</div>
+<!-- EXERCISES: TF -->
+<div class="topic-section" id="tfs">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">✅</span> True / False Questions — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>The regression line of Y on X is used to predict X for a given Y. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-1')">Show Answer ▼</button><div class="answer" id="tf-eng-1"><strong>Answer: False</strong><p>Regression of Y on X predicts Y for a given X.</p></div><div class="question"><strong>Q2. </strong>The correlation coefficient r is the geometric mean of the two regression coefficients. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-2')">Show Answer ▼</button><div class="answer" id="tf-eng-2"><strong>Answer: True</strong><p>r = ± √(b_yx * b_xy).</p></div><div class="question"><strong>Q3. </strong>If b_yx = 1.5, then b_xy can be 0.8. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-3')">Show Answer ▼</button><div class="answer" id="tf-eng-3"><strong>Answer: False</strong><p>Product b_yx * b_xy = 1.2 &gt; 1, which implies r² &gt; 1, impossible!</p></div><div class="question"><strong>Q4. </strong>The two regression lines always intersect at the sample means (x̄, ȳ). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-4')">Show Answer ▼</button><div class="answer" id="tf-eng-4"><strong>Answer: True</strong><p>Since (x̄, ȳ) satisfies both regression equations.</p></div><div class="question"><strong>Q5. </strong>Regression coefficients are independent of change of origin and scale. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-5')">Show Answer ▼</button><div class="answer" id="tf-eng-5"><strong>Answer: False</strong><p>They are independent of origin but dependent on scale.</p></div><div class="question"><strong>Q6. </strong>If r = 0, the regression line of Y on X is horizontal (Y = ȳ). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-6')">Show Answer ▼</button><div class="answer" id="tf-eng-6"><strong>Answer: True</strong><p>Slope b_yx = 0, so Y = ȳ.</p></div><div class="question"><strong>Q7. </strong>When r = ±1, the two regression lines are perpendicular. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-7')">Show Answer ▼</button><div class="answer" id="tf-eng-7"><strong>Answer: False</strong><p>They coincide (angle θ = 0°).</p></div><div class="question"><strong>Q8. </strong>The Standard Error of Estimate S_yx measures the scatter of observed Y values around the regression line. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-8')">Show Answer ▼</button><div class="answer" id="tf-eng-8"><strong>Answer: True</strong><p>S_yx is the standard deviation of residuals.</p></div><div class="question"><strong>Q9. </strong>Correlation measures cause-and-effect relationship between variables. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-9')">Show Answer ▼</button><div class="answer" id="tf-eng-9"><strong>Answer: False</strong><p>Correlation measures linear association; regression models cause-and-effect.</p></div><div class="question"><strong>Q10. </strong>The arithmetic mean of b_yx and b_xy is always greater than or equal to |r|. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-10')">Show Answer ▼</button><div class="answer" id="tf-eng-10"><strong>Answer: True</strong><p>Proof: (b_yx + b_xy)/2 ≥ √(b_yx b_xy) = |r| by AM-GM inequality.</p></div><div class="question"><strong>Q11. </strong>If b_yx is negative, b_xy can be positive. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-11')">Show Answer ▼</button><div class="answer" id="tf-eng-11"><strong>Answer: False</strong><p>Both regression coefficients must have the exact same sign as r.</p></div><div class="question"><strong>Q12. </strong>The correlation between observed Y and estimated Ŷ is |r|. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-12')">Show Answer ▼</button><div class="answer" id="tf-eng-12"><strong>Answer: True</strong><p>r(Y, Ŷ) = |r|.</p></div><div class="question"><strong>Q13. </strong>If r = 1, the Standard Error of Estimate S_yx is equal to σ_y. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-13')">Show Answer ▼</button><div class="answer" id="tf-eng-13"><strong>Answer: False</strong><p>When r = 1, S_yx = σ_y √(1 - 1) = 0.</p></div><div class="question"><strong>Q14. </strong>Changing scale of X by multiplying by 2 doubles the value of b_yx. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-14')">Show Answer ▼</button><div class="answer" id="tf-eng-14"><strong>Answer: False</strong><p>b_yx = (k/h) b_vu; doubling X (h=2) halves b_yx.</p></div><div class="question"><strong>Q15. </strong>Correlation coefficient r is symmetric, whereas regression coefficients are not. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-15')">Show Answer ▼</button><div class="answer" id="tf-eng-15"><strong>Answer: True</strong><p>r_XY = r_YX, but b_yx ≠ b_xy in general.</p></div><div class="question"><strong>Q16. </strong>The regression line of X on Y minimizes vertical deviations. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-16')">Show Answer ▼</button><div class="answer" id="tf-eng-16"><strong>Answer: False</strong><p>It minimizes horizontal deviations Σ(x_i - x̂_i)².</p></div><div class="question"><strong>Q17. </strong>If r = 0.6, then 36% of the variance in Y is explained by X. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-17')">Show Answer ▼</button><div class="answer" id="tf-eng-17"><strong>Answer: True</strong><p>r² = 0.36 = 36%.</p></div><div class="question"><strong>Q18. </strong>The angle between regression lines increases as |r| increases from 0 to 1. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-18')">Show Answer ▼</button><div class="answer" id="tf-eng-18"><strong>Answer: False</strong><p>The angle decreases from 90° (at r=0) to 0° (at |r|=1).</p></div><div class="question"><strong>Q19. </strong>Francis Galton studied regression in connection with heights of fathers and sons. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-19')">Show Answer ▼</button><div class="answer" id="tf-eng-19"><strong>Answer: True</strong><p>Galton observed 'regression towards mediocrity' in human stature.</p></div><div class="question"><strong>Q20. </strong>The product of slopes of the two regression lines equals r². [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-20')">Show Answer ▼</button><div class="answer" id="tf-eng-20"><strong>Answer: True</strong><p>b_yx * b_xy = r (σ_y/σ_x) * r (σ_x/σ_y) = r².</p></div><div class="question"><strong>Q21. </strong>If X and Y are independent, b_yx = 0 and b_xy = 0. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-21')">Show Answer ▼</button><div class="answer" id="tf-eng-21"><strong>Answer: True</strong><p>Independence implies Cov(X,Y) = 0.</p></div><div class="question"><strong>Q22. </strong>The line Y = a + bX minimizes sum of absolute errors. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-22')">Show Answer ▼</button><div class="answer" id="tf-eng-22"><strong>Answer: False</strong><p>It minimizes sum of SQUARED errors.</p></div><div class="question"><strong>Q23. </strong>Regression analysis can be extended to three or more variables. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-23')">Show Answer ▼</button><div class="answer" id="tf-eng-23"><strong>Answer: True</strong><p>Multiple and partial regression analysis handle multivariate data.</p></div><div class="question"><strong>Q24. </strong>The units of b_yx are (unit of Y) / (unit of X). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-24')">Show Answer ▼</button><div class="answer" id="tf-eng-24"><strong>Answer: True</strong><p>b_yx represents change in Y per unit change in X.</p></div><div class="question"><strong>Q25. </strong>Correlation coefficient r has no physical unit of measurement. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-25')">Show Answer ▼</button><div class="answer" id="tf-eng-25"><strong>Answer: True</strong><p>r is dimensionless.</p></div><div class="question"><strong>Q26. </strong>The sum of residuals from regression line of Y on X is always zero. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-26')">Show Answer ▼</button><div class="answer" id="tf-eng-26"><strong>Answer: True</strong><p>Σ(y_i - ŷ_i) = 0.</p></div><div class="question"><strong>Q27. </strong>If b_yx = 0.5 and b_xy = 0.5, then r = 0.5. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-27')">Show Answer ▼</button><div class="answer" id="tf-eng-27"><strong>Answer: True</strong><p>r = √(0.5 * 0.5) = 0.5.</p></div><div class="question"><strong>Q28. </strong>Standard Error of Estimate S_xy is equal to σ_x √(1 - r²). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-28')">Show Answer ▼</button><div class="answer" id="tf-eng-28"><strong>Answer: True</strong><p>Correct formula for X on Y.</p></div><div class="question"><strong>Q29. </strong>The slope b_yx can be greater than 1. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-29')">Show Answer ▼</button><div class="answer" id="tf-eng-29"><strong>Answer: True</strong><p>As long as b_xy ≤ 1/b_yx.</p></div><div class="question"><strong>Q30. </strong>If r = -1, the slope b_yx is negative. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-eng-30')">Show Answer ▼</button><div class="answer" id="tf-eng-30"><strong>Answer: True</strong><p>Sign of b_yx matches r.</p></div>
+</div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">✅</span> True / False Questions — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>The regression line of Y on X is used to predict X for a given Y. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-1')">Show Answer ▼</button><div class="answer" id="tf-hin-1"><strong>Answer: False</strong><p>Regression of Y on X predicts Y for a given X.</p></div><div class="question"><strong>Q2. </strong>The correlation coefficient r is the geometric mean of the two regression coefficients. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-2')">Show Answer ▼</button><div class="answer" id="tf-hin-2"><strong>Answer: True</strong><p>r = ± √(b_yx * b_xy).</p></div><div class="question"><strong>Q3. </strong>If b_yx = 1.5, then b_xy can be 0.8. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-3')">Show Answer ▼</button><div class="answer" id="tf-hin-3"><strong>Answer: False</strong><p>Product b_yx * b_xy = 1.2 &gt; 1, which implies r² &gt; 1, impossible!</p></div><div class="question"><strong>Q4. </strong>The two regression lines always intersect at the sample means (x̄, ȳ). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-4')">Show Answer ▼</button><div class="answer" id="tf-hin-4"><strong>Answer: True</strong><p>Since (x̄, ȳ) satisfies both regression equations.</p></div><div class="question"><strong>Q5. </strong>Regression coefficients are independent of change of origin and scale. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-5')">Show Answer ▼</button><div class="answer" id="tf-hin-5"><strong>Answer: False</strong><p>They are independent of origin but dependent on scale.</p></div><div class="question"><strong>Q6. </strong>If r = 0, the regression line of Y on X is horizontal (Y = ȳ). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-6')">Show Answer ▼</button><div class="answer" id="tf-hin-6"><strong>Answer: True</strong><p>Slope b_yx = 0, so Y = ȳ.</p></div><div class="question"><strong>Q7. </strong>When r = ±1, the two regression lines are perpendicular. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-7')">Show Answer ▼</button><div class="answer" id="tf-hin-7"><strong>Answer: False</strong><p>They coincide (angle θ = 0°).</p></div><div class="question"><strong>Q8. </strong>The Standard Error of Estimate S_yx measures the scatter of observed Y values around the regression line. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-8')">Show Answer ▼</button><div class="answer" id="tf-hin-8"><strong>Answer: True</strong><p>S_yx is the standard deviation of residuals.</p></div><div class="question"><strong>Q9. </strong>Correlation measures cause-and-effect relationship between variables. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-9')">Show Answer ▼</button><div class="answer" id="tf-hin-9"><strong>Answer: False</strong><p>Correlation measures linear association; regression models cause-and-effect.</p></div><div class="question"><strong>Q10. </strong>The arithmetic mean of b_yx and b_xy is always greater than or equal to |r|. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-10')">Show Answer ▼</button><div class="answer" id="tf-hin-10"><strong>Answer: True</strong><p>Proof: (b_yx + b_xy)/2 ≥ √(b_yx b_xy) = |r| by AM-GM inequality.</p></div><div class="question"><strong>Q11. </strong>If b_yx is negative, b_xy can be positive. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-11')">Show Answer ▼</button><div class="answer" id="tf-hin-11"><strong>Answer: False</strong><p>Both regression coefficients must have the exact same sign as r.</p></div><div class="question"><strong>Q12. </strong>The correlation between observed Y and estimated Ŷ is |r|. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-12')">Show Answer ▼</button><div class="answer" id="tf-hin-12"><strong>Answer: True</strong><p>r(Y, Ŷ) = |r|.</p></div><div class="question"><strong>Q13. </strong>If r = 1, the Standard Error of Estimate S_yx is equal to σ_y. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-13')">Show Answer ▼</button><div class="answer" id="tf-hin-13"><strong>Answer: False</strong><p>When r = 1, S_yx = σ_y √(1 - 1) = 0.</p></div><div class="question"><strong>Q14. </strong>Changing scale of X by multiplying by 2 doubles the value of b_yx. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-14')">Show Answer ▼</button><div class="answer" id="tf-hin-14"><strong>Answer: False</strong><p>b_yx = (k/h) b_vu; doubling X (h=2) halves b_yx.</p></div><div class="question"><strong>Q15. </strong>Correlation coefficient r is symmetric, whereas regression coefficients are not. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-15')">Show Answer ▼</button><div class="answer" id="tf-hin-15"><strong>Answer: True</strong><p>r_XY = r_YX, but b_yx ≠ b_xy in general.</p></div><div class="question"><strong>Q16. </strong>The regression line of X on Y minimizes vertical deviations. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-16')">Show Answer ▼</button><div class="answer" id="tf-hin-16"><strong>Answer: False</strong><p>It minimizes horizontal deviations Σ(x_i - x̂_i)².</p></div><div class="question"><strong>Q17. </strong>If r = 0.6, then 36% of the variance in Y is explained by X. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-17')">Show Answer ▼</button><div class="answer" id="tf-hin-17"><strong>Answer: True</strong><p>r² = 0.36 = 36%.</p></div><div class="question"><strong>Q18. </strong>The angle between regression lines increases as |r| increases from 0 to 1. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-18')">Show Answer ▼</button><div class="answer" id="tf-hin-18"><strong>Answer: False</strong><p>The angle decreases from 90° (at r=0) to 0° (at |r|=1).</p></div><div class="question"><strong>Q19. </strong>Francis Galton studied regression in connection with heights of fathers and sons. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-19')">Show Answer ▼</button><div class="answer" id="tf-hin-19"><strong>Answer: True</strong><p>Galton observed 'regression towards mediocrity' in human stature.</p></div><div class="question"><strong>Q20. </strong>The product of slopes of the two regression lines equals r². [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-20')">Show Answer ▼</button><div class="answer" id="tf-hin-20"><strong>Answer: True</strong><p>b_yx * b_xy = r (σ_y/σ_x) * r (σ_x/σ_y) = r².</p></div><div class="question"><strong>Q21. </strong>If X and Y are independent, b_yx = 0 and b_xy = 0. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-21')">Show Answer ▼</button><div class="answer" id="tf-hin-21"><strong>Answer: True</strong><p>Independence implies Cov(X,Y) = 0.</p></div><div class="question"><strong>Q22. </strong>The line Y = a + bX minimizes sum of absolute errors. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-22')">Show Answer ▼</button><div class="answer" id="tf-hin-22"><strong>Answer: False</strong><p>It minimizes sum of SQUARED errors.</p></div><div class="question"><strong>Q23. </strong>Regression analysis can be extended to three or more variables. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-23')">Show Answer ▼</button><div class="answer" id="tf-hin-23"><strong>Answer: True</strong><p>Multiple and partial regression analysis handle multivariate data.</p></div><div class="question"><strong>Q24. </strong>The units of b_yx are (unit of Y) / (unit of X). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-24')">Show Answer ▼</button><div class="answer" id="tf-hin-24"><strong>Answer: True</strong><p>b_yx represents change in Y per unit change in X.</p></div><div class="question"><strong>Q25. </strong>Correlation coefficient r has no physical unit of measurement. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-25')">Show Answer ▼</button><div class="answer" id="tf-hin-25"><strong>Answer: True</strong><p>r is dimensionless.</p></div><div class="question"><strong>Q26. </strong>The sum of residuals from regression line of Y on X is always zero. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-26')">Show Answer ▼</button><div class="answer" id="tf-hin-26"><strong>Answer: True</strong><p>Σ(y_i - ŷ_i) = 0.</p></div><div class="question"><strong>Q27. </strong>If b_yx = 0.5 and b_xy = 0.5, then r = 0.5. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-27')">Show Answer ▼</button><div class="answer" id="tf-hin-27"><strong>Answer: True</strong><p>r = √(0.5 * 0.5) = 0.5.</p></div><div class="question"><strong>Q28. </strong>Standard Error of Estimate S_xy is equal to σ_x √(1 - r²). [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-28')">Show Answer ▼</button><div class="answer" id="tf-hin-28"><strong>Answer: True</strong><p>Correct formula for X on Y.</p></div><div class="question"><strong>Q29. </strong>The slope b_yx can be greater than 1. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-29')">Show Answer ▼</button><div class="answer" id="tf-hin-29"><strong>Answer: True</strong><p>As long as b_xy ≤ 1/b_yx.</p></div><div class="question"><strong>Q30. </strong>If r = -1, the slope b_yx is negative. [T/F]</div><button class="toggle-btn" onclick="toggleAnswer('tf-hin-30')">Show Answer ▼</button><div class="answer" id="tf-hin-30"><strong>Answer: True</strong><p>Sign of b_yx matches r.</p></div>
+</div>
+</section>
+</div>
+<!-- EXERCISES: SUBJ -->
+<div class="topic-section" id="subjective">
+<section class="section-card">
+<div class="english-content">
+<h2><span class="section-num">📝</span> Subjective Questions — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>Define Linear Regression. Distinguish clearly between Correlation and Regression.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-1')">Show Answer ▼</button><div class="answer" id="subj-eng-1"><strong>Solution: </strong><p>Regression is the statistical method of modeling the functional or cause-and-effect relationship between a dependent variable Y and one or more independent variables X. Distinction: 1) Correlation measures degree of linear association; regression predicts dependent variable. 2) Correlation is symmetric (r_XY = r_YX); regression is asymmetric (b_yx ≠ b_xy). 3) Correlation is unitless; regression coefficients have physical units. 4) Correlation does not imply causation; regression assumes independent and dependent roles.</p></div><div class="question"><strong>Q2. </strong>Derive the equation of the line of regression of Y on X using the principle of least squares.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-2')">Show Answer ▼</button><div class="answer" id="subj-eng-2"><strong>Solution: </strong><p>Let Ŷ = a + bX. Minimize S = Σ (y_i - a - b x_i)². Setting ∂S/∂a = 0 ⇒ Σ y_i = n a + b Σ x_i ⇒ a = ȳ - b x̄. Setting ∂S/∂b = 0 ⇒ Σ x_i y_i = a Σ x_i + b Σ x_i². Substituting a = ȳ - b x̄ gives b = [Σ x_i y_i - n x̄ ȳ] / [Σ x_i² - n x̄²] = Cov(X,Y) / σ_x² = b_yx. Thus (Y - ȳ) = b_yx (X - x̄).</p></div><div class="question"><strong>Q3. </strong>State and prove the five important properties of regression coefficients.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-3')">Show Answer ▼</button><div class="answer" id="subj-eng-3"><strong>Solution: </strong><p>1) r = ± √(b_yx * b_xy) [Geometric mean is |r|]. Proof: b_yx * b_xy = r (σ_y/σ_x) * r (σ_x/σ_y) = r². 2) Both b_yx and b_xy have the same sign as r. Proof: σ_x, σ_y &gt; 0. 3) (b_yx + b_xy)/2 ≥ |r|. Proof: (√b_yx - √b_xy)² ≥ 0 ⇒ (b_yx + b_xy)/2 ≥ √(b_yx b_xy) = |r|. 4) If one &gt; 1, the other &lt; 1. Proof: b_yx b_xy = r² ≤ 1. 5) Independent of origin, dependent on scale: If U=(X-a)/h, V=(Y-b)/k, then b_YX = (k/h) b_VU.</p></div><div class="question"><strong>Q4. </strong>Derive the formula for the angle θ between two regression lines.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-4')">Show Answer ▼</button><div class="answer" id="subj-eng-4"><strong>Solution: </strong><p>Lines are Y - ȳ = b_yx (X - x̄) with slope m_1 = b_yx = r (σ_y/σ_x), and X - x̄ = b_xy (Y - ȳ) ⇒ Y - ȳ = (1/b_xy)(X - x̄) with slope m_2 = 1/b_xy = (1/r)(σ_y/σ_x). Using tan θ = |(m_2 - m_1)/(1 + m_1 m_2)| = |(1/b_xy - b_yx) / (1 + b_yx/b_xy)| = |(1 - b_yx b_xy) / (b_xy + b_yx)|. Substituting b_yx = r σ_y/σ_x, b_xy = r σ_x/σ_y gives tan θ = |(1 - r²)/r| * [σ_x σ_y / (σ_x² + σ_y²)].</p></div><div class="question"><strong>Q5. </strong>Discuss the two extreme cases for the angle between regression lines: when r = 0 and when r = ±1.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-5')">Show Answer ▼</button><div class="answer" id="subj-eng-5"><strong>Solution: </strong><p>Case 1: When r = ±1, 1 - r² = 0 ⇒ tan θ = 0 ⇒ θ = 0°. The two regression lines coincide into a single straight line, indicating perfect linear relationship. Case 2: When r = 0, tan θ = ∞ ⇒ θ = 90°. The two lines are perpendicular to each other (Y = ȳ and X = x̄), indicating zero correlation.</p></div><div class="question"><strong>Q6. </strong>Define Standard Error of Estimate S_yx. Derive its formula S_yx = σ_y √(1 - r²).</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-6')">Show Answer ▼</button><div class="answer" id="subj-eng-6"><strong>Solution: </strong><p>S_yx² = (1/n) Σ (y_i - ŷ_i)² = (1/n) Σ [(y_i - ȳ) - b_yx (x_i - x̄)]² = (1/n) Σ (y_i - ȳ)² - (2 b_yx / n) Σ (x_i - x̄)(y_i - ȳ) + (b_yx² / n) Σ (x_i - x̄)² = σ_y² - 2 b_yx Cov(X,Y) + b_yx² σ_x². Substituting b_yx = Cov(X,Y)/σ_x² gives S_yx² = σ_y² - Cov(X,Y)²/σ_x² = σ_y² - r² σ_y² = σ_y² (1 - r²). Thus S_yx = σ_y √(1 - r²).</p></div><div class="question"><strong>Q7. </strong>Prove that the correlation coefficient between observed values Y and estimated values Ŷ is |r|.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-7')">Show Answer ▼</button><div class="answer" id="subj-eng-7"><strong>Solution: </strong><p>Let Ŷ = ȳ + b_yx (X - x̄). Mean of Ŷ is E[Ŷ] = ȳ. Variance Var(Ŷ) = b_yx² σ_x² = r² σ_y². Covariance Cov(Y, Ŷ) = E[(Y - ȳ)(Ŷ - ȳ)] = b_yx E[(Y - ȳ)(X - x̄)] = b_yx Cov(X,Y) = r (σ_y/σ_x) * r σ_x σ_y = r² σ_y². Correlation r(Y, Ŷ) = Cov(Y, Ŷ) / [σ_y σ_Ŷ] = (r² σ_y²) / [σ_y * |r| σ_y] = r² / |r| = |r|.</p></div><div class="question"><strong>Q8. </strong>Given x̄ = 36, ȳ = 85, σ_x = 11, σ_y = 8, r = 0.66. Calculate the two regression lines and estimate Y when X = 50.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-8')">Show Answer ▼</button><div class="answer" id="subj-eng-8"><strong>Solution: </strong><p>b_yx = r (σ_y / σ_x) = 0.66 * (8 / 11) = 0.48. Line Y on X: Y - 85 = 0.48 (X - 36) ⇒ Y = 0.48 X - 17.28 + 85 ⇒ Y = 0.48 X + 67.72. For X = 50: Y = 0.48(50) + 67.72 = 24 + 67.72 = 91.72 q/ha. Line X on Y: b_xy = 0.66 * (11 / 8) = 0.9075. X - 36 = 0.9075 (Y - 85) ⇒ X = 0.9075 Y - 41.14.</p></div><div class="question"><strong>Q9. </strong>The two regression lines are 8X - 10Y + 66 = 0 and 40X - 18Y - 214 = 0. Find x̄, ȳ, r, and ratio of standard deviations.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-9')">Show Answer ▼</button><div class="answer" id="subj-eng-9"><strong>Solution: </strong><p>Intersection (x̄, ȳ): Solve 8x̄ - 10ȳ = -66 and 40x̄ - 18ȳ = 214. Multiply first by 5: 40x̄ - 50ȳ = -330. Subtract: 32ȳ = 544 ⇒ ȳ = 17. 8x̄ = 10(17) - 66 = 104 ⇒ x̄ = 13. Slopes: From 8X - 10Y + 66 = 0 ⇒ Y = 0.8X + 6.6 ⇒ b_yx = 0.8. From 40X - 18Y - 214 = 0 ⇒ X = 0.45Y + 5.35 ⇒ b_xy = 0.45. Correlation r = √(0.8 * 0.45) = √0.36 = 0.6. Ratio σ_y / σ_x: b_yx = r (σ_y / σ_x) ⇒ 0.8 = 0.6 (σ_y / σ_x) ⇒ σ_y / σ_x = 4/3.</p></div><div class="question"><strong>Q10. </strong>In a study on plant height X (cm) and leaf area Y (cm²), N = 10, ΣX = 150, ΣY = 220, ΣX² = 2450, ΣY² = 5100, ΣXY = 3500. Compute regression lines and S_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-10')">Show Answer ▼</button><div class="answer" id="subj-eng-10"><strong>Solution: </strong><p>x̄ = 15, ȳ = 22. Σ(X-x̄)² = 2450 - 10(225) = 200 ⇒ σ_x² = 20. Σ(Y-ȳ)² = 5100 - 10(484) = 260 ⇒ σ_y² = 26. Σ(X-x̄)(Y-ȳ) = 3500 - 10(15)(22) = 200 ⇒ Cov(X,Y) = 20. b_yx = 200/200 = 1.0. Line Y on X: Y - 22 = 1.0 (X - 15) ⇒ Y = X + 7. b_xy = 200/260 = 0.769. Line X on Y: X - 15 = 0.769 (Y - 22). r = √(1.0 * 0.769) = 0.877. S_yx = √26 * √(1 - 0.769) = 5.099 * 0.480 = 2.45.</p></div>
+<div class="question"><strong>Q11. </strong>Show that if one regression coefficient is greater than 1, the other must be less than 1.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-11')">Show Answer ▼</button><div class="answer" id="subj-eng-11"><strong>Solution: </strong><p>Proof: b_yx * b_xy = r² ≤ 1. If b_yx &gt; 1, then b_xy = r² / b_yx &lt; 1 / b_yx &lt; 1. Hence, both coefficients cannot simultaneously exceed unity.</p></div><div class="question"><strong>Q12. </strong>If two regression lines are 3X + 2Y - 26 = 0 and 6X + Y - 31 = 0, find x̄, ȳ, and r.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-12')">Show Answer ▼</button><div class="answer" id="subj-eng-12"><strong>Solution: </strong><p>Solving 3x̄ + 2ȳ = 26 and 6x̄ + ȳ = 31: Multiply second by 2 ⇒ 12x̄ + 2ȳ = 62. Subtract first: 9x̄ = 36 ⇒ x̄ = 4. 2ȳ = 26 - 12 = 14 ⇒ ȳ = 7. Slopes: From first, Y = -1.5X + 13 ⇒ b_yx = -1.5. From second, X = -0.167Y + 5.167 ⇒ b_xy = -0.167. r = -√(-1.5 * -0.167) = -√0.25 = -0.5.</p></div><div class="question"><strong>Q13. </strong>Explain the physical interpretation of the regression coefficient b_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-13')">Show Answer ▼</button><div class="answer" id="subj-eng-13"><strong>Solution: </strong><p>b_yx represents the average change in the dependent variable Y associated with a unit increase in the independent variable X. For example, if b_yx = 0.6 q/ha per kg fertilizer, it means yield increases by 0.6 q/ha for every additional kg of fertilizer applied.</p></div><div class="question"><strong>Q14. </strong>State the condition under which the regression lines of Y on X and X on Y are parallel.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-14')">Show Answer ▼</button><div class="answer" id="subj-eng-14"><strong>Solution: </strong><p>The two regression lines are never parallel unless they coincide (when r = ±1) or are horizontal/vertical (when r = 0). When r = ±1, the lines coincide and have identical slopes.</p></div><div class="question"><strong>Q15. </strong>Given Σ(X-x̄)² = 100, Σ(Y-ȳ)² = 64, Σ(X-x̄)(Y-ȳ) = 40, N = 10. Compute b_yx, b_xy, r, and S_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-15')">Show Answer ▼</button><div class="answer" id="subj-eng-15"><strong>Solution: </strong><p>b_yx = 40 / 100 = 0.4. b_xy = 40 / 64 = 0.625. r = √(0.4 * 0.625) = √0.25 = 0.5. σ_y = √(64/10) = √6.4 = 2.53. S_yx = σ_y √(1 - r²) = 2.53 * √(1 - 0.25) = 2.53 * 0.866 = 2.19.</p></div><div class="question"><strong>Q16. </strong>Prove that the arithmetic mean of b_yx and b_xy is greater than or equal to |r|.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-16')">Show Answer ▼</button><div class="answer" id="subj-eng-16"><strong>Solution: </strong><p>By AM-GM inequality for positive numbers: (b_yx + b_xy)/2 ≥ √(b_yx b_xy) = |r|. For negative coefficients, (|b_yx| + |b_xy|)/2 ≥ |r| holds identically.</p></div><div class="question"><strong>Q17. </strong>Explain why the regression line of Y on X should not be used to predict X from Y.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-17')">Show Answer ▼</button><div class="answer" id="subj-eng-17"><strong>Solution: </strong><p>The line of Y on X is derived by minimizing vertical errors Σ(y_i - ŷ_i)², assuming X is known without error. To predict X from Y, horizontal errors Σ(x_i - x̂_i)² must be minimized, which yields the line of X on Y.</p></div><div class="question"><strong>Q18. </strong>Discuss the effect of change of scale on regression coefficients.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-18')">Show Answer ▼</button><div class="answer" id="subj-eng-18"><strong>Solution: </strong><p>If U = (X - a)/h and V = (Y - b)/k, then b_YX = (k/h) b_VU. Multiplying X by h reduces b_YX by factor h, while multiplying Y by k increases b_YX by factor k.</p></div><div class="question"><strong>Q19. </strong>Show that if r = 0, the regression line of Y on X becomes Y = ȳ.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-19')">Show Answer ▼</button><div class="answer" id="subj-eng-19"><strong>Solution: </strong><p>Since b_yx = r (σ_y/σ_x) = 0, the equation (Y - ȳ) = b_yx (X - x̄) simplifies directly to Y - ȳ = 0 ⇒ Y = ȳ.</p></div><div class="question"><strong>Q20. </strong>Calculate the angle θ between regression lines if r = 0.8.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-20')">Show Answer ▼</button><div class="answer" id="subj-eng-20"><strong>Solution: </strong><p>tan θ = |(1 - r²)/r| * [σ_x σ_y / (σ_x² + σ_y²)]. Assuming σ_x = σ_y: tan θ = |(1 - 0.64)/0.8| * (1/2) = (0.36 / 0.8) * 0.5 = 0.45 * 0.5 = 0.225. θ = arctan(0.225) ≈ 12.68°.</p></div><div class="question"><strong>Q21. </strong>Explain how residual variance is calculated in linear regression.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-21')">Show Answer ▼</button><div class="answer" id="subj-eng-21"><strong>Solution: </strong><p>Residual variance is the mean of squared residuals: S_yx² = (1/n) Σ (y_i - ŷ_i)² = σ_y² (1 - r²). It represents the unexplained variance of Y after fitting the linear regression model.</p></div><div class="question"><strong>Q22. </strong>Find the regression line of Y on X if x̄ = 10, ȳ = 20, σ_x = 2, σ_y = 3, r = 0.8.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-22')">Show Answer ▼</button><div class="answer" id="subj-eng-22"><strong>Solution: </strong><p>b_yx = 0.8 * (3 / 2) = 1.2. Equation: (Y - 20) = 1.2 (X - 10) ⇒ Y = 1.2 X - 12 + 20 ⇒ Y = 1.2 X + 8.</p></div><div class="question"><strong>Q23. </strong>Show that b_yx * b_xy = r².</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-23')">Show Answer ▼</button><div class="answer" id="subj-eng-23"><strong>Solution: </strong><p>b_yx * b_xy = [r (σ_y / σ_x)] * [r (σ_x / σ_y)] = r² (σ_y / σ_x) (σ_x / σ_y) = r².</p></div><div class="question"><strong>Q24. </strong>Explain the principle of least squares as applied to regression lines.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-24')">Show Answer ▼</button><div class="answer" id="subj-eng-24"><strong>Solution: </strong><p>The line Y = a + bX is determined such that the sum of squared vertical deviations S = Σ (y_i - a - b x_i)² is minimized by setting ∂S/∂a = 0 and ∂S/∂b = 0.</p></div><div class="question"><strong>Q25. </strong>If b_yx = 0.4 and b_xy = 0.9, test if these regression coefficients are valid.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-25')">Show Answer ▼</button><div class="answer" id="subj-eng-25"><strong>Solution: </strong><p>Check product: b_yx * b_xy = 0.4 * 0.9 = 0.36. Since 0.36 ≤ 1, r = √0.36 = 0.6 ≤ 1. Check same sign: both are positive. Hence, these coefficients are valid.</p></div><div class="question"><strong>Q26. </strong>Explain why the slope of regression of Y on X is not equal to 1/b_xy in general.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-26')">Show Answer ▼</button><div class="answer" id="subj-eng-26"><strong>Solution: </strong><p>b_yx = r (σ_y/σ_x) and b_xy = r (σ_x/σ_y) ⇒ 1/b_xy = (1/r)(σ_y/σ_x). Thus b_yx = r² (1/b_xy). They are equal only when r = ±1.</p></div><div class="question"><strong>Q27. </strong>In a bivariate data set, N = 25, r = 0.7, σ_y = 5. Find the Standard Error of Estimate S_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-27')">Show Answer ▼</button><div class="answer" id="subj-eng-27"><strong>Solution: </strong><p>S_yx = σ_y √(1 - r²) = 5 * √(1 - 0.49) = 5 * √0.51 = 5 * 0.7141 = 3.57.</p></div><div class="question"><strong>Q28. </strong>Distinguish between regression line of Y on X and regression line of X on Y.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-28')">Show Answer ▼</button><div class="answer" id="subj-eng-28"><strong>Solution: </strong><p>Y on X minimizes vertical errors Σ(y - ŷ)² to predict Y from X. X on Y minimizes horizontal errors Σ(x - x̂)² to predict X from Y. They intersect at (x̄, ȳ) and coincide only if r = ±1.</p></div><div class="question"><strong>Q29. </strong>A scatter diagram shows a vertical line of points. What are the values of b_yx, b_xy, and r?</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-29')">Show Answer ▼</button><div class="answer" id="subj-eng-29"><strong>Solution: </strong><p>If points lie on a vertical line, X is constant (Var(X) = 0). b_yx is undefined (division by zero), b_xy = 0, and r is undefined.</p></div><div class="question"><strong>Q30. </strong>Explain how regression analysis is used in agricultural yield forecasting.</div><button class="toggle-btn" onclick="toggleAnswer('subj-eng-30')">Show Answer ▼</button><div class="answer" id="subj-eng-30"><strong>Solution: </strong><p>Regression models express crop yield (Y) as a function of weather parameters, fertilizer dose, or soil moisture (X). By measuring X early in the season, farmers and policymakers predict harvest yield Y.</p></div></div>
+<div class="hinglish-content" style="display:none;">
+<h2><span class="section-num">📝</span> Subjective Questions — 30 Questions</h2>
+<div class="question"><strong>Q1. </strong>Define Linear Regression. Distinguish clearly between Correlation and Regression.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-1')">Show Answer ▼</button><div class="answer" id="subj-hin-1"><strong>Solution: </strong><p>Regression is the statistical method of modeling the functional or cause-and-effect relationship between a dependent variable Y and one or more independent variables X. Distinction: 1) Correlation measures degree of linear association; regression predicts dependent variable. 2) Correlation is symmetric (r_XY = r_YX); regression is asymmetric (b_yx ≠ b_xy). 3) Correlation is unitless; regression coefficients have physical units. 4) Correlation does not imply causation; regression assumes independent and dependent roles.</p></div><div class="question"><strong>Q2. </strong>Derive the equation of the line of regression of Y on X using the principle of least squares.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-2')">Show Answer ▼</button><div class="answer" id="subj-hin-2"><strong>Solution: </strong><p>Let Ŷ = a + bX. Minimize S = Σ (y_i - a - b x_i)². Setting ∂S/∂a = 0 ⇒ Σ y_i = n a + b Σ x_i ⇒ a = ȳ - b x̄. Setting ∂S/∂b = 0 ⇒ Σ x_i y_i = a Σ x_i + b Σ x_i². Substituting a = ȳ - b x̄ gives b = [Σ x_i y_i - n x̄ ȳ] / [Σ x_i² - n x̄²] = Cov(X,Y) / σ_x² = b_yx. Thus (Y - ȳ) = b_yx (X - x̄).</p></div><div class="question"><strong>Q3. </strong>State and prove the five important properties of regression coefficients.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-3')">Show Answer ▼</button><div class="answer" id="subj-hin-3"><strong>Solution: </strong><p>1) r = ± √(b_yx * b_xy) [Geometric mean is |r|]. Proof: b_yx * b_xy = r (σ_y/σ_x) * r (σ_x/σ_y) = r². 2) Both b_yx and b_xy have the same sign as r. Proof: σ_x, σ_y &gt; 0. 3) (b_yx + b_xy)/2 ≥ |r|. Proof: (√b_yx - √b_xy)² ≥ 0 ⇒ (b_yx + b_xy)/2 ≥ √(b_yx b_xy) = |r|. 4) If one &gt; 1, the other &lt; 1. Proof: b_yx b_xy = r² ≤ 1. 5) Independent of origin, dependent on scale: If U=(X-a)/h, V=(Y-b)/k, then b_YX = (k/h) b_VU.</p></div><div class="question"><strong>Q4. </strong>Derive the formula for the angle θ between two regression lines.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-4')">Show Answer ▼</button><div class="answer" id="subj-hin-4"><strong>Solution: </strong><p>Lines are Y - ȳ = b_yx (X - x̄) with slope m_1 = b_yx = r (σ_y/σ_x), and X - x̄ = b_xy (Y - ȳ) ⇒ Y - ȳ = (1/b_xy)(X - x̄) with slope m_2 = 1/b_xy = (1/r)(σ_y/σ_x). Using tan θ = |(m_2 - m_1)/(1 + m_1 m_2)| = |(1/b_xy - b_yx) / (1 + b_yx/b_xy)| = |(1 - b_yx b_xy) / (b_xy + b_yx)|. Substituting b_yx = r σ_y/σ_x, b_xy = r σ_x/σ_y gives tan θ = |(1 - r²)/r| * [σ_x σ_y / (σ_x² + σ_y²)].</p></div><div class="question"><strong>Q5. </strong>Discuss the two extreme cases for the angle between regression lines: when r = 0 and when r = ±1.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-5')">Show Answer ▼</button><div class="answer" id="subj-hin-5"><strong>Solution: </strong><p>Case 1: When r = ±1, 1 - r² = 0 ⇒ tan θ = 0 ⇒ θ = 0°. The two regression lines coincide into a single straight line, indicating perfect linear relationship. Case 2: When r = 0, tan θ = ∞ ⇒ θ = 90°. The two lines are perpendicular to each other (Y = ȳ and X = x̄), indicating zero correlation.</p></div><div class="question"><strong>Q6. </strong>Define Standard Error of Estimate S_yx. Derive its formula S_yx = σ_y √(1 - r²).</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-6')">Show Answer ▼</button><div class="answer" id="subj-hin-6"><strong>Solution: </strong><p>S_yx² = (1/n) Σ (y_i - ŷ_i)² = (1/n) Σ [(y_i - ȳ) - b_yx (x_i - x̄)]² = (1/n) Σ (y_i - ȳ)² - (2 b_yx / n) Σ (x_i - x̄)(y_i - ȳ) + (b_yx² / n) Σ (x_i - x̄)² = σ_y² - 2 b_yx Cov(X,Y) + b_yx² σ_x². Substituting b_yx = Cov(X,Y)/σ_x² gives S_yx² = σ_y² - Cov(X,Y)²/σ_x² = σ_y² - r² σ_y² = σ_y² (1 - r²). Thus S_yx = σ_y √(1 - r²).</p></div><div class="question"><strong>Q7. </strong>Prove that the correlation coefficient between observed values Y and estimated values Ŷ is |r|.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-7')">Show Answer ▼</button><div class="answer" id="subj-hin-7"><strong>Solution: </strong><p>Let Ŷ = ȳ + b_yx (X - x̄). Mean of Ŷ is E[Ŷ] = ȳ. Variance Var(Ŷ) = b_yx² σ_x² = r² σ_y². Covariance Cov(Y, Ŷ) = E[(Y - ȳ)(Ŷ - ȳ)] = b_yx E[(Y - ȳ)(X - x̄)] = b_yx Cov(X,Y) = r (σ_y/σ_x) * r σ_x σ_y = r² σ_y². Correlation r(Y, Ŷ) = Cov(Y, Ŷ) / [σ_y σ_Ŷ] = (r² σ_y²) / [σ_y * |r| σ_y] = r² / |r| = |r|.</p></div><div class="question"><strong>Q8. </strong>Given x̄ = 36, ȳ = 85, σ_x = 11, σ_y = 8, r = 0.66. Calculate the two regression lines and estimate Y when X = 50.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-8')">Show Answer ▼</button><div class="answer" id="subj-hin-8"><strong>Solution: </strong><p>b_yx = r (σ_y / σ_x) = 0.66 * (8 / 11) = 0.48. Line Y on X: Y - 85 = 0.48 (X - 36) ⇒ Y = 0.48 X - 17.28 + 85 ⇒ Y = 0.48 X + 67.72. For X = 50: Y = 0.48(50) + 67.72 = 24 + 67.72 = 91.72 q/ha. Line X on Y: b_xy = 0.66 * (11 / 8) = 0.9075. X - 36 = 0.9075 (Y - 85) ⇒ X = 0.9075 Y - 41.14.</p></div><div class="question"><strong>Q9. </strong>The two regression lines are 8X - 10Y + 66 = 0 and 40X - 18Y - 214 = 0. Find x̄, ȳ, r, and ratio of standard deviations.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-9')">Show Answer ▼</button><div class="answer" id="subj-hin-9"><strong>Solution: </strong><p>Intersection (x̄, ȳ): Solve 8x̄ - 10ȳ = -66 and 40x̄ - 18ȳ = 214. Multiply first by 5: 40x̄ - 50ȳ = -330. Subtract: 32ȳ = 544 ⇒ ȳ = 17. 8x̄ = 10(17) - 66 = 104 ⇒ x̄ = 13. Slopes: From 8X - 10Y + 66 = 0 ⇒ Y = 0.8X + 6.6 ⇒ b_yx = 0.8. From 40X - 18Y - 214 = 0 ⇒ X = 0.45Y + 5.35 ⇒ b_xy = 0.45. Correlation r = √(0.8 * 0.45) = √0.36 = 0.6. Ratio σ_y / σ_x: b_yx = r (σ_y / σ_x) ⇒ 0.8 = 0.6 (σ_y / σ_x) ⇒ σ_y / σ_x = 4/3.</p></div><div class="question"><strong>Q10. </strong>In a study on plant height X (cm) and leaf area Y (cm²), N = 10, ΣX = 150, ΣY = 220, ΣX² = 2450, ΣY² = 5100, ΣXY = 3500. Compute regression lines and S_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-10')">Show Answer ▼</button><div class="answer" id="subj-hin-10"><strong>Solution: </strong><p>x̄ = 15, ȳ = 22. Σ(X-x̄)² = 2450 - 10(225) = 200 ⇒ σ_x² = 20. Σ(Y-ȳ)² = 5100 - 10(484) = 260 ⇒ σ_y² = 26. Σ(X-x̄)(Y-ȳ) = 3500 - 10(15)(22) = 200 ⇒ Cov(X,Y) = 20. b_yx = 200/200 = 1.0. Line Y on X: Y - 22 = 1.0 (X - 15) ⇒ Y = X + 7. b_xy = 200/260 = 0.769. Line X on Y: X - 15 = 0.769 (Y - 22). r = √(1.0 * 0.769) = 0.877. S_yx = √26 * √(1 - 0.769) = 5.099 * 0.480 = 2.45.</p></div>
+<div class="question"><strong>Q11. </strong>Show that if one regression coefficient is greater than 1, the other must be less than 1.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-11')">Show Answer ▼</button><div class="answer" id="subj-hin-11"><strong>Solution: </strong><p>Proof: b_yx * b_xy = r² ≤ 1. If b_yx &gt; 1, then b_xy = r² / b_yx &lt; 1 / b_yx &lt; 1. Hence, both coefficients cannot simultaneously exceed unity.</p></div><div class="question"><strong>Q12. </strong>If two regression lines are 3X + 2Y - 26 = 0 and 6X + Y - 31 = 0, find x̄, ȳ, and r.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-12')">Show Answer ▼</button><div class="answer" id="subj-hin-12"><strong>Solution: </strong><p>Solving 3x̄ + 2ȳ = 26 and 6x̄ + ȳ = 31: Multiply second by 2 ⇒ 12x̄ + 2ȳ = 62. Subtract first: 9x̄ = 36 ⇒ x̄ = 4. 2ȳ = 26 - 12 = 14 ⇒ ȳ = 7. Slopes: From first, Y = -1.5X + 13 ⇒ b_yx = -1.5. From second, X = -0.167Y + 5.167 ⇒ b_xy = -0.167. r = -√(-1.5 * -0.167) = -√0.25 = -0.5.</p></div><div class="question"><strong>Q13. </strong>Explain the physical interpretation of the regression coefficient b_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-13')">Show Answer ▼</button><div class="answer" id="subj-hin-13"><strong>Solution: </strong><p>b_yx represents the average change in the dependent variable Y associated with a unit increase in the independent variable X. For example, if b_yx = 0.6 q/ha per kg fertilizer, it means yield increases by 0.6 q/ha for every additional kg of fertilizer applied.</p></div><div class="question"><strong>Q14. </strong>State the condition under which the regression lines of Y on X and X on Y are parallel.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-14')">Show Answer ▼</button><div class="answer" id="subj-hin-14"><strong>Solution: </strong><p>The two regression lines are never parallel unless they coincide (when r = ±1) or are horizontal/vertical (when r = 0). When r = ±1, the lines coincide and have identical slopes.</p></div><div class="question"><strong>Q15. </strong>Given Σ(X-x̄)² = 100, Σ(Y-ȳ)² = 64, Σ(X-x̄)(Y-ȳ) = 40, N = 10. Compute b_yx, b_xy, r, and S_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-15')">Show Answer ▼</button><div class="answer" id="subj-hin-15"><strong>Solution: </strong><p>b_yx = 40 / 100 = 0.4. b_xy = 40 / 64 = 0.625. r = √(0.4 * 0.625) = √0.25 = 0.5. σ_y = √(64/10) = √6.4 = 2.53. S_yx = σ_y √(1 - r²) = 2.53 * √(1 - 0.25) = 2.53 * 0.866 = 2.19.</p></div><div class="question"><strong>Q16. </strong>Prove that the arithmetic mean of b_yx and b_xy is greater than or equal to |r|.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-16')">Show Answer ▼</button><div class="answer" id="subj-hin-16"><strong>Solution: </strong><p>By AM-GM inequality for positive numbers: (b_yx + b_xy)/2 ≥ √(b_yx b_xy) = |r|. For negative coefficients, (|b_yx| + |b_xy|)/2 ≥ |r| holds identically.</p></div><div class="question"><strong>Q17. </strong>Explain why the regression line of Y on X should not be used to predict X from Y.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-17')">Show Answer ▼</button><div class="answer" id="subj-hin-17"><strong>Solution: </strong><p>The line of Y on X is derived by minimizing vertical errors Σ(y_i - ŷ_i)², assuming X is known without error. To predict X from Y, horizontal errors Σ(x_i - x̂_i)² must be minimized, which yields the line of X on Y.</p></div><div class="question"><strong>Q18. </strong>Discuss the effect of change of scale on regression coefficients.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-18')">Show Answer ▼</button><div class="answer" id="subj-hin-18"><strong>Solution: </strong><p>If U = (X - a)/h and V = (Y - b)/k, then b_YX = (k/h) b_VU. Multiplying X by h reduces b_YX by factor h, while multiplying Y by k increases b_YX by factor k.</p></div><div class="question"><strong>Q19. </strong>Show that if r = 0, the regression line of Y on X becomes Y = ȳ.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-19')">Show Answer ▼</button><div class="answer" id="subj-hin-19"><strong>Solution: </strong><p>Since b_yx = r (σ_y/σ_x) = 0, the equation (Y - ȳ) = b_yx (X - x̄) simplifies directly to Y - ȳ = 0 ⇒ Y = ȳ.</p></div><div class="question"><strong>Q20. </strong>Calculate the angle θ between regression lines if r = 0.8.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-20')">Show Answer ▼</button><div class="answer" id="subj-hin-20"><strong>Solution: </strong><p>tan θ = |(1 - r²)/r| * [σ_x σ_y / (σ_x² + σ_y²)]. Assuming σ_x = σ_y: tan θ = |(1 - 0.64)/0.8| * (1/2) = (0.36 / 0.8) * 0.5 = 0.45 * 0.5 = 0.225. θ = arctan(0.225) ≈ 12.68°.</p></div><div class="question"><strong>Q21. </strong>Explain how residual variance is calculated in linear regression.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-21')">Show Answer ▼</button><div class="answer" id="subj-hin-21"><strong>Solution: </strong><p>Residual variance is the mean of squared residuals: S_yx² = (1/n) Σ (y_i - ŷ_i)² = σ_y² (1 - r²). It represents the unexplained variance of Y after fitting the linear regression model.</p></div><div class="question"><strong>Q22. </strong>Find the regression line of Y on X if x̄ = 10, ȳ = 20, σ_x = 2, σ_y = 3, r = 0.8.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-22')">Show Answer ▼</button><div class="answer" id="subj-hin-22"><strong>Solution: </strong><p>b_yx = 0.8 * (3 / 2) = 1.2. Equation: (Y - 20) = 1.2 (X - 10) ⇒ Y = 1.2 X - 12 + 20 ⇒ Y = 1.2 X + 8.</p></div><div class="question"><strong>Q23. </strong>Show that b_yx * b_xy = r².</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-23')">Show Answer ▼</button><div class="answer" id="subj-hin-23"><strong>Solution: </strong><p>b_yx * b_xy = [r (σ_y / σ_x)] * [r (σ_x / σ_y)] = r² (σ_y / σ_x) (σ_x / σ_y) = r².</p></div><div class="question"><strong>Q24. </strong>Explain the principle of least squares as applied to regression lines.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-24')">Show Answer ▼</button><div class="answer" id="subj-hin-24"><strong>Solution: </strong><p>The line Y = a + bX is determined such that the sum of squared vertical deviations S = Σ (y_i - a - b x_i)² is minimized by setting ∂S/∂a = 0 and ∂S/∂b = 0.</p></div><div class="question"><strong>Q25. </strong>If b_yx = 0.4 and b_xy = 0.9, test if these regression coefficients are valid.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-25')">Show Answer ▼</button><div class="answer" id="subj-hin-25"><strong>Solution: </strong><p>Check product: b_yx * b_xy = 0.4 * 0.9 = 0.36. Since 0.36 ≤ 1, r = √0.36 = 0.6 ≤ 1. Check same sign: both are positive. Hence, these coefficients are valid.</p></div><div class="question"><strong>Q26. </strong>Explain why the slope of regression of Y on X is not equal to 1/b_xy in general.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-26')">Show Answer ▼</button><div class="answer" id="subj-hin-26"><strong>Solution: </strong><p>b_yx = r (σ_y/σ_x) and b_xy = r (σ_x/σ_y) ⇒ 1/b_xy = (1/r)(σ_y/σ_x). Thus b_yx = r² (1/b_xy). They are equal only when r = ±1.</p></div><div class="question"><strong>Q27. </strong>In a bivariate data set, N = 25, r = 0.7, σ_y = 5. Find the Standard Error of Estimate S_yx.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-27')">Show Answer ▼</button><div class="answer" id="subj-hin-27"><strong>Solution: </strong><p>S_yx = σ_y √(1 - r²) = 5 * √(1 - 0.49) = 5 * √0.51 = 5 * 0.7141 = 3.57.</p></div><div class="question"><strong>Q28. </strong>Distinguish between regression line of Y on X and regression line of X on Y.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-28')">Show Answer ▼</button><div class="answer" id="subj-hin-28"><strong>Solution: </strong><p>Y on X minimizes vertical errors Σ(y - ŷ)² to predict Y from X. X on Y minimizes horizontal errors Σ(x - x̂)² to predict X from Y. They intersect at (x̄, ȳ) and coincide only if r = ±1.</p></div><div class="question"><strong>Q29. </strong>A scatter diagram shows a vertical line of points. What are the values of b_yx, b_xy, and r?</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-29')">Show Answer ▼</button><div class="answer" id="subj-hin-29"><strong>Solution: </strong><p>If points lie on a vertical line, X is constant (Var(X) = 0). b_yx is undefined (division by zero), b_xy = 0, and r is undefined.</p></div><div class="question"><strong>Q30. </strong>Explain how regression analysis is used in agricultural yield forecasting.</div><button class="toggle-btn" onclick="toggleAnswer('subj-hin-30')">Show Answer ▼</button><div class="answer" id="subj-hin-30"><strong>Solution: </strong><p>Regression models express crop yield (Y) as a function of weather parameters, fertilizer dose, or soil moisture (X). By measuring X early in the season, farmers and policymakers predict harvest yield Y.</p></div></div>
+</section>
+</div>
+</main>
+<footer class="book-footer">
+<p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br/>
+        CCS Haryana Agricultural University, Hisar</p>
+</footer>
+<script>
+        let isHinglish = false;
+        function toggleLanguage() {
+            isHinglish = !isHinglish;
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+
+            if (isHinglish) {
+                btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+            } else {
+                btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+            }
+        }
+
+        function showTopic(id) {
+            document.querySelectorAll('.topic-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+            
+            const targetSection = document.getElementById(id);
+            if (targetSection) targetSection.classList.add('active');
+            
+            window.scrollTo(0,0);
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+            if (window.MathJax && MathJax.typesetPromise) {
+                MathJax.typesetPromise([targetSection]).catch(console.error);
+            }
+        }
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            const btn = event.target;
+            if (answer.classList.contains('show')) {
+                answer.classList.remove('show');
+                btn.innerHTML = 'Show Answer ▼';
+            } else {
+                answer.classList.add('show');
+                btn.innerHTML = 'Hide Answer ▲';
+                if (window.MathJax && MathJax.typesetPromise) {
+                    MathJax.typesetPromise([answer]).catch(console.error);
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            showTopic('intro');
+        });
+    </script>
+<script src="../whiteboard/whiteboard.js?v=2.0"></script>
+</body>
+</html>

@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit II – Curve Fitting | STAT-M-201</title>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="stat101_style.css">
+
+    <style>
+        /* ── INFO-BOX (used in theory sections) ── */
+        .info-box {
+            background: var(--sky-light, #EAF4FB);
+            border-left: 5px solid var(--sky, #1D6FA4);
+            border-radius: 0 8px 8px 0;
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.95rem;
+            color: var(--text-dark, #1C1C1E);
+        }
+
+        /* ── FORMULA (inline derivation box) ── */
+        .formula {
+            background: rgba(27,42,74,0.04);
+            border-left: 4px solid var(--gold, #C8922A);
+            padding: 16px 20px;
+            margin: 18px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .formula h4 { margin: 0 0 8px; color: var(--navy, #1B2A4A); font-family: 'DM Sans', sans-serif; }
+
+        /* ── CHAPTER HEADER LANG TOGGLE ── */
+        .chapter-header { position: relative; }
+        .header-lang-toggle {
+            position: absolute; top: 20px; right: 30px;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #fff; padding: 6px 14px; border-radius: 20px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .header-lang-toggle:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         TOP HEADER
+    ═══════════════════════════════════════════════════════════ -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">📈</div>
+        <div class="header-text">
+            <h1>Statistical Methods-II</h1>
+            <div class="subtitle">UNIT II · CURVE FITTING</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SIDEBAR
+    ═══════════════════════════════════════════════════════════ -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>Unit II</h2>
+            <p>Curve Fitting<br>CCS Haryana Agricultural University</p>
+        </div>
+        <div class="sidebar-author">
+            <img src="../Stat-102/opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <p>Author &amp; Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Navigation</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="background:rgba(200,146,42,0.1);color:var(--gold-light);font-weight:600;"><span class="nav-num">🏠</span> Course Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.html" style="background:rgba(27,42,74,0.3);color:white;font-weight:600;margin-top:5px;"><span class="nav-num">📚</span> Back to Library</a></li>
+        </ul>
+
+        <div class="nav-group-label">Theory Topics</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link active" href="#introduction" onclick="showTopic('introduction');return false;"><span class="nav-num">2.1</span> Introduction to Curve Fitting</a></li>
+            <li class="nav-item"><a class="nav-link" href="#least-squares" onclick="showTopic('least-squares');return false;"><span class="nav-num">2.2</span> Principle of Least Squares</a></li>
+            <li class="nav-item"><a class="nav-link" href="#straight-line" onclick="showTopic('straight-line');return false;"><span class="nav-num">2.3</span> Fitting a Straight Line</a></li>
+            <li class="nav-item"><a class="nav-link" href="#parabola" onclick="showTopic('parabola');return false;"><span class="nav-num">2.4</span> Fitting a Parabola</a></li>
+            <li class="nav-item"><a class="nav-link" href="#change-origin" onclick="showTopic('change-origin');return false;"><span class="nav-num">2.5</span> Change of Origin Shortcut</a></li>
+            <li class="nav-item"><a class="nav-link" href="#power-curve" onclick="showTopic('power-curve');return false;"><span class="nav-num">2.6</span> Fitting Power Curves</a></li>
+            <li class="nav-item"><a class="nav-link" href="#exponential-curve" onclick="showTopic('exponential-curve');return false;"><span class="nav-num">2.7</span> Fitting Exponential Curves</a></li>
+        </ul>
+
+        <div class="nav-group-label">Practice Exercises</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#mcq" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> Multiple Choice (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#fib" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tf" onclick="showTopic('tf');return false;"><span class="nav-num">✅</span> True / False (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#subj" onclick="showTopic('subj');return false;"><span class="nav-num">📝</span> Subjective Qs (20)</a></li>
+        </ul>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MAIN CONTENT
+    ═══════════════════════════════════════════════════════════ -->
+    <main class="main-content">
+
+        <div class="chapter-header">
+            <button id="lang-toggle-btn" class="header-lang-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+            </button>
+            <h1>Unit II: Curve Fitting</h1>
+            <div class="author">By Prof. O.P. Sheoran</div>
+            <div class="syllabus-tag">
+                <strong>Syllabus:</strong> Principle of least squares. Fitting of curves: Straight line: \( Y = a + bX \), Second-degree parabola: \( Y = a + bX + cX^2 \), Power curves: \( Y = aX^b \), Exponential curves: \( Y = ab^X \) and \( Y = ae^{bX} \).
+            </div>
+        </div>
+
+<!-- ============================================================
+     2.1  INTRODUCTION
+     ============================================================ -->
+<div class="topic-section active" id="introduction">
+  <section class="section-card">
+    <h2 class="english-content">2.1 Introduction to Curve Fitting</h2>
+    <h2 class="hinglish-content" style="display:none;">2.1 Curve Fitting का परिचय</h2>
+    <div class="body">
+
+      <p class="english-content">
+        In statistics and experimental sciences, we often collect a set of \( n \) paired observations — written as \( (X_1,Y_1), (X_2,Y_2), \dots, (X_n,Y_n) \). When we plot these points on a graph, they form what is called a <strong>scatter diagram</strong>.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Statistics और experimental sciences में, हम अक्सर \( n \) paired observations का एक set collect करते हैं — जिसे \( (X_1,Y_1), (X_2,Y_2), \dots, (X_n,Y_n) \) के रूप में लिखते हैं। जब इन points को graph पर plot करते हैं, तो वे एक <strong>scatter diagram</strong> बनाते हैं।
+      </p>
+
+      <p class="english-content">
+        <strong>Curve fitting</strong> is the mathematical process of finding one equation — a "curve" — that best describes the general pattern of this scattered data. The curve could be a straight line or a more complex curved shape.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        <strong>Curve fitting</strong> वह mathematical process है जिसमें हम एक ऐसी equation — यानी एक "curve" — ढूँढते हैं जो scattered data के general pattern को सबसे अच्छी तरह describe करे। यह curve straight line भी हो सकती है या कोई complex curved shape भी।
+      </p>
+
+      <h3 class="english-content">Why do we fit curves?</h3>
+      <h3 class="hinglish-content" style="display:none;">Curves Fit क्यों करते हैं?</h3>
+
+      <ul class="english-content">
+        <li><strong>Interpolation &amp; Extrapolation:</strong> To estimate the value of \( Y \) for a given \( X \) — either within the data range (interpolation) or outside it (extrapolation).</li>
+        <li><strong>Data Summarisation:</strong> To replace a big, complex data table with a single compact mathematical formula.</li>
+        <li><strong>Trend Analysis:</strong> To understand the underlying law or pattern that links the two variables — physical, biological, or economic.</li>
+      </ul>
+      <ul class="hinglish-content" style="display:none;">
+        <li><strong>Interpolation &amp; Extrapolation:</strong> किसी दिए गए \( X \) के लिए \( Y \) की value estimate करने के लिए — चाहे data range के अंदर हो (interpolation) या बाहर (extrapolation)।</li>
+        <li><strong>Data Summarisation:</strong> बड़ी और complex data table को एक single mathematical formula से replace करने के लिए।</li>
+        <li><strong>Trend Analysis:</strong> दो variables के बीच के underlying law या pattern को समझने के लिए — चाहे वो physical, biological, या economic हो।</li>
+      </ul>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     2.2  PRINCIPLE OF LEAST SQUARES
+     ============================================================ -->
+<div class="topic-section" id="least-squares">
+  <section class="section-card">
+    <h2 class="english-content">2.2 The Principle of Least Squares</h2>
+    <h2 class="hinglish-content" style="display:none;">2.2 Principle of Least Squares</h2>
+    <div class="body">
+
+      <p class="english-content">
+        The key challenge in curve fitting is deciding what "best fit" actually means. For this, we use the <strong>Principle of Least Squares</strong>.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Curve fitting में सबसे बड़ी challenge यह decide करना है कि "best fit" का मतलब क्या है। इसके लिए हम <strong>Principle of Least Squares</strong> का use करते हैं।
+      </p>
+
+      <p class="english-content">
+        Say we fit a curve \( Y = f(X) \) to our data. For any input \( X_i \), there are two \( Y \) values:
+        <br>1. The <strong>observed value</strong> \( y_i \) — the actual data point.
+        <br>2. The <strong>estimated value</strong> \( \hat{y}_i = f(X_i) \) — the value our curve predicts.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        मान लीजिए हम data पर curve \( Y = f(X) \) fit करते हैं। किसी भी input \( X_i \) के लिए दो \( Y \) values होती हैं:
+        <br>1. <strong>Observed value</strong> \( y_i \) — असल data point।
+        <br>2. <strong>Estimated value</strong> \( \hat{y}_i = f(X_i) \) — हमारे curve की predicted value।
+      </p>
+
+      <p class="english-content">
+        The gap between the actual and predicted value is called the <strong>residual</strong> or <strong>error</strong> for the \( i \)-th observation: \( e_i = y_i - \hat{y}_i \).
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Actual और predicted value के बीच के अंतर को \( i \)-th observation का <strong>residual</strong> या <strong>error</strong> कहते हैं: \( e_i = y_i - \hat{y}_i \)।
+      </p>
+
+      <div class="formula">
+        <h4 class="english-content">The Core Definition</h4>
+        <h4 class="hinglish-content" style="display:none;">मुख्य Definition</h4>
+        <p class="english-content">The Principle of Least Squares says: the best-fitting curve is the one that <strong>minimises the sum of the squares of all residuals</strong>.</p>
+        <p class="hinglish-content" style="display:none;">Principle of Least Squares कहता है: best-fitting curve वह है जो <strong>सभी residuals के squares के sum को minimise करे</strong>।</p>
+        \[
+        S = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \longrightarrow \text{minimum}
+        \]
+      </div>
+
+      <h3 class="english-content">Why Do We Square the Errors?</h3>
+      <h3 class="hinglish-content" style="display:none;">Errors का Square क्यों करते हैं?</h3>
+
+      <ul class="english-content">
+        <li><strong>Sign Cancellation:</strong> If we just add raw errors, the positive ones (points above the curve) and negative ones (points below) will cancel out. A very bad curve could still show a total error of zero!</li>
+        <li><strong>Absolute Values are Difficult:</strong> We could use \( |e_i| \), but the absolute value function has sharp corners at zero and is hard to differentiate in calculus.</li>
+        <li><strong>Penalty for Large Errors:</strong> Squaring puts a heavy penalty on big outliers. This forces the fitted curve to represent all data points fairly.</li>
+      </ul>
+      <ul class="hinglish-content" style="display:none;">
+        <li><strong>Sign Cancellation:</strong> अगर raw errors सीधे जोड़ दें, तो positive errors (curve के ऊपर के points) और negative errors (curve के नीचे के points) एक-दूसरे को cancel कर देंगे। एक बहुत बुरा curve भी zero total error दिखा सकता है!</li>
+        <li><strong>Absolute Values मुश्किल होते हैं:</strong> \( |e_i| \) use कर सकते हैं, लेकिन absolute value function को zero पर differentiate करना calculus में मुश्किल होता है।</li>
+        <li><strong>बड़े Errors पर Penalty:</strong> Square करने से बड़े outliers को भारी penalty मिलती है। इससे fitted curve सभी data points को सही represent करता है।</li>
+      </ul>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     2.3  STRAIGHT LINE
+     ============================================================ -->
+<div class="topic-section" id="straight-line">
+  <section class="section-card">
+    <h2 class="english-content">2.3 Fitting a Straight Line: \( Y = a + bX \)</h2>
+    <h2 class="hinglish-content" style="display:none;">2.3 Straight Line Fit करना: \( Y = a + bX \)</h2>
+    <div class="body">
+
+      <p class="english-content">
+        A straight line is the simplest curve. We use it when the variables seem to change at a constant rate. Here, \( a \) is the Y-intercept and \( b \) is the slope.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Straight line सबसे simple curve है। इसे तब use करते हैं जब variables एक constant rate से बदलते हों। यहाँ \( a \) Y-intercept है और \( b \) slope है।
+      </p>
+
+      <h3 class="english-content">Detailed Derivation of Normal Equations</h3>
+      <h3 class="hinglish-content" style="display:none;">Normal Equations का विस्तृत Derivation</h3>
+
+      <p class="english-content">
+        Let the straight line be \( Y = a + bX \) ... (1).
+        Suppose we have a set of \( n \) points \( (x_i, y_i); i=1,2,...,n \).
+        The problem is to determine constants \( a \) and \( b \) so that equation (1) is the line of best fit.
+        Let \( y_i = a + bx_i + e_i \), where \( e_i \) is the error (residual) for the \( i \)-th point.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        मान लें straight line \( Y = a + bX \) ... (1) है।
+        मान लीजिए हमारे पास \( n \) points \( (x_i, y_i); i=1,2,...,n \) का set है।
+        हमें \( a \) और \( b \) को इस तरह determine करना है कि equation (1) best fit line हो।
+        मान लें \( y_i = a + bx_i + e_i \), जहाँ \( e_i \), \( i \)-th point का error (residual) है।
+      </p>
+
+      <p class="english-content">
+        According to the <strong>Principle of Least Squares</strong>, we must determine \( a \) and \( b \) such that the sum of squares of residuals is minimum:
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        <strong>Principle of Least Squares</strong> के अनुसार, हमें \( a \) और \( b \) को इस तरह निकालना है कि residuals के squares का sum minimum हो:
+      </p>
+
+      <div class="formula">
+        \[ S = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - a - bx_i)^2 \longrightarrow \text{minimum} \]
+      </div>
+
+      <p class="english-content">
+        Using the principle of maxima and minima, we take partial derivatives of \( S \) with respect to \( a \) and \( b \) and equate them to zero.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Maxima और minima के principle का use करते हुए, हम \( S \) का \( a \) और \( b \) के respect में partial derivatives लेते हैं और उन्हें zero के बराबर रखते हैं।
+      </p>
+
+      <div class="formula">
+        <h4 class="english-content">Finding Normal Equation 1</h4>
+        <h4 class="hinglish-content" style="display:none;">Normal Equation 1 निकालना</h4>
+        \[ \frac{\partial S}{\partial a} = 0 \implies \sum_{i=1}^{n} 2(y_i - a - bx_i)(-1) = 0 \]
+        \[ \implies -2 \sum_{i=1}^{n} (y_i - a - bx_i) = 0 \]
+        \[ \implies \sum y_i - \sum a - b \sum x_i = 0 \]
+        \[ \implies \sum y = na + b \sum x \quad \text{--- (2)} \]
+      </div>
+
+      <div class="formula">
+        <h4 class="english-content">Finding Normal Equation 2</h4>
+        <h4 class="hinglish-content" style="display:none;">Normal Equation 2 निकालना</h4>
+        \[ \frac{\partial S}{\partial b} = 0 \implies \sum_{i=1}^{n} 2(y_i - a - bx_i)(-x_i) = 0 \]
+        \[ \implies \sum_{i=1}^{n} (y_ix_i - ax_i - bx_i^2) = 0 \]
+        \[ \implies \sum y_ix_i - a \sum x_i - b \sum x_i^2 = 0 \]
+        \[ \implies \sum xy = a \sum x + b \sum x^2 \quad \text{--- (3)} \]
+      </div>
+
+      <p class="english-content">
+        Equations (2) and (3) are known as <strong>Normal Equations</strong> for a straight line. By solving these simultaneous equations, we find the best values for \( a \) and \( b \).
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Equations (2) और (3) को straight line के लिए <strong>Normal Equations</strong> कहा जाता है। इन simultaneous equations को solve करके हम \( a \) और \( b \) की best values निकालते हैं।
+      </p>
+
+      <div class="example">
+        <h4 class="english-content">Example 1. Fit a straight line to the following data:</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 1. निम्नलिखित data के लिए straight line fit करें:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>1</td><td>6</td><td>11</td><td>16</td><td>20</td><td>26</td></tr>
+          <tr><th>Y</th><td>13</td><td>16</td><td>17</td><td>23</td><td>24</td><td>31</td></tr>
+        </table>
+
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Let the straight line be \( Y = a + bX \). To obtain \( a \) and \( b \), the normal equations are:</p>
+        <p class="hinglish-content" style="display:none;">मान लें straight line \( Y = a + bX \) है। \( a \) और \( b \) निकालने के लिए normal equations हैं:</p>
+        \[ \sum y = na + b \sum x \]
+        \[ \sum xy = a \sum x + b \sum x^2 \]
+
+        <p class="english-content">We first calculate the required sums (\( \sum x, \sum y, \sum xy, \sum x^2 \)) using a table:</p>
+        <p class="hinglish-content" style="display:none;">हम पहले table का use करके required sums (\( \sum x, \sum y, \sum xy, \sum x^2 \)) calculate करते हैं:</p>
+
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>\( X^2 \)</th><th>XY</th></tr>
+          <tr><td>1</td><td>13</td><td>1</td><td>13</td></tr>
+          <tr><td>6</td><td>16</td><td>36</td><td>96</td></tr>
+          <tr><td>11</td><td>17</td><td>121</td><td>187</td></tr>
+          <tr><td>16</td><td>23</td><td>256</td><td>368</td></tr>
+          <tr><td>20</td><td>24</td><td>400</td><td>480</td></tr>
+          <tr><td>26</td><td>31</td><td>676</td><td>806</td></tr>
+          <tr><th>\( \sum x = 80 \)</th><th>\( \sum y = 124 \)</th><th>\( \sum x^2 = 1490 \)</th><th>\( \sum xy = 1950 \)</th></tr>
+        </table>
+
+        <p class="english-content">Substituting these values (\( n = 6 \)) into the normal equations:</p>
+        <p class="hinglish-content" style="display:none;">इन values (\( n = 6 \)) को normal equations में रखने पर:</p>
+        \[ 124 = 6a + 80b \quad \text{--- (i)} \]
+        \[ 1950 = 80a + 1490b \quad \text{--- (ii)} \]
+
+        <p class="english-content"><strong>Step-by-Step Solving:</strong></p>
+        <p class="hinglish-content" style="display:none;"><strong>Step-by-Step समाधान:</strong></p>
+        <p class="english-content">Multiplying equation (i) by 80 and equation (ii) by 6:</p>
+        <p class="hinglish-content" style="display:none;">Equation (i) को 80 से और equation (ii) को 6 से multiply करने पर:</p>
+        \[ 9920 = 480a + 6400b \quad \text{--- (iii)} \]
+        \[ 11700 = 480a + 8940b \quad \text{--- (iv)} \]
+        <p class="english-content">Subtracting equation (iii) from (iv):</p>
+        <p class="hinglish-content" style="display:none;">Equation (iii) को (iv) में से घटाने पर:</p>
+        \[ 11700 - 9920 = (8940b - 6400b) \implies 1780 = 2540b \]
+        \[ \implies b = \frac{1780}{2540} \approx 0.7008 \]
+        <p class="english-content">Substituting the value of \( b \) in equation (i):</p>
+        <p class="hinglish-content" style="display:none;">\( b \) की value को equation (i) में रखने पर:</p>
+        \[ 124 = 6a + 80(0.7008) \]
+        \[ 124 = 6a + 56.064 \]
+        \[ 67.936 = 6a \implies a = 11.3227 \]
+        <p class="english-content">The required line of best fit is: \( Y = 11.3227 + 0.7008X \).</p>
+        <p class="hinglish-content" style="display:none;">इसलिए required best fit line है: \( Y = 11.3227 + 0.7008X \)।</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 2. Fit a straight line to the following data:</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 2. निम्नलिखित data के लिए straight line fit करें:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>6</td><td>7</td><td>8</td><td>9</td><td>11</td></tr>
+          <tr><th>Y</th><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Normal equations are \( \sum y = na + b \sum x \) and \( \sum xy = a \sum x + b \sum x^2 \).</p>
+        <p class="hinglish-content" style="display:none;">Normal equations \( \sum y = na + b \sum x \) और \( \sum xy = a \sum x + b \sum x^2 \) हैं।</p>
+
+        <p class="english-content">Calculating the sums (\( n = 5 \)):</p>
+        <p class="hinglish-content" style="display:none;">Sums calculate करने पर (\( n = 5 \)):</p>
+        <table class="calculation-data">
+          <tr><th>S. No.</th><th>X</th><th>Y</th><th>\( X^2 \)</th><th>XY</th></tr>
+          <tr><td>1</td><td>6</td><td>5</td><td>36</td><td>30</td></tr>
+          <tr><td>2</td><td>7</td><td>4</td><td>49</td><td>28</td></tr>
+          <tr><td>3</td><td>8</td><td>3</td><td>64</td><td>24</td></tr>
+          <tr><td>4</td><td>9</td><td>2</td><td>81</td><td>18</td></tr>
+          <tr><td>5</td><td>11</td><td>1</td><td>121</td><td>11</td></tr>
+          <tr><th>Total</th><th>41</th><th>15</th><th>351</th><th>111</th></tr>
+        </table>
+
+        <p class="english-content">Normal equations become:</p>
+        <p class="hinglish-content" style="display:none;">Normal equations बनती हैं:</p>
+        \[ 15 = 5a + 41b \quad \text{--- (i)} \]
+        \[ 111 = 41a + 351b \quad \text{--- (ii)} \]
+
+        <p class="english-content">Multiplying equation (i) by 41 and equation (ii) by 5:</p>
+        <p class="hinglish-content" style="display:none;">Equation (i) को 41 से और equation (ii) को 5 से multiply करने पर:</p>
+        \[ 615 = 205a + 1681b \quad \text{--- (iii)} \]
+        \[ 555 = 205a + 1755b \quad \text{--- (iv)} \]
+
+        <p class="english-content">Subtracting equation (iii) from equation (iv):</p>
+        <p class="hinglish-content" style="display:none;">Equation (iii) को equation (iv) से घटाने पर:</p>
+        \[ 555 - 615 = (1755b - 1681b) \implies -60 = 74b \implies b = -0.8108 \]
+        <p class="english-content">Substituting \( b \) in equation (i):</p>
+        <p class="hinglish-content" style="display:none;">Equation (i) में \( b \) रखने पर:</p>
+        \[ 15 = 5a + 41(-0.8108) \implies 15 = 5a - 33.2428 \]
+        \[ 48.2428 = 5a \implies a \approx 9.6486 \]
+        <p class="english-content"><strong>Result:</strong> The line of best fit is \( Y = 9.6486 - 0.8108X \).</p>
+        <p class="hinglish-content" style="display:none;"><strong>उत्तर:</strong> Best fit line \( Y = 9.6486 - 0.8108X \) है।</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     2.4  PARABOLA
+     ============================================================ -->
+<div class="topic-section" id="parabola">
+  <section class="section-card">
+    <h2 class="english-content">2.4 Fitting a Second-Degree Parabola: \( Y = a + bX + cX^2 \)</h2>
+    <h2 class="hinglish-content" style="display:none;">2.4 Second-Degree Parabola Fit करना: \( Y = a + bX + cX^2 \)</h2>
+    <div class="body">
+
+      <p class="english-content">
+        When the scatter plot shows a single bend — either curving up or down — a straight line is not enough. We need to fit a second-degree polynomial, also called a <strong>parabola</strong>. This model has three unknown constants: \( a \), \( b \), and \( c \).
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        जब scatter plot में एक "bend" (घुमाव) दिखे — ऊपर की तरफ या नीचे की तरफ — तो straight line काम नहीं आती। हमें एक second-degree polynomial, यानी <strong>parabola</strong>, fit करना होता है। इस model में तीन unknown constants होते हैं: \( a \), \( b \), और \( c \)।
+      </p>
+
+      <h3 class="english-content">Detailed Derivation of Normal Equations</h3>
+      <h3 class="hinglish-content" style="display:none;">Normal Equations का विस्तृत Derivation</h3>
+
+      <p class="english-content">
+        Let the second-degree parabola be \( Y = a + bX + cX^2 \) ... (4).
+        Given \( n \) points \( (x_i, y_i); i=1,2,...,n \), let the estimated value be \( \hat{y}_i = a + bx_i + cx_i^2 \).
+        According to the <strong>Principle of Least Squares</strong>, we determine \( a, b, \) and \( c \) such that the sum of squares of residuals is minimum:
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        मान लें second-degree parabola \( Y = a + bX + cX^2 \) ... (4) है।
+        दिए गए \( n \) points \( (x_i, y_i) \) के लिए, estimated value \( \hat{y}_i = a + bx_i + cx_i^2 \) है।
+        <strong>Principle of Least Squares</strong> के अनुसार, हमें \( a, b, \) और \( c \) को इस तरह निकालना है कि squared residuals का sum minimum हो:
+      </p>
+
+      <div class="formula">
+        \[ U = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 = \sum_{i=1}^{n} (y_i - a - bx_i - cx_i^2)^2 \longrightarrow \text{minimum} \]
+      </div>
+
+      <p class="english-content">
+        Using the principle of maxima and minima, we set the partial derivatives of \( U \) with respect to \( a, b, \) and \( c \) to zero:
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        Maxima और minima के principle का use करते हुए, हम \( U \) के \( a, b, \) और \( c \) के respect में partial derivatives को zero रखते हैं:
+      </p>
+
+      <div class="formula">
+        <h4 class="english-content">1. Differentiating w.r.t. \( a \):</h4>
+        \[ \frac{\partial U}{\partial a} = 0 \implies \sum 2(y_i - a - bx_i - cx_i^2)(-1) = 0 \]
+        \[ \implies \sum y_i = na + b \sum x_i + c \sum x_i^2 \quad \text{--- (5)} \]
+
+        <h4 class="english-content">2. Differentiating w.r.t. \( b \):</h4>
+        \[ \frac{\partial U}{\partial b} = 0 \implies \sum 2(y_i - a - bx_i - cx_i^2)(-x_i) = 0 \]
+        \[ \implies \sum y_ix_i = a \sum x_i + b \sum x_i^2 + c \sum x_i^3 \quad \text{--- (6)} \]
+
+        <h4 class="english-content">3. Differentiating w.r.t. \( c \):</h4>
+        \[ \frac{\partial U}{\partial c} = 0 \implies \sum 2(y_i - a - bx_i - cx_i^2)(-x_i^2) = 0 \]
+        \[ \implies \sum y_ix_i^2 = a \sum x_i^2 + b \sum x_i^3 + c \sum x_i^4 \quad \text{--- (7)} \]
+      </div>
+
+      <p class="english-content">Equations (5), (6), and (7) are the <strong>Normal Equations</strong> for a second-degree parabola.</p>
+      <p class="hinglish-content" style="display:none;">Equations (5), (6), और (7) second-degree parabola के लिए <strong>Normal Equations</strong> हैं।</p>
+
+      <div class="example">
+        <h4 class="english-content">Example 4. Fit a second-degree parabola to the following data:</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 4. निम्नलिखित data के लिए second-degree parabola fit करें:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+          <tr><th>Y</th><td>1</td><td>1.8</td><td>1.3</td><td>2.5</td><td>6.3</td></tr>
+        </table>
+
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Let the parabola be \( Y = a + bX + cX^2 \). We build the computation table:</p>
+        <p class="hinglish-content" style="display:none;">मान लें parabola \( Y = a + bX + cX^2 \) है। Computation table बनाते हैं:</p>
+
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>\( X^2 \)</th><th>\( X^3 \)</th><th>\( X^4 \)</th><th>XY</th><th>\( X^2Y \)</th></tr>
+          <tr><td>0</td><td>1.0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>1</td><td>1.8</td><td>1</td><td>1</td><td>1</td><td>1.8</td><td>1.8</td></tr>
+          <tr><td>2</td><td>1.3</td><td>4</td><td>8</td><td>16</td><td>2.6</td><td>5.2</td></tr>
+          <tr><td>3</td><td>2.5</td><td>9</td><td>27</td><td>81</td><td>7.5</td><td>22.5</td></tr>
+          <tr><td>4</td><td>6.3</td><td>16</td><td>64</td><td>256</td><td>25.2</td><td>100.8</td></tr>
+          <tr><th>ΣX=10</th><th>ΣY=12.9</th><th>ΣX²=30</th><th>ΣX³=100</th><th>ΣX⁴=354</th><th>ΣXY=37.1</th><th>ΣX²Y=130.3</th></tr>
+        </table>
+
+        <p class="english-content">Substituting values (\( n = 5 \)) into normal equations:</p>
+        <p class="hinglish-content" style="display:none;">Values (\( n = 5 \)) को normal equations में रखने पर:</p>
+        \[ 12.9 = 5a + 10b + 30c \quad \text{--- (i)} \]
+        \[ 37.1 = 10a + 30b + 100c \quad \text{--- (ii)} \]
+        \[ 130.3 = 30a + 100b + 354c \quad \text{--- (iii)} \]
+
+        <p class="english-content"><strong>Step 1: Eliminate \( a \) from (i) and (ii).</strong> Multiply (i) by 2:</p>
+        <p class="hinglish-content" style="display:none;"><strong>Step 1: (i) और (ii) से \( a \) eliminate करें।</strong> (i) को 2 से multiply करें:</p>
+        \[ 25.8 = 10a + 20b + 60c \quad \text{--- (iv)} \]
+        <p class="english-content">Subtract (iv) from (ii):</p>
+        <p class="hinglish-content" style="display:none;">(ii) में से (iv) घटाएं:</p>
+        \[ 37.1 - 25.8 = (30b - 20b) + (100c - 60c) \implies 11.3 = 10b + 40c \quad \text{--- (v)} \]
+
+        <p class="english-content"><strong>Step 2: Eliminate \( a \) from (i) and (iii).</strong> Multiply (i) by 6:</p>
+        <p class="hinglish-content" style="display:none;"><strong>Step 2: (i) और (iii) से \( a \) eliminate करें।</strong> (i) को 6 से multiply करें:</p>
+        \[ 77.4 = 30a + 60b + 180c \quad \text{--- (vi)} \]
+        <p class="english-content">Subtract (vi) from (iii):</p>
+        <p class="hinglish-content" style="display:none;">(iii) में से (vi) घटाएं:</p>
+        \[ 130.3 - 77.4 = (100b - 60b) + (354c - 180c) \implies 52.9 = 40b + 174c \quad \text{--- (vii)} \]
+
+        <p class="english-content"><strong>Step 3: Solve (v) and (vii) for \( b \) and \( c \).</strong> Multiply (v) by 4:</p>
+        <p class="hinglish-content" style="display:none;"><strong>Step 3: \( b \) और \( c \) के लिए (v) और (vii) को solve करें।</strong> (v) को 4 से multiply करें:</p>
+        \[ 45.2 = 40b + 160c \quad \text{--- (viii)} \]
+        <p class="english-content">Subtract (viii) from (vii):</p>
+        <p class="hinglish-content" style="display:none;">(vii) में से (viii) घटाएं:</p>
+        \[ 52.9 - 45.2 = (174c - 160c) \implies 7.7 = 14c \implies c = 0.55 \]
+        <p class="english-content">Substitute \( c = 0.55 \) in (v):</p>
+        <p class="hinglish-content" style="display:none;">(v) में \( c = 0.55 \) रखें:</p>
+        \[ 11.3 = 10b + 40(0.55) \implies 11.3 = 10b + 22 \implies 10b = -10.7 \implies b = -1.07 \]
+        <p class="english-content">Substitute \( b \) and \( c \) in (i):</p>
+        <p class="hinglish-content" style="display:none;">(i) में \( b \) और \( c \) रखें:</p>
+        \[ 12.9 = 5a + 10(-1.07) + 30(0.55) \implies 12.9 = 5a - 10.7 + 16.5 \implies 5a = 7.1 \implies a = 1.42 \]
+        <p class="english-content">The required parabola is: \( Y = 1.42 - 1.07X + 0.55X^2 \).</p>
+        <p class="hinglish-content" style="display:none;">Required parabola है: \( Y = 1.42 - 1.07X + 0.55X^2 \)।</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 5. Fit a second-degree parabola to the following data:</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 5. निम्नलिखित data के लिए second-degree parabola fit करें:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+          <tr><th>Y</th><td>1</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+        </table>
+
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>XY</th><th>\( X^2 \)</th><th>\( X^2Y \)</th><th>\( X^3 \)</th><th>\( X^4 \)</th></tr>
+          <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+          <tr><td>1</td><td>3</td><td>3</td><td>1</td><td>3</td><td>1</td><td>1</td></tr>
+          <tr><td>2</td><td>4</td><td>8</td><td>4</td><td>16</td><td>8</td><td>16</td></tr>
+          <tr><td>3</td><td>5</td><td>15</td><td>9</td><td>45</td><td>27</td><td>81</td></tr>
+          <tr><td>4</td><td>6</td><td>24</td><td>16</td><td>96</td><td>64</td><td>256</td></tr>
+          <tr><th>Total</th><th>19</th><th>50</th><th>30</th><th>160</th><th>100</th><th>354</th></tr>
+        </table>
+
+        <p class="english-content">Normal equations with \( n = 5 \):</p>
+        \[ 19 = 5a + 10b + 30c \quad \text{--- (i)} \]
+        \[ 50 = 10a + 30b + 100c \quad \text{--- (ii)} \]
+        \[ 160 = 30a + 100b + 354c \quad \text{--- (iii)} \]
+
+        <p class="english-content"><strong>Step 1:</strong> Multiply (i) by 2 and subtract from (ii):</p>
+        <p class="hinglish-content" style="display:none;"><strong>Step 1:</strong> (i) को 2 से multiply करें और (ii) में से घटाएं:</p>
+        \[ 38 = 10a + 20b + 60c \]
+        \[ 50 - 38 = (30-20)b + (100-60)c \implies 12 = 10b + 40c \quad \text{--- (iv)} \]
+
+        <p class="english-content"><strong>Step 2:</strong> Multiply (ii) by 3 and subtract from (iii):</p>
+        <p class="hinglish-content" style="display:none;"><strong>Step 2:</strong> (ii) को 3 से multiply करें और (iii) में से घटाएं:</p>
+        \[ 150 = 30a + 90b + 300c \]
+        \[ 160 - 150 = (100-90)b + (354-300)c \implies 10 = 10b + 54c \quad \text{--- (v)} \]
+
+        <p class="english-content"><strong>Step 3:</strong> Subtract (iv) from (v):</p>
+        <p class="hinglish-content" style="display:none;"><strong>Step 3:</strong> (v) में से (iv) घटाएं:</p>
+        \[ 10 - 12 = (54-40)c \implies -2 = 14c \implies c = -0.1429 \]
+        <p class="english-content">Solve for \( b \) using (iv): \( 12 = 10b + 40(-0.1429) \implies 12 = 10b - 5.716 \implies b = 1.7716 \).</p>
+        <p class="english-content">Solve for \( a \) using (i): \( 19 = 5a + 10(1.7716) + 30(-0.1429) \implies a = 1.114 \).</p>
+        <p class="english-content"><strong>Result:</strong> \( Y = 1.114 + 1.7716X - 0.1429X^2 \).</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 6. Fit a second-degree parabola to the following data:</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 6. निम्नलिखित data के लिए second-degree parabola fit करें:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+          <tr><th>Y</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Building the sums table (\( n = 5 \)):</p>
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>XY</th><th>\( X^2 \)</th><th>\( X^2Y \)</th><th>\( X^3 \)</th><th>\( X^4 \)</th></tr>
+          <tr><td>2</td><td>1</td><td>2</td><td>4</td><td>4</td><td>8</td><td>16</td></tr>
+          <tr><td>4</td><td>2</td><td>8</td><td>16</td><td>32</td><td>64</td><td>256</td></tr>
+          <tr><td>6</td><td>3</td><td>18</td><td>36</td><td>108</td><td>216</td><td>1296</td></tr>
+          <tr><td>8</td><td>4</td><td>32</td><td>64</td><td>256</td><td>512</td><td>4096</td></tr>
+          <tr><td>10</td><td>5</td><td>50</td><td>100</td><td>500</td><td>1000</td><td>10000</td></tr>
+          <tr><th>Total</th><th>15</th><th>110</th><th>220</th><th>900</th><th>1800</th><th>15664</th></tr>
+        </table>
+
+        <p class="english-content">Normal equations:</p>
+        \[ 15 = 5a + 30b + 220c \quad \text{--- (i)} \]
+        \[ 110 = 30a + 220b + 1800c \quad \text{--- (ii)} \]
+        \[ 900 = 220a + 1800b + 15664c \quad \text{--- (iii)} \]
+
+        <p class="english-content">Multiply (i) by 6 and subtract from (ii):</p>
+        \[ 90 = 30a + 180b + 1320c \implies 110 - 90 = 40b + 480c \implies 20 = 40b + 480c \quad \text{--- (iv)} \]
+        <p class="english-content">Multiply (i) by 44 and subtract from (iii):</p>
+        \[ 660 = 220a + 1320b + 9680c \implies 900 - 660 = 480b + 5984c \implies 240 = 480b + 5984c \quad \text{--- (v)} \]
+        <p class="english-content">Multiply (iv) by 12 and subtract from (v):</p>
+        \[ 240 = 480b + 5760c \implies 240 - 240 = (5984 - 5760)c \implies 0 = 224c \implies c = 0 \]
+        <p class="english-content">Substituting \( c=0 \) in (iv) gives \( 20 = 40b \implies b = 0.5 \). Substituting \( b, c \) in (i) gives \( a = 0 \).</p>
+        <p class="english-content"><strong>Result:</strong> The best fit parabola is \( Y = 0.5X \).</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     2.5  CHANGE OF ORIGIN
+     ============================================================ -->
+<div class="topic-section" id="change-origin">
+  <section class="section-card">
+    <h2 class="english-content">2.5 The "Change of Origin" Shortcut</h2>
+    <h2 class="hinglish-content" style="display:none;">2.5 "Change of Origin" Shortcut</h2>
+    <div class="body">
+
+      <p class="english-content">
+        Solving a 3×3 system with terms like \( X^4 \) can be very tedious — especially when \( X \) values are large numbers (like years). If the \( X \) values are equally spaced by an interval \( h \), we can shift the origin to the middle value of \( X \). This simplifies our calculations greatly.
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        \( X^4 \) जैसे terms वाली 3×3 equations solve करना बहुत थका देने वाला हो सकता है — खासकर जब \( X \) values बड़ी हों (जैसे years)। अगर \( X \) values interval \( h \) के साथ equally spaced हों, तो हम origin को \( X \) की middle value पर shift कर सकते हैं। इससे calculations बहुत आसान हो जाती हैं।
+      </p>
+
+      <div class="formula">
+        <p class="english-content">Define a new variable \( U \):</p>
+        <p class="hinglish-content" style="display:none;">एक नया variable \( U \) define करें:</p>
+        <p class="english-content"><strong>If \( n \) is odd:</strong></p>
+        <p class="hinglish-content" style="display:none;"><strong>यदि \( n \) odd है:</strong></p>
+        \[ U = \frac{X - \text{middle term}}{h} \]
+        <p class="english-content"><strong>If \( n \) is even:</strong></p>
+        <p class="hinglish-content" style="display:none;"><strong>यदि \( n \) even है:</strong></p>
+        \[ U = \frac{X - (\text{mean of two middle terms})}{h/2} \]
+      </div>
+
+      <p class="english-content">
+        Since the \( U \) values are symmetric around zero (like −2, −1, 0, 1, 2), the sums of odd powers become zero:
+      </p>
+      <p class="hinglish-content" style="display:none;">
+        चूँकि \( U \) values zero के आस-पास symmetric हो जाती हैं (जैसे −2, −1, 0, 1, 2), odd powers के sums zero बन जाते हैं:
+      </p>
+      \[ \sum U = 0 \quad \text{and} \quad \sum U^3 = 0 \]
+      <p class="english-content">This makes the normal equations much simpler!</p>
+      <p class="hinglish-content" style="display:none;">इससे normal equations काफी आसान हो जाती हैं!</p>
+
+      <div class="example">
+        <h4 class="english-content">Example 7. The weights of a calf taken at weekly intervals are given below. Fit a straight line using the method of least squares and find the average weekly growth rate.</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 7. एक बछड़े (calf) के weekly weights नीचे दिए गए हैं। Least squares method से straight line fit करें और average weekly growth rate निकालें।</h4>
+        <table class="calculation-data">
+          <tr><th>Age (X)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+          <tr><th>Weight (Y)</th><td>52.5</td><td>58.7</td><td>65.0</td><td>70.2</td><td>75.4</td><td>81.1</td><td>87.2</td><td>95.5</td><td>102.2</td><td>108.4</td></tr>
+        </table>
+
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Here \( n = 10 \) (even). The \( X \) values have spacing \( h = 1 \). The two middle terms are 5 and 6, their mean is 5.5. So:</p>
+        <p class="hinglish-content" style="display:none;">यहाँ \( n = 10 \) (even) है। \( X \) values का interval \( h = 1 \) है। Middle terms 5 और 6 हैं, उनका mean 5.5 है। इसलिए:</p>
+        \[ U = \frac{X - 5.5}{1/2} = 2X - 11 \]
+
+        <p class="english-content">Let the least-squares line in \( U \) be \( Y = a + bU \). Since \( \sum U = 0 \), the normal equations simplify to:</p>
+        <p class="hinglish-content" style="display:none;">मान लें \( U \) पर least-squares line \( Y = a + bU \) है। \( \sum U = 0 \) होने से normal equations simplify होती हैं:</p>
+        \[ \sum Y = na \quad \text{and} \quad \sum UY = b \sum U^2 \]
+
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>U = 2X−11</th><th>\( U^2 \)</th><th>UY</th></tr>
+          <tr><td>1</td><td>52.5</td><td>−9</td><td>81</td><td>−472.5</td></tr>
+          <tr><td>2</td><td>58.7</td><td>−7</td><td>49</td><td>−410.9</td></tr>
+          <tr><td>3</td><td>65.0</td><td>−5</td><td>25</td><td>−325.0</td></tr>
+          <tr><td>4</td><td>70.2</td><td>−3</td><td>9</td><td>−210.6</td></tr>
+          <tr><td>5</td><td>75.4</td><td>−1</td><td>1</td><td>−75.4</td></tr>
+          <tr><td>6</td><td>81.1</td><td>1</td><td>1</td><td>81.1</td></tr>
+          <tr><td>7</td><td>87.2</td><td>3</td><td>9</td><td>261.6</td></tr>
+          <tr><td>8</td><td>95.5</td><td>5</td><td>25</td><td>477.5</td></tr>
+          <tr><td>9</td><td>102.2</td><td>7</td><td>49</td><td>715.4</td></tr>
+          <tr><td>10</td><td>108.4</td><td>9</td><td>81</td><td>975.6</td></tr>
+          <tr><th>Total</th><th>796.2</th><th>0</th><th>330</th><th>1016.8</th></tr>
+        </table>
+
+        <p class="english-content">From the simplified normal equations:</p>
+        <p class="hinglish-content" style="display:none;">Simplified normal equations से:</p>
+        \[ 796.2 = 10a \implies a = 79.62 \]
+        \[ 1016.8 = 330b \implies b = \frac{1016.8}{330} \approx 3.08 \]
+
+        <p class="english-content">The least-squares line in \( U \) is \( Y = 79.62 + 3.08U \). Now substitute \( U = 2X - 11 \) back to get the line in \( X \):</p>
+        <p class="hinglish-content" style="display:none;">Line in \( U \) है \( Y = 79.62 + 3.08U \)। \( U = 2X - 11 \) वापस रखने पर \( X \) में line मिलती है:</p>
+        \[ Y = 79.62 + 3.08(2X - 11) \implies Y = 45.74 + 6.16X \]
+        <p class="english-content">The slope \( 6.16 \) is the average rate of growth per week.</p>
+        <p class="hinglish-content" style="display:none;">Slope \( 6.16 \) प्रति सप्ताह average rate of growth है।</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     2.6  POWER CURVE
+     ============================================================ -->
+<div class="topic-section" id="power-curve">
+  <section class="section-card">
+    <h2 class="english-content">2.6 Fitting a Power Curve: \( Y = aX^b \)</h2>
+    <h2 class="hinglish-content" style="display:none;">2.6 Power Curve Fit करना: \( Y = aX^b \)</h2>
+    <div class="body">
+
+      <p class="english-content">
+        A power curve \( Y = aX^b \) is used when the dependent variable changes as some power of the independent variable.
+      </p>
+
+      <h3 class="english-content">Detailed Derivation of Normal Equations</h3>
+      <h3 class="hinglish-content" style="display:none;">Normal Equations का विस्तृत Derivation</h3>
+
+      <p class="english-content">
+        Let the power curve be \( Y = aX^b \) ... (8).
+        Taking common logarithms (base 10) on both sides:
+        \[ \log Y = \log a + b \log X \quad \text{--- (9)} \]
+        To linearise this equation, let:
+        <br>\( V = \log Y \), \( U = \log X \), and \( A = \log a \).
+        <br>Substituting these in (9), we get the linear form:
+        \[ V = A + bU \quad \text{--- (10)} \]
+        The normal equations for (10) are:
+      </p>
+
+      <div class="formula">
+        \[ \sum V = nA + b \sum U \quad \text{--- (11)} \]
+        \[ \sum UV = A \sum U + b \sum U^2 \quad \text{--- (12)} \]
+      </div>
+
+      <p class="english-content">
+        After solving for \( A \) and \( b \), recover the original parameter \( a \):
+        \[ a = \text{antilog}(A) = 10^A \]
+      </p>
+
+      <div class="example">
+        <h4 class="english-content">Example 8. Find the best values of \( a \) and \( b \) so that \( y = ax^b \) fits the following data:</h4>
+        <h4 class="hinglish-content" style="display:none;">Example 8. \( a \) और \( b \) की best values निकालें ताकि \( y = ax^b \) नीचे दिए data में fit हो:</h4>
+        <table class="calculation-data">
+          <tr><th>x</th><td>80</td><td>40</td><td>20</td><td>10</td><td>5</td></tr>
+          <tr><th>y</th><td>333</td><td>375</td><td>422</td><td>475</td><td>533</td></tr>
+        </table>
+
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">The equation is \( y = ax^b \). Taking natural log: \( \ln y = \ln a + b \ln x \).
+        <br>Let \( Y = \ln y, A = \ln a, X = \ln x \). Then \( Y = A + bX \).</p>
+
+        <table class="calculation-data">
+          <tr><th>x</th><th>y</th><th>\( X = \ln x \)</th><th>\( Y = \ln y \)</th><th>XY</th><th>\( X^2 \)</th></tr>
+          <tr><td>80</td><td>333</td><td>4.3820</td><td>5.8080</td><td>25.4507</td><td>19.2019</td></tr>
+          <tr><td>40</td><td>375</td><td>3.6889</td><td>5.9269</td><td>21.8637</td><td>13.6080</td></tr>
+          <tr><td>20</td><td>422</td><td>2.9957</td><td>6.0450</td><td>18.1090</td><td>8.9742</td></tr>
+          <tr><td>10</td><td>475</td><td>2.3030</td><td>6.1633</td><td>14.1941</td><td>5.3038</td></tr>
+          <tr><td>5</td><td>533</td><td>1.6090</td><td>6.2785</td><td>10.1021</td><td>2.5889</td></tr>
+          <tr><th>Total</th><th></th><th>14.9786</th><th>30.2217</th><th>89.7196</th><th>49.6768</th></tr>
+        </table>
+
+        <p class="english-content">Normal equations (\( n = 5 \)):</p>
+        \[ 30.2217 = 5A + 14.9786b \quad \text{--- (i)} \]
+        \[ 89.7196 = 14.9786A + 49.6768b \quad \text{--- (ii)} \]
+
+        <p class="english-content"><strong>Solving Steps:</strong></p>
+        <p class="english-content">Multiply (i) by 14.9786 and (ii) by 5:</p>
+        \[ 452.6787 = 74.8930A + 224.3585b \quad \text{--- (iii)} \]
+        \[ 448.5980 = 74.8930A + 248.3840b \quad \text{--- (iv)} \]
+        <p class="english-content">Subtract (iii) from (iv):</p>
+        \[ -4.0807 = 24.0255b \implies b \approx -0.1699 \]
+        <p class="english-content">Substitute \( b \) in (i): \( 30.2217 = 5A + 14.9786(-0.1699) \implies 5A = 32.7665 \implies A = 6.5533 \).</p>
+        \[ a = e^{6.5533} = 701.55 \]
+        <p class="english-content">Result: \( y = 701.55 x^{-0.1699} \).</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 9. Fit a power curve \( Y = aX^b \) to the following data:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>6</td><td>2</td><td>10</td><td>5</td><td>8</td></tr>
+          <tr><th>Y</th><td>9</td><td>11</td><td>12</td><td>8</td><td>7</td></tr>
+        </table>
+
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Let \( V = \log_{10} Y, U = \log_{10} X, A = \log_{10} a \).</p>
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>\( U = \log X \)</th><th>\( V = \log Y \)</th><th>\( U^2 \)</th><th>UV</th></tr>
+          <tr><td>6</td><td>9</td><td>0.7782</td><td>0.9542</td><td>0.6056</td><td>0.7426</td></tr>
+          <tr><td>2</td><td>11</td><td>0.3010</td><td>1.0414</td><td>0.0906</td><td>0.3135</td></tr>
+          <tr><td>10</td><td>12</td><td>1.0000</td><td>1.0792</td><td>1.0000</td><td>1.0792</td></tr>
+          <tr><td>5</td><td>8</td><td>0.6990</td><td>0.9031</td><td>0.4886</td><td>0.6313</td></tr>
+          <tr><td>8</td><td>7</td><td>0.9031</td><td>0.8451</td><td>0.8156</td><td>0.7632</td></tr>
+          <tr><th>Total</th><th></th><th>3.6813</th><th>4.8230</th><th>3.0004</th><th>3.5298</th></tr>
+        </table>
+
+        <p class="english-content">Normal equations:</p>
+        \[ 4.8230 = 5A + 3.6813b \quad \text{--- (i)} \]
+        \[ 3.5298 = 3.6813A + 3.0004b \quad \text{--- (ii)} \]
+        <p class="english-content">Multiply (i) by 3.6813 and (ii) by 5:</p>
+        \[ 17.7549 = 18.4065A + 13.5519b \quad \text{--- (iii)} \]
+        \[ 17.6490 = 18.4065A + 15.0020b \quad \text{--- (iv)} \]
+        <p class="english-content">Subtract (iii) from (iv): \( -0.1059 = 1.4501b \implies b \approx -0.073 \).</p>
+        <p class="english-content">Then \( 5A = 4.8230 - 3.6813(-0.073) = 5.0917 \implies A = 1.0183 \).</p>
+        \[ a = \text{antilog}(1.0183) = 10.43 \]
+        <p class="english-content">Result: \( Y = 10.43 X^{-0.073} \).</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 10. Fit a power curve \( Y = aX^b \) to:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>6</td><td>5</td><td>9</td><td>8</td><td>11</td></tr>
+          <tr><th>Y</th><td>2</td><td>5</td><td>8</td><td>11</td><td>15</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <table class="calculation-data">
+          <tr><th>X</th><th>Y</th><th>\( U = \log X \)</th><th>\( V = \log Y \)</th><th>UV</th><th>\( U^2 \)</th></tr>
+          <tr><td>6</td><td>2</td><td>0.7782</td><td>0.3010</td><td>0.2342</td><td>0.6056</td></tr>
+          <tr><td>5</td><td>5</td><td>0.6990</td><td>0.6990</td><td>0.4886</td><td>0.4886</td></tr>
+          <tr><td>9</td><td>8</td><td>0.9542</td><td>0.9031</td><td>0.8617</td><td>0.9105</td></tr>
+          <tr><td>8</td><td>11</td><td>0.9031</td><td>1.0414</td><td>0.9405</td><td>0.8156</td></tr>
+          <tr><td>11</td><td>15</td><td>1.0414</td><td>1.1761</td><td>1.2248</td><td>1.0845</td></tr>
+          <tr><th>Total</th><th></th><th>4.3759</th><th>4.1206</th><th>3.7498</th><th>3.9048</th></tr>
+        </table>
+        <p class="english-content">Normal equations:</p>
+        \[ 4.1206 = 5A + 4.3759b \quad \text{--- (i)} \]
+        \[ 3.7498 = 4.3759A + 3.9048b \quad \text{--- (ii)} \]
+        <p class="english-content">Multiply (i) by 4.3759: \( 18.0314 = 21.8795A + 19.1485b \).</p>
+        <p class="english-content">Multiply (ii) by 5: \( 18.7490 = 21.8795A + 19.5240b \).</p>
+        <p class="english-content">Subtracting: \( 0.7176 = 0.3755b \implies b \approx 1.9110 \).</p>
+        <p class="english-content">Substituting \( b \) in (i) gives \( A = -0.8483 \implies a = 0.1418 \).</p>
+        <p class="english-content">Result: \( Y = 0.1418 X^{1.9110} \).</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     2.7  EXPONENTIAL CURVES
+<!-- ============================================================
+     2.7  EXPONENTIAL CURVES
+     ============================================================ -->
+<div class="topic-section" id="exponential-curve">
+  <section class="section-card">
+    <h2 class="english-content">2.7 Fitting Exponential Curves: \( Y = ab^X \) and \( Y = ae^{bX} \)</h2>
+    <h2 class="hinglish-content" style="display:none;">2.7 Exponential Curves Fit करना: \( Y = ab^X \) और \( Y = ae^{bX} \)</h2>
+    <div class="body">
+
+      <p class="english-content">
+        Exponential curves model situations where growth or decay happens very rapidly.
+      </p>
+
+      <h3 class="english-content">(A) Fitting Base-b Exponential: \( Y = ab^X \)</h3>
+      <h3 class="hinglish-content" style="display:none;">(A) Base-b Exponential Fit करना: \( Y = ab^X \)</h3>
+
+      <p class="english-content">
+        Let the curve be \( Y = ab^X \) ... (12).
+        Taking common logarithms (base 10) on both sides:
+        \[ \log Y = \log a + X \log b \quad 	ext{--- (13)} \]
+        To linearise, let \( U = \log Y, A = \log a, B = \log b \).
+        Then \( U = A + BX \). The normal equations are:
+      </p>
+      <div class="formula">
+        \[ \sum U = nA + B \sum X \quad 	ext{--- (14)} \]
+        \[ \sum XU = A \sum X + B \sum X^2 \quad 	ext{--- (15)} \]
+      </div>
+      <p class="english-content">
+        After solving for \( A \) and \( B \), recover parameters:
+        \[ a = 10^A \quad 	ext{and} \quad b = 10^B \]
+      </p>
+
+      <h3 class="english-content">(B) Fitting Natural Exponential: \( Y = ae^{bX} \)</h3>
+      <h3 class="hinglish-content" style="display:none;">(B) Natural Exponential Fit करना: \( Y = ae^{bX} \)</h3>
+
+      <p class="english-content">
+        Let the curve be \( Y = ae^{bX} \) ... (16).
+        Taking logarithms (base 10):
+        \[ \log_{10} Y = \log_{10} a + (b \log_{10} e) X \]
+        Let \( U = \log_{10} Y, A = \log_{10} a, B = b \log_{10} e \).
+        Linear form: \( U = A + BX \).
+        Normal equations:
+      </p>
+      <div class="formula">
+        \[ \sum U = nA + B \sum X \]
+        \[ \sum XU = A \sum X + B \sum X^2 \]
+      </div>
+      <p class="english-content">
+        Recover parameters: \( a = 10^A \) and \( b = rac{B}{0.4343} \).
+      </p>
+
+      <div class="example">
+        <h4 class="english-content">Example 11. Fit \( Y = ab^X \) to:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+          <tr><th>Y</th><td>1.0</td><td>1.2</td><td>1.8</td><td>2.5</td><td>3.6</td><td>4.7</td><td>6.6</td><td>9.1</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Using \( n=8, \sum X=36, \sum U=3.7393, \sum XU=22.7385, \sum X^2=204 \).</p>
+        <p class="english-content">Normal equations:
+        <br>1) \( 3.7393 = 8A + 36B \)
+        <br>2) \( 22.7385 = 36A + 204B \)</p>
+        <p class="english-content">Multiply (1) by 4.5: \( 16.8268 = 36A + 162B \). Subtract from (2):
+        <br>\( 5.9117 = 42B \implies B = 0.1408 \).
+        <br>Substitute \( B \): \( 8A = 3.7393 - 36(0.1408) \implies A = -0.1662 \).</p>
+        <p class="english-content">Recovery: \( a = 10^{-0.1662} = 0.6821, b = 10^{0.1408} = 1.383 \).
+        <br>Result: \( Y = 0.6821(1.383)^X \).</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 12. Fit \( Y = ab^X \) to:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+          <tr><th>Y</th><td>1</td><td>3</td><td>6</td><td>12</td><td>24</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Sums: \( \sum X=30, \sum U=3.7147, \sum XU=29.0132, \sum X^2=220 \).</p>
+        <p class="english-content">Normal equations:
+        <br>1) \( 3.7147 = 5A + 30B \)
+        <br>2) \( 29.0132 = 30A + 220B \)</p>
+        <p class="english-content">Multiply (1) by 6: \( 22.2882 = 30A + 180B \). Subtract from (2):
+        <br>\( 6.725 = 40B \implies B = 0.1681 \).
+        <br>Substitute \( B \): \( 5A = 3.7147 - 30(0.1681) \implies A = -0.2657 \).</p>
+        <p class="english-content">Recovery: \( a = 10^{-0.2657} = 0.5424, b = 10^{0.1681} = 1.4726 \).
+        <br>Result: \( Y = 0.5424(1.4726)^X \).</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 13. Fit \( Y = ae^{bX} \) to:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>1</td><td>2</td><td>4</td></tr>
+          <tr><th>Y</th><td>5</td><td>10</td><td>30</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Sums: \( \sum X=7, \sum U=3.1761, \sum XU=8.6074, \sum X^2=21 \).</p>
+        <p class="english-content">Normal equations:
+        <br>1) \( 3.1761 = 3A + 7B \)
+        <br>2) \( 8.6074 = 7A + 21B \)</p>
+        <p class="english-content">Multiply (1) by 3: \( 9.5283 = 9A + 21B \). Subtract (1) from (2):
+        <br>\( -0.9209 = -2A \implies A = 0.4605 \).
+        <br>Substitute \( A \): \( 7B = 3.1761 - 3(0.4605) \implies B = 0.2564 \).</p>
+        <p class="english-content">Recovery: \( a = 10^{0.4605} = 2.887, b = 0.2564/0.4343 = 0.5904 \).
+        <br>Result: \( Y = 2.887 e^{0.5904X} \).</p>
+      </div>
+
+      <div class="example">
+        <h4 class="english-content">Example 14. Fit \( Y = ab^X \) to:</h4>
+        <table class="calculation-data">
+          <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+          <tr><th>Y</th><td>8</td><td>15</td><td>33</td><td>65</td><td>130</td></tr>
+        </table>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">Sums: \( \sum X=15, \sum U=7.5245, \sum XU=25.6319, \sum X^2=55 \).</p>
+        <p class="english-content">Normal equations:
+        <br>1) \( 7.5245 = 5A + 15B \)
+        <br>2) \( 25.6319 = 15A + 55B \)</p>
+        <p class="english-content">Multiply (1) by 3: \( 22.5735 = 15A + 45B \). Subtract from (2):
+        <br>\( 3.0584 = 10B \implies B = 0.30584 \).
+        <br>Substitute \( B \): \( 5A = 7.5245 - 15(0.30584) \implies A = 0.58738 \).</p>
+        <p class="english-content">Recovery: \( a = 10^{0.58738} = 3.8671, b = 10^{0.30584} = 2.0222 \).
+        <br>Result: \( Y = 3.8671(2.0222)^X \).</p>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     MCQ
+     ============================================================ -->
+<div id="mcq" class="topic-section">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">❓</span> Multiple Choice Questions — 20 Questions</h2>
+      <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+        Click <em>Show Answer</em> to reveal the correct option.
+      </p>
+
+      <div class="question"><strong>Q1.</strong> The Principle of Least Squares minimises:
+        <div class="mcq-options"><p>(a) Sum of errors &nbsp;&nbsp; (b) Sum of absolute errors &nbsp;&nbsp; (c) Sum of squared errors &nbsp;&nbsp; (d) Product of errors</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-1"><strong>Answer:</strong> (c) Sum of squared errors</div>
+
+      <div class="question"><strong>Q2.</strong> To fit a straight line \( Y = a + bX \), how many normal equations are needed?
+        <div class="mcq-options"><p>(a) 1 &nbsp;&nbsp; (b) 2 &nbsp;&nbsp; (c) 3 &nbsp;&nbsp; (d) 4</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-2"><strong>Answer:</strong> (b) 2</div>
+
+      <div class="question"><strong>Q3.</strong> A scatter diagram shows the relationship between:
+        <div class="mcq-options"><p>(a) One variable &nbsp;&nbsp; (b) Two variables &nbsp;&nbsp; (c) Three variables &nbsp;&nbsp; (d) None of the above</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-3"><strong>Answer:</strong> (b) Two variables</div>
+
+      <div class="question"><strong>Q4.</strong> If \( Y = ae^{bX} \), which transformation makes the equation linear?
+        <div class="mcq-options"><p>(a) Take log on X &nbsp;&nbsp; (b) Take ln on both sides &nbsp;&nbsp; (c) Square both sides &nbsp;&nbsp; (d) Take reciprocal</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-4"><strong>Answer:</strong> (b) Take ln on both sides</div>
+
+      <div class="question"><strong>Q5.</strong> For a second-degree parabola \( Y = a + bX + cX^2 \), the third normal equation is:
+        <div class="mcq-options"><p>(a) \( \sum Y = na + b\sum X + c\sum X^2 \) &nbsp;&nbsp; (b) \( \sum XY = a\sum X + b\sum X^2 + c\sum X^3 \) &nbsp;&nbsp; (c) \( \sum X^2Y = a\sum X^2 + b\sum X^3 + c\sum X^4 \) &nbsp;&nbsp; (d) \( \sum X^3Y = a\sum X^3 + b\sum X^4 + c\sum X^5 \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-5"><strong>Answer:</strong> (c) \( \sum X^2Y = a\sum X^2 + b\sum X^3 + c\sum X^4 \)</div>
+
+      <div class="question"><strong>Q6.</strong> Why do we not minimise the sum of raw errors \( \sum e_i \)?
+        <div class="mcq-options"><p>(a) It's too hard to calculate &nbsp;&nbsp; (b) Positive and negative errors cancel out &nbsp;&nbsp; (c) It requires calculus &nbsp;&nbsp; (d) It gives multiple solutions</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-6"><strong>Answer:</strong> (b) Positive and negative errors cancel out</div>
+
+      <div class="question"><strong>Q7.</strong> In the change of origin shortcut for an odd number of items, \( U \) is defined as:
+        <div class="mcq-options"><p>(a) \( (X - \text{mean})/h \) &nbsp;&nbsp; (b) \( (X - \text{median})/h \) &nbsp;&nbsp; (c) \( (X - \text{middle term})/h \) &nbsp;&nbsp; (d) \( X/h \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-7"><strong>Answer:</strong> (c) \( (X - \text{middle term})/h \)</div>
+
+      <div class="question"><strong>Q8.</strong> When we correctly apply the change of origin shortcut, what does \( \sum U \) become?
+        <div class="mcq-options"><p>(a) 1 &nbsp;&nbsp; (b) \( n \) &nbsp;&nbsp; (c) 0 &nbsp;&nbsp; (d) Negative</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-8"><strong>Answer:</strong> (c) 0</div>
+
+      <div class="question"><strong>Q9.</strong> Fitting \( Y = aX^b \) requires logarithms. In the new linear form \( V = A + bU \), what is \( V \)?
+        <div class="mcq-options"><p>(a) \( Y \) &nbsp;&nbsp; (b) \( \log X \) &nbsp;&nbsp; (c) \( \log Y \) &nbsp;&nbsp; (d) \( \log a \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-9"><strong>Answer:</strong> (c) \( \log Y \)</div>
+
+      <div class="question"><strong>Q10.</strong> Which curve equation represents uninhibited exponential growth?
+        <div class="mcq-options"><p>(a) \( Y = a+bX \) &nbsp;&nbsp; (b) \( Y = a+bX+cX^2 \) &nbsp;&nbsp; (c) \( Y = ae^{bX} \) &nbsp;&nbsp; (d) \( Y = a + b/X \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-10"><strong>Answer:</strong> (c) \( Y = ae^{bX} \)</div>
+
+      <div class="question"><strong>Q11.</strong> If \( V = A + BX \) was obtained by taking \( \log_{10} \) of \( Y = ab^X \), how do we recover \( b \)?
+        <div class="mcq-options"><p>(a) \( b = B \) &nbsp;&nbsp; (b) \( b = 10^B \) &nbsp;&nbsp; (c) \( b = e^B \) &nbsp;&nbsp; (d) \( b = \ln B \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-11"><strong>Answer:</strong> (b) \( b = 10^B \)</div>
+
+      <div class="question"><strong>Q12.</strong> Estimating \( Y \) within the observed data range is called:
+        <div class="mcq-options"><p>(a) Extrapolation &nbsp;&nbsp; (b) Interpolation &nbsp;&nbsp; (c) Integration &nbsp;&nbsp; (d) Differentiation</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-12"><strong>Answer:</strong> (b) Interpolation</div>
+
+      <div class="question"><strong>Q13.</strong> Normal equations are obtained by setting which derivative to zero?
+        <div class="mcq-options"><p>(a) Total derivative &nbsp;&nbsp; (b) Second derivative &nbsp;&nbsp; (c) Partial derivative of S w.r.t. unknowns &nbsp;&nbsp; (d) None of the above</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-13"><strong>Answer:</strong> (c) Partial derivative of S w.r.t. unknowns</div>
+
+      <div class="question"><strong>Q14.</strong> For a polynomial of degree \( k \), how many normal equations are formed?
+        <div class="mcq-options"><p>(a) \( k \) &nbsp;&nbsp; (b) \( k-1 \) &nbsp;&nbsp; (c) \( k+1 \) &nbsp;&nbsp; (d) \( 2k \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-14"><strong>Answer:</strong> (c) \( k+1 \)</div>
+
+      <div class="question"><strong>Q15.</strong> What does squaring the errors in least squares do to large outliers?
+        <div class="mcq-options"><p>(a) Ignores them &nbsp;&nbsp; (b) Heavily penalises them &nbsp;&nbsp; (c) Turns them to zero &nbsp;&nbsp; (d) Makes them linear</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-15"><strong>Answer:</strong> (b) Heavily penalises them</div>
+
+      <div class="question"><strong>Q16.</strong> To linearise \( Y = aX^b \), we take the logarithm. The new independent variable is:
+        <div class="mcq-options"><p>(a) \( X \) &nbsp;&nbsp; (b) \( \log X \) &nbsp;&nbsp; (c) \( \log Y \) &nbsp;&nbsp; (d) \( X^b \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-16"><strong>Answer:</strong> (b) \( \log X \)</div>
+
+      <div class="question"><strong>Q17.</strong> If \( \sum U = 0 \), the first normal equation for a line \( Y = a + bU \) simplifies to:
+        <div class="mcq-options"><p>(a) \( \sum Y = na \) &nbsp;&nbsp; (b) \( \sum Y = b \) &nbsp;&nbsp; (c) \( \sum Y = a \) &nbsp;&nbsp; (d) \( \sum UY = a\sum U \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-17"><strong>Answer:</strong> (a) \( \sum Y = na \)</div>
+
+      <div class="question"><strong>Q18.</strong> In \( Y = a + bX + cX^2 \), the parameter \( c \) is associated with:
+        <div class="mcq-options"><p>(a) The slope &nbsp;&nbsp; (b) The intercept &nbsp;&nbsp; (c) The quadratic term &nbsp;&nbsp; (d) The logarithmic term</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-18"><strong>Answer:</strong> (c) The quadratic term</div>
+
+      <div class="question"><strong>Q19.</strong> The curve with the property \( S = d_1^2 + d_2^2 + \dots + d_n^2 = \) minimum is called:
+        <div class="mcq-options"><p>(a) Least-squares curve &nbsp;&nbsp; (b) Maximum-squares curve &nbsp;&nbsp; (c) Error curve &nbsp;&nbsp; (d) Outlier curve</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-19"><strong>Answer:</strong> (a) Least-squares curve</div>
+
+      <div class="question"><strong>Q20.</strong> In the transformation for an even number of points, what does \( h \) represent?
+        <div class="mcq-options"><p>(a) Mean &nbsp;&nbsp; (b) Interval spacing of X &nbsp;&nbsp; (c) Y-intercept &nbsp;&nbsp; (d) Total points</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-20"><strong>Answer:</strong> (b) Interval spacing of X</div>
+    </div>
+
+    <div class="hinglish-content" style="display:none;">
+      <h2><span class="section-num">❓</span> Multiple Choice Questions (बहुविकल्पीय प्रश्न) — 20 Questions</h2>
+      <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+        सही विकल्प देखने के लिए <em>Show Answer</em> पर क्लिक करें।
+      </p>
+
+      <div class="question"><strong>Q1.</strong> Principle of Least Squares किसे minimise करता है?
+        <div class="mcq-options"><p>(a) Sum of errors &nbsp;&nbsp; (b) Sum of absolute errors &nbsp;&nbsp; (c) Sum of squared errors &nbsp;&nbsp; (d) Product of errors</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-1"><strong>Answer:</strong> (c) Sum of squared errors</div>
+
+      <div class="question"><strong>Q2.</strong> Straight line \( Y = a + bX \) fit करने के लिए कितनी normal equations चाहिए?
+        <div class="mcq-options"><p>(a) 1 &nbsp;&nbsp; (b) 2 &nbsp;&nbsp; (c) 3 &nbsp;&nbsp; (d) 4</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-2"><strong>Answer:</strong> (b) 2</div>
+
+      <div class="question"><strong>Q3.</strong> Scatter diagram किन दोनों के बीच का relationship दिखाता है?
+        <div class="mcq-options"><p>(a) One variable &nbsp;&nbsp; (b) Two variables &nbsp;&nbsp; (c) Three variables &nbsp;&nbsp; (d) None of the above</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-3"><strong>Answer:</strong> (b) Two variables</div>
+
+      <div class="question"><strong>Q4.</strong> \( Y = ae^{bX} \) को linear बनाने के लिए कौन सा transformation use होता है?
+        <div class="mcq-options"><p>(a) X पर log लो &nbsp;&nbsp; (b) दोनों तरफ ln लो &nbsp;&nbsp; (c) दोनों तरफ square करो &nbsp;&nbsp; (d) Reciprocal लो</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-4"><strong>Answer:</strong> (b) दोनों तरफ ln लो</div>
+
+      <div class="question"><strong>Q5.</strong> Second-degree parabola \( Y = a + bX + cX^2 \) की तीसरी normal equation है:
+        <div class="mcq-options"><p>(a) \( \sum Y = na + b\sum X + c\sum X^2 \) &nbsp;&nbsp; (b) \( \sum XY = a\sum X + b\sum X^2 + c\sum X^3 \) &nbsp;&nbsp; (c) \( \sum X^2Y = a\sum X^2 + b\sum X^3 + c\sum X^4 \) &nbsp;&nbsp; (d) \( \sum X^3Y = a\sum X^3 + b\sum X^4 + c\sum X^5 \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-5"><strong>Answer:</strong> (c) \( \sum X^2Y = a\sum X^2 + b\sum X^3 + c\sum X^4 \)</div>
+
+      <div class="question"><strong>Q6.</strong> Raw errors के sum \( \sum e_i \) को minimise क्यों नहीं करते?
+        <div class="mcq-options"><p>(a) Calculate करना मुश्किल है &nbsp;&nbsp; (b) Positive और negative errors cancel हो जाते हैं &nbsp;&nbsp; (c) Calculus लगती है &nbsp;&nbsp; (d) Multiple solutions मिलते हैं</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-6"><strong>Answer:</strong> (b) Positive और negative errors cancel हो जाते हैं</div>
+
+      <div class="question"><strong>Q7.</strong> Odd number of items के लिए change of origin shortcut में \( U \) क्या होता है?
+        <div class="mcq-options"><p>(a) \( (X - \text{mean})/h \) &nbsp;&nbsp; (b) \( (X - \text{median})/h \) &nbsp;&nbsp; (c) \( (X - \text{middle term})/h \) &nbsp;&nbsp; (d) \( X/h \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-7"><strong>Answer:</strong> (c) \( (X - \text{middle term})/h \)</div>
+
+      <div class="question"><strong>Q8.</strong> Change of origin सही से apply करने पर \( \sum U \) क्या बन जाता है?
+        <div class="mcq-options"><p>(a) 1 &nbsp;&nbsp; (b) \( n \) &nbsp;&nbsp; (c) 0 &nbsp;&nbsp; (d) Negative</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-8"><strong>Answer:</strong> (c) 0</div>
+
+      <div class="question"><strong>Q9.</strong> \( Y = aX^b \) के linear form \( V = A + bU \) में \( V \) क्या है?
+        <div class="mcq-options"><p>(a) \( Y \) &nbsp;&nbsp; (b) \( \log X \) &nbsp;&nbsp; (c) \( \log Y \) &nbsp;&nbsp; (d) \( \log a \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-9"><strong>Answer:</strong> (c) \( \log Y \)</div>
+
+      <div class="question"><strong>Q10.</strong> कौन सी curve equation uninhibited exponential growth दर्शाती है?
+        <div class="mcq-options"><p>(a) \( Y = a+bX \) &nbsp;&nbsp; (b) \( Y = a+bX+cX^2 \) &nbsp;&nbsp; (c) \( Y = ae^{bX} \) &nbsp;&nbsp; (d) \( Y = a + b/X \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-10"><strong>Answer:</strong> (c) \( Y = ae^{bX} \)</div>
+
+      <div class="question"><strong>Q11.</strong> \( Y = ab^X \) का \( \log_{10} \) लेने पर \( V = A + BX \) मिलता है। \( b \) कैसे recover होगा?
+        <div class="mcq-options"><p>(a) \( b = B \) &nbsp;&nbsp; (b) \( b = 10^B \) &nbsp;&nbsp; (c) \( b = e^B \) &nbsp;&nbsp; (d) \( b = \ln B \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-11"><strong>Answer:</strong> (b) \( b = 10^B \)</div>
+
+      <div class="question"><strong>Q12.</strong> Observed data range के अंदर \( Y \) estimate करना क्या कहलाता है?
+        <div class="mcq-options"><p>(a) Extrapolation &nbsp;&nbsp; (b) Interpolation &nbsp;&nbsp; (c) Integration &nbsp;&nbsp; (d) Differentiation</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-12"><strong>Answer:</strong> (b) Interpolation</div>
+
+      <div class="question"><strong>Q13.</strong> Normal equations किस derivative को zero रखकर बनती हैं?
+        <div class="mcq-options"><p>(a) Total derivative &nbsp;&nbsp; (b) Second derivative &nbsp;&nbsp; (c) S का partial derivative unknowns के w.r.t. &nbsp;&nbsp; (d) इनमें से कोई नहीं</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-13"><strong>Answer:</strong> (c) S का partial derivative unknowns के w.r.t.</div>
+
+      <div class="question"><strong>Q14.</strong> Degree \( k \) के polynomial के लिए कितनी normal equations बनती हैं?
+        <div class="mcq-options"><p>(a) \( k \) &nbsp;&nbsp; (b) \( k-1 \) &nbsp;&nbsp; (c) \( k+1 \) &nbsp;&nbsp; (d) \( 2k \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-14"><strong>Answer:</strong> (c) \( k+1 \)</div>
+
+      <div class="question"><strong>Q15.</strong> Least squares में errors का square करने से बड़े outliers पर क्या असर पड़ता है?
+        <div class="mcq-options"><p>(a) Ignore हो जाते हैं &nbsp;&nbsp; (b) भारी penalty मिलती है &nbsp;&nbsp; (c) Zero बन जाते हैं &nbsp;&nbsp; (d) Linear बन जाते हैं</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-15"><strong>Answer:</strong> (b) भारी penalty मिलती है</div>
+
+      <div class="question"><strong>Q16.</strong> \( Y = aX^b \) को linearise करने पर नया independent variable क्या है?
+        <div class="mcq-options"><p>(a) \( X \) &nbsp;&nbsp; (b) \( \log X \) &nbsp;&nbsp; (c) \( \log Y \) &nbsp;&nbsp; (d) \( X^b \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-16"><strong>Answer:</strong> (b) \( \log X \)</div>
+
+      <div class="question"><strong>Q17.</strong> \( \sum U = 0 \) होने पर line \( Y = a + bU \) की पहली normal equation क्या बन जाती है?
+        <div class="mcq-options"><p>(a) \( \sum Y = na \) &nbsp;&nbsp; (b) \( \sum Y = b \) &nbsp;&nbsp; (c) \( \sum Y = a \) &nbsp;&nbsp; (d) \( \sum UY = a\sum U \)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-17"><strong>Answer:</strong> (a) \( \sum Y = na \)</div>
+
+      <div class="question"><strong>Q18.</strong> \( Y = a + bX + cX^2 \) में parameter \( c \) किससे जुड़ा है?
+        <div class="mcq-options"><p>(a) Slope से &nbsp;&nbsp; (b) Intercept से &nbsp;&nbsp; (c) Quadratic term से &nbsp;&nbsp; (d) Logarithmic term से</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-18"><strong>Answer:</strong> (c) Quadratic term से</div>
+
+      <div class="question"><strong>Q19.</strong> वह curve जिसकी property \( S = d_1^2 + d_2^2 + \dots + d_n^2 = \) minimum हो, क्या कहलाता है?
+        <div class="mcq-options"><p>(a) Least-squares curve &nbsp;&nbsp; (b) Maximum-squares curve &nbsp;&nbsp; (c) Error curve &nbsp;&nbsp; (d) Outlier curve</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-19"><strong>Answer:</strong> (a) Least-squares curve</div>
+
+      <div class="question"><strong>Q20.</strong> Even number of points वाले transformation में \( h \) क्या represent करता है?
+        <div class="mcq-options"><p>(a) Mean &nbsp;&nbsp; (b) X की interval spacing &nbsp;&nbsp; (c) Y-intercept &nbsp;&nbsp; (d) Total points</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-20"><strong>Answer:</strong> (b) X की interval spacing</div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     FILL IN THE BLANKS
+     ============================================================ -->
+<div class="topic-section" id="fib">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">✏️</span> Fill in the Blanks — 20 Questions</h2>
+
+      <div class="question"><strong>Q1.</strong> A set of data points plotted on a coordinate system is called a _________ diagram.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-1"><strong>Answer:</strong> scatter</div>
+
+      <div class="question"><strong>Q2.</strong> Estimating a value outside the observed data range is called _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-2"><strong>Answer:</strong> extrapolation</div>
+
+      <div class="question"><strong>Q3.</strong> The difference between the observed value and the estimated value is called the _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-3"><strong>Answer:</strong> residual / error / deviation</div>
+
+      <div class="question"><strong>Q4.</strong> The Principle of Least Squares minimises the sum of the _________ of the residuals.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-4"><strong>Answer:</strong> squares</div>
+
+      <div class="question"><strong>Q5.</strong> To find the minimum of S, we set the _________ derivatives to zero.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-5"><strong>Answer:</strong> partial</div>
+
+      <div class="question"><strong>Q6.</strong> The equations obtained by setting partial derivatives to zero are called _________ equations.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-6"><strong>Answer:</strong> normal</div>
+
+      <div class="question"><strong>Q7.</strong> For a straight line \( Y = a + bX \), there are _________ unknown parameters to find.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-7"><strong>Answer:</strong> two</div>
+
+      <div class="question"><strong>Q8.</strong> The normal equation \( \sum Y = na + b\sum X \) is derived by differentiating S with respect to _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-8"><strong>Answer:</strong> a</div>
+
+      <div class="question"><strong>Q9.</strong> Fitting a second-degree parabola requires solving _________ normal equations.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-9"><strong>Answer:</strong> three</div>
+
+      <div class="question"><strong>Q10.</strong> In the parabola \( Y = a + bX + cX^2 \), the highest power of X is _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-10"><strong>Answer:</strong> two (2)</div>
+
+      <div class="question"><strong>Q11.</strong> To simplify calculations when X values are equally spaced, we change the _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-11"><strong>Answer:</strong> origin</div>
+
+      <div class="question"><strong>Q12.</strong> If we shift origin so that \( U \) values are balanced around zero, then \( \sum U = \) _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-12"><strong>Answer:</strong> 0</div>
+
+      <div class="question"><strong>Q13.</strong> A curve of the form \( Y = aX^b \) is called a _________ curve.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-13"><strong>Answer:</strong> power</div>
+
+      <div class="question"><strong>Q14.</strong> To apply normal equations to \( Y = aX^b \), we must first _________ it using logarithms.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-14"><strong>Answer:</strong> linearise</div>
+
+      <div class="question"><strong>Q15.</strong> If \( \log Y = \log a + b \log X \), the slope of this linear equation is _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-15"><strong>Answer:</strong> b</div>
+
+      <div class="question"><strong>Q16.</strong> The curve \( Y = ae^{bX} \) represents a natural _________ curve.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-16"><strong>Answer:</strong> exponential</div>
+
+      <div class="question"><strong>Q17.</strong> For natural exponential \( Y = ae^{bX} \), we linearise by taking the _________ logarithm.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-17"><strong>Answer:</strong> natural (\( \ln \))</div>
+
+      <div class="question"><strong>Q18.</strong> If \( A = \ln a \), we recover \( a \) by calculating \( a = \) _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-18"><strong>Answer:</strong> \( e^A \)</div>
+
+      <div class="question"><strong>Q19.</strong> When \( Y = ab^X \), the independent variable X is in the _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-19"><strong>Answer:</strong> exponent</div>
+
+      <div class="question"><strong>Q20.</strong> The number of normal equations equals the number of unknown _________ in the curve.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-20"><strong>Answer:</strong> constants / parameters</div>
+    </div>
+
+    <div class="hinglish-content" style="display:none;">
+      <h2><span class="section-num">✏️</span> Fill in the Blanks (रिक्त स्थान भरें) — 20 Questions</h2>
+
+      <div class="question"><strong>Q1.</strong> Coordinate system पर plot किए गए data points के set को _________ diagram कहते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-1"><strong>Answer:</strong> scatter</div>
+
+      <div class="question"><strong>Q2.</strong> Observed data range के बाहर value estimate करना _________ कहलाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-2"><strong>Answer:</strong> extrapolation</div>
+
+      <div class="question"><strong>Q3.</strong> Observed value और estimated value के अंतर को _________ कहते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-3"><strong>Answer:</strong> residual / error / deviation</div>
+
+      <div class="question"><strong>Q4.</strong> Principle of Least Squares residuals के _________ के sum को minimise करता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-4"><strong>Answer:</strong> squares</div>
+
+      <div class="question"><strong>Q5.</strong> S का minimum ढूँढने के लिए _________ derivatives को zero रखते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-5"><strong>Answer:</strong> partial</div>
+
+      <div class="question"><strong>Q6.</strong> Partial derivatives को zero रखकर जो equations मिलती हैं उन्हें _________ equations कहते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-6"><strong>Answer:</strong> normal</div>
+
+      <div class="question"><strong>Q7.</strong> Straight line \( Y = a + bX \) के लिए _________ unknown parameters ढूँढने होते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-7"><strong>Answer:</strong> two (दो)</div>
+
+      <div class="question"><strong>Q8.</strong> Normal equation \( \sum Y = na + b\sum X \), S को _________ के respect में differentiate करके मिलती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-8"><strong>Answer:</strong> a</div>
+
+      <div class="question"><strong>Q9.</strong> Second-degree parabola fit करने के लिए _________ normal equations solve करनी पड़ती हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-9"><strong>Answer:</strong> three (तीन)</div>
+
+      <div class="question"><strong>Q10.</strong> Parabola \( Y = a + bX + cX^2 \) में X की highest power _________ होती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-10"><strong>Answer:</strong> two (2)</div>
+
+      <div class="question"><strong>Q11.</strong> जब X values equally spaced हों, तो calculation आसान करने के लिए हम _________ change करते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-11"><strong>Answer:</strong> origin</div>
+
+      <div class="question"><strong>Q12.</strong> Origin shift करने पर जब \( U \) values zero के आस-पास balanced हों, तो \( \sum U = \) _________ होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-12"><strong>Answer:</strong> 0</div>
+
+      <div class="question"><strong>Q13.</strong> \( Y = aX^b \) form के curve को _________ curve कहते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-13"><strong>Answer:</strong> power</div>
+
+      <div class="question"><strong>Q14.</strong> \( Y = aX^b \) पर normal equations apply करने से पहले logarithms से इसे _________ करना होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-14"><strong>Answer:</strong> linearise</div>
+
+      <div class="question"><strong>Q15.</strong> \( \log Y = \log a + b \log X \) में linear equation का slope _________ है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-15"><strong>Answer:</strong> b</div>
+
+      <div class="question"><strong>Q16.</strong> Curve \( Y = ae^{bX} \) एक natural _________ curve है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-16"><strong>Answer:</strong> exponential</div>
+
+      <div class="question"><strong>Q17.</strong> Natural exponential \( Y = ae^{bX} \) को linearise करने के लिए _________ logarithm लेते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-17"><strong>Answer:</strong> natural (\( \ln \))</div>
+
+      <div class="question"><strong>Q18.</strong> \( A = \ln a \) हो, तो \( a = \) _________ निकालकर \( a \) recover करते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-18"><strong>Answer:</strong> \( e^A \)</div>
+
+      <div class="question"><strong>Q19.</strong> जब \( Y = ab^X \) हो, तो independent variable X _________ में होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-19"><strong>Answer:</strong> exponent</div>
+
+      <div class="question"><strong>Q20.</strong> Normal equations की संख्या curve के unknown _________ की संख्या के बराबर होती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-20"><strong>Answer:</strong> constants / parameters</div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     TRUE / FALSE
+     ============================================================ -->
+<div class="topic-section" id="tf">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">✅</span> True / False — 20 Questions</h2>
+
+      <div class="question"><strong>Q1.</strong> Curve fitting is the process of finding an equation that best approximates a set of data.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-1"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q2.</strong> Interpolation means estimating a value outside the range of given data.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-2"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q3.</strong> A scatter diagram can only show linear relationships.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-3"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q4.</strong> The Principle of Least Squares minimises the sum of absolute errors.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-4"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q5.</strong> Squaring the errors heavily penalises large outliers.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-5"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q6.</strong> Fitting a straight line requires setting three partial derivatives to zero.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-6"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q7.</strong> \( \sum Y = na + b\sum X \) is a normal equation for a straight line.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-7"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q8.</strong> A second-degree parabola has the equation \( Y = a + bX^2 \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-8"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q9.</strong> Changing the origin for equally spaced X values simplifies the normal equations.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-9"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q10.</strong> If \( \sum U = 0 \), then \( \sum UY = a\sum U + b\sum U^2 \) simplifies to \( \sum UY = b\sum U^2 \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-10"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q11.</strong> A power curve \( Y = aX^b \) can be linearised using logarithms.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-11"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q12.</strong> Taking \( \log_{10} \) of \( Y = aX^b \) yields \( \log Y = a + b\log X \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-12"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q13.</strong> After linearising a power curve to \( V = A + bU \), we find \( a \) using antilog(A).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-13"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q14.</strong> The exponential curve \( Y = ab^X \) is linearised by \( \log Y = \log a + X\log b \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-14"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q15.</strong> When fitting \( Y = ae^{bX} \), it is best to use base-10 logarithms to linearise.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-15"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q16.</strong> Linearisation is needed because normal equations can only be applied directly to linear models.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-16"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q17.</strong> A polynomial of degree \( k \) requires exactly \( k \) normal equations.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-17"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q18.</strong> For equally spaced X, the change of origin gives \( \sum U^3 = 0 \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-18"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q19.</strong> Legendre's principle minimises the sum of deviations \( (y_i - \hat{y}_i) \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-19"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q20.</strong> Residual is the difference between observed value and estimated value.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-20"><strong>Answer:</strong> True</div>
+    </div>
+
+    <div class="hinglish-content" style="display:none;">
+      <h2><span class="section-num">✅</span> True / False (सही / गलत) — 20 Questions</h2>
+
+      <div class="question"><strong>Q1.</strong> Curve fitting वह process है जिसमें हम एक equation ढूँढते हैं जो data set को best approximate करे।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-1"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q2.</strong> Interpolation का मतलब observed data range के बाहर की value का अनुमान लगाना है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-2"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q3.</strong> Scatter diagram केवल linear relationships ही दिखा सकता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-3"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q4.</strong> Principle of Least Squares absolute errors के sum को minimise करता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-4"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q5.</strong> Errors का square करने से बड़े outliers को heavy penalty मिलती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-5"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q6.</strong> Straight line fit करने के लिए तीन partial derivatives को zero रखना पड़ता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-6"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q7.</strong> \( \sum Y = na + b\sum X \) straight line के लिए एक normal equation है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-7"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q8.</strong> Second-degree parabola की equation \( Y = a + bX^2 \) होती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-8"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q9.</strong> Equally spaced X values के लिए origin change करने से normal equations आसान हो जाती हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-9"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q10.</strong> \( \sum U = 0 \) होने पर \( \sum UY = a\sum U + b\sum U^2 \) simplify होकर \( \sum UY = b\sum U^2 \) बन जाती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-10"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q11.</strong> Power curve \( Y = aX^b \) को logarithms से linearise किया जा सकता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-11"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q12.</strong> \( Y = aX^b \) का \( \log_{10} \) लेने पर \( \log Y = a + b\log X \) मिलता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-12"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q13.</strong> Power curve को \( V = A + bU \) में linearise करने के बाद \( a \) निकालने के लिए antilog(A) करना होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-13"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q14.</strong> Exponential curve \( Y = ab^X \) को \( \log Y = \log a + X\log b \) से linearise किया जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-14"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q15.</strong> \( Y = ae^{bX} \) fit करते समय linearise करने के लिए base-10 logarithms सबसे best हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-15"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q16.</strong> Linearisation ज़रूरी है क्योंकि normal equations directly केवल linear models पर apply होती हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-16"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q17.</strong> Degree \( k \) के polynomial को solve करने के लिए exactly \( k \) normal equations चाहिए।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-17"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q18.</strong> Equally spaced X के लिए change of origin से \( \sum U^3 = 0 \) मिलता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-18"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q19.</strong> Legendre का principle deviations के sum \( (y_i - \hat{y}_i) \) को minimise करता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-19"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q20.</strong> Residual, observed value और estimated value का अंतर होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-20"><strong>Answer:</strong> True</div>
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     SUBJECTIVE QUESTIONS
+     ============================================================ -->
+<div class="topic-section" id="subj">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">📝</span> Subjective Questions (Detailed Solutions) — 20 Questions</h2>
+
+      <div class="question"><strong>Q1.</strong> Explain the Principle of Least Squares in curve fitting. Why is the sum of squared errors minimised rather than the sum of absolute errors?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-1">
+        <p><strong>Solution:</strong> The Principle of Least Squares says the best-fitting curve is the one that minimises the sum of the squares of all residuals (the gaps between the actual and predicted values). We square the errors for three reasons. First, raw positive and negative errors cancel out — so their plain sum is not useful. Second, absolute values have sharp corners and cannot be differentiated easily in calculus. Third, squaring puts a heavier penalty on large errors, so the curve is forced to fit all the data fairly.</p>
+      </div>
+
+      <div class="question"><strong>Q2.</strong> Derive the normal equations for fitting a straight line \( Y = a + bX \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-2">
+        <p><strong>Solution:</strong> Let the line be \( \hat{Y}_i = a + bX_i \). The error for the \( i \)-th point is \( e_i = Y_i - a - bX_i \). The sum of squared errors is \( S = \sum (Y_i - a - bX_i)^2 \). To minimise \( S \), take partial derivatives with respect to \( a \) and \( b \) and set them to zero:
+        <br>\( \frac{\partial S}{\partial a} = -2 \sum (Y_i - a - bX_i) = 0 \implies \sum Y = na + b\sum X \) &nbsp; (Equation 1)
+        <br>\( \frac{\partial S}{\partial b} = -2 \sum X_i(Y_i - a - bX_i) = 0 \implies \sum XY = a\sum X + b\sum X^2 \) &nbsp; (Equation 2)</p>
+      </div>
+
+      <div class="question"><strong>Q3.</strong> State the normal equations for fitting a second-degree parabola.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-3">
+        <p><strong>Solution:</strong> For \( Y = a + bX + cX^2 \), there are three unknown constants \( a, b, c \). Differentiating the squared error sum with respect to each gives three normal equations:
+        <br>1) \( \sum Y = na + b\sum X + c\sum X^2 \)
+        <br>2) \( \sum XY = a\sum X + b\sum X^2 + c\sum X^3 \)
+        <br>3) \( \sum X^2Y = a\sum X^2 + b\sum X^3 + c\sum X^4 \)</p>
+      </div>
+
+      <div class="question"><strong>Q4.</strong> Explain the "Change of Origin" shortcut and how it simplifies curve fitting calculations.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-4">
+        <p><strong>Solution:</strong> When \( X \) values are equally spaced by an interval \( h \), computing sums like \( \sum X^3 \) and \( \sum X^4 \) with large numbers is very tedious. We shift the origin to the middle \( X \) value by defining a new variable \( U \). For an odd number of items, \( U = (X - \text{middle})/h \). This makes \( U \) values symmetric around zero (like −2, −1, 0, 1, 2), which means \( \sum U = 0 \) and \( \sum U^3 = 0 \). This removes terms from the normal equations, turning a complex 3×3 system into three much simpler equations.</p>
+      </div>
+
+      <div class="question"><strong>Q5.</strong> Outline the steps to fit a power curve \( Y = aX^b \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-5">
+        <p><strong>Solution:</strong>
+        <br>1) Take logarithms on both sides to linearise: \( \log Y = \log a + b \log X \).
+        <br>2) Substitute: \( V = \log Y \), \( A = \log a \), \( U = \log X \). The equation becomes \( V = A + bU \).
+        <br>3) Write normal equations: \( \sum V = nA + b\sum U \) and \( \sum UV = A\sum U + b\sum U^2 \).
+        <br>4) Build a computation table for \( U, V, U^2, UV \) and solve for \( A \) and \( b \).
+        <br>5) Recover original \( a \) as \( a = \text{antilog}(A) \). Parameter \( b \) stays the same.</p>
+      </div>
+
+      <div class="question"><strong>Q6.</strong> How do you linearise \( Y = ae^{bX} \)? Write the normal equations.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-6">
+        <p><strong>Solution:</strong> Take natural log on both sides: \( \ln Y = \ln a + bX \). Since \( \ln e = 1 \), it simplifies nicely. Let \( V = \ln Y \) and \( A = \ln a \). The linear form is \( V = A + bX \). Normal equations:
+        <br>1) \( \sum V = nA + b\sum X \)
+        <br>2) \( \sum XV = A\sum X + b\sum X^2 \)
+        <br>After solving for \( A \) and \( b \), recover \( a = e^A \).</p>
+      </div>
+
+      <div class="question"><strong>Q7.</strong> Set up the normal equations to fit a straight line for the points (1, 2), (2, 5), (3, 9).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-7">
+        <p><strong>Solution:</strong> Here \( n = 3 \). Let \( Y = a + bX \).
+        <br>\( \sum X = 6,\quad \sum Y = 16,\quad \sum X^2 = 14,\quad \sum XY = 39 \)
+        <br>Normal equations:
+        <br>\( 16 = 3a + 6b \)
+        <br>\( 39 = 6a + 14b \)</p>
+      </div>
+
+      <div class="question"><strong>Q8.</strong> When fitting a parabola using change of origin (\( \sum U = 0, \sum U^3 = 0 \)), how do the normal equations simplify?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-8">
+        <p><strong>Solution:</strong> The original normal equations are:
+        <br>\( \sum Y = na + b\sum U + c\sum U^2 \)
+        <br>\( \sum UY = a\sum U + b\sum U^2 + c\sum U^3 \)
+        <br>\( \sum U^2Y = a\sum U^2 + b\sum U^3 + c\sum U^4 \)
+        <br>Setting \( \sum U = 0 \) and \( \sum U^3 = 0 \):
+        <br>1) \( \sum Y = na + c\sum U^2 \)
+        <br>2) \( \sum UY = b\sum U^2 \implies b = \frac{\sum UY}{\sum U^2} \)  (found directly!)
+        <br>3) \( \sum U^2Y = a\sum U^2 + c\sum U^4 \)
+        <br>Now \( b \) is directly solved, and \( a, c \) come from the 2×2 system of equations 1 and 3.</p>
+      </div>
+
+      <div class="question"><strong>Q9.</strong> Why is curve fitting important in trend analysis?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-9">
+        <p><strong>Solution:</strong> Curve fitting replaces scattered, noisy data points with one clean mathematical function. This function shows the underlying trend — for example, whether a population is growing linearly or exponentially. Once the trend is expressed as a formula, researchers can easily estimate missing data values (interpolation) or make predictions beyond the data range (extrapolation).</p>
+      </div>
+
+      <div class="question"><strong>Q10.</strong> A student wants to fit \( Y = aX + b/X \). Derive the normal equations for this curve.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-10">
+        <p><strong>Solution:</strong> Error: \( E_i = Y_i - aX_i - \frac{b}{X_i} \). Sum of squares: \( S = \sum (Y_i - aX_i - \frac{b}{X_i})^2 \).
+        <br>Differentiate w.r.t. \( a \): \( \frac{\partial S}{\partial a} = -2\sum X_i(Y_i - aX_i - \frac{b}{X_i}) = 0 \implies \sum X_iY_i = a\sum X_i^2 + nb \)
+        <br>Differentiate w.r.t. \( b \): \( \frac{\partial S}{\partial b} = -2\sum \frac{1}{X_i}(Y_i - aX_i - \frac{b}{X_i}) = 0 \implies \sum \frac{Y_i}{X_i} = na + b\sum \frac{1}{X_i^2} \)
+        <br>These are the two normal equations.</p>
+      </div>
+
+      <div class="question"><strong>Q11.</strong> Define Scatter Diagram and Approximating Curve.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-11">
+        <p><strong>Solution:</strong> A <strong>Scatter Diagram</strong> is a graph where each paired observation \( (X_i, Y_i) \) is plotted as a point. It gives a visual picture of how the two variables relate. An <strong>Approximating Curve</strong> is a smooth curve drawn through the scatter diagram that follows the general trend of the data, while keeping total deviations as small as possible.</p>
+      </div>
+
+      <div class="question"><strong>Q12.</strong> Prove that the normal equation for intercept \( a \) in a straight line ensures the sum of residuals is zero.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-12">
+        <p><strong>Solution:</strong> The normal equation for \( a \) comes from: \( \frac{\partial S}{\partial a} = -2 \sum (Y_i - a - bX_i) = 0 \). Dividing by −2 gives \( \sum (Y_i - \hat{Y}_i) = 0 \). Since \( (Y_i - \hat{Y}_i) \) is exactly the residual \( e_i \), we have \( \sum e_i = 0 \). So for any least-squares straight line, the sum of all residuals is always zero.</p>
+      </div>
+
+      <div class="question"><strong>Q13.</strong> Transform \( Y = ab^X \) into a linear form and write the equations to recover \( a \) and \( b \).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-13">
+        <p><strong>Solution:</strong> Take base-10 log: \( \log_{10} Y = \log_{10} a + X\log_{10} b \). Let \( V = \log Y \), \( A = \log a \), \( B = \log b \). The linear form is \( V = A + BX \). After solving normal equations for \( A \) and \( B \), recover: \( a = 10^A \) and \( b = 10^B \).</p>
+      </div>
+
+      <div class="question"><strong>Q14.</strong> Given: \( \sum X = 15, \sum Y = 204, \sum X^2 = 55, \sum XY = 748 \) for 5 data points. Fit a straight line.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-14">
+        <p><strong>Solution:</strong> \( n = 5 \). Normal equations:
+        <br>\( 204 = 5a + 15b \) &nbsp;(Eq 1)
+        <br>\( 748 = 15a + 55b \) &nbsp;(Eq 2)
+        <br>Multiply Eq 1 by 3: \( 612 = 15a + 45b \). Subtract from Eq 2: \( 136 = 10b \implies b = 13.6 \).
+        <br>Put in Eq 1: \( 204 = 5a + 204 \implies a = 0 \).
+        <br>Straight line: \( Y = 13.6X \).</p>
+      </div>
+
+      <div class="question"><strong>Q15.</strong> What is the difference between fitting \( Y = ab^X \) and \( Y = aX^b \)?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-15">
+        <p><strong>Solution:</strong>
+        <br>1) \( Y = ab^X \) is an <strong>exponential curve</strong>. Variable \( X \) is in the exponent. Linearised form: \( \log Y = \log a + X\log b \). Only \( Y \) is transformed; \( X \) stays as it is.
+        <br>2) \( Y = aX^b \) is a <strong>power curve</strong>. Variable \( X \) is raised to a constant power. Linearised form: \( \log Y = \log a + b\log X \). Both \( X \) and \( Y \) must be transformed into log variables.</p>
+      </div>
+
+      <div class="question"><strong>Q16.</strong> Can the sum of absolute errors \( \sum |y_i - \hat{y}_i| \) be used for curve fitting? Why or why not?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-16">
+        <p><strong>Solution:</strong> Technically yes, but it is not used in standard curve fitting. The absolute value function creates sharp "V" corners. At zero, it cannot be differentiated with standard calculus. This means we cannot simply set derivatives to zero to find the minimum. Squaring the errors, on the other hand, creates a smooth parabolic function that is easy to differentiate — leading cleanly to the Normal Equations.</p>
+      </div>
+
+      <div class="question"><strong>Q17.</strong> For X = 2001, 2002, 2003, 2004, 2005, apply the change of origin shortcut to find U.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-17">
+        <p><strong>Solution:</strong> Here \( n = 5 \) (odd). Interval \( h = 1 \) year. Middle term is 2003. Using \( U = (X - 2003)/1 \):
+        <br>X = 2001 → U = −2; &nbsp; X = 2002 → U = −1; &nbsp; X = 2003 → U = 0; &nbsp; X = 2004 → U = 1; &nbsp; X = 2005 → U = 2.
+        <br>Check: \( \sum U = −2−1+0+1+2 = 0 \). ✓</p>
+      </div>
+
+      <div class="question"><strong>Q18.</strong> What is the determinant form for the equation of the line of best fit?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-18">
+        <p><strong>Solution:</strong> Eliminating constants \( a \) and \( b \) from the line \( Y = a + bX \) and the two normal equations, the line of best fit can be written neatly in determinant form as:
+        \[ \begin{vmatrix} Y & X & 1 \\ \sum y_i & \sum x_i & n \\ \sum x_iy_i & \sum x_i^2 & \sum x_i \end{vmatrix} = 0 \]
+        </p>
+      </div>
+
+      <div class="question"><strong>Q19.</strong> What sign will the second-order derivatives \( \frac{\partial^2 S}{\partial a^2} \) have, and what does this prove?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-19">
+        <p><strong>Solution:</strong> The second-order derivatives are positive. In calculus, a positive second derivative at a critical point means the function is concave up — which confirms that the normal equation solution gives a true <strong>minimum</strong> of the total error \( S \), not a maximum.</p>
+      </div>
+
+      <div class="question"><strong>Q20.</strong> Why is building a computation table important when fitting curves?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-20">
+        <p><strong>Solution:</strong> A computation table neatly organises all necessary sums — like \( \sum X, \sum Y, \sum X^2, \sum XY \) — that go into the normal equations. Curve fitting involves many products and powers across multiple data points. Trying to compute them randomly leads to arithmetic mistakes. A proper table with one column per required term and a totals row at the bottom keeps things accurate and makes it simple to substitute values directly into the normal equations.</p>
+      </div>
+    </div>
+
+    <div class="hinglish-content" style="display:none;">
+      <h2><span class="section-num">📝</span> Subjective Questions (Detailed Solutions) — 20 Questions</h2>
+
+      <div class="question"><strong>Q1.</strong> Curve fitting में Principle of Least Squares explain करें। Absolute errors की जगह squared errors का sum minimise क्यों करते हैं?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-1">
+        <p><strong>Solution:</strong> Principle of Least Squares कहता है कि best-fitting curve वह है जो सभी residuals (actual और predicted values का अंतर) के squares के sum को minimise करे। Errors का square तीन कारणों से करते हैं: पहला, raw positive और negative errors एक-दूसरे को cancel कर देते हैं — तो plain sum काम का नहीं। दूसरा, absolute values को calculus में differentiate करना मुश्किल होता है, जबकि squares smooth होते हैं। तीसरा, square करने से बड़े errors पर भारी penalty लगती है, जिससे curve सभी data को fairly represent करता है।</p>
+      </div>
+
+      <div class="question"><strong>Q2.</strong> Straight line \( Y = a + bX \) fit करने के लिए normal equations derive करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-2">
+        <p><strong>Solution:</strong> मान लें line \( \hat{Y}_i = a + bX_i \) है। \( i \)-th point का error \( e_i = Y_i - a - bX_i \) है।
+        <br>Squared errors का sum: \( S = \sum (Y_i - a - bX_i)^2 \)।
+        <br>\( S \) minimise करने के लिए \( a \) और \( b \) के respect में partial derivatives को zero रखें:
+        <br>\( \frac{\partial S}{\partial a} = 0 \implies \sum Y = na + b\sum X \) &nbsp; (Equation 1)
+        <br>\( \frac{\partial S}{\partial b} = 0 \implies \sum XY = a\sum X + b\sum X^2 \) &nbsp; (Equation 2)</p>
+      </div>
+
+      <div class="question"><strong>Q3.</strong> Second-degree parabola fit करने की normal equations लिखें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-3">
+        <p><strong>Solution:</strong> Parabola \( Y = a + bX + cX^2 \) के लिए तीन unknown constants \( a, b, c \) होते हैं। Squared error sum को तीनों के respect में differentiate करने पर तीन normal equations मिलती हैं:
+        <br>1) \( \sum Y = na + b\sum X + c\sum X^2 \)
+        <br>2) \( \sum XY = a\sum X + b\sum X^2 + c\sum X^3 \)
+        <br>3) \( \sum X^2Y = a\sum X^2 + b\sum X^3 + c\sum X^4 \)</p>
+      </div>
+
+      <div class="question"><strong>Q4.</strong> "Change of Origin" shortcut क्या है और यह calculations को कैसे आसान बनाता है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-4">
+        <p><strong>Solution:</strong> जब \( X \) values interval \( h \) के साथ equally spaced हों, तो बड़े numbers के साथ \( \sum X^3 \), \( \sum X^4 \) calculate करना बहुत मुश्किल हो जाता है। हम एक नया variable \( U \) define करके origin को \( X \) की middle value पर shift करते हैं। Odd items के लिए \( U = (X - \text{middle})/h \)। इससे \( U \) values zero के आस-पास symmetric बन जाती हैं (−2, −1, 0, 1, 2), यानी \( \sum U = 0 \) और \( \sum U^3 = 0 \)। Normal equations से terms हट जाते हैं और complex 3×3 system आसान equations में बदल जाता है।</p>
+      </div>
+
+      <div class="question"><strong>Q5.</strong> Power curve \( Y = aX^b \) fit करने के steps बताएं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-5">
+        <p><strong>Solution:</strong>
+        <br>1) दोनों तरफ logarithm लेकर linearise करें: \( \log Y = \log a + b \log X \)।
+        <br>2) Variables substitute करें: \( V = \log Y \), \( A = \log a \), \( U = \log X \)। Equation \( V = A + bU \) बन जाती है।
+        <br>3) Normal equations बनाएं: \( \sum V = nA + b\sum U \) और \( \sum UV = A\sum U + b\sum U^2 \)।
+        <br>4) Computation table बनाकर \( A \) और \( b \) solve करें।
+        <br>5) \( a = \text{antilog}(A) \) से original \( a \) recover करें। \( b \) वही रहता है।</p>
+      </div>
+
+      <div class="question"><strong>Q6.</strong> Exponential curve \( Y = ae^{bX} \) को linearise कैसे करते हैं? Normal equations लिखें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-6">
+        <p><strong>Solution:</strong> दोनों तरफ natural log \( \ln \) लें: \( \ln Y = \ln a + bX \) (क्योंकि \( \ln e = 1 \))।
+        <br>मान लें \( V = \ln Y \) और \( A = \ln a \)। Linear form \( V = A + bX \) है।
+        <br>Normal equations:
+        <br>1) \( \sum V = nA + b\sum X \)
+        <br>2) \( \sum XV = A\sum X + b\sum X^2 \)
+        <br>Solve करने के बाद \( a = e^A \) से recover करें।</p>
+      </div>
+
+      <div class="question"><strong>Q7.</strong> Points (1, 2), (2, 5), (3, 9) के लिए straight line की normal equations set up करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-7">
+        <p><strong>Solution:</strong> \( n = 3 \)। मान लें \( Y = a + bX \)।
+        <br>\( \sum X = 6, \quad \sum Y = 16, \quad \sum X^2 = 14, \quad \sum XY = 39 \)
+        <br>Normal equations:
+        <br>\( 16 = 3a + 6b \)
+        <br>\( 39 = 6a + 14b \)</p>
+      </div>
+
+      <div class="question"><strong>Q8.</strong> Change of origin use करने पर (\( \sum U = 0, \sum U^3 = 0 \)) parabola की normal equations कैसे simplify होती हैं?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-8">
+        <p><strong>Solution:</strong> Original normal equations:
+        <br>\( \sum Y = na + b\sum U + c\sum U^2 \)
+        <br>\( \sum UY = a\sum U + b\sum U^2 + c\sum U^3 \)
+        <br>\( \sum U^2Y = a\sum U^2 + b\sum U^3 + c\sum U^4 \)
+        <br>\( \sum U = 0 \) और \( \sum U^3 = 0 \) रखने पर:
+        <br>1) \( \sum Y = na + c\sum U^2 \)
+        <br>2) \( \sum UY = b\sum U^2 \implies b = \frac{\sum UY}{\sum U^2} \) (directly मिल जाता है!)
+        <br>3) \( \sum U^2Y = a\sum U^2 + c\sum U^4 \)
+        <br>अब \( b \) direct मिलता है, और \( a, c \) equations 1 और 3 के 2×2 system से निकलते हैं।</p>
+      </div>
+
+      <div class="question"><strong>Q9.</strong> Trend analysis में curve fitting क्यों important है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-9">
+        <p><strong>Solution:</strong> Curve fitting scattered data points को एक clean mathematical function से replace कर देता है। यह function data को control करने वाला underlying trend दिखाता है — जैसे population linearly बढ़ रही है या exponentially। एक बार formula मिलने पर, missing data को interpolate और future predictions के लिए extrapolate करना आसान हो जाता है।</p>
+      </div>
+
+      <div class="question"><strong>Q10.</strong> एक student \( Y = aX + b/X \) fit करना चाहता है। इस curve के लिए normal equations derive करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-10">
+        <p><strong>Solution:</strong> Error: \( E_i = Y_i - aX_i - \frac{b}{X_i} \)। Sum of squares: \( S = \sum (Y_i - aX_i - \frac{b}{X_i})^2 \)।
+        <br>\( a \) के respect में differentiate: \( \sum X_iY_i = a\sum X_i^2 + nb \)
+        <br>\( b \) के respect में differentiate: \( \sum \frac{Y_i}{X_i} = na + b\sum \frac{1}{X_i^2} \)
+        <br>ये दो normal equations हैं।</p>
+      </div>
+
+      <div class="question"><strong>Q11.</strong> Scatter Diagram और Approximating Curve define करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-11">
+        <p><strong>Solution:</strong> <strong>Scatter Diagram</strong> एक graph है जिसमें paired observations \( (X_i, Y_i) \) को points के रूप में plot किया जाता है। यह visually दो variables का relationship और spread दिखाता है। <strong>Approximating Curve</strong> एक smooth curve है — जैसे straight line या parabola — जो scatter diagram के trend को follow करे और overall deviations minimise करे।</p>
+      </div>
+
+      <div class="question"><strong>Q12.</strong> Prove करें कि straight line में intercept \( a \) की normal equation residuals का sum zero बनाती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-12">
+        <p><strong>Solution:</strong> \( a \) की normal equation: \( \frac{\partial S}{\partial a} = -2 \sum (Y_i - a - bX_i) = 0 \)।
+        <br>−2 से divide करने पर: \( \sum (Y_i - \hat{Y}_i) = 0 \)।
+        <br>चूँकि \( (Y_i - \hat{Y}_i) \) exactly residual \( e_i \) है, इसलिए \( \sum e_i = 0 \)।
+        <br>यानी least-squares straight line के लिए सभी residuals का sum हमेशा zero होता है। ∎</p>
+      </div>
+
+      <div class="question"><strong>Q13.</strong> \( Y = ab^X \) को linear form में transform करें और \( a \) तथा \( b \) recover करने की equations लिखें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-13">
+        <p><strong>Solution:</strong> Base-10 logarithm लें: \( \log_{10} Y = \log_{10} a + X\log_{10} b \)।
+        <br>मान लें \( V = \log Y \), \( A = \log a \), \( B = \log b \)। Linear form \( V = A + BX \) है।
+        <br>Normal equations solve करने के बाद:
+        <br>\( a = 10^A \) (A का antilog)
+        <br>\( b = 10^B \) (B का antilog)</p>
+      </div>
+
+      <div class="question"><strong>Q14.</strong> 5 data points के लिए: \( \sum X = 15, \sum Y = 204, \sum X^2 = 55, \sum XY = 748 \)। Straight line fit करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-14">
+        <p><strong>Solution:</strong> \( n = 5 \)। Normal equations:
+        <br>\( 204 = 5a + 15b \) &nbsp;(Eq 1)
+        <br>\( 748 = 15a + 55b \) &nbsp;(Eq 2)
+        <br>Eq 1 को 3 से multiply: \( 612 = 15a + 45b \)। Eq 2 से घटाएं: \( 136 = 10b \implies b = 13.6 \)।
+        <br>Eq 1 में \( b \) रखें: \( 204 = 5a + 204 \implies a = 0 \)।
+        <br>Straight line: \( Y = 13.6X \)।</p>
+      </div>
+
+      <div class="question"><strong>Q15.</strong> \( Y = ab^X \) और \( Y = aX^b \) fit करने में क्या अंतर है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-15">
+        <p><strong>Solution:</strong>
+        <br>1) \( Y = ab^X \) एक <strong>exponential curve</strong> है। \( X \) exponent में है। Linearise करने पर: \( \log Y = \log a + X\log b \)। केवल \( Y \) transform होता है, \( X \) वैसे ही रहता है।
+        <br>2) \( Y = aX^b \) एक <strong>power curve</strong> है। \( X \) एक constant power पर है। Linearise करने पर: \( \log Y = \log a + b\log X \)। यहाँ \( X \) और \( Y \) दोनों को log variables में transform करना पड़ता है।</p>
+      </div>
+
+      <div class="question"><strong>Q16.</strong> क्या curve fitting के लिए absolute errors का sum \( \sum |y_i - \hat{y}_i| \) use हो सकता है? क्यों या क्यों नहीं?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-16">
+        <p><strong>Solution:</strong> Technically हाँ, लेकिन standard curve fitting में नहीं होता। Absolute value function mathematically sharp "V" corners बनाता है। Zero पर इसे standard calculus से differentiate नहीं कर सकते। Errors का square करने से एक smooth parabolic function बनता है जिसे easily differentiate किया जा सकता है — जो सीधे Normal Equations देता है।</p>
+      </div>
+
+      <div class="question"><strong>Q17.</strong> X = 2001, 2002, 2003, 2004, 2005 के लिए change of origin shortcut apply करके U निकालें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-17">
+        <p><strong>Solution:</strong> \( n = 5 \) (odd) है। Interval \( h = 1 \) year है। Middle term 2003 है। Formula \( U = (X - 2003)/1 \) use करने पर:
+        <br>X = 2001 → U = −2; &nbsp; X = 2002 → U = −1; &nbsp; X = 2003 → U = 0; &nbsp; X = 2004 → U = 1; &nbsp; X = 2005 → U = 2।
+        <br>Check: \( \sum U = −2−1+0+1+2 = 0 \). ✓</p>
+      </div>
+
+      <div class="question"><strong>Q18.</strong> Line of best fit की equation का determinant form क्या है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-18">
+        <p><strong>Solution:</strong> Line equation \( Y = a + bX \) और दोनों normal equations से constants \( a \) और \( b \) eliminate करने पर, line of best fit को determinant form में लिखा जा सकता है:
+        \[ \begin{vmatrix} Y & X & 1 \\ \sum y_i & \sum x_i & n \\ \sum x_iy_i & \sum x_i^2 & \sum x_i \end{vmatrix} = 0 \]
+        </p>
+      </div>
+
+      <div class="question"><strong>Q19.</strong> Second-order derivatives \( \frac{\partial^2 S}{\partial a^2} \) का sign क्या होगा और यह क्या prove करता है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-19">
+        <p><strong>Solution:</strong> Second-order derivatives positive होंगे। Calculus में, critical point पर positive second derivative confirm करता है कि function वहाँ concave up है। इसका मतलब है कि normal equations से मिला solution total error \( S \) के लिए एक सच्चा <strong>minimum</strong> देता है, maximum नहीं।</p>
+      </div>
+
+      <div class="question"><strong>Q20.</strong> Curves fit करते समय computation table बनाना क्यों ज़रूरी है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-20">
+        <p><strong>Solution:</strong> Computation table उन सभी ज़रूरी sums को organize करती है — जैसे \( \sum X, \sum Y, \sum X^2, \sum XY \) — जो normal equations में जाते हैं। Curve fitting में multiple data points के products और powers के sums होते हैं। इन्हें बिना table के calculate करने में arithmetic errors की संभावना बहुत ज़्यादा होती है। एक proper table हर required term के लिए एक column और नीचे totals row के साथ accuracy ensure करती है और values को directly normal equations में substitute करना easy बनाती है।</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+    </main>
+
+    <footer class="book-footer">
+        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+        CCS Haryana Agricultural University, Hisar</p>
+        <p class="university">Unit II – Curve Fitting · STAT-M-201</p>
+    </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) {
+            showTopic(hash);
+        } else {
+            const firstSec = document.querySelector('.topic-section');
+            if (firstSec) showTopic(firstSec.id);
+        }
+    });
+
+    let isHinglish = false;
+    function toggleLanguage() {
+        isHinglish = !isHinglish;
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+
+        if (isHinglish) {
+            btnText.innerHTML = 'Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+        } else {
+            btnText.innerHTML = 'Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+        }
+    }
+
+    function showTopic(id) {
+        document.querySelectorAll('.topic-section').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+
+        const targetSection = document.getElementById(id);
+        if (targetSection) targetSection.classList.add('active');
+
+        const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
+        window.scrollTo(0, 0);
+
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+
+        try {
+            history.replaceState(null, null, '#' + id);
+        } catch (e) {
+            console.warn('History state update failed:', e);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
+        navItems.forEach(item => {
+            let nextEl = item.nextElementSibling;
+            const subItems = [];
+            while (nextEl && nextEl.classList.contains('nav-sub')) {
+                subItems.push(nextEl);
+                nextEl.style.display = 'none';
+                nextEl = nextEl.nextElementSibling;
+            }
+            if (subItems.length > 0) {
+                const link = item.querySelector('.nav-link');
+                if (link) {
+                    const arrow = document.createElement('span');
+                    arrow.innerHTML = ' &#9660;';
+                    arrow.style.fontSize = '0.8em';
+                    arrow.style.float = 'right';
+                    arrow.style.marginTop = '2px';
+                    arrow.style.transition = 'transform 0.3s';
+                    link.appendChild(arrow);
+                    link.addEventListener('click', function () {
+                        const isHidden = subItems[0].style.display === 'none';
+                        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                        subItems.forEach(sub => {
+                            sub.style.display = isHidden ? 'list-item' : 'none';
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+    function toggleAnswer(id) {
+        const answer = document.getElementById(id);
+        const btn = event.target;
+        if (answer.classList.contains('show')) {
+            answer.classList.remove('show');
+            btn.innerHTML = 'Show Answer ▼';
+        } else {
+            answer.classList.add('show');
+            btn.innerHTML = 'Hide Answer ▲';
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Curve Fitting and Principle of Least Squares</title>
+<style>
+  body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+  table { border-collapse: collapse; margin-bottom: 20px; }
+  th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+  h2, h3 { color: #333; }
+</style>
+</head>
+<body>
+
+  <h2>Curve Fitting and Principle of Least Squares</h2>
+
+  <h3>9.1. Curve Fitting</h3>
+  <p>Let's talk about Curve Fitting. Imagine you are given \( n \) pairs of data points, written as \( (x_i, y_i) \) for \( i = 1, 2, ..., n \). Here, \( X \) is our independent variable and \( Y \) is the dependent variable. The main goal in curve fitting is to find a mathematical formula, like \( y = f(x) \), that best describes the relationship between these data points.</p>
+
+  <p>Fitting curves to numerical data is very important, both in theory and in real life. In theory, it helps us study correlation and regression. For example, lines of regression are basically fitting linear curves to a given set of data. In practical statistics, it helps us show the relationship between two variables using simple algebraic formulas, like polynomials, exponential, or logarithmic functions. Plus, we can use it to guess the value of one variable if we know the specified value of the other variable.</p>
+
+  <h3>9.1.1. Fitting of a straight line</h3>
+  <p>Let's see how to fit a straight line.</p>
+  <p>
+  \[
+  Y = a + bX \quad \dots(9.1)
+  \]
+  </p>
+  <p>to a set of \( n \) points \( (x_i, y_i); i = 1, 2, ..., n \). Equation (9.1) gives us a family of straight lines depending on what values we choose for the arbitrary constants '\( a \)' and '\( b \)'. Our job is to find the specific '\( a \)' and '\( b \)' so that the line is the "best fit".</p>
+
+  <p>What do we mean by "best fit"? We use Legendre's principle of least squares. This principle says we should minimise the sum of the squares of the deviations (differences) between the actual \( y \) values and the estimated \( y \) values from our line of best fit.</p>
+
+  <p>Let \( P_i(x_i, y_i) \) be any general point on our scatter diagram. Draw a perpendicular line from \( P_i \) straight down to the x-axis, meeting our line (9.1) at point \( H_i \). The x-coordinate (abscissa) of \( H_i \) is \( x_i \). Since \( H_i \) lies on the line (9.1), its y-coordinate (ordinate) will be \( a + bx_i \). So, the coordinates of \( H_i \) are \( (x_i, a + bx_i) \).</p>
+
+  <p>The distance between the actual point and the estimated point is: <br>
+  Step 1: Take the full height \( P_i M \). <br>
+  Step 2: Subtract the height of the line \( H_i M \). <br>
+  Final formula for the difference:
+  \[
+  P_i H_i = P_i M - H_i M = y_i - (a + bx_i)
+  \]
+  This difference is called the error of estimate or the residual for \( y_i \).</p>
+
+  <p>To use the principle of least squares, we need to find \( a \) and \( b \) to make this total error \( E \) as small as possible:</p>
+  <p>
+  \[
+  E = \sum_{i=1}^{n} P_i H_i^2 = \sum_{i=1}^{n} (y_i - a - bx_i)^2
+  \]
+  </p>
+  <p>We want this to be a minimum. Using the rules of maxima and minima from calculus, we take the partial derivatives of \( E \) with respect to \( a \) and \( b \), and set them to zero separately.</p>
+
+  <p>
+  \[
+  \frac{\partial E}{\partial a} = 0 = -2 \sum_{i=1}^{n} (y_i - a - bx_i) \quad \text{and} \quad \frac{\partial E}{\partial b} = 0 = -2 \sum_{i=1}^{n} x_i(y_i - a - bx_i) \quad \dots(9.2)
+  \]
+  </p>
+  <p>When we simplify these, we get:</p>
+  <p>
+  \[
+  \implies \sum_{i=1}^{n} y_i = na + b \sum_{i=1}^{n} x_i \quad \text{and} \quad \sum_{i=1}^{n} x_i y_i = a \sum_{i=1}^{n} x_i + b \sum_{i=1}^{n} x_i^2 \quad \dots(9.2a)
+  \]
+  </p>
+  <p>These two equations, (9.2) and (9.2a), are known as the normal equations for estimating \( a \) and \( b \).</p>
+
+  <p>We can easily calculate all the quantities like \( \sum x_i \), \( \sum x_i^2 \), \( \sum y_i \), and \( \sum x_i y_i \) from our given set of points. Once we have those, the equations (9.2a) can be solved for \( a \) and \( b \). When we put those values back into equation (9.1), we get our line of best fit for the data.</p>
+
+  <p><strong>Remark.</strong> The equation of the line of best fit of \( y \) on \( x \) can also be obtained by eliminating \( a \) and \( b \) in (9.1) and (9.2a). We can express it neatly in a determinant form like this:</p>
+  <p>
+  \[
+  \begin{vmatrix}
+  Y & X & 1 \\
+  \sum y_i & \sum x_i & n \\
+  \sum x_i y_i & \sum x_i^2 & \sum x_i
+  \end{vmatrix} = 0 \quad \dots(9.2b)
+  \]
+  </p>
+
+  <h3>9.1.2. Fitting of second degree parabola</h3>
+  <p>Now, suppose we want to fit a curve shaped like a parabola.</p>
+  <p>
+  \[
+  Y = a + bX + cX^2 \quad \dots(9.3)
+  \]
+  </p>
+  <p>Let this be the second degree parabola of best fit to our \( n \) points. Again, using the principle of least squares, we need to determine the constants \( a \), \( b \), and \( c \) so that the total error \( E \) is minimized:</p>
+  <p>
+  \[
+  E = \sum_{i=1}^{n} (y_i - a - bx_i - cx_i^2)^2
+  \]
+  </p>
+
+  <p>Equating to zero the partial derivatives of \( E \) with respect to \( a \), \( b \), and \( c \) separately, we get the normal equations for estimating them:</p>
+  <p>
+  \[
+  \begin{aligned}
+  \frac{\partial E}{\partial a} &= 0 = -2 \sum (y_i - a - bx_i - cx_i^2) \\
+  \frac{\partial E}{\partial b} &= 0 = -2 \sum x_i(y_i - a - bx_i - cx_i^2) \\
+  \frac{\partial E}{\partial c} &= 0 = -2 \sum x_i^2(y_i - a - bx_i - cx_i^2)
+  \end{aligned} \quad \dots(9.4)
+  \]
+  </p>
+
+  <p>Simplifying these, we get:</p>
+  <p>
+  \[
+  \implies \begin{aligned}
+  \sum y_i &= na + b \sum x_i + c \sum x_i^2 \\
+  \sum x_i y_i &= a \sum x_i + b \sum x_i^2 + c \sum x_i^3 \\
+  \sum x_i^2 y_i &= a \sum x_i^2 + b \sum x_i^3 + c \sum x_i^4
+  \end{aligned} \quad \dots(9.4a)
+  \]
+  </p>
+  <p>(summation taken over \( i \) from 1 to \( n \)).</p>
+
+  <p>For our given set of points, equations (9.4a) can be solved for \( a \), \( b \), and \( c \). With these values, (9.3) becomes the parabola of best fit.</p>
+
+  <p><strong>Remark.</strong> Just like before, eliminating \( a \), \( b \), and \( c \) in (9.3) and (9.4a) gives us the parabola of best fit of \( y \) on \( x \) in determinant form:</p>
+  <p>
+  \[
+  \begin{vmatrix}
+  Y & X^2 & X & 1 \\
+  \sum y_i & \sum x_i^2 & \sum x_i & n \\
+  \sum x_i y_i & \sum x_i^3 & \sum x_i^2 & \sum x_i \\
+  \sum x_i^2 y_i & \sum x_i^4 & \sum x_i^3 & \sum x_i^2
+  \end{vmatrix} = 0 \quad \dots(9.4b)
+  \]
+  </p>
+
+  <h3>9.1.3. Fitting of Polynomial of kth Degree</h3>
+  <p>What if we have a more complex curve, a polynomial of degree \( k \)?</p>
+  <p>
+  \[
+  Y = a_0 + a_1 X + a_2 X^2 + \dots + a_k X^k \quad \dots(9.5)
+  \]
+  </p>
+  <p>If this is the best fit polynomial for our points, we need to find the constants \( a_0, a_1, \dots, a_k \) to minimise the error \( E \):</p>
+  <p>
+  \[
+  E = \sum_{i=1}^{n} (y_i - a_0 - a_1 x_i - a_2 x_i^2 - \dots - a_k x_i^k)^2
+  \]
+  </p>
+
+  <p>Thus, the normal equations are obtained by taking partial derivatives of \( E \) with respect to each constant and equating them to zero.</p>
+  <p>
+  \[
+  \begin{aligned}
+  \frac{\partial E}{\partial a_0} &= 0 = -2 \sum (y_i - a_0 - a_1 x_i - \dots - a_k x_i^k) \\
+  \frac{\partial E}{\partial a_1} &= 0 = -2 \sum x_i(y_i - a_0 - a_1 x_i - \dots - a_k x_i^k) \\
+  \vdots \\
+  \frac{\partial E}{\partial a_k} &= 0 = -2 \sum x_i^k(y_i - a_0 - a_1 x_i - \dots - a_k x_i^k)
+  \end{aligned} \quad \dots(9.6)
+  \]
+  </p>
+
+  <p>This leads to:</p>
+  <p>
+  \[
+  \implies \begin{aligned}
+  \sum y_i &= n a_0 + a_1 \sum x_i + a_2 \sum x_i^2 + \dots + a_k \sum x_i^k \\
+  \sum x_i y_i &= a_0 \sum x_i + a_1 \sum x_i^2 + a_2 \sum x_i^3 + \dots + a_k \sum x_i^{k+1} \\
+  \sum x_i^k y_i &= a_0 \sum x_i^k + a_1 \sum x_i^{k+1} + a_2 \sum x_i^{k+2} + \dots + a_k \sum x_i^{2k}
+  \end{aligned} \quad \dots(9.6a)
+  \]
+  </p>
+  <p>Here we have \( (k + 1) \) equations and \( (k + 1) \) unknown constants. We can solve them with the help of algebra.</p>
+
+  <p><strong>Remark.</strong> In all these cases, if we check the second-order derivatives like \( \frac{\partial^2 E}{\partial a_0^2}, \frac{\partial^2 E}{\partial a_1^2} \dots \), they turn out to be positive. This confirms that our solutions for the 'normal equations' actually give us a minimum value for \( E \).</p>
+
+  <h3>Example 9.1. Fit a straight line to the following data.</h3>
+  <table>
+    <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>6</td><td>8</td></tr>
+    <tr><th>Y</th><td>2.4</td><td>3</td><td>3.6</td><td>4</td><td>5</td><td>6</td></tr>
+  </table>
+
+  <p><strong>Solution.</strong> Let the line be \( Y = a + bX \). We'll make a table for our calculations.</p>
+  <table>
+    <tr><th>X</th><th>Y</th><th>\( X^2 \)</th><th>XY</th></tr>
+    <tr><td>1</td><td>2.4</td><td>1</td><td>2.4</td></tr>
+    <tr><td>2</td><td>3.0</td><td>4</td><td>6.0</td></tr>
+    <tr><td>3</td><td>3.6</td><td>9</td><td>10.8</td></tr>
+    <tr><td>4</td><td>4.0</td><td>16</td><td>16.0</td></tr>
+    <tr><td>6</td><td>5.0</td><td>36</td><td>30.0</td></tr>
+    <tr><td>8</td><td>6.0</td><td>64</td><td>48.0</td></tr>
+    <tr><th>Total: 24</th><th>24</th><th>130</th><th>113.2</th></tr>
+  </table>
+
+  <p>Using the normal equations (9.2a), we get:</p>
+  <p>
+  \[
+  24 = 6a + 24b \quad \text{and} \quad 113.2 = 24a + 130b
+  \]
+  </p>
+  <p>Solving these equations, we find \( a = 1.976 \) and \( b = 0.506 \).</p>
+
+  <h3>Example 9.2. Fit a parabola of second degree to the following data:</h3>
+  <table>
+    <tr><th>X</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+    <tr><th>Y</th><td>1</td><td>1.8</td><td>1.3</td><td>2.5</td><td>6.3</td></tr>
+  </table>
+
+  <p><strong>Solution.</strong> Let our parabola be \( Y = a + bX + cX^2 \).</p>
+  <table>
+    <tr><th>X</th><th>Y</th><th>\( X^2 \)</th><th>\( X^3 \)</th><th>\( X^4 \)</th><th>XY</th><th>\( X^2Y \)</th></tr>
+    <tr><td>0</td><td>1.0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+    <tr><td>1</td><td>1.8</td><td>1</td><td>1</td><td>1</td><td>1.8</td><td>1.8</td></tr>
+    <tr><td>2</td><td>1.3</td><td>4</td><td>8</td><td>16</td><td>2.6</td><td>5.2</td></tr>
+    <tr><td>3</td><td>2.5</td><td>9</td><td>27</td><td>81</td><td>7.5</td><td>22.5</td></tr>
+    <tr><td>4</td><td>6.3</td><td>16</td><td>64</td><td>256</td><td>25.2</td><td>100.8</td></tr>
+    <tr><th>Total: 10</th><th>12.9</th><th>30</th><th>100</th><th>354</th><th>37.1</th><th>130.3</th></tr>
+  </table>
+
+  <p>Using normal equations (9.4), we get:</p>
+  <p>
+  \[
+  \begin{aligned}
+  12.9 &= 5a + 10b + 30c \\
+  37.1 &= 10a + 30b + 100c \\
+  130.3 &= 30a + 100b + 354c
+  \end{aligned}
+  \]
+  </p>
+  <p>Solving these equations, we get \( a = 1.42 \), \( b = -1.07 \), and \( c = 0.55 \). Thus, our required equation is:</p>
+  <p>
+  \[
+  Y = 1.42 - 1.07X + 0.55X^2
+  \]
+  </p>
+
+  <p><strong>Remark.</strong> If the values of \( X \) and \( Y \) are very large, calculating things like \( \sum x^2 \) and \( \sum xy \) gets quite tedious, and solving the equations is tough. We can make the arithmetic much easier by changing the origin in \( X \) or \( Y \), or both.</p>
+
+  <h3>9.1.4. Change of origin</h3>
+  <p>Let's suppose our \( X \) values are equally spaced by an interval \( h \). That means \( X \) takes values like \( a, a+h, a+2h \), and so on.</p>
+  <p>If we have an odd number of items, say \( n = 2m + 1 \), we can create a new variable \( U \):</p>
+  <p>
+  \[
+  U = \frac{X - (\text{middle term})}{\text{Interval}} = \frac{X - (a + mh)}{h}
+  \]
+  </p>
+  <p>Now \( U \) will take nice, balanced values like \( -m, -(m-1), \dots, -1, 0, 1, \dots, (m-1), m \). Because it's perfectly balanced, the sum is zero:</p>
+  <p>
+  \[
+  \sum U = \sum U^3 = 0
+  \]
+  </p>
+
+  <p>If \( n \) is an even number, say \( n = 2m \), then there are two middle terms: the \( m \)-th term and the \( (m+1) \)-th term. In this case, we use their average:</p>
+  <p>
+  \[
+  \begin{aligned}
+  U &= \frac{X - (\text{mean of two middle terms})}{\frac{1}{2}(\text{interval})} = \frac{X - [a + \frac{1}{2}(2m - 1)h]}{\frac{1}{2}(h)} \\
+    &= \frac{2X - 2a - (2m - 1)h}{h} \quad \dots(9.7)
+  \end{aligned}
+  \]
+  </p>
+  <p>Now \( U \) takes values like \( -(2m-1), -(2m-3), \dots, -3, -1, 1, 3, \dots, (2m-1) \). Again, we see that:</p>
+  <p>
+  \[
+  \sum U = \sum U^3 = 0
+  \]
+  </p>
+
+  <h3>Example 9.3. The weights of a calf taken at weekly intervals are given below. Fit a straight line using the method of least squares and calculate the average rate of growth per week.</h3>
+  <table>
+    <tr><th>Age (X)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+    <tr><th>Weight (Y)</th><td>52.5</td><td>58.7</td><td>65.0</td><td>70.2</td><td>75.4</td><td>81.1</td><td>87.2</td><td>95.5</td><td>102.2</td><td>108.4</td></tr>
+  </table>
+
+  <p><strong>Solution.</strong> Let age and weight be \( X \) and \( Y \). Here \( n = 10 \), which is an even number. The \( X \) values are spaced by 1, so the interval \( h = 1 \). We can use our origin change trick:</p>
+  <p>
+  \[
+  U = \frac{X - [(5 + 6)/2]}{\frac{1}{2}} = 2X - 11
+  \]
+  </p>
+
+  <p>Let the least-square line based on our new variable be \( Y = a + bU \). Since \( \sum U = 0 \), the normal equations become very simple:</p>
+  <p>
+  \[
+  \sum Y = na + b \sum U \quad \text{and} \quad \sum UY = a \sum U + b \sum U^2
+  \]
+  </p>
+
+  <table>
+    <tr><th>X</th><th>Y</th><th>U</th><th>\( U^2 \)</th><th>UY</th></tr>
+    <tr><td>1</td><td>52.5</td><td>-9</td><td>81</td><td>-472.5</td></tr>
+    <tr><td>2</td><td>58.7</td><td>-7</td><td>49</td><td>-410.9</td></tr>
+    <tr><td>3</td><td>65.0</td><td>-5</td><td>25</td><td>-325.0</td></tr>
+    <tr><td>4</td><td>70.2</td><td>-3</td><td>9</td><td>-210.6</td></tr>
+    <tr><td>5</td><td>75.4</td><td>-1</td><td>1</td><td>-75.4</td></tr>
+    <tr><td>6</td><td>81.1</td><td>1</td><td>1</td><td>81.1</td></tr>
+    <tr><td>7</td><td>87.2</td><td>3</td><td>9</td><td>261.6</td></tr>
+    <tr><td>8</td><td>95.5</td><td>5</td><td>25</td><td>477.5</td></tr>
+    <tr><td>9</td><td>102.2</td><td>7</td><td>49</td><td>715.4</td></tr>
+    <tr><td>10</td><td>108.4</td><td>9</td><td>81</td><td>975.6</td></tr>
+    <tr><th>Total</th><th>796.2</th><th>0</th><th>330</th><th>1016.8</th></tr>
+  </table>
+
+  <p>Thus our simple normal equations are:</p>
+  <p>
+  \[
+  796.2 = 10a + 0 \times b \quad \text{and} \quad 1016.8 = a \times 0 + 330b
+  \]
+  </p>
+  <p>Which give us:</p>
+  <p>
+  \[
+  a = 79.62 \quad \text{and} \quad b = \frac{1016.8}{330} = 3.08 \text{ (approx).}
+  \]
+  </p>
+  <p>So, the least square line of \( Y \) on \( U \) is:</p>
+  <p>
+  \[
+  Y = 79.62 + 3.08U
+  \]
+  </p>
+  <p>To get our final line in terms of \( X \), we just put \( U \) back:</p>
+  <p>
+  \[
+  Y = 79.62 + 3.08(2X - 11) \implies Y = 45.74 + 6.16X
+  \]
+  </p>
+  <p>Our line is in the format \( Y = A + BX \). This means the weight after 1, 2, 3 weeks will be \( A + B \), \( A + 2B \), \( A + 3B \), and so on. The growth each week is the slope \( B \). Hence, the average rate of growth per week is \( 6.16 \) units.</p>
+
+  <h3>(a) Fitting of a Power Curve</h3>
+  <p>Let's look at equations like:</p>
+  <p>
+  \[
+  Y = aX^b \quad \dots(9.10)
+  \]
+  </p>
+  <p>How do we fit this to \( n \) points? We make it look like a straight line by taking the logarithm of both sides:</p>
+  <p>
+  \[
+  \log Y = \log a + b \log X
+  \]
+  </p>
+  <p>Let's rename these parts to keep it simple:</p>
+  <p>
+  \[
+  \implies U = A + bV
+  \]
+  </p>
+  <p>where \( U = \log Y \), \( A = \log a \), and \( V = \log X \).</p>
+  <p>This is now just a linear equation in \( V \) and \( U \). Our normal equations for estimating \( A \) and \( b \) are:</p>
+  <p>
+  \[
+  \sum U = nA + b \sum V \quad \text{and} \quad \sum UV = A \sum V + b \sum V^2 \quad \dots(9.10a)
+  \]
+  </p>
+  <p>We solve these equations for \( A \) and \( b \). Once we have \( A \), we get our original '\( a \)' by taking the antilog:</p>
+  <p>
+  \[
+  a = \text{antilog}(A)
+  \]
+  </p>
+  <p>With these values, (9.10) becomes our curve of best fit.</p>
+
+  <h3>(b) Fitting of Exponential Curves</h3>
+  <p>These look like: (i) \( Y = ab^X \), or (ii) \( Y = ae^{bX} \).</p>
+  <p><strong>(i)</strong> For \( Y = ab^X \) \dots(9.11)</p>
+  <p>Take the logarithm of both sides:</p>
+  <p>
+  \[
+  \log Y = \log a + X \log b
+  \]
+  </p>
+  <p>Rename things:</p>
+  <p>
+  \[
+  \implies U = A + BX
+  \]
+  </p>
+  <p>where \( U = \log Y \), \( A = \log a \), and \( B = \log b \). This is a linear equation in \( X \) and \( U \). The normal equations are:</p>
+  <p>
+  \[
+  \sum U = nA + B \sum X \quad \text{and} \quad \sum XU = A \sum X + B \sum X^2 \quad \dots(9.11a)
+  \]
+  </p>
+  <p>Solve these for \( A \) and \( B \), then find the original constants:</p>
+  <p>
+  \[
+  a = \text{antilog}(A) \quad \text{and} \quad b = \text{antilog}(B)
+  \]
+  </p>
+
+  <p><strong>(ii)</strong> For \( Y = ae^{bX} \) \dots(9.12)</p>
+  <p>Taking the logarithm (base 10) gives us:</p>
+  <p>
+  \[
+  \log Y = \log a + bX \log e = \log a + (b \log e) X
+  \]
+  </p>
+  <p>Rename things:</p>
+  <p>
+  \[
+  \implies U = A + BX
+  \]
+  </p>
+  <p>where \( U = \log Y \), \( A = \log a \), and \( B = b \log e \). The normal equations are the same linear style:</p>
+  <p>
+  \[
+  \sum U = nA + B \sum X \quad \text{and} \quad \sum XU = A \sum X + B \sum X^2 \quad \dots(9.12a)
+  \]
+  </p>
+  <p>From these we find \( A \) and \( B \), and then get our constants:</p>
+  <p>
+  \[
+  a = \text{antilog}(A) \quad \text{and} \quad b = \frac{B}{\log e}
+  \]
+  </p>
+
+  <h3>Example 9.5. Fit an exponential curve of the form \( Y = ab^X \) to the following data:</h3>
+  <table>
+    <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td></tr>
+    <tr><th>Y</th><td>1.0</td><td>1.2</td><td>1.8</td><td>2.5</td><td>3.6</td><td>4.7</td><td>6.6</td><td>9.1</td></tr>
+  </table>
+
+  <p><strong>Solution.</strong> We will use logarithms. Let \( U = \log Y \).</p>
+  <table>
+    <tr><th>X</th><th>Y</th><th>\( U = \log Y \)</th><th>XU</th><th>\( X^2 \)</th></tr>
+    <tr><td>1</td><td>1.0</td><td>0.0000</td><td>0.0000</td><td>1</td></tr>
+    <tr><td>2</td><td>1.2</td><td>0.0792</td><td>0.1584</td><td>4</td></tr>
+    <tr><td>3</td><td>1.8</td><td>0.2553</td><td>0.7659</td><td>9</td></tr>
+    <tr><td>4</td><td>2.5</td><td>0.3979</td><td>1.5916</td><td>16</td></tr>
+    <tr><td>5</td><td>3.6</td><td>0.5563</td><td>2.7815</td><td>25</td></tr>
+    <tr><td>6</td><td>4.7</td><td>0.6721</td><td>4.0326</td><td>36</td></tr>
+    <tr><td>7</td><td>6.6</td><td>0.8195</td><td>5.7365</td><td>49</td></tr>
+    <tr><td>8</td><td>9.1</td><td>0.9590</td><td>7.6720</td><td>64</td></tr>
+    <tr><th>Total: 36</th><th>30.5</th><th>3.7393</th><th>22.7385</th><th>204</th></tr>
+  </table>
+
+  <p>Using our equations (9.11a), we set up the normal equations:</p>
+  <p>
+  \[
+  3.7393 = 8A + 36B \quad \text{and} \quad 22.7385 = 36A + 204B
+  \]
+  </p>
+  <p>When we solve these, we get:</p>
+  <p>
+  \[
+  B = 0.1408 \quad \text{and} \quad A = -0.1662 = \bar{1}.8338
+  \]
+  </p>
+  <p>Therefore:</p>
+  <p>
+  \[
+  b = \text{Antilog } B = 1.383 \quad \text{and} \quad a = \text{Antilog } A = 0.6821
+  \]
+  </p>
+  <p>Hence the equation of our required curve is:</p>
+  <p>
+  \[
+  Y = 0.6821 (1.38)^X
+  \]
+  </p>
+
+  <h3>Example 9.6. Derive the least square equations for fitting a curve of the type \( Y = aX + (b/X) \), to a set of \( n \) points \( (x_i, y_i); i = 1, 2, \dots, n \).</h3>
+  <p><strong>Solution.</strong> First, let's write down the error \( E_i \) for any \( i \)-th point \( (x_i, y_i) \):</p>
+  <p>
+  \[
+  E_i = \left( y_i - ax_i - \frac{b}{x_i} \right)
+  \]
+  </p>
+  <p>According to the principle of least squares, we want to find values for \( a \) and \( b \) so that the total sum of squared errors \( E \) is minimized:</p>
+  <p>
+  \[
+  E = \sum_{i=1}^{n} E_i^2 = \sum_{i=1}^{n} \left( y_i - ax_i - \frac{b}{x_i} \right)^2
+  \]
+  </p>
+  <p>Consequently, the normal equations are found by setting partial derivatives to zero:</p>
+  <p>
+  \[
+  \frac{\partial E}{\partial a} = 0 = -2 \sum_{i=1}^{n} x_i \left( y_i - ax_i - \frac{b}{x_i} \right)
+  \]
+  </p>
+  <p>
+  \[
+  \frac{\partial E}{\partial b} = 0 = -2 \sum_{i=1}^{n} \frac{1}{x_i} \left( y_i - ax_i - \frac{b}{x_i} \right)
+  \]
+  </p>
+  <p>When we simplify these two equations, we get our final normal equations:</p>
+  <p>
+  \[
+  \sum_{i=1}^{n} x_i y_i = a \sum_{i=1}^{n} x_i^2 + nb
+  \]
+  </p>
+  <p>
+  \[
+  \text{and} \quad \sum_{i=1}^{n} \left( \frac{y_i}{x_i} \right) = na + b \sum_{i=1}^{n} \left( \frac{1}{x_i^2} \right)
+  \]
+  </p>
+
+  <h3>Example 9.7. Three independent measurements on each of the three angles A, B, C of a triangle are as follows:</h3>
+  <table>
+    <tr><th>A</th><th>B</th><th>C</th></tr>
+    <tr><td>39.5</td><td>60.3</td><td>80.1</td></tr>
+    <tr><td>39.3</td><td>62.2</td><td>80.3</td></tr>
+    <tr><td>39.6</td><td>60.1</td><td>80.4</td></tr>
+  </table>
+  <p>Obtain the best estimates of the three angles taking into account the relation that the sum of the angles is equal to 180°.</p>
+
+  <p><strong>Solution.</strong> Let the observations for angle A be denoted by \( x_1, x_2, x_3 \). For B, call them \( y_1, y_2, y_3 \). And for C, call them \( z_1, z_2, z_3 \). Let the best actual estimates for angles A and B be \( \theta_1 \) and \( \theta_2 \) respectively. Since angles add up to 180, angle C will be \( 180 - \theta_1 - \theta_2 \).</p>
+
+  <p>Using the principle of least squares, our problem is to estimate \( \theta_1 \) and \( \theta_2 \) so that the total squared error \( E \) is minimised:</p>
+  <p>
+  \[
+  E = \sum (x_i - \theta_1)^2 + \sum (y_i - \theta_2)^2 + \sum (z_i - 180 + \theta_1 + \theta_2)^2
+  \]
+  </p>
+  <p>Here, the summation goes over \( i \) from 1 to 3.</p>
+
+  <p>Equating to zero the partial derivatives of \( E \) with respect to \( \theta_1 \) and \( \theta_2 \), our normal equations are:</p>
+  <p>
+  \[
+  \frac{\partial E}{\partial \theta_1} = 0 = -2 \sum (x_i - \theta_1) + 2 \sum (z_i - 180 + \theta_1 + \theta_2) \quad \dots(*)
+  \]
+  </p>
+  <p>
+  \[
+  \frac{\partial E}{\partial \theta_2} = 0 = -2 \sum (y_i - \theta_2) + 2 \sum (z_i - 180 + \theta_1 + \theta_2) \quad \dots(**)
+  \]
+  </p>
+  <p>From (*) and (**), we can simplify to get:</p>
+  <p>
+  \[
+  \begin{aligned}
+  3\theta_1 - \sum x_i + \sum z_i - 540 + 3\theta_1 + 3\theta_2 &= 0 \\
+  3\theta_2 - \sum y_i + \sum z_i - 540 + 3\theta_1 + 3\theta_2 &= 0
+  \end{aligned} \quad \dots(***)
+  \]
+  </p>
+
+  <p>Now, let's calculate our sums from the given data:</p>
+  <p>
+  \[
+  \begin{aligned}
+  \sum x_i &= 39.5 + 39.3 + 39.6 = 118.4 \\
+  \sum y_i &= 60.3 + 62.2 + 60.1 = 182.6 \\
+  \sum z_i &= 80.1 + 80.3 + 80.4 = 240.8
+  \end{aligned}
+  \]
+  </p>
+  <p>Substituting these sums into (***), we get:</p>
+  <p>
+  \[
+  6\theta_1 + 3\theta_2 - 417.6 = 0 \quad \text{and} \quad 3\theta_1 + 6\theta_2 - 481.8 = 0
+  \]
+  </p>
+  <p>Solving these two equations, we find our final best estimates:</p>
+  <p>
+  \[
+  \hat{A} = \theta_1 = 39.27^\circ, \quad \hat{B} = \theta_2 = 60.66^\circ, \quad \text{and} \quad \hat{C} = 180^\circ - \theta_1 - \theta_2 = 80.07^\circ
+  \]
+  </p>
+
+</body>
+</html>
