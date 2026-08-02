@@ -7,9 +7,9 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Unit II – Curve Fitting &amp; Principle of Least Squares | STAT-M-201</title>
 <!-- MathJax -->
-    <!-- MathJax Config -->
-            <!-- MathJax Configuration -->
-    <script>
+<!-- MathJax Config -->
+<!-- MathJax Configuration -->
+<script>
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -21,7 +21,7 @@
             }
         };
     </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&amp;family=Source+Serif+4:ital,wght@0,400;0,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -921,6 +921,46 @@ tr:hover td {
     color: var(--navy);
 }
 
+    
+/* Compact & Centered Figure / Graph System */
+.figure-box, .chart-container, .graph-container {
+    width: auto !important;
+    max-width: 560px !important;
+    margin: 28px auto !important;
+    padding: 20px !important;
+    background: #ffffff !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 16px rgba(27, 42, 74, 0.08) !important;
+    text-align: center !important;
+    display: block !important;
+}
+
+.figure-title {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    color: var(--navy) !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+}
+
+.figure-caption {
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.85rem !important;
+    color: var(--text-soft) !important;
+    margin-top: 10px !important;
+    font-style: italic !important;
+    text-align: center !important;
+}
+
+svg.book-fig, .figure-box svg, canvas {
+    display: block !important;
+    margin: 0 auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+}
+
     </style>
 </head>
 <body>
@@ -1006,6 +1046,29 @@ tr:hover td {
 \[ y = a + b x + c x^2 \tag{2.1.2} \]
 </div>
 </div>
+</div>
+
+<div class="figure-box">
+<div class="figure-title">Figure 2.1: Principle of Least Squares — Minimizing Vertical Residuals (\(e_i = y_i - \hat{y}_i\))</div>
+<svg class="book-fig" viewbox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+<line stroke="#1B2A4A" stroke-width="2" x1="50" x2="450" y1="220" y2="220"></line>
+<line stroke="#1B2A4A" stroke-width="2" x1="50" x2="50" y1="220" y2="30"></line>
+<text font-family="DM Sans" font-size="13" x="460" y="225">X</text>
+<text font-family="DM Sans" font-size="13" x="45" y="20">Y</text>
+<line stroke="#1D6FA4" stroke-width="3" x1="80" x2="420" y1="190" y2="60"></line>
+<!-- Points & Vertical Deviations -->
+<circle cx="120" cy="140" fill="#9B2335" r="5"></circle>
+<line stroke="#9B2335" stroke-dasharray="3" stroke-width="2" x1="120" x2="120" y1="140" y2="175"></line>
+<text fill="#9B2335" font-family="Source Serif 4" font-size="12" x="128" y="160">e₁</text>
+<circle cx="220" cy="135" fill="#9B2335" r="5"></circle>
+<line stroke="#9B2335" stroke-dasharray="3" stroke-width="2" x1="220" x2="220" y1="135" y2="136"></line>
+<circle cx="310" cy="80" fill="#9B2335" r="5"></circle>
+<line stroke="#9B2335" stroke-dasharray="3" stroke-width="2" x1="310" x2="310" y1="80" y2="102"></line>
+<text fill="#9B2335" font-family="Source Serif 4" font-size="12" x="318" y="95">eᵢ</text>
+<circle cx="400" cy="75" fill="#9B2335" r="5"></circle>
+<line stroke="#9B2335" stroke-dasharray="3" stroke-width="2" x1="400" x2="400" y1="75" y2="68"></line>
+</svg>
+<div class="figure-caption">The line \(Y = a + bX\) minimizes the sum of squared vertical distances \(\sum e_i^2 = \sum (y_i - a - b x_i)^2\).</div>
 </div>
 </section>
 </div>
@@ -1109,6 +1172,21 @@ tr:hover td {
 \end{aligned} \]
 </div>
 </div>
+</div>
+
+<div class="figure-box">
+<div class="figure-title">Figure 2.2: Second-Degree Parabola Fitting (\(Y = a + bX + cX^2\))</div>
+<svg class="book-fig" viewbox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+<line stroke="#1B2A4A" stroke-width="2" x1="50" x2="450" y1="200" y2="200"></line>
+<line stroke="#1B2A4A" stroke-width="2" x1="50" x2="50" y1="200" y2="30"></line>
+<path d="M 80,180 Q 250,20 420,180" fill="none" stroke="#C8922A" stroke-width="3"></path>
+<circle cx="120" cy="140" fill="#1B2A4A" r="4"></circle>
+<circle cx="180" cy="80" fill="#1B2A4A" r="4"></circle>
+<circle cx="250" cy="50" fill="#1B2A4A" r="4"></circle>
+<circle cx="320" cy="85" fill="#1B2A4A" r="4"></circle>
+<circle cx="380" cy="145" fill="#1B2A4A" r="4"></circle>
+</svg>
+<div class="figure-caption">U-shaped or inverted U-shaped non-linear trend fitted by a quadratic parabola.</div>
 </div>
 </section>
 </div>
@@ -2205,10 +2283,10 @@ Calculations: \(\sum Y = 796.2, \sum UY = 1016.8\).</p>
 </section>
 </div>
 </main>
-        <footer class="book-footer">
-        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+<footer class="book-footer">
+<p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br/>
         CCS Haryana Agricultural University, Hisar</p>
-    </footer>
+</footer>
 <script>
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
 function showTopic(id) {
