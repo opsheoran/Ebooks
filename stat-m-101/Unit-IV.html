@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV: Introduction to Survival Analysis | STAT-MDC-101 Bio-Statistics</title>
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ── */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: linear-gradient(135deg, #111B30 0%, #1B2A4A 50%, #2E4270 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
+            border-bottom: 2px solid rgba(200, 146, 42, 0.4);
+        }
+
+        .book-header .menu-toggle {
+            display: none;
+            background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #C8922A 0%, #E8B84B 100%);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(200, 146, 42, 0.35);
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            color: #fff; line-height: 1.2;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            color: rgba(255,255,255,.8);
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(200,146,42,.2);
+            border: 1px solid rgba(232,184,75,.4);
+            color: #E8B84B;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+        }
+
+        .draw-mode-toggle, .calc-mode-toggle {
+            background: var(--navy);
+            color: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+        .draw-mode-toggle:hover, .calc-mode-toggle:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h) - 50px);
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent;
+            padding-bottom: 70px !important;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--gold-light); margin-bottom: 2px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem; color: rgba(255,255,255,.6);
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem; font-weight: 600;
+            letter-spacing: 1.2px; text-transform: uppercase;
+            color: rgba(255,255,255,.35); padding: 14px 20px 4px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+        .nav-link {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 12px; color: rgba(255,255,255,.75);
+            text-decoration: none; border-radius: 6px;
+            font-family: 'DM Sans', sans-serif; font-size: .85rem;
+            transition: all .2s; cursor: pointer;
+        }
+        .nav-link:hover { background: rgba(255,255,255,.08); color: #fff; }
+        .nav-link.active { background: rgba(200,146,42,.18); color: var(--gold-light); font-weight: 600; }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 880px);
+        }
+
+        .chapter-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff; padding: 32px 38px; border-radius: var(--radius);
+            margin-bottom: 32px; position: relative; box-shadow: var(--shadow-md);
+        }
+        .chapter-header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .chapter-header .chap-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: rgba(255,255,255,.85); }
+
+        .section-card {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 36px 40px; margin-bottom: 32px;
+            box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+        }
+        .section-card h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.65rem; font-weight: 700;
+            color: var(--navy); margin-bottom: 20px; padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        p { margin-bottom: 14px; text-align: justify; line-height: 1.8; color: var(--text-mid); }
+        blockquote {
+            background: var(--gold-pale); border-left: 4px solid var(--gold);
+            padding: 16px 20px; margin: 20px 0; border-radius: 0 8px 8px 0;
+            font-style: italic; color: var(--navy-mid);
+        }
+
+        .definition, .theorem, .example, .note, .formula-box {
+            margin: 20px 0; padding: 18px 22px; border-radius: 8px;
+        }
+        .definition { background: var(--sage-light); border-left: 4px solid var(--sage); }
+        .theorem { background: var(--gold-pale); border-left: 4px solid var(--gold); }
+        .example { background: var(--sky-light); border-left: 4px solid var(--sky); }
+        .formula-box { background: var(--navy); color: #fff; text-align: center; padding: 22px; }
+
+        .card-title {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .88rem;
+            text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;
+        }
+        .definition .card-title { color: var(--sage); }
+        .theorem .card-title { color: var(--gold); }
+        .example .card-title { color: var(--sky); }
+        .formula-box .card-title { color: var(--gold-light); }
+
+        table {
+            width: 100% !important; margin: 20px 0 !important;
+            border-collapse: collapse !important; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+        }
+        th { background: var(--navy); color: #fff; padding: 10px 14px; text-align: left; }
+        td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
+
+        .question { font-weight: 600; margin-top: 16px; color: var(--navy); }
+        .mcq-options { margin: 8px 0 12px 20px; line-height: 1.6; }
+        .toggle-btn {
+            background: var(--navy); color: #fff; border: none; padding: 6px 14px;
+            border-radius: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+            font-size: .8rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px;
+        }
+        .answer {
+            display: none; background: #F0FBF5; border-left: 4px solid var(--sage);
+            padding: 12px 16px; margin-bottom: 16px; border-radius: 0 6px 6px 0; font-size: .92rem;
+        }
+
+        .book-footer {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100% !important; z-index: 1000 !important; background: #1B2A4A !important;
+            color: rgba(255,255,255,0.95) !important; text-align: center !important;
+            padding: 8px 16px !important; margin: 0 !important; border-radius: 0 !important;
+            border-top: 1px solid rgba(255,255,255,0.15) !important; box-shadow: 0 -2px 10px rgba(0,0,0,0.25) !important;
+            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important; line-height: 1.4 !important;
+        }
+        .book-footer p { margin: 0 !important; padding: 0 !important; color: rgba(255,255,255,0.9) !important; }
+        .book-footer strong { color: #E2B859 !important; font-weight: 600 !important; }
+    </style>
+    <!-- Shared Whiteboard & Calculator Assets -->
+    <link rel="stylesheet" href="../whiteboard/whiteboard.css">
+    <link rel="stylesheet" href="../calculator/calculator.css?v=1.0">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">⏳</div>
+        <div class="header-text">
+            <h1>Unit IV: Introduction to Survival Analysis</h1>
+            <div class="subtitle">STAT-MDC-101 · BIO-STATISTICS</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+        <button class="draw-mode-toggle" id="draw-mode-btn">
+            <i class="fas fa-chalkboard"></i> Open Whiteboard
+        </button>
+        <button class="calc-mode-toggle" id="calc-mode-btn">
+            <i class="fas fa-calculator"></i> Open Calculator
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>STAT-MDC-101</h2>
+            <p>Bio-Statistics<br>CCS Haryana Agricultural University</p>
+        </div>
+
+        <div class="nav-group-label">Unit IV Navigation</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#sec41">4.1 Intro to Survival &amp; Censoring</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sec42">4.2 Basic Survival Functions</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sec43">4.3 Actuarial / Life Table Method</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sec44">4.4 Kaplan-Meier Estimator</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sec45">4.5 Total Time on Test (TTT)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sec46">4.6 Log-Rank &amp; Wilcoxon Tests</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sec47">4.7 Ageing Classes (IFR, IFRA, NBU)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#exercises">4.8 Exercise Bank</a></li>
+        </ul>
+
+        <div class="nav-group-label">Other Course Units</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html">← Course Portal</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-I.html">Unit I: Epidemiology</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-II.html">Unit II: Clinical Trials</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-III.html">Unit III: Research Design</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- Chapter Header -->
+        <div class="chapter-header">
+            <h1>Unit IV: Introduction to Survival Analysis</h1>
+            <div class="chap-sub">Censoring, survival &amp; hazard functions, Kaplan-Meier estimation, log-rank tests &amp; failure rate ageing classes</div>
+        </div>
+
+        <!-- 4.1 Intro to Survival & Censoring -->
+        <section class="section-card" id="sec41">
+            <h2>4.1 Introduction to Survival Analysis &amp; Censoring</h2>
+            <div class="definition">
+                <div class="card-title">What is Survival Analysis?</div>
+                <strong>Survival analysis</strong> is a branch of biostatistics that models time-to-event data where incomplete observations occur.
+            </div>
+
+            <h3>Types of Censoring</h3>
+            <p><strong>Right Censoring:</strong> Event has not occurred before study end or subject is lost to follow-up.</p>
+            <p><strong>Left Censoring:</strong> Event occurred prior to observation onset.</p>
+            <p><strong>Interval Censoring:</strong> Event occurred within a known time interval $(t_a, t_b]$.</p>
+        </section>
+
+        <!-- 4.2 Basic Survival Functions -->
+        <section class="section-card" id="sec42">
+            <h2>4.2 Basic Survival Functions</h2>
+            <div class="formula-box">
+                <div class="card-title">Survival Function &amp; Hazard Rate</div>
+                $$ S(t) = P(T > t) = 1 - F(t) $$
+                $$ h(t) = \frac{f(t)}{S(t)} = -\frac{d}{dt}\ln S(t) $$
+                $$ S(t) = \exp\left[-\int_0^t h(u)\,du\right] = \exp[-H(t)] $$
+            </div>
+        </section>
+
+        <!-- 4.4 Kaplan-Meier Estimator -->
+        <section class="section-card" id="sec44">
+            <h2>4.4 Kaplan-Meier (Product-Limit) Estimator</h2>
+            <div class="theorem">
+                <div class="card-title">Kaplan-Meier Estimator Formula</div>
+                $$ \hat{S}(t) = \prod_{t_i \leq t} \left(1 - \frac{d_i}{n_i}\right) $$
+                <p style="margin-top:6px;font-size:0.92rem;">Where $d_i$ is number of events at distinct time $t_i$, and $n_i$ is number at risk just prior to $t_i$.</p>
+            </div>
+        </section>
+
+        <!-- 4.7 Ageing Classes -->
+        <section class="section-card" id="sec47">
+            <h2>4.7 Ageing Classes of Life Distributions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Name</th>
+                        <th>Definition &amp; Hierarchy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>IFR</strong></td>
+                        <td>Increasing Failure Rate</td>
+                        <td>$h(t)$ increases monotonically with time $t$.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IFRA</strong></td>
+                        <td>Increasing Failure Rate Average</td>
+                        <td>$\frac{1}{t}\int_0^t h(u)du$ increases with time.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NBU</strong></td>
+                        <td>New Better than Used</td>
+                        <td>$S(x+t) \leq S(x)S(t)$ for all $x,t \geq 0$.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>NBUE</strong></td>
+                        <td>New Better than Used in Expectation</td>
+                        <td>Expected residual life of new is $\geq$ used item.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="note">
+                <div class="card-title">Hierarchy of Positive Ageing Classes</div>
+                $$ \text{IFR} \implies \text{IFRA} \implies \text{NBU} \implies \text{NBUE} $$
+            </div>
+        </section>
+
+        <!-- 4.8 Exercise Bank -->
+        <section class="section-card" id="exercises">
+            <h2>4.8 Chapter End Exercises and Self-Assessment Bank</h2>
+
+            <div class="question">1. The Kaplan-Meier estimator is also known as the:</div>
+            <div class="mcq-options">
+                a) Actuarial estimator<br>
+                b) Product-limit estimator<br>
+                c) Hazard ratio estimator<br>
+                d) Log-rank estimator
+            </div>
+            <button class="toggle-btn" onclick="toggleAnswer('q1')">Show Answer ▼</button>
+            <div class="answer" id="q1"><strong>Correct Answer: b</strong> — Also called product-limit estimator because it multiplies conditional probabilities.</div>
+        </section>
+
+        <footer class="book-footer">
+            <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
+        </footer>
+    </main>
+
+    <script>
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (el.style.display === 'block') { el.style.display = 'none'; }
+            else { el.style.display = 'block'; }
+        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    </script>
+    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    <script src="../calculator/calculator.js?v=1.0"></script>
+</body>
+</html>

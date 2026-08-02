@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAT-MDC-101 · Bio-Statistics | E-Book Portal</title>
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ── */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: linear-gradient(135deg, #111B30 0%, #1B2A4A 50%, #2E4270 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
+            border-bottom: 2px solid rgba(200, 146, 42, 0.4);
+        }
+
+        .book-header .menu-toggle {
+            display: none;
+            background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #C8922A 0%, #E8B84B 100%);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(200, 146, 42, 0.35);
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem; font-weight: 700;
+            letter-spacing: .4px;
+            color: #fff;
+            line-height: 1.2;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.8);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(200,146,42,.2);
+            border: 1px solid rgba(232,184,75,.4);
+            color: #E8B84B;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            padding: 5px 14px;
+            border-radius: 20px;
+            letter-spacing: .5px;
+        }
+
+        .draw-mode-toggle {
+            background: var(--navy);
+            color: #fff;
+            border: 2px solid var(--gold);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.2s ease;
+        }
+        .draw-mode-toggle:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h) - 50px);
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent;
+            padding-bottom: 70px !important;
+        }
+
+        .sidebar-brand {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 3px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            color: rgba(255,255,255,.55);
+            line-height: 1.4;
+        }
+
+        .sidebar-author {
+            padding: 16px 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
+
+        .sidebar-author-info h3 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sidebar-author-info p {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+        .nav-item { margin: 1px 0; }
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            transition: all .2s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+        .nav-link:hover {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-left-color: rgba(200,146,42,.6);
+        }
+        .nav-link.active {
+            background: rgba(200,146,42,.18);
+            color: var(--gold-light);
+            border-left-color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 860px);
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #ffffff;
+            padding: 38px 42px;
+            border-radius: var(--radius);
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 220px; height: 220px;
+            background: rgba(200, 146, 42, 0.12);
+            border-radius: 50%;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: var(--gold-light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-banner h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.15;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner h1 span { color: var(--gold-light); }
+        .hero-sub {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 22px;
+        }
+
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem;
+            padding: 5px 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .hero-chip i { color: var(--gold); }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .stat-pill {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-pill .snum {
+            display: block;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--navy);
+            line-height: 1.2;
+        }
+
+        .stat-pill .slbl {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem;
+            color: var(--text-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .unit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin: 28px 0 36px;
+        }
+
+        .unit-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 26px;
+            text-decoration: none;
+            color: var(--text-dark);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .unit-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+        }
+
+        .unit-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gold);
+        }
+
+        .unit-card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .unit-icon {
+            font-size: 2rem;
+            background: var(--gold-pale);
+            width: 50px; height: 50px;
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .unit-card-meta .unit-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.78rem; font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gold);
+            margin-bottom: 2px;
+        }
+
+        .unit-card-meta h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            color: var(--navy); margin: 0; line-height: 1.3;
+        }
+
+        .unit-topics { list-style: none; margin: 0 0 20px; padding: 0; flex-grow: 1; }
+        .unit-topics li {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--text-mid);
+            padding: 4px 0 4px 18px;
+            position: relative;
+            line-height: 1.5;
+        }
+        .unit-topics li::before {
+            content: '•'; position: absolute; left: 4px; color: var(--gold); font-weight: bold;
+        }
+
+        .unit-card-footer { border-top: 1px solid var(--border); padding-top: 14px; margin-top: auto; }
+        .unit-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600;
+            color: var(--navy); transition: color 0.2s ease;
+        }
+        .unit-card:hover .unit-btn { color: var(--gold); }
+        .unit-card-num {
+            position: absolute; right: 18px; bottom: 12px;
+            font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900;
+            color: rgba(27, 42, 74, 0.05); pointer-events: none;
+        }
+
+        .section-card {
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            margin-bottom: 32px;
+        }
+
+        .section-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem; font-weight: 700;
+            color: var(--navy); margin: 0 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .section-card p {
+            margin-bottom: 14px; text-align: justify; font-size: 1.02rem; color: var(--text-mid); line-height: 1.82;
+        }
+
+        .preface-drop {
+            float: left; font-family: 'Playfair Display', serif; font-size: 3.5rem; line-height: 0.8;
+            font-weight: 900; color: var(--gold); padding-right: 8px; padding-top: 4px;
+        }
+
+        .preface-quote {
+            background: var(--gold-pale); border-left: 4px solid var(--gold);
+            padding: 20px 24px; margin: 24px 0; border-radius: 0 8px 8px 0; font-style: italic;
+        }
+        .quote-attr { text-align: right; font-weight: 600; font-style: normal; color: var(--navy); margin-top: 8px; }
+
+        .highlight-box {
+            background: var(--sky-light); border-left: 4px solid var(--sky);
+            padding: 18px 22px; margin: 20px 0; border-radius: 0 8px 8px 0;
+        }
+
+        .author-card {
+            background: #ffffff; border-radius: 12px; padding: 20px 24px;
+            box-shadow: 0 4px 16px rgba(27,42,74,0.08); border: 1px solid var(--border);
+            border-left: 5px solid var(--gold); display: flex; align-items: center; gap: 20px; margin-bottom: 24px;
+        }
+        .author-photo {
+            width: 85px; height: 85px; border-radius: 50%; object-fit: cover; object-position: top;
+            border: 3px solid var(--gold); box-shadow: 0 4px 12px rgba(27,42,74,0.15); flex-shrink: 0;
+        }
+        .author-info h3 { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--navy); margin: 0 0 4px; }
+        .a-title, .a-dept { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text-soft); margin: 0; }
+
+        .author-sig { margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border); }
+        .sig-name { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--navy); }
+        .sig-title { font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--text-soft); }
+
+        .syllabus-table { width: 100% !important; margin: 20px 0 28px !important; border-collapse: collapse !important; }
+        .syllabus-table th { background: var(--navy); color: #fff; padding: 10px 16px; font-family: 'DM Sans', sans-serif; text-align: left; }
+        .syllabus-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 0.92rem; text-align: left; }
+
+        .ref-list { margin: 16px 0 24px 28px; line-height: 1.8; }
+        .ref-list li { margin-bottom: 12px; }
+
+        .page-section { display: none; animation: fadeSlideIn .45s ease; }
+        .page-section.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+        .book-footer {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100% !important; z-index: 1000 !important; background: #1B2A4A !important;
+            color: rgba(255,255,255,0.95) !important; text-align: center !important;
+            padding: 8px 16px !important; margin: 0 !important; border-radius: 0 !important;
+            border-top: 1px solid rgba(255,255,255,0.15) !important; box-shadow: 0 -2px 10px rgba(0,0,0,0.25) !important;
+            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important; line-height: 1.4 !important;
+        }
+        .book-footer p { margin: 0 !important; padding: 0 !important; color: rgba(255,255,255,0.9) !important; }
+        .book-footer strong { color: #E2B859 !important; font-weight: 600 !important; }
+    </style>
+    <!-- Shared Whiteboard & Calculator Assets -->
+    <link rel="stylesheet" href="../whiteboard/whiteboard.css">
+    <link rel="stylesheet" href="../calculator/calculator.css?v=1.0">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">🧬</div>
+        <div class="header-text">
+            <h1>Bio-Statistics (STAT-MDC-101)</h1>
+            <div class="subtitle">STAT-MDC-101 · SEMESTER I · 3 CREDITS (2+1)</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+        <button class="draw-mode-toggle" id="draw-mode-btn">
+            <i class="fas fa-chalkboard"></i> Open Whiteboard
+        </button>
+        <button class="calc-mode-toggle" id="calc-mode-btn">
+            <i class="fas fa-calculator"></i> Open Calculator
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>STAT-MDC-101</h2>
+            <p>Bio-Statistics<br>CCS Haryana Agricultural University</p>
+        </div>
+
+        <div class="sidebar-author">
+            <img src="../Stat-102/opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <p>Author &amp; Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Book Sections</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="showSection('home'); return false;">
+                    <span class="nav-icon"><i class="fas fa-home"></i></span> Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('preface'); return false;">
+                    <span class="nav-icon"><i class="fas fa-scroll"></i></span> Preface
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('syllabus'); return false;">
+                    <span class="nav-icon"><i class="fas fa-list-alt"></i></span> Course Syllabus
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('author'); return false;">
+                    <span class="nav-icon"><i class="fas fa-user-tie"></i></span> From Author
+                </a>
+            </li>
+        </ul>
+
+        <div class="nav-group-label">Course Units</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link" href="Unit-I.html">
+                    <span class="nav-num">I</span> Epidemiology Fundamentals
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Unit-II.html">
+                    <span class="nav-num">II</span> Clinical Trials
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Unit-III.html">
+                    <span class="nav-num">III</span> Research Design &amp; Data
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="Unit-IV.html">
+                    <span class="nav-num">IV</span> Survival Analysis
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- HOME SECTION -->
+        <section class="page-section active" id="home">
+            <div class="hero-banner">
+                <div class="hero-tag">STAT-MDC-101 · Semester I · 2 + 1 Credits</div>
+                <h1>Bio-<span>Statistics</span></h1>
+                <p class="hero-sub">Epidemiologic investigations, clinical trial designs, research methodologies &amp; survival analysis</p>
+                <div class="hero-meta">
+                    <span class="hero-chip"><i class="fas fa-university"></i> CCS Haryana Agricultural University</span>
+                    <span class="hero-chip"><i class="fas fa-chalkboard-teacher"></i> Prof. O.P. Sheoran</span>
+                    <span class="hero-chip"><i class="fas fa-layer-group"></i> 4 Units</span>
+                    <span class="hero-chip"><i class="fas fa-flask"></i> 2 Theory + 1 Practical</span>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-row">
+                <div class="stat-pill">
+                    <span class="snum">4</span>
+                    <span class="slbl">Units</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="snum">3</span>
+                    <span class="slbl">Credits</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="snum">80+</span>
+                    <span class="slbl">MCQs &amp; Tasks</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="snum">I</span>
+                    <span class="slbl">Semester</span>
+                </div>
+                <div class="stat-pill">
+                    <span class="snum">∞</span>
+                    <span class="slbl">Health Insights</span>
+                </div>
+            </div>
+
+            <!-- Unit Cards Grid -->
+            <div class="unit-grid">
+                <!-- Unit I -->
+                <a class="unit-card" href="Unit-I.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">🦠</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit I</div>
+                            <h3>Epidemiology Fundamentals</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Outbreak investigation protocol &amp; epidemic curves</li>
+                        <li>Prevalence, incidence &amp; mortality rate calculations</li>
+                        <li>Case-control, cohort designs, odds ratios &amp; relative risk</li>
+                        <li>Screening test sensitivity, specificity, PPV &amp; NPV</li>
+                    </ul>
+                    <div class="unit-card-footer">
+                        <span class="unit-btn">Open Unit I <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                    <span class="unit-card-num">I</span>
+                </a>
+
+                <!-- Unit II -->
+                <a class="unit-card" href="Unit-II.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">💊</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit II</div>
+                            <h3>Clinical Trials</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Classification, phases (Phases I–IV) &amp; protocols</li>
+                        <li>Randomized Controlled Trials (RCT) &amp; blinding</li>
+                        <li>Placebo, ethical guidelines &amp; multi-centre trials</li>
+                        <li>Sample size determination &amp; statistical power</li>
+                    </ul>
+                    <div class="unit-card-footer">
+                        <span class="unit-btn">Open Unit II <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                    <span class="unit-card-num">II</span>
+                </a>
+
+                <!-- Unit III -->
+                <a class="unit-card" href="Unit-III.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">📊</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit III</div>
+                            <h3>Research Design &amp; Data Generation</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Primary vs secondary data &amp; questionnaire construction</li>
+                        <li>Data editing, coding &amp; tabulation workflows</li>
+                        <li>Statistical computing in SPSS and R environment</li>
+                        <li>National Sample Survey (NSS) sampling designs</li>
+                    </ul>
+                    <div class="unit-card-footer">
+                        <span class="unit-btn">Open Unit III <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                    <span class="unit-card-num">III</span>
+                </a>
+
+                <!-- Unit IV -->
+                <a class="unit-card" href="Unit-IV.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">⏳</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit IV</div>
+                            <h3>Introduction to Survival Analysis</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Censoring types (Right, Left, Interval) &amp; time-to-event</li>
+                        <li>Survival function $S(t)$ &amp; hazard function $h(t)$</li>
+                        <li>Actuarial life table &amp; Kaplan-Meier estimators</li>
+                        <li>Ageing classes (IFR, IFRA, NBU, NBUE) &amp; dual classes</li>
+                    </ul>
+                    <div class="unit-card-footer">
+                        <span class="unit-btn">Open Unit IV <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                    <span class="unit-card-num">IV</span>
+                </a>
+            </div>
+
+            <!-- About Course Card -->
+            <div class="section-card">
+                <h2><i class="fas fa-info-circle" style="color:var(--sky);"></i> About STAT-MDC-101: Bio-Statistics</h2>
+                <p>
+                    <strong>STAT-MDC-101: Bio-Statistics</strong> is a comprehensive 3-credit course (2 Theory + 1 Practical) offered in Semester I at CCS Haryana Agricultural University, Hisar. It equips students with empirical tools to investigate disease outbreaks, evaluate clinical drug trials, design statistical research surveys, and model time-to-event survival data.
+                </p>
+                <div class="highlight-box">
+                    <p><i class="fas fa-lightbulb" style="color:var(--sky);margin-right:6px;"></i>
+                    Integrated Digital Learning: Features interactive R/SPSS code snippets, step-by-step mathematical proofs, floating whiteboard for live lectures, and a built-in scientific calculator.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PREFACE SECTION -->
+        <section class="page-section" id="preface">
+            <div class="section-card">
+                <h2><i class="fas fa-scroll" style="color:var(--gold);"></i> Preface</h2>
+                <p><span class="preface-drop">B</span>io-Statistics is the quantitative foundation of modern public health, clinical medicine, and agricultural biological research. This digital textbook on <em>Bio-Statistics</em> (STAT-MDC-101) has been crafted specifically for students at CCS Haryana Agricultural University, Hisar, seamlessly bridging mathematical statistical principles with practical epidemiological, clinical, and laboratory applications.</p>
+
+                <p>The course unfolds chronologically: beginning with disease surveillance and screening accuracy in <strong>Unit I</strong>, progressing to gold-standard clinical trials and ethics in <strong>Unit II</strong>, covering empirical survey design, SPSS/R computing, and NSS methodology in <strong>Unit III</strong>, and culminating in survival curves, Kaplan-Meier estimation, and reliability ageing classes in <strong>Unit IV</strong>.</p>
+
+                <div class="preface-quote">
+                    <p>Biostatistics is the science that turns raw biomedical observations into lifesaving public health action.</p>
+                    <div class="quote-attr">— Prof. O.P. Sheoran</div>
+                </div>
+
+                <h3>Scope and Structure</h3>
+                <p><strong>Unit I: Epidemiology Fundamentals</strong> — Outbreak investigation, person-place-time triad, incidence/prevalence, odds ratios ($OR$), relative risk ($RR$), screening test metrics (sensitivity, specificity, PPV, NPV), and bias control.</p>
+                <p><strong>Unit II: Clinical Trials</strong> — Phases I–IV, Randomized Controlled Trials (RCT), single/double-blind designs, ethical guidelines (Declaration of Helsinki, ICMR), multi-centre trial logistics, and sample size calculation.</p>
+                <p><strong>Unit III: Research Design &amp; Data Generation</strong> — Primary vs. secondary sources, questionnaire validation, SPSS &amp; R data pipelines, and National Sample Survey (NSS) multi-stage sampling.</p>
+                <p><strong>Unit IV: Survival Analysis</strong> — Right/Left/Interval censoring, survival $S(t)$ and hazard $h(t)$ functions, Kaplan-Meier product-limit estimator, total time on test, and failure rate ageing classes (IFR, IFRA, NBU, NBUE).</p>
+
+                <div class="author-sig">
+                    <div class="sig-name">Prof. O.P. Sheoran</div>
+                    <div class="sig-title">Department of Mathematics &amp; Statistics</div>
+                    <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SYLLABUS SECTION -->
+        <section class="page-section" id="syllabus">
+            <div class="section-card">
+                <h2><i class="fas fa-list-alt" style="color:var(--sage);"></i> Course Syllabus &amp; Structure</h2>
+                <p>Detailed unit-wise syllabus for <strong>STAT-MDC-101: Bio-Statistics (3 Credits: 2 Theory + 1 Practical)</strong>:</p>
+
+                <table class="syllabus-table">
+                    <thead>
+                        <tr>
+                            <th style="width:90px;">Unit</th>
+                            <th>Title</th>
+                            <th>Topics Covered</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Unit I</td>
+                            <td><strong>Epidemiology Fundamentals</strong></td>
+                            <td>Outbreak investigation protocol, person-place-time triad, attack rate, prevalence ($P$), incidence ($I$), mortality rates (CDR, CFR), case-control ($OR$) &amp; cohort studies ($RR, AR, AR\%$), screening test evaluation (sensitivity, specificity, PPV, NPV), selection/recall/attrition bias &amp; confounding.</td>
+                        </tr>
+                        <tr>
+                            <td>Unit II</td>
+                            <td><strong>Clinical Trials</strong></td>
+                            <td>Trial definitions &amp; objectives, Phases I–IV trials, Randomized Controlled Trials (RCT), open-label vs single/double-blind, placebo control, ethics &amp; informed consent (ICMR/Helsinki), multi-centre trials, sample size estimation.</td>
+                        </tr>
+                        <tr>
+                            <td>Unit III</td>
+                            <td><strong>Research Design &amp; Data Generation</strong></td>
+                            <td>Research design principles, primary vs secondary data collection, questionnaire construction &amp; pre-testing, data editing, coding &amp; tabulation, SPSS &amp; R statistical workflows, National Sample Survey (NSS) sampling methodology.</td>
+                        </tr>
+                        <tr>
+                            <td>Unit IV</td>
+                            <td><strong>Survival Analysis</strong></td>
+                            <td>Censoring mechanisms (Right, Left, Interval), survival function $S(t)$, cumulative distribution $F(t)$, hazard rate $h(t)$, actuarial life table, Kaplan-Meier product-limit estimator, total time on test, ageing classes (IFR, IFRA, NBU, NBUE) and dual classes.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Practical / Lab Work Component</h3>
+                <ol class="ref-list">
+                    <li>Calculating and interpreting incidence, prevalence, attack rates, and case fatality rates.</li>
+                    <li>Constructing 2x2 contingency tables and computing Odds Ratios ($OR$) and Relative Risk ($RR$).</li>
+                    <li>Evaluating screening test sensitivity, specificity, PPV, and NPV from field data.</li>
+                    <li>Designing randomized controlled trial protocols and estimating required sample sizes.</li>
+                    <li>Importing, cleaning, and analyzing primary/secondary biostatistical datasets in SPSS and R.</li>
+                    <li>Constructing actuarial life tables and plotting Kaplan-Meier survival curves.</li>
+                    <li>Classifying life distributions into failure rate ageing classes (IFR, IFRA, NBU, NBUE).</li>
+                </ol>
+
+                <h3>References &amp; Textbooks</h3>
+                <ol class="ref-list">
+                    <li>
+                        <div><strong>Analysis of Survival Data</strong> — Cox, D.R. &amp; Oakes, D.<br>
+                        <em>Chapman and Hall / CRC (1984)</em></div>
+                    </li>
+                    <li>
+                        <div><strong>Applied Multivariate Statistical Analysis</strong> — Johnson, R.A. &amp; Wichern, D.W.<br>
+                        <em>Pearson Education (2007)</em></div>
+                    </li>
+                    <li>
+                        <div><strong>Methods of Multivariate Analysis</strong> — Rencher, A.C. &amp; Christensen, W.F.<br>
+                        <em>John Wiley &amp; Sons (2012)</em></div>
+                    </li>
+                    <li>
+                        <div><strong>Applied Multivariate Techniques</strong> — Sharma, S.<br>
+                        <em>John Wiley &amp; Sons (1996)</em></div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- AUTHOR SECTION -->
+        <section class="page-section" id="author">
+            <div class="author-card">
+                <img src="../Stat-102/opsheoran.png" alt="Prof. O.P. Sheoran" class="author-photo">
+                <div class="author-info">
+                    <h3>Prof. O.P. Sheoran</h3>
+                    <div class="a-title">Professor, Department of Mathematics &amp; Statistics</div>
+                    <div class="a-dept">CCS Haryana Agricultural University, Hisar, Haryana</div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2><i class="fas fa-user-tie" style="color:var(--crimson);"></i> A Note from the Author</h2>
+                <p>Dear Students,</p>
+
+                <p>Welcome to <strong>STAT-MDC-101: Bio-Statistics</strong>. In agricultural science, public health, and biological research, data is not merely abstract numbers—it represents human lives, crop health, vaccine efficacy, and disease prevention.</p>
+
+                <p>This e-book is structured to give you both deep theoretical clarity and immediate practical competence in statistical computing (**R** and **SPSS**). Take full advantage of the step-by-step examples, interactive tools, and self-assessment exercise banks provided in each unit.</p>
+
+                <div class="preface-quote">
+                    <p>Good biostatistics turns clinical and biological uncertainty into confident scientific knowledge.</p>
+                    <div class="quote-attr">— Prof. O.P. Sheoran</div>
+                </div>
+
+                <div class="author-sig">
+                    <div class="sig-name">Prof. O.P. Sheoran</div>
+                    <div class="sig-title">Department of Mathematics &amp; Statistics</div>
+                    <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="book-footer">
+            <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
+        </footer>
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const clicked = document.querySelector(`[onclick*="'${id}'"]`);
+            if (clicked) clicked.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    </script>
+    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    <script src="../calculator/calculator.js?v=1.0"></script>
+</body>
+</html>
