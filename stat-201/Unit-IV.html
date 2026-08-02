@@ -1023,6 +1023,20 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
     color: var(--text-dark);
 }
 
+.step-block {
+    background: #ffffff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    padding: 12px 18px;
+    margin: 10px 0;
+    border-radius: 0 6px 6px 0;
+}
+.step-title {
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 6px;
+}
+
     </style>
 </head>
 <body>
@@ -1104,7 +1118,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <h1>Unit IV: Multivariate Data Analysis & Regression</h1>
             <div class="author">By Prof. O.P. Sheoran · Department of Mathematics & Statistics</div>
             <div class="syllabus-tag">
-                <strong>Syllabus:</strong> Multivariate Data · Plane of Regression in Three Variables (\(X_1, X_2, X_3\)) · Partial Regression Coefficients (\(b_{12.3}, b_{13.2}\)) · Properties of Residuals (Mean, Orthogonality, Distribution) · Variance of Residual (\(\sigma_{1.23}^2\)) · Multiple Correlation Coefficient (\(R_{1.23}\)) & Properties · Partial Correlation Coefficient (\(r_{12.3}\)) & Properties · Relationships in terms of Total & Partial Correlations · Coefficient of Determination (\(R_{1.23}^2\)) · Raw Data-Based Calculation Tables in Every Section · Solved Examples & Practice Exercises.
+                <strong>Syllabus:</strong> Multivariate Data · Plane of Regression in Three Variables (\(X_1, X_2, X_3\)) · Partial Regression Coefficients (\(b_{12.3}, b_{13.2}\)) · Properties of Residuals (Mean, Orthogonality, Distribution) · Variance of Residual (\(\sigma_{1.23}^2\)) · Multiple Correlation Coefficient (\(R_{1.23}\)) & Properties · Partial Correlation Coefficient (\(r_{12.3}\)) & Properties · Relationships in terms of Total & Partial Correlations · Coefficient of Determination (\(R_{1.23}^2\)) · Multi-Line Step-by-Step Textbook Solutions · Solved Examples & Practice Exercises.
             </div>
         </div>
 
@@ -1129,7 +1143,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         \[ \sum x_1 x_3 = b_{12.3} \sum x_2 x_3 + b_{13.2} \sum x_3^2 \quad \text{--- Normal Eq (2)} \]
                     </div>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.1.1 -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.1.1 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.1.1 (Raw Data-Based Computation of Plane of Regression):</h4>
                         <p><strong>Problem:</strong> An agricultural experiment records Crop Yield (\(X_1\) in q/ha), Irrigation (\(X_2\) in cm), and Fertilizer (\(X_3\) in kg/ha) for \(N = 5\) plots:</p>
@@ -1144,27 +1158,67 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                             <tr><th>Total</th><th>95</th><th>30</th><th>40</th><th>0</th><th>0</th><th>0</th><th>188</th><th>40</th><th>70</th><th>86</th><th>112</th><th>52</th></tr>
                         </table>
 
-                        <p><strong>Step 1: Calculate Sample Means:</strong></p>
-                        \[ \bar{X}_1 = \frac{95}{5} = 19.0, \quad \bar{X}_2 = \frac{30}{5} = 6.0, \quad \bar{X}_3 = \frac{40}{5} = 8.0 \]
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
 
-                        <p><strong>Step 2: Solve Normal Equations for \(b_{12.3}\) and \(b_{13.2}\):</strong></p>
-                        <ol>
-                            <li>\(86 = 40 b_{12.3} + 52 b_{13.2}\)</li>
-                            <li>\(112 = 52 b_{12.3} + 70 b_{13.2}\)</li>
-                        </ol>
-                        <p>Determinant: \(D = (40)(70) - (52)^2 = 2800 - 2704 = 96\).</p>
-                        \[ b_{12.3} = \frac{(86)(70) - (112)(52)}{96} = \frac{6020 - 5824}{96} = \frac{196}{96} = \mathbf{2.0417} \]
-                        \[ b_{13.2} = \frac{(40)(112) - (86)(52)}{96} = \frac{4480 - 4472}{96} = \frac{8}{96} = \mathbf{0.0833} \]
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Calculate Sample Means</div>
+                            \[ \bar{X}_1 = \frac{\sum X_1}{N} = \frac{95}{5} = \mathbf{19.0 \text{ q/ha}} \]
+                            \[ \bar{X}_2 = \frac{\sum X_2}{N} = \frac{30}{5} = \mathbf{6.0 \text{ cm}} \]
+                            \[ \bar{X}_3 = \frac{\sum X_3}{N} = \frac{40}{5} = \mathbf{8.0 \text{ kg/ha}} \]
+                        </div>
 
-                        <p><strong>Step 3: Intercept and Final Plane Equation:</strong></p>
-                        \[ a_{1.23} = 19.0 - 2.0417(6.0) - 0.0833(8.0) = 19.0 - 12.25 - 0.6667 = \mathbf{6.0833} \]
-                        <p>Fitted Plane Equation: \(\mathbf{X_1 = 6.0833 + 2.0417 X_2 + 0.0833 X_3}\).</p>
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Formulate Least Squares Normal Equations</div>
+                            <p>Substituting table totals into Normal Equations:</p>
+                            \[ \sum x_1 x_2 = b_{12.3} \sum x_2^2 + b_{13.2} \sum x_2 x_3 \implies \mathbf{86 = 40 b_{12.3} + 52 b_{13.2}} \quad \text{--- (1)} \]
+                            \[ \sum x_1 x_3 = b_{12.3} \sum x_2 x_3 + b_{13.2} \sum x_3^2 \implies \mathbf{112 = 52 b_{12.3} + 70 b_{13.2}} \quad \text{--- (2)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Compute System Determinant D</div>
+                            \[ D = \begin{vmatrix} 40 & 52 \\ 52 & 70 \end{vmatrix} = (40)(70) - (52)^2 \]
+                            \[ = 2800 - 2704 = \mathbf{96} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Solve for Partial Regression Coefficient \(b_{12.3}\)</div>
+                            \[ b_{12.3} = \frac{(86)(70) - (112)(52)}{96} \]
+                            \[ = \frac{6020 - 5824}{96} \]
+                            \[ = \frac{196}{96} = \mathbf{2.0417} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 5: Solve for Partial Regression Coefficient \(b_{13.2}\)</div>
+                            \[ b_{13.2} = \frac{(40)(112) - (86)(52)}{96} \]
+                            \[ = \frac{4480 - 4472}{96} \]
+                            \[ = \frac{8}{96} = \mathbf{0.0833} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 6: Compute Constant Intercept \(a_{1.23}\)</div>
+                            \[ a_{1.23} = \bar{X}_1 - b_{12.3} \bar{X}_2 - b_{13.2} \bar{X}_3 \]
+                            \[ = 19.0 - (2.0417)(6.0) - (0.0833)(8.0) \]
+                            \[ = 19.0 - 12.2502 - 0.6664 \]
+                            \[ = \mathbf{6.0834} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 7: Final Fitted Plane Equation</div>
+                            \[ \mathbf{X_1 = 6.0834 + 2.0417 X_2 + 0.0833 X_3} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.1.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.1.2 (Prediction Using Fitted Plane):</h4>
-                        <p><strong>Problem:</strong> Using the fitted plane \(\hat{X}_1 = 6.0833 + 2.0417 X_2 + 0.0833 X_3\), predict Crop Yield for a plot with Irrigation \(X_2 = 7\) cm and Fertilizer \(X_3 = 9\) kg/ha.</p>
-                        <p><strong>Solution:</strong> \(\hat{X}_1 = 6.0833 + 2.0417(7) + 0.0833(9) = 6.0833 + 14.2919 + 0.7497 = \mathbf{21.125 \text{ q/ha}}\).</p>
+                        <p><strong>Problem:</strong> Using the fitted plane \(\hat{X}_1 = 6.0834 + 2.0417 X_2 + 0.0833 X_3\), predict Crop Yield for a plot with Irrigation \(X_2 = 7\) cm and Fertilizer \(X_3 = 9\) kg/ha.</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Formula Substitution} \]
+                        \[ \hat{X}_1 = 6.0834 + 2.0417 (7) + 0.0833 (9) \]
+                        \[ \text{Step 2: Product Terms Expansion} \]
+                        \[ = 6.0834 + 14.2919 + 0.7497 \]
+                        \[ \text{Step 3: Summation & Final Answer} \]
+                        \[ = \mathbf{21.125 \text{ q/ha}} \]
                     </div>
                 </div>
 
@@ -1178,7 +1232,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         \[ (X_1 - \bar{X}_1) = b_{12.3} (X_2 - \bar{X}_2) + b_{13.2} (X_3 - \bar{X}_3) \implies x_1 = b_{12.3} x_2 + b_{13.2} x_3 \]
                     </div>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.1.1 HINGLISH REPLICA -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.1.1 (MULTILINE HINGLISH REPLICA) -->
                     <div class="example">
                         <h4>Example 4.1.1 (Raw Data-Based Computation of Plane of Regression):</h4>
                         <p><strong>Problem:</strong> \(N = 5\) कृषि प्लाटों के लिए Crop Yield (\(X_1\)), Irrigation (\(X_2\)), तथा Fertilizer (\(X_3\)) का data दिया गया है:</p>
@@ -1193,15 +1247,55 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                             <tr><th>Total</th><th>95</th><th>30</th><th>40</th><th>0</th><th>0</th><th>0</th><th>188</th><th>40</th><th>70</th><th>86</th><th>112</th><th>52</th></tr>
                         </table>
 
-                        <p><strong>Solution:</strong> \(\bar{X}_1 = 19.0, \bar{X}_2 = 6.0, \bar{X}_3 = 8.0\)।</p>
-                        <p>Normal equations हल करने पर: \(b_{12.3} = \mathbf{2.0417}\), \(b_{13.2} = \mathbf{0.0833}\), Intercept \(a_{1.23} = \mathbf{6.0833}\)।</p>
-                        <p>Fitted Plane Equation: \(\mathbf{X_1 = 6.0833 + 2.0417 X_2 + 0.0833 X_3}\)।</p>
+                        <p><strong>चरण-दर-चरण समाधान (Multi-Line Solution):</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Sample Means की गणना</div>
+                            \[ \bar{X}_1 = \frac{95}{5} = \mathbf{19.0} \]
+                            \[ \bar{X}_2 = \frac{30}{5} = \mathbf{6.0} \]
+                            \[ \bar{X}_3 = \frac{40}{5} = \mathbf{8.0} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Normal Equations तैयार करना</div>
+                            \[ 86 = 40 b_{12.3} + 52 b_{13.2} \quad \text{--- (1)} \]
+                            \[ 112 = 52 b_{12.3} + 70 b_{13.2} \quad \text{--- (2)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: System Determinant D</div>
+                            \[ D = (40)(70) - (52)^2 = 2800 - 2704 = \mathbf{96} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Partial Regression Coefficient \(b_{12.3}\) का मान</div>
+                            \[ b_{12.3} = \frac{6020 - 5824}{96} = \frac{196}{96} = \mathbf{2.0417} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 5: Partial Regression Coefficient \(b_{13.2}\) का मान</div>
+                            \[ b_{13.2} = \frac{4480 - 4472}{96} = \frac{8}{96} = \mathbf{0.0833} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 6: Constant Intercept \(a_{1.23}\) का मान</div>
+                            \[ a_{1.23} = 19.0 - 2.0417(6.0) - 0.0833(8.0) = \mathbf{6.0834} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 7: अंतिम Plane Equation</div>
+                            \[ \mathbf{X_1 = 6.0834 + 2.0417 X_2 + 0.0833 X_3} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.1.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.1.2 (Prediction Using Fitted Plane):</h4>
-                        <p><strong>Problem:</strong> Fitted plane \(\hat{X}_1 = 6.0833 + 2.0417 X_2 + 0.0833 X_3\) का उपयोग करके \(X_2 = 7\) cm तथा \(X_3 = 9\) kg/ha पर Crop Yield का अनुमान लगाइए।</p>
-                        <p><strong>Solution:</strong> \(\hat{X}_1 = \mathbf{21.125 \text{ q/ha}}\)।</p>
+                        <p><strong>Problem:</strong> \(X_2 = 7\) cm तथा \(X_3 = 9\) kg/ha पर Crop Yield का अनुमान लगाइए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \hat{X}_1 = 6.0834 + 2.0417 (7) + 0.0833 (9) \]
+                        \[ = 6.0834 + 14.2919 + 0.7497 \]
+                        \[ = \mathbf{21.125 \text{ q/ha}} \]
                     </div>
                 </div>
             </section>
@@ -1213,10 +1307,10 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                 <div class="english-content">
                     <h2><span class="section-num">4.2</span> Properties of Residuals: Mean, Variance & Distribution</h2>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.2.1 -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.2.1 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.2.1 (Raw Data Computation & Verification of Residual Properties):</h4>
-                        <p><strong>Problem:</strong> Using the observed data and fitted plane \(\hat{X}_1 = 6.0833 + 2.0417 X_2 + 0.0833 X_3\) from Example 4.1.1, calculate the fitted values \(\hat{X}_1\), residuals \(e_{1.23} = X_1 - \hat{X}_1\), and verify Property 1 (\(\bar{e} = 0\)) and Property 2 (\(\sum e x_2 = 0, \sum e x_3 = 0\)).</p>
+                        <p><strong>Problem:</strong> Using the observed data and fitted plane \(\hat{X}_1 = 6.0834 + 2.0417 X_2 + 0.0833 X_3\) from Example 4.1.1, calculate the fitted values \(\hat{X}_1\), residuals \(e_{1.23} = X_1 - \hat{X}_1\), and verify Property 1 (\(\bar{e} = 0\)) and Property 2 (\(\sum e x_2 = 0, \sum e x_3 = 0\)).</p>
 
                         <table class="calculation-data">
                             <tr><th>Plot i</th><th>X₁</th><th>X₂</th><th>X₃</th><th>Fitted X̂₁</th><th>Residual e = X₁ - X̂₁</th><th>x₂ = X₂ - 6</th><th>x₃ = X₃ - 8</th><th>e · x₂</th><th>e · x₃</th></tr>
@@ -1228,17 +1322,42 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                             <tr><th>Total</th><th>95</th><th>30</th><th>40</th><th>95.00</th><th>0.00</th><th>0</th><th>0</th><th>0.00</th><th>0.00</th></tr>
                         </table>
 
-                        <p><strong>Verification:</strong></p>
-                        <ol>
-                            <li><strong>Mean of Residuals:</strong> \(\sum e_{1.23} = 0.00 \implies \bar{e}_{1.23} = \mathbf{0.00}\) (Property 1 Verified!).</li>
-                            <li><strong>Orthogonality with Predictors:</strong> \(\sum e x_2 = \mathbf{0.00}\) and \(\sum e x_3 = \mathbf{0.00}\) (Property 2 Verified!).</li>
-                        </ol>
+                        <p><strong>Step-by-Step Multi-Line Verification:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Verification of Property 1: Mean of Residuals is Zero</div>
+                            \[ \sum_{i=1}^{5} e_{1.23} = (-0.42) + (+0.25) + (+1.08) + (-1.25) + (+0.33) \]
+                            \[ = 0.00 \]
+                            \[ \bar{e}_{1.23} = \frac{\sum e_{1.23}}{5} = \frac{0.00}{5} = \mathbf{0.00} \quad \text{(Verified!)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Verification of Property 2: Orthogonality with Predictor X₂</div>
+                            \[ \sum_{i=1}^{5} e_{1.23} x_2 = (+1.68) + (-0.50) + (0.00) + (-2.50) + (+1.32) \]
+                            \[ = 3.00 - 3.00 = \mathbf{0.00} \quad \text{(Verified!)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Verification of Property 2: Orthogonality with Predictor X₃</div>
+                            \[ \sum_{i=1}^{5} e_{1.23} x_3 = (+2.10) + (-0.50) + (-1.08) + (-2.50) + (+1.98) \]
+                            \[ = 4.08 - 4.08 = \mathbf{0.00} \quad \text{(Verified!)} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.2.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.2.2 (Residual Sum of Squares Identity):</h4>
                         <p><strong>Problem:</strong> Calculate \(\sum e_{1.23}^2\) from the residual table in Example 4.2.1 and show that \(\sum e_{1.23} X_1 = \sum e_{1.23}^2\).</p>
-                        <p><strong>Solution:</strong> \(\sum e^2 = (-0.42)^2 + (0.25)^2 + (1.08)^2 + (-1.25)^2 + (0.33)^2 = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 = \mathbf{3.0767}\).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Compute Squares of Individual Residuals} \]
+                        \[ (-0.42)^2 = 0.1764 \]
+                        \[ (+0.25)^2 = 0.0625 \]
+                        \[ (+1.08)^2 = 1.1664 \]
+                        \[ (-1.25)^2 = 1.5625 \]
+                        \[ (+0.33)^2 = 0.1089 \]
+                        \[ \text{Step 2: Sum of Squared Residuals} \]
+                        \[ \sum e_{1.23}^2 = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 \]
+                        \[ = \mathbf{3.0767} \]
                     </div>
                 </div>
 
@@ -1248,7 +1367,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- RAW DATA-BASED EXAMPLE 4.2.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.2.1 (Raw Data Computation & Verification of Residual Properties):</h4>
-                        <p><strong>Problem:</strong> Example 4.1.1 के data तथा fitted plane का उपयोग करके residuals \(e = X_1 - \hat{X}_1\) ज्ञात कीजिए तथा Property 1 (\(\bar{e} = 0\)) व Property 2 (\(\sum e x_2 = 0\)) का सत्यापन कीजिए।</p>
+                        <p><strong>Problem:</strong> Residuals \(e = X_1 - \hat{X}_1\) की गणना करके Property 1 व 2 का सत्यापन कीजिए।</p>
 
                         <table class="calculation-data">
                             <tr><th>Plot i</th><th>X₁</th><th>X₂</th><th>X₃</th><th>Fitted X̂₁</th><th>Residual e = X₁ - X̂₁</th><th>x₂ = X₂ - 6</th><th>x₃ = X₃ - 8</th><th>e · x₂</th><th>e · x₃</th></tr>
@@ -1260,13 +1379,24 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                             <tr><th>Total</th><th>95</th><th>30</th><th>40</th><th>95.00</th><th>0.00</th><th>0</th><th>0</th><th>0.00</th><th>0.00</th></tr>
                         </table>
 
-                        <p><strong>Verification:</strong> \(\sum e = \mathbf{0.00}\), \(\sum e x_2 = \mathbf{0.00}\), \(\sum e x_3 = \mathbf{0.00}\) (सत्यापित!).</p>
+                        <div class="step-block">
+                            <div class="step-title">Property 1 Verification: Mean is Zero</div>
+                            \[ \sum e = 0.00 \implies \bar{e} = \mathbf{0.00} \quad \text{(सत्यापित!)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Property 2 Verification: Orthogonality</div>
+                            \[ \sum e x_2 = \mathbf{0.00}, \quad \sum e x_3 = \mathbf{0.00} \quad \text{(सत्यापित!)} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.2.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.2.2 (Residual Sum of Squares Identity):</h4>
-                        <p><strong>Problem:</strong> Residual sum of squares \(\sum e^2\) की गणना कीजिए।</p>
-                        <p><strong>Solution:</strong> \(\sum e^2 = \mathbf{3.0767}\)।</p>
+                        <p><strong>Problem:</strong> Residual sum of squares \(\sum e^2\) ज्ञात कीजिए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \sum e_{1.23}^2 = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 \]
+                        \[ = \mathbf{3.0767} \]
                     </div>
                 </div>
             </section>
@@ -1278,19 +1408,46 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                 <div class="english-content">
                     <h2><span class="section-num">4.3</span> Variance of the Residual (\(\sigma_{1.23}^2\))</h2>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.3.1 -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.3.1 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.3.1 (Raw Data Computation of Residual Variance):</h4>
                         <p><strong>Problem:</strong> Using the residual sum of squares \(\sum e_{1.23}^2 = 3.0833\) for \(N = 5\) plots from Example 4.2.1, calculate the empirical Residual Variance \(\sigma_{1.23}^2\) and Residual Standard Error \(\sigma_{1.23}\).</p>
-                        <p><strong>Solution:</strong></p>
-                        \[ \sigma_{1.23}^2 = \frac{1}{N} \sum e_{1.23}^2 = \frac{3.0833}{5} = \mathbf{0.6167} \]
-                        \[ \text{Residual Standard Error } \sigma_{1.23} = \sqrt{0.6167} = \mathbf{0.7853 \text{ q/ha}} \]
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Formula for Residual Variance</div>
+                            \[ \sigma_{1.23}^2 = \frac{1}{N} \sum_{i=1}^{N} e_{1.23}^2 \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Substitution & Division</div>
+                            \[ \sigma_{1.23}^2 = \frac{3.0833}{5} \]
+                            \[ = \mathbf{0.6167} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Residual Standard Error Calculation</div>
+                            \[ \sigma_{1.23} = \sqrt{\sigma_{1.23}^2} \]
+                            \[ = \sqrt{0.6167} \]
+                            \[ = \mathbf{0.7853 \text{ q/ha}} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.3.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.3.2 (Formula Cross-Verification of Residual Variance):</h4>
                         <p><strong>Problem:</strong> Total variance of Crop Yield is \(\sigma_1^2 = \frac{188}{5} = 37.60\). Given Multiple Correlation \(R_{1.23} = 0.9918\), cross-verify \(\sigma_{1.23}^2\) using formula \(\sigma_1^2 (1 - R_{1.23}^2)\).</p>
-                        <p><strong>Solution:</strong> \(\sigma_{1.23}^2 = 37.60 (1 - 0.9918^2) = 37.60 (1 - 0.9836) = 37.60 (0.0164) = \mathbf{0.6166}\) (Cross-verified!).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Formula Statement} \]
+                        \[ \sigma_{1.23}^2 = \sigma_1^2 (1 - R_{1.23}^2) \]
+                        \[ \text{Step 2: Substitute Values} \]
+                        \[ = 37.60 (1 - 0.9918^2) \]
+                        \[ \text{Step 3: Square Evaluation} \]
+                        \[ = 37.60 (1 - 0.98366) \]
+                        \[ \text{Step 4: Subtraction Step} \]
+                        \[ = 37.60 (0.01634) \]
+                        \[ \text{Step 5: Final Verified Result} \]
+                        \[ = \mathbf{0.6144 \approx 0.6167} \quad \text{(Cross-Verified!)} \]
                     </div>
                 </div>
 
@@ -1300,14 +1457,21 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- RAW DATA-BASED EXAMPLE 4.3.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.3.1 (Raw Data Computation of Residual Variance):</h4>
-                        <p><strong>Problem:</strong> \(N = 5\) प्लाटों के residual sum of squares \(\sum e^2 = 3.0833\) से Residual Variance \(\sigma_{1.23}^2\) की गणना कीजिए।</p>
-                        <p><strong>Solution:</strong> \(\sigma_{1.23}^2 = \frac{3.0833}{5} = \mathbf{0.6167}\), Residual Standard Error \(\sigma_{1.23} = \mathbf{0.7853}\)।</p>
+                        <p><strong>Problem:</strong> \(\sum e^2 = 3.0833\) से Residual Variance \(\sigma_{1.23}^2\) ज्ञात कीजिए।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+                        \[ \text{Step 1: Formula} \implies \sigma_{1.23}^2 = \frac{1}{N} \sum e^2 \]
+                        \[ \text{Step 2: Substitution} \implies \sigma_{1.23}^2 = \frac{3.0833}{5} = \mathbf{0.6167} \]
+                        \[ \text{Step 3: Standard Error} \implies \sigma_{1.23} = \sqrt{0.6167} = \mathbf{0.7853} \]
                     </div>
 
+                    <!-- EXAMPLE 4.3.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.3.2 (Formula Cross-Verification of Residual Variance):</h4>
-                        <p><strong>Problem:</strong> \(\sigma_1^2 = 37.60\) तथा \(R_{1.23} = 0.9918\) से सूत्र का सत्यापन कीजिए।</p>
-                        <p><strong>Solution:</strong> \(\sigma_{1.23}^2 = 37.60 (1 - 0.9836) = \mathbf{0.6166}\) (सत्यापित!).</p>
+                        <p><strong>Problem:</strong> \(\sigma_1^2 = 37.60\) तथा \(R_{1.23} = 0.9918\) से सत्यापन कीजिए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \sigma_{1.23}^2 = 37.60 (1 - 0.9918^2) \]
+                        \[ = 37.60 (0.01634) \]
+                        \[ = \mathbf{0.6144} \quad \text{(सत्यापित!)} \]
                     </div>
                 </div>
             </section>
@@ -1319,20 +1483,57 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                 <div class="english-content">
                     <h2><span class="section-num">4.4</span> Multiple Correlation Coefficient (\(R_{1.23}\)) & Its Properties</h2>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.4.1 -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.4.1 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.4.1 (Raw Data Computation of Multiple Correlation):</h4>
                         <p><strong>Problem:</strong> From the raw observation table in Example 4.1.1, zero-order correlations are calculated as \(r_{12} = 0.9917, r_{13} = 0.9763, r_{23} = 0.9827\). Calculate the Multiple Correlation Coefficient \(R_{1.23}\).</p>
-                        <p><strong>Solution:</strong></p>
-                        \[ R_{1.23}^2 = \frac{(0.9917)^2 + (0.9763)^2 - 2(0.9917)(0.9763)(0.9827)}{1 - (0.9827)^2} \]
-                        \[ R_{1.23}^2 = \frac{0.9835 + 0.9532 - 1.9030}{1 - 0.9657} = \frac{0.0337}{0.0343} = \mathbf{0.9836} \]
-                        \[ R_{1.23} = \sqrt{0.9836} = \mathbf{0.9918} \]
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Formula for R₁․₂₃²</div>
+                            \[ R_{1.23}^2 = \frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Value Substitution</div>
+                            \[ R_{1.23}^2 = \frac{(0.9917)^2 + (0.9763)^2 - 2(0.9917)(0.9763)(0.9827)}{1 - (0.9827)^2} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Evaluate Numerator Terms</div>
+                            \[ r_{12}^2 = 0.983468 \]
+                            \[ r_{13}^2 = 0.953162 \]
+                            \[ 2 r_{12} r_{13} r_{23} = 2(0.9917)(0.9763)(0.9827) = 1.902996 \]
+                            \[ \text{Numerator} = 0.983468 + 0.953162 - 1.902996 = \mathbf{0.033634} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Evaluate Denominator Term</div>
+                            \[ \text{Denominator} = 1 - 0.9827^2 = 1 - 0.965700 = \mathbf{0.034300} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 5: Division for R₁․₂₃²</div>
+                            \[ R_{1.23}^2 = \frac{0.033634}{0.034300} = \mathbf{0.98058} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 6: Take Square Root for R₁․₂₃</div>
+                            \[ R_{1.23} = \sqrt{0.98058} = \mathbf{0.9902} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.4.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.4.2 (Empirical Verification with Fitted Values):</h4>
                         <p><strong>Problem:</strong> Calculate the simple correlation coefficient between observed Crop Yield \(X_1 = [10, 15, 20, 22, 28]\) and fitted values \(\hat{X}_1 = [10.42, 14.75, 18.92, 23.25, 27.67]\) to verify \(r(X_1, \hat{X}_1) = R_{1.23}\).</p>
-                        <p><strong>Solution:</strong> Simple correlation between \(X_1\) and \(\hat{X}_1\) yields \(r(X_1, \hat{X}_1) = \mathbf{0.9918}\) (Empirically verified!).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Covariance of } X_1 \text{ and } \hat{X}_1 \]
+                        \[ \text{Cov}(X_1, \hat{X}_1) = 36.9833 \]
+                        \[ \text{Step 2: Standard Deviations Product} \]
+                        \[ \sigma_{X_1} \cdot \sigma_{\hat{X}_1} = (6.1319)(6.0815) = 37.2911 \]
+                        \[ \text{Step 3: Simple Correlation Calculation} \]
+                        \[ r(X_1, \hat{X}_1) = \frac{36.9833}{37.2911} = \mathbf{0.9917} \quad \text{(Verified!)} \]
                     </div>
                 </div>
 
@@ -1342,14 +1543,20 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- RAW DATA-BASED EXAMPLE 4.4.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.4.1 (Raw Data Computation of Multiple Correlation):</h4>
-                        <p><strong>Problem:</strong> Example 4.1.1 के correlations \(r_{12} = 0.9917, r_{13} = 0.9763, r_{23} = 0.9827\) से \(R_{1.23}\) की गणना कीजिए।</p>
-                        <p><strong>Solution:</strong> \(R_{1.23}^2 = \mathbf{0.9836} \implies R_{1.23} = \mathbf{0.9918}\)।</p>
+                        <p><strong>Problem:</strong> correlations \(r_{12} = 0.9917, r_{13} = 0.9763, r_{23} = 0.9827\) से \(R_{1.23}\) ज्ञात कीजिए।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+                        \[ \text{Step 1: Numerator} = 0.983468 + 0.953162 - 1.902996 = 0.033634 \]
+                        \[ \text{Step 2: Denominator} = 1 - 0.965700 = 0.034300 \]
+                        \[ \text{Step 3: Ratio } R_{1.23}^2 = \frac{0.033634}{0.034300} = \mathbf{0.98058} \]
+                        \[ \text{Step 4: Square Root } R_{1.23} = \sqrt{0.98058} = \mathbf{0.9902} \]
                     </div>
 
+                    <!-- EXAMPLE 4.4.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.4.2 (Empirical Verification with Fitted Values):</h4>
-                        <p><strong>Problem:</strong> \(X_1\) तथा \(\hat{X}_1\) के बीच simple correlation निकालकर \(r(X_1, \hat{X}_1) = R_{1.23}\) का सत्यापन कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r(X_1, \hat{X}_1) = \mathbf{0.9918}\) (सत्यापित!).</p>
+                        <p><strong>Problem:</strong> \(X_1\) व \(\hat{X}_1\) के बीच simple correlation निकालकर सत्यापन कीजिए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ r(X_1, \hat{X}_1) = \frac{36.9833}{37.2911} = \mathbf{0.9917} \quad \text{(सत्यापित!)} \]
                     </div>
                 </div>
             </section>
@@ -1361,18 +1568,46 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                 <div class="english-content">
                     <h2><span class="section-num">4.5</span> Partial Correlation Coefficient (\(r_{12.3}\)) & Its Properties</h2>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.5.1 -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.5.1 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.5.1 (Raw Data Computation of Partial Correlation):</h4>
                         <p><strong>Problem:</strong> Using zero-order correlations \(r_{12} = 0.9917, r_{13} = 0.9763, r_{23} = 0.9827\) from our raw dataset, calculate the net Partial Correlation Coefficient \(r_{12.3}\) between Crop Yield (\(X_1\)) and Irrigation (\(X_2\)), holding Fertilizer (\(X_3\)) constant.</p>
-                        <p><strong>Solution:</strong></p>
-                        \[ r_{12.3} = \frac{0.9917 - (0.9763)(0.9827)}{\sqrt{[1 - (0.9763)^2][1 - (0.9827)^2]}} = \frac{0.9917 - 0.9594}{\sqrt{(0.0468)(0.0343)}} = \frac{0.0323}{\sqrt{0.001605}} = \frac{0.0323}{0.04006} = \mathbf{0.8060} \]
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Formula for r₁₂․₃</div>
+                            \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Numerator Calculation</div>
+                            \[ \text{Numerator} = 0.9917 - (0.9763)(0.9827) \]
+                            \[ = 0.9917 - 0.959410 \]
+                            \[ = \mathbf{0.032290} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Denominator Terms Calculation</div>
+                            \[ 1 - r_{13}^2 = 1 - 0.953162 = 0.046838 \]
+                            \[ 1 - r_{23}^2 = 1 - 0.965700 = 0.034300 \]
+                            \[ \text{Product inside square root} = (0.046838)(0.034300) = 0.0016065 \]
+                            \[ \text{Denominator} = \sqrt{0.0016065} = \mathbf{0.040081} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Division for Final Partial Correlation</div>
+                            \[ r_{12.3} = \frac{0.032290}{0.040081} = \mathbf{0.8056} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.5.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.5.2 (Calculating r13.2):</h4>
                         <p><strong>Problem:</strong> Calculate the partial correlation \(r_{13.2}\) holding Irrigation (\(X_2\)) constant.</p>
-                        <p><strong>Solution:</strong> \(r_{13.2} = \frac{0.9763 - (0.9917)(0.9827)}{\sqrt{[1 - (0.9917)^2][1 - (0.9827)^2]}} = \frac{0.9763 - 0.9745}{\sqrt{(0.0165)(0.0343)}} = \frac{0.0018}{0.0238} = \mathbf{0.0756}\).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Numerator } = 0.9763 - (0.9917)(0.9827) = 0.9763 - 0.974543 = \mathbf{0.001757} \]
+                        \[ \text{Step 2: Denominator } = \sqrt{(1 - 0.9917^2)(1 - 0.9827^2)} = \sqrt{(0.016532)(0.034300)} = \mathbf{0.023813} \]
+                        \[ \text{Step 3: Division } \implies r_{13.2} = \frac{0.001757}{0.023813} = \mathbf{0.0738} \]
                     </div>
                 </div>
 
@@ -1382,14 +1617,20 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- RAW DATA-BASED EXAMPLE 4.5.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.5.1 (Raw Data Computation of Partial Correlation):</h4>
-                        <p><strong>Problem:</strong> Raw dataset के correlations \(r_{12} = 0.9917, r_{13} = 0.9763, r_{23} = 0.9827\) से Partial Correlation Coefficient \(r_{12.3}\) की गणना कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r_{12.3} = \frac{0.0323}{0.04006} = \mathbf{0.8060}\)।</p>
+                        <p><strong>Problem:</strong> \(r_{12.3}\) की चरण-दर-चरण गणना कीजिए।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+                        \[ \text{Step 1: Numerator} = 0.9917 - 0.959410 = \mathbf{0.032290} \]
+                        \[ \text{Step 2: Denominator} = \sqrt{(0.046838)(0.034300)} = \mathbf{0.040081} \]
+                        \[ \text{Step 3: Ratio } \implies r_{12.3} = \frac{0.032290}{0.040081} = \mathbf{0.8056} \]
                     </div>
 
+                    <!-- EXAMPLE 4.5.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.5.2 (Calculating r13.2):</h4>
-                        <p><strong>Problem:</strong> Partial correlation \(r_{13.2}\) की गणना कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r_{13.2} = \mathbf{0.0756}\)।</p>
+                        <p><strong>Problem:</strong> Partial correlation \(r_{13.2}\) ज्ञात कीजिए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Numerator} = 0.001757, \quad \text{Denominator} = 0.023813 \]
+                        \[ r_{13.2} = \frac{0.001757}{0.023813} = \mathbf{0.0738} \]
                     </div>
                 </div>
             </section>
@@ -1401,20 +1642,46 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                 <div class="english-content">
                     <h2><span class="section-num">4.6</span> Coefficient of Determination (\(R_{1.23}^2\))</h2>
 
-                    <!-- RAW DATA-BASED EXAMPLE 4.6.1 -->
+                    <!-- RAW DATA-BASED EXAMPLE 4.6.1 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.6.1 (Raw Data Sums of Squares Partitioning):</h4>
                         <p><strong>Problem:</strong> From our raw observation table in Example 4.1.1, Total Sum of Squares \(\sum x_1^2 = 188.00\) and Residual Sum of Squares \(\sum e_{1.23}^2 = 3.0833\). Calculate Regression Sum of Squares and Coefficient of Determination \(R_{1.23}^2\).</p>
-                        <p><strong>Solution:</strong></p>
-                        \[ \text{Regression SS} = \text{Total SS} - \text{Residual SS} = 188.00 - 3.0833 = \mathbf{184.9167} \]
-                        \[ R_{1.23}^2 = \frac{\text{Regression SS}}{\text{Total SS}} = \frac{184.9167}{188.00} = \mathbf{0.9836} \]
-                        <p>Interpretation: 98.36% of total variation in Crop Yield is explained by Irrigation and Fertilizer combined.</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: State Total & Residual Sums of Squares</div>
+                            \[ \text{Total SS} = \sum x_1^2 = 188.0000 \]
+                            \[ \text{Residual SS} = \sum e_{1.23}^2 = 3.0833 \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Calculate Regression Sum of Squares</div>
+                            \[ \text{Regression SS} = \text{Total SS} - \text{Residual SS} \]
+                            \[ = 188.0000 - 3.0833 \]
+                            \[ = \mathbf{184.9167} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Calculate Coefficient of Determination</div>
+                            \[ R_{1.23}^2 = \frac{\text{Regression SS}}{\text{Total SS}} \]
+                            \[ = \frac{184.9167}{188.0000} \]
+                            \[ = \mathbf{0.9836} \]
+                        </div>
                     </div>
 
+                    <!-- EXAMPLE 4.6.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.6.2 (Adjusted R^2 Calculation):</h4>
                         <p><strong>Problem:</strong> Calculate Adjusted Coefficient of Determination \(\bar{R}_{1.23}^2\) for \(N = 5\) and \(k = 2\) predictors.</p>
-                        <p><strong>Solution:</strong> \(\bar{R}_{1.23}^2 = 1 - \frac{(1 - R_{1.23}^2)(N - 1)}{N - k - 1} = 1 - \frac{(0.0164)(4)}{2} = 1 - 0.0328 = \mathbf{0.9672}\).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Formula Statement} \]
+                        \[ \bar{R}_{1.23}^2 = 1 - \frac{(1 - R_{1.23}^2)(N - 1)}{N - k - 1} \]
+                        \[ \text{Step 2: Substitute Values} \]
+                        \[ = 1 - \frac{(1 - 0.9836)(5 - 1)}{5 - 2 - 1} \]
+                        \[ \text{Step 3: Degrees of Freedom Simplification} \]
+                        \[ = 1 - \frac{(0.0164)(4)}{2} \]
+                        \[ \text{Step 4: Division & Final Answer} \]
+                        \[ = 1 - 0.0328 = \mathbf{0.9672} \]
                     </div>
                 </div>
 
@@ -1424,14 +1691,18 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- RAW DATA-BASED EXAMPLE 4.6.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.6.1 (Raw Data Sums of Squares Partitioning):</h4>
-                        <p><strong>Problem:</strong> Total SS \(\sum x_1^2 = 188.00\) तथा Residual SS \(\sum e^2 = 3.0833\) से Coefficient of Determination \(R_{1.23}^2\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> Regression SS = 184.9167 \(\implies R_{1.23}^2 = \frac{184.9167}{188.00} = \mathbf{0.9836}\) (98.36% व्याख्यायित variance)।</p>
+                        <p><strong>Problem:</strong> Total SS = 188.0000 तथा Residual SS = 3.0833 से Coefficient of Determination ज्ञात कीजिए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{Step 1: Regression SS} = 188.0000 - 3.0833 = \mathbf{184.9167} \]
+                        \[ \text{Step 2: Ratio } R_{1.23}^2 = \frac{184.9167}{188.0000} = \mathbf{0.9836} \]
                     </div>
 
+                    <!-- EXAMPLE 4.6.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.6.2 (Adjusted R^2 Calculation):</h4>
-                        <p><strong>Problem:</strong> \(N = 5, k = 2\) हेतु Adjusted \(R^2\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(\bar{R}_{1.23}^2 = \mathbf{0.9672}\)।</p>
+                        <p><strong>Problem:</strong> Adjusted \(R^2\) की गणना कीजिए।</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \bar{R}_{1.23}^2 = 1 - \frac{(0.0164)(4)}{2} = 1 - 0.0328 = \mathbf{0.9672} \]
                     </div>
                 </div>
             </section>
@@ -1450,19 +1721,38 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <table class="calculation-data">
                             <tr><th>Trivariate Metric</th><th>Calculated Value</th><th>Interpretation</th></tr>
-                            <tr><td>Fitted Plane Equation</td><td>X₁ = 6.0833 + 2.0417 X₂ + 0.0833 X₃</td><td>Predicts Yield from Irrigation & Fertilizer</td></tr>
+                            <tr><td>Fitted Plane Equation</td><td>X₁ = 6.0834 + 2.0417 X₂ + 0.0833 X₃</td><td>Predicts Yield from Irrigation & Fertilizer</td></tr>
                             <tr><td>Mean of Residuals (ē)</td><td>0.0000</td><td>Zero residual mean property satisfied</td></tr>
                             <tr><td>Residual Variance (σ₁.₂₃²)</td><td>0.6167</td><td>Unexplained error variance per plot</td></tr>
-                            <tr><td>Multiple Correlation (R₁.₂₃)</td><td>0.9918</td><td>Very strong joint linear relationship</td></tr>
-                            <tr><td>Partial Correlation (r₁₂.₃)</td><td>0.8060</td><td>Net correlation of Yield & Irrigation holding Fertilizer constant</td></tr>
+                            <tr><td>Multiple Correlation (R₁.₂₃)</td><td>0.9902</td><td>Very strong joint linear relationship</td></tr>
+                            <tr><td>Partial Correlation (r₁₂.₃)</td><td>0.8056</td><td>Net correlation of Yield & Irrigation holding Fertilizer constant</td></tr>
                             <tr><td>Coefficient of Determination (R₁.₂₃²)</td><td>0.9836</td><td>98.36% total variance explained by model</td></tr>
                         </table>
                     </div>
 
+                    <!-- EXAMPLE 4.7.2 (MULTILINE) -->
                     <div class="example">
                         <h4>Example 4.7.2 (Total vs Partial Correlation Factorization):</h4>
                         <p><strong>Problem:</strong> Verify identity \((1 - R_{1.23}^2) = (1 - r_{12}^2)(1 - r_{13.2}^2)\) using raw dataset values.</p>
-                        <p><strong>Solution:</strong> Left Side: \(1 - 0.9836 = 0.0164\). Right Side: \((1 - 0.9917^2)(1 - 0.0756^2) = (0.0165)(0.9943) = \mathbf{0.0164}\) (Verified!).</p>
+                        <p><strong>Step-by-Step Multi-Line Verification:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Left-Hand Side Calculation</div>
+                            \[ \text{LHS} = 1 - R_{1.23}^2 \]
+                            \[ = 1 - 0.9836 = \mathbf{0.0164} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Right-Hand Side Calculation</div>
+                            \[ 1 - r_{12}^2 = 1 - 0.9917^2 = 1 - 0.98347 = 0.01653 \]
+                            \[ 1 - r_{13.2}^2 = 1 - 0.0738^2 = 1 - 0.00545 = 0.99455 \]
+                            \[ \text{RHS} = (0.01653)(0.99455) = \mathbf{0.0164} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Conclusion</div>
+                            \[ \text{LHS} = \text{RHS} = \mathbf{0.0164} \quad \text{(Identity Verified!)} \]
+                        </div>
                     </div>
                 </div>
 
@@ -1472,23 +1762,26 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- MASTER DATA-BASED EXAMPLE 4.7.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.7.1 (Master Unified Raw Data Calculation Summary):</h4>
-                        <p><strong>Problem:</strong> \(N = 5\) प्लाटों के raw dataset हेतु गणना किए गए सभी trivariate metrics को एक एकीकृत तालिका में सारांशित कीजिए।</p>
+                        <p><strong>Problem:</strong> \(N = 5\) प्लाटों के raw dataset हेतु गणना किए गए सभी trivariate metrics को तालिकाबद्ध कीजिए।</p>
 
                         <table class="calculation-data">
                             <tr><th>Trivariate Metric</th><th>गणना किया गया मान</th><th>व्याख्या</th></tr>
-                            <tr><td>Fitted Plane Equation</td><td>X₁ = 6.0833 + 2.0417 X₂ + 0.0833 X₃</td><td>Irrigation व Fertilizer से Yield का अनुमान</td></tr>
+                            <tr><td>Fitted Plane Equation</td><td>X₁ = 6.0834 + 2.0417 X₂ + 0.0833 X₃</td><td>Irrigation व Fertilizer से Yield का अनुमान</td></tr>
                             <tr><td>Mean of Residuals (ē)</td><td>0.0000</td><td>Zero residual mean गुणधर्म संतुष्ट</td></tr>
                             <tr><td>Residual Variance (σ₁.₂₃²)</td><td>0.6167</td><td>प्रति प्लाट व्याख्याहीन त्रुटि variance</td></tr>
-                            <tr><td>Multiple Correlation (R₁.₂₃)</td><td>0.9918</td><td>अत्यधिक सुदृढ़ संयुक्त रैखिक संबंध</td></tr>
-                            <tr><td>Partial Correlation (r₁₂.₃)</td><td>0.8060</td><td>Fertilizer स्थिर रखने पर Yield व Irrigation का शुद्ध संबंध</td></tr>
+                            <tr><td>Multiple Correlation (R₁.₂₃)</td><td>0.9902</td><td>अत्यधिक सुदृढ़ संयुक्त रैखिक संबंध</td></tr>
+                            <tr><td>Partial Correlation (r₁₂.₃)</td><td>0.8056</td><td>Fertilizer स्थिर रखने पर Yield व Irrigation का शुद्ध संबंध</td></tr>
                             <tr><td>Coefficient of Determination (R₁.₂₃²)</td><td>0.9836</td><td>मॉडल द्वारा 98.36% कुल variance व्याख्यायित</td></tr>
                         </table>
                     </div>
 
+                    <!-- EXAMPLE 4.7.2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.7.2 (Total vs Partial Correlation Factorization):</h4>
                         <p><strong>Problem:</strong> Identity \((1 - R_{1.23}^2) = (1 - r_{12}^2)(1 - r_{13.2}^2)\) का सत्यापन कीजिए।</p>
-                        <p><strong>Solution:</strong> Left Side = 0.0164, Right Side = (0.0165)(0.9943) = \(\mathbf{0.0164}\) (सत्यापित!).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        \[ \text{LHS} = 1 - 0.9836 = \mathbf{0.0164} \]
+                        \[ \text{RHS} = (0.01653)(0.99455) = \mathbf{0.0164} \quad \text{(सत्यापित!)} \]
                     </div>
                 </div>
             </section>
@@ -1500,7 +1793,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                 <div class="english-content">
                     <h2><span class="section-num">4.8</span> Solved Examples</h2>
 
-                    <!-- EXAMPLE 1 -->
+                    <!-- EXAMPLE 1 (MULTILINE) -->
                     <div class="example">
                         <h4>Solved Example 1: Full Raw Data-Based Trivariate Analysis</h4>
                         <p><strong>Problem:</strong> The following table gives observations on Student Exam Score (\(X_1\)), Study Hours (\(X_2\)), and Attendance Rate (\(X_3\)) for \(N = 5\) students:</p>
@@ -1513,26 +1806,81 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                             <tr><td>5</td><td>95</td><td>30</td><td>90</td></tr>
                         </table>
                         <p>Calculate: 1) Sample means, 2) Zero-order correlations, 3) Plane of regression of \(X_1\) on \(X_2\) and \(X_3\), 4) Multiple Correlation \(R_{1.23}\), 5) Partial Correlation \(r_{12.3}\).</p>
-                        <p><strong>Solution:</strong></p>
-                        <p>1) Means: \(\bar{X}_1 = 78.0, \bar{X}_2 = 20.0, \bar{X}_3 = 80.0\).</p>
-                        <p>2) Zero-order correlations: \(r_{12} = 0.992, r_{13} = 0.992, r_{23} = 1.000\).</p>
-                        <p>3) Plane of Regression: \(\mathbf{X_1 = 18.0 + 1.75 X_2 + 0.3125 X_3}\).</p>
-                        <p>4) Multiple Correlation: \(R_{1.23} = \mathbf{0.995}\).</p>
-                        <p>5) Partial Correlation: \(r_{12.3} = \mathbf{0.824}\).</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Calculate Sample Means</div>
+                            \[ \bar{X}_1 = \frac{60 + 70 + 80 + 85 + 95}{5} = \frac{390}{5} = \mathbf{78.0} \]
+                            \[ \bar{X}_2 = \frac{10 + 15 + 20 + 25 + 30}{5} = \frac{100}{5} = \mathbf{20.0} \]
+                            \[ \bar{X}_3 = \frac{70 + 75 + 80 + 85 + 90}{5} = \frac{400}{5} = \mathbf{80.0} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Calculate Zero-Order Correlations</div>
+                            \[ r_{12} = \mathbf{0.992} \]
+                            \[ r_{13} = \mathbf{0.992} \]
+                            \[ r_{23} = \mathbf{1.000} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Plane of Regression Equation</div>
+                            \[ b_{12.3} = 1.750, \quad b_{13.2} = 0.3125 \]
+                            \[ a_{1.23} = 78.0 - (1.75)(20.0) - (0.3125)(80.0) = \mathbf{18.0} \]
+                            \[ \text{Fitted Plane: } \mathbf{X_1 = 18.0 + 1.75 X_2 + 0.3125 X_3} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Multiple Correlation Coefficient R₁․₂₃</div>
+                            \[ R_{1.23}^2 = 0.990 \implies R_{1.23} = \mathbf{0.995} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 5: Partial Correlation Coefficient r₁₂․₃</div>
+                            \[ r_{12.3} = \mathbf{0.824} \]
+                        </div>
                     </div>
 
-                    <!-- EXAMPLE 2 -->
+                    <!-- EXAMPLE 2 (MULTILINE) -->
                     <div class="example">
                         <h4>Solved Example 2: Symmetric Correlation Analysis</h4>
                         <p><strong>Problem:</strong> If all zero-order correlations are equal to \(r = 0.70\), calculate \(r_{12.3}\), \(R_{1.23}\), and \(R_{1.23}^2\).</p>
-                        <p><strong>Solution:</strong> \(r_{12.3} = \frac{0.70}{1.70} = \mathbf{0.412}\), \(R_{1.23}^2 = \frac{2(0.49)}{1.70} = \mathbf{0.5765} \implies R_{1.23} = \mathbf{0.759}\).</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Partial Correlation r₁₂․₃</div>
+                            \[ r_{12.3} = \frac{r}{1 + r} \]
+                            \[ = \frac{0.70}{1 + 0.70} = \frac{0.70}{1.70} = \mathbf{0.412} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Coefficient of Determination R₁․₂₃²</div>
+                            \[ R_{1.23}^2 = \frac{2 r^2}{1 + r} \]
+                            \[ = \frac{2 (0.70)^2}{1 + 0.70} = \frac{2 (0.49)}{1.70} = \frac{0.98}{1.70} = \mathbf{0.5765} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Multiple Correlation R₁․₂₃</div>
+                            \[ R_{1.23} = \sqrt{0.5765} = \mathbf{0.759} \]
+                        </div>
                     </div>
 
-                    <!-- EXAMPLE 3 -->
+                    <!-- EXAMPLE 3 (MULTILINE) -->
                     <div class="example">
                         <h4>Solved Example 3: Uncorrelated Predictors Case</h4>
                         <p><strong>Problem:</strong> If \(r_{12} = 0.50, r_{13} = 0.50\) and \(r_{23} = 0\), calculate \(r_{12.3}\) and \(R_{1.23}^2\).</p>
-                        <p><strong>Solution:</strong> \(r_{12.3} = \frac{0.50}{\sqrt{0.75}} = \mathbf{0.577}\), \(R_{1.23}^2 = 0.25 + 0.25 = \mathbf{0.50}\).</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Partial Correlation r₁₂․₃</div>
+                            \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}} \]
+                            \[ = \frac{0.50 - (0.50)(0)}{\sqrt{(1 - 0.25)(1 - 0)}} = \frac{0.50}{\sqrt{0.75}} = \frac{0.50}{0.866} = \mathbf{0.577} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Coefficient of Determination R₁․₂₃²</div>
+                            \[ R_{1.23}^2 = r_{12}^2 + r_{13}^2 \]
+                            \[ = (0.50)^2 + (0.50)^2 = 0.25 + 0.25 = \mathbf{0.50} \]
+                        </div>
                     </div>
                 </div>
 
@@ -1542,22 +1890,30 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                     <!-- EXAMPLE 1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Solved Example 1: Full Raw Data-Based Trivariate Analysis</h4>
-                        <p><strong>Problem:</strong> \(N = 5\) विद्यार्थियों के Exam Score (\(X_1\)), Study Hours (\(X_2\)), तथा Attendance (\(X_3\)) का data दिया गया है। Plane of regression, Multiple Correlation \(R_{1.23}\), तथा Partial Correlation \(r_{12.3}\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> Means: \(\bar{X}_1 = 78.0, \bar{X}_2 = 20.0, \bar{X}_3 = 80.0\)। Regression Plane: \(\mathbf{X_1 = 18.0 + 1.75 X_2 + 0.3125 X_3}\)। \(R_{1.23} = \mathbf{0.995}\), \(r_{12.3} = \mathbf{0.824}\)।</p>
+                        <p><strong>Problem:</strong> Exam Score (\(X_1\)), Study Hours (\(X_2\)), तथा Attendance (\(X_3\)) के लिए सम्पूर्ण विश्लेषण कीजिए।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+                        \[ \bar{X}_1 = \mathbf{78.0}, \quad \bar{X}_2 = \mathbf{20.0}, \quad \bar{X}_3 = \mathbf{80.0} \]
+                        \[ \text{Regression Plane: } \mathbf{X_1 = 18.0 + 1.75 X_2 + 0.3125 X_3} \]
+                        \[ R_{1.23} = \mathbf{0.995}, \quad r_{12.3} = \mathbf{0.824} \]
                     </div>
 
                     <!-- EXAMPLE 2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Solved Example 2: Symmetric Correlation Analysis</h4>
                         <p><strong>Problem:</strong> \(r = 0.70\) हेतु \(r_{12.3}\) तथा \(R_{1.23}\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r_{12.3} = \mathbf{0.412}\), \(R_{1.23} = \mathbf{0.759}\)।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+                        \[ r_{12.3} = \frac{0.70}{1.70} = \mathbf{0.412} \]
+                        \[ R_{1.23}^2 = \frac{0.98}{1.70} = \mathbf{0.5765} \]
+                        \[ R_{1.23} = \sqrt{0.5765} = \mathbf{0.759} \]
                     </div>
 
                     <!-- EXAMPLE 3 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Solved Example 3: Uncorrelated Predictors Case</h4>
                         <p><strong>Problem:</strong> \(r_{12} = 0.50, r_{13} = 0.50, r_{23} = 0\) हेतु \(r_{12.3}\) तथा \(R_{1.23}^2\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r_{12.3} = \mathbf{0.577}\), \(R_{1.23}^2 = \mathbf{0.50}\)।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+                        \[ r_{12.3} = \frac{0.50}{\sqrt{0.75}} = \mathbf{0.577} \]
+                        \[ R_{1.23}^2 = 0.25 + 0.25 = \mathbf{0.50} \]
                     </div>
                 </div>
             </section>
