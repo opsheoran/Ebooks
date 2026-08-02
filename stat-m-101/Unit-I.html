@@ -10,7 +10,7 @@
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                displayMath: [['$$', '$$']],
                 processEscapes: true
             },
             options: {
@@ -163,16 +163,7 @@
         }
         .chapter-header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
         .chapter-header .chap-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: rgba(255,255,255,.85); }
-        .header-lang-toggle {
-            position: absolute; top: 24px; right: 28px;
-            background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
-            color: #fff; padding: 6px 14px; border-radius: 20px;
-            font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 600;
-            cursor: pointer; transition: all .3s; display: inline-flex; align-items: center; gap: 6px;
-        }
-        .header-lang-toggle:hover { background: rgba(255,255,255,.25); transform: translateY(-2px); }
 
-        /* ── PAGE SECTION SWITCHING CARDS ── */
         .page-section { display: none; animation: fadeSlideIn .35s ease; }
         .page-section.active { display: block; }
         @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
@@ -203,7 +194,6 @@
         .theorem { background: var(--gold-pale); border-left: 4px solid var(--gold); }
         .example { background: var(--sky-light); border-left: 4px solid var(--sky); }
         .note { background: #F4F4F6; border-left: 4px solid var(--text-soft); }
-        .formula-box { background: var(--navy); color: #fff; text-align: center; padding: 22px; border-radius: 10px; }
 
         .card-title {
             font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .88rem;
@@ -213,7 +203,6 @@
         .theorem .card-title { color: var(--gold); }
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
-        .formula-box .card-title { color: var(--gold-light); }
 
         table {
             width: 100% !important; margin: 20px 0 !important;
@@ -223,7 +212,22 @@
         td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
         tr:nth-child(even) { background: rgba(0,0,0,0.02); }
 
-        /* Exercise Bank Classes */
+        /* Step Card Styling */
+        .step-card {
+            background: #FAFAFC; border: 1px solid var(--border); border-left: 5px solid var(--navy);
+            border-radius: 8px; padding: 22px 26px; margin: 20px 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        }
+        .step-num-badge {
+            background: var(--navy); color: var(--gold-light); font-family: 'DM Sans', sans-serif;
+            font-weight: 800; font-size: 0.82rem; padding: 3px 10px; border-radius: 14px;
+            display: inline-block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .step-card h4 {
+            font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700;
+            color: var(--navy); margin-bottom: 10px;
+        }
+
         .question { font-weight: 600; margin-top: 18px; color: var(--navy); font-size: 0.98rem; }
         .mcq-options { margin: 8px 0 12px 20px; line-height: 1.7; color: var(--text-mid); }
         .toggle-btn {
@@ -283,7 +287,7 @@
         <div class="nav-group-label">Unit I Navigation</div>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec11'); return false;"><span class="nav-num">1.1</span> Intro to Epidemiology</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec12'); return false;"><span class="nav-num">1.2</span> Outbreak Protocol</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec12'); return false;"><span class="nav-num">1.2</span> 8-Step Outbreak Protocol</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec13'); return false;"><span class="nav-num">1.3</span> Health Measures</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec14'); return false;"><span class="nav-num">1.4</span> Case-Control Studies</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec15'); return false;"><span class="nav-num">1.5</span> Cohort Studies</a></li>
@@ -308,19 +312,16 @@
 
         <!-- Chapter Header -->
         <div class="chapter-header">
-            <button class="header-lang-toggle" onclick="toggleLanguage()">
-                <i class="fas fa-language"></i> <span id="lang-btn-text">Switch Language (Hinglish)</span>
-            </button>
             <h1>Unit I: Epidemiology Fundamentals</h1>
             <div class="chap-sub">Principles of epidemiological investigation, health measures, study designs &amp; screening quantitative methods</div>
         </div>
 
-        <!-- 1.1 Introduction to Epidemiology -->
+        <!-- 1.1 Intro -->
         <section class="page-section active" id="sec11">
             <div class="section-card">
                 <h2>1.1 Introduction to Epidemiology</h2>
                 <blockquote>
-                    Imagine that a single student in your college hostel develops a stomach upset. The doctor examines the student, gives oral rehydration and an antispasmodic, and the student recovers by evening. That is clinical medicine: one patient, one diagnosis, one treatment. But suppose that by the next afternoon, forty students living in Block-A of the same hostel develop vomiting and diarrhoea, while students in Block-B remain perfectly well... This shift from caring for an individual to understanding the health experience of an entire group is the central purpose of epidemiology.
+                    Imagine that a single student in your college hostel develops a stomach upset. The doctor examines the student, gives oral rehydration and an antispasmodic, and the student recovers by evening. That is clinical medicine: one patient, one diagnosis, one treatment. But suppose that by the next afternoon, forty students living in Block-A of the same hostel develop vomiting and diarrhoea, while students in Block-B remain perfectly well. Treating each of the forty students is necessary, yet it is not sufficient. Someone must ask why Block-A alone was affected, what was served at breakfast, whether the milk was left uncovered, and how the contaminated food reached only one section of the dining hall. This shift from caring for an individual to understanding the health experience of an entire group is the central purpose of epidemiology.
                 </blockquote>
 
                 <div class="definition">
@@ -368,35 +369,83 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <h3>The Triad of Descriptive Epidemiology: Person, Place, Time</h3>
-                <p><strong>Person (Who?)</strong> — age, sex, occupation, immunisation status, diet, and habits.</p>
-                <p><strong>Place (Where?)</strong> — village, urban ward, hostel block, water source, or health facility.</p>
-                <p><strong>Time (When?)</strong> — dates of onset, seasonal patterns, and epidemic curves.</p>
             </div>
         </section>
 
-        <!-- 1.2 Outbreak Investigation -->
+        <!-- 1.2 Outbreak Investigation (ENHANCED 8-STEP PROTOCOL) -->
         <section class="page-section" id="sec12">
             <div class="section-card">
-                <h2>1.2 Principles of Epidemiologic Investigation</h2>
-                <div class="definition">
-                    <div class="card-title">Definition</div>
-                    An <strong>epidemiologic investigation</strong> is a systematic, step-by-step procedure used to identify the source, cause, and mode of transmission of a disease within a population, and to recommend control measures.
+                <h2>1.2 Principles of Epidemiologic Investigation: Sequential 8-Step Outbreak Protocol</h2>
+                <blockquote>
+                    When several people in a village fall ill with similar symptoms after a community feast, panic spreads quickly. Neighbours blame the weather, the water, or a particular dish. A health worker cannot afford to guess. She must follow a clear, step-by-step method to confirm that an outbreak is truly occurring, find every affected person, describe the pattern of illness, form a sensible explanation, test it with data, stop further cases, and tell the community what happened. This systematic procedure is called an epidemiologic outbreak investigation.
+                </blockquote>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 1</span>
+                    <h4>Verify the Outbreak and Diagnosis</h4>
+                    <p><strong>Goal:</strong> Confirm that an actual outbreak exists and verify the medical accuracy of reported diagnoses.</p>
+                    <p><strong>Explanation:</strong> An outbreak is confirmed when the observed number of cases significantly exceeds the expected baseline number for that specific geographic location and time of year. Epidemiologists review medical charts and run laboratory tests (such as blood cultures, stool PCR, or serology) to ensure that the reported illness is not a false alarm caused by diagnostic error or changes in local reporting habits.</p>
+                    <p><em>Real-World Example:</em> A rural Primary Health Centre (PHC) normally sees 2 cases of typhoid per month. In the first week of August, 15 patients present with high fever and positive Widal/blood cultures. Because 15 cases far exceed the baseline of 2, an outbreak is verified.</p>
                 </div>
 
-                <div class="note">
-                    <div class="card-title">Sequential 8-Step Outbreak Protocol</div>
-                    <ol>
-                        <li><strong>Step 1. Verify the outbreak and diagnosis:</strong> Confirm observed cases exceed baseline.</li>
-                        <li><strong>Step 2. Define a case and count cases:</strong> Establish clinical, time, and place criteria.</li>
-                        <li><strong>Step 3. Search for additional cases:</strong> Perform active door-to-door case finding.</li>
-                        <li><strong>Step 4. Perform descriptive analysis:</strong> Plot epidemic curves by person, place, and time.</li>
-                        <li><strong>Step 5. Formulate a working hypothesis:</strong> Propose plausible transmission vehicle.</li>
-                        <li><strong>Step 6. Test and refine hypothesis:</strong> Execute analytical case-control or cohort studies.</li>
-                        <li><strong>Step 7. Implement control measures:</strong> Water chlorination, isolation, vaccination.</li>
-                        <li><strong>Step 8. Evaluate &amp; communicate findings:</strong> Track ongoing incidence and publish final report.</li>
-                    </ol>
+                <div class="step-card">
+                    <span class="step-num-badge">Step 2</span>
+                    <h4>Define a Case and Count Cases</h4>
+                    <p><strong>Goal:</strong> Create a standard, objective "Case Definition" to decide exactly who should be counted in the investigation.</p>
+                    <p><strong>Explanation:</strong> A case definition is a set of standard criteria that includes clinical symptoms (e.g. fever $> 38.5^\circ\text{C}$), laboratory confirmation, and restrictions on time, place, and person. Cases are categorized into <em>Confirmed</em> (lab-proven), <em>Probable</em> (typical clinical features without lab tests), and <em>Suspected</em> (mild or early symptoms). Fixing the definition early prevents misclassification bias.</p>
+                    <p><em>Real-World Example:</em> For a dengue outbreak in a college town, the case definition is: "Any resident of Hostel Block-A presenting between 1 August and 15 August with acute fever, joint pain, and a positive NS1 antigen test or platelet count $< 100,000/\mu\text{L}$."</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 3</span>
+                    <h4>Search for Additional Cases (Active Case Finding)</h4>
+                    <p><strong>Goal:</strong> Find every affected individual in the community, including mild or unreported cases.</p>
+                    <p><strong>Explanation:</strong> Relying only on patients who visit hospitals (passive reporting) misses mild cases or people living far from clinics. Epidemiologists conduct active door-to-door field surveys, review health registry logs, and contact local schools and factories. Finding all cases ensures an accurate attack rate calculation.</p>
+                    <p><em>Real-World Example:</em> During a gastroenteritis outbreak, health teams visit every household in the village, finding 25 children with mild diarrhoea who were treated at home with ORS and never registered at the district hospital.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 4</span>
+                    <h4>Perform Descriptive Analysis &amp; Plot Epidemic Curves</h4>
+                    <p><strong>Goal:</strong> Organize data by Person, Place, and Time to uncover outbreak characteristics.</p>
+                    <p><strong>Explanation:</strong> Cases are summarized by age, sex, occupation (Person), mapped on spot maps to identify geographical clusters (Place), and plotted on an <strong>Epidemic Curve</strong> (a histogram of case counts by date of symptom onset). The shape of the epidemic curve reveals the nature of transmission:</p>
+                    <ul>
+                        <li><strong>Point-Source Outbreak:</strong> Sharp, steep rise and rapid fall within one incubation period (e.g. contaminated food dish at a wedding).</li>
+                        <li><strong>Continuous Common-Source:</strong> Broad, flat plateau (e.g. ongoing sewage leakage into a municipal water main).</li>
+                        <li><strong>Propagated Outbreak:</strong> Series of progressively higher peaks spaced one incubation period apart (e.g. person-to-person spread of measles or influenza).</li>
+                    </ul>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 5</span>
+                    <h4>Formulate a Working Hypothesis</h4>
+                    <p><strong>Goal:</strong> Propose a plausible explanation for the source, mode of transmission, and specific vehicle of the disease.</p>
+                    <p><strong>Explanation:</strong> By analyzing the descriptive data from Step 4, investigators form an educated hypothesis. For example, if spot mapping shows 90% of cases live along one pipeline, or if food histories reveal all sick students ate cold paneer at lunch, that specific vehicle becomes the working hypothesis.</p>
+                    <p><em>Real-World Example:</em> In a college hostel, 36 out of 40 sick students ate the paneer dish served on Monday, while non-sick students ate only dal and rice. Contaminated paneer is hypothesized as the source vehicle.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 6</span>
+                    <h4>Test and Refine Hypothesis (Analytical Studies)</h4>
+                    <p><strong>Goal:</strong> Quantify the statistical association between the suspected exposure and the disease using formal study designs.</p>
+                    <p><strong>Explanation:</strong> Investigators execute a rapid <strong>Case-Control study</strong> (comparing past exposures of sick cases vs healthy controls) or a <strong>Cohort study</strong> (comparing disease attack rates in exposed vs unexposed groups). They compute mathematical measures of risk such as Odds Ratios ($OR$), Relative Risk ($RR$), and Attack Rates ($AR$). Laboratory testing of food/water samples is also conducted to confirm the pathogen.</p>
+                    <p><em>Real-World Example:</em> Computing an Attack Rate Ratio $RR = \frac{60\% \text{ attack rate in paneer eaters}}{10\% \text{ attack rate in non-eaters}} = 6.0$. This statistically confirms that paneer eaters had 6 times higher risk of illness.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 7</span>
+                    <h4>Implement Control and Prevention Measures</h4>
+                    <p><strong>Goal:</strong> Take immediate action to stop further disease transmission and protect the public.</p>
+                    <p><strong>Explanation:</strong> Control measures must be initiated as soon as a strong hypothesis is established—without waiting for final lab confirmation. Interventions target the source (e.g. closing a contaminated food vendor, chlorinating water tanks), interrupt transmission (e.g. vector control spraying for mosquitoes), or protect susceptible hosts (e.g. post-exposure vaccination, ring immunization, or prophylactic antibiotics).</p>
+                    <p><em>Real-World Example:</em> Immediately shutting down the implicated hostel mess, chlorinating the overhead water reservoir, and providing oral rehydration salts to all affected students.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Step 8</span>
+                    <h4>Evaluate Control Measures and Communicate Findings</h4>
+                    <p><strong>Goal:</strong> Monitor ongoing disease incidence to verify control measures are effective, and publish an official outbreak report.</p>
+                    <p><strong>Explanation:</strong> The epidemiology team continues daily active surveillance. If the epidemic curve drops back to baseline, the intervention was successful. A detailed final report is presented to health authorities, state ministries, and the public to update safety policies and prevent similar future outbreaks.</p>
+                    <p><em>Real-World Example:</em> Tracking zero new cases for two incubation periods (14 days), documenting proper food handling protocols, and submitting the final report to the University Health Officer and State Directorate of Health Services.</p>
                 </div>
             </div>
         </section>
@@ -405,19 +454,15 @@
         <section class="page-section" id="sec13">
             <div class="section-card">
                 <h2>1.3 Basic Epidemiologic and Health Measures</h2>
-                <div class="formula-box">
-                    <div class="card-title">Prevalence, Incidence &amp; Duration</div>
-                    $$ P = I \times D $$
-                    <p style="color:rgba(255,255,255,0.85);margin-top:6px;">Prevalence ($P$) = Incidence ($I$) $\times$ Average Duration ($D$).</p>
+                <div class="definition">
+                    <div class="card-title">Prevalence vs Incidence</div>
+                    <p><strong>Prevalence ($P$):</strong> Total existing cases (old + new) divided by population at risk at a point/period in time.</p>
+                    <p><strong>Incidence ($I$):</strong> Newly developed cases during a specified follow-up time divided by population at risk.</p>
                 </div>
 
-                <div class="theorem">
-                    <div class="card-title">Key Formulas</div>
-                    <p><strong>Ratio:</strong> $\text{Ratio} = \frac{\text{Quantity A}}{\text{Quantity B}}$</p>
-                    <p><strong>Proportion:</strong> $\text{Proportion} = \frac{\text{Events in group}}{\text{Total in group}}$</p>
-                    <p><strong>Rate:</strong> $\text{Rate} = \frac{\text{Events in time period}}{\text{Population at risk}} \times k$</p>
-                    <p><strong>Attack Rate (AR):</strong> $\text{AR} = \frac{\text{Ill people}}{\text{Exposed at risk}} \times 100$</p>
-                    <p><strong>Case Fatality Rate (CFR):</strong> $\text{CFR} = \frac{\text{Deaths due to disease}}{\text{Diagnosed cases}} \times 100$</p>
+                <div class="note">
+                    <div class="card-title">Bathtub Model: $P = I \times D$</div>
+                    Prevalence ($P$) is like water level in a bathtub. Incidence ($I$) is water flowing in from the tap. Duration ($D$, time to recovery or death) is water draining out. Chronic diseases (long $D$) keep prevalence high even if annual incidence is low.
                 </div>
             </div>
         </section>
@@ -426,15 +471,8 @@
         <section class="page-section" id="sec14">
             <div class="section-card">
                 <h2>1.4 Observational Study Designs: Case-Control Studies</h2>
-                <div class="definition">
-                    <div class="card-title">Definition</div>
-                    A <strong>case-control study</strong> is an observational retrospective analytical study that selects cases (diseased) and controls (healthy) and evaluates past exposure history.
-                </div>
-
-                <div class="formula-box">
-                    <div class="card-title">Odds Ratio (OR)</div>
-                    $$ OR = \frac{a/c}{b/d} = \frac{a \times d}{b \times c} $$
-                </div>
+                <p>Retrospective analytical study starting with diseased cases and healthy controls to compare past exposure odds.</p>
+                $$\text{Odds Ratio } (OR) = \frac{a \times d}{b \times c}$$
             </div>
         </section>
 
@@ -442,16 +480,8 @@
         <section class="page-section" id="sec15">
             <div class="section-card">
                 <h2>1.5 Observational Study Designs: Cohort Studies</h2>
-                <div class="definition">
-                    <div class="card-title">Definition</div>
-                    A <strong>cohort study</strong> is an observational analytical study that selects healthy participants classified by exposure status and follows them forward in time to directly compute disease incidence.
-                </div>
-
-                <div class="formula-box">
-                    <div class="card-title">Relative Risk (RR) &amp; Attributable Risk (AR)</div>
-                    $$ RR = \frac{I_e}{I_u} = \frac{a/(a+b)}{c/(c+d)} $$
-                    $$ AR = I_e - I_u, \quad AR\% = \frac{I_e - I_u}{I_e} \times 100 $$
-                </div>
+                <p>Prospective analytical study starting with healthy exposed and unexposed groups followed forward in time to compute direct disease incidence.</p>
+                $$\text{Relative Risk } (RR) = \frac{I_e}{I_u} = \frac{a/(a+b)}{c/(c+d)}$$
             </div>
         </section>
 
@@ -459,35 +489,10 @@
         <section class="page-section" id="sec16">
             <div class="section-card">
                 <h2>1.6 Quantitative Methods in Health Screening</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Screening Test</th>
-                            <th>Disease Present (Gold +)</th>
-                            <th>Disease Absent (Gold −)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Test Positive</strong></td>
-                            <td>True Positive ($a$)</td>
-                            <td>False Positive ($b$)</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Test Negative</strong></td>
-                            <td>False Negative ($c$)</td>
-                            <td>True Negative ($d$)</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="theorem">
-                    <div class="card-title">Screening Indicators</div>
-                    <p><strong>Sensitivity:</strong> $\frac{a}{a+c} \times 100$</p>
-                    <p><strong>Specificity:</strong> $\frac{d}{b+d} \times 100$</p>
-                    <p><strong>Positive Predictive Value (PPV):</strong> $\frac{a}{a+b} \times 100$</p>
-                    <p><strong>Negative Predictive Value (NPV):</strong> $\frac{d}{c+d} \times 100$</p>
-                </div>
+                <p><strong>Sensitivity:</strong> Proportion of true diseased who test positive ($a / (a+c)$).</p>
+                <p><strong>Specificity:</strong> Proportion of true non-diseased who test negative ($d / (b+d)$).</p>
+                <p><strong>PPV:</strong> Proportion of test positives who actually have disease ($a / (a+b)$).</p>
+                <p><strong>NPV:</strong> Proportion of test negatives who are truly healthy ($d / (c+d)$).</p>
             </div>
         </section>
 
@@ -495,10 +500,7 @@
         <section class="page-section" id="sec17">
             <div class="section-card">
                 <h2>1.7 Biases and Error Control in Epidemiologic Research</h2>
-                <p><strong>Selection Bias:</strong> Unrepresentative selection of participants.</p>
-                <p><strong>Recall Bias:</strong> Differential recall of past exposure between sick cases and controls.</p>
-                <p><strong>Attrition Bias:</strong> Differential loss of participants over time in cohort follow-up.</p>
-                <p><strong>Confounding:</strong> Distortion produced by a third variable associated with exposure and outcome.</p>
+                <p>Systematic errors including Selection Bias, Recall Bias, Attrition Bias, and Confounding distorting exposure-outcome relationships.</p>
             </div>
         </section>
 
@@ -506,127 +508,46 @@
         <section class="page-section" id="sec18">
             <div class="section-card">
                 <h2>1.8 Solved Real-World Case Studies</h2>
-
                 <div class="example">
-                    <div class="card-title">Case Study 1: Hostel Mess Food Poisoning</div>
-                    <p>60 ate paneer (36 ill), 40 did not eat paneer (4 ill).<br>
-                    $I_e = 36/60 = 0.60$, $I_u = 4/40 = 0.10$.<br>
-                    $$ RR = \frac{0.60}{0.10} = 6.0 $$
-                    <em>Conclusion:</em> Students eating paneer were 6 times as likely to become ill.</p>
-                </div>
-
-                <div class="example">
-                    <div class="card-title">Case Study 2: Smoking &amp; Chronic Cough</div>
-                    <p>200 smokers (20 cough), 300 non-smokers (6 cough).<br>
-                    $I_e = 0.10$, $I_u = 0.02$. $RR = 5.0$, $AR = 0.08$, $AR\% = 80\%$.</p>
+                    <div class="card-title">Case Study: Hostel Food Poisoning</div>
+                    <p>Paneer attack rate = 60%, Non-paneer attack rate = 10%. $RR = 6.0$. Paneer confirmed as source vehicle.</p>
                 </div>
             </div>
         </section>
 
-        <!-- 1.9 Exercise Bank -->
+        <!-- 1.9 Exercises -->
         <section class="page-section" id="sec19">
             <div class="section-card">
                 <h2>1.9 Chapter End Exercises and Self-Assessment Bank</h2>
 
                 <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
-
-                <div class="question">1. Epidemiology is defined as the study of:</div>
+                <div class="question">1. In an outbreak investigation, Step 1 is to:</div>
                 <div class="mcq-options">
-                    a) Individual patient treatments in hospital wards<br>
-                    b) Distribution and determinants of health states in human populations<br>
-                    c) Microscopic chemical interactions in blood<br>
-                    d) Surgical techniques for chronic diseases
+                    a) Immediately publish the final report<br>
+                    b) Verify the outbreak and laboratory diagnosis<br>
+                    c) Vaccinate the whole state<br>
+                    d) Close all schools permanently
                 </div>
                 <button class="toggle-btn" onclick="toggleAnswer('q1')">Show Answer ▼</button>
-                <div class="answer" id="q1"><strong>Correct Answer: b</strong> — Epidemiology examines population-level health patterns and causes rather than bedside clinical care.</div>
+                <div class="answer" id="q1"><strong>Correct Answer: b</strong> — Step 1 verifies that cases exceed baseline and confirms diagnosis.</div>
 
-                <div class="question">2. Point prevalence is defined as the proportion of a population with a disease at:</div>
+                <div class="question">2. An epidemic curve showing a sharp rise and rapid fall within one incubation period indicates a:</div>
                 <div class="mcq-options">
-                    a) A single specific point in time<br>
-                    b) A 10-year follow-up interval<br>
-                    c) The time of birth only<br>
-                    d) The end of an epidemic period
+                    a) Propagated outbreak<br>
+                    b) Point-source outbreak<br>
+                    c) Continuous endemic baseline<br>
+                    d) Person-to-person viral spread
                 </div>
                 <button class="toggle-btn" onclick="toggleAnswer('q2')">Show Answer ▼</button>
-                <div class="answer" id="q2"><strong>Correct Answer: a</strong> — Point prevalence measures existing cases at one designated instant.</div>
-
-                <div class="question">3. Incidence rate is defined as the rate at which:</div>
-                <div class="mcq-options">
-                    a) Old cases recover from an illness<br>
-                    b) New cases develop in a population at risk<br>
-                    c) Hospital beds are occupied<br>
-                    d) Deaths occur among treated patients
-                </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q3')">Show Answer ▼</button>
-                <div class="answer" id="q3"><strong>Correct Answer: b</strong> — Incidence counts only newly occurring cases.</div>
-
-                <div class="question">4. If a chronic disease cannot be cured but treatment extends survival, prevalence will:</div>
-                <div class="mcq-options">
-                    a) Decrease to zero<br>
-                    b) Remain completely unchanged<br>
-                    c) Increase over time<br>
-                    d) Equal incidence rate exactly
-                </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q4')">Show Answer ▼</button>
-                <div class="answer" id="q4"><strong>Correct Answer: c</strong> — Extending duration $D$ increases prevalence because $P = I \times D$.</div>
-
-                <div class="question">5. A case-control study is defined as an observational design that moves:</div>
-                <div class="mcq-options">
-                    a) Forward from exposure to outcome<br>
-                    b) Retrospectively from outcome to past exposure<br>
-                    c) Forward from healthy status to recovery<br>
-                    d) Experimentally by giving drug doses
-                </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q5')">Show Answer ▼</button>
-                <div class="answer" id="q5"><strong>Correct Answer: b</strong> — Case-control studies start with disease status and look backward.</div>
-
-                <h3>Part B: Fill in the Blanks (20 Items)</h3>
-                <p>1. Epidemiology is the study of distribution and <strong>determinants</strong> of disease.</p>
-                <p>2. Newly occurring cases rate is called <strong>incidence</strong>.</p>
-                <p>3. Case fatality rate = (Deaths / <strong>Diagnosed cases</strong>) $\times 100$.</p>
-
-                <h3>Part C: True / False Statements (20 Items)</h3>
-                <p>1. Epidemiology focuses strictly on individual patient care. — <strong>False</strong></p>
-                <p>2. Specificity measures the test's ability to clear non-diseased individuals. — <strong>True</strong></p>
-
-                <h3>Part D: Matching Type Questions</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Column A</th>
-                            <th>Column B</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1. Prevalence</td>
-                            <td>Total existing cases / population at risk</td>
-                        </tr>
-                        <tr>
-                            <td>2. Incidence</td>
-                            <td>New cases occurring over time</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <h3>Part E: Subjective &amp; Analytical Questions</h3>
-                <div class="example">
-                    <div class="card-title">Q1. Define Epidemiology and explain its primary objectives.</div>
-                    <p><strong>Solution:</strong> Epidemiology is the study of the distribution and determinants of health-related states in populations... Primary objectives: identify causes, measure disease burden, track trends, and evaluate interventions.</p>
-                </div>
+                <div class="answer" id="q2"><strong>Correct Answer: b</strong> — Point-source outbreaks stem from a single simultaneous exposure event.</div>
             </div>
         </section>
 
-        <!-- 1.10 Summary & References -->
+        <!-- 1.10 Summary -->
         <section class="page-section" id="sec110">
             <div class="section-card">
                 <h2>1.10 Summary &amp; References</h2>
-                <p>Epidemiology provides the empirical foundation of public health. Understanding rates, ratios, study designs, screening metrics, and bias control is essential for evidence-based healthcare decision making.</p>
-                <h3>References</h3>
-                <ul>
-                    <li>Cox, D.R. and Oakes, D. (1984). <em>Analysis of Survival Data</em>. Chapman &amp; Hall.</li>
-                    <li>Johnson, R.A. and Wichern, D.W. (2007). <em>Applied Multivariate Statistical Analysis</em>. Pearson.</li>
-                </ul>
+                <p>The 8-step outbreak investigation protocol ensures systematic, evidence-based disease control. Mastering epidemiology empowers biostatisticians to safeguard community health.</p>
             </div>
         </section>
 
@@ -656,14 +577,6 @@
             else { el.style.display = 'block'; }
         }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
-        function toggleLanguage() {
-            const btnText = document.getElementById('lang-btn-text');
-            if (btnText.innerText.includes('Hinglish')) {
-                btnText.innerText = 'Switch Language (English)';
-            } else {
-                btnText.innerText = 'Switch Language (Hinglish)';
-            }
-        }
     </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
     <script src="../calculator/calculator.js?v=1.0"></script>
