@@ -1,0 +1,214 @@
+/* ── PROFESSIONAL FLOATING SCIENTIFIC CALCULATOR STYLES ── */
+
+.calc-popup {
+    position: fixed;
+    top: 55%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    width: 380px;
+    background: #111B30;
+    border: 3px solid #C8922A;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    z-index: 20000;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'DM Sans', sans-serif;
+    user-select: none;
+    transition: box-shadow 0.3s ease;
+}
+
+.calc-popup.active {
+    display: flex;
+    animation: calcPopIn 0.3s ease-out;
+}
+
+@keyframes calcPopIn {
+    from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ── CALCULATOR HEADER ── */
+.calc-header {
+    background: linear-gradient(135deg, #1B2A4A 0%, #243555 100%);
+    color: #fff;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: move;
+    border-bottom: 2px solid rgba(200, 146, 42, 0.4);
+}
+
+.calc-header h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin: 0;
+    color: #E8B84B;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calc-close {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.calc-close:hover {
+    background: #9B2335;
+    transform: rotate(90deg);
+}
+
+/* ── CALCULATOR DISPLAY ── */
+.calc-display-container {
+    background: #0A101D;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 85px;
+}
+
+.calc-history {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    min-height: 20px;
+    word-break: break-all;
+    text-align: right;
+    width: 100%;
+}
+
+.calc-input {
+    font-family: 'Source Serif 4', monospace;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #E8B84B;
+    width: 100%;
+    text-align: right;
+    background: none;
+    border: none;
+    outline: none;
+    letter-spacing: 1px;
+}
+
+/* ── KEYPAD GRID ── */
+.calc-keypad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 16px;
+    background: #111B30;
+}
+
+.calc-btn {
+    background: #1B2A4A;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 6px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.calc-btn:hover {
+    background: #2E4270;
+    border-color: rgba(232, 184, 75, 0.4);
+    transform: translateY(-1px);
+}
+
+.calc-btn:active {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+/* Button Variants */
+.calc-btn.fn-btn {
+    background: #16223B;
+    color: #93C5FD;
+    font-size: 0.85rem;
+}
+
+.calc-btn.fn-btn:hover {
+    background: #243555;
+    color: #ffffff;
+}
+
+.calc-btn.op-btn {
+    background: #2A3C60;
+    color: #E8B84B;
+    font-weight: 700;
+    font-size: 1.05rem;
+}
+
+.calc-btn.op-btn:hover {
+    background: #3B5384;
+}
+
+.calc-btn.clear-btn {
+    background: rgba(155, 35, 53, 0.8);
+    color: #ffffff;
+}
+
+.calc-btn.clear-btn:hover {
+    background: #9B2335;
+}
+
+.calc-btn.equals-btn {
+    background: linear-gradient(135deg, #C8922A 0%, #E8B84B 100%);
+    color: #111B30;
+    font-weight: 800;
+    font-size: 1.2rem;
+    grid-column: span 2;
+}
+
+.calc-btn.equals-btn:hover {
+    background: linear-gradient(135deg, #D49B2E 0%, #F5C55D 100%);
+    box-shadow: 0 0 12px rgba(232, 184, 75, 0.5);
+}
+
+/* Header Toggle Button Styling */
+.calc-mode-toggle {
+    background: linear-gradient(135deg, #1B2A4A 0%, #243555 100%);
+    color: #E8B84B;
+    border: 1.5px solid rgba(232, 184, 75, 0.5);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+    margin-left: 8px;
+}
+
+.calc-mode-toggle:hover {
+    background: #2E4270;
+    color: #ffffff;
+    border-color: #E8B84B;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(200, 146, 42, 0.3);
+}
