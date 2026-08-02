@@ -7,7 +7,21 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Unit II – Curve Fitting &amp; Principle of Least Squares | STAT-M-201</title>
 <!-- MathJax -->
-<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- MathJax Configuration -->
+        <!-- MathJax Config -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&amp;family=Source+Serif+4:ital,wght@0,400;0,600&amp;family=DM+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
@@ -718,17 +732,17 @@
         .quick-ref-table th { background: var(--navy-light); }
 
         /* ── FOOTER ───────────────────────────────────────────────── */
-                .book-footer {
+        .book-footer {
             background: var(--navy);
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255,255,255,.75);
             text-align: center;
-            padding: 28px 20px;
+            padding: 24px;
             margin-top: 48px;
             border-radius: 12px 12px 0 0;
-            border-top: 3px solid var(--gold);
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.9rem;
+            font-size: .88rem;
             line-height: 1.7;
+        }
 
         .book-footer strong { color: var(--gold-light); }
         .book-footer .university {
@@ -782,6 +796,8 @@
             position: relative;
         }
     
+
+/* Additional Course Portal & Language Toggle Enhancements */
 .chapter-header { position: relative; }
 .header-lang-toggle {
     position: absolute; top: 20px; right: 30px;
@@ -793,7 +809,109 @@
     display: inline-flex; align-items: center; gap: 6px;
 }
 .header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
-</style>
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.unit-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 30px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.unit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+}
+
+.unit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--gold);
+}
+
+.unit-badge {
+    display: inline-block;
+    background: var(--gold-pale);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    width: fit-content;
+}
+
+.unit-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+}
+
+.unit-card p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.unit-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+}
+
+.unit-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-read {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-read:hover {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+    </style>
 </head>
 <body>
 <header class="book-header">
@@ -2077,10 +2195,10 @@ Calculations: \(\sum Y = 796.2, \sum UY = 1016.8\).</p>
 </section>
 </div>
 </main>
-<footer class="book-footer">
-<p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
-    CCS Haryana Agricultural University, Hisar</br></p>
-</footer>
+        <footer class="book-footer">
+        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+        CCS Haryana Agricultural University, Hisar</p>
+    </footer>
 <script>
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
 function showTopic(id) {

@@ -1,0 +1,2462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit IV – Skewness, Kurtosis & Attributes | STAT-M-101</title>
+    
+        <!-- MathJax Config -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\(', '\)']],
+                displayMath: [['$$', '$$'], ['\[', '\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700&family=Source+Serif+4:ital,wght@0,400;0,600&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../common_style.css">
+    <link rel="stylesheet" href="stat101_style.css">
+    <link rel="stylesheet" href="../whiteboard/whiteboard.css">
+
+    <style>
+
+        /* ============================================================
+           DESIGN SYSTEM — Professional Textbook
+           Palette: Deep Navy · Warm Ivory · Golden Amber · Sage Green
+        ============================================================ */
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* ── TOP HEADER ───────────────────────────────────────────── */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: var(--navy);
+            background: linear-gradient(110deg, var(--navy) 0%, var(--navy-mid) 50%, var(--navy-light) 100%);
+            color: #fff;
+            z-index: 1100;
+            box-shadow: 0 3px 20px rgba(0,0,0,.25);
+            display: flex;
+            align-items: center;
+            padding: 0 28px;
+            gap: 16px;
+        }
+
+        .book-header .menu-toggle {
+            display: none;
+            background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer;
+            padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 42px; height: 42px;
+            background: var(--gold);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700;
+            letter-spacing: .3px;
+            color: #fff;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .8rem;
+            color: rgba(255,255,255,.7);
+            letter-spacing: .5px;
+        }
+
+        .header-badge {
+            margin-left: auto;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            color: rgba(255,255,255,.9);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 20px;
+            letter-spacing: .4px;
+        }
+
+        /* ── SIDEBAR ──────────────────────────────────────────────── */
+        .sidebar {
+            position: fixed;
+            left: 0; top: var(--header-h);
+            width: var(--sidebar-w);
+            height: calc(100vh - var(--header-h));
+            background: var(--navy);
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform .3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: rgba(200,146,42,.4); border-radius: 4px; }
+
+        .sidebar-brand {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gold-light);
+            margin-bottom: 3px;
+        }
+
+        .sidebar-author {
+            padding: 20px 20px;
+            background: rgba(0,0,0,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+        }
+
+        .sidebar-author-info h3 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sidebar-author-info p {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            color: rgba(255,255,255,.55);
+            line-height: 1.4;
+        }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .68rem;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+
+        .nav-item { margin: 1px 0; }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 12px;
+            color: rgba(255,255,255,.75);
+            text-decoration: none;
+            border-radius: 7px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .875rem;
+            font-weight: 400;
+            transition: all .2s ease;
+            border-left: 3px solid transparent;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            background: rgba(255,255,255,.08);
+            color: #fff;
+            border-left-color: rgba(200,146,42,.6);
+        }
+
+        .nav-link.active {
+            background: rgba(200,146,42,.18);
+            color: var(--gold-light);
+            border-left-color: var(--gold);
+            font-weight: 500;
+        }
+
+        .nav-link .nav-num {
+            font-size: .7rem;
+            background: rgba(255,255,255,.12);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-weight: 600;
+            min-width: 26px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .nav-link.active .nav-num {
+            background: var(--gold);
+            color: var(--navy);
+        }
+
+        .nav-sub .nav-link {
+            padding-left: 28px;
+            font-size: .835rem;
+            color: rgba(255,255,255,.55);
+        }
+
+        .nav-sub .nav-link:hover,
+        .nav-sub .nav-link.active {
+            color: var(--gold-light);
+        }
+
+        /* ── MAIN CONTENT ─────────────────────────────────────────── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            margin-top: var(--header-h);
+            padding: 36px 48px 60px;
+            max-width: calc(var(--sidebar-w) + 860px);
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        /* ── PAGE HEADER (chapter intro) ──────────────────────────── */
+        .chapter-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            padding: 32px 36px;
+            border-radius: var(--radius);
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chapter-header::before {
+            content: '';
+            position: absolute; top: -30px; right: -30px;
+            width: 180px; height: 180px;
+            background: rgba(200,146,42,.12);
+            border-radius: 50%;
+        }
+
+        .chapter-header::after {
+            content: '';
+            position: absolute; bottom: -50px; right: 60px;
+            width: 120px; height: 120px;
+            background: rgba(200,146,42,.07);
+            border-radius: 50%;
+        }
+
+        .chapter-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.1rem;
+            font-weight: 900;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+
+        .chapter-header .author {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .95rem;
+            color: rgba(255,255,255,.7);
+            margin-bottom: 14px;
+            font-style: italic;
+        }
+
+        .chapter-header .syllabus-tag {
+            display: inline-block;
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.2);
+            border-radius: 6px;
+            padding: 10px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            line-height: 1.6;
+            color: rgba(255,255,255,.85);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── TOPIC SECTION SHOW/HIDE ──────────────────────────────── */
+        .topic-section {
+            display: none;
+            animation: fadeSlideIn .45s ease;
+        }
+
+        .topic-section.active { display: block; }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── SECTION CARD ─────────────────────────────────────────── */
+        .section-card {
+            background: var(--ivory);
+            border-radius: var(--radius);
+            padding: 36px 42px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+        }
+
+        /* ── TYPOGRAPHY ───────────────────────────────────────────── */
+        .section-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin: 0 0 20px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border);
+            display: flex; align-items: baseline; gap: 10px;
+        }
+
+        .section-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--navy-light);
+            margin: 32px 0 14px;
+        }
+
+        .section-card h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 20px 0 8px;
+        }
+
+        .section-card h5 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .95rem;
+            font-weight: 500;
+            color: var(--sky);
+            margin: 14px 0 6px;
+            font-style: italic;
+        }
+
+        .section-card p {
+            margin-bottom: 12px;
+            text-align: justify;
+            font-size: 1.02rem;
+            color: var(--text-mid);
+            line-height: 1.82;
+        }
+
+        .section-card ul,
+        .section-card ol {
+            margin: 10px 0 14px 28px;
+            line-height: 1.75;
+        }
+
+        .section-card li {
+            margin-bottom: 5px;
+            color: var(--text-mid);
+            font-size: .99rem;
+        }
+
+        .section-num {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 700;
+            background: var(--navy);
+            color: var(--gold-light);
+            padding: 2px 10px;
+            border-radius: 5px;
+            flex-shrink: 0;
+        }
+
+        /* ── CALLOUT BOXES ────────────────────────────────────────── */
+        .definition, .theorem, .example, .note, .warning, .key-point {
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .definition {
+            background: #F3F0FB;
+            border-left: 5px solid #6B4FC8;
+            box-shadow: 0 2px 10px rgba(107,79,200,.1);
+        }
+
+        .definition h4::before { content: "Definition — "; color: #6B4FC8; }
+
+        .theorem {
+            background: var(--sage-light);
+            border-left: 5px solid var(--sage);
+            box-shadow: 0 2px 10px rgba(61,107,90,.1);
+        }
+
+        .theorem h4::before { content: "Theorem — "; color: var(--sage); }
+
+        .example {
+            background: #FFFBF0;
+            border-left: 5px solid var(--gold);
+            box-shadow: 0 2px 10px rgba(200,146,42,.1);
+        }
+
+        .example h4::before { content: ""; }
+
+        .note {
+            background: var(--sky-light);
+            border-left: 5px solid var(--sky);
+            box-shadow: 0 2px 10px rgba(29,111,164,.1);
+        }
+
+        .note h4::before { content: "📘 "; }
+
+        .warning {
+            background: var(--crimson-light);
+            border-left: 5px solid var(--crimson);
+            color: #5a1020;
+            box-shadow: 0 2px 10px rgba(155,35,53,.1);
+        }
+
+        .warning strong { color: var(--crimson); }
+
+        .key-point {
+            background: linear-gradient(135deg, #EAF8F4 0%, #E0F3FF 100%);
+            border-left: 5px solid #0E9E6F;
+            box-shadow: 0 2px 10px rgba(14,158,111,.1);
+        }
+
+        .key-point strong { color: #0E6650; }
+
+        .definition h4, .theorem h4, .example h4,
+        .note h4, .warning h4, .key-point h4 {
+            margin-top: 0; margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        /* ── FORMULA BOX ──────────────────────────────────────────── */
+        .formula-box {
+            background: linear-gradient(135deg, #EEF2FA 0%, #F7F5FF 100%);
+            border: 2px dashed var(--navy-light);
+            border-radius: 8px;
+            padding: 18px 22px;
+            margin: 16px 0;
+            text-align: center;
+            font-size: 1.12rem;
+        }
+
+        /* ── DERIVATION & PROOF ───────────────────────────────────── */
+        .derivation {
+            background: #F8FAFC;
+            border-left: 3px solid var(--sky);
+            padding: 12px 16px;
+            margin: 10px 0;
+            border-radius: 0 6px 6px 0;
+            font-family: 'Source Serif 4', serif;
+            line-height: 1.85;
+            color: var(--text-mid);
+        }
+
+        .proof-step {
+            margin: 5px 0 5px 20px;
+            padding-left: 12px;
+            border-left: 2px solid var(--border);
+            color: var(--text-mid);
+            font-size: .97rem;
+        }
+
+        /* ── TABLES ───────────────────────────────────────────────── */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 18px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th {
+            background: var(--navy);
+            color: #fff;
+            padding: 12px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .9rem;
+            font-weight: 600;
+            letter-spacing: .3px;
+        }
+
+        td {
+            padding: 11px 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: .95rem;
+            color: var(--text-mid);
+            background: #fff;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        tr:nth-child(even) td { background: #FAFAF8; }
+
+        tr:hover td { background: var(--gold-pale); transition: background .15s; }
+
+        /* ── VENN DIAGRAMS ────────────────────────────────────────── */
+        .venn-container {
+            display: flex;
+            justify-content: center;
+            margin: 18px 0;
+            padding: 16px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .venn-diagram { width: 300px; height: 200px; }
+        .venn-diagram svg { width: 100%; height: 100%; }
+
+        .venn-circle {
+            fill-opacity: .38;
+            stroke: #334;
+            stroke-width: 2;
+        }
+
+        .venn-label {
+            font-family: 'Source Serif 4', serif;
+            font-size: 14px;
+            font-weight: 600;
+            fill: #1B2A4A;
+        }
+
+        .venn-shaded {
+            fill: rgba(59,130,246,.55);
+            stroke: #1e40af;
+            stroke-width: 2;
+        }
+
+        /* ── EXERCISE SECTIONS ────────────────────────────────────── */
+        .exercise-section {
+            background: transparent;
+            border-left: none;
+            box-shadow: none;
+            padding: 0;
+        }
+
+        .exercise-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff;
+            padding: 24px 30px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 0;
+        }
+
+        .exercise-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #fff;
+            border: none;
+            padding: 0; margin: 0 0 4px;
+        }
+
+        .exercise-header p {
+            font-family: 'DM Sans', sans-serif;
+            font-size: .85rem;
+            color: rgba(255,255,255,.7);
+            margin: 0;
+        }
+
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        .question strong { color: var(--navy); }
+
+        /* ── TOGGLE ANSWER BUTTON ─────────────────────────────────── */
+        .toggle-btn {
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 8px;
+            letter-spacing: .3px;
+        }
+
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
+        /* ── ANSWER REVEAL ────────────────────────────────────────── */
+        .answer {
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 12px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
+        }
+
+        .answer.show { display: block; }
+
+        .answer p, .answer ul, .answer ol,
+        .answer li, .answer strong, .answer em,
+        .answer .derivation, .answer .proof-step {
+            color: var(--text-dark) !important;
+        }
+
+        .answer .derivation {
+            background: #EFF8F4;
+            border-left-color: var(--sage);
+            color: var(--text-dark) !important;
+        }
+
+        .answer strong { font-weight: 700; }
+
+        /* ── MCQ OPTIONS ──────────────────────────────────────────── */
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+            font-size: .95rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
+        /* ── ANSWER KEY BOX ───────────────────────────────────────── */
+        .answer-key {
+            background: rgba(255,255,255,.15);
+            padding: 14px 18px;
+            border-radius: 7px;
+            margin-top: 20px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.8;
+        }
+
+        .answer-key strong { color: var(--gold-light); }
+
+        /* ── BADGE ────────────────────────────────────────────────── */
+        .badge {
+            display: inline-block;
+            background: var(--crimson);
+            color: #fff;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* ── QUICK REF TABLE ──────────────────────────────────────── */
+        .quick-ref-table th { background: var(--navy-light); }
+
+        /* ── FOOTER ───────────────────────────────────────────────── */
+        .book-footer {
+            background: var(--navy);
+            color: rgba(255,255,255,.75);
+            text-align: center;
+            padding: 24px;
+            margin-top: 48px;
+            border-radius: 12px 12px 0 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            line-height: 1.7;
+        }
+
+        .book-footer strong { color: var(--gold-light); }
+        .book-footer .university {
+            margin-top: 6px;
+            font-size: .82rem;
+            opacity: .7;
+        }
+
+        /* ── MATHJAX ──────────────────────────────────────────────── */
+        .MathJax { font-size: 1.06em !important; }
+        mjx-container { display: inline-block !important; }
+
+        /* ── SCROLLBAR ────────────────────────────────────────────── */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: var(--paper); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #b0a89a; }
+
+        /* ── RESPONSIVE ───────────────────────────────────────────── */
+        @media (max-width: 1024px) {
+            :root { --sidebar-w: 260px; }
+            .main-content { padding: 28px 30px 50px; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --sidebar-w: 280px; }
+            .book-header .menu-toggle { display: flex; align-items: center; justify-content: center; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open { transform: translateX(0); }
+            .main-content {
+                margin-left: 0;
+                padding: 20px 18px 40px;
+                max-width: 100%;
+            }
+            .chapter-header h1 { font-size: 1.6rem; }
+            .section-card { padding: 22px 20px; }
+        }
+
+        /* ── EXERCISE SECTION OVERRIDES ──────────────────────────── */
+        .section-card .exercise-section {
+            background: transparent;
+            padding: 0;
+        }
+
+        .section-card h2:has(.section-num) + * { margin-top: 8px; }
+
+        /* Progress bar decoration for exercise headers */
+        .section-card > h2 {
+            position: relative;
+        }
+    
+
+/* Additional Course Portal & Language Toggle Enhancements */
+.chapter-header { position: relative; }
+.header-lang-toggle {
+    position: absolute; top: 20px; right: 30px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #fff; padding: 6px 14px; border-radius: 20px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600;
+    cursor: pointer; transition: all 0.3s;
+    display: inline-flex; align-items: center; gap: 6px;
+}
+.header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.unit-card {
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    padding: 30px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.unit-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 6px;
+    background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%);
+}
+
+.unit-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--gold);
+}
+
+.unit-badge {
+    display: inline-block;
+    background: var(--gold-pale);
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    width: fit-content;
+}
+
+.unit-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 12px;
+}
+
+.unit-card p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.95rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.unit-stats {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text-soft);
+    border-top: 1px solid var(--border);
+    padding-top: 15px;
+}
+
+.unit-stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-read {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--navy);
+    color: #ffffff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn-read:hover {
+    background: var(--gold);
+    color: var(--navy);
+}
+
+    </style>
+</head>
+<body>
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        <div class="header-icon">📈</div>
+        <div class="header-text">
+            <h1>Statistical Methods-I</h1>
+            <div class="subtitle">UNIT IV · SKEWNESS, KURTOSIS & ATTRIBUTES</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+        <button class="draw-mode-toggle" id="draw-mode-btn"><i class="fas fa-chalkboard"></i> Open Whiteboard</button>
+    </header>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>Unit IV</h2>
+            <p>Skewness & Attributes<br>CCS Haryana Agricultural University</p>
+        </div>
+        <div class="sidebar-author">
+            <img src="../Stat-102/opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3><p>Author & Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Navigation</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;"><span class="nav-num">🏠</span> Course Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 5px;"><span class="nav-num">📚</span> Back to Library</a></li>
+        </ul>
+
+        <div class="nav-group-label">Theory Topics</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#skewness-intro" onclick="showTopic('skewness-intro');return false;"><span class="nav-num">4.1</span> Skewness: Introduction & Interpretation</a></li>
+            <li class="nav-item"><a class="nav-link" href="#skewness-coeffs" onclick="showTopic('skewness-coeffs');return false;"><span class="nav-num">4.2</span> Coefficients of Skewness</a></li>
+            <li class="nav-item"><a class="nav-link" href="#kurtosis" onclick="showTopic('kurtosis');return false;"><span class="nav-num">4.3</span> Kurtosis: Concept & Coefficient</a></li>
+            <li class="nav-item"><a class="nav-link" href="#attributes-intro" onclick="showTopic('attributes-intro');return false;"><span class="nav-num">4.4</span> Theory of Attributes & Dichotomy</a></li>
+            <li class="nav-item"><a class="nav-link" href="#class-frequencies" onclick="showTopic('class-frequencies');return false;"><span class="nav-num">4.5</span> Class Frequencies & Order</a></li>
+            <li class="nav-item"><a class="nav-link" href="#consistency" onclick="showTopic('consistency');return false;"><span class="nav-num">4.6</span> Consistency of Data</a></li>
+            <li class="nav-item"><a class="nav-link" href="#association" onclick="showTopic('association');return false;"><span class="nav-num">4.7</span> Independence & Association</a></li>
+            <li class="nav-item"><a class="nav-link" href="#yules-coeffs" onclick="showTopic('yules-coeffs');return false;"><span class="nav-num">4.8</span> Yule's Coefficients (Q & Y)</a></li>
+        </ul>
+        
+        <div class="nav-group-label">Practice Exercises</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#mcq" onclick="showTopic('mcq');return false;"><span class="nav-num">❓</span> Multiple Choice</a></li>
+            <li class="nav-item"><a class="nav-link" href="#fib" onclick="showTopic('fib');return false;"><span class="nav-num">✏️</span> Fill in Blanks</a></li>
+            <li class="nav-item"><a class="nav-link" href="#tf" onclick="showTopic('tf');return false;"><span class="nav-num">✅</span> True / False</a></li>
+            <li class="nav-item"><a class="nav-link" href="#subj" onclick="showTopic('subj');return false;"><span class="nav-num">📝</span> Subjective Qs</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <div class="chapter-header">
+            <button id="lang-toggle-btn" class="header-lang-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+            </button>
+            <h1>Unit IV: Skewness, Kurtosis & Theory of Attributes</h1>
+            <div class="author">By Prof. O.P. Sheoran</div>
+            <div class="syllabus-tag">
+                <strong>Syllabus:</strong> Skewness and Kurtosis: Coefficients with interpretations. Theory of Attributes: Symbolic notations, dichotomy, class frequencies, consistency, independence, association. Yule’s coefficient of association & colligation.
+            </div>
+        </div>
+
+<div class="topic-section active" id="skewness-intro">
+  <section class="section-card">
+        <h2 class="english-content">4.1 Skewness: Introduction & Interpretation</h2>
+        <h2 class="hinglish-content" style="display: none;">4.1 Skewness: परिचय और Interpretation</h2>
+    <div class="body">
+      <p class="english-content">
+        Measures of central tendency tell us about the concentration of values around a central point, and measures of dispersion give us the spread. However, neither tells us about the symmetry of the distribution. This is where <strong>Skewness</strong> comes in. Skewness means 'lack of symmetry'. When a frequency distribution is not symmetrical about the mean, it is called a skewed distribution.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        Central tendency के measures हमें central point के आस-पास values के concentration के बारे में बताते हैं, और dispersion spread के बारे में बताता है। लेकिन, कोई भी distribution की symmetry के बारे में नहीं बताता। यहीं पर <strong>Skewness</strong> काम आता है। Skewness का मतलब है 'symmetry की कमी' (lack of symmetry)। जब कोई frequency distribution mean के दोनों ओर symmetrical नहीं होता, तो उसे skewed distribution कहते हैं।
+      </p>
+      
+      <h3 class="english-content">Types of Skewness</h3>
+      <h3 class="hinglish-content" style="display: none;">Skewness के प्रकार</h3>
+      <ul class="english-content">
+        <li><strong>Symmetrical (Zero Skewness):</strong> The left half and right half are mirror images. Mean = Median = Mode. The curve is bell-shaped.</li>
+        <li><strong>Positively Skewed:</strong> The right tail is longer. The extreme values are on the higher side. Here, Mean > Median > Mode.</li>
+        <li><strong>Negatively Skewed:</strong> The left tail is longer. The extreme values are on the lower side. Here, Mean < Median < Mode.</li>
+      </ul>
+      <ul class="hinglish-content" style="display: none;">
+        <li><strong>Symmetrical (Zero Skewness):</strong> Left half और right half एक-दूसरे की mirror images होते हैं। Mean = Median = Mode. Curve bell-shaped होता है।</li>
+        <li><strong>Positively Skewed:</strong> Right tail लंबी होती है। Extreme values higher side पर होती हैं। यहाँ, Mean > Median > Mode होता है।</li>
+        <li><strong>Negatively Skewed:</strong> Left tail लंबी होती है। Extreme values lower side पर होती हैं। यहाँ, Mean < Median < Mode होता है।</li>
+      </ul>
+
+      <div class="example">
+        <h4>Example</h4>
+        <p class="english-content">If crop yield data from a region shows a few farms with exceptionally high yields while most farms have normal yields, the distribution will be positively skewed. The mean will be pulled higher by those few extreme values, making it greater than the median and mode.</p>
+        <p class="hinglish-content" style="display: none;">अगर किसी region के crop yield data में कुछ farms की yield बहुत ज़्यादा है जबकि ज़्यादातर farms की yield normal है, तो distribution positively skewed होगा। Mean उन कुछ extreme values की वजह से ऊपर खिंच जाएगा, जिससे यह median और mode से बड़ा हो जाएगा।</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="skewness-coeffs">
+  <section class="section-card">
+        <h2 class="english-content">4.2 Coefficients of Skewness</h2>
+        <h2 class="hinglish-content" style="display: none;">4.2 Skewness के Coefficients</h2>
+    <div class="body">
+      <p class="english-content">To compare skewness between different distributions, we use relative measures called Coefficients of Skewness. They are pure numbers independent of units.</p>
+      <p class="hinglish-content" style="display: none;">अलग-अलग distributions के बीच skewness compare करने के लिए, हम relative measures use करते हैं जिन्हें Coefficients of Skewness कहते हैं। ये pure numbers होते हैं जो units से independent होते हैं।</p>
+
+      <h3 class="english-content">1. Karl Pearson's Coefficient of Skewness (\(S_k\))</h3>
+      <h3 class="hinglish-content" style="display: none;">1. Karl Pearson's Coefficient of Skewness (\(S_k\))</h3>
+      <p class="english-content">It is based on the relationship between Mean, Median, and Mode.</p>
+      <p class="hinglish-content" style="display: none;">यह Mean, Median, और Mode के relationship पर आधारित है।</p>
+      <div class="formula">
+        <div>
+            \[ S_k = \frac{\text{Mean} - \text{Mode}}{\text{Standard Deviation} (\sigma)} \]
+        </div>
+        <p class="english-content">If Mode is ill-defined, using the empirical relation (Mode = 3 Median - 2 Mean), the formula becomes:</p>
+        <p class="hinglish-content" style="display: none;">अगर Mode ill-defined है, तो empirical relation (Mode = 3 Median - 2 Mean) का use करके, formula बन जाता है:</p>
+        <div>
+            \[ S_k = \frac{3(\text{Mean} - \text{Median})}{\sigma} \]
+        </div>
+      </div>
+      <p class="english-content">Interpretation: \(S_k\) usually lies between -3 and +3. \(S_k = 0\) means perfect symmetry.</p>
+      <p class="hinglish-content" style="display: none;">Interpretation: \(S_k\) आमतौर पर -3 और +3 के बीच होता है। \(S_k = 0\) का मतलब perfect symmetry है।</p>
+
+      <h3 class="english-content">2. Bowley's Coefficient of Skewness (\(S_Q\))</h3>
+      <h3 class="hinglish-content" style="display: none;">2. Bowley's Coefficient of Skewness (\(S_Q\))</h3>
+      <p class="english-content">It is based on Quartiles and is very useful for open-ended distributions.</p>
+      <p class="hinglish-content" style="display: none;">यह Quartiles पर आधारित है और open-ended distributions के लिए बहुत useful है।</p>
+      <div class="formula">
+        <div>
+            \[ S_Q = \frac{Q_3 + Q_1 - 2\text{Median}}{Q_3 - Q_1} \]
+        </div>
+      </div>
+      <p class="english-content">Interpretation: \(S_Q\) always lies between -1 and +1.</p>
+      <p class="hinglish-content" style="display: none;">Interpretation: \(S_Q\) हमेशा -1 और +1 के बीच होता है।</p>
+
+      <h3 class="english-content">3. Kelly's Coefficient of Skewness (\(S_P\))</h3>
+      <h3 class="hinglish-content" style="display: none;">3. Kelly's Coefficient of Skewness (\(S_P\))</h3>
+      <p class="english-content">It is based on Percentiles or Deciles, ignoring the extreme 10% on both sides.</p>
+      <p class="hinglish-content" style="display: none;">यह Percentiles या Deciles पर आधारित है, जो दोनों sides के extreme 10% को ignore करता है।</p>
+      <div class="formula">
+        <div>
+            \[ S_P = \frac{P_{90} + P_{10} - 2P_{50}}{P_{90} - P_{10}} \quad \text{or} \quad \frac{D_9 + D_1 - 2D_5}{D_9 - D_1} \]
+        </div>
+      </div>
+
+      <div class="example">
+        <h4>Example: Calculating Pearson's Skewness</h4>
+        <p class="english-content">In a farm survey, the Mean yield is 45 q/ha, the Median is 42 q/ha, and the Standard Deviation is 12 q/ha. Calculate the coefficient of skewness.</p>
+        <p class="hinglish-content" style="display: none;">एक farm survey में, Mean yield 45 q/ha, Median 42 q/ha और Standard Deviation 12 q/ha है। Coefficient of skewness निकालें।</p>
+        <p><strong>Solution:</strong></p>
+        <div>
+            \[ S_k = \frac{3(45 - 42)}{12} = \frac{3(3)}{12} = \frac{9}{12} = +0.75 \]
+        </div>
+        <p class="english-content">Since \(S_k\) is positive, the distribution of yield is positively skewed.</p>
+        <p class="hinglish-content" style="display: none;">चूंकि \(S_k\) positive है, yield का distribution positively skewed है।</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="kurtosis">
+  <section class="section-card">
+        <h2 class="english-content">4.3 Kurtosis: Concept & Coefficient</h2>
+        <h2 class="hinglish-content" style="display: none;">4.3 Kurtosis: Concept और Coefficient</h2>
+    <div class="body">
+      <p class="english-content">
+        While skewness measures the lack of symmetry, <strong>Kurtosis</strong> measures the degree of peakedness or flatness of a distribution curve relative to a normal curve. It describes the shape of the tails and the central peak.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        जहाँ skewness symmetry की कमी को मापता है, वहीं <strong>Kurtosis</strong> एक normal curve के मुक़ाबले distribution curve के peakedness (नुकीलापन) या flatness (चपटापन) को मापता है। यह tails और central peak के shape को describe करता है।
+      </p>
+
+      <h3 class="english-content">Types of Kurtosis</h3>
+      <h3 class="hinglish-content" style="display: none;">Kurtosis के प्रकार</h3>
+      <ul class="english-content">
+        <li><strong>Mesokurtic:</strong> A normal, bell-shaped curve with standard peakedness.</li>
+        <li><strong>Leptokurtic:</strong> A curve that is more peaked than the normal curve, with thicker tails.</li>
+        <li><strong>Platykurtic:</strong> A curve that is flatter than the normal curve, with thinner tails.</li>
+      </ul>
+      <ul class="hinglish-content" style="display: none;">
+        <li><strong>Mesokurtic:</strong> एक normal, bell-shaped curve जिसमें standard peakedness होती है।</li>
+        <li><strong>Leptokurtic:</strong> एक curve जो normal curve से ज़्यादा peaked (नुकीला) होता है, और इसकी tails मोटी होती हैं।</li>
+        <li><strong>Platykurtic:</strong> एक curve जो normal curve से ज़्यादा flat (चपटा) होता है, और इसकी tails पतली होती हैं।</li>
+      </ul>
+
+      <h3 class="english-content">Coefficient of Kurtosis (\(\beta_2\))</h3>
+      <h3 class="hinglish-content" style="display: none;">Coefficient of Kurtosis (\(\beta_2\))</h3>
+      <p class="english-content">Kurtosis is measured using the second and fourth central moments (\(\mu_2\) and \(\mu_4\)).</p>
+      <p class="hinglish-content" style="display: none;">Kurtosis को second और fourth central moments (\(\mu_2\) और \(\mu_4\)) का उपयोग करके मापा जाता है।</p>
+      <div class="formula">
+        <div>
+            \[ \beta_2 = \frac{\mu_4}{\mu_2^2} \quad \text{and} \quad \gamma_2 = \beta_2 - 3 \]
+        </div>
+      </div>
+      
+      <p class="english-content"><strong>Interpretation:</strong></p>
+      <p class="hinglish-content" style="display: none;"><strong>Interpretation:</strong></p>
+      <ul class="english-content">
+        <li>If \(\beta_2 = 3\) (or \(\gamma_2 = 0\)): Mesokurtic.</li>
+        <li>If \(\beta_2 > 3\) (or \(\gamma_2 > 0\)): Leptokurtic.</li>
+        <li>If \(\beta_2 < 3\) (or \(\gamma_2 < 0\)): Platykurtic.</li>
+      </ul>
+      <ul class="hinglish-content" style="display: none;">
+        <li>अगर \(\beta_2 = 3\) (या \(\gamma_2 = 0\)): Mesokurtic.</li>
+        <li>अगर \(\beta_2 > 3\) (या \(\gamma_2 > 0\)): Leptokurtic.</li>
+        <li>अगर \(\beta_2 < 3\) (या \(\gamma_2 < 0\)): Platykurtic.</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="attributes-intro">
+  <section class="section-card">
+        <h2 class="english-content">4.4 Theory of Attributes & Dichotomy</h2>
+        <h2 class="hinglish-content" style="display: none;">4.4 Theory of Attributes और Dichotomy</h2>
+    <div class="body">
+      <p class="english-content">
+        In statistics, a characteristic that can be measured numerically (like height, weight, yield) is called a <strong>Variable</strong>. A characteristic that cannot be measured numerically but can only be observed as present or absent (like gender, literacy, employment, soil type) is called an <strong>Attribute</strong>. The statistics of attributes deals with counting the number of individuals possessing or not possessing certain qualitative traits.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        Statistics में, जिस characteristic को numerically मापा जा सकता है (जैसे height, weight, yield), उसे <strong>Variable</strong> कहते हैं। जिस characteristic को numerically नहीं मापा जा सकता बल्कि केवल present या absent के रूप में observe किया जा सकता है (जैसे gender, literacy, employment, soil type), उसे <strong>Attribute</strong> कहते हैं। Attributes की statistics उन individuals की गिनती से संबंधित है जिनमें कुछ qualitative traits मौजूद हैं या नहीं।
+      </p>
+
+      <h3 class="english-content">Dichotomy of Data</h3>
+      <h3 class="hinglish-content" style="display: none;">Dichotomy of Data (डेटा का द्विभाजन)</h3>
+      <p class="english-content">
+        Dividing the universe (total population) into two mutually exclusive groups—those possessing a specific attribute and those lacking it—is called <strong>Dichotomy</strong>.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        Universe (total population) को दो mutually exclusive groups में बाँटना—जिनके पास कोई specific attribute है और जिनके पास नहीं है—<strong>Dichotomy</strong> कहलाता है।
+      </p>
+
+      <h3 class="english-content">Symbolic Notations</h3>
+      <h3 class="hinglish-content" style="display: none;">Symbolic Notations</h3>
+      <ul class="english-content">
+        <li><strong>Presence:</strong> Capital letters A, B, C are used to denote the presence of attributes. E.g., A = Educated, B = Employed.</li>
+        <li><strong>Absence:</strong> Corresponding Greek letters \(\alpha, \beta, \gamma\) (or lowercase letters a, b, c) are used to denote the absence of attributes. E.g., \(\alpha\) = Uneducated, \(\beta\) = Unemployed.</li>
+        <li><strong>Combination:</strong> Combinations are denoted by combining letters. E.g., AB = Educated and Employed. \(\alpha B\) = Uneducated but Employed.</li>
+        <li><strong>Frequencies:</strong> The number of individuals possessing a specific attribute is placed in brackets to denote its class frequency. E.g., (A) = number of educated people, (AB) = number of educated and employed people, \(N\) = Total number of observations.</li>
+      </ul>
+      <ul class="hinglish-content" style="display: none;">
+        <li><strong>Presence:</strong> Attributes की presence दिखाने के लिए Capital letters A, B, C का use किया जाता है। जैसे, A = Educated, B = Employed.</li>
+        <li><strong>Absence:</strong> Attributes की absence दिखाने के लिए corresponding Greek letters \(\alpha, \beta, \gamma\) (या lowercase a, b, c) का use किया जाता है। जैसे, \(\alpha\) = Uneducated, \(\beta\) = Unemployed.</li>
+        <li><strong>Combination:</strong> Letters को combine करके combinations दिखाए जाते हैं। जैसे, AB = Educated and Employed. \(\alpha B\) = Uneducated but Employed.</li>
+        <li><strong>Frequencies:</strong> किसी specific attribute वाले individuals की संख्या को brackets में रखा जाता है ताकि class frequency दिखाई जा सके। जैसे, (A) = educated लोगों की संख्या, (AB) = educated और employed लोगों की संख्या, \(N\) = Total observations की संख्या।</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="class-frequencies">
+  <section class="section-card">
+        <h2 class="english-content">4.5 Class Frequencies & Order</h2>
+        <h2 class="hinglish-content" style="display: none;">4.5 Class Frequencies और Order</h2>
+    <div class="body">
+      <p class="english-content">
+        Any group formed by specific attributes is called a <strong>Class</strong>. The number of observations falling in a class is its <strong>Class Frequency</strong>. The order of a class depends on the number of attributes defining it.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        Specific attributes से बने किसी भी group को <strong>Class</strong> कहते हैं। किसी class में आने वाले observations की संख्या उसकी <strong>Class Frequency</strong> होती है। किसी class का order उसे define करने वाले attributes की संख्या पर निर्भर करता है।
+      </p>
+
+      <ul class="english-content">
+        <li><strong>Order 0:</strong> Involves no attribute. It is the total population denoted by \(N\).</li>
+        <li><strong>Order 1:</strong> Frequencies involving only one attribute. E.g., (A), (B), (\(\alpha\)), (\(\beta\)). There are \(2 \times n\) such frequencies for \(n\) attributes.</li>
+        <li><strong>Order 2:</strong> Frequencies involving two attributes. E.g., (AB), (\(\alpha B\)), (A\(\beta\)), (\(\alpha\beta\)).</li>
+      </ul>
+      <ul class="hinglish-content" style="display: none;">
+        <li><strong>Order 0:</strong> इसमें कोई attribute नहीं होता। यह total population होती है जिसे \(N\) से denote करते हैं।</li>
+        <li><strong>Order 1:</strong> केवल एक attribute वाली frequencies। जैसे, (A), (B), (\(\alpha\)), (\(\beta\))। \(n\) attributes के लिए ऐसी \(2 \times n\) frequencies होती हैं।</li>
+        <li><strong>Order 2:</strong> दो attributes वाली frequencies। जैसे, (AB), (\(\alpha B\)), (A\(\beta\)), (\(\alpha\beta\))।</li>
+      </ul>
+
+      <h3 class="english-content">Ultimate Class Frequencies</h3>
+      <h3 class="hinglish-content" style="display: none;">Ultimate Class Frequencies</h3>
+      <p class="english-content">
+        Frequencies of the highest order in a given problem are called Ultimate Class Frequencies. For \(n\) attributes, there are \(2^n\) ultimate class frequencies. If we know these, we can find any other class frequency.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        किसी problem में highest order की frequencies को Ultimate Class Frequencies कहते हैं। \(n\) attributes के लिए, \(2^n\) ultimate class frequencies होती हैं। अगर हमें ये पता हों, तो हम कोई भी दूसरी class frequency निकाल सकते हैं।
+      </p>
+
+      <div class="formula">
+        <h4>Relationships (For 2 Attributes A and B):</h4>
+        <div>
+            \[ N = (A) + (\alpha) = (B) + (\beta) \]
+            \[ (A) = (AB) + (A\beta) \]
+            \[ (B) = (AB) + (\alpha B) \]
+            \[ (\alpha) = (\alpha B) + (\alpha\beta) \]
+            \[ (\beta) = (A\beta) + (\alpha\beta) \]
+            \[ N = (AB) + (A\beta) + (\alpha B) + (\alpha\beta) \]
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="consistency">
+  <section class="section-card">
+        <h2 class="english-content">4.6 Consistency of Data</h2>
+        <h2 class="hinglish-content" style="display: none;">4.6 Data की Consistency (संगति)</h2>
+    <div class="body">
+      <p class="english-content">
+        A set of class frequencies is said to be <strong>consistent</strong> if they do not conflict with each other. Since frequencies represent counts of items, no class frequency (whether observed or derived) can be negative.
+      </p>
+      <p class="hinglish-content" style="display: none;">
+        Class frequencies का एक set <strong>consistent</strong> कहा जाता है अगर वे एक-दूसरे के साथ conflict नहीं करते। चूँकि frequencies items की गिनती को दर्शाती हैं, कोई भी class frequency (चाहे observed हो या derived) negative नहीं हो सकती।
+      </p>
+      
+      <h3 class="english-content">Conditions for Consistency (2 Attributes)</h3>
+      <h3 class="hinglish-content" style="display: none;">Consistency के लिए Conditions (2 Attributes)</h3>
+      <p class="english-content">For a set of data with two attributes A and B to be consistent, all ultimate class frequencies must be greater than or equal to zero.</p>
+      <p class="hinglish-content" style="display: none;">दो attributes A और B वाले data set के consistent होने के लिए, सभी ultimate class frequencies zero या उससे बड़ी होनी चाहिए।</p>
+      <div class="formula">
+        <div>
+            \[ 1. \quad (AB) \ge 0 \]
+            \[ 2. \quad (A\beta) \ge 0 \implies (A) - (AB) \ge 0 \implies (AB) \le (A) \]
+            \[ 3. \quad (\alpha B) \ge 0 \implies (B) - (AB) \ge 0 \implies (AB) \le (B) \]
+            \[ 4. \quad (\alpha\beta) \ge 0 \implies N - (A) - (B) + (AB) \ge 0 \implies (AB) \ge (A) + (B) - N \]
+        </div>
+      </div>
+      <p class="english-content">Therefore, the required condition is:</p>
+      <p class="hinglish-content" style="display: none;">इसलिए, ज़रूरी condition है:</p>
+      <div class="formula">
+        <div>
+            \[ (A) + (B) - N \le (AB) \le \text{minimum of } \{ (A), (B) \} \]
+        </div>
+      </div>
+
+      <div class="example">
+        <h4>Example: Checking Consistency</h4>
+        <p class="english-content">Given \(N=1000\), \((A)=600\), \((B)=500\), \((AB)=50\). Is this data consistent?</p>
+        <p class="hinglish-content" style="display: none;">दिया गया है \(N=1000\), \((A)=600\), \((B)=500\), \((AB)=50\)। क्या यह data consistent है?</p>
+        <p><strong>Solution:</strong></p>
+        <p class="english-content">We need to check if \( (\alpha\beta) \ge 0 \).</p>
+        <p class="hinglish-content" style="display: none;">हमें check करना है कि \( (\alpha\beta) \ge 0 \) है या नहीं।</p>
+        <div>
+            \[ (\alpha\beta) = N - (A) - (B) + (AB) = 1000 - 600 - 500 + 50 = -50 \]
+        </div>
+        <p class="english-content">Since \( (\alpha\beta) = -50 < 0 \), a negative frequency is impossible. The given data is <strong>Inconsistent</strong>.</p>
+        <p class="hinglish-content" style="display: none;">चूंकि \( (\alpha\beta) = -50 < 0 \), एक negative frequency असंभव है। दिया गया data <strong>Inconsistent</strong> है।</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="association">
+  <section class="section-card">
+        <h2 class="english-content">4.7 Independence and Association of Attributes</h2>
+        <h2 class="hinglish-content" style="display: none;">4.7 Attributes की Independence और Association</h2>
+    <div class="body">
+      <h3 class="english-content">1. Independence</h3>
+      <h3 class="hinglish-content" style="display: none;">1. Independence (स्वतंत्रता)</h3>
+      <p class="english-content">Two attributes A and B are said to be <strong>independent</strong> if the presence or absence of one does not affect the presence or absence of the other. Mathematically, they are independent if the expected frequency equals the observed frequency.</p>
+      <p class="hinglish-content" style="display: none;">दो attributes A और B को <strong>independent</strong> कहा जाता है अगर एक की presence या absence दूसरे की presence या absence को प्रभावित नहीं करती। Mathematically, वे independent हैं यदि expected frequency observed frequency के बराबर हो।</p>
+      <div class="formula">
+        <div>
+            \[ \text{Condition for Independence:} \quad (AB) = \frac{(A) \times (B)}{N} \]
+        </div>
+      </div>
+
+      <h3 class="english-content">2. Association</h3>
+      <h3 class="hinglish-content" style="display: none;">2. Association (साहचर्य)</h3>
+      <p class="english-content">If attributes A and B are not independent, they are said to be associated. Association can be of two types:</p>
+      <p class="hinglish-content" style="display: none;">अगर attributes A और B independent नहीं हैं, तो उन्हें associated कहा जाता है। Association दो प्रकार का हो सकता है:</p>
+      
+      <ul class="english-content">
+        <li><strong>Positive Association:</strong> The presence of A promotes the presence of B. (e.g., Education and Employment).<br> Condition: \( (AB) > \frac{(A)(B)}{N} \)</li>
+        <li><strong>Negative Association (Dissociation):</strong> The presence of A suppresses the presence of B. (e.g., Vaccination and Disease).<br> Condition: \( (AB) < \frac{(A)(B)}{N} \)</li>
+      </ul>
+      <ul class="hinglish-content" style="display: none;">
+        <li><strong>Positive Association:</strong> A की presence B की presence को बढ़ावा देती है। (जैसे, Education और Employment)।<br> Condition: \( (AB) > \frac{(A)(B)}{N} \)</li>
+        <li><strong>Negative Association (Dissociation):</strong> A की presence B की presence को दबाती है। (जैसे, Vaccination और Disease)।<br> Condition: \( (AB) < \frac{(A)(B)}{N} \)</li>
+      </ul>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="yules-coeffs">
+  <section class="section-card">
+        <h2 class="english-content">4.8 Yule's Coefficient of Association & Colligation</h2>
+        <h2 class="hinglish-content" style="display: none;">4.8 Yule's Coefficient of Association और Colligation</h2>
+    <div class="body">
+      <p class="english-content">To measure the degree and direction of association between two attributes, G.U. Yule proposed two coefficients.</p>
+      <p class="hinglish-content" style="display: none;">दो attributes के बीच association की degree और direction मापने के लिए, G.U. Yule ने दो coefficients दिए।</p>
+
+      <h3 class="english-content">1. Yule's Coefficient of Association (\(Q\))</h3>
+      <h3 class="hinglish-content" style="display: none;">1. Yule's Coefficient of Association (\(Q\))</h3>
+      <div class="formula">
+        <div>
+            \[ Q = \frac{(AB)(\alpha\beta) - (A\beta)(\alpha B)}{(AB)(\alpha\beta) + (A\beta)(\alpha B)} \]
+        </div>
+      </div>
+      <p class="english-content"><strong>Properties:</strong></p>
+      <ul class="english-content">
+        <li>\(Q\) lies between -1 and +1.</li>
+        <li>If \(Q = +1\), complete positive association.</li>
+        <li>If \(Q = -1\), complete negative association.</li>
+        <li>If \(Q = 0\), attributes are independent.</li>
+      </ul>
+      <p class="hinglish-content" style="display: none;"><strong>Properties:</strong></p>
+      <ul class="hinglish-content" style="display: none;">
+        <li>\(Q\) -1 और +1 के बीच होता है।</li>
+        <li>अगर \(Q = +1\), तो complete positive association.</li>
+        <li>अगर \(Q = -1\), तो complete negative association.</li>
+        <li>अगर \(Q = 0\), तो attributes independent हैं।</li>
+      </ul>
+
+      <h3 class="english-content">2. Yule's Coefficient of Colligation (\(Y\))</h3>
+      <h3 class="hinglish-content" style="display: none;">2. Yule's Coefficient of Colligation (\(Y\))</h3>
+      <p class="english-content">Another measure which is numerically smaller than \(Q\) but serves a similar purpose.</p>
+      <p class="hinglish-content" style="display: none;">एक और measure जो numerically \(Q\) से छोटा होता है लेकिन समान उद्देश्य पूरा करता है।</p>
+      <div class="formula">
+        <div>
+            \[ Y = \frac{1 - \sqrt{\frac{(A\beta)(\alpha B)}{(AB)(\alpha\beta)}}}{1 + \sqrt{\frac{(A\beta)(\alpha B)}{(AB)(\alpha\beta)}}} = \frac{\sqrt{(AB)(\alpha\beta)} - \sqrt{(A\beta)(\alpha B)}}{\sqrt{(AB)(\alpha\beta)} + \sqrt{(A\beta)(\alpha B)}} \]
+        </div>
+      </div>
+
+      <h3 class="english-content">Relationship between Q and Y</h3>
+      <h3 class="hinglish-content" style="display: none;">Q और Y के बीच Relationship</h3>
+      <div class="formula">
+        <div>
+            \[ Q = \frac{2Y}{1 + Y^2} \]
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="mcq">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">❓</span> Multiple Choice Questions — 20 Questions</h2>
+      <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+        Click <em>Show Answer</em> to reveal the correct option.
+      </p>
+
+      <div class="question"><strong>Q1.</strong> Skewness measures the:
+        <div class="mcq-options"><p>(a) Central tendency &nbsp;&nbsp; (b) Dispersion &nbsp;&nbsp; (c) Asymmetry &nbsp;&nbsp; (d) Peakedness</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-1"><strong>Answer:</strong> (c) Asymmetry</div>
+
+      <div class="question"><strong>Q2.</strong> In a positively skewed distribution:
+        <div class="mcq-options"><p>(a) Mean > Median > Mode &nbsp;&nbsp; (b) Mean < Median < Mode &nbsp;&nbsp; (c) Mean = Median = Mode &nbsp;&nbsp; (d) Mode > Mean</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-2"><strong>Answer:</strong> (a) Mean > Median > Mode</div>
+
+      <div class="question"><strong>Q3.</strong> Karl Pearson's coefficient of skewness is given by:
+        <div class="mcq-options"><p>(a) \(\frac{\text{Mean} - \text{Median}}{\sigma}\) &nbsp;&nbsp; (b) \(\frac{3(\text{Mean} - \text{Median})}{\sigma}\) &nbsp;&nbsp; (c) \(\frac{\text{Mode} - \text{Mean}}{\sigma}\) &nbsp;&nbsp; (d) \(\frac{Q_3+Q_1-2M}{Q_3-Q_1}\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-3"><strong>Answer:</strong> (b) \(\frac{3(\text{Mean} - \text{Median})}{\sigma}\)</div>
+
+      <div class="question"><strong>Q4.</strong> Kurtosis measures the:
+        <div class="mcq-options"><p>(a) Spread of data &nbsp;&nbsp; (b) Peakedness of the curve &nbsp;&nbsp; (c) Asymmetry &nbsp;&nbsp; (d) Averages</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-4"><strong>Answer:</strong> (b) Peakedness of the curve</div>
+
+      <div class="question"><strong>Q5.</strong> For a mesokurtic distribution, the value of \(\beta_2\) is:
+        <div class="mcq-options"><p>(a) 0 &nbsp;&nbsp; (b) < 3 &nbsp;&nbsp; (c) > 3 &nbsp;&nbsp; (d) 3</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-5"><strong>Answer:</strong> (d) 3</div>
+
+      <div class="question"><strong>Q6.</strong> If \(\beta_2 > 3\), the distribution curve is:
+        <div class="mcq-options"><p>(a) Mesokurtic &nbsp;&nbsp; (b) Platykurtic &nbsp;&nbsp; (c) Leptokurtic &nbsp;&nbsp; (d) Symmetrical</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-6"><strong>Answer:</strong> (c) Leptokurtic</div>
+
+      <div class="question"><strong>Q7.</strong> Which moment is always equal to the variance?
+        <div class="mcq-options"><p>(a) \(\mu_1\) &nbsp;&nbsp; (b) \(\mu'_2\) &nbsp;&nbsp; (c) \(\mu_2\) &nbsp;&nbsp; (d) \(\mu_3\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-7"><strong>Answer:</strong> (c) \(\mu_2\)</div>
+
+      <div class="question"><strong>Q8.</strong> An attribute cannot be measured:
+        <div class="mcq-options"><p>(a) Qualitatively &nbsp;&nbsp; (b) Numerically &nbsp;&nbsp; (c) Categorically &nbsp;&nbsp; (d) By observation</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-8"><strong>Answer:</strong> (b) Numerically</div>
+
+      <div class="question"><strong>Q9.</strong> Dividing the population into two mutually exclusive classes is called:
+        <div class="mcq-options"><p>(a) Skewness &nbsp;&nbsp; (b) Dichotomy &nbsp;&nbsp; (c) Polychotomy &nbsp;&nbsp; (d) Consistency</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-9"><strong>Answer:</strong> (b) Dichotomy</div>
+
+      <div class="question"><strong>Q10.</strong> The frequency (A) represents:
+        <div class="mcq-options"><p>(a) Class of order 0 &nbsp;&nbsp; (b) Class of order 1 &nbsp;&nbsp; (c) Class of order 2 &nbsp;&nbsp; (d) Ultimate class</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-10"><strong>Answer:</strong> (b) Class of order 1</div>
+
+      <div class="question"><strong>Q11.</strong> Which of the following is a zero-order frequency?
+        <div class="mcq-options"><p>(a) (A) &nbsp;&nbsp; (b) (\(\alpha\)) &nbsp;&nbsp; (c) N &nbsp;&nbsp; (d) (AB)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-11"><strong>Answer:</strong> (c) N</div>
+
+      <div class="question"><strong>Q12.</strong> For \(n\) attributes, the number of ultimate class frequencies is:
+        <div class="mcq-options"><p>(a) \(n^2\) &nbsp;&nbsp; (b) \(2n\) &nbsp;&nbsp; (c) \(2^n\) &nbsp;&nbsp; (d) \(3^n\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-12"><strong>Answer:</strong> (c) \(2^n\)</div>
+
+      <div class="question"><strong>Q13.</strong> Data is said to be consistent if:
+        <div class="mcq-options"><p>(a) All frequencies are negative &nbsp;&nbsp; (b) Ultimate frequencies are \(\ge 0\) &nbsp;&nbsp; (c) \(Q = 0\) &nbsp;&nbsp; (d) \(Y = 0\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-13"><strong>Answer:</strong> (b) Ultimate frequencies are \(\ge 0\)</div>
+
+      <div class="question"><strong>Q14.</strong> Two attributes A and B are independent if:
+        <div class="mcq-options"><p>(a) \((AB) = \frac{(A)(B)}{N}\) &nbsp;&nbsp; (b) \((AB) > \frac{(A)(B)}{N}\) &nbsp;&nbsp; (c) \((AB) < \frac{(A)(B)}{N}\) &nbsp;&nbsp; (d) \((AB) = (A) + (B)\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-14"><strong>Answer:</strong> (a) \((AB) = \frac{(A)(B)}{N}\)</div>
+
+      <div class="question"><strong>Q15.</strong> Yule's coefficient of association (\(Q\)) lies between:
+        <div class="mcq-options"><p>(a) 0 and 1 &nbsp;&nbsp; (b) -1 and 0 &nbsp;&nbsp; (c) -1 and +1 &nbsp;&nbsp; (d) -\(\infty\) to +\(\infty\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-15"><strong>Answer:</strong> (c) -1 and +1</div>
+
+      <div class="question"><strong>Q16.</strong> If \(Q = +1\), there is:
+        <div class="mcq-options"><p>(a) Complete independence &nbsp;&nbsp; (b) Complete positive association &nbsp;&nbsp; (c) Complete negative association &nbsp;&nbsp; (d) Inconsistency</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-16"><strong>Answer:</strong> (b) Complete positive association</div>
+
+      <div class="question"><strong>Q17.</strong> The relationship between Yule's \(Q\) and coefficient of colligation \(Y\) is:
+        <div class="mcq-options"><p>(a) \(Q = \frac{Y}{1+Y}\) &nbsp;&nbsp; (b) \(Q = \frac{2Y}{1+Y^2}\) &nbsp;&nbsp; (c) \(Q = \frac{Y^2}{1+2Y}\) &nbsp;&nbsp; (d) \(Y = \frac{2Q}{1+Q^2}\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-17"><strong>Answer:</strong> (b) \(Q = \frac{2Y}{1+Y^2}\)</div>
+
+      <div class="question"><strong>Q18.</strong> Sheppard's correction is applied to correct errors due to:
+        <div class="mcq-options"><p>(a) Extreme values &nbsp;&nbsp; (b) Grouping of data &nbsp;&nbsp; (c) Missing values &nbsp;&nbsp; (d) Rounding off</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-18"><strong>Answer:</strong> (b) Grouping of data</div>
+
+      <div class="question"><strong>Q19.</strong> Bowley's coefficient of skewness uses:
+        <div class="mcq-options"><p>(a) Mean & Variance &nbsp;&nbsp; (b) Deciles &nbsp;&nbsp; (c) Quartiles &nbsp;&nbsp; (d) Moments</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-19"><strong>Answer:</strong> (c) Quartiles</div>
+
+      <div class="question"><strong>Q20.</strong> The first central moment \(\mu_1\) is always:
+        <div class="mcq-options"><p>(a) Mean &nbsp;&nbsp; (b) 0 &nbsp;&nbsp; (c) 1 &nbsp;&nbsp; (d) Variance</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="mcq-eng-20"><strong>Answer:</strong> (b) 0</div>
+    </div>
+    
+    <div class="hinglish-content" style="display:none;">
+      <h2><span class="section-num">❓</span> Multiple Choice Questions (बहुविकल्पीय प्रश्न)</h2>
+      <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">
+        सही विकल्प देखने के लिए <em>Show Answer</em> पर क्लिक करें।
+      </p>
+
+      <div class="question"><strong>Q1.</strong> Skewness क्या मापता है:
+        <div class="mcq-options"><p>(a) Central tendency &nbsp;&nbsp; (b) Dispersion &nbsp;&nbsp; (c) Asymmetry &nbsp;&nbsp; (d) Peakedness</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-1"><strong>Answer:</strong> (c) Asymmetry</div>
+
+      <div class="question"><strong>Q2.</strong> Positively skewed distribution में:
+        <div class="mcq-options"><p>(a) Mean > Median > Mode &nbsp;&nbsp; (b) Mean < Median < Mode &nbsp;&nbsp; (c) Mean = Median = Mode &nbsp;&nbsp; (d) Mode > Mean</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-2"><strong>Answer:</strong> (a) Mean > Median > Mode</div>
+
+      <div class="question"><strong>Q3.</strong> Karl Pearson's coefficient of skewness का formula है:
+        <div class="mcq-options"><p>(a) \(\frac{\text{Mean} - \text{Median}}{\sigma}\) &nbsp;&nbsp; (b) \(\frac{3(\text{Mean} - \text{Median})}{\sigma}\) &nbsp;&nbsp; (c) \(\frac{\text{Mode} - \text{Mean}}{\sigma}\) &nbsp;&nbsp; (d) \(\frac{Q_3+Q_1-2M}{Q_3-Q_1}\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-3"><strong>Answer:</strong> (b) \(\frac{3(\text{Mean} - \text{Median})}{\sigma}\)</div>
+
+      <div class="question"><strong>Q4.</strong> Kurtosis क्या मापता है:
+        <div class="mcq-options"><p>(a) Spread of data &nbsp;&nbsp; (b) Peakedness of the curve &nbsp;&nbsp; (c) Asymmetry &nbsp;&nbsp; (d) Averages</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-4"><strong>Answer:</strong> (b) Peakedness of the curve</div>
+
+      <div class="question"><strong>Q5.</strong> Mesokurtic distribution के लिए \(\beta_2\) की value होती है:
+        <div class="mcq-options"><p>(a) 0 &nbsp;&nbsp; (b) < 3 &nbsp;&nbsp; (c) > 3 &nbsp;&nbsp; (d) 3</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-5"><strong>Answer:</strong> (d) 3</div>
+
+      <div class="question"><strong>Q6.</strong> यदि \(\beta_2 > 3\), तो distribution curve है:
+        <div class="mcq-options"><p>(a) Mesokurtic &nbsp;&nbsp; (b) Platykurtic &nbsp;&nbsp; (c) Leptokurtic &nbsp;&nbsp; (d) Symmetrical</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-6"><strong>Answer:</strong> (c) Leptokurtic</div>
+
+      <div class="question"><strong>Q7.</strong> कौन सा moment हमेशा variance के बराबर होता है?
+        <div class="mcq-options"><p>(a) \(\mu_1\) &nbsp;&nbsp; (b) \(\mu'_2\) &nbsp;&nbsp; (c) \(\mu_2\) &nbsp;&nbsp; (d) \(\mu_3\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-7"><strong>Answer:</strong> (c) \(\mu_2\)</div>
+
+      <div class="question"><strong>Q8.</strong> एक attribute को मापा नहीं जा सकता:
+        <div class="mcq-options"><p>(a) Qualitatively &nbsp;&nbsp; (b) Numerically &nbsp;&nbsp; (c) Categorically &nbsp;&nbsp; (d) By observation</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-8"><strong>Answer:</strong> (b) Numerically</div>
+
+      <div class="question"><strong>Q9.</strong> Population को दो mutually exclusive classes में बाँटना कहलाता है:
+        <div class="mcq-options"><p>(a) Skewness &nbsp;&nbsp; (b) Dichotomy &nbsp;&nbsp; (c) Polychotomy &nbsp;&nbsp; (d) Consistency</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-9"><strong>Answer:</strong> (b) Dichotomy</div>
+
+      <div class="question"><strong>Q10.</strong> Frequency (A) represent करता है:
+        <div class="mcq-options"><p>(a) Class of order 0 &nbsp;&nbsp; (b) Class of order 1 &nbsp;&nbsp; (c) Class of order 2 &nbsp;&nbsp; (d) Ultimate class</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-10"><strong>Answer:</strong> (b) Class of order 1</div>
+
+      <div class="question"><strong>Q11.</strong> निम्नलिखित में से कौन zero-order frequency है?
+        <div class="mcq-options"><p>(a) (A) &nbsp;&nbsp; (b) (\(\alpha\)) &nbsp;&nbsp; (c) N &nbsp;&nbsp; (d) (AB)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-11"><strong>Answer:</strong> (c) N</div>
+
+      <div class="question"><strong>Q12.</strong> \(n\) attributes के लिए, ultimate class frequencies की संख्या होती है:
+        <div class="mcq-options"><p>(a) \(n^2\) &nbsp;&nbsp; (b) \(2n\) &nbsp;&nbsp; (c) \(2^n\) &nbsp;&nbsp; (d) \(3^n\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-12"><strong>Answer:</strong> (c) \(2^n\)</div>
+
+      <div class="question"><strong>Q13.</strong> Data consistent कहा जाता है यदि:
+        <div class="mcq-options"><p>(a) All frequencies are negative &nbsp;&nbsp; (b) Ultimate frequencies are \(\ge 0\) &nbsp;&nbsp; (c) \(Q = 0\) &nbsp;&nbsp; (d) \(Y = 0\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-13"><strong>Answer:</strong> (b) Ultimate frequencies are \(\ge 0\)</div>
+
+      <div class="question"><strong>Q14.</strong> दो attributes A और B independent होते हैं यदि:
+        <div class="mcq-options"><p>(a) \((AB) = \frac{(A)(B)}{N}\) &nbsp;&nbsp; (b) \((AB) > \frac{(A)(B)}{N}\) &nbsp;&nbsp; (c) \((AB) < \frac{(A)(B)}{N}\) &nbsp;&nbsp; (d) \((AB) = (A) + (B)\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-14"><strong>Answer:</strong> (a) \((AB) = \frac{(A)(B)}{N}\)</div>
+
+      <div class="question"><strong>Q15.</strong> Yule's coefficient of association (\(Q\)) किसके बीच होता है:
+        <div class="mcq-options"><p>(a) 0 and 1 &nbsp;&nbsp; (b) -1 and 0 &nbsp;&nbsp; (c) -1 and +1 &nbsp;&nbsp; (d) -\(\infty\) to +\(\infty\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-15"><strong>Answer:</strong> (c) -1 and +1</div>
+
+      <div class="question"><strong>Q16.</strong> यदि \(Q = +1\), तो वहाँ है:
+        <div class="mcq-options"><p>(a) Complete independence &nbsp;&nbsp; (b) Complete positive association &nbsp;&nbsp; (c) Complete negative association &nbsp;&nbsp; (d) Inconsistency</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-16"><strong>Answer:</strong> (b) Complete positive association</div>
+
+      <div class="question"><strong>Q17.</strong> Yule's \(Q\) और coefficient of colligation \(Y\) के बीच relationship है:
+        <div class="mcq-options"><p>(a) \(Q = \frac{Y}{1+Y}\) &nbsp;&nbsp; (b) \(Q = \frac{2Y}{1+Y^2}\) &nbsp;&nbsp; (c) \(Q = \frac{Y^2}{1+2Y}\) &nbsp;&nbsp; (d) \(Y = \frac{2Q}{1+Q^2}\)</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-17"><strong>Answer:</strong> (b) \(Q = \frac{2Y}{1+Y^2}\)</div>
+
+      <div class="question"><strong>Q18.</strong> Sheppard's correction किस error को ठीक करने के लिए apply किया जाता है:
+        <div class="mcq-options"><p>(a) Extreme values &nbsp;&nbsp; (b) Grouping of data &nbsp;&nbsp; (c) Missing values &nbsp;&nbsp; (d) Rounding off</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-18"><strong>Answer:</strong> (b) Grouping of data</div>
+
+      <div class="question"><strong>Q19.</strong> Bowley's coefficient of skewness use करता है:
+        <div class="mcq-options"><p>(a) Mean & Variance &nbsp;&nbsp; (b) Deciles &nbsp;&nbsp; (c) Quartiles &nbsp;&nbsp; (d) Moments</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-19"><strong>Answer:</strong> (c) Quartiles</div>
+
+      <div class="question"><strong>Q20.</strong> First central moment \(\mu_1\) हमेशा होता है:
+        <div class="mcq-options"><p>(a) Mean &nbsp;&nbsp; (b) 0 &nbsp;&nbsp; (c) 1 &nbsp;&nbsp; (d) Variance</p></div>
+      </div>
+      <button class="toggle-btn" onclick="toggleAnswer('mcq-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="mcq-hin-20"><strong>Answer:</strong> (b) 0</div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="fib">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">✏️</span> Fill in the Blanks</h2>
+      
+      <div class="question"><strong>Q1.</strong> Skewness refers to the lack of _________ in a distribution.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-1"><strong>Answer:</strong> symmetry</div>
+
+      <div class="question"><strong>Q2.</strong> If the right tail of a frequency curve is longer, it is _________ skewed.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-2"><strong>Answer:</strong> positively</div>
+
+      <div class="question"><strong>Q3.</strong> The curve which is more peaked than the normal curve is called _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-3"><strong>Answer:</strong> leptokurtic</div>
+
+      <div class="question"><strong>Q4.</strong> For a mesokurtic distribution, the value of \(\gamma_2\) is _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-4"><strong>Answer:</strong> zero (0)</div>
+
+      <div class="question"><strong>Q5.</strong> Moments calculated about the origin (0) are known as _________ moments.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-5"><strong>Answer:</strong> raw</div>
+
+      <div class="question"><strong>Q6.</strong> The second central moment \(\mu_2\) is equal to the _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-6"><strong>Answer:</strong> variance</div>
+
+      <div class="question"><strong>Q7.</strong> Qualitative characteristics that cannot be measured numerically are called _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-7"><strong>Answer:</strong> attributes</div>
+
+      <div class="question"><strong>Q8.</strong> Division of a population into two mutually exclusive classes is termed as _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-8"><strong>Answer:</strong> dichotomy</div>
+
+      <div class="question"><strong>Q9.</strong> Capital letters A, B, C denote the _________ of an attribute.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-9"><strong>Answer:</strong> presence</div>
+
+      <div class="question"><strong>Q10.</strong> For 2 attributes A and B, the total number of ultimate class frequencies is _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-10"><strong>Answer:</strong> 4 (\(2^2\))</div>
+
+      <div class="question"><strong>Q11.</strong> A given set of class frequencies is consistent if no ultimate class frequency is _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-11"><strong>Answer:</strong> negative</div>
+
+      <div class="question"><strong>Q12.</strong> If \((AB) = \frac{(A)(B)}{N}\), the attributes A and B are said to be _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-12"><strong>Answer:</strong> independent</div>
+
+      <div class="question"><strong>Q13.</strong> If the presence of A promotes the presence of B, it is called _________ association.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-13"><strong>Answer:</strong> positive</div>
+
+      <div class="question"><strong>Q14.</strong> Yule's coefficient of association (\(Q\)) varies from _________ to _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-14"><strong>Answer:</strong> -1, +1</div>
+
+      <div class="question"><strong>Q15.</strong> If \(Q = -1\), the attributes are perfectly _________ associated.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-15"><strong>Answer:</strong> negatively</div>
+
+      <div class="question"><strong>Q16.</strong> Bowley’s coefficient of skewness is based on _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-16"><strong>Answer:</strong> quartiles</div>
+
+      <div class="question"><strong>Q17.</strong> Sheppard's corrections are applied to adjust the error caused by _________ of data.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-17"><strong>Answer:</strong> grouping</div>
+
+      <div class="question"><strong>Q18.</strong> \(\mu_3\) is used to calculate the coefficient of _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-18"><strong>Answer:</strong> skewness (\(\beta_1\))</div>
+
+      <div class="question"><strong>Q19.</strong> Total population \(N\) is a class frequency of order _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-19"><strong>Answer:</strong> zero (0)</div>
+
+      <div class="question"><strong>Q20.</strong> In Yule's coefficient formula, if \(Y = 0\), then \(Q\) will be _________.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="fib-eng-20"><strong>Answer:</strong> zero (0)</div>
+    </div>
+
+    <div class="hinglish-content" style="display: none;">
+      <h2><span class="section-num">✏️</span> Fill in the Blanks (रिक्त स्थान भरें)</h2>
+      
+      <div class="question"><strong>Q1.</strong> Skewness एक distribution में _________ की कमी को दर्शाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-1"><strong>Answer:</strong> symmetry</div>
+
+      <div class="question"><strong>Q2.</strong> यदि frequency curve की right tail लंबी है, तो यह _________ skewed है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-2"><strong>Answer:</strong> positively</div>
+
+      <div class="question"><strong>Q3.</strong> जो curve normal curve से अधिक peaked (नुकीला) होता है, उसे _________ कहा जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-3"><strong>Answer:</strong> leptokurtic</div>
+
+      <div class="question"><strong>Q4.</strong> एक mesokurtic distribution के लिए, \(\gamma_2\) की value _________ होती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-4"><strong>Answer:</strong> zero (0)</div>
+
+      <div class="question"><strong>Q5.</strong> Origin (0) के about निकाले गए moments को _________ moments कहा जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-5"><strong>Answer:</strong> raw</div>
+
+      <div class="question"><strong>Q6.</strong> Second central moment \(\mu_2\) _________ के बराबर होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-6"><strong>Answer:</strong> variance</div>
+
+      <div class="question"><strong>Q7.</strong> Qualitative characteristics जिन्हें numerically नहीं मापा जा सकता, उन्हें _________ कहा जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-7"><strong>Answer:</strong> attributes</div>
+
+      <div class="question"><strong>Q8.</strong> Population को दो mutually exclusive classes में विभाजित करने को _________ कहा जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-8"><strong>Answer:</strong> dichotomy</div>
+
+      <div class="question"><strong>Q9.</strong> Capital letters A, B, C किसी attribute की _________ दर्शाते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-9"><strong>Answer:</strong> presence</div>
+
+      <div class="question"><strong>Q10.</strong> 2 attributes A और B के लिए, ultimate class frequencies की कुल संख्या _________ है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-10"><strong>Answer:</strong> 4 (\(2^2\))</div>
+
+      <div class="question"><strong>Q11.</strong> Class frequencies का एक set consistent होता है यदि कोई ultimate class frequency _________ न हो।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-11"><strong>Answer:</strong> negative</div>
+
+      <div class="question"><strong>Q12.</strong> यदि \((AB) = \frac{(A)(B)}{N}\), तो attributes A और B _________ कहे जाते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-12"><strong>Answer:</strong> independent</div>
+
+      <div class="question"><strong>Q13.</strong> यदि A की presence B की presence को बढ़ावा देती है, तो इसे _________ association कहा जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-13"><strong>Answer:</strong> positive</div>
+
+      <div class="question"><strong>Q14.</strong> Yule's coefficient of association (\(Q\)) _________ से _________ तक vary करता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-14"><strong>Answer:</strong> -1, +1</div>
+
+      <div class="question"><strong>Q15.</strong> यदि \(Q = -1\), तो attributes perfectly _________ associated होते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-15"><strong>Answer:</strong> negatively</div>
+
+      <div class="question"><strong>Q16.</strong> Bowley’s coefficient of skewness _________ पर आधारित है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-16"><strong>Answer:</strong> quartiles</div>
+
+      <div class="question"><strong>Q17.</strong> Data की _________ के कारण होने वाली error को adjust करने के लिए Sheppard's corrections apply किए जाते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-17"><strong>Answer:</strong> grouping</div>
+
+      <div class="question"><strong>Q18.</strong> \(\mu_3\) का उपयोग _________ के coefficient को calculate करने के लिए किया जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-18"><strong>Answer:</strong> skewness (\(\beta_1\))</div>
+
+      <div class="question"><strong>Q19.</strong> Total population \(N\) order _________ की एक class frequency है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-19"><strong>Answer:</strong> zero (0)</div>
+
+      <div class="question"><strong>Q20.</strong> Yule's coefficient formula में, यदि \(Y = 0\), तो \(Q\) _________ होगा।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('fib-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="fib-hin-20"><strong>Answer:</strong> zero (0)</div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="tf">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">✅</span> True / False</h2>
+      
+      <div class="question"><strong>Q1.</strong> If Mean = Median = Mode, the distribution has zero skewness.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-1"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q2.</strong> A platykurtic curve is more peaked than a normal curve.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-2"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q3.</strong> The first central moment is always equal to 1.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-3"><strong>Answer:</strong> False (It is always zero)</div>
+
+      <div class="question"><strong>Q4.</strong> Karl Pearson's coefficient of skewness can be calculated using Standard Deviation.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-4"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q5.</strong> \(\beta_2 = 3\) represents a mesokurtic distribution.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-5"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q6.</strong> Eye color is an example of a variable.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-6"><strong>Answer:</strong> False (It is an attribute)</div>
+
+      <div class="question"><strong>Q7.</strong> Attributes can be easily measured in numerical terms like weight.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-7"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q8.</strong> For two attributes, there are 4 ultimate class frequencies.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-8"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q9.</strong> In theory of attributes, N is considered a class frequency of order 0.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-9"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q10.</strong> Data is consistent even if one of the ultimate class frequencies is negative.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-10"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q11.</strong> If (AB) = 0, the attributes A and B are completely independent.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-11"><strong>Answer:</strong> False (If Q = 0, they are independent. (AB)=0 means perfect negative association)</div>
+
+      <div class="question"><strong>Q12.</strong> Yule’s coefficient of association (Q) ranges from -1 to +1.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-12"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q13.</strong> Positive association means the presence of attribute A prevents the presence of B.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-13"><strong>Answer:</strong> False</div>
+
+      <div class="question"><strong>Q14.</strong> The relation between Q and Y is \(Q = \frac{2Y}{1+Y^2}\).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-14"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q15.</strong> Bowley’s measure of skewness ignores the middle 50% of the data.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-15"><strong>Answer:</strong> False (It uses Q1, Q2, Q3, which cover the middle 50%)</div>
+
+      <div class="question"><strong>Q16.</strong> Sheppard's corrections adjust for errors caused by grouping continuous data into class intervals.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-16"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q17.</strong> A negatively skewed distribution has a long tail on the right.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-17"><strong>Answer:</strong> False (Long tail is on the left)</div>
+
+      <div class="question"><strong>Q18.</strong> \((A) + (\alpha) = N\) is always true in dichotomy.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-18"><strong>Answer:</strong> True</div>
+
+      <div class="question"><strong>Q19.</strong> Greek letters \(\alpha, \beta\) represent the presence of an attribute.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-19"><strong>Answer:</strong> False (They represent absence)</div>
+
+      <div class="question"><strong>Q20.</strong> Raw moments are calculated about the actual arithmetic mean.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="tf-eng-20"><strong>Answer:</strong> False (Central moments are calculated about the mean)</div>
+    </div>
+
+    <div class="hinglish-content" style="display: none;">
+      <h2><span class="section-num">✅</span> True / False (सही / गलत)</h2>
+      
+      <div class="question"><strong>Q1.</strong> यदि Mean = Median = Mode, तो distribution में zero skewness होती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-1"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q2.</strong> एक platykurtic curve normal curve से अधिक peaked (नुकीला) होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-2"><strong>Answer:</strong> False (गलत - यह flatter होता है)</div>
+
+      <div class="question"><strong>Q3.</strong> First central moment हमेशा 1 के बराबर होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-3"><strong>Answer:</strong> False (गलत - यह हमेशा zero होता है)</div>
+
+      <div class="question"><strong>Q4.</strong> Karl Pearson's coefficient of skewness को Standard Deviation का उपयोग करके calculate किया जा सकता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-4"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q5.</strong> \(\beta_2 = 3\) एक mesokurtic distribution को दर्शाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-5"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q6.</strong> आँख का रंग (Eye color) एक variable का उदाहरण है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-6"><strong>Answer:</strong> False (गलत - यह एक attribute है)</div>
+
+      <div class="question"><strong>Q7.</strong> Attributes को वजन (weight) जैसे numerical terms में आसानी से मापा जा सकता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-7"><strong>Answer:</strong> False (गलत)</div>
+
+      <div class="question"><strong>Q8.</strong> दो attributes के लिए, 4 ultimate class frequencies होती हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-8"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q9.</strong> Theory of attributes में, N को order 0 की class frequency माना जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-9"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q10.</strong> Data consistent होता है भले ही ultimate class frequencies में से एक negative हो।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-10"><strong>Answer:</strong> False (गलत)</div>
+
+      <div class="question"><strong>Q11.</strong> यदि (AB) = 0, तो attributes A और B पूरी तरह से independent हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-11"><strong>Answer:</strong> False (गलत - (AB)=0 का मतलब perfect negative association है)</div>
+
+      <div class="question"><strong>Q12.</strong> Yule’s coefficient of association (Q) -1 से +1 तक होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-12"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q13.</strong> Positive association का मतलब है कि attribute A की presence B की presence को रोकती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-13"><strong>Answer:</strong> False (गलत)</div>
+
+      <div class="question"><strong>Q14.</strong> Q और Y के बीच का relation \(Q = \frac{2Y}{1+Y^2}\) है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-14"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q15.</strong> Bowley’s measure of skewness data के बीच के 50% हिस्से को ignore कर देता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-15"><strong>Answer:</strong> False (गलत - यह Q1, Q2, Q3 का उपयोग करता है जो बीच के 50% को cover करते हैं)</div>
+
+      <div class="question"><strong>Q16.</strong> Continuous data को class intervals में group करने के कारण होने वाली errors को adjust करने के लिए Sheppard's corrections apply किए जाते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-16"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q17.</strong> एक negatively skewed distribution में right side में लंबी tail होती है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-17"><strong>Answer:</strong> False (गलत - लंबी tail left में होती है)</div>
+
+      <div class="question"><strong>Q18.</strong> Dichotomy में \((A) + (\alpha) = N\) हमेशा सही होता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-18"><strong>Answer:</strong> True (सही)</div>
+
+      <div class="question"><strong>Q19.</strong> Greek letters \(\alpha, \beta\) एक attribute की presence को दर्शाते हैं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-19"><strong>Answer:</strong> False (गलत - ये absence दर्शाते हैं)</div>
+
+      <div class="question"><strong>Q20.</strong> Raw moments को actual arithmetic mean के about calculate किया जाता है।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('tf-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="tf-hin-20"><strong>Answer:</strong> False (गलत - Central moments mean के about calculate किए जाते हैं)</div>
+    </div>
+  </section>
+</div>
+
+<div class="topic-section" id="subj">
+  <section class="section-card">
+    <div class="english-content">
+      <h2><span class="section-num">📝</span> Subjective Questions (Detailed Solutions)</h2>
+      
+      <div class="question"><strong>Q1.</strong> Define Skewness and list the three types of distributions based on skewness.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-1')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-1">
+        <p><strong>Solution:</strong> Skewness refers to the lack of symmetry in a statistical distribution. It indicates whether the data is concentrated on one side.
+        <br>1) <strong>Symmetrical:</strong> Left and right tails are equal (Mean = Median = Mode).
+        <br>2) <strong>Positively Skewed:</strong> Right tail is longer (Mean > Median > Mode).
+        <br>3) <strong>Negatively Skewed:</strong> Left tail is longer (Mean < Median < Mode).</p>
+      </div>
+
+      <div class="question"><strong>Q2.</strong> What is Kurtosis? Mention the three types of kurtotic curves.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-2')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-2">
+        <p><strong>Solution:</strong> Kurtosis measures the degree of peakedness or flatness of a distribution curve relative to a normal curve.
+        <br>1) <strong>Leptokurtic:</strong> Highly peaked with thick tails (\(\beta_2 > 3\)).
+        <br>2) <strong>Mesokurtic:</strong> Normal peakedness (\(\beta_2 = 3\)).
+        <br>3) <strong>Platykurtic:</strong> Flat-topped with thin tails (\(\beta_2 < 3\)).</p>
+      </div>
+
+      <div class="question"><strong>Q3.</strong> A distribution has Mean = 50, Median = 48, and Standard Deviation = 10. Calculate Karl Pearson’s coefficient of skewness.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-3')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-3">
+        <p><strong>Solution:</strong> 
+        <br>Karl Pearson's coefficient (using Median):
+        <br>\(S_k = \frac{3(\text{Mean} - \text{Median})}{\sigma}\)
+        <br>\(S_k = \frac{3(50 - 48)}{10}\)
+        <br>\(S_k = \frac{3(2)}{10} = \frac{6}{10} = 0.6\)
+        <br>The distribution is positively skewed.</p>
+      </div>
+
+      <div class="question"><strong>Q4.</strong> For a distribution, \(Q_1 = 30\), \(Q_2 = 45\), and \(Q_3 = 70\). Calculate Bowley’s coefficient of skewness.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-4')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-4">
+        <p><strong>Solution:</strong>
+        <br>Bowley's coefficient: \(S_Q = \frac{Q_3 + Q_1 - 2Q_2}{Q_3 - Q_1}\)
+        <br>\(S_Q = \frac{70 + 30 - 2(45)}{70 - 30}\)
+        <br>\(S_Q = \frac{100 - 90}{40}\)
+        <br>\(S_Q = \frac{10}{40} = 0.25\).</p>
+      </div>
+
+      <div class="question"><strong>Q5.</strong> Differentiate between Variables and Attributes with examples.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-5')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-5">
+        <p><strong>Solution:</strong>
+        <br><strong>Variable:</strong> A characteristic that can be measured numerically. E.g., Height (cm), Weight (kg), Yield (quintals).
+        <br><strong>Attribute:</strong> A qualitative characteristic that cannot be measured numerically but only observed as present or absent. E.g., Gender (Male/Female), Literacy (Literate/Illiterate), Blindness.</p>
+      </div>
+
+      <div class="question"><strong>Q6.</strong> What do you mean by Dichotomy of data?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-6')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-6">
+        <p><strong>Solution:</strong> Dichotomy means dividing the entire universe (total population) into exactly two mutually exclusive classes based on a single attribute. One class possesses the attribute (denoted by A), and the other lacks it (denoted by \(\alpha\)). Therefore, \(N = (A) + (\alpha)\).</p>
+      </div>
+
+      <div class="question"><strong>Q7.</strong> Explain the order of class frequencies in theory of attributes.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-7')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-7">
+        <p><strong>Solution:</strong> The order of a class frequency is determined by the number of attributes used to specify it.
+        <br>- Order 0: \(N\) (Total population, no attributes).
+        <br>- Order 1: (A), (B), (\(\alpha\)), (\(\beta\)) (One attribute).
+        <br>- Order 2: (AB), (A\(\beta\)), (\(\alpha\)B), (\(\alpha\beta\)) (Two attributes).</p>
+      </div>
+
+      <div class="question"><strong>Q8.</strong> Write down the relationship between frequencies of various orders for two attributes A and B.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-8')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-8">
+        <p><strong>Solution:</strong>
+        <br>\(N = (A) + (\alpha) = (B) + (\beta)\)
+        <br>\((A) = (AB) + (A\beta)\)
+        <br>\((B) = (AB) + (\alpha B)\)
+        <br>\((\alpha) = (\alpha B) + (\alpha\beta)\)
+        <br>\((\beta) = (A\beta) + (\alpha\beta)\)
+        <br>\(N = (AB) + (A\beta) + (\alpha B) + (\alpha\beta)\).</p>
+      </div>
+
+      <div class="question"><strong>Q9.</strong> What is the condition for two attributes A and B to be completely independent?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-9')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-9">
+        <p><strong>Solution:</strong> Two attributes A and B are independent if the presence of one does not influence the presence of the other. The mathematical condition is that the observed frequency (AB) is equal to its expected frequency.
+        <br>Condition: \((AB) = \frac{(A) \times (B)}{N}\).</p>
+      </div>
+
+      <div class="question"><strong>Q10.</strong> Define Consistency of data in theory of attributes.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-10')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-10">
+        <p><strong>Solution:</strong> A given set of class frequencies is said to be consistent if they do not conflict with each other. Since frequencies represent counts, no class frequency (especially the ultimate class frequencies) can be negative. So, if any calculated ultimate class frequency is < 0, the data is inconsistent.</p>
+      </div>
+
+      <div class="question"><strong>Q11.</strong> State the necessary conditions for consistency for two attributes A and B.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-11')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-11">
+        <p><strong>Solution:</strong> For consistency, all ultimate class frequencies must be non-negative:
+        <br>1) \((AB) \ge 0\)
+        <br>2) \((A\beta) \ge 0 \implies (AB) \le (A)\)
+        <br>3) \((\alpha B) \ge 0 \implies (AB) \le (B)\)
+        <br>4) \((\alpha\beta) \ge 0 \implies (AB) \ge (A) + (B) - N\).
+        <br>Combined: \((A) + (B) - N \le (AB) \le \min((A), (B))\).</p>
+      </div>
+
+      <div class="question"><strong>Q12.</strong> Write the formula for Yule's Coefficient of Association (\(Q\)).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-12')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-12">
+        <p><strong>Solution:</strong> Yule's Coefficient of Association is given by:
+        <div>
+        \[ Q = \frac{(AB)(\alpha\beta) - (A\beta)(\alpha B)}{(AB)(\alpha\beta) + (A\beta)(\alpha B)} \]
+        </div>
+        It ranges from -1 to +1.</p>
+      </div>
+
+      <div class="question"><strong>Q13.</strong> Define Yule's Coefficient of Colligation (\(Y\)).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-13')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-13">
+        <p><strong>Solution:</strong> Yule's Coefficient of Colligation is another measure of association, which is numerically smaller than \(Q\).
+        <div>
+        \[ Y = \frac{1 - \sqrt{\frac{(A\beta)(\alpha B)}{(AB)(\alpha\beta)}}}{1 + \sqrt{\frac{(A\beta)(\alpha B)}{(AB)(\alpha\beta)}}} = \frac{\sqrt{(AB)(\alpha\beta)} - \sqrt{(A\beta)(\alpha B)}}{\sqrt{(AB)(\alpha\beta)} + \sqrt{(A\beta)(\alpha B)}} \]
+        </div></p>
+      </div>
+
+      <div class="question"><strong>Q14.</strong> Prove the relationship between Yule's Coefficient of Association (\(Q\)) and Colligation (\(Y\)).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-14')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-14">
+        <p><strong>Solution:</strong> Let \( \sqrt{(AB)(\alpha\beta)} = x \) and \( \sqrt{(A\beta)(\alpha B)} = y \).
+        <br>Then \( Y = \frac{x-y}{x+y} \) and \( Q = \frac{x^2-y^2}{x^2+y^2} \).
+        <br>Consider the expression: \(\frac{2Y}{1+Y^2}\)
+        <br>\(= \frac{2(\frac{x-y}{x+y})}{1 + (\frac{x-y}{x+y})^2} = \frac{\frac{2(x-y)}{x+y}}{\frac{(x+y)^2 + (x-y)^2}{(x+y)^2}}\)
+        <br>\(= \frac{2(x-y)(x+y)}{(x+y)^2 + (x-y)^2} = \frac{2(x^2-y^2)}{x^2 + y^2 + 2xy + x^2 + y^2 - 2xy}\)
+        <br>\(= \frac{2(x^2-y^2)}{2(x^2+y^2)} = \frac{x^2-y^2}{x^2+y^2} = Q\).
+        <br>Hence proved, \(Q = \frac{2Y}{1+Y^2}\).</p>
+      </div>
+
+      <div class="question"><strong>Q15.</strong> Given the first four central moments: \(\mu_1=0, \mu_2=16, \mu_3=-64, \mu_4=162\). Calculate the coefficient of skewness (\(\beta_1\)).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-15')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-15">
+        <p><strong>Solution:</strong> 
+        <br>The moment measure of skewness is \(\beta_1 = \frac{\mu_3^2}{\mu_2^3}\).
+        <br>\(\beta_1 = \frac{(-64)^2}{(16)^3}\)
+        <br>\(\beta_1 = \frac{4096}{4096} = 1\).
+        <br>Since \(\mu_3\) is negative, the distribution is negatively skewed.</p>
+      </div>
+
+      <div class="question"><strong>Q16.</strong> Using the data from Q15, calculate the coefficient of kurtosis (\(\beta_2\)) and comment on the shape.</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-16')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-16">
+        <p><strong>Solution:</strong> 
+        <br>The moment measure of kurtosis is \(\beta_2 = \frac{\mu_4}{\mu_2^2}\).
+        <br>\(\beta_2 = \frac{162}{(16)^2} = \frac{162}{256} = 0.6328\).
+        <br>Since \(\beta_2 < 3\), the distribution curve is <strong>Platykurtic</strong>.</p>
+      </div>
+
+      <div class="question"><strong>Q17.</strong> Given \(N=500\), \((A)=300\), \((B)=250\), \((AB)=150\). Find the remaining ultimate class frequencies: \((A\beta), (\alpha B),\) and \((\alpha\beta)\).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-17')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-17">
+        <p><strong>Solution:</strong>
+        <br>1) \((A\beta) = (A) - (AB) = 300 - 150 = 150\).
+        <br>2) \((\alpha B) = (B) - (AB) = 250 - 150 = 100\).
+        <br>3) \((\alpha\beta) = N - (A) - (B) + (AB) = 500 - 300 - 250 + 150 = 100\).
+        <br>The frequencies are 150, 100, and 100 respectively.</p>
+      </div>
+
+      <div class="question"><strong>Q18.</strong> Check if the following data is consistent: \(N=1000\), \((A)=600\), \((B)=500\), \((AB)=50\).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-18')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-18">
+        <p><strong>Solution:</strong> For consistency, \((\alpha\beta) \ge 0\).
+        <br>\((\alpha\beta) = N - (A) - (B) + (AB)\)
+        <br>\((\alpha\beta) = 1000 - 600 - 500 + 50 = -50\).
+        <br>Since the frequency of a class cannot be negative (\(-50 < 0\)), the given data is <strong>inconsistent</strong>.</p>
+      </div>
+
+      <div class="question"><strong>Q19.</strong> In a group of 400 people, 250 are educated (A) and 150 are employed (B). 100 people are both educated and employed (AB). Find Yule’s Coefficient of Association (\(Q\)).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-19')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-19">
+        <p><strong>Solution:</strong> 
+        <br>\(N=400, (A)=250, (B)=150, (AB)=100\).
+        <br>\((A\beta) = (A) - (AB) = 250 - 100 = 150\).
+        <br>\((\alpha B) = (B) - (AB) = 150 - 100 = 50\).
+        <br>\((\alpha\beta) = N - (A) - (B) + (AB) = 400 - 250 - 150 + 100 = 100\).
+        <br>\(Q = \frac{(AB)(\alpha\beta) - (A\beta)(\alpha B)}{(AB)(\alpha\beta) + (A\beta)(\alpha B)}\)
+        <br>\(Q = \frac{(100)(100) - (150)(50)}{(100)(100) + (150)(50)} = \frac{10000 - 7500}{10000 + 7500}\)
+        <br>\(Q = \frac{2500}{17500} = \frac{1}{7} \approx 0.143\).
+        <br>There is a low positive association between education and employment.</p>
+      </div>
+
+      <div class="question"><strong>Q20.</strong> Find Yule's Coefficient of Colligation (\(Y\)) for the data in Q19 and verify \(Q = \frac{2Y}{1+Y^2}\).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-eng-20')">Show Answer ▼</button>
+      <div class="answer" id="subj-eng-20">
+        <p><strong>Solution:</strong>
+        <br>\((AB)=100, (\alpha\beta)=100, (A\beta)=150, (\alpha B)=50\).
+        <br>\(Y = \frac{\sqrt{(100)(100)} - \sqrt{(150)(50)}}{\sqrt{(100)(100)} + \sqrt{(150)(50)}} = \frac{100 - \sqrt{7500}}{100 + \sqrt{7500}}\)
+        <br>\(\sqrt{7500} \approx 86.60\)
+        <br>\(Y = \frac{100 - 86.60}{100 + 86.60} = \frac{13.40}{186.60} \approx 0.0718\).
+        <br>Now verify: \(\frac{2Y}{1+Y^2} = \frac{2(0.0718)}{1 + (0.0718)^2} = \frac{0.1436}{1 + 0.00515} = \frac{0.1436}{1.00515} \approx 0.143\).
+        <br>This matches the \(Q\) calculated in Q19 (\(0.143\)). Hence verified.</p>
+      </div>
+    </div>
+
+    <div class="hinglish-content" style="display: none;">
+      <h2><span class="section-num">📝</span> Subjective Questions (Detailed Solutions)</h2>
+      
+      <div class="question"><strong>Q1.</strong> Skewness को define करें और skewness के आधार पर distributions के तीन प्रकारों की सूची बनाएं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-1')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-1">
+        <p><strong>Solution:</strong> Skewness किसी statistical distribution में symmetry की कमी (lack of symmetry) को दर्शाता है। यह बताता है कि data एक तरफ झुका हुआ है या नहीं।
+        <br>1) <strong>Symmetrical:</strong> Left और right tails बराबर होती हैं (Mean = Median = Mode).
+        <br>2) <strong>Positively Skewed:</strong> Right tail लंबी होती है (Mean > Median > Mode).
+        <br>3) <strong>Negatively Skewed:</strong> Left tail लंबी होती है (Mean < Median < Mode).</p>
+      </div>
+
+      <div class="question"><strong>Q2.</strong> Kurtosis क्या है? Kurtotic curves के तीन प्रकारों का उल्लेख करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-2')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-2">
+        <p><strong>Solution:</strong> Kurtosis normal curve के मुक़ाबले distribution curve के peakedness (नुकीलापन) या flatness (चपटापन) की degree को मापता है।
+        <br>1) <strong>Leptokurtic:</strong> मोटी tails के साथ highly peaked (\(\beta_2 > 3\))।
+        <br>2) <strong>Mesokurtic:</strong> Normal peakedness (\(\beta_2 = 3\))।
+        <br>3) <strong>Platykurtic:</strong> पतली tails के साथ flat-topped (\(\beta_2 < 3\))।</p>
+      </div>
+
+      <div class="question"><strong>Q3.</strong> एक distribution का Mean = 50, Median = 48, और Standard Deviation = 10 है। Karl Pearson’s coefficient of skewness निकालें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-3')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-3">
+        <p><strong>Solution:</strong> 
+        <br>Karl Pearson's coefficient (Median का उपयोग करते हुए):
+        <br>\(S_k = \frac{3(\text{Mean} - \text{Median})}{\sigma}\)
+        <br>\(S_k = \frac{3(50 - 48)}{10}\)
+        <br>\(S_k = \frac{3(2)}{10} = \frac{6}{10} = 0.6\)
+        <br>Distribution positively skewed है।</p>
+      </div>
+
+      <div class="question"><strong>Q4.</strong> एक distribution के लिए, \(Q_1 = 30\), \(Q_2 = 45\), और \(Q_3 = 70\) है। Bowley’s coefficient of skewness निकालें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-4')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-4">
+        <p><strong>Solution:</strong>
+        <br>Bowley's coefficient: \(S_Q = \frac{Q_3 + Q_1 - 2Q_2}{Q_3 - Q_1}\)
+        <br>\(S_Q = \frac{70 + 30 - 2(45)}{70 - 30}\)
+        <br>\(S_Q = \frac{100 - 90}{40}\)
+        <br>\(S_Q = \frac{10}{40} = 0.25\)।</p>
+      </div>
+
+      <div class="question"><strong>Q5.</strong> Variables और Attributes के बीच examples के साथ अंतर बताएं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-5')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-5">
+        <p><strong>Solution:</strong>
+        <br><strong>Variable:</strong> एक विशेषता जिसे numerically मापा जा सकता है। जैसे, Height (cm), Weight (kg), Yield (quintals).
+        <br><strong>Attribute:</strong> एक qualitative विशेषता जिसे numerically नहीं मापा जा सकता, केवल presence या absence के रूप में observe किया जा सकता है। जैसे, Gender (Male/Female), Literacy (Literate/Illiterate), Blindness.</p>
+      </div>
+
+      <div class="question"><strong>Q6.</strong> Data की Dichotomy से आप क्या समझते हैं?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-6')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-6">
+        <p><strong>Solution:</strong> Dichotomy का अर्थ है पूरे universe (total population) को एक single attribute के आधार पर exactly दो mutually exclusive classes में बाँटना। एक class में attribute मौजूद होता है (A द्वारा दर्शाया गया), और दूसरे में नहीं होता (\(\alpha\) द्वारा दर्शाया गया)। इसलिए, \(N = (A) + (\alpha)\)।</p>
+      </div>
+
+      <div class="question"><strong>Q7.</strong> Theory of attributes में class frequencies के order को समझाएं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-7')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-7">
+        <p><strong>Solution:</strong> किसी class frequency का order उसे specify करने के लिए use किए गए attributes की संख्या से तय होता है।
+        <br>- Order 0: \(N\) (Total population, कोई attributes नहीं).
+        <br>- Order 1: (A), (B), (\(\alpha\)), (\(\beta\)) (एक attribute).
+        <br>- Order 2: (AB), (A\(\beta\)), (\(\alpha\)B), (\(\alpha\beta\)) (दो attributes).</p>
+      </div>
+
+      <div class="question"><strong>Q8.</strong> दो attributes A और B के लिए विभिन्न orders की frequencies के बीच relationship लिखें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-8')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-8">
+        <p><strong>Solution:</strong>
+        <br>\(N = (A) + (\alpha) = (B) + (\beta)\)
+        <br>\((A) = (AB) + (A\beta)\)
+        <br>\((B) = (AB) + (\alpha B)\)
+        <br>\((\alpha) = (\alpha B) + (\alpha\beta)\)
+        <br>\((\beta) = (A\beta) + (\alpha\beta)\)
+        <br>\(N = (AB) + (A\beta) + (\alpha B) + (\alpha\beta)\)।</p>
+      </div>
+
+      <div class="question"><strong>Q9.</strong> दो attributes A और B के पूरी तरह से independent होने की condition क्या है?</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-9')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-9">
+        <p><strong>Solution:</strong> दो attributes A और B independent होते हैं यदि एक की presence दूसरे की presence को प्रभावित नहीं करती है। Mathematical condition यह है कि observed frequency (AB) अपनी expected frequency के बराबर हो।
+        <br>Condition: \((AB) = \frac{(A) \times (B)}{N}\)।</p>
+      </div>
+
+      <div class="question"><strong>Q10.</strong> Theory of attributes में Data की Consistency को define करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-10')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-10">
+        <p><strong>Solution:</strong> Class frequencies के एक दिए गए set को consistent कहा जाता है यदि वे एक-दूसरे के साथ conflict नहीं करते हैं। चूँकि frequencies गिनती (counts) को दर्शाती हैं, कोई भी class frequency (विशेष रूप से ultimate class frequencies) negative नहीं हो सकती है। इसलिए, यदि कोई calculated ultimate class frequency < 0 है, तो data inconsistent है।</p>
+      </div>
+
+      <div class="question"><strong>Q11.</strong> दो attributes A और B के लिए consistency की necessary conditions बताएं।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-11')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-11">
+        <p><strong>Solution:</strong> Consistency के लिए, सभी ultimate class frequencies non-negative होनी चाहिए:
+        <br>1) \((AB) \ge 0\)
+        <br>2) \((A\beta) \ge 0 \implies (AB) \le (A)\)
+        <br>3) \((\alpha B) \ge 0 \implies (AB) \le (B)\)
+        <br>4) \((\alpha\beta) \ge 0 \implies (AB) \ge (A) + (B) - N\).
+        <br>Combined: \((A) + (B) - N \le (AB) \le \min((A), (B))\)।</p>
+      </div>
+
+      <div class="question"><strong>Q12.</strong> Yule's Coefficient of Association (\(Q\)) का formula लिखें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-12')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-12">
+        <p><strong>Solution:</strong> Yule's Coefficient of Association का formula है:
+        <div>
+        \[ Q = \frac{(AB)(\alpha\beta) - (A\beta)(\alpha B)}{(AB)(\alpha\beta) + (A\beta)(\alpha B)} \]
+        </div>
+        यह -1 से +1 तक होता है।</p>
+      </div>
+
+      <div class="question"><strong>Q13.</strong> Yule's Coefficient of Colligation (\(Y\)) को define करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-13')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-13">
+        <p><strong>Solution:</strong> Yule's Coefficient of Colligation association का एक और measure है, जो numerically \(Q\) से छोटा होता है।
+        <div>
+        \[ Y = \frac{1 - \sqrt{\frac{(A\beta)(\alpha B)}{(AB)(\alpha\beta)}}}{1 + \sqrt{\frac{(A\beta)(\alpha B)}{(AB)(\alpha\beta)}}} = \frac{\sqrt{(AB)(\alpha\beta)} - \sqrt{(A\beta)(\alpha B)}}{\sqrt{(AB)(\alpha\beta)} + \sqrt{(A\beta)(\alpha B)}} \]
+        </div></p>
+      </div>
+
+      <div class="question"><strong>Q14.</strong> Yule's Coefficient of Association (\(Q\)) और Colligation (\(Y\)) के बीच relationship को prove करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-14')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-14">
+        <p><strong>Solution:</strong> मान लें \( \sqrt{(AB)(\alpha\beta)} = x \) और \( \sqrt{(A\beta)(\alpha B)} = y \).
+        <br>तो \( Y = \frac{x-y}{x+y} \) और \( Q = \frac{x^2-y^2}{x^2+y^2} \).
+        <br>Expression पर विचार करें: \(\frac{2Y}{1+Y^2}\)
+        <br>\(= \frac{2(\frac{x-y}{x+y})}{1 + (\frac{x-y}{x+y})^2} = \frac{\frac{2(x-y)}{x+y}}{\frac{(x+y)^2 + (x-y)^2}{(x+y)^2}}\)
+        <br>\(= \frac{2(x-y)(x+y)}{(x+y)^2 + (x-y)^2} = \frac{2(x^2-y^2)}{x^2 + y^2 + 2xy + x^2 + y^2 - 2xy}\)
+        <br>\(= \frac{2(x^2-y^2)}{2(x^2+y^2)} = \frac{x^2-y^2}{x^2+y^2} = Q\).
+        <br>Hence proved, \(Q = \frac{2Y}{1+Y^2}\)।</p>
+      </div>
+
+      <div class="question"><strong>Q15.</strong> पहले चार central moments दिए गए हैं: \(\mu_1=0, \mu_2=16, \mu_3=-64, \mu_4=162\). Skewness का coefficient (\(\beta_1\)) निकालें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-15')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-15">
+        <p><strong>Solution:</strong> 
+        <br>Skewness का moment measure \(\beta_1 = \frac{\mu_3^2}{\mu_2^3}\) है।
+        <br>\(\beta_1 = \frac{(-64)^2}{(16)^3}\)
+        <br>\(\beta_1 = \frac{4096}{4096} = 1\)।
+        <br>चूंकि \(\mu_3\) negative है, distribution negatively skewed है।</p>
+      </div>
+
+      <div class="question"><strong>Q16.</strong> Q15 के data का उपयोग करते हुए, kurtosis का coefficient (\(\beta_2\)) निकालें और shape पर टिप्पणी करें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-16')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-16">
+        <p><strong>Solution:</strong> 
+        <br>Kurtosis का moment measure \(\beta_2 = \frac{\mu_4}{\mu_2^2}\) है।
+        <br>\(\beta_2 = \frac{162}{(16)^2} = \frac{162}{256} = 0.6328\)।
+        <br>चूंकि \(\beta_2 < 3\) है, distribution curve <strong>Platykurtic</strong> है।</p>
+      </div>
+
+      <div class="question"><strong>Q17.</strong> दिया गया है \(N=500\), \((A)=300\), \((B)=250\), \((AB)=150\). बची हुई ultimate class frequencies: \((A\beta), (\alpha B),\) और \((\alpha\beta)\) निकालें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-17')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-17">
+        <p><strong>Solution:</strong>
+        <br>1) \((A\beta) = (A) - (AB) = 300 - 150 = 150\).
+        <br>2) \((\alpha B) = (B) - (AB) = 250 - 150 = 100\).
+        <br>3) \((\alpha\beta) = N - (A) - (B) + (AB) = 500 - 300 - 250 + 150 = 100\).
+        <br>Frequencies क्रमशः 150, 100, और 100 हैं।</p>
+      </div>
+
+      <div class="question"><strong>Q18.</strong> Check करें कि क्या निम्नलिखित data consistent है: \(N=1000\), \((A)=600\), \((B)=500\), \((AB)=50\).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-18')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-18">
+        <p><strong>Solution:</strong> Consistency के लिए, \((\alpha\beta) \ge 0\)।
+        <br>\((\alpha\beta) = N - (A) - (B) + (AB)\)
+        <br>\((\alpha\beta) = 1000 - 600 - 500 + 50 = -50\).
+        <br>चूंकि किसी class की frequency negative नहीं हो सकती (\(-50 < 0\)), दिया गया data <strong>inconsistent</strong> है।</p>
+      </div>
+
+      <div class="question"><strong>Q19.</strong> 400 लोगों के एक group में, 250 educated (A) हैं और 150 employed (B) हैं। 100 लोग educated और employed (AB) दोनों हैं। Yule’s Coefficient of Association (\(Q\)) निकालें।</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-19')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-19">
+        <p><strong>Solution:</strong> 
+        <br>\(N=400, (A)=250, (B)=150, (AB)=100\).
+        <br>\((A\beta) = (A) - (AB) = 250 - 100 = 150\).
+        <br>\((\alpha B) = (B) - (AB) = 150 - 100 = 50\).
+        <br>\((\alpha\beta) = N - (A) - (B) + (AB) = 400 - 250 - 150 + 100 = 100\).
+        <br>\(Q = \frac{(AB)(\alpha\beta) - (A\beta)(\alpha B)}{(AB)(\alpha\beta) + (A\beta)(\alpha B)}\)
+        <br>\(Q = \frac{(100)(100) - (150)(50)}{(100)(100) + (150)(50)} = \frac{10000 - 7500}{10000 + 7500}\)
+        <br>\(Q = \frac{2500}{17500} = \frac{1}{7} \approx 0.143\).
+        <br>Education और employment के बीच low positive association है।</p>
+      </div>
+
+      <div class="question"><strong>Q20.</strong> Q19 के data के लिए Yule's Coefficient of Colligation (\(Y\)) निकालें और verify करें कि \(Q = \frac{2Y}{1+Y^2}\).</div>
+      <button class="toggle-btn" onclick="toggleAnswer('subj-hin-20')">Show Answer ▼</button>
+      <div class="answer" id="subj-hin-20">
+        <p><strong>Solution:</strong>
+        <br>\((AB)=100, (\alpha\beta)=100, (A\beta)=150, (\alpha B)=50\).
+        <br>\(Y = \frac{\sqrt{(100)(100)} - \sqrt{(150)(50)}}{\sqrt{(100)(100)} + \sqrt{(150)(50)}} = \frac{100 - \sqrt{7500}}{100 + \sqrt{7500}}\)
+        <br>\(\sqrt{7500} \approx 86.60\)
+        <br>\(Y = \frac{100 - 86.60}{100 + 86.60} = \frac{13.40}{186.60} \approx 0.0718\).
+        <br>अब verify करें: \(\frac{2Y}{1+Y^2} = \frac{2(0.0718)}{1 + (0.0718)^2} = \frac{0.1436}{1 + 0.00515} = \frac{0.1436}{1.00515} \approx 0.143\).
+        <br>यह Q19 में calculated \(Q\) (\(0.143\)) से match करता है। Hence verified.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+    </main>
+
+        <footer class="book-footer">
+        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+        CCS Haryana Agricultural University, Hisar</p>
+    </footer>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.substring(1);
+        if (hash && document.getElementById(hash)) {
+            showTopic(hash);
+        } else {
+            const firstSec = document.querySelector('.topic-section');
+            if(firstSec) showTopic(firstSec.id);
+        }
+    });
+
+    let isHinglish = false;
+    function toggleLanguage() {
+        isHinglish = !isHinglish;
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+
+        if (isHinglish) {
+            btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+        } else {
+            btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+        }
+    }
+
+    function showTopic(id) {
+        document.querySelectorAll('.topic-section').forEach(el => {
+            el.classList.remove('active');
+        });
+        document.querySelectorAll('.nav-link').forEach(el => {
+            el.classList.remove('active');
+        });
+        
+        const targetSection = document.getElementById(id);
+        if (targetSection) {
+            targetSection.classList.add('active');
+        }
+        
+        const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+        
+        window.scrollTo(0,0);
+        
+        if (window.innerWidth <= 768) {
+            document.getElementById('sidebar').classList.remove('open');
+        }
+        
+        try {
+            history.replaceState(null, null, '#' + id);
+        } catch (e) {
+            console.warn('History state update failed:', e);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
+        navItems.forEach(item => {
+            let nextEl = item.nextElementSibling;
+            const subItems = [];
+            while (nextEl && nextEl.classList.contains('nav-sub')) {
+                subItems.push(nextEl);
+                nextEl.style.display = 'none'; // Initially hide sub-items
+                nextEl = nextEl.nextElementSibling;
+            }
+
+            if (subItems.length > 0) {
+                const link = item.querySelector('.nav-link');
+                if (link) {
+                    const arrow = document.createElement('span');
+                    arrow.innerHTML = ' &#9660;';
+                    arrow.style.fontSize = '0.8em';
+                    arrow.style.float = 'right';
+                    arrow.style.marginTop = '2px';
+                    arrow.style.transition = 'transform 0.3s';
+                    link.appendChild(arrow);
+
+                    link.addEventListener('click', function(e) {
+                        const isHidden = subItems[0].style.display === 'none';
+                        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                        subItems.forEach(sub => {
+                            sub.style.display = isHidden ? 'list-item' : 'none';
+                        });
+                    });
+                }
+            }
+        });
+    });
+
+    function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+    function toggleAnswer(id) {
+        const answer = document.getElementById(id);
+        const btn = event.target;
+        if (answer.classList.contains('show')) {
+            answer.classList.remove('show');
+            btn.innerHTML = 'Show Answer ▼';
+        } else {
+            answer.classList.add('show');
+            btn.innerHTML = 'Hide Answer ▲';
+        }
+    }
+</script>
+<script src="../whiteboard/whiteboard.js?v=2.0"></script>
+</html>
