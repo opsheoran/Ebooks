@@ -1102,8 +1102,8 @@ svg.book-fig, .figure-box svg, canvas {
             <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('parabola'); return false;"><span class="nav-num">2.4</span> Fitting Second-Degree Parabola</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('power-curve'); return false;"><span class="nav-num">2.5</span> Fitting a Power Curve</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('exponential'); return false;"><span class="nav-num">2.6</span> Fitting Exponential Curves</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('summary'); return false;"><span class="nav-num">2.7</span> Summary of Methods</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('examples'); return false;"><span class="nav-num">2.8</span> Solved Numerical Examples</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('summary'); return false;"><span class="nav-num">2.7</span> Summary & Student Rules</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showTopic('examples'); return false;"><span class="nav-num">2.8</span> All Solved DOCX Examples</a></li>
         </ul>
 
         <div class="nav-group-label">Practice Exercises</div>
@@ -1123,10 +1123,10 @@ svg.book-fig, .figure-box svg, canvas {
             <button class="header-lang-toggle" id="lang-toggle-btn" onclick="toggleLanguage()">
                 <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
             </button>
-            <h1>Unit II: Curve Fitting & Method of Least Squares</h1>
+            <h1>Unit II: Method of Least Squares & Curve Fitting</h1>
             <div class="author">By Prof. O.P. Sheoran · Department of Mathematics & Statistics</div>
             <div class="syllabus-tag">
-                <strong>Syllabus:</strong> Principle of Least Squares · Fitting of Straight Line \(Y = a + bX\) · Fitting of Second-Degree Parabola \(Y = a + bX + cX^2\) · Fitting of Power Curve \(Y = a X^b\) · Fitting of Exponential Curves \(Y = a b^X\) and \(Y = a e^{bX}\) · Change of origin and scale · Solved numericals.
+                <strong>Syllabus:</strong> Principle of Least Squares · Fitting of Straight Line \(Y = a + bX\) · Fitting of Second-Degree Parabola \(Y = a + bX + cX^2\) · Fitting of Power Curve \(Y = a X^b\) · Fitting of Exponential Curves \(Y = a b^X\) and \(Y = a e^{bX}\) · Change of origin and scale · Verbatim DOCX Examples & Exercises.
             </div>
         </div>
 
@@ -1135,21 +1135,23 @@ svg.book-fig, .figure-box svg, canvas {
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">2.1</span> Concept of Curve Fitting</h2>
-                    <p class="intro-text">The general problem of finding equations of approximating curves that fit given sets of data is called <strong>curve fitting</strong>. Let us say you are given \(n\) pairs of data points \((x_i, y_i)\) for \(i = 1, 2, \dots, n\). Here, \(X\) is the independent variable and \(Y\) is the dependent variable. The goal is to find a mathematical relationship \(y = f(x)\) that best describes the trend in the data.</p>
+                    <p class="intro-text">All the methods that you have learnt in Block 1 of this course were based on univariate distributions, i.e. all measures analysed only a single variable. But many times we have data for two or more variables and our interest is to know the best functional relationship between variables that given data describes. In this unit, you will learn how to fit various functions such as straight line, parabola of the second degree, power curve, and exponential curves.</p>
                     
-                    <p>All measures studied in univariate statistics analyze a single variable (e.g. mean, variance). However, in agricultural, physical, and social sciences, observations are recorded simultaneously for two or more variables. For instance, height and weight of individuals, sales and profit of a firm, rainfall and crop production, or fertilizer dose and plant yield. In all these cases, we are interested in determining the best functional relationship connecting the independent variable \(X\) to the dependent variable \(Y\).</p>
+                    <p>Curve fitting has theoretical importance in regression and correlation analysis while practically it is used to present the relationship by a simple algebraic expression. All these methods can be used to estimate the values of the dependent variable for specific values of the independent variable.</p>
+
+                    <p>In statistics and experimental sciences, we often collect a set of \(n\) paired observations, denoted as \((x_i, y_i)\) for \(i = 1, 2, \dots, n\). When we plot these points on a coordinate plane, they form a scatter diagram. Curve fitting is the mathematical process of finding a specific equation—a "curve" (which could be a straight line or a curved shape)—that best describes the general trend of this scattered data.</p>
 
                     <div class="definition">
-                        <h4>Objectives of Curve Fitting</h4>
+                        <h4>Why Do We Fit Curves? (Objectives of Curve Fitting)</h4>
                         <ol>
-                            <li><strong>Data Summarisation:</strong> Replacing a large, complex table of scattered data points with a single, compact algebraic formula \(y = f(x)\).</li>
-                            <li><strong>Interpolation & Extrapolation:</strong> Estimating the value of the dependent variable \(Y\) for a given value of \(X\) within the observed range (interpolation) or outside the observed range (extrapolation).</li>
-                            <li><strong>Trend Analysis & Mathematical Modeling:</strong> Identifying underlying physical, biological, or economic laws governing the relationship between variables.</li>
+                            <li><strong>Interpolation & Extrapolation:</strong> To estimate the value of \(Y\) for a given \(X\) that lies within (interpolation) or outside (extrapolation) the observed data range.</li>
+                            <li><strong>Data Summarisation:</strong> To replace a large, complex table of data with a single, compact mathematical formula.</li>
+                            <li><strong>Trend Analysis:</strong> To understand the underlying physical, biological, or economic law governing the relationship between the variables.</li>
                         </ol>
                     </div>
 
                     <div class="figure-box">
-                        <div class="figure-title">Figure 2.1: Scatter Diagram and Fitted Mathematical Curve</div>
+                        <div class="figure-title">Figure 2.1: Scatter Diagram and Fitted Curve</div>
                         <svg class="book-fig" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
                             <line x1="50" y1="200" x2="450" y2="200" stroke="#1B2A4A" stroke-width="2"/>
                             <line x1="50" y1="200" x2="50" y2="30" stroke="#1B2A4A" stroke-width="2"/>
@@ -1163,14 +1165,13 @@ svg.book-fig, .figure-box svg, canvas {
                             <circle cx="340" cy="60" r="4" fill="#9B2335"/>
                             <circle cx="400" cy="75" r="4" fill="#9B2335"/>
                         </svg>
-                        <div class="figure-caption">The fitted curve \(y = f(x)\) represents the general trend of scattered observations.</div>
+                        <div class="figure-caption">The fitted curve \(y = f(x)\) describes the general trend of paired data points.</div>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">2.1</span> Curve Fitting का परिचय</h2>
                     <p>दिया गया data points \((x_i, y_i)\) के समूह के लिए एक ऐसी mathematical equation \(y = f(x)\) खोजना जो data के सामान्य trend को सबसे अच्छी तरह दर्शाती है, <strong>Curve Fitting</strong> कहलाती है।</p>
-                    <p>जहाँ univariate statistics केवल एक variable का अध्ययन करता है, वहीं curve fitting दो variables (जैसे वर्षा और फसल उत्पादन) के बीच सर्वश्रेष्ठ संबंध स्थापित करता है।</p>
                 </div>
             </section>
         </div>
@@ -1179,61 +1180,43 @@ svg.book-fig, .figure-box svg, canvas {
         <div id="least-squares" class="topic-section">
             <section class="section-card">
                 <div class="english-content">
-                    <h2><span class="section-num">2.2</span> The Principle of Least Squares</h2>
-                    <p>Suppose we have \(n\) observed paired data points \((x_1, y_1), (x_2, y_2), \dots, (x_n, y_n)\). Let \(\hat{y}_i = f(x_i)\) be the estimated or expected value of \(Y\) calculated from the assumed curve for a given \(x_i\).</p>
+                    <h2><span class="section-num">2.2</span> Principle of Least Squares</h2>
+                    <p>Let \(X\) and \(Y\) be the independent and dependent variables respectively, and we have a set of values \((x_i, y_i)\) for \(i = 1, 2, \dots, n\), i.e. observations are taken from \(n\) individuals on \(X\) and \(Y\). We are interested in studying the function \(y = f(x)\).</p>
                     
-                    <div class="definition">
-                        <h4>Definition: Residual (Error of Estimate)</h4>
-                        <p>The difference between the actual observed value \(y_i\) and the predicted value \(\hat{y}_i\) is called the <strong>residual</strong> or <strong>error</strong> for the \(i\)-th observation:</p>
-                        \[ e_i = y_i - \hat{y}_i = y_i - f(x_i) \]
-                    </div>
+                    <p>If \(\hat{y}_i\) is the estimated value of \(y_i\) obtained by the function and \(y_i\) is the observed value of \(Y\) at \(x_i\), then the difference between observed value and estimated value \(e_i = y_i - \hat{y}_i\) is called error of the estimate or <strong>residual</strong> for \(x_i\).</p>
 
                     <div class="theorem">
                         <h4>The Principle of Least Squares</h4>
-                        <p>The <strong>Principle of Least Squares</strong> states that the curve of best fit is the one for which the sum of the squares of the residuals is minimized:</p>
-                        \[ S = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - f(x_i))^2 = 	ext{Minimum} \]
+                        <p>The <strong>Principle of Least Squares</strong> consists in minimizing the sum of squares of the residuals, i.e., according to the principle of least squares:</p>
+                        \[ S = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - f(x_i))^2 = \text{Minimum} \]
                     </div>
 
                     <div class="key-point">
                         <h4>Why Do We Square the Errors?</h4>
                         <ol>
-                            <li><strong>Prevention of Sign Cancellation:</strong> If we minimize the simple sum of errors \(\sum e_i\), positive errors (points above the curve) and negative errors (points below the curve) cancel each other out. A completely wrong curve could have \(\sum e_i = 0\).</li>
-                            <li><strong>Calculus Differentiability:</strong> Minimizing the sum of absolute errors \(\sum |e_i|\) is mathematically difficult because the absolute value function lacks continuous derivatives at zero. In contrast, squared error functions \(e_i^2\) are smooth and easily differentiable.</li>
-                            <li><strong>Penalty for Outliers:</strong> Squaring penalizes large deviations much more heavily than small ones, forcing the fitted curve to represent all data points fairly.</li>
+                            <li><strong>Sign Cancellation:</strong> If we simply added the raw errors \(\sum e_i\), positive errors (points above the curve) and negative errors (points below the curve) would cancel each other out. A terrible curve could technically have a sum of errors equal to zero.</li>
+                            <li><strong>Absolute Values are Difficult:</strong> We could use the sum of absolute errors \(\sum |e_i|\), but the absolute value function has sharp corners and is not differentiable everywhere, making calculus-based optimization very difficult.</li>
+                            <li><strong>Penalty for Large Errors:</strong> Squaring the errors heavily penalizes large outliers, forcing the fitted curve to represent the entirety of the data points fairly.</li>
                         </ol>
                     </div>
 
                     <div class="derivation">
-                        <h4>General Calculus Procedure for Obtaining Normal Equations</h4>
-                        <p>Let the curve equation be \(Y = f(X; a, b, c, \dots)\) containing unknown parameters \(a, b, c\). The sum of squared errors is:</p>
-                        \[ S(a, b, c, \dots) = \sum_{i=1}^{n} [y_i - f(x_i; a, b, c, \dots)]^2 \]
-                        <p>To minimize \(S\), we set the partial derivatives with respect to each parameter equal to zero:</p>
-                        \[ \frac{\partial S}{\partial a} = 0, \quad \frac{\partial S}{\partial b} = 0, \quad \frac{\partial S}{\partial c} = 0, \dots \]
-                        <p>Solving these simultaneous linear equations (known as <strong>Normal Equations</strong>) yields the best-fit parameters.</p>
-                    </div>
-
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 2.2: Vertical Residuals (\(e_i = y_i - \hat{y}_i\)) Minimization</div>
-                        <svg class="book-fig" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="50" y1="210" x2="450" y2="210" stroke="#1B2A4A" stroke-width="2"/>
-                            <line x1="50" y1="210" x2="50" y2="30" stroke="#1B2A4A" stroke-width="2"/>
-                            <line x1="80" y1="180" x2="420" y2="50" stroke="#1D6FA4" stroke-width="3"/>
-                            <circle cx="130" cy="130" r="5" fill="#9B2335"/>
-                            <line x1="130" y1="130" x2="130" y2="160" stroke="#9B2335" stroke-width="2" stroke-dasharray="3"/>
-                            <text x="138" y="148" font-family="Source Serif 4" font-size="13" fill="#9B2335">e₁</text>
-                            <circle cx="250" cy="115" r="5" fill="#9B2335"/>
-                            <line x1="250" y1="115" x2="250" y2="115" stroke="#9B2335" stroke-width="2"/>
-                            <circle cx="360" cy="65" r="5" fill="#9B2335"/>
-                            <line x1="360" y1="65" x2="360" y2="73" stroke="#9B2335" stroke-width="2" stroke-dasharray="3"/>
-                            <text x="368" y="72" font-family="Source Serif 4" font-size="13" fill="#9B2335">eᵢ</text>
-                        </svg>
-                        <div class="figure-caption">Vertical dashed lines represent residuals \(e_i\) minimized by the Least Squares criterion.</div>
+                        <h4>General Calculus Procedure for Least Squares</h4>
+                        <p>Consider a curve of the type \(y = f(x; a_0, a_1, \dots, a_m)\) where \(Y\) is dependent variable, \(X\) is independent variable, and \(a_0, a_1, \dots, a_m\) are unknown constants.</p>
+                        <p>With the given values \((x_i, y_i)\), we determine the constants such that \(S = \sum [y_i - f(x_i; a_0, a_1, \dots, a_m)]^2\) is minimized.</p>
+                        <p>To find the minimum of the sum of squared errors \(S\), we use partial differentiation:</p>
+                        <ol>
+                            <li>Write \(S\) in terms of the curve's unknown constants (parameters).</li>
+                            <li>Take the partial derivative of \(S\) with respect to each unknown parameter: \(\frac{\partial S}{\partial a_0} = 0, \frac{\partial S}{\partial a_1} = 0, \dots, \frac{\partial S}{\partial a_m} = 0\).</li>
+                            <li>Set each partial derivative to exactly zero (the mathematical condition for a minimum).</li>
+                            <li>Solve the resulting system of simultaneous linear equations universally known as the <strong>Normal Equations</strong>.</li>
+                        </ol>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">2.2</span> Principle of Least Squares</h2>
-                    <p>Principle of Least Squares के अनुसार सर्वश्रेष्ठ fit की रेखा वह होती है जिसके लिए <strong>residual errors के वर्गों का योग (\(\sum e_i^2\)) न्यूनतम (minimum)</strong> हो।</p>
+                    <p>Residual error के वर्गों के योग (\(\sum e_i^2\)) को न्यूनतम करके curve के सर्वोत्तम गुणांक खोजना Principle of Least Squares कहलाता है।</p>
                 </div>
             </section>
         </div>
@@ -1243,37 +1226,33 @@ svg.book-fig, .figure-box svg, canvas {
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">2.3</span> Fitting a Straight Line (\(Y = a + bX\))</h2>
-                    <p>Let the equation of the straight line to be fitted be:</p>
-                    \[ Y = a + bX \]
-                    <p>where \(a\) is the Y-intercept and \(b\) is the slope. Given \(n\) data points \((x_i, y_i)\), the residual sum of squares is:</p>
-                    \[ S = \sum_{i=1}^{n} (y_i - a - b x_i)^2 \]
+                    <p>A straight line is the simplest curve, used when the variables exhibit a linear rate of change: \(Y = a + bX\). Here \(a\) is the Y-intercept (value of \(Y\) when \(X = 0\)) and \(b\) is the Slope (rate of change of \(Y\) with respect to \(X\)).</p>
 
                     <div class="derivation">
-                        <h4>Derivation of Normal Equations for Straight Line</h4>
-                        <p>Differentiating \(S\) partially with respect to \(a\) and \(b\) and setting to zero:</p>
-                        <ol>
-                            <li>\(\frac{\partial S}{\partial a} = -2 \sum_{i=1}^{n} (y_i - a - b x_i) = 0 \implies \mathbf{\sum Y = n a + b \sum X}\)</li>
-                            <li>\(\frac{\partial S}{\partial b} = -2 \sum_{i=1}^{n} x_i (y_i - a - b x_i) = 0 \implies \mathbf{\sum XY = a \sum X + b \sum X^2}\)</li>
-                        </ol>
+                        <h4>Step-by-Step Derivation of Normal Equations</h4>
+                        <p>Let the equation of the best-fit line be \(Y = a + bX\). The sum of squared errors is:</p>
+                        \[ S = \sum_{i=1}^{n} (y_i - a - b x_i)^2 \]
+                        <p><strong>Step 1: Differentiate \(S\) with respect to \(a\):</strong></p>
+                        \[ \frac{\partial S}{\partial a} = -2 \sum_{i=1}^{n} (y_i - a - b x_i) = 0 \]
+                        <p>Divide by \(-2\) and distribute summation: \(\sum y_i - \sum a - b \sum x_i = 0\). Since \(\sum_{i=1}^n a = n a\):</p>
+                        \[ \mathbf{\sum Y = n a + b \sum X} \quad \text{--- (Normal Equation I)} \]
+
+                        <p><strong>Step 2: Differentiate \(S\) with respect to \(b\):</strong></p>
+                        \[ \frac{\partial S}{\partial b} = -2 \sum_{i=1}^{n} x_i (y_i - a - b x_i) = 0 \]
+                        <p>Divide by \(-2\) and distribute summation: \(\sum x_i y_i - a \sum x_i - b \sum x_i^2 = 0\):</p>
+                        \[ \mathbf{\sum XY = a \sum X + b \sum X^2} \quad \text{--- (Normal Equation II)} \]
                     </div>
 
                     <div class="formula-box">
-                        <strong>System of Normal Equations for Straight Line \(Y = a + bX\):</strong><br>
-                        \[ \begin{cases} \sum Y = n a + b \sum X \\ \sum XY = a \sum X + b \sum X^2 \end{cases} \]
-                    </div>
-
-                    <div class="note">
-                        <h4>Simplification via Shift of Origin (\(\sum X = 0\))</h4>
-                        <p>When \(X\) values are equally spaced, we can shift the origin to the middle value \(X = A\):</p>
-                        \[ U = \frac{X - A}{h} \implies \sum U = 0 \]
-                        <p>Then the normal equations simplify directly to:</p>
-                        \[ a = \frac{\sum Y}{n} = \bar{Y}, \quad b = \frac{\sum U Y}{\sum U^2} \]
+                        <strong>Explicit Solution Formulas for \(a\) and \(b\):</strong><br>
+                        \[ b = \frac{n \sum XY - \sum X \sum Y}{n \sum X^2 - (\sum X)^2}, \quad a = \bar{Y} - b \bar{X} \]
+                        <p>where \(\bar{X} = \frac{\sum X}{n}\) and \(\bar{Y} = \frac{\sum Y}{n}\) are arithmetic means.</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">2.3</span> Straight Line Fitting (\(Y = a + bX\))</h2>
-                    <p>Straight line fit करने के लिए दो Normal Equations का उपयोग किया जाता है जो ऊपर दर्शाई गई हैं।</p>
+                    <p>Straight line fit करने की सम्पूर्ण विधि एवं Normal Equations ऊपर दी गई हैं।</p>
                 </div>
             </section>
         </div>
@@ -1283,12 +1262,11 @@ svg.book-fig, .figure-box svg, canvas {
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">2.4</span> Fitting a Second-Degree Parabola (\(Y = a + bX + cX^2\))</h2>
-                    <p>When the scatter plot exhibits a curved (U-shaped or inverted U-shaped) trend, a second-degree polynomial or parabola is fitted:</p>
-                    \[ Y = a + bX + cX^2 \]
+                    <p>When a scatter plot reveals a curve with a single bend (convex or concave), a straight line is insufficient. We fit a second-degree polynomial or parabola: \(Y = a + bX + cX^2\). This model has three unknown parameters: \(a, b, c\).</p>
 
                     <div class="derivation">
-                        <h4>Derivation of Normal Equations for Parabola</h4>
-                        <p>Let \(S = \sum_{i=1}^{n} (y_i - a - b x_i - c x_i^2)^2\). Taking partial derivatives:</p>
+                        <h4>Derivation of 3 Normal Equations</h4>
+                        <p>The sum of squared errors is \(S = \sum_{i=1}^{n} (y_i - a - b x_i - c x_i^2)^2\). Taking partial derivatives:</p>
                         <ol>
                             <li>\(\frac{\partial S}{\partial a} = 0 \implies \mathbf{\sum Y = n a + b \sum X + c \sum X^2}\)</li>
                             <li>\(\frac{\partial S}{\partial b} = 0 \implies \mathbf{\sum XY = a \sum X + b \sum X^2 + c \sum X^3}\)</li>
@@ -1296,17 +1274,16 @@ svg.book-fig, .figure-box svg, canvas {
                         </ol>
                     </div>
 
-                    <div class="formula-box">
-                        <strong>System of 3 Normal Equations for Parabola:</strong><br>
-                        \[ \begin{cases} 
-                        \sum Y = n a + b \sum X + c \sum X^2 \\ \sum XY = a \sum X + b \sum X^2 + c \sum X^3 \\ \sum X^2Y = a \sum X^2 + b \sum X^3 + c \sum X^4 
-                        \end{cases} \]
+                    <div class="note">
+                        <h4>The "Change of Origin" Shortcut (\(\sum X = 0\))</h4>
+                        <p>If \(X\) values are equally spaced, shift origin to the middle value of \(X\) such that \(\sum X = 0\) and \(\sum X^3 = 0\). The normal equations simplify directly to:</p>
+                        \[ a = \frac{\sum Y - c \sum X^2}{n}, \quad b = \frac{\sum XY}{\sum X^2}, \quad c = \frac{n \sum X^2 Y - \sum Y \sum X^2}{n \sum X^4 - (\sum X^2)^2} \]
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">2.4</span> Second-Degree Parabola (\(Y = a + bX + cX^2\))</h2>
-                    <p>Parabola fitting के लिए 3 Normal Equations का उपयोग किया जाता है।</p>
+                    <h2><span class="section-num">2.4</span> Second-Degree Parabola</h2>
+                    <p>Parabola fitting की complete theory एवं 3 Normal Equations यहाँ दी गई हैं।</p>
                 </div>
             </section>
         </div>
@@ -1316,24 +1293,20 @@ svg.book-fig, .figure-box svg, canvas {
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">2.5</span> Fitting a Power Curve (\(Y = a X^b\))</h2>
-                    <p>The power curve equation is non-linear: \(Y = a X^b\). Taking base-10 logarithms on both sides converts it into a linear relationship:</p>
+                    <p>The power curve models relationships where one variable scales as a power of another (e.g. \(Y = a X^b\)). To linearize, take common logarithm \(\log_{10}\) on both sides:</p>
                     \[ \log_{10} Y = \log_{10} a + b \log_{10} X \]
 
                     <div class="formula-box">
-                        <strong>Linearized Power Model:</strong><br>
-                        <p>Let \(v = \log_{10} Y\), \(u = \log_{10} X\), \(A = \log_{10} a\), and \(B = b\). Then:</p>
-                        \[ v = A + B u \]
-                        <br>
-                        <strong>Normal Equations:</strong><br>
+                        <strong>Linearized Form & Normal Equations:</strong><br>
+                        <p>Let \(v = \log_{10} Y\), \(u = \log_{10} X\), \(A = \log_{10} a\), and \(B = b\). The equation becomes \(v = A + B u\).</p>
                         \[ \begin{cases} \sum v = n A + B \sum u \\ \sum u v = A \sum u + B \sum u^2 \end{cases} \]
-                        <br>
-                        <strong>Parameters:</strong> \(a = 	ext{antilog}_{10}(A) = 10^A\), and \(b = B\).
+                        <p>Parameter Recovery: \(a = \text{antilog}_{10}(A) = 10^A\), and \(b = B\).</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">2.5</span> Power Curve (\(Y = a X^b\))</h2>
-                    <p>Power curve को logarithm लेकर linear form \(v = A + B u\) में बदल दिया जाता है।</p>
+                    <h2><span class="section-num">2.5</span> Power Curve Fitting</h2>
+                    <p>Power curve को log लेकर linearize करने की विधि।</p>
                 </div>
             </section>
         </div>
@@ -1343,26 +1316,25 @@ svg.book-fig, .figure-box svg, canvas {
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">2.6</span> Fitting Exponential Curves (\(Y = a b^X\) and \(Y = a e^{bX}\))</h2>
-                    <p>Exponential growth and decay curves are widely used in biology, compound interest, and crop growth modeling.</p>
-
+                    
                     <div class="theorem">
-                        <h4>Form 1: \(Y = a b^X\)</h4>
-                        <p>Taking \(\log_{10}\) on both sides: \(\log_{10} Y = \log_{10} a + X \log_{10} b \implies v = A + B X\).</p>
+                        <h4>Form 1: Base-10 Exponential Curve (\(Y = a b^X\))</h4>
+                        <p>Take \(\log_{10}\) on both sides: \(\log_{10} Y = \log_{10} a + X \log_{10} b \implies v = A + B X\).</p>
                         <p>Normal equations: \(\sum v = n A + B \sum X\) and \(\sum X v = A \sum X + B \sum X^2\).</p>
-                        <p>Parameter values: \(a = 10^A\), \(b = 10^B\).</p>
+                        <p>Parameter recovery: \(a = 10^A\), \(b = 10^B\).</p>
                     </div>
 
                     <div class="theorem">
-                        <h4>Form 2: \(Y = a e^{bX}\)</h4>
-                        <p>Taking natural logarithm \(\ln\) on both sides: \(\ln Y = \ln a + b X \implies v = A + b X\).</p>
+                        <h4>Form 2: Natural Exponential Curve (\(Y = a e^{bX}\))</h4>
+                        <p>Take natural logarithm \(\ln\) on both sides: \(\ln Y = \ln a + b X \implies v = A + b X\).</p>
                         <p>Normal equations: \(\sum v = n A + b \sum X\) and \(\sum X v = A \sum X + b \sum X^2\).</p>
-                        <p>Parameter values: \(a = e^A\), \(b = b\).</p>
+                        <p>Parameter recovery: \(a = e^A\), \(b = b\).</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">2.6</span> Exponential Curves</h2>
-                    <p>Exponential curves \(Y = a b^X\) और \(Y = a e^{bX}\) की प्रक्रिया ऊपर दर्शाई गई है।</p>
+                    <p>Exponential curves के दोनों रूपों की linearisation तकनीक।</p>
                 </div>
             </section>
         </div>
@@ -1371,85 +1343,226 @@ svg.book-fig, .figure-box svg, canvas {
         <div id="summary" class="topic-section">
             <section class="section-card">
                 <div class="english-content">
-                    <h2><span class="section-num">2.7</span> Summary & Comparison of Curve Fitting Methods</h2>
+                    <h2><span class="section-num">2.7</span> Summary Table & Fundamental Student Rules</h2>
                     <table>
                         <thead>
                             <tr>
                                 <th>Curve Type</th>
-                                <th>Equation</th>
-                                <th>Transformation</th>
-                                <th>Linear Form</th>
-                                <th>Parameters</th>
+                                <th>Model</th>
+                                <th>Linearized Form</th>
+                                <th>Transformations Needed</th>
+                                <th>Parameter Recovery</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td><strong>Straight Line</strong></td>
                                 <td>\(Y = a + bX\)</td>
-                                <td>None</td>
                                 <td>\(Y = a + bX\)</td>
-                                <td>\(a, b\)</td>
+                                <td>None</td>
+                                <td>\(a, b\) directly computed</td>
                             </tr>
                             <tr>
                                 <td><strong>Parabola</strong></td>
                                 <td>\(Y = a + bX + cX^2\)</td>
-                                <td>None</td>
                                 <td>\(Y = a + bX + cX^2\)</td>
-                                <td>\(a, b, c\)</td>
+                                <td>None</td>
+                                <td>\(a, b, c\) directly computed</td>
                             </tr>
                             <tr>
                                 <td><strong>Power Curve</strong></td>
                                 <td>\(Y = a X^b\)</td>
-                                <td>\(u = \log X, v = \log Y\)</td>
                                 <td>\(v = A + B u\)</td>
+                                <td>\(u = \log_{10} X, v = \log_{10} Y\)</td>
                                 <td>\(a = 10^A, b = B\)</td>
                             </tr>
                             <tr>
                                 <td><strong>Exponential 1</strong></td>
                                 <td>\(Y = a b^X\)</td>
-                                <td>\(v = \log Y\)</td>
                                 <td>\(v = A + B X\)</td>
+                                <td>\(v = \log_{10} Y, A = \log a, B = \log b\)</td>
                                 <td>\(a = 10^A, b = 10^B\)</td>
                             </tr>
                             <tr>
                                 <td><strong>Exponential 2</strong></td>
                                 <td>\(Y = a e^{bX}\)</td>
-                                <td>\(v = \ln Y\)</td>
                                 <td>\(v = A + b X\)</td>
+                                <td>\(v = \ln Y, A = \ln a\)</td>
                                 <td>\(a = e^A, b = b\)</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
 
-                <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">2.7</span> Summary of Methods</h2>
-                    <p>सभी 5 curves का तुलनात्मक विवरण तालिका में दिया गया है।</p>
-                </div>
-            </section>
-        </div>
-
-        <!-- TOPIC 2.8: EXAMPLES -->
-        <div id="examples" class="topic-section">
-            <section class="section-card">
-                <div class="english-content">
-                    <h2><span class="section-num">2.8</span> Solved Numerical Examples</h2>
-                    <div class="example">
-                        <h4>Example 2.1: Fitting a Straight Line</h4>
-                        <p>Fit a straight line \(Y = a + bX\) to the following agricultural data:</p>
-                        <table class="calculation-data">
-                            <tr><th>X (Fertilizer kg/ha)</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-                            <tr><th>Y (Yield q/ha)</th><td>14</td><td>27</td><td>40</td><td>55</td><td>68</td></tr>
-                        </table>
-                        <p><strong>Solution:</strong> Here \(N = 5\). \(\sum X = 15\), \(\sum Y = 204\), \(\sum X^2 = 55\), \(\sum XY = 748\).</p>
-                        <p>Normal equations: 1) \(204 = 5a + 15b\), 2) \(748 = 15a + 55b\).</p>
-                        <p>Solving simultaneously gives: \(b = 13.6\), \(a = 0\). The fitted line is \(\mathbf{Y = 13.6 X}\).</p>
+                    <div class="key-point">
+                        <h4>Fundamental Rules for Students</h4>
+                        <ol>
+                            <li><strong>Understand the Calculus:</strong> The Normal Equations are not arbitrary; they are the direct mathematical result of setting partial derivatives of the squared-error sum to zero.</li>
+                            <li><strong>Count Your Unknowns:</strong> The number of unknown parameters in your curve dictates the number of Normal Equations you must generate and solve.</li>
+                            <li><strong>Linearise First:</strong> You can only directly apply Normal Equations to linear formulas. If you have exponents or powers as parameters, linearise using logarithms first.</li>
+                            <li><strong>Tables are Mandatory:</strong> Never try to solve these by calculating sums randomly. Always build a strict computation table with columns for \(X, Y, X^2, XY, U, V, \log X, \log Y\), etc., sum the columns at the bottom, and substitute totals into Normal Equations.</li>
+                        </ol>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">2.8</span> Solved Examples</h2>
-                    <p>Numerical solved examples are in the English tab.</p>
+                    <h2><span class="section-num">2.7</span> Summary & Student Rules</h2>
+                    <p>विद्यार्थियों के लिए महत्वपूर्ण नियम एवं तुलनात्मक तालिका।</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- TOPIC 2.8: ALL SOLVED EXAMPLES FROM DOCX -->
+        <div id="examples" class="topic-section">
+            <section class="section-card">
+                <div class="english-content">
+                    <h2><span class="section-num">2.8</span> All Solved Examples & Exercises from DOCX Files</h2>
+
+                    <!-- EXAMPLE 1 -->
+                    <div class="example">
+                        <h4>Example 1 (DOCX 1 Section 5.3): Fitting a Straight Line</h4>
+                        <p><strong>Problem:</strong> Fit a straight line \(Y = a + bX\) to the following data:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                            <tr><th>Y</th><td>14</td><td>27</td><td>40</td><td>55</td><td>68</td></tr>
+                        </table>
+                        <p><strong>Solution:</strong> Here \(N = 5\). \(\sum X = 15\), \(\sum Y = 204\), \(\sum X^2 = 55\), \(\sum XY = 748\).</p>
+                        <p>Normal equations: 1) \(204 = 5a + 15b\), 2) \(748 = 15a + 55b\).</p>
+                        <p>Solving simultaneously: Multiply Eq (1) by 3: \(612 = 15a + 45b\). Subtract from Eq (2): \(136 = 10b \implies b = 13.6\). Substituting \(b = 13.6\) into Eq (1): \(5a = 204 - 15(13.6) = 0 \implies a = 0\).</p>
+                        <p><strong>Fitted Straight Line:</strong> \(\mathbf{Y = 13.6 X}\).</p>
+                    </div>
+
+                    <!-- EXERCISE E1 -->
+                    <div class="example">
+                        <h4>Exercise E1 (DOCX 1 Section 5.9): Straight Line Fitting</h4>
+                        <p><strong>Problem:</strong> Fit a straight line \(Y = a + bX\) to the following data:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>6</td><td>7</td><td>8</td><td>9</td><td>11</td></tr>
+                            <tr><th>Y</th><td>5</td><td>4</td><td>3</td><td>2</td><td>1</td></tr>
+                        </table>
+                        <p><strong>Solution:</strong> \(N = 5\). \(\sum X = 41\), \(\sum Y = 15\), \(\sum X^2 = 351\), \(\sum XY = 111\).</p>
+                        <p>Normal equations: 1) \(15 = 5a + 41b\), 2) \(111 = 41a + 351b\).</p>
+                        <p>Solving simultaneously: \(a = 9.87\), \(b = -0.73\).</p>
+                        <p><strong>Fitted Straight Line:</strong> \(\mathbf{Y = 9.87 - 0.73 X}\).</p>
+                    </div>
+
+                    <!-- EXAMPLE 2 -->
+                    <div class="example">
+                        <h4>Example 2 (DOCX 1 Section 5.4): Fitting a Second-Degree Parabola</h4>
+                        <p><strong>Problem:</strong> Fit a second-degree parabola \(Y = a + bX + cX^2\) to the following data:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>0</td><td>1</td><td>2</td><td>3</td><td>4</td></tr>
+                            <tr><th>Y</th><td>1</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+                        </table>
+                        <p><strong>Computation Table:</strong></p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><th>Y</th><th>XY</th><th>X²</th><th>X²Y</th><th>X³</th><th>X⁴</th></tr>
+                            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>1</td><td>3</td><td>3</td><td>1</td><td>3</td><td>1</td><td>1</td></tr>
+                            <tr><td>2</td><td>4</td><td>8</td><td>4</td><td>16</td><td>8</td><td>16</td></tr>
+                            <tr><td>3</td><td>5</td><td>15</td><td>9</td><td>45</td><td>27</td><td>81</td></tr>
+                            <tr><td>4</td><td>6</td><td>24</td><td>16</td><td>96</td><td>64</td><td>256</td></tr>
+                            <tr><th>Total: 10</th><th>19</th><th>50</th><th>30</th><th>160</th><th>100</th><th>354</th></tr>
+                        </table>
+                        <p>Normal equations: 1) \(19 = 5a + 10b + 30c\), 2) \(50 = 10a + 30b + 100c\), 3) \(160 = 30a + 100b + 354c\).</p>
+                        <p>Solving simultaneously: \(a = 1.0857\), \(b = 1.6286\), \(c = -0.1071\).</p>
+                        <p><strong>Fitted Parabola:</strong> \(\mathbf{Y = 1.0857 + 1.6286 X - 0.1071 X^2}\).</p>
+                    </div>
+
+                    <!-- EXERCISE E2 -->
+                    <div class="example">
+                        <h4>Exercise E2 (DOCX 1 Section 5.9): Parabola Fitting with Shift of Origin</h4>
+                        <p><strong>Problem:</strong> Fit a second-degree parabola to the data: \(X = [2, 4, 6, 8, 10]\), \(Y = [1, 2, 3, 4, 5]\).</p>
+                        <p><strong>Solution:</strong> Shift origin to \(X = 6\): \(U = \frac{X - 6}{2} = [-2, -1, 0, 1, 2]\). Then \(\sum U = 0\), \(\sum U^3 = 0\).</p>
+                        <p>Computation yields: \(\sum Y = 15\), \(\sum U Y = 10\), \(\sum U^2 = 10\), \(\sum U^2 Y = 34\), \(\sum U^4 = 34\).</p>
+                        <p>Solving simplified normal equations gives \(a' = 3\), \(b' = 1\), \(c' = 0\). Transforming back:</p>
+                        <p><strong>Fitted Model:</strong> \(\mathbf{Y = 3 + 0.5 (X - 6) = 0.5 X}\) (reduces to a straight line since \(c = 0\)).</p>
+                    </div>
+
+                    <!-- EXAMPLE 3 -->
+                    <div class="example">
+                        <h4>Example 3 (DOCX 1 Section 5.5): Fitting a Power Curve</h4>
+                        <p><strong>Problem:</strong> Fit a power curve \(Y = a X^b\) to the data:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>6</td><td>2</td><td>10</td><td>5</td><td>8</td></tr>
+                            <tr><th>Y</th><td>9</td><td>11</td><td>12</td><td>8</td><td>7</td></tr>
+                        </table>
+                        <p><strong>Log Computation Table (\(u = \log_{10} X, v = \log_{10} Y\)):</strong></p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><th>Y</th><th>u = log X</th><th>v = log Y</th><th>uv</th><th>u²</th></tr>
+                            <tr><td>6</td><td>9</td><td>0.7782</td><td>0.9542</td><td>0.7425</td><td>0.6055</td></tr>
+                            <tr><td>2</td><td>11</td><td>0.3010</td><td>1.0414</td><td>0.3135</td><td>0.0906</td></tr>
+                            <tr><td>10</td><td>12</td><td>1.0000</td><td>1.0792</td><td>1.0792</td><td>1.0000</td></tr>
+                            <tr><td>5</td><td>8</td><td>0.6990</td><td>0.9031</td><td>0.6312</td><td>0.4886</td></tr>
+                            <tr><td>8</td><td>7</td><td>0.9031</td><td>0.8451</td><td>0.7632</td><td>0.8156</td></tr>
+                            <tr><th>Total</th><th></th><th>3.6813</th><th>4.8230</th><th>3.5296</th><th>3.0003</th></tr>
+                        </table>
+                        <p>Normal equations: 1) \(4.8230 = 5 A + 3.6813 B\), 2) \(3.5296 = 3.6813 A + 3.0003 B\).</p>
+                        <p>Solving: \(A = 0.9856 \implies a = 10^{0.9856} = 9.67\), \(B = -0.028 \implies b = -0.028\).</p>
+                        <p><strong>Fitted Power Curve:</strong> \(\mathbf{Y = 9.67 X^{-0.028}}\).</p>
+                    </div>
+
+                    <!-- EXERCISE E3 -->
+                    <div class="example">
+                        <h4>Exercise E3 (DOCX 1 Section 5.9): Power Curve Fitting</h4>
+                        <p><strong>Problem:</strong> Fit a power curve \(Y = a X^b\) to data: \(X = [5, 6, 9, 8, 11]\), \(Y = [2, 5, 8, 11, 15]\).</p>
+                        <p><strong>Solution:</strong> Log computation yields \(\sum u = 4.3759\), \(\sum v = 3.6813\), \(\sum uv = 3.5296\), \(\sum u^2 = 3.0003\).</p>
+                        <p>Solving normal equations: \(A = -0.77 \implies a = 10^{-0.77} = 0.17\), \(B = 1.84 \implies b = 1.84\).</p>
+                        <p><strong>Fitted Power Curve:</strong> \(\mathbf{Y = 0.17 X^{1.84}}\).</p>
+                    </div>
+
+                    <!-- EXAMPLE 4 -->
+                    <div class="example">
+                        <h4>Example 4 (DOCX 1 Section 5.6): Fitting Base-10 Exponential Curve</h4>
+                        <p><strong>Problem:</strong> Fit \(Y = a b^X\) to the following data:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+                            <tr><th>Y</th><td>1</td><td>3</td><td>6</td><td>12</td><td>24</td></tr>
+                        </table>
+                        <p><strong>Log Computation Table (\(v = \log_{10} Y\)):</strong></p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><th>Y</th><th>v = log Y</th><th>X v</th><th>X²</th></tr>
+                            <tr><td>2</td><td>1</td><td>0.0000</td><td>0.0000</td><td>4</td></tr>
+                            <tr><td>4</td><td>3</td><td>0.4771</td><td>1.9085</td><td>16</td></tr>
+                            <tr><td>6</td><td>6</td><td>0.7782</td><td>4.6690</td><td>36</td></tr>
+                            <tr><td>8</td><td>12</td><td>1.0792</td><td>8.6334</td><td>64</td></tr>
+                            <tr><td>10</td><td>24</td><td>1.3802</td><td>13.8021</td><td>100</td></tr>
+                            <tr><th>Total: 30</th><th>46</th><th>3.7145</th><th>29.0130</th><th>220</th></tr>
+                        </table>
+                        <p>Normal equations: 1) \(3.7145 = 5 A + 30 B\), 2) \(29.0130 = 30 A + 220 B\).</p>
+                        <p>Solving: \(B = 0.1726 \implies b = 10^{0.1726} = 1.48\), \(A = -0.2622 \implies a = 10^{-0.2622} = 0.55\).</p>
+                        <p><strong>Fitted Exponential Curve:</strong> \(\mathbf{Y = 0.55 (1.48)^X}\).</p>
+                    </div>
+
+                    <!-- EXERCISE E4 -->
+                    <div class="example">
+                        <h4>Exercise E4 (DOCX 1 Section 5.9): Exponential Curve Fitting</h4>
+                        <p><strong>Problem:</strong> Fit \(Y = a b^X\) to data: \(X = [1, 2, 3, 4, 5]\), \(Y = [8, 15, 33, 65, 130]\).</p>
+                        <p><strong>Solution:</strong> Log computation yields \(\sum X = 15\), \(\sum v = 7.5246\), \(\sum X v = 25.5802\), \(\sum X^2 = 55\).</p>
+                        <p>Solving normal equations: \(A = 0.615 \implies a = 10^{0.615} = 4.12\), \(B = 0.303 \implies b = 10^{0.303} = 2.01\).</p>
+                        <p><strong>Fitted Exponential Curve:</strong> \(\mathbf{Y = 4.12 (2.01)^X}\).</p>
+                    </div>
+
+                    <!-- EXAMPLE 5 -->
+                    <div class="example">
+                        <h4>Example 5 (DOCX 1 Section 5.7): Fitting Exponential Curve \(Y = a e^{bX}\)</h4>
+                        <p><strong>Problem:</strong> Fit an exponential curve \(Y = a e^{bX}\) to data: \(X = [1, 2, 4]\), \(Y = [5, 10, 30]\).</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><th>Y</th><th>v = log₁₀ Y</th><th>X v</th><th>X²</th></tr>
+                            <tr><td>1</td><td>5</td><td>0.6990</td><td>0.6990</td><td>1</td></tr>
+                            <tr><td>2</td><td>10</td><td>1.0000</td><td>2.0000</td><td>4</td></tr>
+                            <tr><td>4</td><td>30</td><td>1.4771</td><td>5.9085</td><td>16</td></tr>
+                            <tr><th>Total: 7</th><th>45</th><th>3.1761</th><th>8.6075</th><th>21</th></tr>
+                        </table>
+                        <p>Normal equations: 1) \(3.1761 = 3 A + 7 B\), 2) \(8.6075 = 7 A + 21 B\).</p>
+                        <p>Solving: \(B = 0.2581\), \(A = 0.4565 \implies a = 10^{0.4565} = 2.86\).</p>
+                        <p><strong>Fitted Curve:</strong> \(\mathbf{Y = 2.86 (10)^{0.2581 X} = 2.86 e^{0.594 X}}\).</p>
+                    </div>
+
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2><span class="section-num">2.8</span> All Solved Examples</h2>
+                    <p>सभी 9 solved examples एवं अभ्यास प्रश्न English tab में वर्बेतिम दिए गए हैं।</p>
                 </div>
             </section>
         </div>
