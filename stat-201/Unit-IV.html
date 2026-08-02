@@ -1118,7 +1118,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <h1>Unit IV: Multivariate Data Analysis & Regression</h1>
             <div class="author">By Prof. O.P. Sheoran · Department of Mathematics & Statistics</div>
             <div class="syllabus-tag">
-                <strong>Syllabus:</strong> Multivariate Data · Plane of Regression in Three Variables (\(X_1, X_2, X_3\)) · Partial Regression Coefficients (\(b_{12.3}, b_{13.2}\)) · Properties of Residuals (Mean, Orthogonality, Distribution) · Variance of Residual (\(\sigma_{1.23}^2\)) · Multiple Correlation Coefficient (\(R_{1.23}\)) & Properties · Partial Correlation Coefficient (\(r_{12.3}\)) & Properties · Relationships in terms of Total & Partial Correlations · Coefficient of Determination (\(R_{1.23}^2\)) · Multi-Line Step-by-Step Textbook Solutions · Solved Examples & Practice Exercises.
+                <strong>Syllabus:</strong> Multivariate Data · Plane of Regression in Three Variables (\(X_1, X_2, X_3\)) · Partial Regression Coefficients (\(b_{12.3}, b_{13.2}\)) · Properties of Residuals (Mean, Orthogonality, Distribution) · Variance of Residual (\(\sigma_{1.23}^2\)) · Multiple Correlation Coefficient (\(R_{1.23}\)) & Properties · Partial Correlation Coefficient (\(r_{12.3}\)) & Properties · Relationships in terms of Total & Partial Correlations · Coefficient of Determination (\(R_{1.23}^2\)) · Complete Theoretical Exposition & Multi-Line Step-by-Step Textbook Solutions.
             </div>
         </div>
 
@@ -1136,11 +1136,24 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <p>In uncentered absolute terms: \(X_1 = a_{1.23} + b_{12.3} X_2 + b_{13.2} X_3\), where \(a_{1.23} = \bar{X}_1 - b_{12.3} \bar{X}_2 - b_{13.2} \bar{X}_3\).</p>
                     </div>
 
+                    <div class="symbol-list">
+                        <strong>Symbol & Parameter Guide:</strong>
+                        <ul>
+                            <li>\(X_1\): Dependent (response) variable.</li>
+                            <li>\(X_2, X_3\): Independent (predictor) variables.</li>
+                            <li>\(b_{12.3}\): Partial regression coefficient of \(X_1\) on \(X_2\) holding \(X_3\) constant.</li>
+                            <li>\(b_{13.2}\): Partial regression coefficient of \(X_1\) on \(X_3\) holding \(X_2\) constant.</li>
+                            <li>\(a_{1.23}\): Constant Y-intercept of the regression plane.</li>
+                        </ul>
+                    </div>
+
                     <div class="derivation">
                         <h4>Derivation of Normal Equations via Least Squares</h4>
                         <p>Differentiating residual sum of squares \(S = \sum (x_{1i} - b_{12.3} x_{2i} - b_{13.2} x_{3i})^2\) partially w.r.t \(b_{12.3}\) and \(b_{13.2}\) gives:</p>
                         \[ \sum x_1 x_2 = b_{12.3} \sum x_2^2 + b_{13.2} \sum x_2 x_3 \quad \text{--- Normal Eq (1)} \]
                         \[ \sum x_1 x_3 = b_{12.3} \sum x_2 x_3 + b_{13.2} \sum x_3^2 \quad \text{--- Normal Eq (2)} \]
+                        <p>Expressing in terms of standard deviations \(\sigma_1, \sigma_2, \sigma_3\) and zero-order correlations \(r_{12}, r_{13}, r_{23}\):</p>
+                        \[ b_{12.3} = \frac{\sigma_1}{\sigma_2} \left( \frac{r_{12} - r_{13} r_{23}}{1 - r_{23}^2} \right), \quad b_{13.2} = \frac{\sigma_1}{\sigma_3} \left( \frac{r_{13} - r_{12} r_{23}}{1 - r_{23}^2} \right) \]
                     </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.1.1 (MULTILINE) -->
@@ -1169,37 +1182,28 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 2: Formulate Least Squares Normal Equations</div>
-                            <p>Substituting table totals into Normal Equations:</p>
-                            \[ \sum x_1 x_2 = b_{12.3} \sum x_2^2 + b_{13.2} \sum x_2 x_3 \implies \mathbf{86 = 40 b_{12.3} + 52 b_{13.2}} \quad \text{--- (1)} \]
-                            \[ \sum x_1 x_3 = b_{12.3} \sum x_2 x_3 + b_{13.2} \sum x_3^2 \implies \mathbf{112 = 52 b_{12.3} + 70 b_{13.2}} \quad \text{--- (2)} \]
+                            \[ 86 = 40 b_{12.3} + 52 b_{13.2} \quad \text{--- (1)} \]
+                            \[ 112 = 52 b_{12.3} + 70 b_{13.2} \quad \text{--- (2)} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 3: Compute System Determinant D</div>
-                            \[ D = \begin{vmatrix} 40 & 52 \\ 52 & 70 \end{vmatrix} = (40)(70) - (52)^2 \]
-                            \[ = 2800 - 2704 = \mathbf{96} \]
+                            \[ D = (40)(70) - (52)^2 = 2800 - 2704 = \mathbf{96} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 4: Solve for Partial Regression Coefficient \(b_{12.3}\)</div>
-                            \[ b_{12.3} = \frac{(86)(70) - (112)(52)}{96} \]
-                            \[ = \frac{6020 - 5824}{96} \]
-                            \[ = \frac{196}{96} = \mathbf{2.0417} \]
+                            \[ b_{12.3} = \frac{(86)(70) - (112)(52)}{96} = \frac{6020 - 5824}{96} = \frac{196}{96} = \mathbf{2.0417} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 5: Solve for Partial Regression Coefficient \(b_{13.2}\)</div>
-                            \[ b_{13.2} = \frac{(40)(112) - (86)(52)}{96} \]
-                            \[ = \frac{4480 - 4472}{96} \]
-                            \[ = \frac{8}{96} = \mathbf{0.0833} \]
+                            \[ b_{13.2} = \frac{(40)(112) - (86)(52)}{96} = \frac{4480 - 4472}{96} = \frac{8}{96} = \mathbf{0.0833} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 6: Compute Constant Intercept \(a_{1.23}\)</div>
-                            \[ a_{1.23} = \bar{X}_1 - b_{12.3} \bar{X}_2 - b_{13.2} \bar{X}_3 \]
-                            \[ = 19.0 - (2.0417)(6.0) - (0.0833)(8.0) \]
-                            \[ = 19.0 - 12.2502 - 0.6664 \]
-                            \[ = \mathbf{6.0834} \]
+                            \[ a_{1.23} = 19.0 - (2.0417)(6.0) - (0.0833)(8.0) = \mathbf{6.0834} \]
                         </div>
 
                         <div class="step-block">
@@ -1213,11 +1217,8 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.1.2 (Prediction Using Fitted Plane):</h4>
                         <p><strong>Problem:</strong> Using the fitted plane \(\hat{X}_1 = 6.0834 + 2.0417 X_2 + 0.0833 X_3\), predict Crop Yield for a plot with Irrigation \(X_2 = 7\) cm and Fertilizer \(X_3 = 9\) kg/ha.</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Formula Substitution} \]
                         \[ \hat{X}_1 = 6.0834 + 2.0417 (7) + 0.0833 (9) \]
-                        \[ \text{Step 2: Product Terms Expansion} \]
                         \[ = 6.0834 + 14.2919 + 0.7497 \]
-                        \[ \text{Step 3: Summation & Final Answer} \]
                         \[ = \mathbf{21.125 \text{ q/ha}} \]
                     </div>
                 </div>
@@ -1251,39 +1252,17 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 1: Sample Means की गणना</div>
-                            \[ \bar{X}_1 = \frac{95}{5} = \mathbf{19.0} \]
-                            \[ \bar{X}_2 = \frac{30}{5} = \mathbf{6.0} \]
-                            \[ \bar{X}_3 = \frac{40}{5} = \mathbf{8.0} \]
+                            \[ \bar{X}_1 = \mathbf{19.0}, \quad \bar{X}_2 = \mathbf{6.0}, \quad \bar{X}_3 = \mathbf{8.0} \]
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 2: Normal Equations तैयार करना</div>
-                            \[ 86 = 40 b_{12.3} + 52 b_{13.2} \quad \text{--- (1)} \]
-                            \[ 112 = 52 b_{12.3} + 70 b_{13.2} \quad \text{--- (2)} \]
+                            <div class="step-title">Step 2: Normal Equations</div>
+                            \[ 86 = 40 b_{12.3} + 52 b_{13.2}, \quad 112 = 52 b_{12.3} + 70 b_{13.2} \]
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 3: System Determinant D</div>
-                            \[ D = (40)(70) - (52)^2 = 2800 - 2704 = \mathbf{96} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 4: Partial Regression Coefficient \(b_{12.3}\) का मान</div>
-                            \[ b_{12.3} = \frac{6020 - 5824}{96} = \frac{196}{96} = \mathbf{2.0417} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 5: Partial Regression Coefficient \(b_{13.2}\) का मान</div>
-                            \[ b_{13.2} = \frac{4480 - 4472}{96} = \frac{8}{96} = \mathbf{0.0833} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 6: Constant Intercept \(a_{1.23}\) का मान</div>
-                            \[ a_{1.23} = 19.0 - 2.0417(6.0) - 0.0833(8.0) = \mathbf{6.0834} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 7: अंतिम Plane Equation</div>
+                            <div class="step-title">Step 3: Coefficients का मान</div>
+                            \[ b_{12.3} = \mathbf{2.0417}, \quad b_{13.2} = \mathbf{0.0833}, \quad a_{1.23} = \mathbf{6.0834} \]
                             \[ \mathbf{X_1 = 6.0834 + 2.0417 X_2 + 0.0833 X_3} \]
                         </div>
                     </div>
@@ -1293,9 +1272,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.1.2 (Prediction Using Fitted Plane):</h4>
                         <p><strong>Problem:</strong> \(X_2 = 7\) cm तथा \(X_3 = 9\) kg/ha पर Crop Yield का अनुमान लगाइए।</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \hat{X}_1 = 6.0834 + 2.0417 (7) + 0.0833 (9) \]
-                        \[ = 6.0834 + 14.2919 + 0.7497 \]
-                        \[ = \mathbf{21.125 \text{ q/ha}} \]
+                        \[ \hat{X}_1 = 6.0834 + 2.0417 (7) + 0.0833 (9) = \mathbf{21.125 \text{ q/ha}} \]
                     </div>
                 </div>
             </section>
@@ -1306,6 +1283,20 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">4.2</span> Properties of Residuals: Mean, Variance & Distribution</h2>
+                    <p class="intro-text">The residual error \(e_{1.23}\) is the difference between observed value \(X_1\) and estimated value \(\hat{X}_1\) on the plane of regression: \(e_{1.23} = X_1 - \hat{X}_1 = x_1 - b_{12.3} x_2 - b_{13.2} x_3\).</p>
+
+                    <div class="theorem">
+                        <h4>Three Fundamental Properties of Residuals</h4>
+                        <ol>
+                            <li><strong>Property 1 (Zero Mean):</strong> The mean of the residuals is identically zero: \(\bar{e}_{1.23} = E[e_{1.23}] = 0\).</li>
+                            <li><strong>Property 2 (Orthogonality / Zero Correlation):</strong> The residual \(e_{1.23}\) is completely uncorrelated with independent predictor variables \(X_2\) and \(X_3\):
+                                \[ \sum_{i=1}^{n} e_{1.23} x_2 = 0 \quad \text{and} \quad \sum_{i=1}^{n} e_{1.23} x_3 = 0 \]
+                            </li>
+                            <li><strong>Property 3 (Normal Distribution):</strong> Under the assumption of multivariate normality of \((X_1, X_2, X_3)\), the residual \(e_{1.23}\) follows a univariate Normal Distribution with mean 0 and variance \(\sigma_{1.23}^2\):
+                                \[ e_{1.23} \sim N(0, \sigma_{1.23}^2) \]
+                            </li>
+                        </ol>
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.2.1 (MULTILINE) -->
                     <div class="example">
@@ -1349,20 +1340,23 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.2.2 (Residual Sum of Squares Identity):</h4>
                         <p><strong>Problem:</strong> Calculate \(\sum e_{1.23}^2\) from the residual table in Example 4.2.1 and show that \(\sum e_{1.23} X_1 = \sum e_{1.23}^2\).</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Compute Squares of Individual Residuals} \]
-                        \[ (-0.42)^2 = 0.1764 \]
-                        \[ (+0.25)^2 = 0.0625 \]
-                        \[ (+1.08)^2 = 1.1664 \]
-                        \[ (-1.25)^2 = 1.5625 \]
-                        \[ (+0.33)^2 = 0.1089 \]
-                        \[ \text{Step 2: Sum of Squared Residuals} \]
-                        \[ \sum e_{1.23}^2 = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 \]
-                        \[ = \mathbf{3.0767} \]
+                        \[ (-0.42)^2 + (+0.25)^2 + (+1.08)^2 + (-1.25)^2 + (+0.33)^2 \]
+                        \[ = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 = \mathbf{3.0767} \]
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">4.2</span> Residuals के गुणधर्म: Mean, Variance एवं Distribution</h2>
+                    <p class="intro-text">Residual error \(e_{1.23}\) observed मान \(X_1\) तथा plane of regression पर estimated मान \(\hat{X}_1\) के बीच का अंतर होता है: \(e_{1.23} = X_1 - \hat{X}_1 = x_1 - b_{12.3} x_2 - b_{13.2} x_3\)।</p>
+
+                    <div class="theorem">
+                        <h4>Residuals के तीन आधारभूत गुणधर्म</h4>
+                        <ol>
+                            <li><strong>Property 1 (Zero Mean):</strong> Residuals का माध्य शून्य होता है: \(\bar{e}_{1.23} = 0\)।</li>
+                            <li><strong>Property 2 (Orthogonality):</strong> Residual \(e_{1.23}\) स्वतंत्र variables \(X_2\) तथा \(X_3\) के साथ uncorrelated होता है: \(\sum e x_2 = 0, \sum e x_3 = 0\)।</li>
+                            <li><strong>Property 3 (Normal Distribution):</strong> Residual \(e_{1.23} \sim N(0, \sigma_{1.23}^2)\)।</li>
+                        </ol>
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.2.1 HINGLISH REPLICA -->
                     <div class="example">
@@ -1395,8 +1389,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.2.2 (Residual Sum of Squares Identity):</h4>
                         <p><strong>Problem:</strong> Residual sum of squares \(\sum e^2\) ज्ञात कीजिए।</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \sum e_{1.23}^2 = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 \]
-                        \[ = \mathbf{3.0767} \]
+                        \[ \sum e_{1.23}^2 = 0.1764 + 0.0625 + 1.1664 + 1.5625 + 0.1089 = \mathbf{3.0767} \]
                     </div>
                 </div>
             </section>
@@ -1407,6 +1400,16 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">4.3</span> Variance of the Residual (\(\sigma_{1.23}^2\))</h2>
+                    <p class="intro-text">The variance of the residual \(\sigma_{1.23}^2\) measures the unexplained scatter or error variance of \(X_1\) around the plane of regression.</p>
+
+                    <div class="derivation">
+                        <h4>Derivation of Residual Variance Formula</h4>
+                        <p>By definition, residual variance is \(\sigma_{1.23}^2 = \frac{1}{n} \sum e_{1.23}^2\). Using Property 2 (\(\sum e x_1 = \sum e^2\)):</p>
+                        \[ \sigma_{1.23}^2 = \frac{1}{n} \sum x_1 (x_1 - b_{12.3} x_2 - b_{13.2} x_3) = \sigma_1^2 - b_{12.3} \text{Cov}(X_1, X_2) - b_{13.2} \text{Cov}(X_1, X_3) \]
+                        <p>Substituting expressions for \(b_{12.3}\) and \(b_{13.2}\) in terms of zero-order correlations:</p>
+                        \[ \sigma_{1.23}^2 = \sigma_1^2 \left[ 1 - \frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2} \right] = \sigma_1^2 (1 - R_{1.23}^2) \]
+                        <p>In determinant form using correlation matrix determinant \(w\): \(\sigma_{1.23}^2 = \sigma_1^2 \frac{w}{w_{11}}\).</p>
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.3.1 (MULTILINE) -->
                     <div class="example">
@@ -1421,15 +1424,12 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 2: Substitution & Division</div>
-                            \[ \sigma_{1.23}^2 = \frac{3.0833}{5} \]
-                            \[ = \mathbf{0.6167} \]
+                            \[ \sigma_{1.23}^2 = \frac{3.0833}{5} = \mathbf{0.6167} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 3: Residual Standard Error Calculation</div>
-                            \[ \sigma_{1.23} = \sqrt{\sigma_{1.23}^2} \]
-                            \[ = \sqrt{0.6167} \]
-                            \[ = \mathbf{0.7853 \text{ q/ha}} \]
+                            \[ \sigma_{1.23} = \sqrt{0.6167} = \mathbf{0.7853 \text{ q/ha}} \]
                         </div>
                     </div>
 
@@ -1438,30 +1438,29 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.3.2 (Formula Cross-Verification of Residual Variance):</h4>
                         <p><strong>Problem:</strong> Total variance of Crop Yield is \(\sigma_1^2 = \frac{188}{5} = 37.60\). Given Multiple Correlation \(R_{1.23} = 0.9918\), cross-verify \(\sigma_{1.23}^2\) using formula \(\sigma_1^2 (1 - R_{1.23}^2)\).</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Formula Statement} \]
                         \[ \sigma_{1.23}^2 = \sigma_1^2 (1 - R_{1.23}^2) \]
-                        \[ \text{Step 2: Substitute Values} \]
                         \[ = 37.60 (1 - 0.9918^2) \]
-                        \[ \text{Step 3: Square Evaluation} \]
                         \[ = 37.60 (1 - 0.98366) \]
-                        \[ \text{Step 4: Subtraction Step} \]
-                        \[ = 37.60 (0.01634) \]
-                        \[ \text{Step 5: Final Verified Result} \]
-                        \[ = \mathbf{0.6144 \approx 0.6167} \quad \text{(Cross-Verified!)} \]
+                        \[ = 37.60 (0.01634) = \mathbf{0.6144 \approx 0.6167} \quad \text{(Cross-Verified!)} \]
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">4.3</span> Residual की Variance (\(\sigma_{1.23}^2\))</h2>
+                    <p class="intro-text">Residual variance \(\sigma_{1.23}^2\) plane of regression के चारों ओर \(X_1\) के व्याख्याहीन (unexplained) बिखराव या त्रुटि variance को मापता है।</p>
+
+                    <div class="derivation">
+                        <h4>Residual Variance सूत्र की व्युत्पत्ति</h4>
+                        \[ \sigma_{1.23}^2 = \sigma_1^2 (1 - R_{1.23}^2) \]
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.3.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.3.1 (Raw Data Computation of Residual Variance):</h4>
                         <p><strong>Problem:</strong> \(\sum e^2 = 3.0833\) से Residual Variance \(\sigma_{1.23}^2\) ज्ञात कीजिए।</p>
                         <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
-                        \[ \text{Step 1: Formula} \implies \sigma_{1.23}^2 = \frac{1}{N} \sum e^2 \]
-                        \[ \text{Step 2: Substitution} \implies \sigma_{1.23}^2 = \frac{3.0833}{5} = \mathbf{0.6167} \]
-                        \[ \text{Step 3: Standard Error} \implies \sigma_{1.23} = \sqrt{0.6167} = \mathbf{0.7853} \]
+                        \[ \sigma_{1.23}^2 = \frac{3.0833}{5} = \mathbf{0.6167} \]
+                        \[ \sigma_{1.23} = \sqrt{0.6167} = \mathbf{0.7853} \]
                     </div>
 
                     <!-- EXAMPLE 4.3.2 HINGLISH REPLICA -->
@@ -1469,9 +1468,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.3.2 (Formula Cross-Verification of Residual Variance):</h4>
                         <p><strong>Problem:</strong> \(\sigma_1^2 = 37.60\) तथा \(R_{1.23} = 0.9918\) से सत्यापन कीजिए।</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \sigma_{1.23}^2 = 37.60 (1 - 0.9918^2) \]
-                        \[ = 37.60 (0.01634) \]
-                        \[ = \mathbf{0.6144} \quad \text{(सत्यापित!)} \]
+                        \[ \sigma_{1.23}^2 = 37.60 (1 - 0.9918^2) = \mathbf{0.6144} \quad \text{(सत्यापित!)} \]
                     </div>
                 </div>
             </section>
@@ -1482,6 +1479,22 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">4.4</span> Multiple Correlation Coefficient (\(R_{1.23}\)) & Its Properties</h2>
+                    <p class="intro-text">The <strong>Multiple Correlation Coefficient</strong> \(R_{1.23}\) measures the degree of joint linear association between the dependent variable \(X_1\) and the combined linear estimate \(\hat{X}_1\) provided by independent variables \(X_2\) and \(X_3\).</p>
+
+                    <div class="definition">
+                        <h4>Formula for Multiple Correlation Coefficient</h4>
+                        \[ R_{1.23} = \sqrt{\frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2}} \]
+                    </div>
+
+                    <div class="theorem">
+                        <h4>4 Fundamental Properties of Multiple Correlation Coefficient</h4>
+                        <ol>
+                            <li><strong>Property 1 (Range):</strong> \(R_{1.23}\) is always non-negative and bounded between 0 and 1: \(0 \le R_{1.23} \le 1\).</li>
+                            <li><strong>Property 2 (Dominance over Zero-Order Correlations):</strong> \(R_{1.23}\) is always greater than or equal to absolute simple correlation coefficients: \(R_{1.23} \ge |r_{12}|\) and \(R_{1.23} \ge |r_{13}|\).</li>
+                            <li><strong>Property 3 (Perfect Fit):</strong> If \(R_{1.23} = 1\), all observed data points lie exactly on the plane of regression, and residual variance \(\sigma_{1.23}^2 = 0\).</li>
+                            <li><strong>Property 4 (Zero Association):</strong> If \(R_{1.23} = 0\), then \(r_{12} = 0\) and \(r_{13} = 0\), meaning \(X_1\) is completely uncorrelated with both \(X_2\) and \(X_3\).</li>
+                        </ol>
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.4.1 (MULTILINE) -->
                     <div class="example">
@@ -1495,30 +1508,14 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 2: Value Substitution</div>
-                            \[ R_{1.23}^2 = \frac{(0.9917)^2 + (0.9763)^2 - 2(0.9917)(0.9763)(0.9827)}{1 - (0.9827)^2} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 3: Evaluate Numerator Terms</div>
-                            \[ r_{12}^2 = 0.983468 \]
-                            \[ r_{13}^2 = 0.953162 \]
-                            \[ 2 r_{12} r_{13} r_{23} = 2(0.9917)(0.9763)(0.9827) = 1.902996 \]
+                            <div class="step-title">Step 2: Evaluate Numerator & Denominator</div>
                             \[ \text{Numerator} = 0.983468 + 0.953162 - 1.902996 = \mathbf{0.033634} \]
+                            \[ \text{Denominator} = 1 - 0.9827^2 = \mathbf{0.034300} \]
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 4: Evaluate Denominator Term</div>
-                            \[ \text{Denominator} = 1 - 0.9827^2 = 1 - 0.965700 = \mathbf{0.034300} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 5: Division for R₁․₂₃²</div>
+                            <div class="step-title">Step 3: Division & Square Root</div>
                             \[ R_{1.23}^2 = \frac{0.033634}{0.034300} = \mathbf{0.98058} \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 6: Take Square Root for R₁․₂₃</div>
                             \[ R_{1.23} = \sqrt{0.98058} = \mathbf{0.9902} \]
                         </div>
                     </div>
@@ -1528,27 +1525,28 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.4.2 (Empirical Verification with Fitted Values):</h4>
                         <p><strong>Problem:</strong> Calculate the simple correlation coefficient between observed Crop Yield \(X_1 = [10, 15, 20, 22, 28]\) and fitted values \(\hat{X}_1 = [10.42, 14.75, 18.92, 23.25, 27.67]\) to verify \(r(X_1, \hat{X}_1) = R_{1.23}\).</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Covariance of } X_1 \text{ and } \hat{X}_1 \]
                         \[ \text{Cov}(X_1, \hat{X}_1) = 36.9833 \]
-                        \[ \text{Step 2: Standard Deviations Product} \]
                         \[ \sigma_{X_1} \cdot \sigma_{\hat{X}_1} = (6.1319)(6.0815) = 37.2911 \]
-                        \[ \text{Step 3: Simple Correlation Calculation} \]
                         \[ r(X_1, \hat{X}_1) = \frac{36.9833}{37.2911} = \mathbf{0.9917} \quad \text{(Verified!)} \]
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">4.4</span> Multiple Correlation Coefficient (\(R_{1.23}\)) एवं इसके गुणधर्म</h2>
+                    <p class="intro-text"><strong>Multiple Correlation Coefficient</strong> \(R_{1.23}\) dependent variable \(X_1\) तथा स्वतंत्र predictor variables \(X_2, X_3\) द्वारा प्रदान किए गए संयुक्त रैखिक अनुमान \(\hat{X}_1\) के बीच की घनिष्ठता को मापता है।</p>
+
+                    <div class="definition">
+                        <h4>Multiple Correlation Coefficient का सूत्र</h4>
+                        \[ R_{1.23} = \sqrt{\frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2}} \]
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.4.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.4.1 (Raw Data Computation of Multiple Correlation):</h4>
                         <p><strong>Problem:</strong> correlations \(r_{12} = 0.9917, r_{13} = 0.9763, r_{23} = 0.9827\) से \(R_{1.23}\) ज्ञात कीजिए।</p>
                         <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
-                        \[ \text{Step 1: Numerator} = 0.983468 + 0.953162 - 1.902996 = 0.033634 \]
-                        \[ \text{Step 2: Denominator} = 1 - 0.965700 = 0.034300 \]
-                        \[ \text{Step 3: Ratio } R_{1.23}^2 = \frac{0.033634}{0.034300} = \mathbf{0.98058} \]
-                        \[ \text{Step 4: Square Root } R_{1.23} = \sqrt{0.98058} = \mathbf{0.9902} \]
+                        \[ R_{1.23}^2 = \frac{0.033634}{0.034300} = \mathbf{0.98058} \]
+                        \[ R_{1.23} = \sqrt{0.98058} = \mathbf{0.9902} \]
                     </div>
 
                     <!-- EXAMPLE 4.4.2 HINGLISH REPLICA -->
@@ -1567,6 +1565,22 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">4.5</span> Partial Correlation Coefficient (\(r_{12.3}\)) & Its Properties</h2>
+                    <p class="intro-text">The <strong>Partial Correlation Coefficient</strong> \(r_{12.3}\) measures the net linear correlation between variables \(X_1\) and \(X_2\) after eliminating (holding constant) the linear effect of the third variable \(X_3\).</p>
+
+                    <div class="definition">
+                        <h4>Formula for Partial Correlation Coefficients</h4>
+                        \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}} \]
+                        \[ r_{13.2} = \frac{r_{13} - r_{12} r_{23}}{\sqrt{(1 - r_{12}^2)(1 - r_{23}^2)}}, \quad r_{23.1} = \frac{r_{23} - r_{12} r_{13}}{\sqrt{(1 - r_{12}^2)(1 - r_{13}^2)}} \]
+                    </div>
+
+                    <div class="theorem">
+                        <h4>Properties of Partial Correlation Coefficients</h4>
+                        <ul>
+                            <li><strong>Range:</strong> \(-1 \le r_{12.3} \le 1\).</li>
+                            <li><strong>Relation to Partial Regression Coefficients:</strong> \(r_{12.3}^2 = b_{12.3} \cdot b_{21.3}\).</li>
+                            <li><strong>Total & Partial Correlation Relation:</strong> \((1 - R_{1.23}^2) = (1 - r_{12}^2)(1 - r_{13.2}^2) = (1 - r_{13}^2)(1 - r_{12.3}^2)\).</li>
+                        </ul>
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.5.1 (MULTILINE) -->
                     <div class="example">
@@ -1581,21 +1595,16 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 2: Numerator Calculation</div>
-                            \[ \text{Numerator} = 0.9917 - (0.9763)(0.9827) \]
-                            \[ = 0.9917 - 0.959410 \]
-                            \[ = \mathbf{0.032290} \]
+                            \[ \text{Numerator} = 0.9917 - (0.9763)(0.9827) = \mathbf{0.032290} \]
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 3: Denominator Terms Calculation</div>
-                            \[ 1 - r_{13}^2 = 1 - 0.953162 = 0.046838 \]
-                            \[ 1 - r_{23}^2 = 1 - 0.965700 = 0.034300 \]
-                            \[ \text{Product inside square root} = (0.046838)(0.034300) = 0.0016065 \]
-                            \[ \text{Denominator} = \sqrt{0.0016065} = \mathbf{0.040081} \]
+                            <div class="step-title">Step 3: Denominator Calculation</div>
+                            \[ \text{Denominator} = \sqrt{(1 - 0.9763^2)(1 - 0.9827^2)} = \sqrt{(0.046838)(0.034300)} = \mathbf{0.040081} \]
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 4: Division for Final Partial Correlation</div>
+                            <div class="step-title">Step 4: Division & Final Result</div>
                             \[ r_{12.3} = \frac{0.032290}{0.040081} = \mathbf{0.8056} \]
                         </div>
                     </div>
@@ -1605,23 +1614,28 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.5.2 (Calculating r13.2):</h4>
                         <p><strong>Problem:</strong> Calculate the partial correlation \(r_{13.2}\) holding Irrigation (\(X_2\)) constant.</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Numerator } = 0.9763 - (0.9917)(0.9827) = 0.9763 - 0.974543 = \mathbf{0.001757} \]
-                        \[ \text{Step 2: Denominator } = \sqrt{(1 - 0.9917^2)(1 - 0.9827^2)} = \sqrt{(0.016532)(0.034300)} = \mathbf{0.023813} \]
-                        \[ \text{Step 3: Division } \implies r_{13.2} = \frac{0.001757}{0.023813} = \mathbf{0.0738} \]
+                        \[ \text{Numerator } = 0.9763 - (0.9917)(0.9827) = \mathbf{0.001757} \]
+                        \[ \text{Denominator } = \sqrt{(0.016532)(0.034300)} = \mathbf{0.023813} \]
+                        \[ r_{13.2} = \frac{0.001757}{0.023813} = \mathbf{0.0738} \]
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">4.5</span> Partial Correlation Coefficient (\(r_{12.3}\)) एवं इसके गुणधर्म</h2>
+                    <p class="intro-text"><strong>Partial Correlation Coefficient</strong> \(r_{12.3}\) तीसरे variable \(X_3\) के प्रभाव को नियंत्रित करते हुए \(X_1\) व \(X_2\) के शुद्ध संबंध को मापता है।</p>
+
+                    <div class="definition">
+                        <h4>Partial Correlation Coefficients के सूत्र</h4>
+                        \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}} \]
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.5.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.5.1 (Raw Data Computation of Partial Correlation):</h4>
                         <p><strong>Problem:</strong> \(r_{12.3}\) की चरण-दर-चरण गणना कीजिए।</p>
                         <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
-                        \[ \text{Step 1: Numerator} = 0.9917 - 0.959410 = \mathbf{0.032290} \]
-                        \[ \text{Step 2: Denominator} = \sqrt{(0.046838)(0.034300)} = \mathbf{0.040081} \]
-                        \[ \text{Step 3: Ratio } \implies r_{12.3} = \frac{0.032290}{0.040081} = \mathbf{0.8056} \]
+                        \[ \text{Numerator} = \mathbf{0.032290}, \quad \text{Denominator} = \mathbf{0.040081} \]
+                        \[ r_{12.3} = \frac{0.032290}{0.040081} = \mathbf{0.8056} \]
                     </div>
 
                     <!-- EXAMPLE 4.5.2 HINGLISH REPLICA -->
@@ -1629,7 +1643,6 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.5.2 (Calculating r13.2):</h4>
                         <p><strong>Problem:</strong> Partial correlation \(r_{13.2}\) ज्ञात कीजिए।</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Numerator} = 0.001757, \quad \text{Denominator} = 0.023813 \]
                         \[ r_{13.2} = \frac{0.001757}{0.023813} = \mathbf{0.0738} \]
                     </div>
                 </div>
@@ -1641,6 +1654,13 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">4.6</span> Coefficient of Determination (\(R_{1.23}^2\))</h2>
+                    <p class="intro-text">The <strong>Coefficient of Determination</strong> \(R_{1.23}^2\) represents the proportion of total variation in dependent variable \(X_1\) that is explained by the joint linear influence of independent variables \(X_2\) and \(X_3\).</p>
+
+                    <div class="derivation">
+                        <h4>Partitioning of Total Variance & Definition</h4>
+                        \[ \text{Total SS } (\sum x_1^2) = \text{Regression SS } (\sum \hat{x}_1^2) + \text{Residual SS } (\sum e_{1.23}^2) \]
+                        \[ R_{1.23}^2 = \frac{\text{Regression SS}}{\text{Total SS}} = 1 - \frac{\text{Residual SS}}{\text{Total SS}} = 1 - \frac{\sigma_{1.23}^2}{\sigma_1^2} \]
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.6.1 (MULTILINE) -->
                     <div class="example">
@@ -1649,23 +1669,15 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
 
                         <div class="step-block">
-                            <div class="step-title">Step 1: State Total & Residual Sums of Squares</div>
-                            \[ \text{Total SS} = \sum x_1^2 = 188.0000 \]
-                            \[ \text{Residual SS} = \sum e_{1.23}^2 = 3.0833 \]
-                        </div>
-
-                        <div class="step-block">
-                            <div class="step-title">Step 2: Calculate Regression Sum of Squares</div>
+                            <div class="step-title">Step 1: Calculate Regression Sum of Squares</div>
                             \[ \text{Regression SS} = \text{Total SS} - \text{Residual SS} \]
-                            \[ = 188.0000 - 3.0833 \]
-                            \[ = \mathbf{184.9167} \]
+                            \[ = 188.0000 - 3.0833 = \mathbf{184.9167} \]
                         </div>
 
                         <div class="step-block">
-                            <div class="step-title">Step 3: Calculate Coefficient of Determination</div>
+                            <div class="step-title">Step 2: Calculate Coefficient of Determination</div>
                             \[ R_{1.23}^2 = \frac{\text{Regression SS}}{\text{Total SS}} \]
-                            \[ = \frac{184.9167}{188.0000} \]
-                            \[ = \mathbf{0.9836} \]
+                            \[ = \frac{184.9167}{188.0000} = \mathbf{0.9836} \]
                         </div>
                     </div>
 
@@ -1674,27 +1686,28 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.6.2 (Adjusted R^2 Calculation):</h4>
                         <p><strong>Problem:</strong> Calculate Adjusted Coefficient of Determination \(\bar{R}_{1.23}^2\) for \(N = 5\) and \(k = 2\) predictors.</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Formula Statement} \]
                         \[ \bar{R}_{1.23}^2 = 1 - \frac{(1 - R_{1.23}^2)(N - 1)}{N - k - 1} \]
-                        \[ \text{Step 2: Substitute Values} \]
-                        \[ = 1 - \frac{(1 - 0.9836)(5 - 1)}{5 - 2 - 1} \]
-                        \[ \text{Step 3: Degrees of Freedom Simplification} \]
-                        \[ = 1 - \frac{(0.0164)(4)}{2} \]
-                        \[ \text{Step 4: Division & Final Answer} \]
+                        \[ = 1 - \frac{(1 - 0.9836)(4)}{2} \]
                         \[ = 1 - 0.0328 = \mathbf{0.9672} \]
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">4.6</span> Coefficient of Determination (\(R_{1.23}^2\))</h2>
+                    <p class="intro-text"><strong>Coefficient of Determination</strong> \(R_{1.23}^2\) dependent variable \(X_1\) के कुल variance का व्याख्यायित भाग दर्शाता है।</p>
+
+                    <div class="derivation">
+                        <h4>Total Variance का विभाजन</h4>
+                        \[ R_{1.23}^2 = \frac{\text{Regression SS}}{\text{Total SS}} = 1 - \frac{\sigma_{1.23}^2}{\sigma_1^2} \]
+                    </div>
 
                     <!-- RAW DATA-BASED EXAMPLE 4.6.1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 4.6.1 (Raw Data Sums of Squares Partitioning):</h4>
                         <p><strong>Problem:</strong> Total SS = 188.0000 तथा Residual SS = 3.0833 से Coefficient of Determination ज्ञात कीजिए।</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \text{Step 1: Regression SS} = 188.0000 - 3.0833 = \mathbf{184.9167} \]
-                        \[ \text{Step 2: Ratio } R_{1.23}^2 = \frac{184.9167}{188.0000} = \mathbf{0.9836} \]
+                        \[ \text{Regression SS} = 188.0000 - 3.0833 = \mathbf{184.9167} \]
+                        \[ R_{1.23}^2 = \frac{184.9167}{188.0000} = \mathbf{0.9836} \]
                     </div>
 
                     <!-- EXAMPLE 4.6.2 HINGLISH REPLICA -->
@@ -1702,7 +1715,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
                         <h4>Example 4.6.2 (Adjusted R^2 Calculation):</h4>
                         <p><strong>Problem:</strong> Adjusted \(R^2\) की गणना कीजिए।</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
-                        \[ \bar{R}_{1.23}^2 = 1 - \frac{(0.0164)(4)}{2} = 1 - 0.0328 = \mathbf{0.9672} \]
+                        \[ \bar{R}_{1.23}^2 = 1 - \frac{(0.0164)(4)}{2} = \mathbf{0.9672} \]
                     </div>
                 </div>
             </section>
@@ -1713,6 +1726,56 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
             <section class="section-card">
                 <div class="english-content">
                     <h2><span class="section-num">4.7</span> Inter-relationships & Summary of Trivariate Metrics</h2>
+                    <p class="intro-text">Summary of mathematical relations linking Plane of Regression, Residual Variance, Multiple Correlation, and Partial Correlation.</p>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Statistical Metric</th>
+                                <th>Symbol</th>
+                                <th>Mathematical Formula</th>
+                                <th>Range / Bounds</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Plane of Regression</strong></td>
+                                <td>\(x_1 = b_{12.3} x_2 + b_{13.2} x_3\)</td>
+                                <td>\(b_{12.3} = \frac{\sigma_1}{\sigma_2} \left( \frac{r_{12} - r_{13} r_{23}}{1 - r_{23}^2} \right)\)</td>
+                                <td>\(-\infty < b < \infty\)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Residual Error</strong></td>
+                                <td>\(e_{1.23}\)</td>
+                                <td>\(e_{1.23} = X_1 - \hat{X}_1\), \(\bar{e}_{1.23} = 0\)</td>
+                                <td>Uncorrelated with \(X_2, X_3\)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Residual Variance</strong></td>
+                                <td>\(\sigma_{1.23}^2\)</td>
+                                <td>\(\sigma_{1.23}^2 = \sigma_1^2 (1 - R_{1.23}^2)\)</td>
+                                <td>\(0 \le \sigma_{1.23}^2 \le \sigma_1^2\)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Multiple Correlation</strong></td>
+                                <td>\(R_{1.23}\)</td>
+                                <td>\(R_{1.23} = \sqrt{\frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2}}\)</td>
+                                <td>\(0 \le R_{1.23} \le 1\)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Partial Correlation</strong></td>
+                                <td>\(r_{12.3}\)</td>
+                                <td>\(r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}}\)</td>
+                                <td>\(-1 \le r_{12.3} \le 1\)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Coefficient of Determination</strong></td>
+                                <td>\(R_{1.23}^2\)</td>
+                                <td>\(R_{1.23}^2 = 1 - \frac{\sigma_{1.23}^2}{\sigma_1^2}\)</td>
+                                <td>\(0 \le R_{1.23}^2 \le 1\)</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
                     <!-- MASTER DATA-BASED EXAMPLE 4.7.1 -->
                     <div class="example">
@@ -1738,15 +1801,12 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Left-Hand Side Calculation</div>
-                            \[ \text{LHS} = 1 - R_{1.23}^2 \]
-                            \[ = 1 - 0.9836 = \mathbf{0.0164} \]
+                            \[ \text{LHS} = 1 - R_{1.23}^2 = 1 - 0.9836 = \mathbf{0.0164} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Right-Hand Side Calculation</div>
-                            \[ 1 - r_{12}^2 = 1 - 0.9917^2 = 1 - 0.98347 = 0.01653 \]
-                            \[ 1 - r_{13.2}^2 = 1 - 0.0738^2 = 1 - 0.00545 = 0.99455 \]
-                            \[ \text{RHS} = (0.01653)(0.99455) = \mathbf{0.0164} \]
+                            \[ \text{RHS} = (1 - 0.9917^2)(1 - 0.0738^2) = (0.01653)(0.99455) = \mathbf{0.0164} \]
                         </div>
 
                         <div class="step-block">
@@ -1810,23 +1870,20 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 1: Calculate Sample Means</div>
-                            \[ \bar{X}_1 = \frac{60 + 70 + 80 + 85 + 95}{5} = \frac{390}{5} = \mathbf{78.0} \]
-                            \[ \bar{X}_2 = \frac{10 + 15 + 20 + 25 + 30}{5} = \frac{100}{5} = \mathbf{20.0} \]
-                            \[ \bar{X}_3 = \frac{70 + 75 + 80 + 85 + 90}{5} = \frac{400}{5} = \mathbf{80.0} \]
+                            \[ \bar{X}_1 = \frac{60 + 70 + 80 + 85 + 95}{5} = \mathbf{78.0} \]
+                            \[ \bar{X}_2 = \frac{10 + 15 + 20 + 25 + 30}{5} = \mathbf{20.0} \]
+                            \[ \bar{X}_3 = \frac{70 + 75 + 80 + 85 + 90}{5} = \mathbf{80.0} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 2: Calculate Zero-Order Correlations</div>
-                            \[ r_{12} = \mathbf{0.992} \]
-                            \[ r_{13} = \mathbf{0.992} \]
-                            \[ r_{23} = \mathbf{1.000} \]
+                            \[ r_{12} = \mathbf{0.992}, \quad r_{13} = \mathbf{0.992}, \quad r_{23} = \mathbf{1.000} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 3: Plane of Regression Equation</div>
-                            \[ b_{12.3} = 1.750, \quad b_{13.2} = 0.3125 \]
-                            \[ a_{1.23} = 78.0 - (1.75)(20.0) - (0.3125)(80.0) = \mathbf{18.0} \]
-                            \[ \text{Fitted Plane: } \mathbf{X_1 = 18.0 + 1.75 X_2 + 0.3125 X_3} \]
+                            \[ b_{12.3} = 1.750, \quad b_{13.2} = 0.3125, \quad a_{1.23} = \mathbf{18.0} \]
+                            \[ \mathbf{X_1 = 18.0 + 1.75 X_2 + 0.3125 X_3} \]
                         </div>
 
                         <div class="step-block">
@@ -1848,14 +1905,12 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 1: Partial Correlation r₁₂․₃</div>
-                            \[ r_{12.3} = \frac{r}{1 + r} \]
-                            \[ = \frac{0.70}{1 + 0.70} = \frac{0.70}{1.70} = \mathbf{0.412} \]
+                            \[ r_{12.3} = \frac{r}{1 + r} = \frac{0.70}{1.70} = \mathbf{0.412} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 2: Coefficient of Determination R₁․₂₃²</div>
-                            \[ R_{1.23}^2 = \frac{2 r^2}{1 + r} \]
-                            \[ = \frac{2 (0.70)^2}{1 + 0.70} = \frac{2 (0.49)}{1.70} = \frac{0.98}{1.70} = \mathbf{0.5765} \]
+                            \[ R_{1.23}^2 = \frac{2 r^2}{1 + r} = \frac{2 (0.49)}{1.70} = \mathbf{0.5765} \]
                         </div>
 
                         <div class="step-block">
@@ -1872,14 +1927,12 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
                         <div class="step-block">
                             <div class="step-title">Step 1: Partial Correlation r₁₂․₃</div>
-                            \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}} \]
-                            \[ = \frac{0.50 - (0.50)(0)}{\sqrt{(1 - 0.25)(1 - 0)}} = \frac{0.50}{\sqrt{0.75}} = \frac{0.50}{0.866} = \mathbf{0.577} \]
+                            \[ r_{12.3} = \frac{0.50 - 0}{\sqrt{(1 - 0.25)(1 - 0)}} = \frac{0.50}{0.866} = \mathbf{0.577} \]
                         </div>
 
                         <div class="step-block">
                             <div class="step-title">Step 2: Coefficient of Determination R₁․₂₃²</div>
-                            \[ R_{1.23}^2 = r_{12}^2 + r_{13}^2 \]
-                            \[ = (0.50)^2 + (0.50)^2 = 0.25 + 0.25 = \mathbf{0.50} \]
+                            \[ R_{1.23}^2 = (0.50)^2 + (0.50)^2 = \mathbf{0.50} \]
                         </div>
                     </div>
                 </div>
