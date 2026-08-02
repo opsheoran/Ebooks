@@ -1225,27 +1225,75 @@ svg.book-fig, .figure-box svg, canvas {
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">3.1</span> Regression की अवधारणा एवं इतिहास (Concept & History of Regression)</h2>
-                    <p class="intro-text">"Statistics is the grammar of science." — Karl Pearson. वास्तविक जीवन तथा प्रयोगात्मक विज्ञानों में, हम अक्सर किसी एक known variable के मान के आधार पर दूसरे unknown variable के मान का estimation (अनुमान) लगाने या prediction (पूर्वानुमान) करने में रुचि रखते हैं। उदाहरण के लिए, एक कृषि वैज्ञानिक fertilizer dose के आधार पर crop yield का पूर्वानुमान लगाना चाहता है। Regression Analysis ऐसे पूर्वानुमानों के लिए गणितीय ढांचा प्रदान करता है।</p>
+                    <p class="intro-text">"Statistics is the grammar of science." — Karl Pearson. वास्तविक जीवन तथा वैज्ञानिक अनुसंधानों में, correlation analysis केवल यह बताता है कि दो variables साथ-साथ बदलते हैं या नहीं, परंतु यह किसी एक variable के known value के आधार पर दूसरे variable का forecast या estimation नहीं कर सकता। उदाहरण के लिए, एक कृषि वैज्ञानिक fertilizer dose के आधार पर crop yield का prediction करना चाहता है। <strong>Regression Analysis</strong> इस प्रकार के functional prediction तथा cause-and-effect modeling के लिए गणितीय ढांचा प्रदान करता है।</p>
 
                     <div class="definition">
-                        <h4>Linear Regression की परिभाषा</h4>
-                        <p><strong>Linear Regression</strong> एक ऐसी सांख्यिकीय विधि है जिसके द्वारा <em>independent variable</em> (\(X\)) के known मान का उपयोग करके <em>dependent variable</em> (\(Y\)) के unknown मान का estimation लगाया जाता है।</p>
+                        <h4>Linear Regression की औपचारिक परिभाषा</h4>
+                        <p><strong>Linear Regression</strong> एक ऐसी सांख्यिकीय तथा गणितीय विधि है जिसके द्वारा <em>independent variable</em> (\(X\)) के known मान का उपयोग करके <em>dependent variable</em> (\(Y\)) के unknown मान का mathematical functional relationship स्थापित करके estimation या prediction किया जाता है।</p>
                         <ul>
-                            <li><strong>Dependent Variable (\(Y\)):</strong> वह चर जिसका मान अनुमानित करना है (जैसे Crop Yield)।</li>
-                            <li><strong>Independent Variable (\(X\)):</strong> वह चर जिसके आधार पर पूर्वानुमान लगाया जाता है (जैसे Fertilizer Dose)।</li>
+                            <li><strong>Dependent Variable (\(Y\)):</strong> वह चर जिसका मान अनुमानित या predict किया जाना है। इसे <em>regressand</em>, <em>response variable</em>, या <em>endogenous variable</em> भी कहते हैं (जैसे Paddy Crop Yield)।</li>
+                            <li><strong>Independent Variable (\(X\)):</strong> वह चर जिसका known मान prediction हेतु उपयोग किया जाता है। इसे <em>regressor</em>, <em>explanatory variable</em>, या <em>exogenous variable</em> कहते हैं (जैसे Fertilizer Dose in kg/ha)।</li>
+                        </ul>
+                    </div>
+
+                    <div class="note">
+                        <h4>ऐतिहासिक उद्गम: Sir Francis Galton की बायोमेट्रिक खोज (1885)</h4>
+                        <p><strong>"Regression"</strong> शब्द (जिसका शाब्दिक अर्थ <em>"पीछे लौटना"</em> या <em>"पूर्व स्थिति में आना"</em> है) का प्रतिपादन <strong>Sir Francis Galton</strong> द्वारा 1885 में मानव आनुवंशिकी (biometrics) के अध्ययन के दौरान किया गया था। Galton ने 928 वयस्क बच्चों तथा उनके 205 माता-पिता की ऊँचाइयों का विश्लेषण किया।</p>
+                        <p>Galton ने पाया कि लंबे माता-पिता के बच्चे औसतन लंबे होते हैं और नाटे माता-पिता के बच्चे नाटे होते हैं। परंतु अत्यधिक लंबे माता-पिता के बच्चों की औसत ऊँचाई उनके माता-पिता की तुलना में कम थी, जबकि अत्यधिक नाटे माता-पिता के बच्चों की औसत ऊँचाई उनके माता-पिता की तुलना में अधिक थी। शब्दों में, बच्चों की ऊँचाई सामान्य जनसंख्या के औसत मान (\(\bar{Y}\)) की ओर <em>"regress"</em> (लौटने) की प्रवृत्ति दर्शाती है। Galton ने इस जैविक नियम को <strong>"Law of Universal Regression to Mediocrity"</strong> कहा।</p>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>Simple Linear Regression Model एवं Parameter Guide</h4>
+                        <p>Dependent variable \(Y\) तथा independent variable \(X\) के बीच simple linear regression model इस प्रकार व्यक्त किया जाता है:</p>
+                        \[ Y = a + b X + e \]
+                        <div class="symbol-list">
+                            <strong>Parameter शाब्दिक व्याख्या एवं Symbol Guide:</strong>
+                            <ul>
+                                <li>\(\mathbf{Y}\) = Dependent variable (regressand) का observed मान।</li>
+                                <li>\(\mathbf{X}\) = Independent variable (regressor) का known मान।</li>
+                                <li>\(\mathbf{a}\) = <strong>\(Y\)-intercept</strong>। जब \(X = 0\) होता है, तब \(Y\) का baseline expected मान दर्शाता है।</li>
+                                <li>\(\mathbf{b}\) = <strong>Slope Coefficient (Regression Coefficient)</strong>। \(X\) में 1 इकाई वृद्धि होने पर \(Y\) में होने वाला औसत परिवर्तन दर्शाता है।</li>
+                                <li>\(\mathbf{e}\) = <strong>Random Error / Residual Term</strong>। Unexplained disturbance या measurement noise दर्शाता है।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 3.1: Galton's Concept of Regression to Mediocrity</div>
+                        <svg class="book-fig" viewBox="0 0 500 240" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="50" y1="200" x2="450" y2="200" stroke="#1B2A4A" stroke-width="2"/>
+                            <line x1="50" y1="200" x2="50" y2="30" stroke="#1B2A4A" stroke-width="2"/>
+                            <text x="460" y="205" font-family="DM Sans" font-size="13">Parent Height (X)</text>
+                            <text x="45" y="20" font-family="DM Sans" font-size="13">Son Height (Y)</text>
+                            <line x1="50" y1="200" x2="420" y2="40" stroke="#ccc" stroke-dasharray="4,4" stroke-width="2"/>
+                            <path d="M 50,180 L 420,70" stroke="#9B2335" stroke-width="3"/>
+                            <line x1="50" y1="120" x2="450" y2="120" stroke="#1D6FA4" stroke-width="1.5" stroke-dasharray="6,6"/>
+                            <text x="360" y="115" font-family="DM Sans" font-size="11" fill="#1D6FA4">Population Mean (\(\bar{Y}\))</text>
+                            <text x="330" y="60" font-family="DM Sans" font-size="12" fill="#9B2335">Regression Line (Slope &lt; 1)</text>
+                        </svg>
+                        <div class="figure-caption">Heights of offspring revert back (regress) toward the population mean.</div>
+                    </div>
+
+                    <!-- SECTION 3.1 NUMERICAL EXAMPLES HINGLISH REPLICA -->
+                    <div class="example">
+                        <h4>Example 3.1.1 (Variable Identification & Model Formulation):</h4>
+                        <p><strong>Problem:</strong> एक कृषि प्रयोग में, शोधकर्ता Fertilizer Application (\(X\) in kg/hectare) तथा Paddy Yield (\(Y\) in quintals/hectare) का data एकत्र करता है। बताइए कि कौन सा dependent variable है तथा कौन सा independent variable है। Linear regression model समीकरण लिखिए तथा समझाएं कि parameters \(a\) एवं \(b\) क्या दर्शाते हैं।</p>
+                        <p><strong>Solution:</strong></p>
+                        <ul>
+                            <li><strong>Independent Variable (\(X\)):</strong> Fertilizer Application (kg/ha), क्योंकि इसे शोधकर्ता द्वारा नियंत्रित किया जाता है।</li>
+                            <li><strong>Dependent Variable (\(Y\)):</strong> Paddy Yield (q/ha), क्योंकि इसका मान प्रयुक्त fertilizer की मात्रा पर निर्भर करता है।</li>
+                            <li><strong>Linear Model Equation:</strong> \(Y = a + bX\)।</li>
+                            <li><strong>Parameter \(a\) (\(Y\)-Intercept):</strong> बिना fertilizer (\(X = 0\)) के expected baseline yield दर्शाता है।</li>
+                            <li><strong>Parameter \(b\) (Regression Slope):</strong> Fertilizer में प्रति 1 kg/ha वृद्धि होने पर paddy yield में होने वाला औसत परिवर्तन दर्शाता है।</li>
                         </ul>
                     </div>
 
                     <div class="example">
-                        <h4>Example 3.1.1 (Variable Identification):</h4>
-                        <p><strong>Problem:</strong> Fertilizer (\(X\)) और Crop Yield (\(Y\)) में Dependent तथा Independent variable की पहचान कीजिए।</p>
-                        <p><strong>Solution:</strong> \(X\) = Independent Variable (Fertilizer), \(Y\) = Dependent Variable (Yield)। Model: \(Y = a + bX\)।</p>
-                    </div>
-
-                    <div class="example">
-                        <h4>Example 3.1.2 (Basic Prediction):</h4>
-                        <p><strong>Problem:</strong> समीकरण \(Y = 12.5 + 0.65 X\) में \(X = 35\) सेमी वर्षा पर Yield (\(Y\)) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(Y = 12.5 + 0.65(35) = \mathbf{35.25 \text{ q/ha}}\)।</p>
+                        <h4>Example 3.1.2 (Basic Prediction Concept):</h4>
+                        <p><strong>Problem:</strong> Wheat Yield (\(Y\) in q/ha) तथा Annual Rainfall (\(X\) in cm) का simple regression model \(Y = 12.5 + 0.65 X\) दिया गया है। \(35\) सेमी वर्षा होने पर expected wheat yield का पूर्वानुमान लगाइए।</p>
+                        <p><strong>Solution:</strong> Regression समीकरण में \(X = 35\) का मान रखने पर:</p>
+                        \[ Y = 12.5 + 0.65 (35) = 12.5 + 22.75 = \mathbf{35.25 \text{ quintals/hectare}} \]
+                        <p>अतः 35 सेमी वर्षा के लिए अनुमानित wheat yield 35.25 q/ha है।</p>
                     </div>
                 </div>
             </section>
@@ -1346,17 +1394,93 @@ svg.book-fig, .figure-box svg, canvas {
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">3.2</span> दो Regression Lines (Two Lines of Regression)</h2>
+                    <h2><span class="section-num">3.2</span> दो Regression Lines एवं उनकी व्युत्पत्ति (Two Lines of Regression & Derivation)</h2>
+                    <p class="intro-text">दो variables \(X\) तथा \(Y\) वाले bivariate data में, जब तक correlation perfect (\(r = \pm 1\)) न हो, <strong>हमेशा दो अलग-अलग regression lines प्राप्त होती हैं</strong>। एक अकेली रेखा दोनों दिशाओं के पूर्वानुमान नहीं कर सकती।</p>
+
+                    <div class="note">
+                        <h4>दो Regression Lines क्यों होती हैं? (शाब्दिक व्याख्या)</h4>
+                        <p>यह अंतर dependent तथा independent variables के चयन और error minimization की दिशा के कारण उत्पन्न होता है:</p>
+                        <ol>
+                            <li><strong>Line of Regression of \(Y\) on \(X\):</strong> जब \(X\) known independent variable तथा \(Y\) unknown dependent variable होता है। यह <em>vertical distances</em> \(\sum (Y - \hat{Y})^2\) के योग को न्यूनतम करता है।</li>
+                            <li><strong>Line of Regression of \(X\) on \(Y\):</strong> जब \(Y\) known independent variable तथा \(X\) unknown dependent variable होता है। यह <em>horizontal distances</em> \(\sum (X - \hat{X})^2\) के योग को न्यूनतम करता है।</li>
+                        </ol>
+                    </div>
+
+                    <div class="theorem">
+                        <h4>1. Line of Regression of \(Y\) on \(X\) (परिभाषा एवं सूत्र)</h4>
+                        <p>Point-slope रूप में \(Y\) on \(X\) की regression line का समीकरण:</p>
+                        \[ (Y - \bar{Y}) = b_{yx} (X - \bar{X}) \]
+                        <div class="symbol-list">
+                            <strong>Symbol Guide:</strong>
+                            <ul>
+                                <li>\(\bar{Y}\) = Variable \(Y\) का arithmetic mean (\(\bar{Y} = \frac{\sum Y}{n}\))।</li>
+                                <li>\(\bar{X}\) = Variable \(X\) का arithmetic mean (\(\bar{X} = \frac{\sum X}{n}\))।</li>
+                                <li>\(b_{yx}\) = <strong>Regression Coefficient of \(Y\) on \(X\)</strong> (\(Y\) on \(X\) रेखा की slope)।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="theorem">
+                        <h4>2. Line of Regression of \(X\) on \(Y\) (परिभाषा एवं सूत्र)</h4>
+                        <p>Point-slope रूप में \(X\) on \(Y\) की regression line का समीकरण:</p>
+                        \[ (X - \bar{X}) = b_{xy} (Y - \bar{Y}) \]
+                        <div class="symbol-list">
+                            <strong>Symbol Guide:</strong>
+                            <ul>
+                                <li>\(\bar{X}, \bar{Y}\) = \(X\) तथा \(Y\) के sample means।</li>
+                                <li>\(b_{xy}\) = <strong>Regression Coefficient of \(X\) on \(Y\)</strong> (\(X\) on \(Y\) रेखा की slope)।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="derivation">
+                        <h4>Principle of Least Squares द्वारा चरण-दर-चरण व्युत्पत्ति (Derivation)</h4>
+                        <p>माना \(Y\) on \(X\) की regression line \(Y = a + bX\) द्वारा व्यक्त की जाती है। किसी observed बिंदु \((x_i, y_i)\) के लिए predicted मान \(\hat{y}_i = a + b x_i\) है। Vertical residual \(e_i = y_i - (a + b x_i)\) है।</p>
+                        <p>Principle of Least Squares के अनुसार, हम residuals के वर्गों के योग \(S\) को न्यूनतम करते हैं:</p>
+                        \[ S = \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n} (y_i - a - b x_i)^2 \]
+                        <p>\(S\) को न्यूनतम करने हेतु, हम \(S\) का \(a\) तथा \(b\) के सापेक्ष आंशिक अवकलन (partial differentiation) करके शून्य के बराबर रखते हैं:</p>
+                        \[ \frac{\partial S}{\partial a} = -2 \sum (y_i - a - b x_i) = 0 \implies \mathbf{\sum Y = n a + b \sum X} \quad \text{--- Normal Equation (1)} \]
+                        \[ \frac{\partial S}{\partial b} = -2 \sum x_i (y_i - a - b x_i) = 0 \implies \mathbf{\sum XY = a \sum X + b \sum X^2} \quad \text{--- Normal Equation (2)} \]
+                        <p>Normal Equation (1) को \(n\) से विभाजित करने पर \(a = \bar{Y} - b \bar{X}\) प्राप्त होता है। \(a\) का मान Normal Equation (2) में रखने पर:</p>
+                        \[ \sum XY = (\bar{Y} - b \bar{X}) \sum X + b \sum X^2 \implies b = \frac{\sum (X - \bar{X})(Y - \bar{Y})}{\sum (X - \bar{X})^2} \]
+                        <p>अतः regression slope \(b_{yx}\) को लिखा जा सकता है:</p>
+                        \[ b_{yx} = \frac{\text{Cov}(X,Y)}{\text{Var}(X)} = \frac{\text{Cov}(X,Y)}{\sigma_x^2} = r \frac{\sigma_y}{\sigma_x} \]
+                        <p>\(a = \bar{Y} - b_{yx} \bar{X}\) को \(Y = a + b_{yx} X\) में रखने पर अंतिम point-slope रूप प्राप्त होता है: \(\mathbf{(Y - \bar{Y}) = b_{yx} (X - \bar{X})}\)।</p>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>Regression Coefficients के गणना सूत्र (Computational Formulas)</h4>
+                        \[ b_{yx} = \frac{n \sum XY - \sum X \sum Y}{n \sum X^2 - (\sum X)^2} = \frac{\text{Cov}(X,Y)}{\sigma_x^2} = r \frac{\sigma_y}{\sigma_x} \]
+                        \[ b_{xy} = \frac{n \sum XY - \sum X \sum Y}{n \sum Y^2 - (\sum Y)^2} = \frac{\text{Cov}(X,Y)}{\sigma_y^2} = r \frac{\sigma_x}{\sigma_y} \]
+                    </div>
+
+                    <!-- SECTION 3.2 NUMERICAL EXAMPLES HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 3.2.1 (Line of Y on X):</h4>
-                        <p><strong>Problem:</strong> Data \(X = [2, 4, 6, 8, 10]\), \(Y = [10, 18, 25, 30, 37]\) के लिए \(Y\) on \(X\) का regression समीकरण ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(\bar{X} = 6, \bar{Y} = 24, b_{yx} = 3.3 \implies \mathbf{Y = 3.3 X + 4.2}\)। \(X = 7\) पर \(Y = \mathbf{27.3}\)।</p>
+                        <p><strong>Problem:</strong> Data \(X = [2, 4, 6, 8, 10]\), \(Y = [10, 18, 25, 30, 37]\) के लिए \(Y\) on \(X\) का regression समीकरण ज्ञात कीजिए। \(X = 7\) के लिए \(Y\) का अनुमान लगाइए।</p>
+                        <p><strong>Computation Table:</strong></p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><th>Y</th><th>X²</th><th>Y²</th><th>XY</th></tr>
+                            <tr><td>2</td><td>10</td><td>4</td><td>100</td><td>20</td></tr>
+                            <tr><td>4</td><td>18</td><td>16</td><td>324</td><td>72</td></tr>
+                            <tr><td>6</td><td>25</td><td>36</td><td>625</td><td>150</td></tr>
+                            <tr><td>8</td><td>30</td><td>64</td><td>900</td><td>240</td></tr>
+                            <tr><td>10</td><td>37</td><td>100</td><td>1369</td><td>370</td></tr>
+                            <tr><th>Total: 30</th><th>120</th><th>220</th><th>3318</th><th>852</th></tr>
+                        </table>
+                        <p><strong>Solution:</strong> \(N = 5\)। \(\bar{X} = 30/5 = 6\), \(\bar{Y} = 120/5 = 24\)।</p>
+                        \[ b_{yx} = \frac{5(852) - (30)(120)}{5(220) - (30)^2} = \frac{4260 - 3600}{1100 - 900} = \frac{660}{200} = 3.3 \]
+                        <p>Regression line: \((Y - 24) = 3.3 (X - 6) \implies \mathbf{Y = 3.3 X + 4.2}\)।</p>
+                        <p>\(X = 7\) के लिए: \(Y = 3.3(7) + 4.2 = \mathbf{27.3}\)।</p>
                     </div>
 
                     <div class="example">
                         <h4>Example 3.2.2 (Line of X on Y):</h4>
-                        <p><strong>Problem:</strong> समान data के लिए \(X\) on \(Y\) का regression समीकरण ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(b_{xy} = 0.301 \implies \mathbf{X = 0.301 Y - 1.224}\)। \(Y = 28\) पर \(X = \mathbf{7.20}\)।</p>
+                        <p><strong>Problem:</strong> Example 3.2.1 के data का उपयोग करके \(X\) on \(Y\) की regression line ज्ञात कीजिए तथा \(Y = 28\) होने पर \(X\) का अनुमान लगाइए।</p>
+                        <p><strong>Solution:</strong> Table कुल योग से: \(N = 5, \sum Y = 120, \sum Y^2 = 3318, \sum XY = 852\)।</p>
+                        \[ b_{xy} = \frac{5(852) - (30)(120)}{5(3318) - (120)^2} = \frac{660}{16590 - 14400} = \frac{660}{2190} = 0.301 \]
+                        <p>Regression line: \((X - 6) = 0.301 (Y - 24) \implies \mathbf{X = 0.301 Y - 1.224}\)।</p>
+                        <p>\(Y = 28\) के लिए: \(X = 0.301(28) - 1.224 = \mathbf{7.20}\)।</p>
                     </div>
                 </div>
             </section>
@@ -1432,17 +1556,68 @@ svg.book-fig, .figure-box svg, canvas {
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">3.3</span> Regression Coefficients के 6 मौलिक गुण (Properties)</h2>
+                    <h2><span class="section-num">3.3</span> Regression Coefficients के 6 मौलिक गुण (6 Fundamental Properties)</h2>
+                    <p class="intro-text">Regression coefficients \(b_{yx}\) तथा \(b_{xy}\) के 6 मौलिक गणितीय गुण होते हैं जो उनके व्यवहार, बीजीय सीमाओं तथा correlation coefficient \(r\) के साथ संबंधों को नियंत्रित करते हैं।</p>
+
+                    <div class="key-point">
+                        <h4>Property 1: Geometric Mean Rule</h4>
+                        <p><strong>कथन:</strong> Correlation coefficient \(r\), दोनों regression coefficients \(b_{yx}\) तथा \(b_{xy}\) का <strong>geometric mean</strong> होता है।</p>
+                        \[ r = \pm \sqrt{b_{yx} \cdot b_{xy}} \]
+                        <p><strong>शाब्दिक व्याख्या एवं प्रमाण:</strong> दोनों regression coefficients का गुणा करने पर:</p>
+                        \[ b_{yx} \cdot b_{xy} = \left(r \frac{\sigma_y}{\sigma_x}\right) \cdot \left(r \frac{\sigma_x}{\sigma_y}\right) = r^2 \]
+                        <p>वर्गमूल लेने पर \(r = \pm \sqrt{b_{yx} \cdot b_{xy}}\) प्राप्त होता है। \(r\) का चिन्ह दोनों coefficients के उभयनिष्ठ चिन्ह के समान होता है।</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h4>Property 2: Same Sign Rule</h4>
+                        <p><strong>कथन:</strong> दोनों regression coefficients \(b_{yx}\) तथा \(b_{xy}\) का चिन्ह हमेशा अनिवार्य रूप से समान होता है, जो correlation coefficient \(r\) के चिन्ह के समान होता है।</p>
+                        <p><strong>शाब्दिक व्याख्या:</strong> Standard deviations \(\sigma_x > 0\) तथा \(\sigma_y > 0\) धनात्मक संख्याएँ हैं। चूँकि \(b_{yx} = r \frac{\sigma_y}{\sigma_x}\) तथा \(b_{xy} = r \frac{\sigma_x}{\sigma_y}\), अतः दोनों का चिन्ह पूर्णतः \(r\) के चिन्ह पर निर्भर करता है।</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h4>Property 3: Magnitude Reciprocity Rule</h4>
+                        <p><strong>कथन:</strong> यदि एक regression coefficient निरपेक्ष मान में 1 से बड़ा है (\(|b_{yx}| > 1\)), तो दूसरा अनिवार्य रूप से 1 से छोटा होगा (\(|b_{xy}| < 1\))।</p>
+                        <p><strong>शाब्दिक व्याख्या एवं प्रमाण:</strong> हम जानते हैं कि \(b_{yx} \cdot b_{xy} = r^2\)। चूँकि \(|r| \le 1 \implies r^2 \le 1\), अतः उनका गुणनफल 1 से अधिक नहीं हो सकता। यदि \(|b_{yx}| > 1\) है, तो यह बाध्य करता है कि \(|b_{xy}| \le \frac{1}{|b_{yx}|} < 1\)।</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h4>Property 4: Arithmetic Mean Inequality</h4>
+                        <p><strong>कथन:</strong> दोनों regression coefficients का arithmetic mean हमेशा correlation coefficient \(r\) के निरपेक्ष मान से बड़ा या बराबर होता है।</p>
+                        \[ \frac{b_{yx} + b_{xy}}{2} \ge |r| \]
+                        <p><strong>प्रमाण:</strong> पूर्ण वर्ग \((\sqrt{b_{yx}} - \sqrt{b_{xy}})^2 \ge 0 \implies b_{yx} + b_{xy} - 2\sqrt{b_{yx} b_{xy}} \ge 0 \implies b_{yx} + b_{xy} \ge 2|r| \implies \frac{b_{yx} + b_{xy}}{2} \ge |r|\)।</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h4>Property 5: Independence of Origin & Scale Dependence</h4>
+                        <p><strong>कथन:</strong> Regression coefficients <strong>shift of origin से पूर्णतः स्वतंत्र</strong> होते हैं, परंतु <strong>change of scale पर निर्भर</strong> करते हैं।</p>
+                        <p><strong>प्रमाण:</strong> माना \(u = \frac{X - a}{h}\) तथा \(v = \frac{Y - b}{k}\) जहाँ \(a, b\) origin constants हैं तथा \(h, k\) scale factors हैं। तब \(X = a + h u\) तथा \(Y = b + k v\)। Covariance एवं variance सूत्रों में रखने पर:</p>
+                        \[ b_{yx} = \left(\frac{k}{h}\right) b_{vu}, \quad \text{तथा} \quad b_{xy} = \left(\frac{h}{k}\right) b_{uv} \]
+                        <p>यदि scale factors समान हों (\(h = k\)), तो regression coefficients अपरिवर्तित रहते हैं।</p>
+                    </div>
+
+                    <div class="key-point">
+                        <h4>Property 6: Point of Intersection at Means</h4>
+                        <p><strong>कथन:</strong> दोनों regression lines हमेशा means के बिंदु \((\bar{X}, \bar{Y})\) पर प्रतिच्छेद करती हैं।</p>
+                        <p><strong>प्रमाण:</strong> रेखा \(Y - \bar{Y} = b_{yx} (X - \bar{X})\) में \(X = \bar{X}\) रखने पर \(Y - \bar{Y} = 0 \implies Y = \bar{Y}\)। अतः \((\bar{X}, \bar{Y})\) दोनों समीकरणों को संतुष्ट करता है।</p>
+                    </div>
+
+                    <!-- SECTION 3.3 NUMERICAL EXAMPLES HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 3.3.1 (Verification of Properties):</h4>
-                        <p><strong>Problem:</strong> \(b_{yx} = 1.2, b_{xy} = 0.3\) से \(r\) ज्ञात कीजिए तथा AM Inequality जांचिए।</p>
-                        <p><strong>Solution:</strong> \(r = \sqrt{1.2 \times 0.3} = \mathbf{+0.6}\)। AM \(= 0.75 \ge 0.6\) (Verified)।</p>
+                        <p><strong>Problem:</strong> दी गई regression coefficients \(b_{yx} = 1.2\) तथा \(b_{xy} = 0.3\)। 1) Correlation coefficient \(r\) ज्ञात कीजिए, 2) Same Sign नियम सत्यापित कीजिए, 3) Arithmetic Mean असमानता सत्यापित कीजिए।</p>
+                        <p><strong>Solution:</strong></p>
+                        <ol>
+                            <li>\(r = +\sqrt{b_{yx} \cdot b_{xy}} = \sqrt{1.2 \times 0.3} = \sqrt{0.36} = \mathbf{+0.6}\)।</li>
+                            <li>दोनों \(b_{yx} = +1.2\) तथा \(b_{xy} = +0.3\) धनात्मक हैं, जो \(r = +0.6\) से मेल खाते हैं (Same Sign Rule Verified)।</li>
+                            <li>Arithmetic mean \(= \frac{1.2 + 0.3}{2} = 0.75\)। चूँकि \(0.75 \ge 0.6\), अतः AM Inequality \(\frac{b_{yx} + b_{xy}}{2} \ge r\) सत्यापित हुई।</li>
+                        </ol>
                     </div>
 
                     <div class="example">
-                        <h4>Example 3.3.2 (Scale Transformation):</h4>
-                        <p><strong>Problem:</strong> \(u = \frac{X - 100}{10}, v = \frac{Y - 50}{5}\) तथा \(b_{vu} = 0.8\) के लिए \(b_{yx}\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(b_{yx} = \left(\frac{5}{10}\right)(0.8) = \mathbf{0.4}\)।</p>
+                        <h4>Example 3.3.2 (Origin & Scale Transformation):</h4>
+                        <p><strong>Problem:</strong> यदि variables को \(u = \frac{X - 100}{10}\) तथा \(v = \frac{Y - 50}{5}\) में रूपांतरित किया जाता है, तथा \(v\) on \(u\) का परिकलित regression coefficient \(b_{vu} = 0.8\) है, तो मूल regression coefficient \(b_{yx}\) ज्ञात कीजिए।</p>
+                        <p><strong>Solution:</strong> यहाँ scale factors \(h = 10\) तथा \(k = 5\) हैं। Property 5 का उपयोग करने पर:</p>
+                        \[ b_{yx} = \left(\frac{k}{h}\right) b_{vu} = \left(\frac{5}{10}\right) (0.8) = 0.5 \times 0.8 = \mathbf{0.4} \]
                     </div>
                 </div>
             </section>
@@ -1499,16 +1674,47 @@ svg.book-fig, .figure-box svg, canvas {
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">3.4</span> Regression Lines के बीच का कोण (\(\theta\))</h2>
+                    <p class="intro-text">\(Y\) on \(X\) की regression line तथा \(X\) on \(Y\) की regression line के बीच न्यून कोण (acute angle) \(\theta\), दो variables के बीच linear association की तीव्रता का ज्यामितीय माप प्रदान करता है।</p>
+
+                    <div class="derivation">
+                        <h4>कोण \(\theta\) के सूत्र की व्युत्पत्ति (Derivation)</h4>
+                        <p>माना रेखा \(Y\) on \(X\) की slope \(m_1 = b_{yx} = r \frac{\sigma_y}{\sigma_x}\) है। रेखा \(X\) on \(Y\) की slope \(m_2 = \frac{1}{b_{xy}} = \frac{1}{r} \frac{\sigma_y}{\sigma_x}\) है।</p>
+                        <p>दो रेखाओं के बीच कोण का निर्देशांक ज्यामिति सूत्र \(\tan \theta = \left|\frac{m_1 - m_2}{1 + m_1 m_2}\right|\) प्रयुक्त करने पर:</p>
+                        \[ \tan \theta = \left( \frac{1 - r^2}{|r|} \right) \left( \frac{\sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2} \right) \]
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>कोण \(\theta\) का सूत्र Box</h4>
+                        \[ \tan \theta = \left( \frac{1 - r^2}{|r|} \right) \left( \frac{\sigma_x \sigma_y}{\sigma_x^2 + \sigma_y^2} \right) \]
+                    </div>
+
+                    <div class="note">
+                        <h4>दो मुख्य स्थितियों का शाब्दिक विश्लेषण</h4>
+                        <ol>
+                            <li><strong>स्थिति 1: Perfect Correlation (\(r = \pm 1\)) \(\implies \theta = 0^\circ\)</strong><br>
+                            जब correlation perfect (\(r = +1\) या \(-1\)) होता है, \(\tan \theta = 0 \implies \mathbf{\theta = 0^\circ}\)। ज्यामितीय रूप से, दोनों regression lines एक-दूसरे के ऊपर पूरी तरह संपाती (coincide) हो जाती हैं। सभी observed बिंदु रेखा पर स्थित होते हैं।</li>
+                            <li><strong>स्थिति 2: Zero Correlation (\(r = 0\)) \(\implies \theta = 90^\circ\)</strong><br>
+                            जब variables पूर्णतः uncorrelated (\(r = 0\)) होते हैं, \(\tan \theta = \infty \implies \mathbf{\theta = 90^\circ}\)। ज्यामितीय रूप से, दोनों regression lines एक-दूसरे पर लंबवत (perpendicular) होती हैं। रेखा \(Y\) on \(X\) क्षैतिज (\(Y = \bar{Y}\)) तथा रेखा \(X\) on \(Y\) ऊर्ध्वाधर (\(X = \bar{X}\)) हो जाती है।</li>
+                        </ol>
+                    </div>
+
+                    <!-- SECTION 3.4 NUMERICAL EXAMPLES HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 3.4.1 (Angle Calculation):</h4>
-                        <p><strong>Problem:</strong> \(\sigma_x = 3, \sigma_y = 4, r = 0.6\) के लिए \(\tan \theta\) एवं \(\theta\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(\tan \theta = 0.512 \implies \mathbf{\theta \approx 27.11^\circ}\)।</p>
+                        <p><strong>Problem:</strong> यदि \(X\) का standard deviation \(\sigma_x = 3\), \(Y\) का standard deviation \(\sigma_y = 4\), तथा correlation coefficient \(r = 0.6\) है, तो दोनों regression lines के बीच न्यून कोण \(\theta\) ज्ञात कीजिए।</p>
+                        <p><strong>Solution:</strong> कोण सूत्र में मान रखने पर:</p>
+                        \[ \tan \theta = \left( \frac{1 - (0.6)^2}{0.6} \right) \left( \frac{3 \times 4}{3^2 + 4^2} \right) = \left( \frac{0.64}{0.6} \right) \left( \frac{12}{25} \right) = 1.0667 \times 0.48 = 0.512 \]
+                        \[ \tan \theta = 0.512 \implies \mathbf{\theta = \tan^{-1}(0.512) \approx 27.11^\circ} \]
                     </div>
 
                     <div class="example">
-                        <h4>Example 3.4.2 (Extreme Cases):</h4>
-                        <p><strong>Problem:</strong> \(r = 1\) तथा \(r = 0\) के लिए \(\theta\) का मान ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r = 1 \implies \mathbf{\theta = 0^\circ}\), \(r = 0 \implies \mathbf{\theta = 90^\circ}\)।</p>
+                        <h4>Example 3.4.2 (Extreme Cases Verification):</h4>
+                        <p><strong>Problem:</strong> Regression lines के बीच कोण \(\theta\) ज्ञात कीजिए जब: 1) Correlation perfect (\(r = 1\)) है, 2) Variables uncorrelated (\(r = 0\)) हैं।</p>
+                        <p><strong>Solution:</strong></p>
+                        <ol>
+                            <li>जब \(r = 1\): \(\tan \theta = 0 \implies \mathbf{\theta = 0^\circ}\) (रेखाएँ पूर्णतः संपाती हैं)।</li>
+                            <li>जब \(r = 0\): \(\tan \theta = \infty \implies \mathbf{\theta = 90^\circ}\) (रेखाएँ लंबवत हैं)।</li>
+                        </ol>
                     </div>
                 </div>
             </section>
@@ -1566,16 +1772,48 @@ svg.book-fig, .figure-box svg, canvas {
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">3.5</span> Standard Error of Estimate (\(S_{yx}\) एवं \(S_{xy}\))</h2>
+                    <p class="intro-text"><strong>Standard Error of Estimate</strong> fitted regression equation द्वारा किए गए पूर्वानुमानों की विश्वसनीयता, सटीकता (accuracy) तथा परिशुद्धता (precision) को regression line के चारों ओर observed डाटा बिंदुओं के मानक विचलन द्वारा मापता है।</p>
+
+                    <div class="formula-box">
+                        <h4>Standard Error of Estimate के सूत्र एवं Symbol Guide</h4>
+                        \[ S_{yx} = \sqrt{\frac{\sum (Y - \hat{Y})^2}{n}} = \sigma_y \sqrt{1 - r^2} \]
+                        \[ S_{xy} = \sqrt{\frac{\sum (X - \hat{X})^2}{n}} = \sigma_x \sqrt{1 - r^2} \]
+                        <div class="symbol-list">
+                            <strong>Symbol Guide:</strong>
+                            <ul>
+                                <li>\(S_{yx}\) = Standard Error of Estimate of \(Y\) on \(X\) (\(Y\) की इकाइयों में माप)।</li>
+                                <li>\(S_{xy}\) = Standard Error of Estimate of \(X\) on \(Y\) (\(X\) की इकाइयों में माप)।</li>
+                                <li>\(\sigma_y, \sigma_x\) = Variables \(Y\) तथा \(X\) के standard deviations।</li>
+                                <li>\(r\) = \(X\) तथा \(Y\) के बीच simple correlation coefficient।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="note">
+                        <h4>Total Variance का विभाजन: Explained vs Unexplained Variation</h4>
+                        <p>\(Y\) में कुल variance \(\sigma_y^2\) है। इसे दो घटकों में विभाजित किया जाता है:</p>
+                        \[ \text{Total Variance } (\sigma_y^2) = \text{Explained Variance } (r^2 \sigma_y^2) + \text{Unexplained Variance } (S_{yx}^2) \]
+                        <ul>
+                            <li><strong>Explained Variance (\(r^2 \sigma_y^2\)):</strong> \(X\) के साथ linear संबंध द्वारा व्याख्यायित variance। \(r^2\) को <strong>Coefficient of Determination</strong> कहते हैं।</li>
+                            <li><strong>Unexplained Variance (\(S_{yx}^2 = \sigma_y^2 (1 - r^2)\)):</strong> बाह्य अनावृत कारकों के कारण अवशिष्ट variance।</li>
+                        </ul>
+                    </div>
+
+                    <!-- SECTION 3.5 NUMERICAL EXAMPLES HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Example 3.5.1 (Standard Error S_yx):</h4>
-                        <p><strong>Problem:</strong> \(\sigma_y = 8, r = 0.8\) के लिए \(S_{yx}\) एवं unexplained variance प्रतिशत ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(S_{yx} = 8 \sqrt{0.36} = \mathbf{4.8}\)। Unexplained variance \(= \mathbf{36\%}\)।</p>
+                        <p><strong>Problem:</strong> फसल उत्पादन अध्ययन में, yield \(Y\) का standard deviation \(\sigma_y = 8\) क्विंटल है, तथा fertilizer \(X\) के साथ correlation \(r = 0.8\) है। Standard Error of Estimate \(S_{yx}\) की गणना कीजिए तथा unexplained variance का प्रतिशत बताइए।</p>
+                        <p><strong>Solution:</strong></p>
+                        \[ S_{yx} = \sigma_y \sqrt{1 - r^2} = 8 \sqrt{1 - (0.8)^2} = 8 \sqrt{1 - 0.64} = 8 \sqrt{0.36} = 8 \times 0.6 = \mathbf{4.8 \text{ quintals}} \]
+                        <p>Explained variance का अनुपात \(= r^2 = (0.8)^2 = 0.64 = 64\%\)।</p>
+                        <p>Unexplained variance का अनुपात \(= 1 - r^2 = 0.36 = \mathbf{36\%}\)।</p>
                     </div>
 
                     <div class="example">
                         <h4>Example 3.5.2 (Standard Error S_xy):</h4>
-                        <p><strong>Problem:</strong> \(\sigma_x = 10, r = 0.6\) के लिए \(S_{xy}\) ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(S_{xy} = 10 \sqrt{0.64} = \mathbf{8.0}\)।</p>
+                        <p><strong>Problem:</strong> यदि fertilizer dose \(X\) का standard deviation \(\sigma_x = 10\) kg है तथा correlation \(r = 0.6\) है, तो \(S_{xy}\) की गणना कीजिए।</p>
+                        <p><strong>Solution:</strong></p>
+                        \[ S_{xy} = \sigma_x \sqrt{1 - r^2} = 10 \sqrt{1 - (0.6)^2} = 10 \sqrt{0.64} = 10 \times 0.8 = \mathbf{8.0 \text{ kg}} \]
                     </div>
                 </div>
             </section>
@@ -1666,11 +1904,14 @@ svg.book-fig, .figure-box svg, canvas {
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">3.6</span> Correlation और Regression में 7 मुख्य अंतर</h2>
+                    <h2><span class="section-num">3.6</span> Correlation और Regression में 7 मुख्य अंतर (7-Point Distinction)</h2>
+                    <p class="intro-text">यद्यपि Correlation तथा Regression दोनों bivariate numerical data का विश्लेषण करते हैं, परंतु वे उद्देश्य, variable symmetry, गणितीय सीमाओं, origin/scale invariance, तथा predictive क्षमता में मौलिक रूप से भिन्न हैं।</p>
+
+                    <!-- 7-POINT COMPARATIVE TABLE HINGLISH REPLICA -->
                     <table>
                         <thead>
                             <tr>
-                                <th>क्रमांक</th>
+                                <th>#</th>
                                 <th>अंतर का आधार</th>
                                 <th>Correlation Analysis</th>
                                 <th>Regression Analysis</th>
@@ -1680,58 +1921,66 @@ svg.book-fig, .figure-box svg, canvas {
                             <tr>
                                 <td><strong>1</strong></td>
                                 <td><strong>अर्थ एवं परिभाषा</strong></td>
-                                <td>चरों के बीच रैखिक संबंध की दिशा एवं तीव्रता मापता है।</td>
-                                <td>पूर्वानुमान हेतु कारण-और-प्रभाव (cause-and-effect) समीकरण स्थापित करता है।</td>
+                                <td>दो चरों के बीच linear संबंध की दिशा, तीव्रता एवं मात्रा को मापता है।</td>
+                                <td>अज्ञात variable मानों के पूर्वानुमान हेतु कारण-और-प्रभाव (cause-and-effect) गणितीय समीकरण स्थापित करता है।</td>
                             </tr>
                             <tr>
                                 <td><strong>2</strong></td>
-                                <td><strong>उद्देश्य</strong></td>
-                                <td>यह जांचना कि चर साथ-साथ बदलते हैं या नहीं।</td>
-                                <td>ज्ञात independent variable (\(X\)) से unknown dependent variable (\(Y\)) का मान अनुमानित करना।</td>
+                                <td><strong>उद्देश्य एवं अनुप्रयोग</strong></td>
+                                <td>यह मूल्यांकन करना कि दो variables साथ-साथ बदलते हैं या नहीं।</td>
+                                <td>ज्ञात independent variable (\(X\)) से unknown dependent variable (\(Y\)) के मान का forecast करना।</td>
                             </tr>
                             <tr>
                                 <td><strong>3</strong></td>
-                                <td><strong>सममिति (Symmetric)</strong></td>
-                                <td>Symmetric: \(r_{xy} = r_{yx}\)। दोनों चर समान रूप से माने जाते हैं।</td>
-                                <td>Asymmetric: \(b_{yx} \neq b_{xy}\)। Dependent तथा Independent variables में स्पष्ट वर्गीकरण होता है।</td>
+                                <td><strong>सममिति (Symmetry)</strong></td>
+                                <td><strong>Symmetric:</strong> \(r_{xy} = r_{yx}\)। दोनों variables \(X\) तथा \(Y\) बिना वर्गीकृत किए समान रूप से माने जाते हैं।</td>
+                                <td><strong>Asymmetric:</strong> \(b_{yx} \neq b_{xy}\)। Variables को strictly Dependent (\(Y\)) तथा Independent (\(X\)) में वर्गीकृत किया जाता है।</td>
                             </tr>
                             <tr>
                                 <td><strong>4</strong></td>
-                                <td><strong>सीमाएँ (Limits)</strong></td>
-                                <td>\(-1 \le r \le +1\) तक सीमित।</td>
-                                <td>Regression coefficients \(b_{yx}, b_{xy}\) 1 से बड़े हो सकते हैं।</td>
+                                <td><strong>गणितीय सीमाएँ (Bounds)</strong></td>
+                                <td>\(-1 \le r \le +1\) के भीतर सीमित।</td>
+                                <td>Regression coefficients \(b_{yx}, b_{xy}\) \(-\infty\) से \(+\infty\) तक कोई भी वास्तविक मान ले सकते हैं।</td>
                             </tr>
                             <tr>
                                 <td><strong>5</strong></td>
-                                <td><strong>Origin & Scale</strong></td>
-                                <td>Origin तथा Scale दोनों परिवर्तनों से स्वतंत्र।</td>
-                                <td>Origin से स्वतंत्र, परंतु **Scale परिवर्तन पर निर्भर**।</td>
+                                <td><strong>Origin & Scale रूपांतरण</strong></td>
+                                <td>Origin के shift तथा Scale परिवर्तन दोनों से स्वतंत्र।</td>
+                                <td>Origin के shift से स्वतंत्र, परंतु **Scale परिवर्तन पर निर्भर** (\(b_{yx} = \frac{k}{h} b_{vu}\))।</td>
                             </tr>
                             <tr>
                                 <td><strong>6</strong></td>
-                                <td><strong>Error Term (\(e\))</strong></td>
-                                <td>कोई residual error term नहीं होता।</td>
-                                <td>Residual error term \(e_i\) शामिल होता है जिसे Least Squares द्वारा न्यूनतम किया जाता है।</td>
+                                <td><strong>Residual Error Term (\(e\))</strong></td>
+                                <td>किसी residual error term को शामिल नहीं करता।</td>
+                                <td>Residual error term \(e_i = Y_i - \hat{Y}_i\) शामिल करता है जिसे Least Squares द्वारा न्यूनतम किया जाता है।</td>
                             </tr>
                             <tr>
                                 <td><strong>7</strong></td>
-                                <td><strong>Intercept & Prediction</strong></td>
-                                <td>कोई intercept नहीं; मान का पूर्वानुमान नहीं कर सकता।</td>
-                                <td>Intercept \(a\) शामिल होता है; पूर्वानुमान हेतु बनाया गया है।</td>
+                                <td><strong>Intercept & Prediction क्षमता</strong></td>
+                                <td>कोई intercept नहीं होता; मान का पूर्वानुमान नहीं कर सकता।</td>
+                                <td>Intercept parameter \(a\) शामिल होता है; परिमाणात्मक forecasting हेतु डिज़ाइन किया गया है।</td>
                             </tr>
                         </tbody>
                     </table>
 
+                    <!-- SECTION 3.6 NUMERICAL EXAMPLES HINGLISH REPLICA -->
                     <div class="example">
-                        <h4>Example 3.6.1 (Symmetry vs Asymmetry):</h4>
-                        <p><strong>Problem:</strong> \(\sigma_x = 4, \sigma_y = 8, r = 0.75\) के लिए \(r_{xy}, r_{yx}\) तथा \(b_{yx}, b_{xy}\) ज्ञात करके सममिति सिद्ध कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r_{xy} = r_{yx} = 0.75\) (Symmetric)। \(b_{yx} = 1.5 \ne b_{xy} = 0.375\) (Asymmetric)।</p>
+                        <h4>Example 3.6.1 (Symmetry vs Asymmetry Demonstration):</h4>
+                        <p><strong>Problem:</strong> दी गई \(\sigma_x = 4, \sigma_y = 8,\) तथा correlation \(r = 0.75\)। गणना कीजिए: 1) Correlation coefficients \(r_{xy}\) एवं \(r_{yx}\), 2) Regression coefficients \(b_{yx}\) एवं \(b_{xy}\)। इन परिणामों का उपयोग करके symmetry vs asymmetry प्रदर्शित कीजिए।</p>
+                        <p><strong>Solution:</strong></p>
+                        <ol>
+                            <li><strong>Correlation Symmetry:</strong> \(r_{xy} = r_{yx} = \mathbf{0.75}\) (Symmetric, दिशा से स्वतंत्र)।</li>
+                            <li><strong>Regression Asymmetry:</strong><br>
+                            \(b_{yx} = r \frac{\sigma_y}{\sigma_x} = 0.75 \left(\frac{8}{4}\right) = 0.75 \times 2 = \mathbf{1.5}\)।<br>
+                            \(b_{xy} = r \frac{\sigma_x}{\sigma_y} = 0.75 \left(\frac{4}{8}\right) = 0.75 \times 0.5 = \mathbf{0.375}\)।<br>
+                            चूँकि \(b_{yx} = 1.5 \neq b_{xy} = 0.375\), अतः regression Asymmetric है।</li>
+                        </ol>
                     </div>
 
                     <div class="example">
-                        <h4>Example 3.6.2 (Prediction Ability):</h4>
-                        <p><strong>Problem:</strong> \(\bar{X} = 5, \bar{Y} = 12, b_{yx} = 1.4\) के साथ \(X = 8\) पर prediction कीजिए।</p>
-                        <p><strong>Solution:</strong> \(Y = 1.4(8) + 5 = \mathbf{16.2}\)।</p>
+                        <h4>Example 3.6.2 (Prediction Ability Demonstration):</h4>
+                        <p><strong>Problem:</strong> दी गई \(\bar{X} = 5, \bar{Y} = 12,\) तथा \(b_{yx} = 1.4\)। प्रदर्शित कीजिए कि regression line \(X = 8\) पर \(Y\) का पूर्वानुमान कैसे करती है, तथा समझाएं कि correlation coefficient \(r\) अकेला यह पूर्वानुमान क्यों नहीं कर सकता।</p>
+                        <p><strong>Solution:</strong> \(Y\) on \(X\) की Regression line: \((Y - 12) = 1.4 (X - 5) \implies Y = 1.4 X + 5\)। \(X = 8\) के लिए: \(Y = 1.4(8) + 5 = \mathbf{16.2}\)। Correlation coefficient \(r\) केवल संबंध की तीव्रता दर्शाता है, परंतु specific prediction हेतु linear intercept या slope प्रदान नहीं करता।</p>
                     </div>
                 </div>
             </section>
@@ -1812,16 +2061,71 @@ svg.book-fig, .figure-box svg, canvas {
 
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">3.7</span> Multiple Regression एवं Partial Correlation (Trivariate Regression)</h2>
+                    <p class="intro-text">कृषि, जैविक, तथा आर्थिक अनुसंधानों में, एक अकेला dependent variable \(X_1\) एक साथ दो या अधिक independent variables \(X_2, X_3\) द्वारा प्रभावित होता है। उदाहरण के लिए, Crop Yield (\(X_1\)) Fertilizer Dose (\(X_2\)) तथा Rainfall (\(X_3\)) पर निर्भर करता है। Simple linear regression (2 variables) ऐसे जटिल तंत्रों के लिए अपर्याप्त है।</p>
+
+                    <div class="theorem">
+                        <h4>1. Multiple Regression Plane समीकरण एवं Symbol Guide</h4>
+                        <p>\(X_1\) का \(X_2\) तथा \(X_3\) पर linear regression समीकरण 3-dimensional space में एक plane को दर्शाता है:</p>
+                        \[ (X_1 - \bar{X}_1) = b_{12.3} (X_2 - \bar{X}_2) + b_{13.2} (X_3 - \bar{X}_3) \]
+                        <div class="symbol-list">
+                            <strong>Symbol Guide:</strong>
+                            <ul>
+                                <li>\(X_1\) = Predicted किया जाने वाला Dependent variable (जैसे Crop Yield)।</li>
+                                <li>\(X_2, X_3\) = Independent variables (जैसे Fertilizer Dose, Soil Moisture)।</li>
+                                <li>\(\bar{X}_1, \bar{X}_2, \bar{X}_3\) = तीनों variables के arithmetic sample means।</li>
+                                <li>\(b_{12.3}\) = <strong>Partial Regression Coefficient of \(X_1\) on \(X_2\) holding \(X_3\) constant</strong>। जब \(X_3\) स्थिर हो, तब \(X_2\) में प्रति इकाई परिवर्तन पर \(X_1\) में परिवर्तन दर्शाता है।</li>
+                                <li>\(b_{13.2}\) = <strong>Partial Regression Coefficient of \(X_1\) on \(X_3\) holding \(X_2\) constant</strong>। जब \(X_2\) स्थिर हो, तब \(X_3\) में प्रति इकाई परिवर्तन पर \(X_1\) में परिवर्तन दर्शाता है।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="formula-box">
+                        <h4>Partial Regression Coefficients के सूत्र</h4>
+                        \[ b_{12.3} = \left( \frac{\sigma_1}{\sigma_2} \right) \left( \frac{r_{12} - r_{13} r_{23}}{1 - r_{23}^2} \right) \]
+                        \[ b_{13.2} = \left( \frac{\sigma_1}{\sigma_3} \right) \left( \frac{r_{13} - r_{12} r_{23}}{1 - r_{23}^2} \right) \]
+                        <div class="symbol-list">
+                            <strong>Symbol Guide:</strong>
+                            <ul>
+                                <li>\(\sigma_1, \sigma_2, \sigma_3\) = Variables \(X_1, X_2, X_3\) के standard deviations।</li>
+                                <li>\(r_{12}, r_{13}, r_{23}\) = Variable युग्मों के बीच zero-order simple correlation coefficients।</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="theorem">
+                        <h4>2. Multiple Correlation Coefficient (\(R_{1.23}\))</h4>
+                        <p>\(X_1\) के observed मानों तथा \(X_2, X_3\) के आधार पर उसके संयुक्त linear अनुमान के बीच कुल correlation मापता है:</p>
+                        \[ R_{1.23}^2 = \frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2}, \quad (0 \le R_{1.23} \le 1) \]
+                    </div>
+
+                    <div class="theorem">
+                        <h4>3. Partial Correlation Coefficient (\(r_{12.3}\))</h4>
+                        <p>Variable \(X_3\) के linear प्रभाव को समाप्त (eliminate) या स्थिर करने के पश्चात् \(X_1\) तथा \(X_2\) के बीच शुद्ध (net) linear correlation मापता है:</p>
+                        \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}}, \quad (-1 \le r_{12.3} \le +1) \]
+                    </div>
+
+                    <!-- SECTION 3.7 NUMERICAL EXAMPLES HINGLISH REPLICA -->
                     <div class="example">
-                        <h4>Example 3.7.1 (Multiple Regression Plane):</h4>
-                        <p><strong>Problem:</strong> \(\bar{X}_1 = 50, \bar{X}_2 = 15, \bar{X}_3 = 8, \sigma_1 = 8, \sigma_2 = 3, \sigma_3 = 2, r_{12} = 0.75, r_{13} = 0.60, r_{23} = 0.40\) के लिए multiple regression plane समीकरण ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(b_{12.3} = 1.619, b_{13.2} = 1.429 \implies \mathbf{X_1 = 14.28 + 1.619 X_2 + 1.429 X_3}\)।</p>
+                        <h4>Example 3.7.1 (Trivariate Regression Plane):</h4>
+                        <p><strong>Problem:</strong> Fertilizer (\(X_2\)) तथा Irrigation (\(X_3\)) से Crop Yield (\(X_1\)) का पूर्वानुमान लगाने वाले प्रयोग में दी गई: \(\bar{X}_1 = 50, \bar{X}_2 = 15, \bar{X}_3 = 8\), \(\sigma_1 = 8, \sigma_2 = 3, \sigma_3 = 2\), तथा correlation coefficients \(r_{12} = 0.75, r_{13} = 0.60, r_{23} = 0.40\)। Partial regression coefficients \(b_{12.3}\) तथा \(b_{13.2}\) की गणना कीजिए एवं multiple regression plane समीकरण लिखिए।</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>1) Partial regression coefficient \(b_{12.3}\):</p>
+                        \[ b_{12.3} = \left(\frac{8}{3}\right) \left[\frac{0.75 - (0.60)(0.40)}{1 - (0.40)^2}\right] = 2.667 \left[\frac{0.75 - 0.24}{1 - 0.16}\right] = 2.667 \left[\frac{0.51}{0.84}\right] = \mathbf{1.619} \]
+                        <p>2) Partial regression coefficient \(b_{13.2}\):</p>
+                        \[ b_{13.2} = \left(\frac{8}{2}\right) \left[\frac{0.60 - (0.75)(0.40)}{1 - (0.40)^2}\right] = 4 \left[\frac{0.60 - 0.30}{0.84}\right] = 4 \left[\frac{0.30}{0.84}\right] = \mathbf{1.429} \]
+                        <p>3) Regression plane equation:</p>
+                        \[ (X_1 - 50) = 1.619 (X_2 - 15) + 1.429 (X_3 - 8) \implies \mathbf{X_1 = 14.28 + 1.619 X_2 + 1.429 X_3} \]
                     </div>
 
                     <div class="example">
                         <h4>Example 3.7.2 (Partial & Multiple Correlation):</h4>
-                        <p><strong>Problem:</strong> समान data के लिए \(r_{12.3}\) तथा \(R_{1.23}\) का मान ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(r_{12.3} = \mathbf{0.696}\), \(R_{1.23} = \mathbf{0.818}\)।</p>
+                        <p><strong>Problem:</strong> Zero-order correlations \(r_{12} = 0.75, r_{13} = 0.60, r_{23} = 0.40\) का उपयोग करके गणना कीजिए: 1) Partial Correlation Coefficient \(r_{12.3}\), 2) Multiple Correlation Coefficient \(R_{1.23}\)।</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>1) Partial Correlation Coefficient \(r_{12.3}\):</p>
+                        \[ r_{12.3} = \frac{0.75 - (0.60)(0.40)}{\sqrt{[1 - (0.60)^2][1 - (0.40)^2]}} = \frac{0.51}{\sqrt{0.64 \times 0.84}} = \frac{0.51}{\sqrt{0.5376}} = \frac{0.51}{0.7332} = \mathbf{0.696} \]
+                        <p>2) Multiple Correlation Coefficient \(R_{1.23}\):</p>
+                        \[ R_{1.23}^2 = \frac{(0.75)^2 + (0.60)^2 - 2(0.75)(0.60)(0.40)}{1 - (0.40)^2} = \frac{0.5625 + 0.36 - 0.36}{0.84} = \frac{0.5625}{0.84} = 0.6696 \]
+                        \[ R_{1.23} = \sqrt{0.6696} = \mathbf{0.818} \]
                     </div>
                 </div>
             </section>
@@ -1887,31 +2191,53 @@ svg.book-fig, .figure-box svg, canvas {
                 <div class="hinglish-content" style="display:none;">
                     <h2><span class="section-num">3.8</span> हल किए गए उदाहरण (Solved Examples)</h2>
 
-                    <!-- EXAMPLE 1 HINGLISH -->
+                    <!-- EXAMPLE 1 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Solved Example 1: Calculation of Bivariate Regression Lines</h4>
-                        <p><strong>Problem:</strong> दिए गए data के लिए दोनों regression lines ज्ञात कीजिए:</p>
+                        <p><strong>Problem:</strong> निम्नलिखित data के लिए दोनों regression lines ज्ञात कीजिए:</p>
                         <table class="calculation-data">
                             <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
                             <tr><th>Y</th><td>2</td><td>5</td><td>3</td><td>8</td><td>7</td></tr>
                         </table>
-                        <p><strong>Solution:</strong> \(N = 5\), \(\bar{X} = 3\), \(\bar{Y} = 5\)।</p>
-                        <p>\(b_{yx} = 1.4 \implies \mathbf{Y = 1.4 X + 0.8}\)। \(X = 6\) के लिए \(Y = \mathbf{9.2}\)।</p>
-                        <p>\(b_{xy} = 0.538 \implies \mathbf{X = 0.538 Y + 0.31}\)। \(Y = 10\) के लिए \(X = \mathbf{5.69}\)।</p>
+                        <p>\(X = 6\) होने पर \(Y\) का पूर्वानुमान कीजिए, तथा \(Y = 10\) होने पर \(X\) का पूर्वानुमान कीजिए।</p>
+                        <p><strong>Solution:</strong> \(N = 5\)। \(\sum X = 15 \implies \bar{X} = 3\)। \(\sum Y = 25 \implies \bar{Y} = 5\)।</p>
+                        <p>\(\sum X^2 = 55\), \(\sum Y^2 = 151\), \(\sum XY = 89\)।</p>
+                        <p>1) Regression Coefficient \(b_{yx}\):</p>
+                        \[ b_{yx} = \frac{5(89) - (15)(25)}{5(55) - (15)^2} = \frac{445 - 375}{275 - 225} = \frac{70}{50} = 1.4 \]
+                        <p>Regression Line of \(Y\) on \(X\): \((Y - 5) = 1.4 (X - 3) \implies \mathbf{Y = 1.4 X + 0.8}\)।</p>
+                        <p>\(X = 6\) के लिए: \(Y = 1.4(6) + 0.8 = \mathbf{9.2}\)।</p>
+
+                        <p>2) Regression Coefficient \(b_{xy}\):</p>
+                        \[ b_{xy} = \frac{5(89) - (15)(25)}{5(151) - (25)^2} = \frac{70}{755 - 625} = \frac{70}{130} = 0.538 \]
+                        <p>Regression Line of \(X\) on \(Y\): \((X - 3) = 0.538 (Y - 5) \implies \mathbf{X = 0.538 Y + 0.31}\)।</p>
+                        <p>\(Y = 10\) के लिए: \(X = 0.538(10) + 0.31 = \mathbf{5.69}\)।</p>
                     </div>
 
-                    <!-- EXAMPLE 2 HINGLISH -->
+                    <!-- EXAMPLE 2 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Solved Example 2: Finding Means and Correlation from Given Regression Lines</h4>
-                        <p><strong>Problem:</strong> दी गई regression lines: \(8X - 10Y + 66 = 0\) तथा \(40X - 18Y - 214 = 0\)। ज्ञात कीजिए: 1) Means \(\bar{X}, \bar{Y}\), 2) Correlation coefficient \(r\)।</p>
-                        <p><strong>Solution:</strong> समीकरणों को हल करने पर: \(\mathbf{\bar{X} = 13, \bar{Y} = 17}\)। Slopes: \(b_{yx} = 0.8, b_{xy} = 0.45 \implies r = \sqrt{0.8 \times 0.45} = \mathbf{+0.6}\)।</p>
+                        <p><strong>Problem:</strong> दो दी गई regression lines: \(8X - 10Y + 66 = 0\) तथा \(40X - 18Y - 214 = 0\)। ज्ञात कीजिए: 1) Means \(\bar{X}\) एवं \(\bar{Y}\), 2) Correlation coefficient \(r\)।</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>1) दोनों रेखाएँ \((\bar{X}, \bar{Y})\) पर प्रतिच्छेद करती हैं। एक साथ हल करने पर:</p>
+                        <p>\(8\bar{X} - 10\bar{Y} = -66\) ---(1), तथा \(40\bar{X} - 18\bar{Y} = 214\) ---(2)।</p>
+                        <p>Eq (1) को 5 से गुणा करने पर: \(40\bar{X} - 50\bar{Y} = -330\)। Eq (2) से घटाने पर: \(32\bar{Y} = 544 \implies \mathbf{\bar{Y} = 17}\)।</p>
+                        <p>Eq (1) में रखने पर: \(8\bar{X} = 10(17) - 66 = 104 \implies \mathbf{\bar{X} = 13}\)। Means हैं \(\mathbf{(\bar{X} = 13, \bar{Y} = 17)}\)।</p>
+                        <p>2) मानिए रेखा (1) \(Y\) on \(X\) है: \(Y = 0.8 X + 6.6 \implies b_{yx} = 0.8\)।</p>
+                        <p>मानिए रेखा (2) \(X\) on \(Y\) है: \(X = 0.45 Y + 5.35 \implies b_{xy} = 0.45\)।</p>
+                        <p>चूँकि दोनों slopes धनात्मक हैं, \(r = +\sqrt{b_{yx} \cdot b_{xy}} = \sqrt{0.8 \times 0.45} = \sqrt{0.36} = \mathbf{+0.6}\)।</p>
                     </div>
 
-                    <!-- EXAMPLE 3 HINGLISH -->
+                    <!-- EXAMPLE 3 HINGLISH REPLICA -->
                     <div class="example">
                         <h4>Solved Example 3: Multiple Regression Plane for Agricultural Yield</h4>
-                        <p><strong>Problem:</strong> \(X_1\) (Crop Yield), \(X_2\) (Fertilizer), \(X_3\) (Rainfall) के लिए: \(\bar{X}_1 = 60, \bar{X}_2 = 20, \bar{X}_3 = 10\), \(\sigma_1 = 10, \sigma_2 = 4, \sigma_3 = 3\), \(r_{12} = 0.8, r_{13} = 0.6, r_{23} = 0.5\)। Multiple regression plane ज्ञात कीजिए।</p>
-                        <p><strong>Solution:</strong> \(b_{12.3} = 1.67\), \(b_{13.2} = 0.89\)। Plane Equation: \(\mathbf{X_1 = 17.7 + 1.67 X_2 + 0.89 X_3}\)।</p>
+                        <p><strong>Problem:</strong> Crop Yield (\(X_1\)), Fertilizer (\(X_2\)), तथा Rainfall (\(X_3\)) के एक कृषि प्रयोग में हमारे पास है: \(\bar{X}_1 = 60, \bar{X}_2 = 20, \bar{X}_3 = 10\), \(\sigma_1 = 10, \sigma_2 = 4, \sigma_3 = 3\), तथा \(r_{12} = 0.8, r_{13} = 0.6, r_{23} = 0.5\)। \(X_1\) का \(X_2\) एवं \(X_3\) पर multiple regression plane समीकरण ज्ञात कीजिए।</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>1) Partial regression coefficient \(b_{12.3}\):</p>
+                        \[ b_{12.3} = \left(\frac{10}{4}\right) \left[\frac{0.8 - (0.6)(0.5)}{1 - (0.5)^2}\right] = 2.5 \left[\frac{0.5}{0.75}\right] = 1.67 \]
+                        <p>2) Partial regression coefficient \(b_{13.2}\):</p>
+                        \[ b_{13.2} = \left(\frac{10}{3}\right) \left[\frac{0.6 - (0.8)(0.5)}{1 - (0.5)^2}\right] = 3.33 \left[\frac{0.2}{0.75}\right] = 0.89 \]
+                        <p>3) Regression Plane Equation:</p>
+                        \[ (X_1 - 60) = 1.67 (X_2 - 20) + 0.89 (X_3 - 10) \implies \mathbf{X_1 = 17.7 + 1.67 X_2 + 0.89 X_3} \]
                     </div>
 
                 </div>
