@@ -2000,101 +2000,186 @@ svg.book-fig, .figure-box svg, canvas {
                         <div class="symbol-list">
                             <strong>Symbol Guide:</strong>
                             <ul>
-                                <li>\(X_1\) = Dependent variable being predicted (e.g., Crop Yield).</li>
-                                <li>\(X_2, X_3\) = Independent variables (e.g., Fertilizer Dose, Soil Moisture).</li>
-                                <li>\(\bar{X}_1, \bar{X}_2, \bar{X}_3\) = Arithmetic sample means of the three variables.</li>
-                                <li>\(b_{12.3}\) = <strong>Partial Regression Coefficient of \(X_1\) on \(X_2\) holding \(X_3\) constant</strong>. Represents the change in \(X_1\) per unit change in \(X_2\) when \(X_3\) is fixed.</li>
-                                <li>\(b_{13.2}\) = <strong>Partial Regression Coefficient of \(X_1\) on \(X_3\) holding \(X_2\) constant</strong>. Represents the change in \(X_1\) per unit change in \(X_3\) when \(X_2\) is fixed.</li>
-                            </ul>
+                                         <!-- EXAMPLE 1 -->
+                    <div class="example">
+                        <h4>Solved Example 1: Calculation of Bivariate Regression Lines</h4>
+                        <p><strong>Problem:</strong> Calculate the two lines of regression for the following data:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                            <tr><th>Y</th><td>2</td><td>5</td><td>3</td><td>8</td><td>7</td></tr>
+                        </table>
+                        <p>Predict \(Y\) when \(X = 6\), and predict \(X\) when \(Y = 10\).</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Calculate Sample Means</div>
+                            \[ N = 5 \]
+                            \[ \sum X = 15 \implies \bar{X} = \frac{15}{5} = \mathbf{3} \]
+                            \[ \sum Y = 25 \implies \bar{Y} = \frac{25}{5} = \mathbf{5} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Summary Totals</div>
+                            \[ \sum X^2 = 55 \]
+                            \[ \sum Y^2 = 151 \]
+                            \[ \sum XY = 89 \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Regression Coefficient b_yx & Line Y on X</div>
+                            \[ b_{yx} = \frac{5(89) - (15)(25)}{5(55) - (15)^2} = \frac{445 - 375}{275 - 225} = \frac{70}{50} = \mathbf{1.4} \]
+                            \[ (Y - 5) = 1.4 (X - 3) \]
+                            \[ \mathbf{Y = 1.4 X + 0.8} \]
+                            \[ \text{For } X = 6: Y = 1.4(6) + 0.8 = \mathbf{9.2} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Regression Coefficient b_xy & Line X on Y</div>
+                            \[ b_{xy} = \frac{5(89) - (15)(25)}{5(151) - (25)^2} = \frac{70}{755 - 625} = \frac{70}{130} = \mathbf{0.538} \]
+                            \[ (X - 3) = 0.538 (Y - 5) \]
+                            \[ \mathbf{X = 0.538 Y + 0.31} \]
+                            \[ \text{For } Y = 10: X = 0.538(10) + 0.31 = \mathbf{5.69} \]
                         </div>
                     </div>
 
-                    <div class="formula-box">
-                        <h4>Formulas for Partial Regression Coefficients</h4>
-                        \[ b_{12.3} = \left( \frac{\sigma_1}{\sigma_2} \right) \left( \frac{r_{12} - r_{13} r_{23}}{1 - r_{23}^2} \right) \]
-                        \[ b_{13.2} = \left( \frac{\sigma_1}{\sigma_3} \right) \left( \frac{r_{13} - r_{12} r_{23}}{1 - r_{23}^2} \right) \]
-                        <div class="symbol-list">
-                            <strong>Symbol Guide:</strong>
-                            <ul>
-                                <li>\(\sigma_1, \sigma_2, \sigma_3\) = Standard deviations of variables \(X_1, X_2, X_3\).</li>
-                                <li>\(r_{12}, r_{13}, r_{23}\) = Zero-order simple correlation coefficients between variable pairs.</li>
-                            </ul>
+                    <!-- EXAMPLE 2 -->
+                    <div class="example">
+                        <h4>Solved Example 2: Finding Means and Correlation from Given Regression Lines</h4>
+                        <p><strong>Problem:</strong> Given two regression lines: \(8X - 10Y + 66 = 0\) and \(40X - 18Y - 214 = 0\). Find: 1) Means \(\bar{X}\) and \(\bar{Y}\), 2) Correlation coefficient \(r\).</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Intersection at Means (X̄, Ȳ)</div>
+                            \[ 8\bar{X} - 10\bar{Y} = -66 \quad \text{--- Eq (1)} \]
+                            \[ 40\bar{X} - 18\bar{Y} = 214 \quad \text{--- Eq (2)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Solve Means Simultaneously</div>
+                            \[ \text{Multiply Eq (1) by 5: } 40\bar{X} - 50\bar{Y} = -330 \]
+                            \[ \text{Subtract from Eq (2): } 32\bar{Y} = 544 \]
+                            \[ \bar{Y} = \mathbf{17} \]
+                            \[ 8\bar{X} = 10(17) - 66 = 104 \]
+                            \[ \bar{X} = \mathbf{13} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Identify Regression Slopes b_yx & b_xy</div>
+                            \[ \text{Line (1) as Y on X: } Y = 0.8 X + 6.6 \implies b_{yx} = \mathbf{0.8} \]
+                            \[ \text{Line (2) as X on Y: } X = 0.45 Y + 5.35 \implies b_{xy} = \mathbf{0.45} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 4: Compute Correlation Coefficient r</div>
+                            \[ r = +\sqrt{b_{yx} \cdot b_{xy}} = \sqrt{0.8 \times 0.45} = \sqrt{0.36} = \mathbf{+0.6} \]
                         </div>
                     </div>
 
-                    <div class="theorem">
-                        <h4>2. Multiple Correlation Coefficient (\(R_{1.23}\))</h4>
-                        <p>Measures the overall linear correlation between observed values of \(X_1\) and its combined joint estimate based on \(X_2\) and \(X_3\):</p>
-                        \[ R_{1.23}^2 = \frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2}, \quad (0 \le R_{1.23} \le 1) \]
-                    </div>
-
-                    <div class="theorem">
-                        <h4>3. Partial Correlation Coefficient (\(r_{12.3}\))</h4>
-                        <p>Measures the net linear correlation between \(X_1\) and \(X_2\) after eliminating or holding constant the linear influence of variable \(X_3\):</p>
-                        \[ r_{12.3} = \frac{r_{12} - r_{13} r_{23}}{\sqrt{(1 - r_{13}^2)(1 - r_{23}^2)}}, \quad (-1 \le r_{12.3} \le +1) \]
-                    </div>
-
-                    <!-- SECTION 3.7 NUMERICAL EXAMPLES -->
+                    <!-- EXAMPLE 3 -->
                     <div class="example">
-                        <h4>Example 3.7.1 (Trivariate Regression Plane):</h4>
-                        <p><strong>Problem:</strong> In a trial predicting Crop Yield (\(X_1\)) from Fertilizer (\(X_2\)) and Irrigation (\(X_3\)), given: \(\bar{X}_1 = 50, \bar{X}_2 = 15, \bar{X}_3 = 8\), \(\sigma_1 = 8, \sigma_2 = 3, \sigma_3 = 2\), and correlation coefficients \(r_{12} = 0.75, r_{13} = 0.60, r_{23} = 0.40\). Calculate partial regression coefficients \(b_{12.3}\) and \(b_{13.2}\) and write the multiple regression plane equation.</p>
-                        <p><strong>Solution:</strong></p>
-                        <p>1) Partial regression coefficient \(b_{12.3}\):</p>
-                        \[ b_{12.3} = \left(\frac{8}{3}\right) \left[\frac{0.75 - (0.60)(0.40)}{1 - (0.40)^2}\right] = 2.667 \left[\frac{0.75 - 0.24}{1 - 0.16}\right] = 2.667 \left[\frac{0.51}{0.84}\right] = \mathbf{1.619} \]
-                        <p>2) Partial regression coefficient \(b_{13.2}\):</p>
-                        \[ b_{13.2} = \left(\frac{8}{2}\right) \left[\frac{0.60 - (0.75)(0.40)}{1 - (0.40)^2}\right] = 4 \left[\frac{0.60 - 0.30}{0.84}\right] = 4 \left[\frac{0.30}{0.84}\right] = \mathbf{1.429} \]
-                        <p>3) Regression plane equation:</p>
-                        \[ (X_1 - 50) = 1.619 (X_2 - 15) + 1.429 (X_3 - 8) \implies \mathbf{X_1 = 14.28 + 1.619 X_2 + 1.429 X_3} \]
+                        <h4>Solved Example 3: Multiple Regression Plane for Agricultural Yield</h4>
+                        <p><strong>Problem:</strong> For an agricultural experiment with Crop Yield (\(X_1\)), Fertilizer (\(X_2\)), and Rainfall (\(X_3\)), we have: \(\bar{X}_1 = 60, \bar{X}_2 = 20, \bar{X}_3 = 10\), \(\sigma_1 = 10, \sigma_2 = 4, \sigma_3 = 3\), and \(r_{12} = 0.8, r_{13} = 0.6, r_{23} = 0.5\). Find the multiple regression plane equation of \(X_1\) on \(X_2\) and \(X_3\).</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Compute Partial Regression Coefficient b_12.3</div>
+                            \[ b_{12.3} = \left(\frac{10}{4}\right) \left[\frac{0.8 - (0.6)(0.5)}{1 - (0.5)^2}\right] = 2.5 \left[\frac{0.5}{0.75}\right] = \mathbf{1.67} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Compute Partial Regression Coefficient b_13.2</div>
+                            \[ b_{13.2} = \left(\frac{10}{3}\right) \left[\frac{0.6 - (0.8)(0.5)}{1 - (0.5)^2}\right] = 3.33 \left[\frac{0.2}{0.75}\right] = \mathbf{0.89} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Formulate Regression Plane Equation</div>
+                            \[ (X_1 - 60) = 1.67 (X_2 - 20) + 0.89 (X_3 - 10) \]
+                            \[ \mathbf{X_1 = 17.7 + 1.67 X_2 + 0.89 X_3} \]
+                        </div>
                     </div>
 
-                    <div class="example">
-                        <h4>Example 3.7.2 (Partial & Multiple Correlation):</h4>
-                        <p><strong>Problem:</strong> Using zero-order correlations \(r_{12} = 0.75, r_{13} = 0.60, r_{23} = 0.40\), calculate: 1) Partial Correlation Coefficient \(r_{12.3}\), 2) Multiple Correlation Coefficient \(R_{1.23}\).</p>
-                        <p><strong>Solution:</strong></p>
-                        <p>1) Partial Correlation Coefficient \(r_{12.3}\):</p>
-                        \[ r_{12.3} = \frac{0.75 - (0.60)(0.40)}{\sqrt{[1 - (0.60)^2][1 - (0.40)^2]}} = \frac{0.51}{\sqrt{0.64 \times 0.84}} = \frac{0.51}{\sqrt{0.5376}} = \frac{0.51}{0.7332} = \mathbf{0.696} \]
-                        <p>2) Multiple Correlation Coefficient \(R_{1.23}\):</p>
-                        \[ R_{1.23}^2 = \frac{(0.75)^2 + (0.60)^2 - 2(0.75)(0.60)(0.40)}{1 - (0.40)^2} = \frac{0.5625 + 0.36 - 0.36}{0.84} = \frac{0.5625}{0.84} = 0.6696 \]
-                        \[ R_{1.23} = \sqrt{0.6696} = \mathbf{0.818} \]
-                    </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2><span class="section-num">3.7</span> Multiple Regression एवं Partial Correlation (Trivariate Regression)</h2>
-                    <p class="intro-text">कृषि, जैविक, तथा आर्थिक अनुसंधानों में, एक अकेला dependent variable \(X_1\) एक साथ दो या अधिक independent variables \(X_2, X_3\) द्वारा प्रभावित होता है। उदाहरण के लिए, Crop Yield (\(X_1\)) Fertilizer Dose (\(X_2\)) तथा Rainfall (\(X_3\)) पर निर्भर करता है। Simple linear regression (2 variables) ऐसे जटिल तंत्रों के लिए अपर्याप्त है।</p>
+                    <h2><span class="section-num">3.8</span> हल किए गए उदाहरण (Solved Examples)</h2>
 
-                    <div class="theorem">
-                        <h4>1. Multiple Regression Plane समीकरण एवं Symbol Guide</h4>
-                        <p>\(X_1\) का \(X_2\) तथा \(X_3\) पर linear regression समीकरण 3-dimensional space में एक plane को दर्शाता है:</p>
-                        \[ (X_1 - \bar{X}_1) = b_{12.3} (X_2 - \bar{X}_2) + b_{13.2} (X_3 - \bar{X}_3) \]
-                        <div class="symbol-list">
-                            <strong>Symbol Guide:</strong>
-                            <ul>
-                                <li>\(X_1\) = Predicted किया जाने वाला Dependent variable (जैसे Crop Yield)।</li>
-                                <li>\(X_2, X_3\) = Independent variables (जैसे Fertilizer Dose, Soil Moisture)।</li>
-                                <li>\(\bar{X}_1, \bar{X}_2, \bar{X}_3\) = तीनों variables के arithmetic sample means।</li>
-                                <li>\(b_{12.3}\) = <strong>Partial Regression Coefficient of \(X_1\) on \(X_2\) holding \(X_3\) constant</strong>। जब \(X_3\) स्थिर हो, तब \(X_2\) में प्रति इकाई परिवर्तन पर \(X_1\) में परिवर्तन दर्शाता है।</li>
-                                <li>\(b_{13.2}\) = <strong>Partial Regression Coefficient of \(X_1\) on \(X_3\) holding \(X_2\) constant</strong>। जब \(X_2\) स्थिर हो, तब \(X_3\) में प्रति इकाई परिवर्तन पर \(X_1\) में परिवर्तन दर्शाता है।</li>
-                            </ul>
+                    <!-- EXAMPLE 1 HINGLISH REPLICA -->
+                    <div class="example">
+                        <h4>Solved Example 1: Calculation of Bivariate Regression Lines</h4>
+                        <p><strong>Problem:</strong> निम्नलिखित data के लिए दोनों regression lines ज्ञात कीजिए:</p>
+                        <table class="calculation-data">
+                            <tr><th>X</th><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+                            <tr><th>Y</th><td>2</td><td>5</td><td>3</td><td>8</td><td>7</td></tr>
+                        </table>
+                        <p>\(X = 6\) होने पर \(Y\) का पूर्वानुमान कीजिए, तथा \(Y = 10\) होने पर \(X\) का पूर्वानुमान कीजिए।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Sample Means की गणना</div>
+                            \[ N = 5 \]
+                            \[ \sum X = 15 \implies \bar{X} = \mathbf{3} \]
+                            \[ \sum Y = 25 \implies \bar{Y} = \mathbf{5} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Regression Coefficients b_yx & b_xy</div>
+                            \[ b_{yx} = \frac{5(89) - (15)(25)}{5(55) - (15)^2} = \frac{70}{50} = \mathbf{1.4} \]
+                            \[ b_{xy} = \frac{5(89) - (15)(25)}{5(151) - (25)^2} = \frac{70}{130} = \mathbf{0.538} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Regression Lines & Predictions</div>
+                            \[ Y \text{ on } X: (Y - 5) = 1.4(X - 3) \implies \mathbf{Y = 1.4 X + 0.8} \]
+                            \[ \text{For } X = 6: Y = 1.4(6) + 0.8 = \mathbf{9.2} \]
+                            \[ X \text{ on } Y: (X - 3) = 0.538(Y - 5) \implies \mathbf{X = 0.538 Y + 0.31} \]
+                            \[ \text{For } Y = 10: X = 0.538(10) + 0.31 = \mathbf{5.69} \]
                         </div>
                     </div>
 
-                    <div class="formula-box">
-                        <h4>Partial Regression Coefficients के सूत्र</h4>
-                        \[ b_{12.3} = \left( \frac{\sigma_1}{\sigma_2} \right) \left( \frac{r_{12} - r_{13} r_{23}}{1 - r_{23}^2} \right) \]
-                        \[ b_{13.2} = \left( \frac{\sigma_1}{\sigma_3} \right) \left( \frac{r_{13} - r_{12} r_{23}}{1 - r_{23}^2} \right) \]
-                        <div class="symbol-list">
-                            <strong>Symbol Guide:</strong>
-                            <ul>
-                                <li>\(\sigma_1, \sigma_2, \sigma_3\) = Variables \(X_1, X_2, X_3\) के standard deviations।</li>
-                                <li>\(r_{12}, r_{13}, r_{23}\) = Variable युग्मों के बीच zero-order simple correlation coefficients।</li>
-                            </ul>
+                    <!-- EXAMPLE 2 HINGLISH REPLICA -->
+                    <div class="example">
+                        <h4>Solved Example 2: Finding Means and Correlation from Given Regression Lines</h4>
+                        <p><strong>Problem:</strong> दो दी गई regression lines: \(8X - 10Y + 66 = 0\) तथा \(40X - 18Y - 214 = 0\)। ज्ञात कीजिए: 1) Means \(\bar{X}\) एवं \(\bar{Y}\), 2) Correlation coefficient \(r\)।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Means का प्रतिच्छेदन बिंदु</div>
+                            \[ 8\bar{X} - 10\bar{Y} = -66 \quad \text{--- Eq (1)} \]
+                            \[ 40\bar{X} - 18\bar{Y} = 214 \quad \text{--- Eq (2)} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: Means की गणना</div>
+                            \[ \bar{Y} = \mathbf{17} \]
+                            \[ \bar{X} = \mathbf{13} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 3: Slopes & Correlation r</div>
+                            \[ b_{yx} = \mathbf{0.8} \]
+                            \[ b_{xy} = \mathbf{0.45} \]
+                            \[ r = +\sqrt{0.8 \times 0.45} = \mathbf{+0.6} \]
                         </div>
                     </div>
 
-                    <div class="theorem">
-                        <h4>2. Multiple Correlation Coefficient (\(R_{1.23}\))</h4>
-                        <p>\(X_1\) के observed मानों तथा \(X_2, X_3\) के आधार पर उसके संयुक्त linear अनुमान के बीच कुल correlation मापता है:</p>
+                    <!-- EXAMPLE 3 HINGLISH REPLICA -->
+                    <div class="example">
+                        <h4>Solved Example 3: Multiple Regression Plane for Agricultural Yield</h4>
+                        <p><strong>Problem:</strong> Crop Yield (\(X_1\)), Fertilizer (\(X_2\)), तथा Rainfall (\(X_3\)) के एक कृषि प्रयोग में हमारे पास है: \(\bar{X}_1 = 60, \bar{X}_2 = 20, \bar{X}_3 = 10\), \(\sigma_1 = 10, \sigma_2 = 4, \sigma_3 = 3\), तथा \(r_{12} = 0.8, r_{13} = 0.6, r_{23} = 0.5\)। \(X_1\) का \(X_2\) एवं \(X_3\) पर multiple regression plane समीकरण ज्ञात कीजिए।</p>
+                        <p><strong>Step-by-Step Multi-Line Solution:</strong></p>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 1: Partial Regression Coefficients</div>
+                            \[ b_{12.3} = 2.5 \left[\frac{0.5}{0.75}\right] = \mathbf{1.67} \]
+                            \[ b_{13.2} = 3.33 \left[\frac{0.2}{0.75}\right] = \mathbf{0.89} \]
+                        </div>
+
+                        <div class="step-block">
+                            <div class="step-title">Step 2: अंतिम Multiple Regression Plane</div>
+                            \[ (X_1 - 60) = 1.67 (X_2 - 20) + 0.89 (X_3 - 10) \]
+                            \[ \mathbf{X_1 = 17.7 + 1.67 X_2 + 0.89 X_3} \]
+                        </div>
+                    </div>ation मापता है:</p>
                         \[ R_{1.23}^2 = \frac{r_{12}^2 + r_{13}^2 - 2 r_{12} r_{13} r_{23}}{1 - r_{23}^2}, \quad (0 \le R_{1.23} \le 1) \]
                     </div>
 
