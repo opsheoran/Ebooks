@@ -485,70 +485,99 @@
         <section class="page-section active" id="sec41">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.1 Introduction to Survival Analysis</h2>
-                    <blockquote>
-                        Suppose a doctor treats ten cancer patients with a new drug. After six months, some patients die, some are still alive, and one patient shifts to another city and cannot be traced. If we only count the patients who died, we ignore those who are still alive. We also cannot say that the missing patient died. We only know that he survived until he left. This kind of data, where we do not know the exact time of the event for everyone, needs special methods. Survival analysis is the branch of statistics that deals with such data. It is used not only for death but for any event that happens over time, such as recovery, relapse, machine failure, or getting a job.
-                    </blockquote>
 
-                    <!-- FIGURE 4.1 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 4.1: Time-to-Event and Censoring Mechanics</div>
-                        <svg class="book-fig" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Time Axis -->
-                            <line x1="60" y1="170" x2="560" y2="170" stroke="#1B2A4A" stroke-width="2"/>
-                            <text x="310" y="195" font-family="DM Sans" font-size="11" fill="#1B2A4A" text-anchor="middle" font-weight="bold">Follow-Up Duration (Months / Years)</text>
+<h2>4.1 Introduction to Survival Analysis</h2>
+<blockquote>
+    Suppose a doctor treats ten cancer patients with a new drug. After six months, some patients die, some are still alive, and one patient shifts to another city and cannot be traced. If we only count the patients who died, we ignore those who are still alive. We also cannot say that the missing patient died. We only know that he survived until he left. This kind of data, where we do not know the exact time of the event for everyone, needs special methods. Survival analysis is the branch of statistics that deals with such data. It is used not only for death but for any event that happens over time, such as recovery, relapse, machine failure, or getting a job.
+</blockquote>
 
-                            <!-- Patient 1: Complete event -->
-                            <text x="40" y="40" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Patient A</text>
-                            <line x1="100" y1="36" x2="350" y2="36" stroke="#9B2335" stroke-width="3"/>
-                            <circle cx="100" cy="36" r="5" fill="#1B2A4A"/>
-                            <circle cx="350" cy="36" r="6" fill="#9B2335"/>
-                            <text x="365" y="40" font-family="DM Sans" font-size="9" fill="#9B2335" font-weight="bold">Event (Death at t = 12m)</text>
+<!-- FIGURE 4.1 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.1: Time-to-Event and Censoring Mechanics</div>
+    <svg class="book-fig" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Time Axis -->
+        <line x1="60" y1="170" x2="560" y2="170" stroke="#1B2A4A" stroke-width="2"/>
+        <text x="310" y="195" font-family="DM Sans" font-size="11" fill="#1B2A4A" text-anchor="middle" font-weight="bold">Follow-Up Duration (Months / Years)</text>
 
-                            <!-- Patient 2: Right Censored (End of Study) -->
-                            <text x="40" y="80" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Patient B</text>
-                            <line x1="100" y1="76" x2="500" y2="76" stroke="#1D6FA4" stroke-width="3"/>
-                            <circle cx="100" cy="76" r="5" fill="#1B2A4A"/>
-                            <rect x="495" y="71" width="10" height="10" fill="#1D6FA4"/>
-                            <text x="515" y="80" font-family="DM Sans" font-size="9" fill="#1D6FA4" font-weight="bold">Right-Censored (Study End t = 24m+)</text>
+        <!-- Patient A: Complete event -->
+        <text x="40" y="40" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Patient A</text>
+        <line x1="100" y1="36" x2="350" y2="36" stroke="#9B2335" stroke-width="3"/>
+        <circle cx="100" cy="36" r="5" fill="#1B2A4A"/>
+        <circle cx="350" cy="36" r="6" fill="#9B2335"/>
+        <text x="365" y="40" font-family="DM Sans" font-size="9" fill="#9B2335" font-weight="bold">Event (Death at t = 12m)</text>
 
-                            <!-- Patient 3: Right Censored (Lost to Follow-up) -->
-                            <text x="40" y="120" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Patient C</text>
-                            <line x1="100" y1="116" x2="280" y2="116" stroke="#C8922A" stroke-width="3" stroke-dasharray="6 3"/>
-                            <circle cx="100" cy="116" r="5" fill="#1B2A4A"/>
-                            <polygon points="280,111 290,116 280,121" fill="#C8922A"/>
-                            <text x="300" y="120" font-family="DM Sans" font-size="9" fill="#C8922A" font-weight="bold">Lost to Follow-up (t = 8.5m+)</text>
+        <!-- Patient B: Right Censored (End of Study) -->
+        <text x="40" y="80" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Patient B</text>
+        <line x1="100" y1="76" x2="500" y2="76" stroke="#1D6FA4" stroke-width="3"/>
+        <circle cx="100" cy="76" r="5" fill="#1B2A4A"/>
+        <rect x="495" y="71" width="10" height="10" fill="#1D6FA4"/>
+        <text x="515" y="80" font-family="DM Sans" font-size="9" fill="#1D6FA4" font-weight="bold">Right-Censored (Study End t = 24m+)</text>
 
-                            <!-- Study End Line -->
-                            <line x1="500" y1="20" x2="500" y2="170" stroke="#6B6B70" stroke-width="1.5" stroke-dasharray="4 4"/>
-                            <text x="500" y="15" font-family="DM Sans" font-size="9" fill="#6B6B70" text-anchor="middle" font-weight="bold">Study End</text>
-                        </svg>
-                        <div class="figure-caption">Comparison of complete time-to-event failure vs administrative right censoring and drop-out censoring.</div>
-                    </div>
+        <!-- Patient C: Right Censored (Lost to Follow-up) -->
+        <text x="40" y="120" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Patient C</text>
+        <line x1="100" y1="116" x2="280" y2="116" stroke="#C8922A" stroke-width="3" stroke-dasharray="6 3"/>
+        <circle cx="100" cy="116" r="5" fill="#1B2A4A"/>
+        <polygon points="280,111 290,116 280,121" fill="#C8922A"/>
+        <text x="300" y="120" font-family="DM Sans" font-size="9" fill="#C8922A" font-weight="bold">Lost to Follow-up (t = 8.5m+)</text>
 
-                    <div class="definition">
-                        <div class="card-title">What is Survival Analysis?</div>
-                        <strong>Survival analysis</strong> encompasses statistical methodologies for analyzing time-to-event data where the outcome of interest is the time duration $T$ until a specified event (e.g. death, disease recurrence, mechanical breakdown) occurs, accounting for incomplete follow-up (censoring).
-                    </div>
+        <!-- Study End Line -->
+        <line x1="500" y1="20" x2="500" y2="170" stroke="#6B6B70" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <text x="500" y="15" font-family="DM Sans" font-size="9" fill="#6B6B70" text-anchor="middle" font-weight="bold">Study End</text>
+    </svg>
+    <div class="figure-caption">Comparison of complete time-to-event failure vs administrative right censoring and drop-out censoring.</div>
+</div>
 
-                    <h3>Types of Censoring</h3>
-                    <ul>
-                        <li><strong>Right Censoring:</strong> The true event time is strictly greater than the observed follow-up time ($T > t$). Occurs due to study termination or patient withdrawal.</li>
-                        <li><strong>Left Censoring:</strong> The event is known to have occurred prior to a specified observation time ($T < t$), but the exact onset date is unknown.</li>
-                        <li><strong>Interval Censoring:</strong> The event is known to occur within a specific time interval $(t_a, t_b]$, common in periodic screening examinations.</li>
-                    </ul>
-                </div>
+<div class="definition">
+    <div class="card-title">What is Survival Analysis?</div>
+    <strong>Survival analysis</strong> encompasses statistical methodologies for analyzing time-to-event data where the outcome of interest is the time duration $T$ until a specified event (e.g. death, disease recurrence, mechanical breakdown) occurs, accounting for incomplete follow-up (censoring).
+</div>
+
+<h3>Why Standard Statistical Methods Fail</h3>
+<p>Ordinary statistical techniques (such as linear regression or standard ANOVA) cannot be directly applied to time-to-event data due to three major characteristics:</p>
+<ul>
+    <li><strong>Censoring:</strong> Unobserved exact event times for participants who do not experience the event during follow-up.</li>
+    <li><strong>Skewness:</strong> Survival times $T$ are non-negative and typically positive-skewed, violating normality assumptions.</li>
+    <li><strong>Time-Varying Risk:</strong> Risk of event occurrence varies continuously over follow-up duration.</li>
+</ul>
+
+<h3>Types of Censoring</h3>
+<ul>
+    <li><strong>Right Censoring:</strong> The true event time is strictly greater than the observed follow-up time ($T > t$). Occurs due to study termination or patient withdrawal.</li>
+    <li><strong>Left Censoring:</strong> The event is known to have occurred prior to a specified observation time ($T < t$), but the exact onset date is unknown.</li>
+    <li><strong>Interval Censoring:</strong> The event is known to occur within a specific time interval $(t_a, t_b]$, common in periodic screening examinations.</li>
+</ul>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.1.1: Follow-Up &amp; Censoring Status Table</div>
+    <p><strong>Problem:</strong> Five patients with stage-III colon cancer are followed after surgery. Patient 1 dies at 14 months; Patient 2 drops out at 8 months; Patient 3 dies at 22 months; Patient 4 is alive at study completion at 24 months; Patient 5 dies at 5 months. Construct the survival data matrix with time $t_i$ and event indicator $\delta_i$ (where $\delta_i = 1$ for event, $\delta_i = 0$ for censored).</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <table>
+        <thead>
+            <tr><th>Patient ID</th><th>Follow-up Duration ($t_i$ months)</th><th>Event Status</th><th>Censoring Indicator ($\delta_i$)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Patient 1</td><td>14</td><td>Died (Uncensored)</td><td>1</td></tr>
+            <tr><td>Patient 2</td><td>8</td><td>Lost to Follow-up</td><td>0</td></tr>
+            <tr><td>Patient 3</td><td>22</td><td>Died (Uncensored)</td><td>1</td></tr>
+            <tr><td>Patient 4</td><td>24</td><td>Alive at Study End</td><td>0</td></tr>
+            <tr><td>Patient 5</td><td>5</td><td>Died (Uncensored)</td><td>1</td></tr>
+        </tbody>
+    </table>
+    <p>Total subjects $n = 5$, Observed events $D = \sum \delta_i = 3$, Total time at risk $TTT = 14 + 8 + 22 + 24 + 5 = 73 \text{ person-months}$.</p>
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
 <h2>4.1 सर्वाइवल एनालिसिस का परिचय (Introduction to Survival Analysis)</h2>
 <blockquote>
-मान लीजिए एक डॉक्टर दस कैंसर रोगियों का इलाज एक नई दवा से करता है। छह महीने बाद, कुछ मरीज मर जाते हैं, कुछ अभी भी जीवित हैं, और एक मरीज दूसरे शहर चला जाता है जिसे ट्रैक नहीं किया जा सकता। यदि हम केवल मरने वाले रोगियों की गिनती करते हैं, तो हम उन लोगों की उपेक्षा करते हैं जो अभी भी जीवित हैं। इस प्रकार के डेटा के लिए जहाँ हर किसी के लिए घटना का सटीक समय नहीं मालूम होता, विशेष तरीकों की आवश्यकता होती है। सर्वाइवल एनालिसिस (survival analysis) सांख्यिकी की वह शाखा है जो ऐसे डेटा से निपटती है।
+    मान लीजिए एक डॉक्टर दस कैंसर रोगियों का इलाज एक नई दवा से करता है। छह महीने बाद, कुछ मरीज मर जाते हैं, कुछ अभी भी जीवित हैं, और एक मरीज दूसरे शहर चला जाता है जिसे ट्रैक नहीं किया जा सकता। यदि हम केवल मरने वाले रोगियों की गिनती करते हैं, तो हम उन लोगों की उपेक्षा करते हैं जो अभी भी जीवित हैं। इस प्रकार के डेटा के लिए जहाँ हर किसी के लिए घटना का सटीक समय नहीं मालूम होता, विशेष तरीकों की आवश्यकता होती है। सर्वाइवल एनालिसिस (survival analysis) सांख्यिकी की वह शाखा है जो ऐसे डेटा से निपटती है।
 </blockquote>
 
 <div class="definition">
     <div class="card-title">Survival Analysis की परिभाषा</div>
-    <strong>Survival analysis</strong> सांख्यिकीय विधियों का एक समूह है जिसका उपयोग किसी रुचि की घटना (event) के घटित होने तक के समय का अध्ययन करने के लिए किया जाता है।
+    <strong>Survival analysis</strong> सांख्यिकीय विधियों का एक समूह है जिसका उपयोग किसी रुचि की घटना (event) के घटित होने तक के समय ($T$) का अध्ययन करने के लिए किया जाता है।
 </div>
 
 <h3>Censoring के प्रकार (Types of Censoring)</h3>
@@ -558,7 +587,7 @@
     <li><strong>Interval Censoring (अंतराल सेंसरिंग):</strong> तब होता है जब घटना दो समय बिंदुओं के बीच घटित होती है ($(t_a, t_b]$)।</li>
 </ul>
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -566,47 +595,58 @@
         <section class="page-section" id="sec42">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.2 Basic Survival Functions</h2>
-                    <p>Survival data are characterized by three fundamental, mathematically linked functions:</p>
 
-                    <div class="note">
-                        <div class="card-title">1. Survival Function $S(t)$</div>
-                        The probability that a subject survives beyond time $t$:
-                        $$ S(t) = P(T > t) = 1 - F(t) $$
-                        Properties: $S(0) = 1$, non-increasing function, $\lim_{t 	o \infty} S(t) = 0$.
-                    </div>
+<h2>4.2 Basic Survival Functions</h2>
+<p>Survival data are characterized by three fundamental, mathematically linked functions:</p>
 
-                    <div class="note">
-                        <div class="card-title">2. Hazard Function $h(t)$ (Force of Mortality)</div>
-                        The instantaneous rate of event occurrence at time $t$, given survival up to time $t$:
-                        $$ h(t) = \lim_{\Delta t 	o 0} rac{P(t \le T < t + \Delta t \mid T \ge t)}{\Delta t} = rac{f(t)}{S(t)} = -rac{d}{dt}\ln S(t) $$
-                    </div>
+<div class="note">
+    <div class="card-title">1. Survival Function $S(t)$</div>
+    The probability that a subject survives beyond time $t$:
+    $$ S(t) = P(T > t) = 1 - F(t) $$
+    Properties: $S(0) = 1$, non-increasing function, $\lim_{t \to \infty} S(t) = 0$.
+</div>
 
-                    <div class="note">
-                        <div class="card-title">3. Cumulative Hazard Function $H(t)$</div>
-                        The integrated risk accumulated up to time $t$:
-                        $$ H(t) = \int_0^t h(u)\,du = -\ln S(t) \implies S(t) = \exp[-H(t)] $$
-                    </div>
+<div class="note">
+    <div class="card-title">2. Hazard Function $h(t)$ (Force of Mortality)</div>
+    The instantaneous rate of event occurrence at time $t$, given survival up to time $t$:
+    $$ h(t) = \lim_{\Delta t \to 0} \frac{P(t \le T < t + \Delta t \mid T \ge t)}{\Delta t} = \frac{f(t)}{S(t)} = -\frac{d}{dt}\ln S(t) $$
+</div>
 
-                    <!-- FIGURE 4.2 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 4.2: Survival Function S(t) vs Cumulative Hazard H(t)</div>
-                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Axes -->
-                            <line x1="40" y1="150" x2="500" y2="150" stroke="#1B2A4A" stroke-width="2"/>
-                            <line x1="40" y1="20" x2="40" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+<div class="note">
+    <div class="card-title">3. Cumulative Hazard Function $H(t)$</div>
+    The integrated risk accumulated up to time $t$:
+    $$ H(t) = \int_0^t h(u)\,du = -\ln S(t) \implies S(t) = \exp[-H(t)] $$
+</div>
 
-                            <!-- S(t) Curve (Decreasing from 1.0 to 0.1) -->
-                            <path d="M 40 30 Q 150 40 250 90 T 500 145" stroke="#3D6B5A" stroke-width="3" fill="none"/>
-                            <text x="260" y="80" font-family="DM Sans" font-size="11" fill="#3D6B5A" font-weight="bold">S(t) Survival Curve</text>
+<!-- FIGURE 4.2 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.2: Survival Function S(t) vs Cumulative Hazard H(t)</div>
+    <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="150" x2="500" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+        <line x1="40" y1="20" x2="40" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+        <path d="M 40 30 Q 150 40 250 90 T 500 145" stroke="#3D6B5A" stroke-width="3" fill="none"/>
+        <text x="260" y="80" font-family="DM Sans" font-size="11" fill="#3D6B5A" font-weight="bold">S(t) Survival Curve</text>
+        <path d="M 40 150 Q 180 130 300 80 T 500 25" stroke="#9B2335" stroke-width="3" stroke-dasharray="6 3" fill="none"/>
+        <text x="310" y="65" font-family="DM Sans" font-size="11" fill="#9B2335" font-weight="bold">H(t) Cumulative Hazard</text>
+    </svg>
+    <div class="figure-caption">Inverse relation between monotonically decreasing survival probability S(t) and monotonically increasing cumulative hazard H(t).</div>
+</div>
 
-                            <!-- H(t) Curve (Increasing from 0) -->
-                            <path d="M 40 150 Q 180 130 300 80 T 500 25" stroke="#9B2335" stroke-width="3" stroke-dasharray="6 3" fill="none"/>
-                            <text x="310" y="65" font-family="DM Sans" font-size="11" fill="#9B2335" font-weight="bold">H(t) Cumulative Hazard</text>
-                        </svg>
-                        <div class="figure-caption">Inverse relation between monotonically decreasing survival probability S(t) and monotonically increasing cumulative hazard H(t).</div>
-                    </div>
-                </div>
+<div class="example">
+    <div class="card-title">Numerical Example 4.2.1: Mathematical Derivation of Survival Functions</div>
+    <p><strong>Problem:</strong> Suppose survival times follow an exponential distribution with constant hazard rate $h(t) = \lambda = 0.05 \text{ year}^{-1}$. Calculate: (a) Survival probability at 5 years $S(5)$, (b) Cumulative probability of death $F(5)$, (c) Probability density $f(5)$, (d) Cumulative hazard $H(5)$, and (e) Median survival time $t_{0.50}$.</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <p><strong>Step 1: Calculate Cumulative Hazard $H(5)$ and Survival $S(5)$:</strong></p>
+    $$ H(5) = \int_0^5 0.05 \, du = 0.05 \times 5 = 0.25 $$
+    $$ S(5) = \exp[-H(5)] = e^{-0.25} = 0.7788 \text{ (77.88\% 5-year survival rate)} $$
+    <p><strong>Step 2: Calculate CDF $F(5)$ and Density $f(5)$:</strong></p>
+    $$ F(5) = 1 - S(5) = 1 - 0.7788 = 0.2212 \text{ (22.12\% cumulative mortality)} $$
+    $$ f(5) = h(5) \times S(5) = 0.05 \times 0.7788 = 0.03894 $$
+    <p><strong>Step 3: Calculate Median Survival Time $t_{0.50}$:</strong></p>
+    $$ S(t_{0.50}) = 0.50 \implies e^{-\lambda t_{0.50}} = 0.50 \implies t_{0.50} = \frac{\ln 2}{\lambda} = \frac{0.69315}{0.05} = 13.86 \text{ years.} $$
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
@@ -621,7 +661,7 @@
 <div class="note">
     <div class="card-title">2. Hazard Function $h(t)$ (विफलता दर / जोखिम)</div>
     समय $t$ पर घटना घटित होने का तात्कालिक जोखिम (instantaneous risk):
-    $$ h(t) = \frac{f(t)}{S(t)} = -\frac{d}{dt}\ln S(t) $$
+    $$ h(t) = \lim_{\Delta t \to 0} \frac{P(t \le T < t + \Delta t \mid T \ge t)}{\Delta t} = \frac{f(t)}{S(t)} = -\frac{d}{dt}\ln S(t) $$
 </div>
 
 <div class="note">
@@ -630,7 +670,7 @@
     $$ H(t) = \int_0^t h(u)\,du = -\ln S(t) \implies S(t) = \exp[-H(t)] $$
 </div>
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -638,19 +678,57 @@
         <section class="page-section" id="sec43">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.3 Life Table or Actuarial Estimator</h2>
-                    <p>The actuarial life table method partitions follow-up into fixed time intervals $[t_{i-1}, t_i)$. For an interval with $n_i$ at risk, $d_i$ deaths, and $c_i$ censored cases, the effective sample size at risk is adjusted for half-interval censoring:</p>
-                    $$ n_i' = n_i - rac{c_i}{2} $$
-                    $$ \hat{p}_i = 1 - rac{d_i}{n_i'}, \quad \hat{S}(t_i) = \prod_{j=1}^i \hat{p}_j $$
-                </div>
+
+<h2>4.3 Life Table or Actuarial Estimator</h2>
+<p>The actuarial life table method partitions follow-up into fixed time intervals $[t_{i-1}, t_i)$. For an interval with $n_i$ at risk at start, $d_i$ deaths, and $c_i$ censored cases during interval, Cutler-Ederer adjustment calculates the effective sample size at risk:</p>
+$$ n_i' = n_i - \frac{c_i}{2} $$
+$$ \hat{p}_i = 1 - \frac{d_i}{n_i'}, \quad \hat{S}(t_i) = \prod_{j=1}^i \hat{p}_j $$
+
+<!-- FIGURE 4.3 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.3: Actuarial Life Table Survival Progression</div>
+    <svg class="book-fig" viewBox="0 0 540 160" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="30" width="100" height="100" rx="6" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+        <text x="70" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Interval 0-1y</text>
+        <text x="70" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Ŝ(1) = 0.897</text>
+
+        <rect x="150" y="30" width="100" height="100" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+        <text x="200" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Interval 1-2y</text>
+        <text x="200" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Ŝ(2) = 0.811</text>
+
+        <rect x="280" y="30" width="100" height="100" rx="6" fill="#1D6FA4" stroke="#C8922A" stroke-width="2"/>
+        <text x="330" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Interval 2-3y</text>
+        <text x="330" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Ŝ(3) = 0.743</text>
+
+        <rect x="410" y="30" width="100" height="100" rx="6" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+        <text x="460" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Interval 3-4y</text>
+        <text x="460" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Ŝ(4) = 0.680</text>
+    </svg>
+    <div class="figure-caption">Step-by-step multiplication of conditional survival rates across consecutive life table intervals.</div>
+</div>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.3.1: Full Actuarial Life Table Construction</div>
+    <p><strong>Problem:</strong> Calculate the cumulative actuarial survival probabilities $\hat{S}(t)$ for a 100-patient cohort over 3 yearly intervals given: Interval 0–1y ($n_1=100, d_1=10, c_1=6$), Interval 1–2y ($n_2=84, d_2=8, c_2=4$), Interval 2–3y ($n_3=72, d_3=6, c_3=4$).</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <p><strong>Step 1: Interval 0–1 Year:</strong></p>
+    $$ n_1' = 100 - \frac{6}{2} = 97.0 \implies \hat{p}_1 = 1 - \frac{10}{97.0} = 0.8969 \implies \hat{S}(1) = 0.8969 $$
+    <p><strong>Step 2: Interval 1–2 Years:</strong></p>
+    $$ n_2' = 84 - \frac{4}{2} = 82.0 \implies \hat{p}_2 = 1 - \frac{8}{82.0} = 0.9024 \implies \hat{S}(2) = 0.8969 \times 0.9024 = 0.8094 $$
+    <p><strong>Step 3: Interval 2–3 Years:</strong></p>
+    $$ n_3' = 72 - \frac{4}{2} = 70.0 \implies \hat{p}_3 = 1 - \frac{6}{70.0} = 0.9143 \implies \hat{S}(3) = 0.8094 \times 0.9143 = 0.7400 $$
+    <p>Conclusion: Estimated 3-year actuarial survival probability is $\hat{S}(3) = 74.00\%$.</p>
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
 <h2>4.3 लाइफ टेबल या एक्ट्यूएरियल विधि (Actuarial Method)</h2>
-<p>यह विधि समय को निश्चित अंतरालों ($0-1$ वर्ष, $1-2$ वर्ष) में विभाजित करती है। सेंसर किए गए व्यक्तियों के लिए समायोजन ($n_i' = n_i - c_i/2$) किया जाता है:</p>
-$$ \hat{p}_i = 1 - \frac{d_i}{n_i'}, \quad \hat{S}(t_i) = \hat{p}_1 \times \hat{p}_2 \times \cdots \times \hat{p}_i $$
+<p>यह विधि समय को निश्चित अंतरालों में विभाजित करती है और प्रत्येक अंतराल के लिए जीवित रहने की संभावना की गणना करती है।</p>
+$$ n_i' = n_i - \frac{c_i}{2}, \quad \hat{p}_i = 1 - \frac{d_i}{n_i'}, \quad \hat{S}(t_i) = \prod_{j=1}^i \hat{p}_j $$
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -658,47 +736,73 @@ $$ \hat{p}_i = 1 - \frac{d_i}{n_i'}, \quad \hat{S}(t_i) = \hat{p}_1 \times \hat{
         <section class="page-section" id="sec44">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.4 Kaplan-Meier Non-Parametric Estimator</h2>
-                    <p>The <strong>Kaplan-Meier (Product-Limit) estimator</strong> estimates $S(t)$ at exact event times $t_1 < t_2 < \dots < t_k$ without requiring arbitrary time interval groupings:</p>
-                    $$ \hat{S}(t) = \prod_{t_i \le t} \left( 1 - rac{d_i}{n_i} 
-ight) $$
 
-                    <div class="formula-box" style="background:#F0F4F8; border-left:4px solid var(--sky); padding:16px;">
-                        <div class="card-title">Greenwood's Variance Formula for Ŝ(t)</div>
-                        $$ \widehat{	ext{Var}}[\hat{S}(t)] = [\hat{S}(t)]^2 \sum_{t_i \le t} rac{d_i}{n_i (n_i - d_i)} $$
-                        $$ 	ext{SE}[\hat{S}(t)] = \sqrt{\widehat{	ext{Var}}[\hat{S}(t)]} $$
-                    </div>
+<h2>4.4 Kaplan-Meier Non-Parametric Estimator</h2>
+<p>The <strong>Kaplan-Meier (Product-Limit) estimator</strong> estimates $S(t)$ at exact event times $t_1 < t_2 < \dots < t_k$ without requiring arbitrary time interval groupings:</p>
+$$ \hat{S}(t) = \prod_{t_i \le t} \left( 1 - \frac{d_i}{n_i} \right) $$
 
-                    <!-- FIGURE 4.3 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 4.3: Kaplan-Meier Survival Step Function</div>
-                        <svg class="book-fig" viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="40" y1="170" x2="500" y2="170" stroke="#1B2A4A" stroke-width="2"/>
-                            <line x1="40" y1="20" x2="40" y2="170" stroke="#1B2A4A" stroke-width="2"/>
+<div class="formula-box" style="background:#F0F4F8; border-left:4px solid var(--sky); padding:16px;">
+    <div class="card-title">Greenwood's Variance Formula for Ŝ(t)</div>
+    $$ \widehat{\text{Var}}[\hat{S}(t)] = [\hat{S}(t)]^2 \sum_{t_i \le t} \frac{d_i}{n_i (n_i - d_i)} $$
+    $$ \text{SE}[\hat{S}(t)] = \sqrt{\widehat{\text{Var}}[\hat{S}(t)]} $$
+</div>
 
-                            <!-- Step Function Curve -->
-                            <path d="M 40 30 L 120 30 L 120 70 L 220 70 L 220 110 L 350 110 L 350 145 L 480 145" stroke="#1B2A4A" stroke-width="3" fill="none"/>
+<!-- FIGURE 4.4 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.4: Kaplan-Meier Survival Step Function with Confidence Bands</div>
+    <svg class="book-fig" viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="170" x2="500" y2="170" stroke="#1B2A4A" stroke-width="2"/>
+        <line x1="40" y1="20" x2="40" y2="170" stroke="#1B2A4A" stroke-width="2"/>
 
-                            <!-- Censored tick marks -->
-                            <line x1="170" y1="65" x2="170" y2="75" stroke="#C8922A" stroke-width="2"/>
-                            <line x1="290" y1="105" x2="290" y2="115" stroke="#C8922A" stroke-width="2"/>
+        <!-- Upper & Lower Confidence Bands -->
+        <path d="M 40 20 L 120 20 L 120 50 L 220 50 L 220 85 L 350 85 L 350 120 L 480 120" stroke="#1D6FA4" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
+        <path d="M 40 40 L 120 40 L 120 90 L 220 90 L 220 135 L 350 135 L 350 165 L 480 165" stroke="#1D6FA4" stroke-width="1.5" stroke-dasharray="4 4" fill="none"/>
 
-                            <text x="170" y="58" font-family="DM Sans" font-size="9" fill="#C8922A" text-anchor="middle">Censored (+)</text>
-                            <text x="290" y="98" font-family="DM Sans" font-size="9" fill="#C8922A" text-anchor="middle">Censored (+)</text>
-                        </svg>
-                        <div class="figure-caption">Step-function graph of Kaplan-Meier product-limit survival curve with tick marks indicating censored observations.</div>
-                    </div>
-                </div>
+        <!-- Main Step Function Curve -->
+        <path d="M 40 30 L 120 30 L 120 70 L 220 70 L 220 110 L 350 110 L 350 145 L 480 145" stroke="#1B2A4A" stroke-width="3" fill="none"/>
+
+        <!-- Censored tick marks -->
+        <line x1="170" y1="65" x2="170" y2="75" stroke="#C8922A" stroke-width="2"/>
+        <line x1="290" y1="105" x2="290" y2="115" stroke="#C8922A" stroke-width="2"/>
+
+        <text x="170" y="58" font-family="DM Sans" font-size="9" fill="#C8922A" text-anchor="middle">Censored (+)</text>
+        <text x="290" y="98" font-family="DM Sans" font-size="9" fill="#C8922A" text-anchor="middle">Censored (+)</text>
+    </svg>
+    <div class="figure-caption">Step-function graph of Kaplan-Meier product-limit survival curve bounded by 95% confidence interval limits.</div>
+</div>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.4.1: Kaplan-Meier Survival Probability &amp; Greenwood SE</div>
+    <p><strong>Problem:</strong> Follow-up data for 8 patients: $t_i = 2, 4, 4, 6+, 8, 10, 12+, 15\text{ months}$. Calculate $\hat{S}(8)$ and Greenwood's standard error $\text{SE}[\hat{S}(8)]$.</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <table>
+        <thead>
+            <tr><th>$t_i$</th><th>$n_i$</th><th>$d_i$</th><th>$c_i$</th><th>$1 - d_i/n_i$</th><th>$\hat{S}(t_i)$</th><th>$\frac{d_i}{n_i(n_i-d_i)}$</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>2</td><td>8</td><td>1</td><td>0</td><td>$7/8 = 0.8750$</td><td>0.8750</td><td>$1/(8 \times 7) = 0.01786$</td></tr>
+            <tr><td>4</td><td>7</td><td>2</td><td>0</td><td>$5/7 = 0.7143$</td><td>0.6250</td><td>$2/(7 \times 5) = 0.05714$</td></tr>
+            <tr><td>6+</td><td>5</td><td>0</td><td>1</td><td>—</td><td>0.6250</td><td>—</td></tr>
+            <tr><td>8</td><td>4</td><td>1</td><td>0</td><td>$3/4 = 0.7500$</td><td>0.4688</td><td>$1/(4 \times 3) = 0.08333$</td></tr>
+        </tbody>
+    </table>
+    <p><strong>Greenwood Variance Calculation:</strong></p>
+    $$ \sum \frac{d_i}{n_i(n_i-d_i)} = 0.01786 + 0.05714 + 0.08333 = 0.15833 $$
+    $$ \widehat{\text{Var}}[\hat{S}(8)] = (0.4688)^2 \times 0.15833 = 0.21977 \times 0.15833 = 0.03479 $$
+    $$ \text{SE}[\hat{S}(8)] = \sqrt{0.03479} = 0.1865 \implies \hat{S}(8) = 0.4688 \pm 0.3656 \text{ (95\% CI: 0.103 to 0.834)} $$
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
 <h2>4.4 कपलान-मायर अनुमानक (Kaplan-Meier Estimator)</h2>
-<p><strong>Kaplan-Meier (Product-Limit) estimator</strong> निश्चित अंतरालों के बजाय घटनाओं के सटीक समय $t_i$ का उपयोग करता है:</p>
+<p>Kaplan-Meier (Product-Limit) estimator घटनाओं के सटीक समय का उपयोग करके $S(t)$ की गणना करता है।</p>
 $$ \hat{S}(t) = \prod_{t_i \le t} \left( 1 - \frac{d_i}{n_i} \right) $$
 <p>Greenwood का सूत्र मानक त्रुटि $\text{SE}[\hat{S}(t)]$ प्रदान करता है:</p>
 $$ \widehat{\text{Var}}[\hat{S}(t)] = [\hat{S}(t)]^2 \sum_{t_i \le t} \frac{d_i}{n_i (n_i - d_i)} $$
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -706,20 +810,56 @@ $$ \widehat{\text{Var}}[\hat{S}(t)] = [\hat{S}(t)]^2 \sum_{t_i \le t} \frac{d_i}
         <section class="page-section" id="sec45">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.5 Total Time on Test (TTT)</h2>
-                    <p>The <strong>Total Time on Test ($TTT$)</strong> represents the cumulative operational exposure time aggregated across all $n$ subjects up to failure or censoring:</p>
-                    $$ TTT = \sum_{i=1}^n t_i $$
-                    <p>Under an exponential distribution with constant hazard $\lambda$, the Maximum Likelihood Estimator is $\hat{\lambda} = rac{D}{TTT}$ where $D$ is total observed failures.</p>
-                </div>
+
+<h2>4.5 Total Time on Test (TTT)</h2>
+<p>The <strong>Total Time on Test ($TTT$)</strong> represents the cumulative operational exposure time aggregated across all $n$ subjects up to failure or censoring:</p>
+$$ TTT = \sum_{i=1}^n t_i $$
+<p>Under an exponential distribution with constant hazard $\lambda$, the Maximum Likelihood Estimator is $\hat{\lambda} = \frac{D}{TTT}$ where $D$ is total observed failures.</p>
+
+<!-- FIGURE 4.5 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.5: Total Time on Test (TTT) Transform Plots</div>
+    <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="150" x2="500" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+        <line x1="40" y1="20" x2="40" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+        <!-- Diagonal Exponential -->
+        <line x1="40" y1="150" x2="500" y2="20" stroke="#1B2A4A" stroke-width="2" stroke-dasharray="5 5"/>
+        <text x="280" y="95" font-family="DM Sans" font-size="10" fill="#1B2A4A" font-weight="bold">Exponential (Constant Hazard)</text>
+
+        <!-- Concave IFR -->
+        <path d="M 40 150 Q 200 30 500 20" stroke="#9B2335" stroke-width="3" fill="none"/>
+        <text x="210" y="45" font-family="DM Sans" font-size="10" fill="#9B2335" font-weight="bold">Concave (IFR Wear-Out)</text>
+
+        <!-- Convex DFR -->
+        <path d="M 40 150 Q 340 140 500 20" stroke="#1D6FA4" stroke-width="3" fill="none"/>
+        <text x="350" y="125" font-family="DM Sans" font-size="10" fill="#1D6FA4" font-weight="bold">Convex (DFR Infant Mortality)</text>
+    </svg>
+    <div class="figure-caption">TTT plot curvature diagnostics differentiating constant hazard from wear-out (IFR) and infant mortality (DFR).</div>
+</div>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.5.1: Total Time on Test &amp; Constant Hazard Estimation</div>
+    <p><strong>Problem:</strong> Eight industrial pumps undergo endurance testing. Observed operational times in hours: 120, 180, 240, 310+, 400, 450+, 520, 600+ (where + denotes right censoring at study termination). Calculate: (a) Total Time on Test ($TTT$), (b) MLE of constant failure rate $\hat{\lambda}$, and (c) Mean Time To Failure ($\text{MTTF}$).</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <p><strong>Step 1: Calculate Total Time on Test ($TTT$):</strong></p>
+    $$ TTT = 120 + 180 + 240 + 310 + 400 + 450 + 520 + 600 = 2,820 \text{ pump-hours.} $$
+    <p><strong>Step 2: Calculate Number of Failures ($D$) and MLE Hazard ($\hat{\lambda}$):</strong></p>
+    $$ D = 5 \text{ failures (Uncensored cases: 120, 180, 240, 400, 520)} $$
+    $$ \hat{\lambda} = \frac{D}{TTT} = \frac{5}{2,820} = 0.001773 \text{ failures per hour.} $$
+    <p><strong>Step 3: Calculate Mean Time To Failure ($\text{MTTF}$):</strong></p>
+    $$ \text{MTTF} = \frac{1}{\hat{\lambda}} = \frac{1}{0.001773} = 564.0 \text{ operational hours.} $$
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
 <h2>4.5 कुल परीक्षण समय (Total Time on Test - TTT)</h2>
-<p><strong>Total Time on Test ($TTT$)</strong> सभी व्यक्तियों द्वारा अध्ययन में बिताए गए कुल समय का योग है:</p>
+<p>TTT सभी व्यक्तियों द्वारा अध्ययन में बिताए गए कुल समय का योग है।</p>
 $$ TTT = \sum_{i=1}^n t_i $$
 <p>TTT प्लॉट डेटा के निरंतर जोखिम (constant hazard / exponential distribution) की जांच करने में मदद करता है।</p>
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -727,16 +867,67 @@ $$ TTT = \sum_{i=1}^n t_i $$
         <section class="page-section" id="sec46">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.6 Log-Rank Test and Cox Proportional Hazards Regression</h2>
-                    <h3>1. Two-Sample Log-Rank Test</h3>
-                    <p>Tests $H_0: S_1(t) = S_2(t)$ by comparing observed event counts $O_1 = \sum d_{1j}$ against expected event counts $E_1 = \sum n_{1j} rac{d_j}{n_j}$ under $H_0$:</p>
-                    $$ \chi^2_{	ext{log-rank}} = rac{(O_1 - E_1)^2}{	ext{Var}(O_1 - E_1)} \sim \chi^2_1 $$
 
-                    <h3>2. Cox Proportional Hazards Model</h3>
-                    <p>Semi-parametric model expressing hazard as a function of baseline hazard $h_0(t)$ and covariates $X$:</p>
-                    $$ h(t \mid X) = h_0(t) \exp(eta_1 X_1 + eta_2 X_2 + \dots + eta_p X_p) $$
-                    $$ 	ext{Hazard Ratio (HR)} = rac{h(t \mid X=1)}{h(t \mid X=0)} = \exp(eta) $$
-                </div>
+<h2>4.6 Log-Rank Test and Cox Proportional Hazards Regression</h2>
+<h3>1. Two-Sample Log-Rank Test</h3>
+<p>Tests $H_0: S_1(t) = S_2(t)$ by comparing observed event counts $O_1 = \sum d_{1j}$ against expected event counts $E_1 = \sum n_{1j} \frac{d_j}{n_j}$ under $H_0$:</p>
+$$ \chi^2_{\text{log-rank}} = \frac{(O_1 - E_1)^2}{\text{Var}(O_1 - E_1)} \sim \chi^2_1 $$
+
+<h3>2. Cox Proportional Hazards Model</h3>
+<p>Semi-parametric model expressing hazard as a function of baseline hazard $h_0(t)$ and covariates $X$:</p>
+$$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p) $$
+$$ \text{Hazard Ratio (HR)} = \frac{h(t \mid X=1)}{h(t \mid X=0)} = \exp(\beta) $$
+
+<!-- FIGURE 4.6 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.6: Two-Sample Log-Rank Survival Curve Comparison</div>
+    <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+        <line x1="40" y1="150" x2="500" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+        <line x1="40" y1="20" x2="40" y2="150" stroke="#1B2A4A" stroke-width="2"/>
+
+        <!-- Treatment Group (Upper Curve) -->
+        <path d="M 40 30 L 140 30 L 140 55 L 260 55 L 260 80 L 380 80 L 380 105 L 480 105" stroke="#3D6B5A" stroke-width="3" fill="none"/>
+        <text x="390" y="95" font-family="DM Sans" font-size="10" fill="#3D6B5A" font-weight="bold">Treatment Arm (Immunotherapy)</text>
+
+        <!-- Control Group (Lower Curve) -->
+        <path d="M 40 30 L 100 30 L 100 70 L 200 70 L 200 115 L 300 115 L 300 140 L 480 140" stroke="#9B2335" stroke-width="3" stroke-dasharray="6 3" fill="none"/>
+        <text x="310" y="130" font-family="DM Sans" font-size="10" fill="#9B2335" font-weight="bold">Control Arm (Standard Care)</text>
+    </svg>
+    <div class="figure-caption">Visual gap between treatment and control Kaplan-Meier survival curves tested for statistical significance via Log-Rank Test.</div>
+</div>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.6.1: Two-Sample Log-Rank Test Calculation</div>
+    <p><strong>Problem:</strong> A clinical trial compares Treatment Group A ($n_1 = 5$) vs Control Group B ($n_2 = 5$). Failure times: Group A (4, 7, 9, 11+, 15), Group B (2, 5, 6, 8, 10). Perform the Log-Rank test at $\alpha = 0.05$ ($\chi^2_{0.05, 1} = 3.841$).</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <table>
+        <thead>
+            <tr><th>Failure Time ($t_j$)</th><th>$n_{1j}$</th><th>$n_{2j}$</th><th>$n_j$</th><th>$d_j$</th><th>$E_{1j} = n_{1j} \frac{d_j}{n_j}$</th><th>$V_j = \frac{n_{1j}n_{2j}d_j(n_j-d_j)}{n_j^2(n_j-1)}$</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>2</td><td>5</td><td>5</td><td>10</td><td>1</td><td>$5 \times 1/10 = 0.50$</td><td>$(5 \times 5 \times 1 \times 9)/(100 \times 9) = 0.2500$</td></tr>
+            <tr><td>4</td><td>5</td><td>4</td><td>9</td><td>1</td><td>$5 \times 1/9 = 0.5556$</td><td>$(5 \times 4 \times 1 \times 8)/(81 \times 8) = 0.2469$</td></tr>
+            <tr><td>5</td><td>4</td><td>4</td><td>8</td><td>1</td><td>$4 \times 1/8 = 0.50$</td><td>$(4 \times 4 \times 1 \times 7)/(64 \times 7) = 0.2500$</td></tr>
+            <tr><td>6</td><td>4</td><td>3</td><td>7</td><td>1</td><td>$4 \times 1/7 = 0.5714$</td><td>$(4 \times 3 \times 1 \times 6)/(49 \times 6) = 0.2449$</td></tr>
+            <tr><td>7</td><td>4</td><td>2</td><td>6</td><td>1</td><td>$4 \times 1/6 = 0.6667$</td><td>$(4 \times 2 \times 1 \times 5)/(36 \times 5) = 0.2222$</td></tr>
+        </tbody>
+    </table>
+    <p>Total Observed Deaths in Group A ($O_1$) = 3. Total Expected Deaths ($E_1$) = $0.50 + 0.5556 + 0.50 + 0.5714 + 0.6667 = 2.7937$. Total Variance $V = 1.2140$.</p>
+    $$ \chi^2_{\text{log-rank}} = \frac{(O_1 - E_1)^2}{V} = \frac{(3 - 2.7937)^2}{1.2140} = \frac{0.04256}{1.2140} = 0.03505 $$
+    <p>Since $\chi^2_{\text{cal}} = 0.0351 < 3.841$, do not reject $H_0$. No statistically significant difference between treatment arms.</p>
+</div>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.6.2: Cox Model Hazard Ratio &amp; Confidence Interval</div>
+    <p><strong>Problem:</strong> In a clinical trial of lung cancer, the treatment variable $X$ (1 = Immunotherapy, 0 = Standard Chemotherapy) yields $\hat{\beta} = -0.5108$ with $\text{SE}(\hat{\beta}) = 0.2200$. Calculate the Hazard Ratio (HR) and its $95\%$ Confidence Interval.</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    $$ \text{HR} = \exp(\hat{\beta}) = \exp(-0.5108) = 0.6000 \text{ (40\% reduction in risk of death)} $$
+    $$ \text{Lower 95\% CI} = \exp(-0.5108 - 1.96 \times 0.2200) = \exp(-0.9420) = 0.3898 $$
+    $$ \text{Upper 95\% CI} = \exp(-0.5108 + 1.96 \times 0.2200) = \exp(-0.0796) = 0.9235 $$
+    <p>Conclusion: $\text{HR} = 0.60$ ($95\%$ CI: 0.390 to 0.924). Since the CI does not include 1.0, Immunotherapy significantly reduces mortality risk.</p>
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
@@ -745,7 +936,7 @@ $$ TTT = \sum_{i=1}^n t_i $$
 <p><strong>Cox Proportional Hazards Model:</strong> सेमी-पैरामीट्रिक मॉडल जो कोवेरिएट्स के प्रभाव को Hazard Ratio (HR = $e^{\beta}$) के रूप में मापता है:</p>
 $$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \dots + \beta_p X_p) $$
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -753,34 +944,68 @@ $$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \dots + \beta_p X_p) $$
         <section class="page-section" id="sec47">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.7 Ageing Classes of Life Distributions</h2>
-                    <p>Reliability analysis categorizes lifetime distributions based on hazard evolution over time:</p>
-                    <ul>
-                        <li><strong>IFR (Increasing Failure Rate):</strong> $h(t)$ increases monotonically with time.</li>
-                        <li><strong>IFRA (Increasing Failure Rate Average):</strong> $rac{1}{t}\int_0^t h(u)du$ increases with time.</li>
-                        <li><strong>NBU (New Better than Used):</strong> $S(x+t) \le S(x) S(t)$ for all $x, t \ge 0$.</li>
-                        <li><strong>NBUE (New Better than Used in Expectation):</strong> $e(t) \le e(0)$.</li>
-                    </ul>
-                    <div class="theorem">
-                        <div class="card-title">Hierarchy of Positive Ageing Classes</div>
-                        $$ IFR \implies IFRA \implies NBU \implies NBUE $$
-                        Dual Negative Ageing Classes: $DFR \implies DFRA \implies NWU \implies NWUE$.
-                    </div>
-                </div>
+
+<h2>4.7 Ageing Classes of Life Distributions</h2>
+<p>Reliability analysis categorizes lifetime distributions based on hazard evolution over time:</p>
+<ul>
+    <li><strong>IFR (Increasing Failure Rate):</strong> $h(t)$ increases monotonically with time.</li>
+    <li><strong>IFRA (Increasing Failure Rate Average):</strong> $\frac{1}{t}\int_0^t h(u)du$ increases with time.</li>
+    <li><strong>NBU (New Better than Used):</strong> $S(x+t) \le S(x) S(t)$ for all $x, t \ge 0$.</li>
+    <li><strong>NBUE (New Better than Used in Expectation):</strong> $e(t) \le e(0)$.</li>
+</ul>
+
+<!-- FIGURE 4.7 -->
+<div class="figure-box">
+    <div class="figure-title">Figure 4.7: Implication Hierarchy of Positive Ageing Classes</div>
+    <svg class="book-fig" viewBox="0 0 540 140" xmlns="http://www.w3.org/2000/svg">
+        <rect x="20" y="45" width="90" height="50" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+        <text x="65" y="75" font-family="DM Sans" font-size="14" fill="#E8B84B" text-anchor="middle" font-weight="bold">IFR</text>
+
+        <path d="M 110 70 L 145 70" stroke="#C8922A" stroke-width="3" marker-end="url(#arrow)"/>
+        <text x="127" y="62" font-family="DM Sans" font-size="12" fill="#1B2A4A" font-weight="bold">⇒</text>
+
+        <rect x="150" y="45" width="90" height="50" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+        <text x="195" y="75" font-family="DM Sans" font-size="14" fill="#E8B84B" text-anchor="middle" font-weight="bold">IFRA</text>
+
+        <text x="257" y="62" font-family="DM Sans" font-size="12" fill="#1B2A4A" font-weight="bold">⇒</text>
+
+        <rect x="280" y="45" width="90" height="50" rx="8" fill="#1D6FA4" stroke="#C8922A" stroke-width="2"/>
+        <text x="325" y="75" font-family="DM Sans" font-size="14" fill="#E8B84B" text-anchor="middle" font-weight="bold">NBU</text>
+
+        <text x="387" y="62" font-family="DM Sans" font-size="12" fill="#1B2A4A" font-weight="bold">⇒</text>
+
+        <rect x="410" y="45" width="100" height="50" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+        <text x="460" y="75" font-family="DM Sans" font-size="14" fill="#E8B84B" text-anchor="middle" font-weight="bold">NBUE</text>
+    </svg>
+    <div class="figure-caption">Strict nested hierarchy of positive reliability ageing classes: IFR ⊆ IFRA ⊆ NBU ⊆ NBUE.</div>
+</div>
+
+<div class="theorem">
+    <div class="card-title">Hierarchy of Positive Ageing Classes</div>
+    $$ IFR \implies IFRA \implies NBU \implies NBUE $$
+    Dual Negative Ageing Classes: $DFR \implies DFRA \implies NWU \implies NWUE$.
+</div>
+
+<div class="example">
+    <div class="card-title">Numerical Example 4.7.1: Verification of Weibull Ageing Class</div>
+    <p><strong>Problem:</strong> A machine component has a Weibull lifetime distribution with hazard rate $h(t) = \alpha \lambda t^{\alpha - 1}$ where $\lambda = 0.02$ and shape parameter $\alpha = 1.5$. Determine whether the component belongs to the IFR ageing class.</p>
+    <p><strong>Step-by-Step Solution:</strong></p>
+    <p><strong>Step 1: Evaluate the derivative of the hazard function $h'(t)$:</strong></p>
+    $$ h(t) = 1.5 \times 0.02 \times t^{1.5 - 1} = 0.03 \, t^{0.5} $$
+    $$ h'(t) = \frac{d}{dt}(0.03 \, t^{0.5}) = 0.03 \times 0.5 \, t^{-0.5} = \frac{0.015}{\sqrt{t}} $$
+    <p><strong>Step 2: Check sign of $h'(t)$ for all $t > 0$:</strong></p>
+    $$ \text{For all } t > 0, \quad h'(t) = \frac{0.015}{\sqrt{t}} > 0 $$
+    <p>Conclusion: Since $h'(t) > 0$ strictly for all $t > 0$, the hazard function $h(t)$ is monotonically increasing with time. Therefore, the Weibull distribution with $\alpha = 1.5 > 1$ belongs to the **IFR (Increasing Failure Rate)** class.</p>
+</div>
+
+</div>
 
                 <div class="hinglish-content" style="display:none;">
 
-<h2>4.7 एजिंग वर्ग (Ageing Classes of Life Distributions)</h2>
-<p>विफलता जोखिम में परिवर्तन के आधार पर वर्गीकरण:</p>
-<ul>
-    <li><strong>IFR (Increasing Failure Rate):</strong> समय के साथ जोखिम बढ़ता है।</li>
-    <li><strong>IFRA (Increasing Failure Rate Average):</strong> औसत जोखिम बढ़ता है।</li>
-    <li><strong>NBU (New Better than Used):</strong> नया आइटम पुराने से बेहतर है।</li>
-    <li><strong>NBUE (New Better than Used in Expectation):</strong> नए आइटम की अपेक्षित शेष आयु अधिक है।</li>
-</ul>
-<p>अनुक्रम का पदानुक्रम: $IFR \implies IFRA \implies NBU \implies NBUE$।</p>
+<h2>4.7 एजिंग वर्ग (Ageing Classes)</h2>
+<p>उम्र बढ़ने के साथ विफलता जोखिम में परिवर्तन के आधार पर वर्गीकरण: $IFR \implies IFRA \implies NBU \implies NBUE$।</p>
 
-                </div>
+</div>
             </div>
         </section>
 
@@ -792,17 +1017,17 @@ $$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \dots + \beta_p X_p) $$
 
                     <div class="example">
                         <div class="card-title">Example 4.8.1: Kaplan-Meier Survival Probability &amp; Greenwood SE</div>
-                        <p><strong>Problem:</strong> Follow-up data for 8 patients: $t_i = 2, 4, 4, 6+, 8, 10, 12+, 15	ext{ months}$. Calculate $\hat{S}(8)$ and Greenwood's standard error $	ext{SE}[\hat{S}(8)]$.</p>
+                        <p><strong>Problem:</strong> Follow-up data for 8 patients: $t_i = 2, 4, 4, 6+, 8, 10, 12+, 15\text{ months}$. Calculate $\hat{S}(8)$ and Greenwood's standard error $\text{SE}[\hat{S}(8)]$.</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
                         <table>
                             <thead>
                                 <tr><th>$t_i$</th><th>$n_i$</th><th>$d_i$</th><th>$c_i$</th><th>$1 - d_i/n_i$</th><th>$\hat{S}(t_i)$</th><th>$rac{d_i}{n_i(n_i-d_i)}$</th></tr>
                             </thead>
                             <tbody>
-                                <tr><td>2</td><td>8</td><td>1</td><td>0</td><td>$7/8 = 0.8750$</td><td>0.8750</td><td>$1/(8 	imes 7) = 0.01786$</td></tr>
-                                <tr><td>4</td><td>7</td><td>2</td><td>0</td><td>$5/7 = 0.7143$</td><td>0.6250</td><td>$2/(7 	imes 5) = 0.05714$</td></tr>
+                                <tr><td>2</td><td>8</td><td>1</td><td>0</td><td>$7/8 = 0.8750$</td><td>0.8750</td><td>$1/(8 \times 7) = 0.01786$</td></tr>
+                                <tr><td>4</td><td>7</td><td>2</td><td>0</td><td>$5/7 = 0.7143$</td><td>0.6250</td><td>$2/(7 \times 5) = 0.05714$</td></tr>
                                 <tr><td>6+</td><td>5</td><td>0</td><td>1</td><td>—</td><td>0.6250</td><td>—</td></tr>
-                                <tr><td>8</td><td>4</td><td>1</td><td>0</td><td>$3/4 = 0.7500$</td><td>0.4688</td><td>$1/(4 	imes 3) = 0.08333$</td></tr>
+                                <tr><td>8</td><td>4</td><td>1</td><td>0</td><td>$3/4 = 0.7500$</td><td>0.4688</td><td>$1/(4 \times 3) = 0.08333$</td></tr>
                             </tbody>
                         </table>
                         <p><strong>Greenwood Variance Calculation:</strong></p>
@@ -813,7 +1038,7 @@ $$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \dots + \beta_p X_p) $$
 
                     <div class="example">
                         <div class="card-title">Example 4.8.2: Cox Model Hazard Ratio &amp; Confidence Interval</div>
-                        <p><strong>Problem:</strong> In a clinical trial of lung cancer, the treatment variable $X$ (1 = Immunotherapy, 0 = Standard Chemotherapy) yields $\hat{eta} = -0.5108$ with $	ext{SE}(\hat{eta}) = 0.2200$. Calculate the Hazard Ratio (HR) and its $95\%$ Confidence Interval.</p>
+                        <p><strong>Problem:</strong> In a clinical trial of lung cancer, the treatment variable $X$ (1 = Immunotherapy, 0 = Standard Chemotherapy) yields $\hat{eta} = -0.5108$ with $\text{SE}(\hat{eta}) = 0.2200$. Calculate the Hazard Ratio (HR) and its $95\%$ Confidence Interval.</p>
                         <p><strong>Step-by-Step Solution:</strong></p>
                         $$ \text{HR} = \exp(\hat{\beta}) = \exp(-0.5108) = 0.6000 \text{ (40\% reduction in risk of death)} $$
                         $$ \text{Lower 95\% CI} = \exp(-0.5108 - 1.96 \times 0.2200) = \exp(-0.9420) = 0.3898 $$
@@ -1276,7 +1501,7 @@ $$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \dots + \beta_p X_p) $$
                 <button class="toggle-btn" onclick="toggleAnswer('sub42_ans')">Show Answer ▼</button>
                 <div class="answer" id="sub42_ans">
                     <p><strong>Solution:</strong></p>
-                    <p><strong>Right Censoring:</strong> Event time $T > t_{	ext{end}}$ (e.g. patient alive at study completion).<br>
+                    <p><strong>Right Censoring:</strong> Event time $T > t_{\text{end}}$ (e.g. patient alive at study completion).<br>
                     <strong>Left Censoring:</strong> Event time $T < t_0$ (e.g. disease infection occurred prior to blood screening).<br>
                     <strong>Interval Censoring:</strong> Event time $T \in (t_a, t_b]$ (e.g. tumor recurrence detected between 6-month checkups).</p>
                 </div>
@@ -1335,9 +1560,9 @@ $$ h(t \mid X) = h_0(t) \exp(\beta_1 X_1 + \dots + \beta_p X_p) $$
                 <div class="answer" id="sub410_ans">
                     <p><strong>Solution:</strong></p>
                     <p>At $t=3$: $\hat{S}(3) = 1 - 1/5 = 0.8000$.<br>
-                    At $t=5$: $\hat{S}(5) = 0.8000 	imes (1 - 2/4) = 0.4000$.<br>
-                    At $t=7+$: Censored ($n_i = 1 	o 0$).<br>
-                    At $t=9$: $\hat{S}(9) = 0.4000 	imes (1 - 1/1) = 0.0000$.</p>
+                    At $t=5$: $\hat{S}(5) = 0.8000 \times (1 - 2/4) = 0.4000$.<br>
+                    At $t=7+$: Censored ($n_i = 1 \to 0$).<br>
+                    At $t=9$: $\hat{S}(9) = 0.4000 \times (1 - 1/1) = 0.0000$.</p>
                 </div>
 
             </div>
