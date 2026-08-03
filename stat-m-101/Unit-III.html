@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit III: Research Design &amp; Data Generation | STAT-M-101 Bio-Statistics</title>
+    <title>Unit III: Research Design and Data Generation | Stat-M-101 Bio-Statistics</title>
 
     <!-- MathJax Configuration -->
     <script>
@@ -135,6 +135,52 @@
             font-family: 'DM Sans', sans-serif; font-size: .75rem; color: rgba(255,255,255,.6);
         }
 
+        .sidebar-author {
+            padding: 16px 20px;
+            background: rgba(0,0,0,0.25);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-author-info h3 {
+            font-size: 0.9rem;
+            color: #fff;
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .sidebar-author-info p {
+            font-size: 0.65rem;
+            color: rgba(255,255,255,0.6);
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .header-lang-toggle {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff; padding: 6px 14px; border-radius: 20px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
         .nav-group-label {
             font-family: 'DM Sans', sans-serif; font-size: .68rem; font-weight: 600;
             letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,.35); padding: 14px 20px 4px;
@@ -172,6 +218,7 @@
             background: #ffffff; border-radius: var(--radius);
             padding: 36px 40px; margin-bottom: 32px;
             box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
         }
         .section-card h2 {
             font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700;
@@ -187,7 +234,7 @@
             font-style: italic; color: var(--navy-mid); font-size: 1.02rem;
         }
 
-        .definition, .theorem, .example, .note {
+        .definition, .theorem, .example, .note, .formula-box {
             margin: 20px 0; padding: 18px 22px; border-radius: 8px;
         }
         .definition { background: var(--sage-light); border-left: 4px solid var(--sage); }
@@ -204,31 +251,137 @@
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
 
+        /* ── COMPACT CENTERED TABLES (STAT 101/102 SYSTEM) ── */
         table {
-            width: 100% !important; margin: 20px 0 !important;
-            border-collapse: collapse !important; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            width: auto !important;
+            max-width: 95% !important;
+            margin: 24px auto !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
+            background: #ffffff !important;
+            display: table !important;
+            border: 1px solid var(--border) !important;
         }
-        th { background: var(--navy); color: #fff; padding: 10px 14px; text-align: left; }
-        td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
-        tr:nth-child(even) { background: rgba(0,0,0,0.02); }
+        th {
+            background: var(--navy) !important;
+            color: #ffffff !important;
+            padding: 8px 16px !important;
+            font-family: 'DM Sans', sans-serif !important;
+            font-size: 0.88rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px !important;
+            text-align: center !important;
+            border-bottom: 2px solid var(--gold) !important;
+        }
+        td {
+            padding: 6px 16px !important;
+            border-bottom: 1px solid var(--border) !important;
+            font-size: 0.88rem !important;
+            color: var(--text-dark) !important;
+            text-align: center !important;
+        }
+        tr:nth-child(even) td { background: #fcfbf9 !important; }
+        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
 
-        .code-block {
-            background: #1E1E2E; color: #CDD6F4; padding: 16px; border-radius: 8px;
-            font-family: 'Courier New', monospace; font-size: 0.9rem; margin: 16px 0;
+        /* ── FIGURE BOX STYLING ── */
+        .figure-box {
+            background: #FAFAFC;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            margin: 28px auto;
+            max-width: 720px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .figure-title {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--navy);
+            margin-bottom: 14px;
+        }
+        .book-fig {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+        .figure-caption {
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.88rem;
+            font-style: italic;
+            color: var(--text-soft);
+            margin-top: 12px;
+            line-height: 1.5;
         }
 
-        .question { font-weight: 600; margin-top: 18px; color: var(--navy); font-size: 0.98rem; }
-        .mcq-options { margin: 8px 0 12px 20px; line-height: 1.7; color: var(--text-mid); }
+        /* ── EXERCISE STYLING ── */
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        .question strong { color: var(--navy); }
+
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block;
+            margin: 6px 0;
+            cursor: pointer;
+            font-size: .95rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
         .toggle-btn {
-            background: var(--navy); color: #fff; border: none; padding: 6px 14px;
-            border-radius: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
-            font-size: .8rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 12px;
+            letter-spacing: .3px;
         }
-        .toggle-btn:hover { background: var(--navy-light); }
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
         .answer {
-            display: none; background: #F0FBF5; border-left: 4px solid var(--sage);
-            padding: 14px 18px; margin-bottom: 16px; border-radius: 0 6px 6px 0; font-size: .94rem;
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 16px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
         }
+        .answer.show { display: block; }
+        .answer strong { font-weight: 700; color: var(--navy); }
 
         .book-footer {
             position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
@@ -272,26 +425,46 @@
             <h2>STAT-M-101</h2>
             <p>Bio-Statistics<br>CCS Haryana Agricultural University</p>
         </div>
+        <div class="sidebar-author">
+            <img src="../opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <p>Author &amp; Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Library &amp; Course</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.15); color: var(--gold-light); font-weight: 600;"><span class="nav-num">🏠</span> Course Portal Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 4px;"><span class="nav-num">📚</span> Main E-Library</a></li>
+        </ul>
 
         <div class="nav-group-label">Unit III Navigation</div>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec31'); return false;"><span class="nav-num">3.1</span> Intro to Research Design</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec32'); return false;"><span class="nav-num">3.2</span> Primary vs Secondary Data</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec32'); return false;"><span class="nav-num">3.2</span> Primary &amp; Secondary Data</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec33'); return false;"><span class="nav-num">3.3</span> Questionnaire Construction</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec34'); return false;"><span class="nav-num">3.4</span> Data Organisation</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec35'); return false;"><span class="nav-num">3.5</span> SPSS &amp; R Computing Workflows</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec35'); return false;"><span class="nav-num">3.5</span> SPSS &amp; R Workflows</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec36'); return false;"><span class="nav-num">3.6</span> National Sample Survey (NSS)</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec37'); return false;"><span class="nav-num">3.7</span> Solved Examples</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">3.8</span> Exercise Bank (Parts A–E)</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec39'); return false;"><span class="nav-num">3.9</span> Summary &amp; References</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec37'); return false;"><span class="nav-num">3.7</span> Solved Numerical Examples</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec310'); return false;"><span class="nav-num">3.10</span> Summary &amp; References</a></li>
+        </ul>
+
+        <div class="nav-group-label">Exercise Bank</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">❓</span> Multiple Choice (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">✏️</span> Fill in Blanks (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">✅</span> True / False (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">🧩</span> Matching Sets (5)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">📝</span> Subjective Qs (10)</a></li>
         </ul>
 
         <div class="nav-group-label">Other Course Units</div>
         <ul class="nav-list">
-            <li class="nav-item"><a class="nav-link" href="index.html">← Course Portal Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="Unit-I.html">Unit I: Epidemiology</a></li>
-            <li class="nav-item"><a class="nav-link" href="Unit-II.html">Unit II: Clinical Trials</a></li>
-            <li class="nav-item"><a class="nav-link" href="Unit-IV.html">Unit IV: Survival Analysis</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-I.html"><span class="nav-num">U-1</span> Unit I: Epidemiology</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-II.html"><span class="nav-num">U-2</span> Unit II: Clinical Trials</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-IV.html"><span class="nav-num">U-4</span> Unit IV: Survival Analysis</a></li>
         </ul>
     </nav>
 
@@ -300,86 +473,230 @@
 
         <!-- Chapter Header -->
         <div class="chapter-header">
-            <h1>Unit III: Research Design &amp; Data Generation</h1>
-            <div class="chap-sub">Primary &amp; secondary data, survey questionnaire construction, SPSS/R computing workflows &amp; NSS sampling</div>
+            <button id="lang-toggle-btn" class="header-lang-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+            </button>
+            <h1>Unit III: Research Design and Data Generation</h1>
+            <div class="chap-sub">Study planning, primary vs secondary data collection, questionnaire design, data organization, SPSS &amp; R analysis workflows &amp; NSS methodology</div>
         </div>
 
         <!-- 3.1 Intro -->
         <section class="page-section active" id="sec31">
             <div class="section-card">
-                <h2>3.1 Introduction to Research Design</h2>
-                <blockquote>
-                    Suppose your teacher asks you to find out how many students in your college use public transport. You cannot simply guess. You need a plan. You must decide whom to ask, how many students to include, what questions to ask, and how to record the answers. This plan is called a research design. A good research design is like a road map. It tells you where to start, what to do, and how to reach your goal. Without a design, your study may become messy.
-                </blockquote>
+                <div class="english-content">
+                    <h2>3.1 Introduction to Research Design</h2>
+                    <blockquote>
+                        Suppose your teacher asks you to find out how many students in your college use public transport. You cannot simply guess. You need a plan. You must decide whom to ask, how many students to include, what questions to ask, and how to record the answers. This plan is called a research design. A good research design is like a road map. It tells you where to start, what to do, and how to reach your goal. Without a design, your study may become messy. You may collect wrong data, ask the wrong people, or forget important details. In this unit, we learn how to plan a study, collect data, and prepare it for analysis.
+                    </blockquote>
 
-                <div class="definition">
-                    <div class="card-title">What is a Research Design?</div>
-                    A <strong>research design</strong> is the blueprint or conceptual structure of a study. It details how the investigation will be executed, answering: What do we want to study? Who will be studied? How will data be collected? How will data be analysed?
+                    <div class="definition">
+                        <div class="card-title">What is Research Design?</div>
+                        A <strong>research design</strong> is the conceptual blueprint or operational plan within which research is conducted. It provides a structured framework for data collection, measurement, and analysis to answer specific research questions efficiently.
+                    </div>
+
+                    <h3>Why Do We Need a Research Design?</h3>
+                    <ul>
+                        <li><strong>Structure &amp; Direction:</strong> Keeps the investigation focused and prevents scope creep.</li>
+                        <li><strong>Resource Optimization:</strong> Saves time, money, and manpower by eliminating redundant data collection.</li>
+                        <li><strong>Internal &amp; External Validity:</strong> Minimizes systematic bias and ensures findings can be generalized.</li>
+                        <li><strong>Reproducibility:</strong> Allows independent researchers to replicate the methodology.</li>
+                    </ul>
+
+                    <h3>8-Step Research Planning Workflow</h3>
+                    <ol>
+                        <li>Choose a research topic and identify the knowledge gap.</li>
+                        <li>State clear, measurable objectives and testable hypotheses.</li>
+                        <li>Define the target population and eligibility criteria.</li>
+                        <li>Select an appropriate sampling technique and sample size.</li>
+                        <li>Construct and pre-test data collection instruments.</li>
+                        <li>Organize data through editing, coding, and tabulation.</li>
+                        <li>Perform statistical data analysis (SPSS / R / Python).</li>
+                        <li>Synthesize conclusions and publish research reports.</li>
+                    </ol>
+
+                    <div class="example">
+                        <div class="card-title">Example: Crop Yield Experiment in Haryana</div>
+                        A researcher at CCS HAU wants to compare 4 wheat varieties ($V_1, V_2, V_3, V_4$) across 3 fertilizer levels ($F_1, F_2, F_3$). Without a research design, soil heterogeneity would distort yield measurements. By using a Randomized Block Design (RBD), the researcher blocks by field slope and isolates true variety-fertilizer interaction effects.
+                    </div>
                 </div>
 
-                <h3>Why Do We Need a Research Design?</h3>
-                <ul>
-                    <li><strong>Focus:</strong> Keeps the investigation structured and aligned with core research objectives.</li>
-                    <li><strong>Resource Efficiency:</strong> Saves time, labor, and budget by avoiding unnecessary data collection.</li>
-                    <li><strong>Data Validity:</strong> Ensures the measurement tools yield reliable and accurate figures.</li>
-                    <li><strong>Replicability:</strong> Enables other scientists to audit and reproduce the exact methodology.</li>
-                </ul>
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.1 रिसर्च डिजाइन का परिचय (Introduction to Research Design)</h2>
+<blockquote>
+मान लीजिए आपके शिक्षक आपसे पूछते हैं कि आपके कॉलेज में कितने छात्र सार्वजनिक परिवहन का उपयोग करते हैं। आप केवल अनुमान नहीं लगा सकते। आपको एक योजना की आवश्यकता है। आपको यह तय करना होगा कि किससे पूछना है, कितने छात्रों को शामिल करना है, क्या प्रश्न पूछने हैं और उत्तरों को कैसे रिकॉर्ड करना है। इस योजना को रिसर्च डिजाइन (research design) कहा जाता है। एक अच्छा research design एक रोड मैप की तरह है। यह आपको बताता है कि कहाँ से शुरू करना है, क्या करना है और अपने लक्ष्य तक कैसे पहुँचना है। डिजाइन के बिना आपका अध्ययन अव्यवस्थित हो सकता है।
+</blockquote>
+
+<div class="definition">
+    <div class="card-title">Research Design की परिभाषा (Definition)</div>
+    एक <strong>research design</strong> अध्ययन की अवधारणात्मक रूपरेखा (conceptual blueprint) या परिचालन योजना है जिसके तहत शोध किया जाता है। यह डेटा संग्रह (data collection), मापन (measurement) और विश्लेषण (analysis) के लिए एक संरचित ढांचा प्रदान करता है।
+</div>
+
+<h3>रिसर्च डिजाइन की आवश्यकता क्यों है?</h3>
+<ul>
+    <li><strong>संरचना और दिशा (Structure &amp; Direction):</strong> अध्ययन को केंद्रित और व्यवस्थित रखता है।</li>
+    <li><strong>संसाधन अनुकूलन (Resource Optimization):</strong> अनावश्यक डेटा संग्रह को समाप्त करके समय और धन की बचत करता है।</li>
+    <li><strong>आंतरिक और बाह्य वैधता (Validity):</strong> पक्षपात (bias) को कम करता है और परिणामों को सामान्य बनाने में मदद करता है।</li>
+    <li><strong>पुनरुत्पादकता (Reproducibility):</strong> अन्य शोधकर्ताओं को अध्ययन को दोहराने की अनुमति देता है।</li>
+</ul>
+
+<h3>शोध योजना के 8 बुनियादी चरण (8-Step Research Workflow)</h3>
+<ol>
+    <li>शोध विषय चुनें और उद्देश्य स्पष्ट करें।</li>
+    <li>स्पष्ट और मापने योग्य उद्देश्यों (objectives) को बताएं।</li>
+    <li>लक्ष्य आबादी (target population) को परिभाषित करें।</li>
+    <li>उपयुक्त नमूना विधि (sampling technique) और आकार चुनें।</li>
+    <li>डेटा संग्रह उपकरण (questionnaire / schedule) तैयार करें।</li>
+    <li>डेटा को संपादित (editing), कोडित (coding) और सारणीबद्ध (tabulation) करें।</li>
+    <li>सांख्यिकीय विश्लेषण (SPSS / R) करें।</li>
+    <li>निष्कर्ष प्रस्तुत करें और रिपोर्ट लिखें।</li>
+</ol>
+
+                </div>
             </div>
         </section>
 
-        <!-- 3.2 Primary vs Secondary -->
+        <!-- 3.2 Primary & Secondary Data -->
         <section class="page-section" id="sec32">
             <div class="section-card">
-                <h2>3.2 Primary and Secondary Data</h2>
-                <p><strong>Primary Data:</strong> Data collected first-hand by the researcher specifically for the current project (e.g. personal interviews, questionnaires, field experiments).</p>
-                <p><strong>Secondary Data:</strong> Existing data previously gathered by other agencies for external purposes (e.g. Census of India, NSS reports, hospital archives).</p>
+                <div class="english-content">
+                    <h2>3.2 Primary and Secondary Data</h2>
+                    <blockquote>
+                        When you collect information for the first time, it is called primary data. When you use information that someone else has already collected, it is called secondary data. Both types are useful. A student who counts the number of bicycles in the college parking lot is collecting primary data. A student who reads last year's attendance records is using secondary data. Knowing the difference helps you choose the right source for your study.
+                    </blockquote>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Feature</th>
-                            <th>Primary Data</th>
-                            <th>Secondary Data</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Collection</strong></td>
-                            <td>Directly collected for the first time</td>
-                            <td>Extracted from existing publications</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Cost &amp; Time</strong></td>
-                            <td>High expenditure, time-intensive</td>
-                            <td>Inexpensive, immediately accessible</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Reliability</strong></td>
-                            <td>Known quality, tailored to objectives</td>
-                            <td>Requires verification of source accuracy</td>
-                        </tr>
-                    </tbody>
-                </table>
+                    <!-- FIGURE 3.1 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 3.1: Data Sources &amp; Collection Pathways</div>
+                        <svg class="book-fig" viewBox="0 0 580 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Root Node -->
+                            <rect x="230" y="15" width="120" height="40" rx="6" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="290" y="40" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Data Sources</text>
+
+                            <!-- Branch Arrows -->
+                            <path d="M 240 55 L 120 90" stroke="#C8922A" stroke-width="2"/>
+                            <path d="M 340 55 L 460 90" stroke="#C8922A" stroke-width="2"/>
+
+                            <!-- Primary Box -->
+                            <rect x="50" y="90" width="140" height="60" rx="8" fill="#3D6B5A" stroke="#1B2A4A" stroke-width="2"/>
+                            <text x="120" y="115" font-family="DM Sans" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">Primary Data</text>
+                            <text x="120" y="135" font-family="Source Serif 4" font-size="10" fill="#DDD8CF" text-anchor="middle">First-hand Collection</text>
+
+                            <!-- Secondary Box -->
+                            <rect x="390" y="90" width="140" height="60" rx="8" fill="#1D6FA4" stroke="#1B2A4A" stroke-width="2"/>
+                            <text x="460" y="115" font-family="DM Sans" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">Secondary Data</text>
+                            <text x="460" y="135" font-family="Source Serif 4" font-size="10" fill="#DDD8CF" text-anchor="middle">Existing Records/Reports</text>
+                        </svg>
+                        <div class="figure-caption">Classification of data generation pathways into primary first-hand collection and secondary published repositories.</div>
+                    </div>
+
+                    <h3>Primary vs Secondary Data Comparison</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Primary Data</th>
+                                <th>Secondary Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Origin</strong></td>
+                                <td>Collected first-hand by the investigator.</td>
+                                <td>Extracted from pre-existing records.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Specific Target</strong></td>
+                                <td>Tailored exactly to current study objectives.</td>
+                                <td>Collected for a different primary purpose.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Time &amp; Cost</strong></td>
+                                <td>High resource, time, and financial cost.</td>
+                                <td>Fast, economical, readily available.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Examples</strong></td>
+                                <td>Surveys, clinical trials, field measurements.</td>
+                                <td>Census of India, NSS reports, hospital registries.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.2 प्राथमिक और माध्यमिक डेटा (Primary and Secondary Data)</h2>
+<blockquote>
+जब आप पहली बार किसी विशिष्ट उद्देश्य के लिए जानकारी एकत्र करते हैं, तो इसे प्राथमिक डेटा (primary data) कहा जाता है। जब आप उस जानकारी का उपयोग करते हैं जिसे किसी अन्य व्यक्ति ने पहले ही एकत्र किया है, तो इसे माध्यमिक डेटा (secondary data) कहा जाता है। दोनों प्रकार उपयोगी हैं।
+</blockquote>
+
+<h3>प्राथमिक डेटा (Primary Data)</h3>
+<p><strong>Primary data</strong> शोधकर्ता द्वारा पहली बार सीधे एकत्र किया गया डेटा है।</p>
+<ul>
+    <li><strong>प्रत्यक्ष अवलोकन (Direct Observation):</strong> घटनाओं को घटित होते हुए देखना और रिकॉर्ड करना।</li>
+    <li><strong>व्यक्तिगत साक्षात्कार (Personal Interview):</strong> आमने-सामने प्रश्न पूछना।</li>
+    <li><strong>प्रश्नावली (Questionnaire):</strong> उत्तरदाताओं को दिए जाने वाले प्रश्नों का सेट।</li>
+    <li><strong>अनुसूची (Schedule):</strong> प्रशिक्षित प्रगणक (enumerator) द्वारा भरे जाने वाले उत्तर।</li>
+</ul>
+
+<h3>माध्यमिक डेटा (Secondary Data)</h3>
+<p><strong>Secondary data</strong> वह डेटा है जो पहले से प्रकाशित या अप्रकाशित रूप में उपलब्ध है (जैसे भारत की जनगणना, NSS रिपोर्ट, अस्पताल के रिकॉर्ड)।</p>
+
+                </div>
             </div>
         </section>
 
         <!-- 3.3 Questionnaire Construction -->
         <section class="page-section" id="sec33">
             <div class="section-card">
-                <h2>3.3 Survey Questionnaire Construction</h2>
-                <div class="definition">
-                    <div class="card-title">What is a Questionnaire?</div>
-                    A <strong>questionnaire</strong> is a structured instrument consisting of a series of written questions administered to respondents to collect standardized primary data.
+                <div class="english-content">
+                    <h2>3.3 Survey Questionnaire Construction</h2>
+                    <blockquote>
+                        A questionnaire is one of the most common tools used to collect primary data. It is a list of questions given to people to answer. A good questionnaire is short, clear, and easy to answer. A bad questionnaire confuses people and gives wrong answers. In this section, we learn how to make a good questionnaire step by step.
+                    </blockquote>
+
+                    <!-- FIGURE 3.2 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 3.2: 7-Step Questionnaire Construction Protocol</div>
+                        <svg class="book-fig" viewBox="0 0 600 160" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="30" width="75" height="100" rx="6" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="47" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 1</text>
+                            <text x="47" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Define Goal</text>
+
+                            <rect x="95" y="30" width="75" height="100" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="132" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 2</text>
+                            <text x="132" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Target Pop</text>
+
+                            <rect x="180" y="30" width="75" height="100" rx="6" fill="#1D6FA4" stroke="#C8922A" stroke-width="2"/>
+                            <text x="217" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 3</text>
+                            <text x="217" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Q Type</text>
+
+                            <rect x="265" y="30" width="75" height="100" rx="6" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="302" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 4</text>
+                            <text x="302" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Draft Qs</text>
+
+                            <rect x="350" y="30" width="75" height="100" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="387" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 5</text>
+                            <text x="387" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Sequence</text>
+
+                            <rect x="435" y="30" width="75" height="100" rx="6" fill="#9B2335" stroke="#C8922A" stroke-width="2"/>
+                            <text x="472" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 6</text>
+                            <text x="472" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Pre-Test</text>
+
+                            <rect x="520" y="30" width="70" height="100" rx="6" fill="#1B2A4A" stroke="#E8B84B" stroke-width="2"/>
+                            <text x="555" y="60" font-family="DM Sans" font-size="10" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 7</text>
+                            <text x="555" y="85" font-family="Source Serif 4" font-size="9" fill="#fff" text-anchor="middle">Finalize</text>
+                        </svg>
+                        <div class="figure-caption">Step-by-step questionnaire engineering workflow from objective definition to pilot pre-testing.</div>
+                    </div>
                 </div>
 
-                <div class="note">
-                    <div class="card-title">Best Practices for Questionnaire Design</div>
-                    <ul>
-                        <li>Keep the questionnaire concise and objective-driven.</li>
-                        <li>Use simple, unambiguous wording; avoid double-barreled questions (asking two things at once).</li>
-                        <li>Avoid leading questions that bias the respondent's answer.</li>
-                        <li>Pre-test (pilot test) the instrument on a small group before full deployment.</li>
-                    </ul>
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.3 सर्वेक्षण प्रश्नावली निर्माण (Survey Questionnaire Construction)</h2>
+<p>एक अच्छी <strong>questionnaire</strong> स्पष्ट, संक्षिप्त और उत्तर देने में आसान होनी चाहिए। प्रश्नों के प्रकार में open-ended, closed-ended, dichotomous, multiple-choice और rating scale शामिल हैं।</p>
+
                 </div>
             </div>
         </section>
@@ -387,26 +704,66 @@
         <!-- 3.4 Data Organisation -->
         <section class="page-section" id="sec34">
             <div class="section-card">
-                <h2>3.4 Data Organisation</h2>
-                <p><strong>Editing:</strong> Inspecting raw response forms to correct obvious errors and handle missing entries.</p>
-                <p><strong>Coding:</strong> Assigning numerical codes to categorical responses (e.g. Male=1, Female=2).</p>
-                <p><strong>Tabulation:</strong> Systematically displaying data into structured rows and columns (frequency tables).</p>
+                <div class="english-content">
+                    <h2>3.4 Data Organisation</h2>
+                    <p>Raw data collected from surveys or experiments must undergo editing, coding, classification, and tabulation before statistical processing.</p>
+                    <ul>
+                        <li><strong>Editing:</strong> Inspecting forms to correct inconsistencies, illegible entries, or impossible values.</li>
+                        <li><strong>Coding:</strong> Translating qualitative responses into numerical codes (e.g. Male = 1, Female = 2).</li>
+                        <li><strong>Classification:</strong> Grouping observations into homogeneous classes based on attributes or intervals.</li>
+                        <li><strong>Tabulation:</strong> Arranging categorized data into systematic rows and columns.</li>
+                    </ul>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.4 डेटा संगठन (Data Organisation)</h2>
+<p>एकत्रित कच्चे डेटा (raw data) को विश्लेषण योग्य बनाने के चरण:</p>
+<ol>
+    <li><strong>Editing (संपादन):</strong> डेटा में त्रुटियों और कमियों की जांच करना और उन्हें सही करना।</li>
+    <li><strong>Coding (कोडिंग):</strong> उत्तरों को कंप्यूटर प्रविष्टि के लिए संख्याओं में बदलना।</li>
+    <li><strong>Classification (वर्गीकरण):</strong> समानताओं के आधार पर डेटा को समूहों में व्यवस्थित करना।</li>
+    <li><strong>Tabulation (सारणीयन):</strong> पंक्तियों (rows) और स्तंभों (columns) के रूप में डेटा प्रस्तुत करना।</li>
+</ol>
+
+                </div>
             </div>
         </section>
 
-        <!-- 3.5 SPSS & R Workflows -->
+        <!-- 3.5 SPSS & R -->
         <section class="page-section" id="sec35">
             <div class="section-card">
-                <h2>3.5 Data Analysis Workflows in SPSS and R</h2>
-                <div class="example">
-                    <div class="card-title">R Workflow Example</div>
-                    <div class="code-block">
-# Load biostatistical sample data in R<br>
-hb_levels &lt;- c(12.5, 11.2, 13.8, 14.1, 10.9)<br>
-mean_hb   &lt;- mean(hb_levels)<br>
-sd_hb     &lt;- sd(hb_levels)<br>
-cat("Mean Hb:", mean_hb, "SD:", sd_hb)
+                <div class="english-content">
+                    <h2>3.5 Data Analysis Workflows in SPSS and R</h2>
+                    <!-- FIGURE 3.3 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 3.3: Data Analysis Workflow in SPSS and R</div>
+                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="30" width="110" height="120" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="75" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">1. Import Data</text>
+                            <text x="75" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">.csv / .xlsx / .sav</text>
+
+                            <rect x="150" y="30" width="110" height="120" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="205" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">2. Data Cleaning</text>
+                            <text x="205" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Missing Values &amp; Outliers</text>
+
+                            <rect x="280" y="30" width="110" height="120" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="335" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">3. Stat Analysis</text>
+                            <text x="335" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Descriptive &amp; Inferential</text>
+
+                            <rect x="410" y="30" width="110" height="120" rx="8" fill="#9B2335" stroke="#C8922A" stroke-width="2"/>
+                            <text x="465" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">4. Reporting</text>
+                            <text x="465" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Plots &amp; Tables</text>
+                        </svg>
+                        <div class="figure-caption">Standardized data analysis pipeline executed through GUI menus in SPSS or code scripts in R.</div>
                     </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.5 SPSS और R में डेटा विश्लेषण वर्कफ़्लो (Data Analysis Workflows in SPSS and R)</h2>
+<p><strong>SPSS</strong> मेनू-आधारित सॉफ्टवेयर है जो शुरुआती शोधकर्ताओं के लिए आसान है। <strong>R</strong> एक मुफ़्त और ओपन-सोर्स कमांड-आधारित सांख्यिकीय प्रोग्रामिंग भाषा है।</p>
+
                 </div>
             </div>
         </section>
@@ -414,53 +771,648 @@ cat("Mean Hb:", mean_hb, "SD:", sd_hb)
         <!-- 3.6 NSS -->
         <section class="page-section" id="sec36">
             <div class="section-card">
-                <h2>3.6 Overview of National Sample Survey (NSS)</h2>
-                <div class="theorem">
-                    <div class="card-title">NSS Stratified Multi-Stage Sampling</div>
-                    <p>The National Statistical Office (NSO) conducts nationwide sample surveys using <strong>stratified multi-stage sampling</strong>:</p>
-                    <p><strong>Stage 1 (FSUs):</strong> Census villages in rural areas or Urban Frame Survey blocks in urban areas.</p>
-                    <p><strong>Stage 2 (SSUs):</strong> Households selected randomly from within the sampled villages/blocks.</p>
+                <div class="english-content">
+                    <h2>3.6 Overview of National Sample Survey (NSS)</h2>
+                    <!-- FIGURE 3.4 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 3.4: NSS Stratified Multi-Stage Sampling Architecture</div>
+                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Country Level -->
+                            <rect x="20" y="30" width="120" height="120" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="80" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Whole Country</text>
+                            <text x="80" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Divided into</text>
+                            <text x="80" y="105" font-family="Source Serif 4" font-size="10" fill="#E8B84B" text-anchor="middle">Districts (Strata)</text>
+
+                            <!-- First Stage -->
+                            <rect x="180" y="30" width="140" height="120" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="250" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">First-Stage Units</text>
+                            <text x="250" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Villages (Rural)</text>
+                            <text x="250" y="105" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Urban Blocks</text>
+
+                            <!-- Second Stage -->
+                            <rect x="360" y="30" width="140" height="120" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="430" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Second-Stage Units</text>
+                            <text x="430" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Sample Households</text>
+                            <text x="430" y="105" font-family="Source Serif 4" font-size="10" fill="#E8B84B" text-anchor="middle">Survey Data</text>
+                        </svg>
+                        <div class="figure-caption">Sampling hierarchy of the National Sample Survey across rural villages and urban blocks.</div>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.6 राष्ट्रीय नमूना सर्वेक्षण (National Sample Survey - NSS)</h2>
+<p>NSS भारत सरकार द्वारा आयोजित एक बड़े पैमाने का राष्ट्रीय सर्वेक्षण है जो रोजगार, स्वास्थ्य, शिक्षा और खपत पर डेटा एकत्र करता है। यह <strong>stratified multi-stage sampling</strong> पद्धति का उपयोग करता है।</p>
+
                 </div>
             </div>
         </section>
 
-        <!-- 3.7 Solved Examples -->
+        <!-- 3.7 Solved Numerical Examples -->
         <section class="page-section" id="sec37">
             <div class="section-card">
-                <h2>3.7 Solved Conceptual Examples</h2>
-                <div class="example">
-                    <div class="card-title">Example 1: Primary vs Secondary</div>
-                    <p>Measuring hostel water tank levels daily is <strong>primary data</strong>. Reading a Municipal Corporation annual water report is <strong>secondary data</strong>.</p>
+                <div class="english-content">
+                    <h2>3.7 Solved Multiline Numerical Examples</h2>
+
+                    <div class="example">
+                        <div class="card-title">Example 3.7.1: Neyman Optimum Allocation in Stratified Sampling</div>
+                        <p><strong>Problem:</strong> A population of $N = 10,000$ households is divided into 3 strata: Stratum 1 ($N_1 = 5,000, S_1 = 4$), Stratum 2 ($N_2 = 3,000, S_2 = 9$), Stratum 3 ($N_3 = 2,000, S_3 = 16$). Calculate the sample size per stratum ($n_1, n_2, n_3$) for a total sample of $n = 500$ using Neyman Optimum Allocation.</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        <p><strong>Step 1: Formula for Neyman Allocation:</strong></p>
+                        $$ n_h = n \times \frac{N_h S_h}{\sum_{i=1}^k N_i S_i} $$
+                        <p><strong>Step 2: Calculate products $N_h S_h$ for each stratum:</strong></p>
+                        $$ N_1 S_1 = 5,000 \times 4 = 20,000 $$
+                        $$ N_2 S_2 = 3,000 \times 9 = 27,000 $$
+                        $$ N_3 S_3 = 2,000 \times 16 = 32,000 $$
+                        $$ \sum N_h S_h = 20,000 + 27,000 + 32,000 = 79,000 $$
+                        <p><strong>Step 3: Calculate sample size allocations:</strong></p>
+                        $$ n_1 = 500 \times \frac{20,000}{79,000} = 500 \times 0.25316 = 126.58 \approx 127 $$
+                        $$ n_2 = 500 \times \frac{27,000}{79,000} = 500 \times 0.34177 = 170.88 \approx 171 $$
+                        $$ n_3 = 500 \times \frac{32,000}{79,000} = 500 \times 0.40506 = 202.53 \approx 202 $$
+                        $$ \text{Verification: } 127 + 171 + 202 = 500 \text{ total households.} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 3.7.2: Chi-Square Test of Independence for Survey Data</div>
+                        <p><strong>Problem:</strong> A survey evaluates whether public transport preference (Bus vs Train) is independent of gender. Observed data: Males (Bus = 60, Train = 40; Total = 100), Females (Bus = 40, Train = 60; Total = 100). Test independence at $\alpha = 0.05$ ($1$ degree of freedom critical value $\chi^2_{0.05, 1} = 3.841$).</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        $$ E_{11} = \frac{100 \times 100}{200} = 50, \quad E_{12} = 50, \quad E_{21} = 50, \quad E_{22} = 50 $$
+                        $$ \chi^2 = \sum \frac{(O - E)^2}{E} = \frac{(60-50)^2}{50} + \frac{(40-50)^2}{50} + \frac{(40-50)^2}{50} + \frac{(60-50)^2}{50} $$
+                        $$ \chi^2 = \frac{100}{50} + \frac{100}{50} + \frac{100}{50} + \frac{100}{50} = 2 + 2 + 2 + 2 = 8.00 $$
+                        <p>Since $\chi^2_{\text{cal}} = 8.00 > 3.841$, reject the null hypothesis. Transport preference is significantly associated with gender.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+
+<h2>3.7 हल किए गए बहु-पंक्ति संख्यात्मक उदाहरण (Solved Numerical Examples)</h2>
+<p>Neyman Optimum Allocation और Chi-Square स्वतंत्रता परीक्षण के चरण-दर-चरण गणितीय हल।</p>
+
                 </div>
             </div>
         </section>
 
-        <!-- 3.8 Exercises -->
+        <!-- 3.8 COMPLETE EXERCISE BANK -->
         <section class="page-section" id="sec38">
             <div class="section-card">
                 <h2>3.8 Chapter End Exercises and Self-Assessment Bank</h2>
-                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
-                <div class="question">1. Data collected directly by the researcher for the first time is called:</div>
-                <div class="mcq-options">
-                    a) Primary data<br>
-                    b) Secondary data<br>
-                    c) Tertiary data<br>
-                    d) Archival data
-                </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q1')">Show Answer ▼</button>
-                <div class="answer" id="q1"><strong>Correct Answer: a</strong> — Primary data is collected first-hand for the specific research goal.</div>
 
-                <h3>Part B: Fill in the Blanks</h3>
-                <p>1. Data collected by someone else is called <strong>secondary</strong> data.</p>
-                <p>2. Assigning numbers to categories is called <strong>coding</strong>.</p>
+                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
+
+                <div class="question"><strong>Q1.</strong> A research design is:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq31" value="a"> (a) A fancy cover page for the project</label>
+                    <label><input type="radio" name="mcq31" value="b"> (b) A plan that shows how a study will be done</label>
+                    <label><input type="radio" name="mcq31" value="c"> (c) A list of references</label>
+                    <label><input type="radio" name="mcq31" value="d"> (d) The final report of a study</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq31_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq31_ans"><strong>Correct Answer: (b)</strong> — A research design is the blueprint or plan of a study.</div>
+
+                <div class="question"><strong>Q2.</strong> The entire group about which we want information is called the:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq32" value="a"> (a) Sample</label>
+                    <label><input type="radio" name="mcq32" value="b"> (b) Population</label>
+                    <label><input type="radio" name="mcq32" value="c"> (c) Variable</label>
+                    <label><input type="radio" name="mcq32" value="d"> (d) Statistic</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq32_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq32_ans"><strong>Correct Answer: (b)</strong> — The population is the entire target group of interest.</div>
+
+                <div class="question"><strong>Q3.</strong> A smaller part of the population that is actually studied is called the:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq33" value="a"> (a) Population</label>
+                    <label><input type="radio" name="mcq33" value="b"> (b) Parameter</label>
+                    <label><input type="radio" name="mcq33" value="c"> (c) Sample</label>
+                    <label><input type="radio" name="mcq33" value="d"> (d) Variable</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq33_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq33_ans"><strong>Correct Answer: (c)</strong> — A sample is a portion of the population selected for study.</div>
+
+                <div class="question"><strong>Q4.</strong> Data collected for the first time by the researcher is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq34" value="a"> (a) Secondary data</label>
+                    <label><input type="radio" name="mcq34" value="b"> (b) Primary data</label>
+                    <label><input type="radio" name="mcq34" value="c"> (c) Published data</label>
+                    <label><input type="radio" name="mcq34" value="d"> (d) Historical data</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq34_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq34_ans"><strong>Correct Answer: (b)</strong> — Primary data is collected directly by the investigator.</div>
+
+                <div class="question"><strong>Q5.</strong> Census of India reports are an example of:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq35" value="a"> (a) Primary data</label>
+                    <label><input type="radio" name="mcq35" value="b"> (b) Secondary data</label>
+                    <label><input type="radio" name="mcq35" value="c"> (c) Raw data</label>
+                    <label><input type="radio" name="mcq35" value="d"> (d) Sample data</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq35_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq35_ans"><strong>Correct Answer: (b)</strong> — Census reports represent published secondary data.</div>
+
+                <div class="question"><strong>Q6.</strong> Which of the following is a method of collecting primary data?</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq36" value="a"> (a) Reading a government report</label>
+                    <label><input type="radio" name="mcq36" value="b"> (b) Using a questionnaire</label>
+                    <label><input type="radio" name="mcq36" value="c"> (c) Searching the internet</label>
+                    <label><input type="radio" name="mcq36" value="d"> (d) Looking at old school records</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq36_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq36_ans"><strong>Correct Answer: (b)</strong> — Questionnaires collect first-hand primary data.</div>
+
+                <div class="question"><strong>Q7.</strong> A schedule is filled by:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq37" value="a"> (a) The respondent alone</label>
+                    <label><input type="radio" name="mcq37" value="b"> (b) A trained investigator</label>
+                    <label><input type="radio" name="mcq37" value="c"> (c) The government</label>
+                    <label><input type="radio" name="mcq37" value="d"> (d) A computer</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq37_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq37_ans"><strong>Correct Answer: (b)</strong> — Schedules are administered and completed by trained enumerators.</div>
+
+                <div class="question"><strong>Q8.</strong> A questionnaire is filled by:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq38" value="a"> (a) The respondent</label>
+                    <label><input type="radio" name="mcq38" value="b"> (b) The investigator</label>
+                    <label><input type="radio" name="mcq38" value="c"> (c) The computer</label>
+                    <label><input type="radio" name="mcq38" value="d"> (d) The librarian</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq38_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq38_ans"><strong>Correct Answer: (a)</strong> — Questionnaires are self-administered by respondents.</div>
+
+                <div class="question"><strong>Q9.</strong> Which type of question allows the respondent to answer in his own words?</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq39" value="a"> (a) Closed-ended question</label>
+                    <label><input type="radio" name="mcq39" value="b"> (b) Multiple-choice question</label>
+                    <label><input type="radio" name="mcq39" value="c"> (c) Open-ended question</label>
+                    <label><input type="radio" name="mcq39" value="d"> (d) Dichotomous question</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq39_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq39_ans"><strong>Correct Answer: (c)</strong> — Open-ended questions permit free qualitative responses.</div>
+
+                <div class="question"><strong>Q10.</strong> A question that has only two answers, such as yes or no, is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq310" value="a"> (a) Open-ended question</label>
+                    <label><input type="radio" name="mcq310" value="b"> (b) Dichotomous question</label>
+                    <label><input type="radio" name="mcq310" value="c"> (c) Rating scale question</label>
+                    <label><input type="radio" name="mcq310" value="d"> (d) Multiple-choice question</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq310_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq310_ans"><strong>Correct Answer: (b)</strong> — Dichotomous questions feature binary choices.</div>
+
+                <div class="question"><strong>Q11.</strong> Which of the following should be avoided in a questionnaire?</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq311" value="a"> (a) Simple words</label>
+                    <label><input type="radio" name="mcq311" value="b"> (b) Short questions</label>
+                    <label><input type="radio" name="mcq311" value="c"> (c) Leading questions</label>
+                    <label><input type="radio" name="mcq311" value="d"> (d) Clear instructions</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq311_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq311_ans"><strong>Correct Answer: (c)</strong> — Leading questions introduce measurement bias.</div>
+
+                <div class="question"><strong>Q12.</strong> Checking collected data for mistakes is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq312" value="a"> (a) Coding</label>
+                    <label><input type="radio" name="mcq312" value="b"> (b) Editing</label>
+                    <label><input type="radio" name="mcq312" value="c"> (c) Tabulation</label>
+                    <label><input type="radio" name="mcq312" value="d"> (d) Classification</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq312_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq312_ans"><strong>Correct Answer: (b)</strong> — Editing involves reviewing data for accuracy and completeness.</div>
+
+                <div class="question"><strong>Q13.</strong> Giving numbers to answers for computer entry is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq313" value="a"> (a) Editing</label>
+                    <label><input type="radio" name="mcq313" value="b"> (b) Coding</label>
+                    <label><input type="radio" name="mcq313" value="c"> (c) Classifying</label>
+                    <label><input type="radio" name="mcq313" value="d"> (d) Tabulating</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq313_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq313_ans"><strong>Correct Answer: (b)</strong> — Coding converts textual responses into numeric codes.</div>
+
+                <div class="question"><strong>Q14.</strong> Arranging data into groups is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq314" value="a"> (a) Editing</label>
+                    <label><input type="radio" name="mcq314" value="b"> (b) Coding</label>
+                    <label><input type="radio" name="mcq314" value="c"> (c) Classification</label>
+                    <label><input type="radio" name="mcq314" value="d"> (d) Tabulation</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq314_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq314_ans"><strong>Correct Answer: (c)</strong> — Classification groups observations based on shared attributes.</div>
+
+                <div class="question"><strong>Q15.</strong> Presenting data in rows and columns is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq315" value="a"> (a) Editing</label>
+                    <label><input type="radio" name="mcq315" value="b"> (b) Coding</label>
+                    <label><input type="radio" name="mcq315" value="c"> (c) Classification</label>
+                    <label><input type="radio" name="mcq315" value="d"> (d) Tabulation</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq315_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq315_ans"><strong>Correct Answer: (d)</strong> — Tabulation displays data in structured matrix tables.</div>
+
+                <div class="question"><strong>Q16.</strong> SPSS is a software mainly used for:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq316" value="a"> (a) Drawing cartoons</label>
+                    <label><input type="radio" name="mcq316" value="b"> (b) Statistical analysis</label>
+                    <label><input type="radio" name="mcq316" value="c"> (c) Making movies</label>
+                    <label><input type="radio" name="mcq316" value="d"> (d) Writing letters</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq316_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq316_ans"><strong>Correct Answer: (b)</strong> — SPSS is a comprehensive statistical analysis package.</div>
+
+                <div class="question"><strong>Q17.</strong> R is:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq317" value="a"> (a) Paid software</label>
+                    <label><input type="radio" name="mcq317" value="b"> (b) Free and open-source software</label>
+                    <label><input type="radio" name="mcq317" value="c"> (c) A type of calculator</label>
+                    <label><input type="radio" name="mcq317" value="d"> (d) A mobile phone app</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq317_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq317_ans"><strong>Correct Answer: (b)</strong> — R is a free, open-source statistical programming language.</div>
+
+                <div class="question"><strong>Q18.</strong> The National Sample Survey is conducted by:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq318" value="a"> (a) A private company</label>
+                    <label><input type="radio" name="mcq318" value="b"> (b) The Government of India</label>
+                    <label><input type="radio" name="mcq318" value="c"> (c) A foreign university</label>
+                    <label><input type="radio" name="mcq318" value="d"> (d) A single village</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq318_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq318_ans"><strong>Correct Answer: (b)</strong> — The NSS is conducted by the National Statistical Office, Govt of India.</div>
+
+                <div class="question"><strong>Q19.</strong> The NSS mainly uses which sampling method?</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq319" value="a"> (a) Simple random sampling only</label>
+                    <label><input type="radio" name="mcq319" value="b"> (b) Stratified multi-stage sampling</label>
+                    <label><input type="radio" name="mcq319" value="c"> (c) Convenience sampling</label>
+                    <label><input type="radio" name="mcq319" value="d"> (d) Judgement sampling</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq319_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq319_ans"><strong>Correct Answer: (b)</strong> — NSS uses stratified multi-stage sampling across rural and urban sectors.</div>
+
+                <div class="question"><strong>Q20.</strong> In NSS sampling, villages or blocks are selected in the:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq320" value="a"> (a) Final stage</label>
+                    <label><input type="radio" name="mcq320" value="b"> (b) First stage</label>
+                    <label><input type="radio" name="mcq320" value="c"> (c) Second stage</label>
+                    <label><input type="radio" name="mcq320" value="d"> (d) Editing stage</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq320_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq320_ans"><strong>Correct Answer: (b)</strong> — Primary sampling units (villages/blocks) are selected in the first stage.</div>
+
+
+                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
+
+                <div class="question"><strong>FIB 1.</strong> The plan of a research study is called the ____________ design.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib31_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib31_ans"><strong>Answer: research</strong> — A research design plans study methodology.</div>
+
+                <div class="question"><strong>FIB 2.</strong> The whole group about which we want information is called the ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib32_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib32_ans"><strong>Answer: population</strong> — The target population includes all units of interest.</div>
+
+                <div class="question"><strong>FIB 3.</strong> A part of the population selected for study is called a ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib33_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib33_ans"><strong>Answer: sample</strong> — A sample represents a portion of the population.</div>
+
+                <div class="question"><strong>FIB 4.</strong> Data collected directly by the researcher is called ____________ data.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib34_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib34_ans"><strong>Answer: primary</strong> — Primary data is collected first-hand.</div>
+
+                <div class="question"><strong>FIB 5.</strong> Data already collected by someone else is called ____________ data.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib35_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib35_ans"><strong>Answer: secondary</strong> — Secondary data is obtained from existing sources.</div>
+
+                <div class="question"><strong>FIB 6.</strong> A set of written questions used to collect information is called a ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib36_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib36_ans"><strong>Answer: questionnaire</strong> — A questionnaire contains structured items.</div>
+
+                <div class="question"><strong>FIB 7.</strong> In the ____________ method, a trained investigator fills in the answers.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib37_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib37_ans"><strong>Answer: schedule</strong> — Schedules are interviewer-administered.</div>
+
+                <div class="question"><strong>FIB 8.</strong> A question that allows free answers is called an ____________ question.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib38_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib38_ans"><strong>Answer: open-ended</strong> — Open-ended questions allow free narrative responses.</div>
+
+                <div class="question"><strong>FIB 9.</strong> A question with only yes or no options is called a ____________ question.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib39_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib39_ans"><strong>Answer: dichotomous</strong> — Dichotomous questions have binary choices.</div>
+
+                <div class="question"><strong>FIB 10.</strong> Checking data for mistakes is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib310_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib310_ans"><strong>Answer: editing</strong> — Editing cleans errors and missing values.</div>
+
+                <div class="question"><strong>FIB 11.</strong> Giving numbers to answers is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib311_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib311_ans"><strong>Answer: coding</strong> — Coding assigns numeric values to categories.</div>
+
+                <div class="question"><strong>FIB 12.</strong> Arranging data into groups is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib312_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib312_ans"><strong>Answer: classification</strong> — Classification organizes data into homogeneous classes.</div>
+
+                <div class="question"><strong>FIB 13.</strong> Presenting data in tables is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib313_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib313_ans"><strong>Answer: tabulation</strong> — Tabulation displays data in rows and columns.</div>
+
+                <div class="question"><strong>FIB 14.</strong> SPSS stands for Statistical Package for the ____________ Sciences.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib314_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib314_ans"><strong>Answer: Social</strong> — SPSS was originally developed for social sciences.</div>
+
+                <div class="question"><strong>FIB 15.</strong> R is a free software used for statistical analysis and making ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib315_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib315_ans"><strong>Answer: graphs / graphics</strong> — R excels at statistical programming and plotting.</div>
+
+                <div class="question"><strong>FIB 16.</strong> The National Sample Survey is now conducted by the National ____________ Office.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib316_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib316_ans"><strong>Answer: Statistical</strong> — Conducted by the NSO under MoSPI.</div>
+
+                <div class="question"><strong>FIB 17.</strong> NSS uses ____________ multi-stage sampling.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib317_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib317_ans"><strong>Answer: stratified</strong> — NSS employs stratified multi-stage designs.</div>
+
+                <div class="question"><strong>FIB 18.</strong> In NSS, households are usually selected in the ____________ stage.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib318_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib318_ans"><strong>Answer: second</strong> — Households are ultimate second-stage sampling units.</div>
+
+                <div class="question"><strong>FIB 19.</strong> The first step in data analysis is to ____________ or import the data.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib319_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib319_ans"><strong>Answer: enter</strong> — Data entry or importing precedes statistical cleaning.</div>
+
+                <div class="question"><strong>FIB 20.</strong> A ____________ distribution shows how often each value occurs.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib320_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib320_ans"><strong>Answer: frequency</strong> — Frequency distributions tabulate occurrence counts.</div>
+
+
+                <h3>Part C: True / False Statements (20 Questions)</h3>
+
+                <div class="question"><strong>TF 1.</strong> A research design is not needed if the study is small.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf31_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf31_ans"><strong>Answer: False</strong> — Every study requires a clear research design regardless of sample size.</div>
+
+                <div class="question"><strong>TF 2.</strong> Primary data is always more accurate than secondary data.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf32_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf32_ans"><strong>Answer: False</strong> — Primary data can suffer from measurement bias if improper sampling or instruments are used.</div>
+
+                <div class="question"><strong>TF 3.</strong> A questionnaire is filled by the respondent.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf33_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf33_ans"><strong>Answer: True</strong> — Questionnaires are self-administered by participants.</div>
+
+                <div class="question"><strong>TF 4.</strong> A schedule is filled by the investigator.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf34_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf34_ans"><strong>Answer: True</strong> — Schedules are completed by trained enumerators during interviews.</div>
+
+                <div class="question"><strong>TF 5.</strong> Open-ended questions are easy to analyse.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf35_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf35_ans"><strong>Answer: False</strong> — Open-ended responses require qualitative content analysis and coding.</div>
+
+                <div class="question"><strong>TF 6.</strong> Leading questions give fair answers.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf36_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf36_ans"><strong>Answer: False</strong> — Leading questions introduce bias by prompting specific responses.</div>
+
+                <div class="question"><strong>TF 7.</strong> Coding means writing questions in code language.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf37_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf37_ans"><strong>Answer: False</strong> — Coding means assigning numerical codes to categorical variables.</div>
+
+                <div class="question"><strong>TF 8.</strong> Classification means putting data into groups.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf38_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf38_ans"><strong>Answer: True</strong> — Classification arranges raw data into homogeneous categories.</div>
+
+                <div class="question"><strong>TF 9.</strong> Tabulation means presenting data in tables.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf39_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf39_ans"><strong>Answer: True</strong> — Tabulation displays data in structured matrix rows and columns.</div>
+
+                <div class="question"><strong>TF 10.</strong> SPSS is free software.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf310_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf310_ans"><strong>Answer: False</strong> — SPSS is a commercial proprietary software; R is open-source.</div>
+
+                <div class="question"><strong>TF 11.</strong> R uses menus and buttons only.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf311_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf311_ans"><strong>Answer: False</strong> — R is a command-driven programming language.</div>
+
+                <div class="question"><strong>TF 12.</strong> The NSS collects data only on income.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf312_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf312_ans"><strong>Answer: False</strong> — NSS collects multi-sectoral data on employment, health, education, and expenditure.</div>
+
+                <div class="question"><strong>TF 13.</strong> Stratified sampling divides the population into groups.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf313_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf313_ans"><strong>Answer: True</strong> — Population is partitioned into non-overlapping strata.</div>
+
+                <div class="question"><strong>TF 14.</strong> In multi-stage sampling, the sample is selected in one step.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf314_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf314_ans"><strong>Answer: False</strong> — Multi-stage sampling selects units in sequential hierarchical stages.</div>
+
+                <div class="question"><strong>TF 15.</strong> Villages are first-stage units in NSS rural surveys.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf315_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf315_ans"><strong>Answer: True</strong> — Villages serve as Primary Sampling Units (PSUs) in rural sectors.</div>
+
+                <div class="question"><strong>TF 16.</strong> Secondary data saves time and money.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf316_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf316_ans"><strong>Answer: True</strong> — Secondary data utilizes existing published repositories.</div>
+
+                <div class="question"><strong>TF 17.</strong> Personal interviews are useful when respondents cannot read.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf317_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf317_ans"><strong>Answer: True</strong> — Interviewers read questions orally to illiterate respondents.</div>
+
+                <div class="question"><strong>TF 18.</strong> A frequency table shows the total of all values.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf318_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf318_ans"><strong>Answer: False</strong> — A frequency table counts occurrences per class interval.</div>
+
+                <div class="question"><strong>TF 19.</strong> Pre-testing a questionnaire is not necessary.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf319_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf319_ans"><strong>Answer: False</strong> — Pilot pre-testing identifies ambiguous or flawed questions prior to full rollout.</div>
+
+                <div class="question"><strong>TF 20.</strong> The population and sample are the same thing.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf320_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf320_ans"><strong>Answer: False</strong> — A sample is a smaller representative subset of the target population.</div>
+
+
+                <h3>Part D: Matching Type Questions (5 Sets of 4 Items)</h3>
+
+                <div class="question"><strong>Matching Set 1: Research Terms</strong><br>
+                    1. Population &nbsp;&nbsp;&nbsp;&nbsp; 2. Sample &nbsp;&nbsp;&nbsp;&nbsp; 3. Variable &nbsp;&nbsp;&nbsp;&nbsp; 4. Parameter
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match31_ans')">Show Answer ▼</button>
+                <div class="answer" id="match31_ans">
+                    <strong>1 → D</strong> (The entire group of interest)<br>
+                    <strong>2 → A</strong> (A part of the population studied)<br>
+                    <strong>3 → B</strong> (Characteristic that takes different values)<br>
+                    <strong>4 → C</strong> (Number describing the whole population)
+                </div>
+
+                <div class="question"><strong>Matching Set 2: Data Types and Sources</strong><br>
+                    5. Primary data &nbsp;&nbsp;&nbsp;&nbsp; 6. Secondary data &nbsp;&nbsp;&nbsp;&nbsp; 7. Questionnaire &nbsp;&nbsp;&nbsp;&nbsp; 8. Schedule
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match32_ans')">Show Answer ▼</button>
+                <div class="answer" id="match32_ans">
+                    <strong>5 → A</strong> (Data collected first-hand)<br>
+                    <strong>6 → B</strong> (Data already collected by others)<br>
+                    <strong>7 → C</strong> (Respondent fills the answers)<br>
+                    <strong>8 → D</strong> (Investigator fills the answers)
+                </div>
+
+                <div class="question"><strong>Matching Set 3: Questionnaire Terms</strong><br>
+                    9. Open-ended question &nbsp;&nbsp;&nbsp;&nbsp; 10. Closed-ended question &nbsp;&nbsp;&nbsp;&nbsp; 11. Dichotomous question &nbsp;&nbsp;&nbsp;&nbsp; 12. Multiple-choice question
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match33_ans')">Show Answer ▼</button>
+                <div class="answer" id="match33_ans">
+                    <strong>9 → B</strong> (Respondent writes freely)<br>
+                    <strong>10 → D</strong> (Question with fixed answer choices)<br>
+                    <strong>11 → A</strong> (Question with yes or no answer)<br>
+                    <strong>12 → C</strong> (Question with several fixed options)
+                </div>
+
+                <div class="question"><strong>Matching Set 4: Data Organisation Steps</strong><br>
+                    13. Editing &nbsp;&nbsp;&nbsp;&nbsp; 14. Coding &nbsp;&nbsp;&nbsp;&nbsp; 15. Classification &nbsp;&nbsp;&nbsp;&nbsp; 16. Tabulation
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match34_ans')">Show Answer ▼</button>
+                <div class="answer" id="match34_ans">
+                    <strong>13 → B</strong> (Checking data for errors)<br>
+                    <strong>14 → C</strong> (Converting answers into numbers)<br>
+                    <strong>15 → D</strong> (Arranging data into groups)<br>
+                    <strong>16 → A</strong> (Presenting data in rows and columns)
+                </div>
+
+                <div class="question"><strong>Matching Set 5: Software and Sampling</strong><br>
+                    17. SPSS &nbsp;&nbsp;&nbsp;&nbsp; 18. R &nbsp;&nbsp;&nbsp;&nbsp; 19. NSS &nbsp;&nbsp;&nbsp;&nbsp; 20. Multi-stage sampling
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match35_ans')">Show Answer ▼</button>
+                <div class="answer" id="match35_ans">
+                    <strong>17 → C</strong> (Menu-based statistical software)<br>
+                    <strong>18 → A</strong> (Free command-based software)<br>
+                    <strong>19 → B</strong> (National Sample Survey)<br>
+                    <strong>20 → D</strong> (Selecting sample in several steps)
+                </div>
+
+
+                <h3>Part E: Subjective and Analytical Questions (10 Questions with Detailed Solutions)</h3>
+
+                <div class="question"><strong>Q1.</strong> What is a research design? Why is it important?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub31_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub31_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>A research design is the operational plan or blueprint of a study. It details what will be studied, how data will be collected, and how analysis will be conducted. It is essential because it keeps the study organized, saves time and financial resources, reduces systematic bias, and ensures valid and reliable results.</p>
+                </div>
+
+                <div class="question"><strong>Q2.</strong> Distinguish between primary and secondary data. Give two examples of each.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub32_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub32_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p><strong>Primary Data:</strong> Data collected first-hand by the investigator specifically for the present research. <em>Examples:</em> Household nutrition survey, clinical trial blood pressure recordings.</p>
+                    <p><strong>Secondary Data:</strong> Pre-existing data collected by another agency for a different primary purpose. <em>Examples:</em> Census of India report, NSS consumer expenditure survey.</p>
+                </div>
+
+                <div class="question"><strong>Q3.</strong> Describe four methods of collecting primary data.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub33_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub33_ans">
+                    <p><strong>Solution:</strong></p>
+                    <ol>
+                        <li><strong>Observation:</strong> Recording events or behaviors directly as they occur.</li>
+                        <li><strong>Personal Interview:</strong> Asking structured questions face-to-face.</li>
+                        <li><strong>Questionnaire:</strong> Distributing self-administered written forms.</li>
+                        <li><strong>Schedule:</strong> Employing trained enumerators to ask questions and record responses.</li>
+                    </ol>
+                </div>
+
+                <div class="question"><strong>Q4.</strong> What are the steps in constructing a questionnaire?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub34_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub34_ans">
+                    <p><strong>Solution:</strong></p>
+                    <ol>
+                        <li>Define clear research objectives.</li>
+                        <li>Identify the target respondent population.</li>
+                        <li>Select appropriate question formats (open vs closed).</li>
+                        <li>Draft clear, unambiguous questions avoiding leading wording.</li>
+                        <li>Sequence questions logically (easy to sensitive).</li>
+                        <li>Pre-test on a pilot sample and refine.</li>
+                        <li>Finalize and deploy.</li>
+                    </ol>
+                </div>
+
+                <div class="question"><strong>Q5.</strong> What is the difference between open-ended and closed-ended questions? Give one example of each.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub35_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub35_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p><strong>Open-ended Questions:</strong> Allow respondents to answer freely in their own words. <em>Example:</em> "What improvements would you suggest for hostel facilities?"</p>
+                    <p><strong>Closed-ended Questions:</strong> Provide fixed response options. <em>Example:</em> "Do you use hostel Wi-Fi? (Yes / No)"</p>
+                </div>
+
+                <div class="question"><strong>Q6.</strong> What are the steps in organising data after collection?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub36_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub36_ans">
+                    <p><strong>Solution:</strong></p>
+                    <ol>
+                        <li><strong>Editing:</strong> Inspecting forms for completeness and error correction.</li>
+                        <li><strong>Coding:</strong> Assigning numerical codes to categorical responses.</li>
+                        <li><strong>Classification:</strong> Grouping data into homogeneous classes.</li>
+                        <li><strong>Tabulation:</strong> Displaying data in structured rows and columns.</li>
+                        <li><strong>Frequency Distribution:</strong> Summarizing occurrence counts per category.</li>
+                    </ol>
+                </div>
+
+                <div class="question"><strong>Q7.</strong> Compare SPSS and R in four points.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub37_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub37_ans">
+                    <p><strong>Solution:</strong></p>
+                    <table>
+                        <thead>
+                            <tr><th>Feature</th><th>SPSS</th><th>R Software</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Cost</td><td>Commercial Paid</td><td>Free Open-Source</td></tr>
+                            <tr><td>Interface</td><td>Menu &amp; GUI based</td><td>Command &amp; Script based</td></tr>
+                            <tr><td>Target Audience</td><td>Beginners / Health Sciences</td><td>Data Scientists / Statisticians</td></tr>
+                            <tr><td>Graphics</td><td>Standard plots</td><td>Highly customizable (ggplot2)</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="question"><strong>Q8.</strong> What is the National Sample Survey? Why is it important?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub38_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub38_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>The National Sample Survey (NSS) is a nation-wide socio-economic sample survey conducted by the Government of India (NSO under MoSPI). It is important because it provides reliable, representative nationwide data on employment, health, education, and expenditure at relatively low cost to guide national planning and welfare policies.</p>
+                </div>
+
+                <div class="question"><strong>Q9.</strong> Explain stratified multi-stage sampling as used by NSS.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub39_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub39_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>In NSS sampling, the country is first divided into geographical strata (districts/sectors). In the first stage, Primary Sampling Units (villages in rural sectors, urban blocks in cities) are selected randomly within each stratum. In the second stage, sample households are selected from the chosen villages/blocks for detailed interview.</p>
+                </div>
+
+                <div class="question"><strong>Q10.</strong> The marks of 8 students are: 45, 50, 50, 55, 60, 60, 60, 65. Prepare a frequency distribution.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub310_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub310_ans">
+                    <p><strong>Solution:</strong></p>
+                    <table>
+                        <thead>
+                            <tr><th>Marks ($X$)</th><th>Frequency ($f$)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>45</td><td>1</td></tr>
+                            <tr><td>50</td><td>2</td></tr>
+                            <tr><td>55</td><td>1</td></tr>
+                            <tr><td>60</td><td>3</td></tr>
+                            <tr><td>65</td><td>1</td></tr>
+                            <tr><td><strong>Total ($\sum f$)</strong></td><td><strong>8</strong></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </section>
 
-        <!-- 3.9 Summary -->
-        <section class="page-section" id="sec39">
+        <!-- 3.10 Summary -->
+        <section class="page-section" id="sec310">
             <div class="section-card">
-                <h2>3.9 Summary &amp; References</h2>
-                <p>Research design provides the foundation for data integrity. Mastering questionnaire construction, data cleaning, SPSS/R workflows, and national sampling designs ensures reliable statistical findings.</p>
+                <h2>3.10 Summary &amp; References</h2>
+                <p>Research design provides the structural blueprint for scientific investigation, encompassing objective formulation, primary vs secondary data collection, questionnaire engineering, data editing/coding/tabulation, computational workflows in SPSS/R, and national sampling methodologies such as the NSS.</p>
+                <h3>References</h3>
+                <ul>
+                    <li>Gupta, S.C. and Kapoor, V.K. <em>Fundamentals of Applied Statistics</em>. Sultan Chand &amp; Sons.</li>
+                    <li>Cochran, W.G. <em>Sampling Techniques</em>. Wiley.</li>
+                    <li>Government of India. <em>National Sample Survey Reports</em>. MoSPI.</li>
+                </ul>
             </div>
         </section>
 
@@ -486,10 +1438,35 @@ cat("Mean Hb:", mean_hb, "SD:", sd_hb)
         }
         function toggleAnswer(id) {
             const el = document.getElementById(id);
-            if (el.style.display === 'block') { el.style.display = 'none'; }
-            else { el.style.display = 'block'; }
+            if (!el) return;
+            if (el.classList.contains('show') || el.style.display === 'block') {
+                el.classList.remove('show');
+                el.style.display = 'none';
+            } else {
+                el.classList.add('show');
+                el.style.display = 'block';
+            }
         }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
+            } else {
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
+            }
+        }
     </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
     <script src="../calculator/calculator.js?v=1.0"></script>
