@@ -1,4 +1,4 @@
-# STAT-MDC-101: Bio-Statistics
+# STAT-M-101: Bio-Statistics
 
 ## Unit-IV: Introduction to Survival Analysis
 
