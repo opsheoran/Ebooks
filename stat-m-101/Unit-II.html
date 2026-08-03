@@ -10,7 +10,7 @@
         window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                displayMath: [['$$', '$$']],
                 processEscapes: true
             },
             options: {
@@ -172,6 +172,7 @@
             background: #ffffff; border-radius: var(--radius);
             padding: 36px 40px; margin-bottom: 32px;
             box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
         }
         .section-card h2 {
             font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700;
@@ -194,7 +195,6 @@
         .theorem { background: var(--gold-pale); border-left: 4px solid var(--gold); }
         .example { background: var(--sky-light); border-left: 4px solid var(--sky); }
         .note { background: #F4F4F6; border-left: 4px solid var(--text-soft); }
-        .formula-box { background: var(--navy); color: #fff; text-align: center; padding: 22px; border-radius: 10px; }
 
         .card-title {
             font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .88rem;
@@ -204,28 +204,138 @@
         .theorem .card-title { color: var(--gold); }
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
-        .formula-box .card-title { color: var(--gold-light); }
 
+        /* ── COMPACT CENTERED TABLES (STAT 101/102 SYSTEM) ── */
         table {
-            width: 100% !important; margin: 20px 0 !important;
-            border-collapse: collapse !important; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            width: auto !important;
+            max-width: 95% !important;
+            margin: 24px auto !important;
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
+            background: #ffffff !important;
+            display: table !important;
+            border: 1px solid var(--border) !important;
         }
-        th { background: var(--navy); color: #fff; padding: 10px 14px; text-align: left; }
-        td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: left; }
-        tr:nth-child(even) { background: rgba(0,0,0,0.02); }
+        th {
+            background: var(--navy) !important;
+            color: #ffffff !important;
+            padding: 8px 16px !important;
+            font-family: 'DM Sans', sans-serif !important;
+            font-size: 0.88rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px !important;
+            text-align: center !important;
+            border-bottom: 2px solid var(--gold) !important;
+        }
+        td {
+            padding: 6px 16px !important;
+            border-bottom: 1px solid var(--border) !important;
+            font-size: 0.88rem !important;
+            color: var(--text-dark) !important;
+            text-align: center !important;
+        }
+        tr:nth-child(even) td { background: #fcfbf9 !important; }
+        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
 
-        .question { font-weight: 600; margin-top: 18px; color: var(--navy); font-size: 0.98rem; }
-        .mcq-options { margin: 8px 0 12px 20px; line-height: 1.7; color: var(--text-mid); }
+        /* ── FIGURE BOX STYLING ── */
+        .figure-box {
+            background: #FAFAFC;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 22px;
+            margin: 28px auto;
+            max-width: 720px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .figure-title {
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--navy);
+            margin-bottom: 14px;
+        }
+        .book-fig {
+            width: 100%;
+            max-width: 640px;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
+        .figure-caption {
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.88rem;
+            font-style: italic;
+            color: var(--text-soft);
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        /* ── EXERCISE STYLING ── */
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        .question strong { color: var(--navy); }
+
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block;
+            margin: 6px 0;
+            cursor: pointer;
+            font-size: .95rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
         .toggle-btn {
-            background: var(--navy); color: #fff; border: none; padding: 6px 14px;
-            border-radius: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
-            font-size: .8rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 12px;
+            letter-spacing: .3px;
         }
-        .toggle-btn:hover { background: var(--navy-light); }
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
         .answer {
-            display: none; background: #F0FBF5; border-left: 4px solid var(--sage);
-            padding: 14px 18px; margin-bottom: 16px; border-radius: 0 6px 6px 0; font-size: .94rem;
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 16px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
         }
+        .answer.show { display: block; }
+        .answer strong { font-weight: 700; color: var(--navy); }
 
         .book-footer {
             position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
@@ -274,13 +384,13 @@
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec21'); return false;"><span class="nav-num">2.1</span> Intro to Clinical Trials</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec22'); return false;"><span class="nav-num">2.2</span> Classification of Trials</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec23'); return false;"><span class="nav-num">2.3</span> Phases (Phases 0–IV)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec23'); return false;"><span class="nav-num">2.3</span> Phases (0 to IV)</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec24'); return false;"><span class="nav-num">2.4</span> Randomized Controlled Trials</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec25'); return false;"><span class="nav-num">2.5</span> Ethics &amp; Informed Consent</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec25'); return false;"><span class="nav-num">2.5</span> Ethics in Clinical Trials</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec26'); return false;"><span class="nav-num">2.6</span> Multi-Centre Trials</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec27'); return false;"><span class="nav-num">2.7</span> Sample Size Estimation</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">2.8</span> Solved Examples</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec29'); return false;"><span class="nav-num">2.9</span> Exercise Bank (Parts A–E)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec29'); return false;"><span class="nav-num">2.9</span> Exercise Bank (All 75 Qs)</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec210'); return false;"><span class="nav-num">2.10</span> Summary &amp; References</a></li>
         </ul>
 
@@ -299,7 +409,7 @@
         <!-- Chapter Header -->
         <div class="chapter-header">
             <h1>Unit II: Clinical Trials</h1>
-            <div class="chap-sub">Phases of clinical development, randomized controlled trials, ethical guidelines &amp; sample size computation</div>
+            <div class="chap-sub">Definitions, classification, trial phases (Phases I–IV), RCT principles, ethics, multi-centre trials &amp; sample size estimation</div>
         </div>
 
         <!-- 2.1 Intro -->
@@ -307,30 +417,40 @@
             <div class="section-card">
                 <h2>2.1 Introduction to Clinical Trials</h2>
                 <blockquote>
-                    When a doctor gives a patient a tablet for fever, the doctor knows the drug has already been tested. But before that tablet reached the market, someone had to answer important questions. Does the drug work? Is it safe? What is the right dose? These questions are answered through clinical trials. A clinical trial is a study done with human beings to test a new medicine, device, vaccine, or treatment method. It is the bridge between laboratory research and everyday medical use.
+                    When a doctor gives a patient a tablet for fever, the doctor knows the drug has already been tested. But before that tablet reached the market, someone had to answer important questions. Does the drug work? Is it safe? What is the right dose? These questions are answered through clinical trials. A clinical trial is a study done with human beings to test a new medicine, device, vaccine, or treatment method. It is the bridge between laboratory research and everyday medical use. In India, clinical trials help find better treatments for diseases like tuberculosis, diabetes, cancer, and heart disease. They also help us compare a new treatment with the one already in use. Without trials, doctors would have no solid proof that a treatment is helpful or safe.
                 </blockquote>
 
                 <div class="definition">
                     <div class="card-title">What is a Clinical Trial?</div>
-                    A <strong>clinical trial</strong> is a research study carried out on human volunteers. It tests how safe and useful a new treatment, drug, vaccine, or medical device is. The treatment being tested is called the <strong>investigational product</strong>.
+                    A <strong>clinical trial</strong> is a biomedical or health-related research study carried out on human volunteers to evaluate the safety, efficacy, and clinical utility of a new drug, medical device, vaccine, or therapeutic regimen. The new product under evaluation is referred to as the <strong>investigational product</strong>.
+                </div>
+
+                <div class="example">
+                    <div class="card-title">Example</div>
+                    A pharmaceutical company develops a new cough syrup. Before the syrup can be prescribed by doctors or sold in pharmacies, it must undergo testing in a clinical trial. Researchers check whether the new syrup reduces cough symptoms more effectively than existing syrups and evaluate any adverse side effects.
                 </div>
 
                 <h3>Why Do We Need Clinical Trials?</h3>
-                <p>We need clinical trials because laboratory tests on animals or cells cannot tell us everything about how a treatment will work in humans. Trials give us proof about:</p>
+                <p>Laboratory tests on cell cultures or animal models cannot completely predict how a medical intervention will perform in human biology. Clinical trials provide essential empirical evidence regarding:</p>
                 <ul>
-                    <li><strong>Safety:</strong> Does the treatment cause harm or unexpected adverse events?</li>
-                    <li><strong>Effectiveness:</strong> Does the treatment produce the desired therapeutic result?</li>
-                    <li><strong>Dose:</strong> What is the optimal amount and schedule to administer?</li>
-                    <li><strong>Comparison:</strong> Is the new treatment superior or non-inferior to existing standard care?</li>
+                    <li><strong>Safety:</strong> Does the treatment cause unwanted side effects or toxic reactions in humans?</li>
+                    <li><strong>Efficacy:</strong> Does the treatment produce the intended therapeutic benefit?</li>
+                    <li><strong>Dosage:</strong> What is the optimal amount and schedule of administration?</li>
+                    <li><strong>Comparative Superiority:</strong> Is the new intervention more effective or safer than current standard care?</li>
                 </ul>
 
-                <div class="note">
-                    <div class="card-title">Key Terminology</div>
-                    <p><strong>Participant / Subject:</strong> The human volunteer taking part in the trial.</p>
-                    <p><strong>Investigator:</strong> The doctor or scientist conducting the trial at a study site.</p>
-                    <p><strong>Sponsor:</strong> The organisation funding the trial (government agency, university, or pharmaceutical firm).</p>
-                    <p><strong>Protocol:</strong> The binding master plan outlining objectives, design, eligibility criteria, and analysis.</p>
+                <div class="example">
+                    <div class="card-title">Real-World Application</div>
+                    During the COVID-19 pandemic, clinical trials evaluated candidate vaccines in thousands of volunteers across India and worldwide. These trials provided regulatory authorities such as the CDSCO (Central Drugs Standard Control Organisation) with rigorous data to authorize vaccines for public health use.
                 </div>
+
+                <h3>Key Roles and Terminology</h3>
+                <ul>
+                    <li><strong>Participant or Subject:</strong> A human volunteer (healthy or diseased) who agrees to take part in the research study.</li>
+                    <li><strong>Investigator:</strong> The qualified medical doctor or scientist who conducts and supervises the trial at a clinical site.</li>
+                    <li><strong>Sponsor:</strong> The individual, company, university, or government organization that initiates, manages, and finances the clinical trial.</li>
+                    <li><strong>Protocol:</strong> A strict, formal document detailing the objective, design, methodology, statistical considerations, and safety measures of the trial.</li>
+                </ul>
             </div>
         </section>
 
@@ -338,66 +458,208 @@
         <section class="page-section" id="sec22">
             <div class="section-card">
                 <h2>2.2 Classification of Clinical Trials</h2>
+                <blockquote>
+                    Not all clinical trials are the same. Some test new drugs. Some test vaccines. Some try to prevent disease, while others try to diagnose it. Trials can also differ in how they are designed. Some compare a new drug with a sugar pill. Others compare it with the best existing treatment. Understanding these types helps us read trial results correctly. It also helps doctors and patients choose the right treatment.
+                </blockquote>
 
-                <h3>By Objective / Purpose</h3>
-                <p><strong>Treatment Trials:</strong> Test new drugs, biologicals, or surgical techniques in diseased patients.</p>
-                <p><strong>Prevention Trials:</strong> Evaluate vaccines, vitamins, or lifestyle interventions in healthy populations.</p>
-                <p><strong>Diagnostic &amp; Screening Trials:</strong> Test new tests or procedures for early disease detection.</p>
-                <p><strong>Quality-of-Life Trials:</strong> Explore supportive care interventions to improve comfort for chronic patients.</p>
+                <h3>Classification by Purpose or Objective</h3>
 
-                <h3>By Control Group &amp; Blinding</h3>
-                <p><strong>Placebo-Controlled:</strong> Investigational product is compared against an inactive dummy treatment.</p>
-                <p><strong>Active-Controlled:</strong> Investigational product is compared against current gold-standard therapy.</p>
-                <p><strong>Open-Label:</strong> Both participant and doctor know which intervention is administered.</p>
-                <p><strong>Double-Blind:</strong> Neither participant nor investigator knows the group assignment.</p>
+                <div class="note">
+                    <div class="card-title">1. Treatment Trials</div>
+                    Evaluate new treatments, novel drug combinations, or new surgical techniques in patients who already suffer from a diagnosed illness.
+                    <br><em>Example:</em> Testing a target-specific chemotherapy drug in patients with advanced lung cancer.
+                </div>
+
+                <div class="note">
+                    <div class="card-title">2. Prevention Trials</div>
+                    Evaluate interventions designed to prevent disease onset in healthy individuals or high-risk populations.
+                    <br><em>Example:</em> Testing whether daily micronutrient or vitamin supplementation lowers anaemia incidence among adolescent school children.
+                </div>
+
+                <div class="note">
+                    <div class="card-title">3. Diagnostic Trials</div>
+                    Test new procedures or tests for identifying a specific disease or condition more accurately.
+                    <br><em>Example:</em> Comparing a rapid molecular blood test with a chest X-ray for early tuberculosis detection.
+                </div>
+
+                <div class="note">
+                    <div class="card-title">4. Screening Trials</div>
+                    Evaluate ways to detect disease early in asymptomatic populations before clinical signs emerge.
+                    <br><em>Example:</em> Evaluating mobile mammography or cervical screening camps in rural communities.
+                </div>
+
+                <div class="note">
+                    <div class="card-title">5. Quality-of-Life Trials</div>
+                    Investigate approaches to improve comfort, daily function, and well-being for patients managing chronic conditions.
+                    <br><em>Example:</em> Testing structured physical therapy or yoga routines for pain management in rheumatoid arthritis.
+                </div>
+
+                <h3>Classification by Control Group Architecture</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Trial Type</th>
+                            <th>Description</th>
+                            <th>Field Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Placebo-Controlled</strong></td>
+                            <td>The new intervention is compared against a placebo (an inactive tablet or mock intervention identical in appearance).</td>
+                            <td>Comparing an experimental analgesic pill against an identical sugar pill.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Active-Controlled</strong></td>
+                            <td>The new intervention is compared directly against the current gold-standard treatment already approved for use.</td>
+                            <td>Comparing a new anti-diabetic drug against Metformin.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Classification by Degree of Blinding</h3>
+                <ul>
+                    <li><strong>Open-Label Trial:</strong> Both the participant and the investigator know exactly which intervention is being administered.</li>
+                    <li><strong>Single-Blind Trial:</strong> Only the participant remains unaware of their assigned treatment group, while the investigator knows.</li>
+                    <li><strong>Double-Blind Trial:</strong> Neither the participant nor the investigator assessing outcomes knows who is receiving the new drug versus the control. This design minimizes observer and participant bias.</li>
+                </ul>
             </div>
         </section>
 
         <!-- 2.3 Phases -->
         <section class="page-section" id="sec23">
             <div class="section-card">
-                <h2>2.3 Phases of Clinical Trials</h2>
-                <p>Drug development progresses sequentially through 5 distinct phases to protect human volunteers and ensure rigorous scientific evidence:</p>
+                <h2>2.3 Phases of Clinical Trials (Phases 0 to IV)</h2>
+                <blockquote>
+                    A new drug is not tested on thousands of people on the first day. Testing happens step by step. Each step is called a phase. Early phases use a small number of people and focus on safety. Later phases use more people and focus on whether the drug really works. If a drug passes all phases, it can be approved for public use. Even after approval, experts keep watching it. This organised step-by-step process protects volunteers and gives trustworthy results.
+                </blockquote>
 
+                <!-- FIGURE 2.1 -->
+                <div class="figure-box">
+                    <div class="figure-title">Figure 2.1: Sequential Development Phases of Clinical Trials</div>
+                    <svg class="book-fig" viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Phase 0 -->
+                        <rect x="10" y="30" width="105" height="130" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                        <text x="62" y="55" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">Phase 0</text>
+                        <text x="62" y="75" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Microdosing</text>
+                        <text x="62" y="95" font-family="DM Sans" font-size="10" fill="#DDD8CF" text-anchor="middle">N &lt; 15</text>
+                        <text x="62" y="115" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Human PK/PD</text>
+
+                        <!-- Arrow 1 -->
+                        <line x1="115" y1="95" x2="135" y2="95" stroke="#C8922A" stroke-width="2"/>
+
+                        <!-- Phase I -->
+                        <rect x="135" y="30" width="105" height="130" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="187" y="55" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">Phase I</text>
+                        <text x="187" y="75" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Safety &amp; Dose</text>
+                        <text x="187" y="95" font-family="DM Sans" font-size="10" fill="#DDD8CF" text-anchor="middle">N: 20–100</text>
+                        <text x="187" y="115" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Volunteers</text>
+
+                        <!-- Arrow 2 -->
+                        <line x1="240" y1="95" x2="260" y2="95" stroke="#C8922A" stroke-width="2"/>
+
+                        <!-- Phase II -->
+                        <rect x="260" y="30" width="105" height="130" rx="8" fill="#1D6FA4" stroke="#C8922A" stroke-width="2"/>
+                        <text x="312" y="55" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">Phase II</text>
+                        <text x="312" y="75" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Efficacy Check</text>
+                        <text x="312" y="95" font-family="DM Sans" font-size="10" fill="#DDD8CF" text-anchor="middle">N: 100–300</text>
+                        <text x="312" y="115" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Patients</text>
+
+                        <!-- Arrow 3 -->
+                        <line x1="365" y1="95" x2="385" y2="95" stroke="#C8922A" stroke-width="2"/>
+
+                        <!-- Phase III -->
+                        <rect x="385" y="30" width="105" height="130" rx="8" fill="#3D6B5A" stroke="#E8B84B" stroke-width="2"/>
+                        <text x="437" y="55" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">Phase III</text>
+                        <text x="437" y="75" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Confirmation</text>
+                        <text x="437" y="95" font-family="DM Sans" font-size="10" fill="#DDD8CF" text-anchor="middle">1,000–5,000</text>
+                        <text x="437" y="115" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Reg. Approval</text>
+
+                        <!-- Arrow 4 -->
+                        <line x1="490" y1="95" x2="510" y2="95" stroke="#C8922A" stroke-width="2"/>
+
+                        <!-- Phase IV -->
+                        <rect x="510" y="30" width="100" height="130" rx="8" fill="#9B2335" stroke="#C8922A" stroke-width="2"/>
+                        <text x="560" y="55" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">Phase IV</text>
+                        <text x="560" y="75" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Post-Market</text>
+                        <text x="560" y="95" font-family="DM Sans" font-size="10" fill="#DDD8CF" text-anchor="middle">General Pop.</text>
+                        <text x="560" y="115" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Long Safety</text>
+                    </svg>
+                    <div class="figure-caption">Step-by-step clinical drug development progression from early microdosing to post-marketing safety surveillance.</div>
+                </div>
+
+                <h3>Detailed Breakdown of Development Phases</h3>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Phase 0</span>
+                    <h4>Exploratory Microdosing Studies</h4>
+                    <p>Sub-therapeutic microdoses are administered to a very small cohort (typically under 15 volunteers). The goal is to study human pharmacokinetics (absorption, distribution, metabolism, excretion) without therapeutic expectation.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Phase I</span>
+                    <h4>Safety, Tolerability, and Dose-Ranging</h4>
+                    <p>Evaluates safety in 20 to 100 healthy volunteers (or cancer patients for toxic drugs). Determines safe dosage ranges, maximum tolerated dose (MTD), and identifies initial side effects.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Phase II</span>
+                    <h4>Therapeutic Exploratory Efficacy</h4>
+                    <p>Evaluates therapeutic efficacy and short-term safety in 100 to 300 target patients. Helps refine optimal dosing regimens and confirms biological activity.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Phase III</span>
+                    <h4>Therapeutic Confirmatory Pivotal Trials</h4>
+                    <p>Large multi-centre randomized controlled trials involving 1,000 to 5,000+ patients comparing the new drug against standard care or placebo. Provides regulatory agencies with definitive proof for market authorization.</p>
+                </div>
+
+                <div class="step-card">
+                    <span class="step-num-badge">Phase IV</span>
+                    <h4>Post-Marketing Surveillance</h4>
+                    <p>Conducted after regulatory approval and commercial launch. Monitors long-term safety, rare adverse events (e.g. 1 in 100,000), drug interactions, and effectiveness in diverse real-world patient populations.</p>
+                </div>
+
+                <h3>Master Summary Table of Trial Phases</h3>
                 <table>
                     <thead>
                         <tr>
                             <th>Phase</th>
-                            <th>Main Question</th>
-                            <th>Participants</th>
-                            <th>Primary Focus</th>
+                            <th>Primary Objective</th>
+                            <th>Participant Cohort</th>
+                            <th>Key Focus</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Phase 0</strong></td>
-                            <td>How does the drug act in humans?</td>
-                            <td>Very small (10)</td>
-                            <td>Microdosing &amp; early pharmacokinetics</td>
+                            <td>Human pharmacokinetics</td>
+                            <td>Under 15 human subjects</td>
+                            <td>Microdose biodistribution</td>
                         </tr>
                         <tr>
                             <td><strong>Phase I</strong></td>
-                            <td>Is it safe? What dose can be given?</td>
-                            <td>20–100</td>
-                            <td>Safety, tolerability &amp; dose-finding</td>
+                            <td>Safety &amp; safe dose range</td>
+                            <td>20–100 healthy volunteers</td>
+                            <td>Tolerability &amp; toxicity</td>
                         </tr>
                         <tr>
                             <td><strong>Phase II</strong></td>
-                            <td>Does it work in diseased patients?</td>
-                            <td>100–300</td>
-                            <td>Therapeutic efficacy &amp; short-term safety</td>
+                            <td>Efficacy &amp; side effects</td>
+                            <td>100–300 target patients</td>
+                            <td>Proof of therapeutic concept</td>
                         </tr>
                         <tr>
                             <td><strong>Phase III</strong></td>
-                            <td>Is it better than standard care?</td>
-                            <td>1,000–5,000</td>
-                            <td>Large-scale confirmatory comparison for regulatory approval</td>
+                            <td>Definitive efficacy comparison</td>
+                            <td>1,000–5,000+ patients</td>
+                            <td>Regulatory approval evidence</td>
                         </tr>
                         <tr>
                             <td><strong>Phase IV</strong></td>
-                            <td>What happens in real-world use?</td>
-                            <td>Large populations</td>
-                            <td>Post-marketing surveillance &amp; rare adverse reactions</td>
+                            <td>Real-world long-term monitoring</td>
+                            <td>Thousands of public users</td>
+                            <td>Rare adverse event surveillance</td>
                         </tr>
                     </tbody>
                 </table>
@@ -407,19 +669,96 @@
         <!-- 2.4 RCT -->
         <section class="page-section" id="sec24">
             <div class="section-card">
-                <h2>2.4 Randomized Controlled Trials (RCT)</h2>
+                <h2>2.4 Randomized Controlled Trials (RCTs)</h2>
+                <blockquote>
+                    Suppose a doctor believes that a new herbal tea lowers blood pressure. If she gives the tea only to patients she likes, her personal belief may affect the result. To avoid this, researchers use a special design called the randomized controlled trial, or RCT. In an RCT, participants are divided into groups by chance, like tossing a coin. One group gets the new treatment. The other group gets a placebo or the standard treatment. Then both groups are followed in the same way. Because the groups are formed by chance, they are likely to be similar at the start. Any difference in outcome at the end can then be credited to the treatment.
+                </blockquote>
+
                 <div class="definition">
-                    <div class="card-title">What is an RCT?</div>
-                    A <strong>Randomized Controlled Trial (RCT)</strong> is a trial in which participants are allocated to treatment or control arms strictly by chance. It represents the gold standard design for evaluating healthcare interventions.
+                    <div class="card-title">Definition</div>
+                    A <strong>Randomized Controlled Trial (RCT)</strong> is an experimental study design in which eligible human participants are randomly allocated to receive either an investigational intervention or a control intervention (placebo or active standard care) and followed systematically to compare clinical outcomes.
                 </div>
 
-                <div class="theorem">
-                    <div class="card-title">Core Principles of RCT Design</div>
-                    <p><strong>Randomization:</strong> Uses chance (computer generator/random tables) to create comparable groups at baseline, balancing both known and unknown confounding variables.</p>
-                    <p><strong>Control Group:</strong> Provides a baseline comparison (placebo or active standard care) to isolate the true therapeutic benefit.</p>
-                    <p><strong>Blinding / Masking:</strong> Prevents expectation bias. In double-blind RCTs, coded containers ensure neither patient nor evaluating physician knows the assignment.</p>
-                    <p><strong>Allocation Concealment:</strong> Prevents enrollment bias by hiding upcoming group assignments until a participant is formally enrolled.</p>
+                <!-- FIGURE 2.2 -->
+                <div class="figure-box">
+                    <div class="figure-title">Figure 2.2: Basic Architecture of a Randomized Controlled Trial</div>
+                    <svg class="book-fig" viewBox="0 0 580 220" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Eligible Population -->
+                        <rect x="10" y="70" width="130" height="60" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                        <text x="75" y="96" font-family="DM Sans" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">Eligible Study</text>
+                        <text x="75" y="114" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle">Population</text>
+
+                        <!-- Arrow to Randomization -->
+                        <line x1="140" y1="100" x2="180" y2="100" stroke="#C8922A" stroke-width="3"/>
+
+                        <!-- Randomization Circle -->
+                        <circle cx="215" cy="100" r="35" fill="#C8922A" stroke="#1B2A4A" stroke-width="2"/>
+                        <text x="215" y="96" font-family="DM Sans" font-size="10" fill="#fff" text-anchor="middle" font-weight="bold">Random</text>
+                        <text x="215" y="112" font-family="DM Sans" font-size="10" fill="#fff" text-anchor="middle">Allocation</text>
+
+                        <!-- Split Arrows -->
+                        <path d="M 250 85 L 290 45" stroke="#C8922A" stroke-width="2"/>
+                        <path d="M 250 115 L 290 155" stroke="#C8922A" stroke-width="2"/>
+
+                        <!-- Intervention Group -->
+                        <rect x="290" y="20" width="140" height="50" rx="6" fill="#1D6FA4" stroke="#1B2A4A" stroke-width="2"/>
+                        <text x="360" y="50" font-family="DM Sans" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">New Intervention</text>
+
+                        <!-- Control Group -->
+                        <rect x="290" y="130" width="140" height="50" rx="6" fill="#3D6B5A" stroke="#1B2A4A" stroke-width="2"/>
+                        <text x="360" y="160" font-family="DM Sans" font-size="12" fill="#fff" text-anchor="middle" font-weight="bold">Control (Placebo/Std)</text>
+
+                        <!-- Outcome Followup -->
+                        <line x1="430" y1="45" x2="470" y2="45" stroke="#C8922A" stroke-width="2"/>
+                        <line x1="430" y1="155" x2="470" y5="155" stroke="#C8922A" stroke-width="2"/>
+
+                        <rect x="470" y="20" width="100" height="50" rx="6" fill="#9B2335" stroke="#1B2A4A" stroke-width="2"/>
+                        <text x="520" y="50" font-family="DM Sans" font-size="11" fill="#fff" text-anchor="middle">Measure Outcome</text>
+
+                        <rect x="470" y="130" width="100" height="50" rx="6" fill="#9B2335" stroke="#1B2A4A" stroke-width="2"/>
+                        <text x="520" y="160" font-family="DM Sans" font-size="11" fill="#fff" text-anchor="middle">Measure Outcome</text>
+                    </svg>
+                    <div class="figure-caption">Experimental design of a randomized controlled trial showing random allocation to intervention and control arms.</div>
                 </div>
+
+                <h3>Core Methodological Elements</h3>
+
+                <h4>1. Randomization</h4>
+                <p>Allocating participants to treatment groups strictly by chance (using computer-generated random schedules or central telephone systems). Randomization ensures that baseline prognostic factors (age, sex, disease severity) are distributed equally between study groups, effectively eliminating selection bias.</p>
+
+                <h4>2. Control Group &amp; Placebo</h4>
+                <p>The control group receives either an active standard treatment or a <strong>placebo</strong> (an inert substance identical in appearance). A placebo isolates the specific pharmacological action of the intervention from psychological response (the <em>placebo effect</em>).</p>
+
+                <!-- FIGURE 2.3 -->
+                <div class="figure-box">
+                    <div class="figure-title">Figure 2.3: Degrees of Blinding in Clinical Research</div>
+                    <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="30" width="110" height="120" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                        <text x="75" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Open-Label</text>
+                        <text x="75" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Participant: Aware</text>
+                        <text x="75" y="110" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Doctor: Aware</text>
+
+                        <rect x="150" y="30" width="110" height="120" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="205" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Single-Blind</text>
+                        <text x="205" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Participant: Blind</text>
+                        <text x="205" y="110" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Doctor: Aware</text>
+
+                        <rect x="280" y="30" width="110" height="120" rx="8" fill="#3D6B5A" stroke="#E8B84B" stroke-width="2"/>
+                        <text x="335" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Double-Blind</text>
+                        <text x="335" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Participant: Blind</text>
+                        <text x="335" y="110" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Doctor: Blind</text>
+
+                        <rect x="410" y="30" width="110" height="120" rx="8" fill="#9B2335" stroke="#C8922A" stroke-width="2"/>
+                        <text x="465" y="60" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Triple-Blind</text>
+                        <text x="465" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Participant: Blind</text>
+                        <text x="465" y="105" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Doctor: Blind</text>
+                        <text x="465" y="125" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Statistician: Blind</text>
+                    </svg>
+                    <div class="figure-caption">Hierarchy of blinding levels to prevent expectation and assessment bias in clinical trials.</div>
+                </div>
+
+                <h4>3. Allocation Concealment</h4>
+                <p>Keeping upcoming random assignments secret until the moment of enrollment (e.g. sealed opaque envelopes or web-based randomization). This prevents investigators from subconsciously selecting which patients enter which arm.</p>
             </div>
         </section>
 
@@ -427,33 +766,86 @@
         <section class="page-section" id="sec25">
             <div class="section-card">
                 <h2>2.5 Ethics in Clinical Trials</h2>
-                <p>Human participant protection is governed by international (Declaration of Helsinki) and national (ICMR National Ethical Guidelines) frameworks.</p>
+                <blockquote>
+                    Clinical trials involve real people. These people may be sick, poor, or unable to fully understand the risks. That is why ethics are at the heart of every trial. No matter how promising a new drug looks, it cannot be tested on humans unless ethical rules are followed. The safety and rights of participants must always come before the interests of science or business. In India, ethics committees review every trial. They check the protocol, the consent form, and the balance between possible benefit and possible harm.
+                </blockquote>
 
-                <div class="note">
-                    <div class="card-title">Four Essential Ethical Principles</div>
-                    <ol>
-                        <li><strong>Respect for Persons (Autonomy):</strong> Participants must be treated with dignity and give voluntary informed consent.</li>
-                        <li><strong>Beneficence:</strong> Researchers must maximize potential benefits to subjects and society.</li>
-                        <li><strong>Non-Maleficence:</strong> Researchers must minimize risks and do no harm.</li>
-                        <li><strong>Justice:</strong> Selection of subjects and distribution of trial benefits/burdens must be fair and non-exploitative.</li>
-                    </ol>
+                <!-- FIGURE 2.4 -->
+                <div class="figure-box">
+                    <div class="figure-title">Figure 2.4: Four Pillars of Bioethics in Human Research</div>
+                    <svg class="book-fig" viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="20" width="230" height="70" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                        <text x="135" y="48" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">1. Respect for Persons</text>
+                        <text x="135" y="68" font-family="Source Serif 4" font-size="11" fill="#fff" text-anchor="middle">Autonomy &amp; Informed Consent</text>
+
+                        <rect x="290" y="20" width="230" height="70" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                        <text x="405" y="48" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">2. Beneficence</text>
+                        <text x="405" y="68" font-family="Source Serif 4" font-size="11" fill="#fff" text-anchor="middle">Maximizing Therapeutic Benefits</text>
+
+                        <rect x="20" y="110" width="230" height="70" rx="8" fill="#9B2335" stroke="#C8922A" stroke-width="2"/>
+                        <text x="135" y="138" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">3. Non-Maleficence</text>
+                        <text x="135" y="158" font-family="Source Serif 4" font-size="11" fill="#fff" text-anchor="middle">First, Do No Harm (Minimizing Risk)</text>
+
+                        <rect x="290" y="110" width="230" height="70" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="405" y="138" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">4. Justice</text>
+                        <text x="405" y="158" font-family="Source Serif 4" font-size="11" fill="#fff" text-anchor="middle">Fair Selection &amp; Protection</text>
+                    </svg>
+                    <div class="figure-caption">Ethical framework derived from the Declaration of Helsinki and ICMR National Ethical Guidelines.</div>
                 </div>
 
-                <h3>Institutional Ethics Committee (IEC)</h3>
-                <p>Every trial must obtain prior written approval from an independent Ethics Committee comprising medical experts, scientists, legal experts, and community lay members.</p>
+                <h3>Core Ethical Pillars</h3>
+                <ol>
+                    <li><strong>Informed Consent:</strong> Voluntary agreement given by a fully informed participant who understands the trial's purpose, procedures, risks, and right to withdraw anytime without penalty.</li>
+                    <li><strong>Ethics Committee / Institutional Review Board (IRB):</strong> An independent committee of medical professionals, ethicists, legal experts, and laypersons tasked with reviewing and approving protocols to safeguard volunteer welfare.</li>
+                    <li><strong>Vulnerable Populations:</strong> Groups needing special protections against coercion (e.g. children, pregnant women, prisoners, economically disadvantaged persons).</li>
+                    <li><strong>Declaration of Helsinki &amp; ICMR Guidelines:</strong> Codified international and national standards governing ethical human experimentation.</li>
+                </ol>
             </div>
         </section>
 
         <!-- 2.6 Multi-Centre -->
         <section class="page-section" id="sec26">
             <div class="section-card">
-                <h2>2.6 Multi-Centre Trials &amp; Data Safety Monitoring</h2>
-                <p>Multi-centre trials run the identical protocol across multiple geographic sites to accelerate participant recruitment and test generalizability across diverse populations.</p>
+                <h2>2.6 Multi-Centre Trials</h2>
+                <blockquote>
+                    A single hospital may not have enough patients for a large trial. It may also see only one type of patient. To solve this, researchers run the same trial in many hospitals or clinics at the same time. This is called a multi-centre trial. These trials are common for diseases like cancer, diabetes, and heart disease, where thousands of patients are needed. Multi-centre trials can also include patients from different regions or countries, so the results apply to a wider population.
+                </blockquote>
 
-                <div class="definition">
-                    <div class="card-title">Data Safety &amp; Monitoring Board (DSMB)</div>
-                    An independent committee of biostatisticians and clinicians that monitors unblinded interim data during an ongoing trial. The DSMB has the authority to stop a trial early if clear evidence of severe harm or overwhelming efficacy emerges.
+                <!-- FIGURE 2.5 -->
+                <div class="figure-box">
+                    <div class="figure-title">Figure 2.5: Multi-Centre Trial Coordination Architecture</div>
+                    <svg class="book-fig" viewBox="0 0 540 200" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Central Hub -->
+                        <circle cx="270" cy="100" r="45" fill="#1B2A4A" stroke="#C8922A" stroke-width="3"/>
+                        <text x="270" y="95" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Central Coordinating</text>
+                        <text x="270" y="110" font-family="DM Sans" font-size="10" fill="#fff" text-anchor="middle">Center &amp; DSMB</text>
+
+                        <!-- Site 1 -->
+                        <rect x="30" y="20" width="110" height="50" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="85" y="50" font-family="DM Sans" font-size="11" fill="#fff" text-anchor="middle">Hospital Site A</text>
+                        <line x1="140" y1="45" x2="228" y2="80" stroke="#C8922A" stroke-width="2" stroke-dasharray="3"/>
+
+                        <!-- Site 2 -->
+                        <rect x="400" y="20" width="110" height="50" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="455" y="50" font-family="DM Sans" font-size="11" fill="#fff" text-anchor="middle">Hospital Site B</text>
+                        <line x1="400" y1="45" x2="312" y2="80" stroke="#C8922A" stroke-width="2" stroke-dasharray="3"/>
+
+                        <!-- Site 3 -->
+                        <rect x="30" y="130" width="110" height="50" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="85" y="160" font-family="DM Sans" font-size="11" fill="#fff" text-anchor="middle">Hospital Site C</text>
+                        <line x1="140" y1="155" x2="228" y2="120" stroke="#C8922A" stroke-width="2" stroke-dasharray="3"/>
+
+                        <!-- Site 4 -->
+                        <rect x="400" y="130" width="110" height="50" rx="6" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                        <text x="455" y="160" font-family="DM Sans" font-size="11" fill="#fff" text-anchor="middle">Hospital Site D</text>
+                        <line x1="400" y1="155" x2="312" y2="120" stroke="#C8922A" stroke-width="2" stroke-dasharray="3"/>
+                    </svg>
+                    <div class="figure-caption">Data coordination and Data Safety Monitoring Board (DSMB) oversight across multiple clinical sites.</div>
                 </div>
+
+                <h3>Advantages &amp; Operational Challenges</h3>
+                <p><strong>Advantages:</strong> Enables rapid recruitment of large sample sizes, enhances generalizability across diverse ethnic/geographic populations, and verifies intervention robustness in different clinical settings.</p>
+                <p><strong>Challenges:</strong> Requires rigorous protocol standardization, uniform investigator training, centralized data management, multi-IRB approvals, and oversight by an independent <strong>Data Safety and Monitoring Board (DSMB)</strong>.</p>
             </div>
         </section>
 
@@ -461,16 +853,27 @@
         <section class="page-section" id="sec27">
             <div class="section-card">
                 <h2>2.7 Sample Size Estimation</h2>
-                <p>Calculating the required sample size ensures the trial has adequate statistical power to detect a clinically meaningful difference without exposing unnecessary subjects to risk.</p>
+                <blockquote>
+                    Suppose you want to know if a new teaching method improves exam scores. If you test it on only two students, the result may be due to chance. If you test it on two hundred students, the result is more trustworthy. The same idea applies to clinical trials. The number of participants in a trial is called the sample size. Choosing the right sample size is important. Too few participants and the trial may miss a real benefit. Too many participants wastes money and puts extra people at risk. Sample size estimation is the process of deciding how many people are needed.
+                </blockquote>
+
+                <div class="definition">
+                    <div class="card-title">Key Determinants of Sample Size</div>
+                    <ol>
+                        <li><strong>Significance Level ($\alpha$):</strong> Probability of Type I error (false positive), typically set at 5% ($\alpha = 0.05$).</li>
+                        <li><strong>Statistical Power ($1 - \beta$):</strong> Probability of correctly detecting a true treatment effect, typically set at 80% or 90%.</li>
+                        <li><strong>Effect Size ($\Delta$):</strong> The clinically meaningful difference between treatment groups. Smaller effect sizes require larger sample sizes.</li>
+                        <li><strong>Population Variability ($\sigma$):</strong> Higher outcome variance requires larger sample sizes.</li>
+                        <li><strong>Anticipated Dropout Rate:</strong> Inflation factor added to account for loss to follow-up.</li>
+                    </ol>
+                </div>
 
                 <div class="formula-box">
-                    <div class="card-title">Sample Size Formula for Two Proportions</div>
-                    $$ n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2} $$
-                    <p style="color:rgba(255,255,255,0.85);margin-top:8px;font-size:0.92rem;">
-                        $Z_{\alpha/2}$: Standard normal value for significance level $\alpha$ (typically $0.05 \implies Z_{0.025} = 1.96$).<br>
-                        $Z_{\beta}$: Standard normal value for power $1-\beta$ (typically $80\% \implies Z_{0.20} = 0.84$).<br>
-                        $p_1, p_2$: Expected proportions in treatment and control groups ($p = (p_1+p_2)/2$).
-                    </p>
+                    <div class="card-title">Sample Size Formula (Comparing Two Proportions)</div>
+                    $$
+                    n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2}
+                    $$
+                    where $n$ is the required sample size per group, $Z_{\alpha/2}$ and $Z_{\beta}$ are standard normal critical values, $p_1$ and $p_2$ are expected response proportions, and $p = (p_1 + p_2)/2$.
                 </div>
             </div>
         </section>
@@ -478,90 +881,560 @@
         <!-- 2.8 Solved Examples -->
         <section class="page-section" id="sec28">
             <div class="section-card">
-                <h2>2.8 Solved Conceptual Examples</h2>
+                <h2>2.8 Solved Examples</h2>
+
                 <div class="example">
-                    <div class="card-title">Example 1: Identifying Phase</div>
-                    <p><strong>Scenario:</strong> A team tests a new malaria candidate in 30 healthy volunteers to determine maximum tolerated dose and pharmacokinetics.<br>
-                    <strong>Answer:</strong> This is a <strong>Phase I trial</strong> (safety and dose-finding in a small group).</p>
+                    <div class="card-title">Example 1: Identifying Trial Phase</div>
+                    <strong>Scenario:</strong> A pharmaceutical company tests a new anti-malarial drug in 30 healthy volunteers to determine safe dosage range and toxicity. Which trial phase is this?
+                    <br><strong>Solution:</strong> This is a <strong>Phase I</strong> clinical trial because the primary objectives are safety, tolerability, and dose-ranging in a small cohort.
                 </div>
 
                 <div class="example">
-                    <div class="card-title">Example 2: Sample Size Reasoning</div>
-                    <p><strong>Scenario:</strong> A trial compares a new anti-hypertensive expecting a small 5 mmHg drop, with standard deviation 30 mmHg.<br>
-                    <strong>Answer:</strong> Because the expected effect size (5 mmHg) is small relative to population variability (SD 30 mmHg), a <strong>large sample size</strong> is required to achieve 80% power.</p>
+                    <div class="card-title">Example 2: Purpose of Randomization</div>
+                    <strong>Scenario:</strong> 200 osteoporotic women are assigned by a computer-generated random list to receive either Vitamin D3 or a matching placebo tablet. Why is randomization used?
+                    <br><strong>Solution:</strong> Randomization ensures that baseline demographic and health characteristics (age, baseline bone density, diet) are balanced equally between groups, eliminating selection bias.
+                </div>
+
+                <div class="example">
+                    <div class="card-title">Example 3: Determining Blinding Level</div>
+                    <strong>Scenario:</strong> In an eczema trial, patients do not know whether they are applying active cream or placebo, but the evaluating doctor knows. What type of blinding is this?
+                    <br><strong>Solution:</strong> This is a <strong>single-blind</strong> trial because only the study participants are blinded to treatment assignment.
+                </div>
+
+                <div class="example">
+                    <div class="card-title">Example 4: Sample Size Reasoning</div>
+                    <strong>Scenario:</strong> A trial aims to detect a small blood pressure reduction of 5 mmHg, where outcome standard deviation is 15 mmHg. Why is a large sample needed?
+                    <br><strong>Solution:</strong> Because the effect size (5 mmHg) is small relative to population variability ($\sigma = 15$), a larger sample size is required to achieve 80% statistical power.
+                </div>
+
+                <div class="example">
+                    <div class="card-title">Example 5: Ethics Review in Pediatric Research</div>
+                    <strong>Scenario:</strong> A company wishes to test an asthma inhaler in 10-year-old children. What special ethical considerations apply?
+                    <br><strong>Solution:</strong> Children are a vulnerable population. Safety must first be proven in adults. Informed consent must be signed by parents/guardians, and child assent must be obtained alongside IRB approval.
                 </div>
             </div>
         </section>
 
-        <!-- 2.9 Exercises -->
+        <!-- 2.9 COMPLETE 75 QUESTION EXERCISE BANK -->
         <section class="page-section" id="sec29">
             <div class="section-card">
                 <h2>2.9 Chapter End Exercises and Self-Assessment Bank</h2>
 
                 <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
-                <div class="question">1. Phase I clinical trials mainly focus on:</div>
+
+                <div class="question"><strong>Q1.</strong> A clinical trial is a research study carried out on:</div>
                 <div class="mcq-options">
-                    a) Long-term side effects after marketing<br>
-                    b) Safety and dose-finding<br>
-                    c) Price negotiation<br>
-                    d) Quality of life
+                    <label><input type="radio" name="mcq1" value="a"> (a) Animals in a laboratory</label>
+                    <label><input type="radio" name="mcq1" value="b"> (b) Human volunteers</label>
+                    <label><input type="radio" name="mcq1" value="c"> (c) Plants in a field</label>
+                    <label><input type="radio" name="mcq1" value="d"> (d) Historical patient records</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q1')">Show Answer ▼</button>
-                <div class="answer" id="q1"><strong>Correct Answer: b</strong> — Phase I evaluates safety and determines safe dosage range.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq1_ans"><strong>Correct Answer: (b)</strong> — Clinical trials are research studies done with human participants.</div>
 
-                <div class="question">2. Neither participant nor investigator knows treatment allocation in a:</div>
+                <div class="question"><strong>Q2.</strong> The treatment being tested in a clinical trial is called the:</div>
                 <div class="mcq-options">
-                    a) Open-label trial<br>
-                    b) Single-blind trial<br>
-                    c) Double-blind trial<br>
-                    d) Phase 0 trial
+                    <label><input type="radio" name="mcq2" value="a"> (a) Placebo</label>
+                    <label><input type="radio" name="mcq2" value="b"> (b) Control</label>
+                    <label><input type="radio" name="mcq2" value="c"> (c) Investigational product</label>
+                    <label><input type="radio" name="mcq2" value="d"> (d) Standard treatment</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q2')">Show Answer ▼</button>
-                <div class="answer" id="q2"><strong>Correct Answer: c</strong> — Double-blind trial masks both patient and doctor.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq2_ans"><strong>Correct Answer: (c)</strong> — The new treatment under evaluation is called the investigational product.</div>
 
-                <div class="question">3. Phase III trials typically involve:</div>
+                <div class="question"><strong>Q3.</strong> Phase I clinical trials mainly focus on:</div>
                 <div class="mcq-options">
-                    a) 10 healthy volunteers<br>
-                    b) 1,000 to 5,000 patients<br>
-                    c) Only animals<br>
-                    d) Single clinic
+                    <label><input type="radio" name="mcq3" value="a"> (a) Long-term side effects after the drug is sold</label>
+                    <label><input type="radio" name="mcq3" value="b"> (b) Safety and dose</label>
+                    <label><input type="radio" name="mcq3" value="c"> (c) Comparing the drug with standard treatment</label>
+                    <label><input type="radio" name="mcq3" value="d"> (d) Quality of life improvement</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q3')">Show Answer ▼</button>
-                <div class="answer" id="q3"><strong>Correct Answer: b</strong> — Phase III trials are large confirmatory multi-centre trials.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq3_ans"><strong>Correct Answer: (b)</strong> — Phase I trials evaluate safety, tolerability, and safe dosage ranges.</div>
 
-                <h3>Part B: Fill in the Blanks (20 Items)</h3>
-                <p>1. The detailed written plan of a clinical trial is called the <strong>protocol</strong>.</p>
-                <p>2. A dummy treatment with no active drug is called a <strong>placebo</strong>.</p>
-                <p>3. Phase IV trials represent post-marketing <strong>surveillance</strong>.</p>
+                <div class="question"><strong>Q4.</strong> Phase II clinical trials mainly test:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq4" value="a"> (a) Whether the drug works</label>
+                    <label><input type="radio" name="mcq4" value="b"> (b) The chemical structure of the drug</label>
+                    <label><input type="radio" name="mcq4" value="c"> (c) The price of the drug</label>
+                    <label><input type="radio" name="mcq4" value="d"> (d) The colour of the drug</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq4_ans"><strong>Correct Answer: (a)</strong> — Phase II trials evaluate therapeutic efficacy in patients.</div>
 
-                <h3>Part C: True / False Statements (20 Items)</h3>
-                <p>1. Phase I trials are conducted on thousands of patients. — <strong>False</strong> (20–100 participants).</p>
-                <p>2. Randomization balances both known and unknown confounding variables. — <strong>True</strong>.</p>
+                <div class="question"><strong>Q5.</strong> Phase III clinical trials usually involve:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq5" value="a"> (a) 5 to 10 healthy volunteers</label>
+                    <label><input type="radio" name="mcq5" value="b"> (b) 1,000 to 5,000 patients</label>
+                    <label><input type="radio" name="mcq5" value="c"> (c) Only animals</label>
+                    <label><input type="radio" name="mcq5" value="d"> (d) A single doctor's clinic</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq5_ans"><strong>Correct Answer: (b)</strong> — Phase III trials are large-scale studies comparing interventions against standard care.</div>
 
-                <h3>Part D: Matching Type Questions</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Column A</th>
-                            <th>Column B</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1. Phase I</td>
-                            <td>Safety &amp; dose-finding</td>
-                        </tr>
-                        <tr>
-                            <td>2. Phase III</td>
-                            <td>Large-scale confirmatory comparison</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="question"><strong>Q6.</strong> Phase IV trials are done:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq6" value="a"> (a) Before any human testing</label>
+                    <label><input type="radio" name="mcq6" value="b"> (b) After the drug is approved and sold</label>
+                    <label><input type="radio" name="mcq6" value="c"> (c) Only in test tubes</label>
+                    <label><input type="radio" name="mcq6" value="d"> (d) On healthy volunteers only</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq6_ans"><strong>Correct Answer: (b)</strong> — Phase IV monitors long-term safety after market approval.</div>
 
-                <h3>Part E: Subjective &amp; Analytical Questions</h3>
-                <div class="example">
-                    <div class="card-title">Q1. Define a Clinical Trial and outline its key development phases.</div>
-                    <p><strong>Solution:</strong> A clinical trial is a prospective human research study evaluating an investigational product... Phases: Phase 0 (microdosing), Phase I (safety/dose), Phase II (efficacy), Phase III (confirmatory comparison), Phase IV (post-marketing surveillance).</p>
+                <div class="question"><strong>Q7.</strong> A placebo is:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq7" value="a"> (a) A strong standard drug</label>
+                    <label><input type="radio" name="mcq7" value="b"> (b) A dummy treatment with no active ingredient</label>
+                    <label><input type="radio" name="mcq7" value="c"> (c) A new surgical method</label>
+                    <label><input type="radio" name="mcq7" value="d"> (d) A blood test</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq7_ans"><strong>Correct Answer: (b)</strong> — A placebo is an inactive substance used for comparison.</div>
+
+                <div class="question"><strong>Q8.</strong> Randomization in an RCT means:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq8" value="a"> (a) The doctor chooses which patient gets which treatment</label>
+                    <label><input type="radio" name="mcq8" value="b"> (b) Patients choose their own treatment</label>
+                    <label><input type="radio" name="mcq8" value="c"> (c) Patients are divided into groups by chance</label>
+                    <label><input type="radio" name="mcq8" value="d"> (d) Everyone gets the new drug</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq8_ans"><strong>Correct Answer: (c)</strong> — Randomization allocates participants to treatment arms strictly by chance.</div>
+
+                <div class="question"><strong>Q9.</strong> The main purpose of a control group is to:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq9" value="a"> (a) Receive the best possible new drug</label>
+                    <label><input type="radio" name="mcq9" value="b"> (b) Act as a comparison for the new treatment</label>
+                    <label><input type="radio" name="mcq9" value="c"> (c) Pay for the trial</label>
+                    <label><input type="radio" name="mcq9" value="d"> (d) Write the trial report</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq9_ans"><strong>Correct Answer: (b)</strong> — The control group provides a baseline comparison to judge efficacy.</div>
+
+                <div class="question"><strong>Q10.</strong> In a double-blind trial:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq10" value="a"> (a) Only the patient is blinded</label>
+                    <label><input type="radio" name="mcq10" value="b"> (b) Only the doctor is blinded</label>
+                    <label><input type="radio" name="mcq10" value="c"> (c) Neither the patient nor the doctor knows the treatment</label>
+                    <label><input type="radio" name="mcq10" value="d"> (d) Everyone knows the treatment</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq10_ans"><strong>Correct Answer: (c)</strong> — Double-blind means both participant and investigator are unaware of treatment assignment.</div>
+
+                <div class="question"><strong>Q11.</strong> Informed consent means:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq11" value="a"> (a) The doctor decides for the patient</label>
+                    <label><input type="radio" name="mcq11" value="b"> (b) The patient agrees after understanding the trial</label>
+                    <label><input type="radio" name="mcq11" value="c"> (c) The sponsor forces the patient to join</label>
+                    <label><input type="radio" name="mcq11" value="d"> (d) The patient joins without any explanation</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq11_ans"><strong>Correct Answer: (b)</strong> — Informed consent requires voluntary agreement after full understanding.</div>
+
+                <div class="question"><strong>Q12.</strong> An ethics committee reviews a trial to:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq12" value="a"> (a) Make money from the sponsor</label>
+                    <label><input type="radio" name="mcq12" value="b"> (b) Protect the rights and safety of participants</label>
+                    <label><input type="radio" name="mcq12" value="c"> (c) Advertise the new drug</label>
+                    <label><input type="radio" name="mcq12" value="d"> (d) Sell the drug faster</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq12_ans"><strong>Correct Answer: (b)</strong> — Ethics committees protect participant safety and rights.</div>
+
+                <div class="question"><strong>Q13.</strong> A multi-centre trial is conducted:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq13" value="a"> (a) In one small laboratory</label>
+                    <label><input type="radio" name="mcq13" value="b"> (b) At many hospitals or sites at the same time</label>
+                    <label><input type="radio" name="mcq13" value="c"> (c) Only in foreign countries</label>
+                    <label><input type="radio" name="mcq13" value="d"> (d) Without any protocol</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq13_ans"><strong>Correct Answer: (b)</strong> — Multi-centre trials run simultaneously across multiple clinical sites.</div>
+
+                <div class="question"><strong>Q14.</strong> Sample size estimation is important because:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq14" value="a"> (a) It decides the colour of the tablets</label>
+                    <label><input type="radio" name="mcq14" value="b"> (b) It helps decide how many participants are needed</label>
+                    <label><input type="radio" name="mcq14" value="c"> (c) It selects the doctor</label>
+                    <label><input type="radio" name="mcq14" value="d"> (d) It fixes the price of the drug</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq14_ans"><strong>Correct Answer: (b)</strong> — Sample size determines the number of volunteers required for statistical validity.</div>
+
+                <div class="question"><strong>Q15.</strong> Statistical power is the chance of:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq15" value="a"> (a) Finding a real effect if it exists</label>
+                    <label><input type="radio" name="mcq15" value="b"> (b) Making a profit</label>
+                    <label><input type="radio" name="mcq15" value="c"> (c) Getting ethical approval</label>
+                    <label><input type="radio" name="mcq15" value="d"> (d) Avoiding all side effects</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq15_ans"><strong>Correct Answer: (a)</strong> — Statistical power ($1 - \beta$) is the ability to detect a true therapeutic effect.</div>
+
+                <div class="question"><strong>Q16.</strong> A trial that compares a new drug with the best existing drug is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq16" value="a"> (a) Placebo-controlled</label>
+                    <label><input type="radio" name="mcq16" value="b"> (b) Active-controlled</label>
+                    <label><input type="radio" name="mcq16" value="c"> (c) Open-label</label>
+                    <label><input type="radio" name="mcq16" value="d"> (d) Single-blind</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq16_ans"><strong>Correct Answer: (b)</strong> — Active-controlled trials compare new drugs against standard care.</div>
+
+                <div class="question"><strong>Q17.</strong> The Declaration of Helsinki is related to:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq17" value="a"> (a) Drug pricing</label>
+                    <label><input type="radio" name="mcq17" value="b"> (b) Ethical principles for medical research on humans</label>
+                    <label><input type="radio" name="mcq17" value="c"> (c) Sample size formulas</label>
+                    <label><input type="radio" name="mcq17" value="d"> (d) Marketing of medicines</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq17_ans"><strong>Correct Answer: (b)</strong> — The Declaration of Helsinki sets international ethical standards.</div>
+
+                <div class="question"><strong>Q18.</strong> Allocation concealment is used to:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq18" value="a"> (a) Hide the results from the sponsor</label>
+                    <label><input type="radio" name="mcq18" value="b"> (b) Prevent the doctor from knowing the next group assignment</label>
+                    <label><input type="radio" name="mcq18" value="c"> (c) Keep patients in the hospital</label>
+                    <label><input type="radio" name="mcq18" value="d"> (d) Speed up recruitment</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq18_ans"><strong>Correct Answer: (b)</strong> — Allocation concealment prevents selection bias prior to enrollment.</div>
+
+                <div class="question"><strong>Q19.</strong> Children are considered a:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq19" value="a"> (a) Healthy adult group</label>
+                    <label><input type="radio" name="mcq19" value="b"> (b) Vulnerable population</label>
+                    <label><input type="radio" name="mcq19" value="c"> (c) Sponsor group</label>
+                    <label><input type="radio" name="mcq19" value="d"> (d) Control group</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq19_ans"><strong>Correct Answer: (b)</strong> — Children are a vulnerable group requiring special ethical protections.</div>
+
+                <div class="question"><strong>Q20.</strong> A data safety and monitoring board can:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq20" value="a"> (a) Stop a trial early if there is clear harm or benefit</label>
+                    <label><input type="radio" name="mcq20" value="b"> (b) Sell the drug</label>
+                    <label><input type="radio" name="mcq20" value="c"> (c) Choose the colour of the tablets</label>
+                    <label><input type="radio" name="mcq20" value="d"> (d) Remove the ethics committee</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq20_ans"><strong>Correct Answer: (a)</strong> — DSMBs can terminate trials early for safety concerns or overwhelming efficacy.</div>
+
+
+                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
+
+                <div class="question"><strong>FIB 1.</strong> A research study done on human volunteers to test a new treatment is called a ____________ trial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib1_ans"><strong>Answer: clinical</strong> — Clinical trials evaluate health interventions in humans.</div>
+
+                <div class="question"><strong>FIB 2.</strong> The new drug or treatment being tested is called the ____________ product.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib2_ans"><strong>Answer: investigational</strong> — The candidate intervention is the investigational product.</div>
+
+                <div class="question"><strong>FIB 3.</strong> The detailed written plan of a clinical trial is called the ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib3_ans"><strong>Answer: protocol</strong> — The protocol outlines all trial procedures and methods.</div>
+
+                <div class="question"><strong>FIB 4.</strong> A ____________ treatment looks like the real treatment but has no active medicine.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib4_ans"><strong>Answer: placebo</strong> — A placebo is an inactive control substance.</div>
+
+                <div class="question"><strong>FIB 5.</strong> Dividing participants into groups by chance is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib5_ans"><strong>Answer: randomization</strong> — Randomization ensures chance allocation.</div>
+
+                <div class="question"><strong>FIB 6.</strong> The group that does not receive the new treatment is called the ____________ group.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib6_ans"><strong>Answer: control</strong> — The control group acts as a comparison standard.</div>
+
+                <div class="question"><strong>FIB 7.</strong> In a ____________-blind trial, neither the participant nor the doctor knows the treatment.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib7_ans"><strong>Answer: double</strong> — Double-blinding prevents observer and participant bias.</div>
+
+                <div class="question"><strong>FIB 8.</strong> Phase I trials mainly study ____________ and dose.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib8_ans"><strong>Answer: safety</strong> — Phase I evaluates safety, tolerability, and dosage.</div>
+
+                <div class="question"><strong>FIB 9.</strong> Phase II trials mainly study whether the drug ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib9_ans"><strong>Answer: works / is effective</strong> — Phase II tests therapeutic efficacy.</div>
+
+                <div class="question"><strong>FIB 10.</strong> Phase ____________ trials compare the new drug with standard treatment in large groups.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib10_ans"><strong>Answer: III</strong> — Phase III trials provide confirmatory evidence.</div>
+
+                <div class="question"><strong>FIB 11.</strong> Phase ____________ trials happen after the drug is approved.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib11_ans"><strong>Answer: IV</strong> — Phase IV is post-marketing surveillance.</div>
+
+                <div class="question"><strong>FIB 12.</strong> The group that reviews a trial to protect participants is called the ethics committee or ____________ review board.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib12_ans"><strong>Answer: institutional</strong> — Institutional Review Boards (IRBs) review ethical safety.</div>
+
+                <div class="question"><strong>FIB 13.</strong> ____________ consent means the participant agrees after understanding the trial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib13_ans"><strong>Answer: Informed</strong> — Informed consent guarantees voluntary participation.</div>
+
+                <div class="question"><strong>FIB 14.</strong> Children, pregnant women, and prisoners are examples of ____________ populations.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib14_ans"><strong>Answer: vulnerable</strong> — Vulnerable groups require special protections.</div>
+
+                <div class="question"><strong>FIB 15.</strong> A trial conducted at many hospitals at the same time is called a ____________ trial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib15_ans"><strong>Answer: multi-centre</strong> — Multi-centre trials recruit across multiple sites.</div>
+
+                <div class="question"><strong>FIB 16.</strong> The number of participants needed for a trial is called the ____________ size.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib16_ans"><strong>Answer: sample</strong> — Sample size determines statistical power.</div>
+
+                <div class="question"><strong>FIB 17.</strong> The chance of finding a true effect if it exists is called statistical ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib17_ans"><strong>Answer: power</strong> — Statistical power ($1 - \beta$) measures detection probability.</div>
+
+                <div class="question"><strong>FIB 18.</strong> The probability of a false positive result is called the ____________ level.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib18_ans"><strong>Answer: significance / alpha</strong> — Alpha is the Type I error probability.</div>
+
+                <div class="question"><strong>FIB 19.</strong> Hiding the upcoming group assignment until enrollment is called allocation ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib19_ans"><strong>Answer: concealment</strong> — Allocation concealment prevents selection bias.</div>
+
+                <div class="question"><strong>FIB 20.</strong> The principle of doing no harm is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib20_ans"><strong>Answer: non-maleficence</strong> — Non-maleficence requires minimizing risk and harm.</div>
+
+
+                <h3>Part C: True / False Statements (20 Questions)</h3>
+
+                <div class="question"><strong>TF 1.</strong> Clinical trials are conducted only after a drug has been approved.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf1_ans"><strong>Answer: False</strong> — Clinical trials are conducted prior to approval to establish safety and efficacy.</div>
+
+                <div class="question"><strong>TF 2.</strong> Phase I trials usually involve healthy volunteers or a small group of patients.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf2_ans"><strong>Answer: True</strong> — Phase I trials evaluate safety in small cohorts (20–100 participants).</div>
+
+                <div class="question"><strong>TF 3.</strong> A placebo contains the active medicine being studied.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf3_ans"><strong>Answer: False</strong> — A placebo contains no active pharmacological ingredient.</div>
+
+                <div class="question"><strong>TF 4.</strong> Randomization helps make the treatment groups similar at the start.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf4_ans"><strong>Answer: True</strong> — Randomization balances baseline characteristics between arms.</div>
+
+                <div class="question"><strong>TF 5.</strong> In a single-blind trial, neither the patient nor the doctor knows the treatment.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf5_ans"><strong>Answer: False</strong> — In a single-blind trial, only the participant is blinded.</div>
+
+                <div class="question"><strong>TF 6.</strong> The control group is not needed in a clinical trial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf6_ans"><strong>Answer: False</strong> — A control group is essential for comparative inference.</div>
+
+                <div class="question"><strong>TF 7.</strong> Phase III trials are usually the largest and provide evidence for approval.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf7_ans"><strong>Answer: True</strong> — Phase III trials provide pivotal efficacy evidence.</div>
+
+                <div class="question"><strong>TF 8.</strong> Informed consent is not required for mentally ill participants.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf8_ans"><strong>Answer: False</strong> — Vulnerable participants require surrogate consent or specialized assent.</div>
+
+                <div class="question"><strong>TF 9.</strong> Multi-centre trials can recruit participants faster than single-centre trials.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf9_ans"><strong>Answer: True</strong> — Multiple sites accelerate participant enrollment.</div>
+
+                <div class="question"><strong>TF 10.</strong> Sample size does not affect the reliability of trial results.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf10_ans"><strong>Answer: False</strong> — Sample size directly influences statistical power and precision.</div>
+
+                <div class="question"><strong>TF 11.</strong> A larger effect size needs a larger sample.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf11_ans"><strong>Answer: False</strong> — A smaller effect size requires a larger sample size.</div>
+
+                <div class="question"><strong>TF 12.</strong> Ethics committees include only doctors.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf12_ans"><strong>Answer: False</strong> — Ethics committees include doctors, ethicists, lawyers, and lay members.</div>
+
+                <div class="question"><strong>TF 13.</strong> Open-label trials are those in which both patient and doctor know the treatment.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf13_ans"><strong>Answer: True</strong> — Open-label means no blinding is employed.</div>
+
+                <div class="question"><strong>TF 14.</strong> Phase IV trials study long-term safety after the drug is sold.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf14_ans"><strong>Answer: True</strong> — Phase IV represents post-marketing safety surveillance.</div>
+
+                <div class="question"><strong>TF 15.</strong> Allocation concealment means hiding the treatment from the statistician.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf15_ans"><strong>Answer: False</strong> — Allocation concealment hides assignment until enrollment occurs.</div>
+
+                <div class="question"><strong>TF 16.</strong> Vulnerable populations need less protection in trials.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf16_ans"><strong>Answer: False</strong> — Vulnerable populations require extra ethical safeguards.</div>
+
+                <div class="question"><strong>TF 17.</strong> A data safety and monitoring board is independent of the sponsor.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf17_ans"><strong>Answer: True</strong> — DSMBs operate independently to protect patient safety.</div>
+
+                <div class="question"><strong>TF 18.</strong> The significance level is usually set at 5%.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf18_ans"><strong>Answer: True</strong> — Significance level ($\alpha$) is conventionally 0.05.</div>
+
+                <div class="question"><strong>TF 19.</strong> Active-controlled trials compare a new drug with a placebo.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf19_ans"><strong>Answer: False</strong> — Active-controlled trials compare against existing standard therapy.</div>
+
+                <div class="question"><strong>TF 20.</strong> The principle of justice means benefits and burdens should be shared fairly.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf20_ans"><strong>Answer: True</strong> — Justice requires equitable distribution of research benefits and burdens.</div>
+
+
+                <h3>Part D: Matching Type Questions (5 Sets of 4 Items)</h3>
+
+                <div class="question"><strong>Matching Set 1: Trial Phases</strong><br>
+                    1. Phase I &nbsp;&nbsp;&nbsp;&nbsp; 2. Phase II &nbsp;&nbsp;&nbsp;&nbsp; 3. Phase III &nbsp;&nbsp;&nbsp;&nbsp; 4. Phase IV
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match1_ans')">Show Answer ▼</button>
+                <div class="answer" id="match1_ans">
+                    <strong>1 → B</strong> (Tests safety and dose in a small group)<br>
+                    <strong>2 → C</strong> (Tests if the drug works in patients)<br>
+                    <strong>3 → D</strong> (Compares the drug with standard treatment in large groups)<br>
+                    <strong>4 → A</strong> (Monitors safety after the drug is sold)
+                </div>
+
+                <div class="question"><strong>Matching Set 2: Trial Designs</strong><br>
+                    5. Placebo-controlled trial &nbsp;&nbsp;&nbsp;&nbsp; 6. Active-controlled trial &nbsp;&nbsp;&nbsp;&nbsp; 7. Single-blind trial &nbsp;&nbsp;&nbsp;&nbsp; 8. Double-blind trial
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match2_ans')">Show Answer ▼</button>
+                <div class="answer" id="match2_ans">
+                    <strong>5 → C</strong> (One group gets a dummy treatment)<br>
+                    <strong>6 → A</strong> (New drug compared with existing standard drug)<br>
+                    <strong>7 → D</strong> (Only the patient does not know the treatment)<br>
+                    <strong>8 → B</strong> (Neither patient nor doctor knows the treatment)
+                </div>
+
+                <div class="question"><strong>Matching Set 3: Key Concepts</strong><br>
+                    9. Randomization &nbsp;&nbsp;&nbsp;&nbsp; 10. Blinding &nbsp;&nbsp;&nbsp;&nbsp; 11. Allocation concealment &nbsp;&nbsp;&nbsp;&nbsp; 12. Sample size
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match3_ans')">Show Answer ▼</button>
+                <div class="answer" id="match3_ans">
+                    <strong>9 → B</strong> (Dividing participants by chance)<br>
+                    <strong>10 → D</strong> (Hiding treatment from patient or doctor)<br>
+                    <strong>11 → A</strong> (Hiding the next group assignment)<br>
+                    <strong>12 → C</strong> (Number of participants needed)
+                </div>
+
+                <div class="question"><strong>Matching Set 4: Ethical Principles</strong><br>
+                    13. Respect for persons &nbsp;&nbsp;&nbsp;&nbsp; 14. Beneficence &nbsp;&nbsp;&nbsp;&nbsp; 15. Non-maleficence &nbsp;&nbsp;&nbsp;&nbsp; 16. Justice
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match4_ans')">Show Answer ▼</button>
+                <div class="answer" id="match4_ans">
+                    <strong>13 → C</strong> (Treat participants with dignity)<br>
+                    <strong>14 → D</strong> (Maximise benefit and minimise harm)<br>
+                    <strong>15 → A</strong> (Do no harm)<br>
+                    <strong>16 → B</strong> (Fair distribution of benefits and burdens)
+                </div>
+
+                <div class="question"><strong>Matching Set 5: Trial Components</strong><br>
+                    17. Protocol &nbsp;&nbsp;&nbsp;&nbsp; 18. Informed consent &nbsp;&nbsp;&nbsp;&nbsp; 19. Data safety and monitoring board &nbsp;&nbsp;&nbsp;&nbsp; 20. Participant
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match5_ans')">Show Answer ▼</button>
+                <div class="answer" id="match5_ans">
+                    <strong>17 → B</strong> (Detailed plan of the trial)<br>
+                    <strong>18 → D</strong> (Agreement to join after understanding risks and benefits)<br>
+                    <strong>19 → A</strong> (Independent group that can stop a trial early)<br>
+                    <strong>20 → C</strong> (Person who takes part in the trial)
+                </div>
+
+
+                <h3>Part E: Subjective and Analytical Questions (10 Questions with Detailed Solutions)</h3>
+
+                <div class="question"><strong>Q1.</strong> What is a clinical trial? Why is it important?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub1_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub1_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>A clinical trial is a research study done with human volunteers to test a new treatment, drug, vaccine, or medical device. It is important because it gives proof about safety and effectiveness before a treatment is approved for public use. Without trials, doctors would not know whether a new treatment really helps or causes harm.</p>
+                </div>
+
+                <div class="question"><strong>Q2.</strong> Describe the different phases of clinical trials.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub2_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub2_ans">
+                    <p><strong>Solution:</strong></p>
+                    <ul>
+                        <li><strong>Phase 0:</strong> Microdosing study in &lt;15 subjects to assess human pharmacokinetics.</li>
+                        <li><strong>Phase I:</strong> Tests safety, tolerability, and dosage in 20–100 healthy volunteers.</li>
+                        <li><strong>Phase II:</strong> Tests efficacy and short-term safety in 100–300 patients.</li>
+                        <li><strong>Phase III:</strong> Compares new intervention against standard care in 1,000–5,000+ patients.</li>
+                        <li><strong>Phase IV:</strong> Post-marketing surveillance to monitor long-term safety and rare side effects.</li>
+                    </ul>
+                </div>
+
+                <div class="question"><strong>Q3.</strong> What is randomization? Why is it used in RCTs?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub3_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub3_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>Randomization is the process of assigning participants to treatment groups by chance. It makes groups comparable at baseline by balancing known and unknown prognostic factors (e.g., age, sex, disease severity). This eliminates selection bias and enables valid statistical testing.</p>
+                </div>
+
+                <div class="question"><strong>Q4.</strong> Explain the difference between a placebo and a control group.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub4_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub4_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>A <strong>control group</strong> is the group of participants who do not receive the test intervention (receiving placebo, standard care, or no treatment). A <strong>placebo</strong> is an inert substance designed to simulate the experimental treatment. The placebo is used within the control arm to isolate pharmacological drug action from psychological placebo effects.</p>
+                </div>
+
+                <div class="question"><strong>Q5.</strong> What is blinding? Describe single-blind and double-blind trials.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub5_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub5_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>Blinding is the concealment of treatment assignments from participants, investigators, or assessors.</p>
+                    <ul>
+                        <li><strong>Single-blind:</strong> Participant is unaware of group allocation, but the investigator knows.</li>
+                        <li><strong>Double-blind:</strong> Neither participant nor investigator knows group allocation, minimizing expectation and measurement bias.</li>
+                    </ul>
+                </div>
+
+                <div class="question"><strong>Q6.</strong> What is informed consent? Why is it important?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub6_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub6_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>Informed consent is the voluntary agreement of a participant to enter a trial after receiving full disclosure of study objectives, procedures, potential risks, benefits, and rights (including withdrawal without penalty). It protects autonomy and ensures ethical research conduct.</p>
+                </div>
+
+                <div class="question"><strong>Q7.</strong> List the main ethical principles that guide clinical trials.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub7_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub7_ans">
+                    <p><strong>Solution:</strong></p>
+                    <ol>
+                        <li><strong>Respect for Persons:</strong> Respect autonomy and protect individuals with diminished autonomy.</li>
+                        <li><strong>Beneficence:</strong> Maximize potential benefits to participants and society.</li>
+                        <li><strong>Non-maleficence:</strong> Minimize potential risks and cause no harm.</li>
+                        <li><strong>Justice:</strong> Ensure fair distribution of research burdens and benefits.</li>
+                    </ol>
+                </div>
+
+                <div class="question"><strong>Q8.</strong> What is a multi-centre trial? Give its advantages and challenges.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub8_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub8_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>A multi-centre trial is conducted across multiple clinical sites under a unified protocol.</p>
+                    <p><strong>Advantages:</strong> Rapid sample recruitment, enhanced population generalizability, and testing treatment consistency.</p>
+                    <p><strong>Challenges:</strong> Protocol standardization, inter-site communication, data quality control, and multi-IRB approvals.</p>
+                </div>
+
+                <div class="question"><strong>Q9.</strong> Why is sample size estimation important in clinical trials? What factors affect it?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub9_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub9_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>Sample size planning prevents underpowered trials (which fail to detect real effects) and oversized trials (which waste resources and expose unnecessary participants to risk).</p>
+                    <p><strong>Key Factors:</strong> Significance level ($\alpha$), statistical power ($1 - \beta$), effect size ($\Delta$), variance ($\sigma^2$), and anticipated dropout rate.</p>
+                </div>
+
+                <div class="question"><strong>Q10.</strong> A new drug for diabetes is expected to reduce blood sugar by 20 mg/dL more than the standard drug. The standard deviation is 30 mg/dL. Will this trial need a small or large sample? Why?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub10_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub10_ans">
+                    <p><strong>Solution:</strong></p>
+                    <p>This trial will require a relatively <strong>large sample size</strong>. The effect size (20 mg/dL difference) is small relative to the high standard deviation (30 mg/dL). Detecting subtle differences against background variation requires more participants to achieve 80% statistical power.</p>
                 </div>
             </div>
         </section>
@@ -570,11 +1443,18 @@
         <section class="page-section" id="sec210">
             <div class="section-card">
                 <h2>2.10 Summary &amp; References</h2>
-                <p>Clinical trials are the gold standard for establishing therapeutic efficacy and safety. Adherence to ethical guidelines, randomization, blinding, and proper sample size estimation are critical for robust evidence-based medicine.</p>
-                <h3>References</h3>
+                <p>Clinical trials are human volunteer studies designed to evaluate the safety, efficacy, and clinical utility of novel healthcare interventions. They provide the definitive evidence required for regulatory approval and clinical practice.</p>
+                <p>Trials progress through Phase 0 (microdosing), Phase I (safety/dosing), Phase II (efficacy exploration), Phase III (confirmatory comparison), and Phase IV (post-marketing surveillance).</p>
+                <p>Randomized controlled trials (RCTs) are the gold standard design. Randomization balances baseline covariates, control arms isolate intervention effects, placebos control psychological response, and blinding eliminates assessment bias.</p>
+                <p>Ethics govern human experimentation through informed consent, Institutional Review Boards (IRBs), vulnerable population safeguards, and the four bioethical pillars (Respect for Persons, Beneficence, Non-Maleficence, Justice).</p>
+
+                <h3>References and Further Reading</h3>
                 <ul>
-                    <li>Indian Council of Medical Research (ICMR). <em>National Ethical Guidelines for Biomedical Research</em>.</li>
-                    <li>World Medical Association. <em>Declaration of Helsinki</em>.</li>
+                    <li>Indian Council of Medical Research (ICMR). <em>National Ethical Guidelines for Biomedical and Health Research Involving Human Participants</em>.</li>
+                    <li>World Medical Association. <em>Declaration of Helsinki</em> — Ethical Principles for Medical Research Involving Human Subjects.</li>
+                    <li>Friedman, L.M., Furberg, C.D., and DeMets, D.L. <em>Fundamentals of Clinical Trials</em>. Springer.</li>
+                    <li>Pocock, S.J. <em>Clinical Trials: A Practical Approach</em>. Wiley.</li>
+                    <li>Indira Gandhi National Open University. <em>MST-019: Epidemiology and Clinical Trials</em> study material. Available through <a href="https://egyankosh.co.in/books/mst-019" target="_blank">eGyankosh</a>.</li>
                 </ul>
             </div>
         </section>
@@ -601,8 +1481,14 @@
         }
         function toggleAnswer(id) {
             const el = document.getElementById(id);
-            if (el.style.display === 'block') { el.style.display = 'none'; }
-            else { el.style.display = 'block'; }
+            if (!el) return;
+            if (el.classList.contains('show') || el.style.display === 'block') {
+                el.classList.remove('show');
+                el.style.display = 'none';
+            } else {
+                el.classList.add('show');
+                el.style.display = 'block';
+            }
         }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
     </script>
