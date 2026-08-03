@@ -172,6 +172,7 @@
             background: #ffffff; border-radius: var(--radius);
             padding: 36px 40px; margin-bottom: 32px;
             box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
         }
         .section-card h2 {
             font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700;
@@ -204,35 +205,40 @@
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
 
-        /* ── COMPACT CENTERED TABLES ── */
+        /* ── COMPACT CENTERED TABLES (STAT 101/102 SYSTEM) ── */
         table {
             width: auto !important;
-            max-width: 720px !important;
+            max-width: 95% !important;
             margin: 24px auto !important;
-            border-collapse: collapse !important;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.88rem;
-            background: #ffffff;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 10px rgba(27,42,74,.06);
+            border-collapse: separate !important;
+            border-spacing: 0 !important;
+            border-radius: 8px !important;
+            overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
+            background: #ffffff !important;
+            display: table !important;
+            border: 1px solid var(--border) !important;
         }
         th {
-            background: var(--navy);
-            color: #ffffff;
-            padding: 9px 16px;
-            text-align: center;
-            font-weight: 600;
-            border-bottom: 2px solid var(--gold);
+            background: var(--navy) !important;
+            color: #ffffff !important;
+            padding: 8px 16px !important;
+            font-family: 'DM Sans', sans-serif !important;
+            font-size: 0.88rem !important;
+            font-weight: 600 !important;
+            letter-spacing: 0.3px !important;
+            text-align: center !important;
+            border-bottom: 2px solid var(--gold) !important;
         }
         td {
-            padding: 9px 16px;
-            border-bottom: 1px solid var(--border);
-            text-align: center;
-            color: var(--text-dark);
+            padding: 6px 16px !important;
+            border-bottom: 1px solid var(--border) !important;
+            font-size: 0.88rem !important;
+            color: var(--text-dark) !important;
+            text-align: center !important;
         }
-        tr:nth-child(even) { background: rgba(27,42,74,0.02); }
+        tr:nth-child(even) td { background: #fcfbf9 !important; }
+        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
 
         /* ── FIGURE BOX STYLING ── */
         .figure-box {
@@ -284,18 +290,68 @@
             color: var(--navy); margin-bottom: 10px;
         }
 
-        .question { font-weight: 600; margin-top: 18px; color: var(--navy); font-size: 0.98rem; }
-        .mcq-options { margin: 8px 0 12px 20px; line-height: 1.7; color: var(--text-mid); }
+        /* ── STAT-101 / STAT-102 EXERCISE STYLING ── */
+        .question {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--navy-light);
+            padding: 16px 20px;
+            margin: 14px 0 6px;
+            border-radius: 0 8px 8px 0;
+            font-size: 1rem;
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+        .question strong { color: var(--navy); }
+
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block;
+            margin: 6px 0;
+            cursor: pointer;
+            font-size: .95rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
         .toggle-btn {
-            background: var(--navy); color: #fff; border: none; padding: 6px 14px;
-            border-radius: 16px; cursor: pointer; font-family: 'DM Sans', sans-serif;
-            font-size: .8rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 14px;
+            background: var(--navy);
+            color: #fff;
+            border: none;
+            padding: 7px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'DM Sans', sans-serif;
+            font-size: .82rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: all .25s;
+            margin: 4px 0 12px;
+            letter-spacing: .3px;
         }
-        .toggle-btn:hover { background: var(--navy-light); }
+        .toggle-btn:hover {
+            background: var(--navy-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(27,42,74,.3);
+        }
+
         .answer {
-            display: none; background: #F0FBF5; border-left: 4px solid var(--sage);
-            padding: 14px 18px; margin-bottom: 16px; border-radius: 0 6px 6px 0; font-size: .94rem;
+            display: none;
+            background: #F0FBF5;
+            border-left: 4px solid var(--sage);
+            padding: 16px 20px;
+            margin: 2px 0 16px;
+            border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease;
+            color: var(--text-dark) !important;
+            font-size: .97rem;
+            line-height: 1.75;
         }
+        .answer.show { display: block; }
+        .answer strong { font-weight: 700; color: var(--navy); }
 
         .book-footer {
             position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
@@ -1555,306 +1611,443 @@
             </div>
         </section>
 
-        <!-- 1.9 COMPLETE 75 QUESTION EXERCISE BANK -->
+        <!-- 1.9 COMPLETE 75 QUESTION EXERCISE BANK (STAT 101/102 SYSTEM) -->
         <section class="page-section" id="sec19">
             <div class="section-card">
                 <h2>1.9 Chapter End Exercises and Self-Assessment Bank</h2>
 
                 <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
 
-                <div class="question">1. Epidemiology is defined as the study of:</div>
+                <div class="question"><strong>Q1.</strong> Epidemiology is defined as the study of:</div>
                 <div class="mcq-options">
-                    a) Individual patient treatments in hospital wards<br>
-                    b) Distribution and determinants of health states in human populations<br>
-                    c) Microscopic chemical interactions in blood<br>
-                    d) Surgical techniques for chronic diseases
+                    <label><input type="radio" name="mcq1" value="a"> (a) Individual patient treatments in hospital wards</label>
+                    <label><input type="radio" name="mcq1" value="b"> (b) Distribution and determinants of health states in human populations</label>
+                    <label><input type="radio" name="mcq1" value="c"> (c) Microscopic chemical interactions in blood</label>
+                    <label><input type="radio" name="mcq1" value="d"> (d) Surgical techniques for chronic diseases</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q1')">Show Answer ▼</button>
-                <div class="answer" id="q1"><strong>Correct Answer: b</strong> — Epidemiology examines population-level health patterns and causes rather than bedside clinical care.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq1_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq1_ans"><strong>Correct Answer: (b)</strong> — Epidemiology examines population-level health patterns and causes rather than bedside clinical care.</div>
 
-                <div class="question">2. Point prevalence is defined as the proportion of a population with a disease at:</div>
+                <div class="question"><strong>Q2.</strong> Point prevalence is defined as the proportion of a population with a disease at:</div>
                 <div class="mcq-options">
-                    a) A single specific point in time<br>
-                    b) A 10-year follow-up interval<br>
-                    c) The time of birth only<br>
-                    d) The end of an epidemic period
+                    <label><input type="radio" name="mcq2" value="a"> (a) A single specific point in time</label>
+                    <label><input type="radio" name="mcq2" value="b"> (b) A 10-year follow-up interval</label>
+                    <label><input type="radio" name="mcq2" value="c"> (c) The time of birth only</label>
+                    <label><input type="radio" name="mcq2" value="d"> (d) The end of an epidemic period</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q2')">Show Answer ▼</button>
-                <div class="answer" id="q2"><strong>Correct Answer: a</strong> — Point prevalence measures existing cases at one designated instant.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq2_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq2_ans"><strong>Correct Answer: (a)</strong> — Point prevalence measures existing cases at one designated instant.</div>
 
-                <div class="question">3. Incidence rate is defined as the rate at which:</div>
+                <div class="question"><strong>Q3.</strong> Incidence rate is defined as the rate at which:</div>
                 <div class="mcq-options">
-                    a) Old cases recover from an illness<br>
-                    b) New cases develop in a population at risk<br>
-                    c) Hospital beds are occupied<br>
-                    d) Deaths occur among treated patients
+                    <label><input type="radio" name="mcq3" value="a"> (a) Old cases recover from an illness</label>
+                    <label><input type="radio" name="mcq3" value="b"> (b) New cases develop in a population at risk</label>
+                    <label><input type="radio" name="mcq3" value="c"> (c) Hospital beds are occupied</label>
+                    <label><input type="radio" name="mcq3" value="d"> (d) Deaths occur among treated patients</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q3')">Show Answer ▼</button>
-                <div class="answer" id="q3"><strong>Correct Answer: b</strong> — Incidence counts only newly occurring cases.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq3_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq3_ans"><strong>Correct Answer: (b)</strong> — Incidence counts only newly occurring cases.</div>
 
-                <div class="question">4. If a chronic disease cannot be cured but treatment extends patient survival, disease prevalence will:</div>
+                <div class="question"><strong>Q4.</strong> If a chronic disease cannot be cured but treatment extends patient survival, disease prevalence will:</div>
                 <div class="mcq-options">
-                    a) Decrease to zero<br>
-                    b) Remain completely unchanged<br>
-                    c) Increase over time<br>
-                    d) Equal the incidence rate exactly
+                    <label><input type="radio" name="mcq4" value="a"> (a) Decrease to zero</label>
+                    <label><input type="radio" name="mcq4" value="b"> (b) Remain completely unchanged</label>
+                    <label><input type="radio" name="mcq4" value="c"> (c) Increase over time</label>
+                    <label><input type="radio" name="mcq4" value="d"> (d) Equal the incidence rate exactly</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q4')">Show Answer ▼</button>
-                <div class="answer" id="q4"><strong>Correct Answer: c</strong> — Extending survival increases duration $D$; since $P = I \times D$, prevalence rises.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq4_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq4_ans"><strong>Correct Answer: (c)</strong> — Extending survival increases duration $D$; since $P = I \times D$, prevalence rises.</div>
 
-                <div class="question">5. A case-control study is defined as an observational design that moves:</div>
+                <div class="question"><strong>Q5.</strong> A case-control study is defined as an observational design that moves:</div>
                 <div class="mcq-options">
-                    a) Forward from exposure to outcome<br>
-                    b) Retrospectively from outcome to past exposure<br>
-                    c) Forward from healthy status to recovery<br>
-                    d) Experimentally by giving drug doses
+                    <label><input type="radio" name="mcq5" value="a"> (a) Forward from exposure to outcome</label>
+                    <label><input type="radio" name="mcq5" value="b"> (b) Retrospectively from outcome to past exposure</label>
+                    <label><input type="radio" name="mcq5" value="c"> (c) Forward from healthy status to recovery</label>
+                    <label><input type="radio" name="mcq5" value="d"> (d) Experimentally by giving drug doses</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q5')">Show Answer ▼</button>
-                <div class="answer" id="q5"><strong>Correct Answer: b</strong> — Case-control studies start with disease status and look backward.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq5_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq5_ans"><strong>Correct Answer: (b)</strong> — Case-control studies start with disease status and look backward.</div>
 
-                <div class="question">6. The primary measure of association calculated in a case-control study is the:</div>
+                <div class="question"><strong>Q6.</strong> The primary measure of association calculated in a case-control study is the:</div>
                 <div class="mcq-options">
-                    a) Relative risk<br>
-                    b) Odds ratio<br>
-                    c) Attributable risk<br>
-                    d) Population risk difference
+                    <label><input type="radio" name="mcq6" value="a"> (a) Relative risk</label>
+                    <label><input type="radio" name="mcq6" value="b"> (b) Odds ratio</label>
+                    <label><input type="radio" name="mcq6" value="c"> (c) Attributable risk</label>
+                    <label><input type="radio" name="mcq6" value="d"> (d) Population risk difference</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q6')">Show Answer ▼</button>
-                <div class="answer" id="q6"><strong>Correct Answer: b</strong> — Because direct incidence cannot be measured, the odds ratio is the primary metric.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq6_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq6_ans"><strong>Correct Answer: (b)</strong> — Because direct incidence cannot be measured, the odds ratio is the primary metric.</div>
 
-                <div class="question">7. A cohort study is defined as a design that selects participants based on their:</div>
+                <div class="question"><strong>Q7.</strong> A cohort study is defined as a design that selects participants based on their:</div>
                 <div class="mcq-options">
-                    a) Disease status<br>
-                    b) Exposure status<br>
-                    c) Hospital admission date<br>
-                    d) Recovery rate
+                    <label><input type="radio" name="mcq7" value="a"> (a) Disease status</label>
+                    <label><input type="radio" name="mcq7" value="b"> (b) Exposure status</label>
+                    <label><input type="radio" name="mcq7" value="c"> (c) Hospital admission date</label>
+                    <label><input type="radio" name="mcq7" value="d"> (d) Recovery rate</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q7')">Show Answer ▼</button>
-                <div class="answer" id="q7"><strong>Correct Answer: b</strong> — Cohort studies begin with healthy groups classified by exposure.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq7_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq7_ans"><strong>Correct Answer: (b)</strong> — Cohort studies begin with healthy groups classified by exposure.</div>
 
-                <div class="question">8. Relative risk is defined as the ratio of:</div>
+                <div class="question"><strong>Q8.</strong> Relative risk is defined as the ratio of:</div>
                 <div class="mcq-options">
-                    a) Odds of exposure in cases to odds in controls<br>
-                    b) Incidence rate in exposed group to incidence rate in unexposed group<br>
-                    c) Total deaths to total healthy individuals<br>
-                    d) Prevalence in urban areas to prevalence in rural areas
+                    <label><input type="radio" name="mcq8" value="a"> (a) Odds of exposure in cases to odds in controls</label>
+                    <label><input type="radio" name="mcq8" value="b"> (b) Incidence rate in exposed group to incidence rate in unexposed group</label>
+                    <label><input type="radio" name="mcq8" value="c"> (c) Total deaths to total healthy individuals</label>
+                    <label><input type="radio" name="mcq8" value="d"> (d) Prevalence in urban areas to prevalence in rural areas</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q8')">Show Answer ▼</button>
-                <div class="answer" id="q8"><strong>Correct Answer: b</strong> — $RR = I_e / I_u$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq8_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq8_ans"><strong>Correct Answer: (b)</strong> — $RR = I_e / I_u$.</div>
 
-                <div class="question">9. An odds ratio equal to 1.0 means:</div>
+                <div class="question"><strong>Q9.</strong> An odds ratio equal to 1.0 means:</div>
                 <div class="mcq-options">
-                    a) Exposure increases disease risk significantly<br>
-                    b) Exposure decreases disease risk significantly<br>
-                    c) There is no association between exposure and disease<br>
-                    d) Study calculations are mathematically invalid
+                    <label><input type="radio" name="mcq9" value="a"> (a) Exposure increases disease risk significantly</label>
+                    <label><input type="radio" name="mcq9" value="b"> (b) Exposure decreases disease risk significantly</label>
+                    <label><input type="radio" name="mcq9" value="c"> (c) There is no association between exposure and disease</label>
+                    <label><input type="radio" name="mcq9" value="d"> (d) Study calculations are mathematically invalid</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q9')">Show Answer ▼</button>
-                <div class="answer" id="q9"><strong>Correct Answer: c</strong> — $OR = 1$ indicates equal exposure odds in cases and controls.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq9_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq9_ans"><strong>Correct Answer: (c)</strong> — $OR = 1$ indicates equal exposure odds in cases and controls.</div>
 
-                <div class="question">10. Case fatality rate is defined as the proportion of:</div>
+                <div class="question"><strong>Q10.</strong> Case fatality rate is defined as the proportion of:</div>
                 <div class="mcq-options">
-                    a) Deaths in a city divided by mid-year population<br>
-                    b) Diagnosed patients with a specific disease who die from it<br>
-                    c) Deaths caused by accidents in factory workers<br>
-                    d) Recovered cases relative to total admissions
+                    <label><input type="radio" name="mcq10" value="a"> (a) Deaths in a city divided by mid-year population</label>
+                    <label><input type="radio" name="mcq10" value="b"> (b) Diagnosed patients with a specific disease who die from it</label>
+                    <label><input type="radio" name="mcq10" value="c"> (c) Deaths caused by accidents in factory workers</label>
+                    <label><input type="radio" name="mcq10" value="d"> (d) Recovered cases relative to total admissions</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q10')">Show Answer ▼</button>
-                <div class="answer" id="q10"><strong>Correct Answer: b</strong> — CFR = (deaths from disease / diagnosed cases) $\times 100$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq10_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq10_ans"><strong>Correct Answer: (b)</strong> — CFR = (deaths from disease / diagnosed cases) $\times 100$.</div>
 
-                <div class="question">11. Sensitivity of a screening test is defined as the test's ability to correctly identify:</div>
+                <div class="question"><strong>Q11.</strong> Sensitivity of a screening test is defined as the test's ability to correctly identify:</div>
                 <div class="mcq-options">
-                    a) Healthy individuals as negative<br>
-                    b) Diseased individuals as positive<br>
-                    c) False positive cases in a lab<br>
-                    d) Carrier states in animals
+                    <label><input type="radio" name="mcq11" value="a"> (a) Healthy individuals as negative</label>
+                    <label><input type="radio" name="mcq11" value="b"> (b) Diseased individuals as positive</label>
+                    <label><input type="radio" name="mcq11" value="c"> (c) False positive cases in a lab</label>
+                    <label><input type="radio" name="mcq11" value="d"> (d) Carrier states in animals</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q11')">Show Answer ▼</button>
-                <div class="answer" id="q11"><strong>Correct Answer: b</strong> — Sensitivity = $a/(a+c)$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq11_ans"><strong>Correct Answer: (b)</strong> — Sensitivity = $a/(a+c)$.</div>
 
-                <div class="question">12. Specificity of a screening test is defined as the test's ability to correctly identify:</div>
+                <div class="question"><strong>Q12.</strong> Specificity of a screening test is defined as the test's ability to correctly identify:</div>
                 <div class="mcq-options">
-                    a) Diseased individuals as positive<br>
-                    b) Non-diseased individuals as negative<br>
-                    c) New incidence rates<br>
-                    d) Case fatality differences
+                    <label><input type="radio" name="mcq12" value="a"> (a) Diseased individuals as positive</label>
+                    <label><input type="radio" name="mcq12" value="b"> (b) Non-diseased individuals as negative</label>
+                    <label><input type="radio" name="mcq12" value="c"> (c) New incidence rates</label>
+                    <label><input type="radio" name="mcq12" value="d"> (d) Case fatality differences</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q12')">Show Answer ▼</button>
-                <div class="answer" id="q12"><strong>Correct Answer: b</strong> — Specificity = $d/(b+d)$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq12_ans"><strong>Correct Answer: (b)</strong> — Specificity = $d/(b+d)$.</div>
 
-                <div class="question">13. A false positive result in a screening program occurs when a person:</div>
+                <div class="question"><strong>Q13.</strong> A false positive result in a screening program occurs when a person:</div>
                 <div class="mcq-options">
-                    a) Has the disease and tests positive<br>
-                    b) Does not have the disease but tests positive<br>
-                    c) Has the disease but tests negative<br>
-                    d) Does not have the disease and tests negative
+                    <label><input type="radio" name="mcq13" value="a"> (a) Has the disease and tests positive</label>
+                    <label><input type="radio" name="mcq13" value="b"> (b) Does not have the disease but tests positive</label>
+                    <label><input type="radio" name="mcq13" value="c"> (c) Has the disease but tests negative</label>
+                    <label><input type="radio" name="mcq13" value="d"> (d) Does not have the disease and tests negative</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q13')">Show Answer ▼</button>
-                <div class="answer" id="q13"><strong>Correct Answer: b</strong> — A false positive is a healthy individual misclassified as positive.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq13_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq13_ans"><strong>Correct Answer: (b)</strong> — A false positive is a healthy individual misclassified as positive.</div>
 
-                <div class="question">14. Positive predictive value is defined as the proportion of:</div>
+                <div class="question"><strong>Q14.</strong> Positive predictive value is defined as the proportion of:</div>
                 <div class="mcq-options">
-                    a) Test-positive individuals who truly have the disease<br>
-                    b) Test-negative individuals who are healthy<br>
-                    c) Diseased people who test negative<br>
-                    d) Healthy people who test positive
+                    <label><input type="radio" name="mcq14" value="a"> (a) Test-positive individuals who truly have the disease</label>
+                    <label><input type="radio" name="mcq14" value="b"> (b) Test-negative individuals who are healthy</label>
+                    <label><input type="radio" name="mcq14" value="c"> (c) Diseased people who test negative</label>
+                    <label><input type="radio" name="mcq14" value="d"> (d) Healthy people who test positive</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q14')">Show Answer ▼</button>
-                <div class="answer" id="q14"><strong>Correct Answer: a</strong> — PPV = $a/(a+b)$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq14_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq14_ans"><strong>Correct Answer: (a)</strong> — PPV = $a/(a+b)$.</div>
 
-                <div class="question">15. Loss of study participants over time during a prospective study leads to:</div>
+                <div class="question"><strong>Q15.</strong> Loss of study participants over time during a prospective study leads to:</div>
                 <div class="mcq-options">
-                    a) Recall bias<br>
-                    b) Attrition bias<br>
-                    c) Selection bias at baseline<br>
-                    d) Interviewer bias
+                    <label><input type="radio" name="mcq15" value="a"> (a) Recall bias</label>
+                    <label><input type="radio" name="mcq15" value="b"> (b) Attrition bias</label>
+                    <label><input type="radio" name="mcq15" value="c"> (c) Selection bias at baseline</label>
+                    <label><input type="radio" name="mcq15" value="d"> (d) Interviewer bias</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q15')">Show Answer ▼</button>
-                <div class="answer" id="q15"><strong>Correct Answer: b</strong> — Loss to follow-up creates attrition bias.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq15_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq15_ans"><strong>Correct Answer: (b)</strong> — Loss to follow-up creates attrition bias.</div>
 
-                <div class="question">16. Which study design is most efficient for studying extremely rare diseases?</div>
+                <div class="question"><strong>Q16.</strong> Which study design is most efficient for studying extremely rare diseases?</div>
                 <div class="mcq-options">
-                    a) Cohort study<br>
-                    b) Case-control study<br>
-                    c) Randomised controlled trial<br>
-                    d) Field population survey
+                    <label><input type="radio" name="mcq16" value="a"> (a) Cohort study</label>
+                    <label><input type="radio" name="mcq16" value="b"> (b) Case-control study</label>
+                    <label><input type="radio" name="mcq16" value="c"> (c) Randomised controlled trial</label>
+                    <label><input type="radio" name="mcq16" value="d"> (d) Field population survey</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q16')">Show Answer ▼</button>
-                <div class="answer" id="q16"><strong>Correct Answer: b</strong> — Case-control studies start with pre-identified cases, making them ideal for rare diseases.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq16_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq16_ans"><strong>Correct Answer: (b)</strong> — Case-control studies start with pre-identified cases, making them ideal for rare diseases.</div>
 
-                <div class="question">17. Crude death rate is traditionally expressed per:</div>
+                <div class="question"><strong>Q17.</strong> Crude death rate is traditionally expressed per:</div>
                 <div class="mcq-options">
-                    a) 100 population<br>
-                    b) 1,000 population<br>
-                    c) 10,000 population<br>
-                    d) 100,000 population
+                    <label><input type="radio" name="mcq17" value="a"> (a) 100 population</label>
+                    <label><input type="radio" name="mcq17" value="b"> (b) 1,000 population</label>
+                    <label><input type="radio" name="mcq17" value="c"> (c) 10,000 population</label>
+                    <label><input type="radio" name="mcq17" value="d"> (d) 100,000 population</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q17')">Show Answer ▼</button>
-                <div class="answer" id="q17"><strong>Correct Answer: b</strong> — CDR is standardised per 1,000 mid-year population.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq17_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq17_ans"><strong>Correct Answer: (b)</strong> — CDR is standardised per 1,000 mid-year population.</div>
 
-                <div class="question">18. In a stable population, prevalence ($P$), incidence ($I$), and duration ($D$) are related as:</div>
+                <div class="question"><strong>Q18.</strong> In a stable population, prevalence ($P$), incidence ($I$), and duration ($D$) are related as:</div>
                 <div class="mcq-options">
-                    a) $P = I + D$<br>
-                    b) $P = I \times D$<br>
-                    c) $P = I / D$<br>
-                    d) $P = D / I$
+                    <label><input type="radio" name="mcq18" value="a"> (a) $P = I + D$</label>
+                    <label><input type="radio" name="mcq18" value="b"> (b) $P = I \times D$</label>
+                    <label><input type="radio" name="mcq18" value="c"> (c) $P = I / D$</label>
+                    <label><input type="radio" name="mcq18" value="d"> (d) $P = D / I$</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q18')">Show Answer ▼</button>
-                <div class="answer" id="q18"><strong>Correct Answer: b</strong> — Prevalence equals incidence multiplied by average duration.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq18_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq18_ans"><strong>Correct Answer: (b)</strong> — Prevalence equals incidence multiplied by average duration.</div>
 
-                <div class="question">19. Which variable describes person-level characteristics in descriptive epidemiology?</div>
+                <div class="question"><strong>Q19.</strong> Which variable describes person-level characteristics in descriptive epidemiology?</div>
                 <div class="mcq-options">
-                    a) Altitude<br>
-                    b) Rainfall<br>
-                    c) Age<br>
-                    d) Season
+                    <label><input type="radio" name="mcq19" value="a"> (a) Altitude</label>
+                    <label><input type="radio" name="mcq19" value="b"> (b) Rainfall</label>
+                    <label><input type="radio" name="mcq19" value="c"> (c) Age</label>
+                    <label><input type="radio" name="mcq19" value="d"> (d) Season</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q19')">Show Answer ▼</button>
-                <div class="answer" id="q19"><strong>Correct Answer: c</strong> — Age is a fundamental person-level characteristic.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq19_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq19_ans"><strong>Correct Answer: (c)</strong> — Age is a fundamental person-level characteristic.</div>
 
-                <div class="question">20. A screening test with very high sensitivity is preferred when:</div>
+                <div class="question"><strong>Q20.</strong> A screening test with very high sensitivity is preferred when:</div>
                 <div class="mcq-options">
-                    a) Missing a true disease case has serious health consequences<br>
-                    b) Diagnostic treatment is very harmful<br>
-                    c) The test is extremely expensive<br>
-                    d) Disease is mild and self-healing
+                    <label><input type="radio" name="mcq20" value="a"> (a) Missing a true disease case has serious health consequences</label>
+                    <label><input type="radio" name="mcq20" value="b"> (b) Diagnostic treatment is very harmful</label>
+                    <label><input type="radio" name="mcq20" value="c"> (c) The test is extremely expensive</label>
+                    <label><input type="radio" name="mcq20" value="d"> (d) Disease is mild and self-healing</label>
                 </div>
-                <button class="toggle-btn" onclick="toggleAnswer('q20')">Show Answer ▼</button>
-                <div class="answer" id="q20"><strong>Correct Answer: a</strong> — High sensitivity minimises false negatives.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq20_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq20_ans"><strong>Correct Answer: (a)</strong> — High sensitivity minimises false negatives.</div>
 
 
                 <h3>Part B: Fill in the Blanks (20 Questions)</h3>
-                <div class="note">
-                    <p><strong>1.</strong> Epidemiology is defined as the study of the distribution and <strong>determinants</strong> of disease in human populations.</p>
-                    <p><strong>2.</strong> The number of newly occurring cases of a disease in a population over a given time is called <strong>incidence</strong>.</p>
-                    <p><strong>3.</strong> Total existing cases (old plus new) divided by population at risk gives the <strong>prevalence</strong> rate.</p>
-                    <p><strong>4.</strong> The proportion of diagnosed patients of a specific disease who die from it is defined as the <strong>case fatality</strong> rate.</p>
-                    <p><strong>5.</strong> In case-control studies, participants are selected on the basis of their <strong>disease / outcome</strong> status.</p>
-                    <p><strong>6.</strong> In cohort studies, participants are selected on the basis of their <strong>exposure</strong> status.</p>
-                    <p><strong>7.</strong> The formula $(a \times d)/(b \times c)$ in a 2×2 table computes the <strong>odds</strong> ratio.</p>
-                    <p><strong>8.</strong> The ratio of incidence rate in exposed group to incidence rate in unexposed group is defined as <strong>relative</strong> risk.</p>
-                    <p><strong>9.</strong> The difference in incidence rates between exposed and unexposed groups is defined as <strong>attributable</strong> risk.</p>
-                    <p><strong>10.</strong> The proportion of truly sick people correctly identified by a screening test is defined as <strong>sensitivity</strong>.</p>
-                    <p><strong>11.</strong> The proportion of truly healthy people correctly identified as negative by a test is defined as <strong>specificity</strong>.</p>
-                    <p><strong>12.</strong> A sick person misclassified as healthy by a screening test is called a <strong>false</strong> negative.</p>
-                    <p><strong>13.</strong> A healthy person misclassified as sick by a screening test is called a <strong>false</strong> positive.</p>
-                    <p><strong>14.</strong> An odds ratio greater than 1.0 indicates that an exposure is a potential <strong>risk</strong> factor.</p>
-                    <p><strong>15.</strong> Systematic loss of participants during long-term follow-up leads to <strong>attrition</strong> bias in cohort studies.</p>
-                    <p><strong>16.</strong> Patients struggling to remember past dietary habits leads to <strong>recall</strong> bias in case-control studies.</p>
-                    <p><strong>17.</strong> The ultimate accurate diagnostic test against which screening tests are evaluated is called the <strong>gold</strong> standard.</p>
-                    <p><strong>18.</strong> Mid-year population is used in the denominator to calculate the <strong>crude</strong> death rate.</p>
-                    <p><strong>19.</strong> Long disease duration causes the disease <strong>prevalence</strong> to increase over time.</p>
-                    <p><strong>20.</strong> Screening is conducted on individuals who are <strong>asymptomatic</strong> (showing no outward symptoms).</p>
-                </div>
+
+                <div class="question"><strong>FIB 1.</strong> Epidemiology is defined as the study of the distribution and ____________ of disease in human populations.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib1_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib1_ans"><strong>Answer: determinants</strong> — Determinants are the causes and risk factors influencing health outcomes.</div>
+
+                <div class="question"><strong>FIB 2.</strong> The number of newly occurring cases of a disease in a population over a given time is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib2_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib2_ans"><strong>Answer: incidence</strong> — Incidence measures new cases developing in a population at risk.</div>
+
+                <div class="question"><strong>FIB 3.</strong> Total existing cases (old plus new) divided by population at risk gives the ____________ rate.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib3_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib3_ans"><strong>Answer: prevalence</strong> — Prevalence reflects the total disease burden at a point or period.</div>
+
+                <div class="question"><strong>FIB 4.</strong> The proportion of diagnosed patients of a specific disease who die from it is defined as the ____________ rate.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib4_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib4_ans"><strong>Answer: case fatality</strong> — Case fatality rate (CFR) measures disease lethality.</div>
+
+                <div class="question"><strong>FIB 5.</strong> In case-control studies, participants are selected on the basis of their ____________ status.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib5_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib5_ans"><strong>Answer: disease / outcome</strong> — Cases have the disease, and controls do not.</div>
+
+                <div class="question"><strong>FIB 6.</strong> In cohort studies, participants are selected on the basis of their ____________ status.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib6_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib6_ans"><strong>Answer: exposure</strong> — Healthy groups are classified into exposed and unexposed.</div>
+
+                <div class="question"><strong>FIB 7.</strong> The formula $(a \times d)/(b \times c)$ in a 2×2 table computes the ____________ ratio.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib7_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib7_ans"><strong>Answer: odds</strong> — The odds ratio ($OR$) estimates relative odds in case-control studies.</div>
+
+                <div class="question"><strong>FIB 8.</strong> The ratio of incidence rate in exposed group to incidence rate in unexposed group is defined as ____________ risk.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib8_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib8_ans"><strong>Answer: relative</strong> — Relative risk ($RR = I_e / I_u$) measures association in cohort studies.</div>
+
+                <div class="question"><strong>FIB 9.</strong> The difference in incidence rates between exposed and unexposed groups is defined as ____________ risk.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib9_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib9_ans"><strong>Answer: attributable</strong> — Attributable risk ($AR = I_e - I_u$) measures excess incidence.</div>
+
+                <div class="question"><strong>FIB 10.</strong> The proportion of truly sick people correctly identified by a screening test is defined as ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib10_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib10_ans"><strong>Answer: sensitivity</strong> — Sensitivity = $a/(a+c)$.</div>
+
+                <div class="question"><strong>FIB 11.</strong> The proportion of truly healthy people correctly identified as negative by a test is defined as ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib11_ans"><strong>Answer: specificity</strong> — Specificity = $d/(b+d)$.</div>
+
+                <div class="question"><strong>FIB 12.</strong> A sick person misclassified as healthy by a screening test is called a ____________ negative.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib12_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib12_ans"><strong>Answer: false</strong> — A false negative is a diseased individual missed by screening.</div>
+
+                <div class="question"><strong>FIB 13.</strong> A healthy person misclassified as sick by a screening test is called a ____________ positive.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib13_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib13_ans"><strong>Answer: false</strong> — A false positive is a healthy individual incorrectly flagged as positive.</div>
+
+                <div class="question"><strong>FIB 14.</strong> An odds ratio greater than 1.0 indicates that an exposure is a potential ____________ factor.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib14_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib14_ans"><strong>Answer: risk</strong> — $OR > 1$ indicates higher odds of disease in exposed individuals.</div>
+
+                <div class="question"><strong>FIB 15.</strong> Systematic loss of participants during long-term follow-up leads to ____________ bias in cohort studies.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib15_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib15_ans"><strong>Answer: attrition</strong> — Attrition bias occurs when dropouts differ systematically from remainers.</div>
+
+                <div class="question"><strong>FIB 16.</strong> Patients struggling to remember past dietary habits leads to ____________ bias in case-control studies.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib16_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib16_ans"><strong>Answer: recall</strong> — Recall bias distorts past exposure estimates.</div>
+
+                <div class="question"><strong>FIB 17.</strong> The ultimate accurate diagnostic test against which screening tests are evaluated is called the ____________ standard.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib17_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib17_ans"><strong>Answer: gold</strong> — The gold standard establishes true disease presence.</div>
+
+                <div class="question"><strong>FIB 18.</strong> Mid-year population is used in the denominator to calculate the ____________ death rate.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib18_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib18_ans"><strong>Answer: crude</strong> — CDR uses total deaths over mid-year population $\times 1{,}000$.</div>
+
+                <div class="question"><strong>FIB 19.</strong> Long disease duration causes the disease ____________ to increase over time.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib19_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib19_ans"><strong>Answer: prevalence</strong> — Long duration keeps cases in the prevalence pool longer ($P = I \times D$).</div>
+
+                <div class="question"><strong>FIB 20.</strong> Screening is conducted on individuals who are ____________ (showing no outward symptoms).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib20_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib20_ans"><strong>Answer: asymptomatic</strong> — Screening targets apparently healthy asymptomatic populations.</div>
 
 
                 <h3>Part C: True / False Statements (20 Questions)</h3>
-                <div class="note">
-                    <p><strong>1.</strong> Epidemiology focuses strictly on individual patient care in clinical settings. <br>Answer: <strong>False</strong> — Epidemiology focuses on whole population groups and public health.</p>
-                    <p><strong>2.</strong> Incidence rate includes both old and newly diagnosed cases in its numerator. <br>Answer: <strong>False</strong> — Incidence includes only newly diagnosed cases.</p>
-                    <p><strong>3.</strong> A case-control study tracks participants forward into the future to see who gets sick. <br>Answer: <strong>False</strong> — Case-control studies are retrospective.</p>
-                    <p><strong>4.</strong> Relative risk can be calculated directly from a standard case-control study. <br>Answer: <strong>False</strong> — Case-control studies yield odds ratios; direct incidence and relative risk cannot be calculated.</p>
-                    <p><strong>5.</strong> Fatal diseases with very short survival times tend to have low prevalence. <br>Answer: <strong>True</strong> — Short duration reduces prevalence because $P = I \times D$.</p>
-                    <p><strong>6.</strong> Specificity measures the test's ability to correctly clear non-diseased individuals. <br>Answer: <strong>True</strong> — Specificity = $d/(b+d)$.</p>
-                    <p><strong>7.</strong> False positive results cause unnecessary psychological anxiety for patients. <br>Answer: <strong>True</strong> — Misclassifying healthy people as sick creates anxiety and unnecessary follow-up.</p>
-                    <p><strong>8.</strong> An odds ratio of less than 1.0 suggests an exposure may protect against disease. <br>Answer: <strong>True</strong> — $OR < 1$ indicates lower odds of disease in exposed individuals.</p>
-                    <p><strong>9.</strong> Cohort studies require smaller sample sizes than case-control studies. <br>Answer: <strong>False</strong> — Cohort studies generally require larger sample sizes.</p>
-                    <p><strong>10.</strong> Attributable risk measures the excess rate of disease caused directly by an exposure. <br>Answer: <strong>True</strong> — $AR = I_e - I_u$.</p>
-                    <p><strong>11.</strong> Case fatality rate is usually expressed per 100,000 mid-year population. <br>Answer: <strong>False</strong> — CFR is expressed as a percentage of diagnosed cases.</p>
-                    <p><strong>12.</strong> Point prevalence measures disease status at one designated moment in time. <br>Answer: <strong>True</strong> — Point prevalence evaluates burden at a specific instant.</p>
-                    <p><strong>13.</strong> Cohort study participants must already have the disease when follow-up starts. <br>Answer: <strong>False</strong> — Participants must be disease-free at baseline.</p>
-                    <p><strong>14.</strong> Positive predictive value changes depending on disease prevalence in the population. <br>Answer: <strong>True</strong> — PPV rises with prevalence and falls when prevalence is low.</p>
-                    <p><strong>15.</strong> Observational study designs involve giving new medicines to participants. <br>Answer: <strong>False</strong> — Observational studies only observe natural exposures.</p>
-                    <p><strong>16.</strong> Crude death rate accounts for age differences between different populations. <br>Answer: <strong>False</strong> — CDR does not adjust for age; age-specific rates are needed.</p>
-                    <p><strong>17.</strong> High sensitivity minimises the number of false negative test results. <br>Answer: <strong>True</strong> — High sensitivity ensures sick individuals are detected.</p>
-                    <p><strong>18.</strong> Loss of participants during cohort follow-up creates attrition bias. <br>Answer: <strong>True</strong> — Differential dropout over time leads to attrition bias.</p>
-                    <p><strong>19.</strong> Retrospective studies examine historical records or past memories. <br>Answer: <strong>True</strong> — Retrospective designs look back at past data.</p>
-                    <p><strong>20.</strong> A screening test provides a final medical diagnosis by itself. <br>Answer: <strong>False</strong> — Screening only flags potential cases; a gold standard test is required for diagnosis.</p>
-                </div>
+
+                <div class="question"><strong>TF 1.</strong> Epidemiology focuses strictly on individual patient care in clinical settings.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf1_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf1_ans"><strong>Answer: False</strong> — Epidemiology focuses on whole population groups and public health prevention.</div>
+
+                <div class="question"><strong>TF 2.</strong> Incidence rate includes both old and newly diagnosed cases in its numerator.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf2_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf2_ans"><strong>Answer: False</strong> — Incidence includes only newly diagnosed cases.</div>
+
+                <div class="question"><strong>TF 3.</strong> A case-control study tracks participants forward into the future to see who gets sick.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf3_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf3_ans"><strong>Answer: False</strong> — Case-control studies are retrospective; cohort studies move forward.</div>
+
+                <div class="question"><strong>TF 4.</strong> Relative risk can be calculated directly from a standard case-control study.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf4_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf4_ans"><strong>Answer: False</strong> — Case-control studies yield odds ratios; direct incidence and relative risk cannot be calculated.</div>
+
+                <div class="question"><strong>TF 5.</strong> Fatal diseases with very short survival times tend to have low prevalence.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf5_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf5_ans"><strong>Answer: True</strong> — Short duration reduces prevalence because $P = I \times D$.</div>
+
+                <div class="question"><strong>TF 6.</strong> Specificity measures the test's ability to correctly clear non-diseased individuals.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf6_ans"><strong>Answer: True</strong> — Specificity = $d/(b+d)$.</div>
+
+                <div class="question"><strong>TF 7.</strong> False positive results cause unnecessary psychological anxiety for patients.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf7_ans"><strong>Answer: True</strong> — Misclassifying healthy people as sick creates anxiety and unnecessary follow-up.</div>
+
+                <div class="question"><strong>TF 8.</strong> An odds ratio of less than 1.0 suggests an exposure may protect against disease.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf8_ans"><strong>Answer: True</strong> — $OR < 1$ indicates lower odds of disease in exposed individuals.</div>
+
+                <div class="question"><strong>TF 9.</strong> Cohort studies require smaller sample sizes than case-control studies.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf9_ans"><strong>Answer: False</strong> — Cohort studies generally require larger sample sizes.</div>
+
+                <div class="question"><strong>TF 10.</strong> Attributable risk measures the excess rate of disease caused directly by an exposure.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf10_ans"><strong>Answer: True</strong> — $AR = I_e - I_u$.</div>
+
+                <div class="question"><strong>TF 11.</strong> Case fatality rate is usually expressed per 100,000 mid-year population.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf11_ans"><strong>Answer: False</strong> — CFR is expressed as a percentage of diagnosed cases.</div>
+
+                <div class="question"><strong>TF 12.</strong> Point prevalence measures disease status at one designated moment in time.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf12_ans"><strong>Answer: True</strong> — Point prevalence evaluates burden at a specific instant.</div>
+
+                <div class="question"><strong>TF 13.</strong> Cohort study participants must already have the disease when follow-up starts.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf13_ans"><strong>Answer: False</strong> — Participants must be disease-free at baseline.</div>
+
+                <div class="question"><strong>TF 14.</strong> Positive predictive value changes depending on disease prevalence in the population.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf14_ans"><strong>Answer: True</strong> — PPV rises with prevalence and falls when prevalence is low.</div>
+
+                <div class="question"><strong>TF 15.</strong> Observational study designs involve giving new medicines to participants.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf15_ans"><strong>Answer: False</strong> — Observational studies only observe natural exposures.</div>
+
+                <div class="question"><strong>TF 16.</strong> Crude death rate accounts for age differences between different populations.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf16_ans"><strong>Answer: False</strong> — CDR does not adjust for age; age-specific rates are needed.</div>
+
+                <div class="question"><strong>TF 17.</strong> High sensitivity minimises the number of false negative test results.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf17_ans"><strong>Answer: True</strong> — High sensitivity ensures sick individuals are detected.</div>
+
+                <div class="question"><strong>TF 18.</strong> Loss of participants during cohort follow-up creates attrition bias.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf18_ans"><strong>Answer: True</strong> — Differential dropout over time leads to attrition bias.</div>
+
+                <div class="question"><strong>TF 19.</strong> Retrospective studies examine historical records or past memories.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf19_ans"><strong>Answer: True</strong> — Retrospective designs look back at past data.</div>
+
+                <div class="question"><strong>TF 20.</strong> A screening test provides a final medical diagnosis by itself.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf20_ans"><strong>Answer: False</strong> — Screening only flags potential cases; a gold standard test is required for diagnosis.</div>
 
 
                 <h3>Part D: Matching Type Questions (5 Sets of 4 Items)</h3>
-                <div class="note">
-                    <h4>Set 1: Basic Epidemiological Measures</h4>
-                    <p>1. Prevalence $\implies$ <strong>B</strong> (Total existing cases divided by population at risk)</p>
-                    <p>2. Incidence $\implies$ <strong>C</strong> (New cases occurring over a given time period)</p>
-                    <p>3. Crude death rate $\implies$ <strong>D</strong> (Total deaths per 1,000 mid-year population)</p>
-                    <p>4. Case fatality rate $\implies$ <strong>A</strong> (Proportion of diagnosed patients who die)</p>
+
+                <div class="question"><strong>Matching Set 1: Basic Epidemiological Measures</strong><br>
+                    1. Prevalence &nbsp;&nbsp;&nbsp;&nbsp; 2. Incidence &nbsp;&nbsp;&nbsp;&nbsp; 3. Crude death rate &nbsp;&nbsp;&nbsp;&nbsp; 4. Case fatality rate
                 </div>
-                <div class="note">
-                    <h4>Set 2: Study Designs and Metrics</h4>
-                    <p>5. Case-control study $\implies$ <strong>B</strong> (Retrospective study starting with sick and healthy groups)</p>
-                    <p>6. Cohort study $\implies$ <strong>D</strong> (Prospective study following exposed groups forward)</p>
-                    <p>7. Odds ratio $\implies$ <strong>C</strong> (Calculated as $(a \times d)/(b \times c)$)</p>
-                    <p>8. Relative risk $\implies$ <strong>A</strong> (Direct ratio of exposed to unexposed incidence)</p>
+                <button class="toggle-btn" onclick="toggleAnswer('match1_ans')">Show Answer ▼</button>
+                <div class="answer" id="match1_ans">
+                    <strong>1 → B</strong> (Total existing cases divided by population at risk)<br>
+                    <strong>2 → C</strong> (New cases occurring over a given time period)<br>
+                    <strong>3 → D</strong> (Total deaths per 1,000 mid-year population)<br>
+                    <strong>4 → A</strong> (Proportion of diagnosed patients who die)
                 </div>
-                <div class="note">
-                    <h4>Set 3: Screening Definitions</h4>
-                    <p>9. Sensitivity $\implies$ <strong>B</strong> (Ability to correctly identify sick individuals [$a/(a+c)$])</p>
-                    <p>10. Specificity $\implies$ <strong>A</strong> (Ability to correctly clear healthy individuals [$d/(b+d)$])</p>
-                    <p>11. Positive predictive value $\implies$ <strong>D</strong> (Probability that a positive test person truly has disease)</p>
-                    <p>12. Negative predictive value $\implies$ <strong>C</strong> (Probability that a negative test person is truly healthy)</p>
+
+                <div class="question"><strong>Matching Set 2: Study Designs and Metrics</strong><br>
+                    5. Case-control study &nbsp;&nbsp;&nbsp;&nbsp; 6. Cohort study &nbsp;&nbsp;&nbsp;&nbsp; 7. Odds ratio &nbsp;&nbsp;&nbsp;&nbsp; 8. Relative risk
                 </div>
-                <div class="note">
-                    <h4>Set 4: Screening Categories</h4>
-                    <p>13. True positive $\implies$ <strong>D</strong> (Test is positive, and person is sick)</p>
-                    <p>14. False positive $\implies$ <strong>A</strong> (Test is positive, but person is healthy)</p>
-                    <p>15. False negative $\implies$ <strong>B</strong> (Test is negative, but person is sick)</p>
-                    <p>16. True negative $\implies$ <strong>C</strong> (Test is negative, and person is healthy)</p>
+                <button class="toggle-btn" onclick="toggleAnswer('match2_ans')">Show Answer ▼</button>
+                <div class="answer" id="match2_ans">
+                    <strong>5 → B</strong> (Retrospective study starting with sick and healthy groups)<br>
+                    <strong>6 → D</strong> (Prospective study following exposed groups forward)<br>
+                    <strong>7 → C</strong> (Calculated as $(a \times d)/(b \times c)$)<br>
+                    <strong>8 → A</strong> (Direct ratio of exposed to unexposed incidence)
                 </div>
-                <div class="note">
-                    <h4>Set 5: Interpretation of Risk Values</h4>
-                    <p>17. Relative risk = 1.0 $\implies$ <strong>C</strong> (No association between exposure and disease)</p>
-                    <p>18. Relative risk > 1.0 $\implies$ <strong>B</strong> (Exposure acts as a risk factor)</p>
-                    <p>19. Relative risk < 1.0 $\implies$ <strong>A</strong> (Exposure acts as a protective factor)</p>
-                    <p>20. Attributable risk $\implies$ <strong>D</strong> (Excess rate of disease caused directly by exposure)</p>
+
+                <div class="question"><strong>Matching Set 3: Screening Definitions</strong><br>
+                    9. Sensitivity &nbsp;&nbsp;&nbsp;&nbsp; 10. Specificity &nbsp;&nbsp;&nbsp;&nbsp; 11. Positive predictive value &nbsp;&nbsp;&nbsp;&nbsp; 12. Negative predictive value
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match3_ans')">Show Answer ▼</button>
+                <div class="answer" id="match3_ans">
+                    <strong>9 → B</strong> (Ability to correctly identify sick individuals [$a/(a+c)$])<br>
+                    <strong>10 → A</strong> (Ability to correctly clear healthy individuals [$d/(b+d)$])<br>
+                    <strong>11 → D</strong> (Probability that a positive test person truly has disease)<br>
+                    <strong>12 → C</strong> (Probability that a negative test person is truly healthy)
+                </div>
+
+                <div class="question"><strong>Matching Set 4: Screening Categories</strong><br>
+                    13. True positive &nbsp;&nbsp;&nbsp;&nbsp; 14. False positive &nbsp;&nbsp;&nbsp;&nbsp; 15. False negative &nbsp;&nbsp;&nbsp;&nbsp; 16. True negative
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match4_ans')">Show Answer ▼</button>
+                <div class="answer" id="match4_ans">
+                    <strong>13 → D</strong> (Test is positive, and person is sick)<br>
+                    <strong>14 → A</strong> (Test is positive, but person is healthy)<br>
+                    <strong>15 → B</strong> (Test is negative, but person is sick)<br>
+                    <strong>16 → C</strong> (Test is negative, and person is healthy)
+                </div>
+
+                <div class="question"><strong>Matching Set 5: Interpretation of Risk Values</strong><br>
+                    17. Relative risk = 1.0 &nbsp;&nbsp;&nbsp;&nbsp; 18. Relative risk > 1.0 &nbsp;&nbsp;&nbsp;&nbsp; 19. Relative risk < 1.0 &nbsp;&nbsp;&nbsp;&nbsp; 20. Attributable risk
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('match5_ans')">Show Answer ▼</button>
+                <div class="answer" id="match5_ans">
+                    <strong>17 → C</strong> (No association between exposure and disease)<br>
+                    <strong>18 → B</strong> (Exposure acts as a risk factor)<br>
+                    <strong>19 → A</strong> (Exposure acts as a protective factor)<br>
+                    <strong>20 → D</strong> (Excess rate of disease caused directly by exposure)
                 </div>
 
 
                 <h3>Part E: Subjective and Analytical Questions (10 Questions with Detailed Solutions)</h3>
 
-                <div class="example">
-                    <div class="card-title">Q1. How is epidemiology defined? Explain its primary objectives and applications in simple terms.</div>
+                <div class="question"><strong>Q1.</strong> How is epidemiology defined? Explain its primary objectives and applications in simple terms.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub1_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub1_ans">
                     <p><strong>Solution:</strong></p>
                     <p>Epidemiology is the study of the distribution and determinants of health-related states or events in specified human populations, and the application of this study to the prevention and control of health problems.</p>
                     <p>Its primary objectives are:</p>
@@ -1868,8 +2061,9 @@
                     <p><em>Example:</em> The pulse polio programme used epidemiologic surveillance to identify areas with ongoing poliovirus transmission and target vaccination campaigns there.</p>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q2. How are prevalence and incidence defined? Explain their mathematical differences and describe how disease duration links them.</div>
+                <div class="question"><strong>Q2.</strong> How are prevalence and incidence defined? Explain their mathematical differences and describe how disease duration links them.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub2_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub2_ans">
                     <p><strong>Solution:</strong></p>
                     <p><strong>Prevalence</strong> is the proportion of a population that has a disease at a given point or period in time. It includes both old and new cases.</p>
                     <p><strong>Incidence</strong> is the number of new cases that develop in a population at risk during a given time period.</p>
@@ -1878,8 +2072,9 @@
                     <p>where $D$ is the average duration of disease. A disease with long duration, such as diabetes, accumulates cases and produces high prevalence even when annual incidence is moderate. A disease with short duration, such as food poisoning, has low prevalence even when many people become ill.</p>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q3. What are the eight key steps in an outbreak investigation?</div>
+                <div class="question"><strong>Q3.</strong> What are the eight key steps in an outbreak investigation?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub3_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub3_ans">
                     <p><strong>Solution:</strong></p>
                     <ol>
                         <li>Verify the outbreak and diagnosis by comparing case counts with the baseline.</li>
@@ -1893,8 +2088,9 @@
                     </ol>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q4. Define crude death rate and case fatality rate. How do they differ?</div>
+                <div class="question"><strong>Q4.</strong> Define crude death rate and case fatality rate. How do they differ?</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub4_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub4_ans">
                     <p><strong>Solution:</strong></p>
                     <p><strong>Crude death rate</strong> is the total number of deaths from all causes in a year per 1,000 mid-year population. It measures general mortality in a population.</p>
                     <p><strong>Case fatality rate</strong> is the proportion of people diagnosed with a specific disease who die from it. It measures how deadly that particular disease is.</p>
@@ -1902,8 +2098,9 @@
                     <p><em>Example:</em> A CDR of 8 per 1,000 tells us about overall health conditions in a district. A CFR of 3% for dengue tells us the risk of death once dengue has been diagnosed.</p>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q5. Define a case-control study. Explain its setup, advantages, and limitations.</div>
+                <div class="question"><strong>Q5.</strong> Define a case-control study. Explain its setup, advantages, and limitations.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub5_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub5_ans">
                     <p><strong>Solution:</strong></p>
                     <p>A <strong>case-control study</strong> is an observational retrospective study that compares individuals with a disease (cases) to individuals without the disease (controls) to assess differences in past exposure.</p>
                     <p><strong>Setup:</strong> Cases and controls are selected, and their histories of exposure to suspected risk factors are compared. Data are arranged in a 2×2 table, and the odds ratio is calculated as $OR = (a \times d)/(b \times c)$.</p>
@@ -1911,8 +2108,9 @@
                     <p><strong>Limitations:</strong> cannot measure direct incidence or relative risk directly, and is vulnerable to recall bias and selection bias.</p>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q6. Define a cohort study. Explain how relative risk and attributable risk are calculated and interpreted.</div>
+                <div class="question"><strong>Q6.</strong> Define a cohort study. Explain how relative risk and attributable risk are calculated and interpreted.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub6_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub6_ans">
                     <p><strong>Solution:</strong></p>
                     <p>A <strong>cohort study</strong> is an observational study in which healthy participants are selected on the basis of exposure status and followed forward in time to measure disease development.</p>
                     <p>The incidence in the exposed group is $I_e = a/(a+b)$ and in the unexposed group is $I_u = c/(c+d)$.</p>
@@ -1920,8 +2118,9 @@
                     <p><strong>Attributable risk</strong> is $AR = I_e - I_u$. It measures the excess incidence of disease attributable to the exposure.</p>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q7. Compare case-control and cohort study designs across key parameters.</div>
+                <div class="question"><strong>Q7.</strong> Compare case-control and cohort study designs across key parameters.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub7_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub7_ans">
                     <p><strong>Solution:</strong></p>
                     <table>
                         <thead>
@@ -1976,8 +2175,9 @@
                     </table>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q8. Define sensitivity, specificity, positive predictive value, and negative predictive value.</div>
+                <div class="question"><strong>Q8.</strong> Define sensitivity, specificity, positive predictive value, and negative predictive value.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub8_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub8_ans">
                     <p><strong>Solution:</strong></p>
                     <ul>
                         <li><strong>Sensitivity</strong> = $a/(a+c)$. It is the ability of a test to correctly identify diseased individuals as positive.</li>
@@ -1987,8 +2187,9 @@
                     </ul>
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q9. A screening test was evaluated on 300 adults. The gold standard showed that 100 had diabetes and 200 did not. The test correctly gave positive results for 85 diabetic adults and incorrectly gave positive results for 20 healthy adults. Calculate sensitivity, specificity, and positive predictive value.</div>
+                <div class="question"><strong>Q9.</strong> A screening test was evaluated on 300 adults. The gold standard showed that 100 had diabetes and 200 did not. The test correctly gave positive results for 85 diabetic adults and incorrectly gave positive results for 20 healthy adults. Calculate sensitivity, specificity, and positive predictive value.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub9_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub9_ans">
                     <p><strong>Solution:</strong></p>
                     <p>The 2×2 table is:</p>
                     <table>
@@ -2017,8 +2218,9 @@
                     $$ \text{PPV} = \frac{85}{85+20} \times 100 = \frac{85}{105} \times 100 \approx 80.95\% $$
                 </div>
 
-                <div class="example">
-                    <div class="card-title">Q10. Define bias and confounding. Explain recall bias and attrition bias with simple examples.</div>
+                <div class="question"><strong>Q10.</strong> Define bias and confounding. Explain recall bias and attrition bias with simple examples.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub10_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub10_ans">
                     <p><strong>Solution:</strong></p>
                     <p><strong>Bias</strong> is any systematic error in study design, data collection, analysis, or interpretation that distorts the true effect of an exposure on a disease.</p>
                     <p><strong>Confounding</strong> occurs when a third variable is associated with both the exposure and the disease and distorts their apparent relationship.</p>
@@ -2072,8 +2274,14 @@
         }
         function toggleAnswer(id) {
             const el = document.getElementById(id);
-            if (el.style.display === 'block') { el.style.display = 'none'; }
-            else { el.style.display = 'block'; }
+            if (!el) return;
+            if (el.classList.contains('show') || el.style.display === 'block') {
+                el.classList.remove('show');
+                el.style.display = 'none';
+            } else {
+                el.classList.add('show');
+                el.style.display = 'block';
+            }
         }
         function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
     </script>
