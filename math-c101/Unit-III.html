@@ -415,23 +415,31 @@
                     <h3>Solved Examples for Section 3.1</h3>
 
                     <div class="example">
-                        <div class="card-title">Example 3.1.1: Verification of Subspace Criterion in R^3</div>
+                        <div class="card-title">Example 3.1.1: Verification of Subspace Criterion for Plane in R^3</div>
                         <p><strong>Question:</strong> Test if $W = \{(x_1, x_2, x_3) \in \mathbb{R}^3 \mid 2x_1 - x_2 + 3x_3 = 0\}$ is a subspace of $\mathbb{R}^3$.</p>
                         <p><strong>Solution:</strong></p>
                         <p><strong>Step 1: Check Zero Vector</strong></p>
+                        <p>Substitute $(x_1, x_2, x_3) = (0, 0, 0)$ into defining plane equation:</p>
                         $$ 2(0) - (0) + 3(0) = 0 $$
-                        <p>Zero vector $(0,0,0) \in W$, so $W$ is non-empty.</p>
+                        <p>The zero vector $(0,0,0) \in W$, so $W$ is non-empty.</p>
 
-                        <p><strong>Step 2: Apply Subspace Criterion $\alpha u + \beta v \in W$</strong></p>
+                        <p><strong>Step 2: Take Arbitrary Vectors in W</strong></p>
                         <p>Let $u = (u_1, u_2, u_3) \in W$ and $v = (v_1, v_2, v_3) \in W$. Then:</p>
                         $$ 2u_1 - u_2 + 3u_3 = 0 $$
                         $$ 2v_1 - v_2 + 3v_3 = 0 $$
-                        <p>Form linear combination $w = \alpha u + \beta v$:</p>
+
+                        <p><strong>Step 3: Form Linear Combination Vector</strong></p>
+                        <p>For scalars $\alpha, \beta \in \mathbb{R}$, form vector $w = \alpha u + \beta v$:</p>
+                        $$ w = \alpha (u_1, u_2, u_3) + \beta (v_1, v_2, v_3) $$
                         $$ w = (\alpha u_1 + \beta v_1, \; \alpha u_2 + \beta v_2, \; \alpha u_3 + \beta v_3) $$
-                        <p>Substitute components into defining equation:</p>
+
+                        <p><strong>Step 4: Check if Linear Combination Satisfies Equation</strong></p>
+                        <p>Substitute components of $w$ into plane equation:</p>
                         $$ 2(\alpha u_1 + \beta v_1) - (\alpha u_2 + \beta v_2) + 3(\alpha u_3 + \beta v_3) $$
+                        $$ = (2\alpha u_1 - \alpha u_2 + 3\alpha u_3) + (2\beta v_1 - \beta v_2 + 3\beta v_3) $$
                         $$ = \alpha(2u_1 - u_2 + 3u_3) + \beta(2v_1 - v_2 + 3v_3) $$
                         $$ = \alpha(0) + \beta(0) = 0 $$
+
                         <p><strong>Conclusion:</strong></p>
                         $$ w = \alpha u + \beta v \in W $$
                         <p>Hence $W$ is a subspace of $\mathbb{R}^3$.</p>
@@ -441,56 +449,101 @@
                         <div class="card-title">Example 3.1.2: Non-Subspace Example (Non-Zero Constant Term)</div>
                         <p><strong>Question:</strong> Test if $W = \{(x_1, x_2, x_3) \in \mathbb{R}^3 \mid x_1 + x_2 + x_3 = 1\}$ is a subspace of $\mathbb{R}^3$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p><strong>Step 1: Test Zero Vector</strong></p>
+                        <p><strong>Step 1: Test Zero Vector Membership</strong></p>
+                        <p>Substitute $(x_1, x_2, x_3) = (0, 0, 0)$ into defining equation:</p>
                         $$ 0 + 0 + 0 = 0 \neq 1 $$
                         <p>The zero vector $(0,0,0) \notin W$.</p>
 
+                        <p><strong>Step 2: Test Closure under Addition</strong></p>
+                        <p>Take vectors $u = (1, 0, 0) \in W$ and $v = (0, 1, 0) \in W$:</p>
+                        $$ 1 + 0 + 0 = 1 \implies u \in W $$
+                        $$ 0 + 1 + 0 = 1 \implies v \in W $$
+                        <p>Sum of vectors:</p>
+                        $$ u + v = (1, 1, 0) $$
+                        <p>Check sum components in equation:</p>
+                        $$ 1 + 1 + 0 = 2 \neq 1 $$
+                        $$ \implies u + v \notin W $$
+
                         <p><strong>Conclusion:</strong></p>
-                        <p>Since the zero vector does not belong to $W$, $W$ cannot be a vector space.</p>
+                        <p>Since $W$ lacks the zero vector and is not closed under addition:</p>
                         $$ \text{Result: } W \text{ is NOT a subspace of } \mathbb{R}^3 $$
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.1.3: Subspace of Symmetric Matrices</div>
-                        <p><strong>Question:</strong> Show that the set $W$ of all $n \times n$ real symmetric matrices ($A^T = A$) is a subspace of $M_{n \times n}(\mathbb{R})$.</p>
+                        <div class="card-title">Example 3.1.3: Subspace of Real Symmetric Matrices</div>
+                        <p><strong>Question:</strong> Show that the set $W$ of all $n \times n$ real symmetric matrices ($A^T = A$) is a subspace of matrix space $M_{n \times n}(\mathbb{R})$.</p>
                         <p><strong>Solution:</strong></p>
                         <p><strong>Step 1: Check Zero Matrix</strong></p>
                         $$ 0^T = 0 \implies 0 \in W $$
 
-                        <p><strong>Step 2: Check Transpose of Linear Combination</strong></p>
-                        <p>Let $A, B \in W$ (so $A^T = A, B^T = B$) and $\alpha, \beta \in \mathbb{R}$:</p>
+                        <p><strong>Step 2: Transpose of Linear Combination</strong></p>
+                        <p>Let $A, B \in W$, which means:</p>
+                        $$ A^T = A $$
+                        $$ B^T = B $$
+                        <p>For scalars $\alpha, \beta \in \mathbb{R}$, evaluate transpose of $\alpha A + \beta B$:</p>
                         $$ (\alpha A + \beta B)^T = (\alpha A)^T + (\beta B)^T $$
                         $$ = \alpha A^T + \beta B^T $$
                         $$ = \alpha A + \beta B $$
+
                         <p><strong>Conclusion:</strong></p>
                         $$ \alpha A + \beta B \in W $$
                         <p>Thus $W$ is a subspace of $M_{n \times n}(\mathbb{R})$.</p>
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.1.4: Subspace of Continuous Functions</div>
-                        <p><strong>Question:</strong> Show that $C[a, b]$ (set of continuous functions on $[a,b]$) is a subspace of function space $F[a, b]$.</p>
+                        <div class="card-title">Example 3.1.4: Subspace of Real Skew-Symmetric Matrices</div>
+                        <p><strong>Question:</strong> Show that the set $W$ of all $n \times n$ real skew-symmetric matrices ($A^T = -A$) is a subspace of $M_{n \times n}(\mathbb{R})$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p><strong>Step 1: Continuity of Linear Combination</strong></p>
-                        <p>If $f(x), g(x) \in C[a,b]$, then by calculus theorem, linear combination $h(x) = \alpha f(x) + \beta g(x)$ is also continuous on $[a,b]$.</p>
+                        <p><strong>Step 1: Check Zero Matrix</strong></p>
+                        $$ 0^T = 0 = -0 \implies 0 \in W $$
+
+                        <p><strong>Step 2: Transpose of Linear Combination</strong></p>
+                        <p>Let $A, B \in W$, which means $A^T = -A$ and $B^T = -B$:</p>
+                        $$ (\alpha A + \beta B)^T = \alpha A^T + \beta B^T $$
+                        $$ = \alpha(-A) + \beta(-B) $$
+                        $$ = -(\alpha A + \beta B) $$
 
                         <p><strong>Conclusion:</strong></p>
-                        $$ \alpha f + \beta g \in C[a,b] $$
-                        <p>$C[a, b]$ is a subspace of $F[a, b]$.</p>
+                        $$ \alpha A + \beta B \in W $$
+                        <p>Thus $W$ is a subspace of $M_{n \times n}(\mathbb{R})$.</p>
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.1.5: Intersection of Two Subspaces</div>
+                        <div class="card-title">Example 3.1.5: Non-Subspace Example (Quadrants Subset)</div>
+                        <p><strong>Question:</strong> Test if $W = \{(x_1, x_2) \in \mathbb{R}^2 \mid x_1 x_2 \geq 0\}$ (first and third quadrants) is a subspace of $\mathbb{R}^2$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p><strong>Step 1: Check Zero Vector</strong></p>
+                        $$ (0)(0) = 0 \geq 0 \implies (0,0) \in W $$
+
+                        <p><strong>Step 2: Test Closure under Addition</strong></p>
+                        <p>Take vector $u = (1, 2) \in W$ (since $1 \times 2 = 2 \geq 0$).</p>
+                        <p>Take vector $v = (-3, -1) \in W$ (since $-3 \times -1 = 3 \geq 0$).</p>
+                        <p>Add vectors $u$ and $v$:</p>
+                        $$ u + v = (1 - 3, \; 2 - 1) $$
+                        $$ u + v = (-2, 1) $$
+                        <p>Check component product of sum vector:</p>
+                        $$ (-2)(1) = -2 < 0 $$
+                        $$ \implies u + v \notin W $$
+
+                        <p><strong>Conclusion:</strong></p>
+                        <p>Since $W$ is not closed under vector addition:</p>
+                        $$ \text{Result: } W \text{ is NOT a subspace of } \mathbb{R}^2 $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 3.1.6: Subspace Intersection Theorem Verification</div>
                         <p><strong>Question:</strong> Prove that if $W_1$ and $W_2$ are subspaces of $V(F)$, then their intersection $W_1 \cap W_2$ is also a subspace of $V(F)$.</p>
                         <p><strong>Solution:</strong></p>
                         <p><strong>Step 1: Non-empty Test</strong></p>
-                        $$ 0 \in W_1 \text{ and } 0 \in W_2 \implies 0 \in W_1 \cap W_2 $$
+                        $$ 0 \in W_1 \text{ and } 0 \in W_2 $$
+                        $$ \implies 0 \in W_1 \cap W_2 $$
 
                         <p><strong>Step 2: Subspace Criterion Test</strong></p>
                         <p>Let $u, v \in W_1 \cap W_2$ and $\alpha, \beta \in F$:</p>
                         $$ u, v \in W_1 \implies \alpha u + \beta v \in W_1 $$
                         $$ u, v \in W_2 \implies \alpha u + \beta v \in W_2 $$
                         $$ \implies \alpha u + \beta v \in W_1 \cap W_2 $$
+
                         <p><strong>Conclusion:</strong></p>
                         <p>$W_1 \cap W_2$ is a subspace of $V(F)$.</p>
                     </div>
@@ -534,19 +587,45 @@
                         $$ c_1 + c_2 + c_3 = -4 $$
 
                         <p><strong>Step 3: Solve System by Back Substitution</strong></p>
-                        <p>From component 1:</p>
+                        <p>From Component 1 equation:</p>
                         $$ c_1 = 1 $$
-                        <p>From component 2:</p>
-                        $$ 1 + c_2 = 7 \implies c_2 = 6 $$
-                        <p>From component 3:</p>
-                        $$ 1 + 6 + c_3 = -4 \implies 7 + c_3 = -4 \implies c_3 = -11 $$
+                        <p>From Component 2 equation:</p>
+                        $$ 1 + c_2 = 7 $$
+                        $$ \implies c_2 = 6 $$
+                        <p>From Component 3 equation:</p>
+                        $$ 1 + 6 + c_3 = -4 $$
+                        $$ 7 + c_3 = -4 $$
+                        $$ \implies c_3 = -11 $$
 
                         <p><strong>Conclusion:</strong></p>
-                        $$ v = 1 v_1 + 6 v_2 - 11 v_3 $$
+                        <p>The vector $v$ expressed as a linear combination is:</p>
+                        $$ (1, 7, -4) = 1 v_1 + 6 v_2 - 11 v_3 $$
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.2.2: Testing Vector Membership in Linear Span</div>
+                        <div class="card-title">Example 3.2.2: Hand Calculation via Gaussian Elimination</div>
+                        <p><strong>Question:</strong> Express vector $v = (2, -5, 3)$ as a linear combination of $v_1 = (1, -3, 2)$, $v_2 = (2, -4, -1)$, and $v_3 = (1, -5, 7)$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p><strong>Step 1: Linear Combination Equation</strong></p>
+                        $$ c_1(1, -3, 2) + c_2(2, -4, -1) + c_3(1, -5, 7) = (2, -5, 3) $$
+                        <p>Form augmented matrix $[A \mid B]$:</p>
+                        $$ \begin{bmatrix} 1 & 2 & 1 & \mid & 2 \\ -3 & -4 & -5 & \mid & -5 \\ 2 & -1 & 7 & \mid & 3 \end{bmatrix} $$
+
+                        <p><strong>Step 2: Row Operations to Row Echelon Form</strong></p>
+                        <p>Perform $R_2 \to R_2 + 3R_1$ and $R_3 \to R_3 - 2R_1$:</p>
+                        $$ \begin{bmatrix} 1 & 2 & 1 & \mid & 2 \\ 0 & 2 & -2 & \mid & 1 \\ 0 & -5 & 5 & \mid & -1 \end{bmatrix} $$
+                        <p>Perform $R_3 \to R_3 + \frac{5}{2} R_2$:</p>
+                        $$ \begin{bmatrix} 1 & 2 & 1 & \mid & 2 \\ 0 & 2 & -2 & \mid & 1 \\ 0 & 0 & 0 & \mid & 1.5 \end{bmatrix} $$
+
+                        <p><strong>Step 3: Analyze System Consistency</strong></p>
+                        <p>Row 3 equation gives $0 c_1 + 0 c_2 + 0 c_3 = 1.5$, which is impossible ($0 = 1.5$).</p>
+
+                        <p><strong>Conclusion:</strong></p>
+                        <p>System is inconsistent. Vector $v = (2, -5, 3)$ cannot be expressed as a linear combination of $\{v_1, v_2, v_3\}$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 3.2.3: Testing Membership in Linear Span</div>
                         <p><strong>Question:</strong> Is vector $v = (2, 5, 3)$ in $\text{span}\{v_1, v_2\}$ where $v_1 = (1, 2, 1)$ and $v_2 = (1, 1, 0)$?</p>
                         <p><strong>Solution:</strong></p>
                         <p><strong>Step 1: Set up Linear Combination Equation</strong></p>
@@ -558,55 +637,76 @@
                         $$ 2c_1 + c_2 = 5 $$
                         $$ c_1 = 3 $$
 
-                        <p><strong>Step 3: Check System Consistency</strong></p>
-                        <p>From component 3: $c_1 = 3$. Substitute into component 1:</p>
+                        <p><strong>Step 3: Solve and Verify Consistency</strong></p>
+                        <p>From Component 3 equation:</p>
+                        $$ c_1 = 3 $$
+                        <p>Substitute $c_1 = 3$ into Component 1 equation:</p>
                         $$ 3 + c_2 = 2 \implies c_2 = -1 $$
-                        <p>Substitute $c_1 = 3, c_2 = -1$ into component 2:</p>
+                        <p>Check $c_1 = 3, c_2 = -1$ in Component 2 equation:</p>
                         $$ 2(3) + (-1) = 6 - 1 = 5 $$
-                        <p>Component 2 matches! System is consistent.</p>
+                        <p>Component 2 equation matches!</p>
 
                         <p><strong>Conclusion:</strong></p>
-                        $$ (2, 5, 3) = 3 v_1 - 1 v_2 \in \text{span}\{v_1, v_2\} $$
+                        $$ (2, 5, 3) = 3 v_1 - 1 v_2 $$
+                        $$ \text{Result: } (2, 5, 3) \in \text{span}\{v_1, v_2\} $$
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.2.3: Inconsistent Linear Combination System</div>
+                        <div class="card-title">Example 3.2.4: Inconsistent Span System</div>
                         <p><strong>Question:</strong> Show that vector $v = (1, 2, 3)$ is NOT in $\text{span}\{(1, 1, 0), (2, 2, 0)\}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p><strong>Step 1: Linear Combination Equation</strong></p>
+                        <p><strong>Step 1: Set up Linear Combination Equation</strong></p>
                         $$ c_1(1, 1, 0) + c_2(2, 2, 0) = (1, 2, 3) $$
                         $$ (c_1 + 2c_2, \; c_1 + 2c_2, \; 0) = (1, 2, 3) $$
-                        <p>Component 3 equation requires $0 = 3$, which is impossible!</p>
+
+                        <p><strong>Step 2: Component Equations</strong></p>
+                        $$ c_1 + 2c_2 = 1 $$
+                        $$ c_1 + 2c_2 = 2 $$
+                        $$ 0 = 3 $$
 
                         <p><strong>Conclusion:</strong></p>
+                        <p>Equation 3 requires $0 = 3$, which is a contradiction. Hence:</p>
                         $$ (1, 2, 3) \notin \text{span}\{(1, 1, 0), (2, 2, 0)\} $$
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.2.4: Polynomial Linear Combination</div>
-                        <p><strong>Question:</strong> Express $p(x) = 3x^2 + 2x + 1$ as a linear combination of $p_1(x) = x^2$, $p_2(x) = x + 1$, and $p_3(x) = 1$.</p>
+                        <div class="card-title">Example 3.2.5: Polynomial Linear Combination</div>
+                        <p><strong>Question:</strong> Express polynomial $p(x) = 3x^2 + 2x + 1$ as a linear combination of $p_1(x) = x^2$, $p_2(x) = x + 1$, and $p_3(x) = 1$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p><strong>Step 1: Equation Setup</strong></p>
+                        <p><strong>Step 1: Polynomial Equation Setup</strong></p>
                         $$ c_1(x^2) + c_2(x + 1) + c_3(1) = 3x^2 + 2x + 1 $$
                         $$ c_1 x^2 + c_2 x + (c_2 + c_3) = 3x^2 + 2x + 1 $$
 
-                        <p><strong>Step 2: Equate Coefficients of Powers of $x$</strong></p>
+                        <p><strong>Step 2: Equate Coefficients of Like Powers</strong></p>
+                        <p>Coefficient of $x^2$:</p>
                         $$ c_1 = 3 $$
+                        <p>Coefficient of $x$:</p>
                         $$ c_2 = 2 $$
-                        $$ c_2 + c_3 = 1 \implies 2 + c_3 = 1 \implies c_3 = -1 $$
+                        <p>Constant term:</p>
+                        $$ c_2 + c_3 = 1 $$
+                        $$ 2 + c_3 = 1 $$
+                        $$ \implies c_3 = -1 $$
 
                         <p><strong>Conclusion:</strong></p>
                         $$ p(x) = 3 p_1(x) + 2 p_2(x) - 1 p_3(x) $$
                     </div>
 
                     <div class="example">
-                        <div class="card-title">Example 3.2.5: Spanning Set for R^2</div>
-                        <p><strong>Question:</strong> Show that $S = \{(1, 0), (0, 1)\}$ spans $\mathbb{R}^2$.</p>
+                        <div class="card-title">Example 3.2.6: Matrix Linear Combination</div>
+                        <p><strong>Question:</strong> Express matrix $A = \begin{bmatrix} 3 & 1 \\ 4 & 2 \end{bmatrix}$ as a linear combination of standard elementary matrices $E_{11}, E_{12}, E_{21}, E_{22}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>For any arbitrary vector $(x, y) \in \mathbb{R}^2$:</p>
-                        $$ (x, y) = x(1, 0) + y(0, 1) $$
-                        <p>Since every vector in $\mathbb{R}^2$ can be written as a linear combination of elements of $S$:</p>
-                        $$ \text{span}(S) = \mathbb{R}^2 $$
+                        <p><strong>Step 1: Set up Matrix Linear Combination</strong></p>
+                        $$ c_1 \begin{bmatrix} 1 & 0 \\ 0 & 0 \end{bmatrix} + c_2 \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} + c_3 \begin{bmatrix} 0 & 0 \\ 1 & 0 \end{bmatrix} + c_4 \begin{bmatrix} 0 & 0 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 3 & 1 \\ 4 & 2 \end{bmatrix} $$
+                        $$ \begin{bmatrix} c_1 & c_2 \\ c_3 & c_4 \end{bmatrix} = \begin{bmatrix} 3 & 1 \\ 4 & 2 \end{bmatrix} $$
+
+                        <p><strong>Step 2: Equate Entries</strong></p>
+                        $$ c_1 = 3 $$
+                        $$ c_2 = 1 $$
+                        $$ c_3 = 4 $$
+                        $$ c_4 = 2 $$
+
+                        <p><strong>Conclusion:</strong></p>
+                        $$ A = 3 E_{11} + 1 E_{12} + 4 E_{21} + 2 E_{22} $$
                     </div>
                 </div>
 
