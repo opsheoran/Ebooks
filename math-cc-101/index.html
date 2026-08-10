@@ -3,208 +3,260 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATH-CC-101: Linear Algebra and Matrix Theory | Course Manual</title>
+    <title>MATH-CC-101 · Linear Algebra and Matrix Theory | Course Portal</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
     <style>
         :root {
-            --navy: #1B2A4A;
-            --navy-mid: #243555;
-            --navy-light: #2E4270;
-            --gold: #C8922A;
-            --gold-light: #E8B84B;
-            --gold-pale: #FDF3DC;
-            --sage: #3D6B5A;
-            --sage-light: #EEF6F2;
-            --sky: #1D6FA4;
-            --sky-light: #EAF4FB;
-            --paper: #F5F3EE;
-            --border: #DDD8CF;
-            --text-dark: #1C1C1E;
-            --text-soft: #6B6B70;
-            --shadow-sm: 0 2px 8px rgba(27,42,74,.08);
-            --shadow-md: 0 4px 20px rgba(27,42,74,.12);
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --ivory:         #FAFAF7;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     300px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; }
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Source Serif 4', Georgia, serif;
             background: var(--paper);
             color: var(--text-dark);
-            line-height: 1.7;
+            line-height: 1.78;
+            font-size: 16px;
         }
 
-        /* HEADER */
-        header {
+        /* TOP HEADER */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
             background: linear-gradient(135deg, #111B30 0%, #1B2A4A 50%, #2E4270 100%);
-            color: #fff;
-            padding: 50px 30px 40px;
-            text-align: center;
-            border-bottom: 4px solid var(--gold);
-            position: relative;
-            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+            color: #fff; z-index: 1100;
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            display: flex; align-items: center;
+            padding: 0 28px; gap: 16px;
+            border-bottom: 2px solid rgba(200, 146, 42, 0.4);
         }
 
-        header h1 {
+        .book-header .menu-toggle {
+            display: none; background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer; padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #C8922A 0%, #E8B84B 100%);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0;
+            box-shadow: 0 2px 10px rgba(200, 146, 42, 0.35);
+        }
+
+        .header-text h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            margin-bottom: 8px;
-            color: #fff;
+            font-size: 1.35rem; font-weight: 700; color: #fff; line-height: 1.2;
         }
 
-        header .subtitle {
+        .header-text .subtitle {
             font-family: 'DM Sans', sans-serif;
-            font-size: 1.1rem;
-            color: var(--gold-light);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 16px;
+            font-size: .8rem; color: rgba(255,255,255,.8);
         }
 
-        .header-meta {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .meta-badge {
-            background: rgba(200,146,42,0.2);
-            border: 1px solid rgba(232,184,75,0.4);
+        .header-badge {
+            margin-left: auto;
+            background: rgba(200,146,42,.2);
+            border: 1px solid rgba(232,184,75,.4);
             color: #E8B84B;
             font-family: 'DM Sans', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            padding: 6px 18px;
-            border-radius: 20px;
+            font-size: .78rem; font-weight: 600;
+            padding: 5px 14px; border-radius: 20px;
         }
 
-        /* MAIN CONTAINER */
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 24px 60px;
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed; left: 0; top: var(--header-h);
+            width: var(--sidebar-w); height: calc(100vh - var(--header-h) - 50px);
+            background: var(--navy); overflow-y: auto; z-index: 1000;
+            transition: transform .3s ease;
+            padding-bottom: 70px !important;
         }
 
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 24px;
-            margin: 32px 0;
+        .sidebar-brand {
+            padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
         }
 
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+            color: var(--gold-light); margin-bottom: 2px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif; font-size: .75rem; color: rgba(255,255,255,.6);
+        }
+
+        .sidebar-author {
+            padding: 16px 20px; background: rgba(0,0,0,0.25);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 46px; height: 46px; border-radius: 50%; object-fit: cover;
+            border: 2px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-author-info h3 { font-size: 0.9rem; color: #fff; margin: 0; font-family: 'Playfair Display', serif; }
+        .sidebar-author-info p { font-size: 0.68rem; color: rgba(255,255,255,0.6); margin: 0; font-family: 'DM Sans', sans-serif; }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif; font-size: .68rem; font-weight: 600;
+            letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,.35);
+            padding: 16px 20px 6px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+        .nav-item { margin: 1px 0; }
+        .nav-link {
+            display: flex; align-items: center; gap: 10px; padding: 9px 12px;
+            color: rgba(255,255,255,.75); text-decoration: none; border-radius: 7px;
+            font-family: 'DM Sans', sans-serif; font-size: .875rem; transition: all .2s ease;
+            border-left: 3px solid transparent; cursor: pointer;
+        }
+        .nav-link:hover { background: rgba(255,255,255,.08); color: #fff; border-left-color: rgba(200,146,42,.6); }
+        .nav-link.active { background: rgba(200,146,42,.18); color: var(--gold-light); border-left-color: var(--gold); font-weight: 500; }
+        .nav-link .nav-icon { color: var(--gold); font-size: 0.9rem; width: 18px; text-align: center; }
+
+        .nav-divider { height: 1px; background: rgba(255,255,255,0.1); margin: 8px 16px; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: var(--sidebar-w); margin-top: var(--header-h);
+            padding: 36px 48px 60px; max-width: calc(var(--sidebar-w) + 860px);
+            min-height: calc(100vh - var(--header-h));
+        }
+
+        .page-section { display: none; animation: fadeSlideIn .35s ease; }
+        .page-section.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* HERO BANNER */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #ffffff; padding: 38px 42px; border-radius: var(--radius);
+            margin-bottom: 28px; box-shadow: var(--shadow-md); position: relative; overflow: hidden;
+        }
+        .hero-tag {
+            display: inline-block; background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25); color: var(--gold-light);
+            font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 600;
+            padding: 4px 14px; border-radius: 20px; margin-bottom: 14px; letter-spacing: 0.5px;
+        }
+        .hero-banner h1 {
+            font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: #ffffff;
+            line-height: 1.15; margin-bottom: 8px;
+        }
+        .hero-banner h1 span { color: var(--gold-light); }
+        .hero-sub { font-family: 'DM Sans', sans-serif; font-size: 1.05rem; color: rgba(255, 255, 255, 0.85); margin-bottom: 22px; }
+
+        .hero-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+        .hero-chip {
+            display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9); font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
+            padding: 5px 14px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .hero-chip i { color: var(--gold); }
+
+        /* STATS ROW */
+        .stats-row {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+            gap: 16px; margin-bottom: 32px;
+        }
+        .stat-pill {
+            background: #ffffff; border: 1px solid var(--border); border-radius: 10px;
+            padding: 16px; text-align: center; box-shadow: var(--shadow-sm);
+        }
+        .stat-pill .snum { display: block; font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 700; color: var(--navy); }
+        .stat-pill .slbl { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* UNIT GRID */
+        .unit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin: 28px 0 36px; }
         .unit-card {
-            background: #fff;
-            border-radius: 12px;
-            padding: 28px 24px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            border-top: 4px solid var(--navy);
-            transition: all 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
+            background: #ffffff; border: 1px solid var(--border); border-radius: 12px;
+            padding: 24px 26px; text-decoration: none; color: var(--text-dark);
+            display: flex; flex-direction: column; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-sm); transition: all 0.3s ease;
         }
+        .unit-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 100%); }
+        .unit-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: var(--gold); }
+        .unit-card-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; }
+        .unit-icon { font-size: 2rem; background: var(--gold-pale); width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .unit-card-meta .unit-label { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 700; text-transform: uppercase; color: var(--gold); margin-bottom: 2px; }
+        .unit-card-meta h3 { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: var(--navy); margin: 0; }
+        .unit-topics { list-style: none; margin: 0 0 20px; padding: 0; flex-grow: 1; }
+        .unit-topics li { font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--text-mid); padding: 4px 0 4px 18px; position: relative; }
+        .unit-topics li::before { content: '•'; position: absolute; left: 4px; color: var(--gold); font-weight: bold; }
+        .unit-card-footer { border-top: 1px solid var(--border); padding-top: 14px; margin-top: auto; }
+        .unit-btn { display: inline-flex; align-items: center; gap: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 600; color: var(--navy); }
+        .unit-card:hover .unit-btn { color: var(--gold); }
 
-        .unit-card:hover {
-            transform: translateY(-6px);
-            box-shadow: var(--shadow-md);
-            border-top-color: var(--gold);
-        }
-
-        .unit-num {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: var(--gold);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .unit-card h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.35rem;
-            color: var(--navy);
-            margin-bottom: 12px;
-        }
-
-        .unit-card p {
-            font-size: 0.92rem;
-            color: var(--text-soft);
-            margin-bottom: 20px;
-            flex: 1;
-        }
-
-        .btn-open {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--navy);
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .unit-card:hover .btn-open {
-            color: var(--gold);
-        }
-
-        .info-section {
-            background: #fff;
-            border-radius: 12px;
-            padding: 32px;
+        /* SECTION CARD */
+        .section-card {
+            background: var(--ivory); border-radius: var(--radius); padding: 36px 42px;
+            box-shadow: var(--shadow-sm); border: 1px solid var(--border); border-top: 4px solid var(--navy);
             margin-bottom: 32px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
         }
+        .section-card h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; font-weight: 700; color: var(--navy); margin: 0 0 20px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
+        .section-card p { margin-bottom: 14px; text-align: justify; font-size: 1.02rem; color: var(--text-mid); line-height: 1.82; }
 
-        .info-section h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.7rem;
-            color: var(--navy);
-            margin-bottom: 16px;
-            border-bottom: 2px solid var(--gold-pale);
-            padding-bottom: 8px;
+        /* AUTHOR CARD */
+        .author-card {
+            background: #ffffff; border-radius: 12px; padding: 24px 28px;
+            box-shadow: 0 4px 16px rgba(27,42,74,0.08); border: 1px solid var(--border);
+            border-left: 5px solid var(--gold); display: flex; align-items: center; gap: 24px; margin-bottom: 28px;
         }
-
-        .info-section ul {
-            margin-left: 20px;
-            margin-bottom: 16px;
-        }
-
-        .info-section li {
-            margin-bottom: 8px;
-            color: var(--text-dark);
-        }
-
-        .references-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 16px;
-        }
-
-        .references-table th, .references-table td {
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            text-align: left;
-            font-size: 0.9rem;
-        }
-
-        .references-table th {
-            background: var(--navy);
-            color: #fff;
-            font-family: 'DM Sans', sans-serif;
-        }
+        .author-photo-large { width: 110px; height: 110px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold); box-shadow: 0 4px 12px rgba(0,0,0,0.15); flex-shrink: 0; }
+        .author-card-info h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+        .author-card-info .author-desig { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; color: var(--gold); margin-bottom: 8px; }
+        .author-card-info p { font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text-mid); margin-bottom: 6px; }
 
         .book-footer {
             position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
@@ -212,111 +264,277 @@
             color: rgba(255,255,255,0.95) !important; text-align: center !important;
             padding: 8px 16px !important; margin: 0 !important; border-radius: 0 !important;
             border-top: 1px solid rgba(255,255,255,0.15) !important; box-shadow: 0 -2px 10px rgba(0,0,0,0.25) !important;
-            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important; line-height: 1.4 !important;
+            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important;
         }
         .book-footer p { margin: 0 !important; padding: 0 !important; color: rgba(255,255,255,0.9) !important; }
         .book-footer strong { color: #E2B859 !important; font-weight: 600 !important; }
-        body { padding-bottom: 50px !important; }
+        body, .main-content { padding-bottom: 50px !important; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>MATH-CC-101: Linear Algebra and Matrix Theory</h1>
-        <div class="subtitle">Core Course Manual · B.Sc. Physical Science</div>
-        <div class="header-meta">
-            <span class="meta-badge">4 Credits (4+0)</span>
-            <span class="meta-badge">Duration: 4 Months</span>
-            <span class="meta-badge">Dr. Manju Singh Tonk</span>
+    <!-- TOP HEADER -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">📐</div>
+        <div class="header-text">
+            <h1>MATH-CC-101</h1>
+            <div class="subtitle">LINEAR ALGEBRA AND MATRIX THEORY</div>
         </div>
+        <div class="header-badge">Dr. Manju Singh Tonk</div>
     </header>
 
-    <main class="container">
-
-        <!-- COURSE OBJECTIVES & OUTCOMES -->
-        <div class="info-section">
-            <h2>Course Objectives &amp; Learning Outcomes</h2>
-            <p><strong>Course Objectives:</strong></p>
-            <ul>
-                <li>To familiarize students with vector spaces, subspaces, and linear transformations.</li>
-                <li>To develop high competence in matrix operations, rank reduction, canonical forms, and systems of linear equations.</li>
-                <li>To establish the explicit relationship between linear transformations and their matrix representations.</li>
-                <li>To introduce eigenvalue problems, diagonalizability criteria, and quadratic forms with physical science applications.</li>
-            </ul>
-
-            <p><strong>Learning Outcomes:</strong> Upon successful completion of this course, students will be able to:</p>
-            <ul>
-                <li>Identify, construct, and analyze vector spaces, subspaces, quotient spaces, bases, and dimensions.</li>
-                <li>Perform advanced matrix reductions (Row Echelon, Normal PAQ form, LU Decomposition).</li>
-                <li>Analyze and solve linear systems using Rouché-Capelli consistency criteria and matrix factorizations.</li>
-                <li>Compute eigenvalues, eigenvectors, characteristic polynomials, and apply the Cayley-Hamilton Theorem.</li>
-                <li>Diagonalize matrices and classify real quadratic forms using Sylvester's Law of Inertia.</li>
-                <li>Construct matrix representations of linear transformations, verify the Rank-Nullity Theorem, and analyze vector space isomorphisms.</li>
-            </ul>
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>MATH-CC-101</h2>
+            <p>Linear Algebra &amp; Matrix Theory<br>CCS Haryana Agricultural University</p>
         </div>
 
-        <!-- UNITS GRID -->
-        <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 16px;">Course Units</h2>
-        <div class="card-grid">
-
-            <a href="Unit-I.html" class="unit-card">
-                <div class="unit-num">Unit 1</div>
-                <h3>Matrices and Systems of Equations</h3>
-                <p>Special matrices (Hermitian, Unitary, Orthogonal, Idempotent, Nilpotent), Matrix Rank, Echelon Forms, Normal PAQ Form, Inversion, Systems of Equations, and LU Decomposition.</p>
-                <div class="btn-open">Study Unit 1 <i class="fas fa-arrow-right"></i></div>
-            </a>
-
-            <a href="Unit-II.html" class="unit-card">
-                <div class="unit-num">Unit 2</div>
-                <h3>Eigenvalues and Eigenvectors</h3>
-                <p>Characteristic polynomial, Cayley-Hamilton Theorem, Minimal Polynomial, Algebraic vs Geometric Multiplicity, Matrix Diagonalization, and Quadratic Forms classification.</p>
-                <div class="btn-open">Study Unit 2 <i class="fas fa-arrow-right"></i></div>
-            </a>
-
-            <a href="Unit-III.html" class="unit-card">
-                <div class="unit-num">Unit 3</div>
-                <h3>Vector Spaces</h3>
-                <p>Groups &amp; Fields, Vector Spaces, Subspaces, Quotient Spaces V/W, Linear Independence &amp; Dependence, Linear Span, Basis, and Dimension theorems.</p>
-                <div class="btn-open">Study Unit 3 <i class="fas fa-arrow-right"></i></div>
-            </a>
-
-            <a href="Unit-IV.html" class="unit-card">
-                <div class="unit-num">Unit 4</div>
-                <h3>Linear Transformations</h3>
-                <p>Linear Mappings, Kernel &amp; Range, Rank-Nullity Theorem, Matrix Representation, Change of Basis Matrix, Inverse Transformations, and Vector Space Isomorphisms.</p>
-                <div class="btn-open">Study Unit 4 <i class="fas fa-arrow-right"></i></div>
-            </a>
-
+        <div class="sidebar-author">
+            <img src="Manju.png" alt="Dr. Manju Singh Tonk" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Dr. Manju Singh Tonk</h3>
+                <p>Professor of Mathematics</p>
+            </div>
         </div>
 
-        <!-- REFERENCES TABLE -->
-        <div class="info-section">
-            <h2>Suggested Textbooks &amp; References</h2>
-            <table class="references-table">
-                <thead>
-                    <tr>
-                        <th>Sr. No.</th>
-                        <th>Title</th>
-                        <th>Authors</th>
-                        <th>Publisher</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr><td>1</td><td>Linear Algebra and Its Applications</td><td>Gilbert Strang</td><td>Cengage Learning</td></tr>
-                    <tr><td>2</td><td>Linear Algebra</td><td>Friedberg, Insel, and Spence</td><td>Pearson</td></tr>
-                    <tr><td>3</td><td>Linear Algebra Done Right</td><td>Sheldon Axler</td><td>Springer</td></tr>
-                    <tr><td>4</td><td>Elementary Linear Algebra with Applications</td><td>Howard Anton and Chris Rorres</td><td>John Wiley &amp; Sons</td></tr>
-                    <tr><td>5</td><td>Matrix Analysis and Applied Linear Algebra</td><td>Carl D. Meyer</td><td>SIAM</td></tr>
-                    <tr><td>6</td><td>Linear Algebra</td><td>Vivek Sahai and Vikas Bist</td><td>Narosa</td></tr>
-                </tbody>
-            </table>
-        </div>
+        <div class="nav-group-label">Book Sections</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link active" href="#" onclick="showSection('home'); return false;">
+                    <span class="nav-icon"><i class="fas fa-home"></i></span> Home
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('preface'); return false;">
+                    <span class="nav-icon"><i class="fas fa-scroll"></i></span> Preface
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('syllabus'); return false;">
+                    <span class="nav-icon"><i class="fas fa-list-alt"></i></span> Syllabus
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" onclick="showSection('author'); return false;">
+                    <span class="nav-icon"><i class="fas fa-user-tie"></i></span> From the Author
+                </a>
+            </li>
+        </ul>
 
+        <div class="nav-divider"></div>
+        <div class="nav-group-label">Course Units</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="Unit-I.html"><span class="nav-icon"><i class="fas fa-layer-group"></i></span> Unit I: Matrices &amp; Systems</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-II.html"><span class="nav-icon"><i class="fas fa-chart-line"></i></span> Unit II: Eigenvalues &amp; Eigenvectors</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-III.html"><span class="nav-icon"><i class="fas fa-vector-square"></i></span> Unit III: Vector Spaces</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-IV.html"><span class="nav-icon"><i class="fas fa-exchange-alt"></i></span> Unit IV: Linear Transformations</a></li>
+        </ul>
+
+        <div class="nav-divider"></div>
+        <div class="nav-group-label">Library</div>
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a class="nav-link" href="../index.html" style="background: rgba(200,146,42,0.1); color: var(--gold-light); font-weight: 600;">
+                    <span class="nav-icon"><i class="fas fa-book-open"></i></span> Back to E-Books Library
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- ══════════════════════════════ HOME SECTION ══════════════════════════════ -->
+        <section class="page-section active" id="home">
+            <div class="hero-banner">
+                <div class="hero-tag">MATH-CC-101 · Semester Core Course · 4 Credits</div>
+                <h1>Linear Algebra &amp;<br><span>Matrix Theory</span></h1>
+                <p class="hero-sub">A comprehensive core manual on vector spaces, matrix factorizations, eigenvalues, and linear transformations</p>
+                <div class="hero-meta">
+                    <span class="hero-chip"><i class="fas fa-university"></i> CCS Haryana Agricultural University</span>
+                    <span class="hero-chip"><i class="fas fa-chalkboard-teacher"></i> Dr. Manju Singh Tonk</span>
+                    <span class="hero-chip"><i class="fas fa-layer-group"></i> 4 Complete Units</span>
+                    <span class="hero-chip"><i class="fas fa-graduation-cap"></i> Core Course (4+0)</span>
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="stats-row">
+                <div class="stat-pill"><span class="snum">4</span><span class="slbl">Units</span></div>
+                <div class="stat-pill"><span class="snum">4</span><span class="slbl">Credits</span></div>
+                <div class="stat-pill"><span class="snum">139+</span><span class="slbl">Solved Examples</span></div>
+                <div class="stat-pill"><span class="snum">224+</span><span class="slbl">Exercise Bank</span></div>
+                <div class="stat-pill"><span class="snum">0</span><span class="slbl">MathJax Errors</span></div>
+            </div>
+
+            <!-- Unit Cards Grid -->
+            <div class="unit-grid">
+                <a class="unit-card" href="Unit-I.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">📐</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit I</div>
+                            <h3>Matrices and Systems of Equations</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Hermitian, Skew-Hermitian &amp; Unitary Matrices</li>
+                        <li>Elementary Row Operations &amp; Row Echelon Forms</li>
+                        <li>PAQ Normal Form &amp; LU Decomposition</li>
+                    </ul>
+                    <div class="unit-card-footer"><span class="unit-btn">Open Unit I <i class="fas fa-arrow-right"></i></span></div>
+                </a>
+
+                <a class="unit-card" href="Unit-II.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">📊</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit II</div>
+                            <h3>Eigenvalues and Eigenvectors</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Eigenvalues, Eigenvectors &amp; Characteristic Polynomial</li>
+                        <li>Cayley-Hamilton Theorem &amp; Minimal Polynomial</li>
+                        <li>Quadratic Forms, Canonical Form &amp; Definiteness</li>
+                    </ul>
+                    <div class="unit-card-footer"><span class="unit-btn">Open Unit II <i class="fas fa-arrow-right"></i></span></div>
+                </a>
+
+                <a class="unit-card" href="Unit-III.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">🔲</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit III</div>
+                            <h3>Vector Spaces &amp; Inner Product Spaces</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Vector Spaces, Subspaces &amp; Subspace Criterion</li>
+                        <li>Linear Independence, Basis &amp; Dimension</li>
+                        <li>Inner Product Spaces &amp; Gram-Schmidt Process</li>
+                    </ul>
+                    <div class="unit-card-footer"><span class="unit-btn">Open Unit III <i class="fas fa-arrow-right"></i></span></div>
+                </a>
+
+                <a class="unit-card" href="Unit-IV.html">
+                    <div class="unit-card-header">
+                        <div class="unit-icon">🔄</div>
+                        <div class="unit-card-meta">
+                            <div class="unit-label">Unit IV</div>
+                            <h3>Linear Transformations &amp; Dual Spaces</h3>
+                        </div>
+                    </div>
+                    <ul class="unit-topics">
+                        <li>Linear Operators, Kernel &amp; Image Subspaces</li>
+                        <li>Rank-Nullity Theorem &amp; Matrix Representation $[T]_{B_1, B_2}$</li>
+                        <li>Dual Spaces $V^*$, Dual Basis &amp; Adjoint Operators</li>
+                    </ul>
+                    <div class="unit-card-footer"><span class="unit-btn">Open Unit IV <i class="fas fa-arrow-right"></i></span></div>
+                </a>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════ PREFACE SECTION ══════════════════════════════ -->
+        <section class="page-section" id="preface">
+            <div class="section-card">
+                <h2><span class="nav-icon"><i class="fas fa-scroll"></i></span> Course Preface</h2>
+                <p><span class="preface-drop" style="float:left; font-size:3.5rem; line-height:0.8; font-weight:900; color:var(--gold); padding-right:8px;">L</span>inear Algebra and Matrix Theory forms the foundational pillar of modern mathematical sciences, statistics, data modeling, and engineering computations. This manual has been structured specifically for undergraduate students at CCS Haryana Agricultural University to master both conceptual rigor and hand-calculation techniques.</p>
+
+                <div style="background:var(--gold-pale); border-left:4px solid var(--gold); padding:20px 24px; margin:24px 0; border-radius:0 8px 8px 0; font-style:italic;">
+                    "Linear algebra is the language of modern mathematics. Mastering vector spaces, matrix representations, and spectral properties empowers students to solve complex mathematical and empirical problems with precision."
+                    <div style="text-align:right; font-weight:600; font-style:normal; color:var(--navy); margin-top:8px;">— Dr. Manju Singh Tonk</div>
+                </div>
+
+                <h3>Key Pedagogical Features</h3>
+                <ul>
+                    <li><strong>Rigorous Proofs in Display Equations:</strong> Every theorem proof and mathematical step is formatted into vertical, separate-line display math blocks.</li>
+                    <li><strong>Step-by-Step Solved Examples:</strong> Over 139 detailed solved examples featuring complete hand calculations and arithmetic intermediate steps.</li>
+                    <li><strong>Comprehensive Exercise Bank:</strong> Over 224 self-assessment questions divided into 20 MCQs, 20 Fill in the Blanks, 20 True/False, 6 Matching Sets, and 10 Subjective Questions per unit.</li>
+                    <li><strong>Hinglish Toggle Support:</strong> Integrated language toggle for English and Hinglish explanations to support diverse learning needs.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════ SYLLABUS SECTION ══════════════════════════════ -->
+        <section class="page-section" id="syllabus">
+            <div class="section-card">
+                <h2><span class="nav-icon"><i class="fas fa-list-alt"></i></span> Official Course Syllabus</h2>
+                <p><strong>Course Code:</strong> MATH-CC-101 &nbsp;|&nbsp; <strong>Title:</strong> Linear Algebra and Matrix Theory &nbsp;|&nbsp; <strong>Credits:</strong> 4 (4+0)</p>
+
+                <h3>Unit I: Matrices &amp; Systems of Linear Equations</h3>
+                <p>Types of matrices: Symmetric, Skew-Symmetric, Hermitian, Skew-Hermitian, Orthogonal, Unitary, and Nilpotent. Elementary row and column operations, rank of a matrix, Row Echelon form, Reduced Row Echelon form. Normal form $PAQ$, inverse of matrix via EROs, LU decomposition. System of linear equations $AX = B$, consistency conditions, Gaussian elimination, and Gauss-Jordan method.</p>
+
+                <h3>Unit II: Eigenvalues, Eigenvectors &amp; Quadratic Forms</h3>
+                <p>Eigenvalues, eigenvectors, characteristic equation, characteristic polynomial. Properties of eigenvalues of symmetric, skew-symmetric, Hermitian, and unitary matrices. Cayley-Hamilton Theorem and applications in finding matrix powers and inverses. Minimal polynomial, diagonalizable matrices, quadratic forms, matrix of quadratic form, principal minor test ($D_1, D_2, D_3$), rank, index, signature, and definiteness classification.</p>
+
+                <h3>Unit III: Vector Spaces &amp; Inner Product Spaces</h3>
+                <p>Vector space over a field, subspaces, subspace criterion theorem ($\alpha u + \beta v \in W$). Linear combinations, linear span $L(S)$, linear independence and dependence. Basis, dimension, dimension of sum $W_1 + W_2$, direct sum $W_1 \oplus W_2$. Quotient spaces, inner product spaces, Cauchy-Schwarz inequality, orthogonality, Gram-Schmidt orthogonalization process, and orthonormal basis.</p>
+
+                <h3>Unit IV: Linear Transformations &amp; Dual Spaces</h3>
+                <p>Linear transformations, linear operators, zero transformation, identity operator. Kernel $\text{Ker}(T)$, image $\text{Im}(T)$, rank $\rho(T)$, nullity $\nu(T)$, Rank-Nullity Theorem ($\rho(T) + \nu(T) = \dim(V)$). Matrix representation $[T]_{B_1, B_2}$, change of basis similarity transformation $[T]_{B'} = P^{-1} [T]_B P$. Linear functionals, dual space $V^*$, dual basis $B^* = \{f_1, \dots, f_n\}$ ($f_i(v_j) = \delta_{ij}$), double dual $V^{**}$, annihilators $W^0$, and adjoint operators $T^*$.</p>
+
+                <h3>Suggested Reference Textbooks</h3>
+                <ul>
+                    <li>Strang, Gilbert. <em>Linear Algebra and Its Applications</em>. Cengage Learning.</li>
+                    <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
+                    <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
+                    <li>Hoffman, K., and Kunze, R. <em>Linear Algebra</em>. Prentice-Hall.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════ FROM THE AUTHOR SECTION ══════════════════════════════ -->
+        <section class="page-section" id="author">
+            <div class="author-card">
+                <img src="Manju.png" alt="Dr. Manju Singh Tonk" class="author-photo-large">
+                <div class="author-card-info">
+                    <h3>Dr. Manju Singh Tonk</h3>
+                    <div class="author-desig">Professor of Mathematics</div>
+                    <p>Department of Mathematics and Statistics</p>
+                    <p>College of Basic Sciences &amp; Humanities</p>
+                    <p>CCS Haryana Agricultural University, Hisar – 125004, Haryana, India</p>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2>About the Author</h2>
+                <p><strong>Dr. Manju Singh Tonk</strong> is Professor of Mathematics in the Department of Mathematics and Statistics at CCS Haryana Agricultural University, Hisar. With extensive academic experience in university teaching and mathematical research, Dr. Tonk specializes in Linear Algebra, Applied Mathematics, and Matrix Theory.</p>
+
+                <p>This digital course manual has been designed to provide students with a rigorous, textbook-aligned learning platform featuring complete step-by-step hand calculations, display equations, interactive tools, and comprehensive exercise banks for university examinations.</p>
+            </div>
+        </section>
+
+        <footer class="book-footer">
+            <p>Design and developed by <strong>Dr. Manju Singh Tonk</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
+        </footer>
     </main>
 
-    <footer class="book-footer">
-        <p>Design and developed by <strong>Dr. Manju Singh Tonk</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
-    </footer>
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
 
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            try {
+                if (window.event && window.event.target) {
+                    const link = window.event.target.closest('.nav-link');
+                    if (link) link.classList.add('active');
+                }
+            } catch (e) {}
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth <= 768) {
+                const sb = document.getElementById('sidebar');
+                if (sb) sb.classList.remove('open');
+            }
+        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+    </script>
 </body>
 </html>
