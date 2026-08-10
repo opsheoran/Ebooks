@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.tab {
+    position: absolute;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+}
+.tab.active {
+    position: relative;
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+}
+.chart-container { width: 400px; height: 300px; border: 1px solid black; }
+</style>
+</head>
+<body>
+    <button onclick="document.getElementById('t1').classList.add('active'); document.getElementById('t2').classList.remove('active');">Show 1</button>
+    <button onclick="document.getElementById('t2').classList.add('active'); document.getElementById('t1').classList.remove('active');">Show 2</button>
+    
+    <div id="t1" class="tab active">
+        <h1>Tab 1</h1>
+        <div class="chart-container"><canvas id="c1"></canvas></div>
+    </div>
+    
+    <div id="t2" class="tab">
+        <h1>Tab 2</h1>
+        <div class="chart-container"><canvas id="c2"></canvas></div>
+    </div>
+    
+    <script>
+        new Chart(document.getElementById('c1').getContext('2d'), {type:'bar', data:{labels:['A'], datasets:[{data:[10]}]}});
+        new Chart(document.getElementById('c2').getContext('2d'), {type:'bar', data:{labels:['B'], datasets:[{data:[20]}]}});
+    </script>
+</body>
+</html>
