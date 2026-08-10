@@ -224,44 +224,6 @@
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
 
-        /* TABLES */
-        table {
-            width: auto !important; max-width: 95% !important; margin: 24px auto !important;
-            border-collapse: separate !important; border-spacing: 0 !important;
-            border-radius: 8px !important; overflow: hidden !important;
-            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
-            background: #ffffff !important; display: table !important;
-            border: 1px solid var(--border) !important;
-        }
-        th {
-            background: var(--navy) !important; color: #ffffff !important;
-            padding: 8px 16px !important; font-family: 'DM Sans', sans-serif !important;
-            font-size: 0.88rem !important; font-weight: 600 !important;
-            letter-spacing: 0.3px !important; text-align: center !important;
-            border-bottom: 2px solid var(--gold) !important;
-        }
-        td {
-            padding: 6px 16px !important; border-bottom: 1px solid var(--border) !important;
-            font-size: 0.88rem !important; color: var(--text-dark) !important; text-align: center !important;
-        }
-        tr:nth-child(even) td { background: #fcfbf9 !important; }
-        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
-
-        /* FIGURE BOX */
-        .figure-box {
-            background: #FAFAFC; border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 22px; margin: 28px auto; max-width: 720px; text-align: center; box-shadow: var(--shadow-sm);
-        }
-        .figure-title {
-            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.95rem;
-            color: var(--navy); margin-bottom: 14px;
-        }
-        .book-fig { width: 100%; max-width: 640px; height: auto; margin: 0 auto; display: block; }
-        .figure-caption {
-            font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-style: italic;
-            color: var(--text-soft); margin-top: 12px; line-height: 1.5;
-        }
-
         /* EXERCISE STYLING */
         .question {
             background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light);
@@ -348,7 +310,8 @@
 
         <div class="nav-group-label">Unit I Navigation</div>
         <ul class="nav-list">
-            <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec11'); return false;"><span class="nav-num">1.1</span> Special Types of Matrices</a></li>
+            <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec10'); return false;"><span class="nav-num">1.0</span> Basics of Matrix Algebra</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec11'); return false;"><span class="nav-num">1.1</span> Special Types of Matrices</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec12'); return false;"><span class="nav-num">1.2</span> Rank &amp; Echelon Forms</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec13'); return false;"><span class="nav-num">1.3</span> Normal Form &amp; PAQ Reduction</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec14'); return false;"><span class="nav-num">1.4</span> Inverse via Elementary Operations</a></li>
@@ -384,15 +347,157 @@
                 <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
             </button>
             <h1>Unit I: Matrices and Systems of Equations</h1>
-            <div class="chap-sub">Hermitian, Skew-Hermitian, Unitary, Orthogonal &amp; Nilpotent matrices, Echelon forms, PAQ Normal Form, Gauss-Jordan Inversion, Rouché-Capelli System Consistency, and Doolittle/Crout LU Decomposition</div>
+            <div class="chap-sub">Foundations of Matrix Algebra, Special Matrices, Echelon forms, PAQ Normal Form, Gauss-Jordan Inversion, Rouché-Capelli System Consistency, and LU Decomposition</div>
         </div>
 
+        <!-- 1.0 Matrix Algebra Basics -->
+        <section class="page-section active" id="sec10">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.0 Basics of Matrix Algebra</h2>
+                    <p>A matrix is a rectangular arrangement of numbers into horizontal rows and vertical columns. Matrices are used to solve linear equations, represent linear transformations, and handle data in physics, statistics, and engineering.</p>
+
+                    <div class="definition">
+                        <div class="card-title">1. Definition and Order of a Matrix</div>
+                        A system of $m \times n$ numbers arranged in a rectangular array of $m$ rows and $n$ columns is called a <strong>matrix of order $m \times n$</strong> (read as $m$ by $n$). We write matrix $A$ as:
+                        $$ A = \begin{bmatrix} a_{11} & a_{12} & \dots & a_{1n} \\ a_{21} & a_{22} & \dots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \dots & a_{mn} \end{bmatrix} = (a_{ij})_{m \times n} $$
+                        where $a_{ij}$ represents the element in the $i$-th row and $j$-th column.
+                    </div>
+
+                    <div class="note">
+                        <div class="card-title">Basic Types of Matrices</div>
+                        <ul>
+                            <li><strong>Row Matrix:</strong> A matrix having only one row is called a row matrix or row vector. Example: matrix $A = \begin{bmatrix} 1 & 3 & 5 \end{bmatrix}$ of order $1 \times 3$.</li>
+                            <li><strong>Column Matrix:</strong> A matrix having only one column is called a column matrix or column vector. Example: matrix $B = \begin{bmatrix} 2 \\ 4 \\ 6 \end{bmatrix}$ of order $3 \times 1$.</li>
+                            <li><strong>Zero Matrix (Null Matrix):</strong> A matrix in which every entry is equal to zero is called a zero matrix or null matrix, denoted by $0$. Example: matrix $0 = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix}$.</li>
+                            <li><strong>Square Matrix:</strong> A matrix in which the number of rows is equal to the number of columns ($m = n$) is called a square matrix of order $n$. The entries $a_{11}, a_{22}, \dots, a_{nn}$ form the main diagonal.</li>
+                            <li><strong>Diagonal Matrix:</strong> A square matrix in which all non-diagonal elements are zero ($a_{ij} = 0$ for all $i \neq j$) is called a diagonal matrix. Example: matrix $D = \begin{bmatrix} 3 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & 0 & 5 \end{bmatrix}$.</li>
+                            <li><strong>Scalar Matrix:</strong> A diagonal matrix in which all main diagonal elements are equal to a constant scalar $k$ ($a_{ii} = k$) is called a scalar matrix. Example: matrix $S = \begin{bmatrix} 4 & 0 \\ 0 & 4 \end{bmatrix}$.</li>
+                            <li><strong>Identity Matrix (Unit Matrix):</strong> A scalar matrix in which all main diagonal entries are equal to $1$ ($a_{ii} = 1$) is called an identity matrix or unit matrix, denoted by $I_n$. Example: matrix $I_3 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix}$.</li>
+                            <li><strong>Upper Triangular Matrix:</strong> A square matrix in which all entries below the main diagonal are zero ($a_{ij} = 0$ for all $i > j$) is called an upper triangular matrix. Example: matrix $U = \begin{bmatrix} 2 & 3 & 4 \\ 0 & 5 & 1 \\ 0 & 0 & 6 \end{bmatrix}$.</li>
+                            <li><strong>Lower Triangular Matrix:</strong> A square matrix in which all entries above the main diagonal are zero ($a_{ij} = 0$ for all $i < j$) is called a lower triangular matrix. Example: matrix $L = \begin{bmatrix} 1 & 0 & 0 \\ 4 & 2 & 0 \\ 5 & 3 & 7 \end{bmatrix}$.</li>
+                            <li><strong>Transpose of a Matrix ($A^T$):</strong> The matrix obtained by interchanging the rows and columns of matrix $A$ is called the transpose of matrix $A$, denoted by $A^T$ or $A'$. If $A = (a_{ij})_{m \times n}$, then $A^T = (a_{ji})_{n \times m}$.</li>
+                            <li><strong>Symmetric Matrix:</strong> A square matrix $A$ is called a symmetric matrix if $A^T = A$ ($a_{ij} = a_{ji}$ for all $i, j$). Example: matrix $A = \begin{bmatrix} 1 & 2 & 5 \\ 2 & 3 & 4 \\ 5 & 4 & 6 \end{bmatrix}$.</li>
+                            <li><strong>Skew-Symmetric Matrix:</strong> A square matrix $A$ is called a skew-symmetric matrix if $A^T = -A$ ($a_{ij} = -a_{ji}$ for all $i, j$). The main diagonal elements of a skew-symmetric matrix are always zero ($a_{ii} = 0$). Example: matrix $A = \begin{bmatrix} 0 & 2 & -3 \\ -2 & 0 & 4 \\ 3 & -4 & 0 \end{bmatrix}$.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 1.0.1: Reversal Law for Transpose of Product Matrices</div>
+                        <strong>Statement:</strong> If matrix $A$ and matrix $B$ are two matrices suitable for multiplication, then the transpose of their product is:
+                        $$ (A B)^T = B^T A^T $$
+
+                        <p><strong>Proof:</strong></p>
+                        <p>Let matrix $A = (a_{ij})$ be of order $m \times n$, and matrix $B = (b_{jk})$ be of order $n \times p$.</p>
+                        <p>Then matrix product $C = A B$ is of order $m \times p$. The element in the $i$-th row and $k$-th column of matrix $C$ is:</p>
+                        $$ c_{ik} = \sum_{j=1}^n a_{ij} b_{jk} $$
+                        <p>The element in the $k$-th row and $i$-th column of transpose matrix $(AB)^T$ is:</p>
+                        $$ ((AB)^T)_{ki} = c_{ik} = \sum_{j=1}^n a_{ij} b_{jk} $$
+                        <p>Now consider matrix $B^T$ of order $p \times n$ and matrix $A^T$ of order $n \times m$. Let element of $B^T$ be $b'_{kj} = b_{jk}$, and element of $A^T$ be $a'_{ji} = a_{ij}$.</p>
+                        <p>The element in the $k$-th row and $i$-th column of product matrix $B^T A^T$ is:</p>
+                        $$ (B^T A^T)_{ki} = \sum_{j=1}^n b'_{kj} a'_{ji} = \sum_{j=1}^n b_{jk} a_{ij} = \sum_{j=1}^n a_{ij} b_{jk} $$
+                        <p>Comparing both sides, we get $((AB)^T)_{ki} = (B^T A^T)_{ki}$ for all $k, i$. Thus $(A B)^T = B^T A^T$. Proof complete.</p>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 1.0.2: Expression of Square Matrix as Sum of Symmetric and Skew-Symmetric Matrices</div>
+                        <strong>Statement:</strong> Every real square matrix $A$ can be uniquely expressed as the sum of a symmetric matrix $P$ and a skew-symmetric matrix $Q$:
+                        $$ A = P + Q \quad \text{where } P = \frac{1}{2}(A + A^T) \text{ and } Q = \frac{1}{2}(A - A^T) $$
+
+                        <p><strong>Proof:</strong></p>
+                        <p>Let matrix $A$ be any square matrix. We can write matrix $A$ as:</p>
+                        $$ A = \frac{1}{2}(2A) = \frac{1}{2}(A + A^T + A - A^T) = \frac{1}{2}(A + A^T) + \frac{1}{2}(A - A^T) $$
+                        <p>Let $P = \frac{1}{2}(A + A^T)$ and $Q = \frac{1}{2}(A - A^T)$.</p>
+                        <p>1. Check $P^T$: $P^T = \left(\frac{1}{2}(A + A^T)\right)^T = \frac{1}{2}(A^T + (A^T)^T) = \frac{1}{2}(A^T + A) = P$. Thus matrix $P$ is symmetric.</p>
+                        <p>2. Check $Q^T$: $Q^T = \left(\frac{1}{2}(A - A^T)\right)^T = \frac{1}{2}(A^T - (A^T)^T) = \frac{1}{2}(A^T - A) = -Q$. Thus matrix $Q$ is skew-symmetric.</p>
+                        <p>To prove uniqueness, suppose $A = P_1 + Q_1$ with $P_1^T = P_1$ and $Q_1^T = -Q_1$. Then $A^T = P_1 - Q_1$. Adding gives $2P_1 = A + A^T \implies P_1 = P$. Subtracting gives $2Q_1 = A - A^T \implies Q_1 = Q$. Proof complete.</p>
+                    </div>
+
+                    <h3>Solved Verbatim Examples for Section 1.0</h3>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.0.1: Verification of Orthogonal Multiplication Identity for Trigonometric Matrix</div>
+                        <p><strong>Question:</strong> If matrix $A = \begin{bmatrix} \cos\alpha & \sin\alpha \\ -\sin\alpha & \cos\alpha \end{bmatrix}$, verify that $A A^T = I = A^T A$, where $I$ is the unit matrix.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Given matrix $A = \begin{bmatrix} \cos\alpha & \sin\alpha \\ -\sin\alpha & \cos\alpha \end{bmatrix}$, its transpose matrix is $A^T = \begin{bmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{bmatrix}$.</p>
+                        <p>Step 2: Multiply matrix $A$ and matrix $A^T$:</p>
+                        $$ A A^T = \begin{bmatrix} \cos\alpha & \sin\alpha \\ -\sin\alpha & \cos\alpha \end{bmatrix} \begin{bmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{bmatrix} $$
+                        $$ = \begin{bmatrix} \cos^2\alpha + \sin^2\alpha & -\cos\alpha\sin\alpha + \sin\alpha\cos\alpha \\ -\sin\alpha\cos\alpha + \cos\alpha\sin\alpha & \sin^2\alpha + \cos^2\alpha \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = I $$
+                        <p>Step 3: Multiply matrix $A^T$ and matrix $A$:</p>
+                        $$ A^T A = \begin{bmatrix} \cos\alpha & -\sin\alpha \\ \sin\alpha & \cos\alpha \end{bmatrix} \begin{bmatrix} \cos\alpha & \sin\alpha \\ -\sin\alpha & \cos\alpha \end{bmatrix} = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix} = I $$
+                        <p>Hence verified that $A A^T = I = A^T A$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.0.2: Expressing a 3x3 Numeric Matrix as Sum of Symmetric and Skew-Symmetric Matrices</div>
+                        <p><strong>Question:</strong> Express matrix $A = \begin{bmatrix} 3 & -2 & 6 \\ 2 & 7 & -1 \\ 5 & 4 & 0 \end{bmatrix}$ as the sum of a symmetric matrix and a skew-symmetric matrix.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Write transpose matrix $A^T$ of matrix $A$:</p>
+                        $$ A^T = \begin{bmatrix} 3 & 2 & 5 \\ -2 & 7 & 4 \\ 6 & -1 & 0 \end{bmatrix} $$
+                        <p>Step 2: Calculate symmetric part matrix $P = \frac{1}{2}(A + A^T)$:</p>
+                        $$ P = \frac{1}{2} \left( \begin{bmatrix} 3 & -2 & 6 \\ 2 & 7 & -1 \\ 5 & 4 & 0 \end{bmatrix} + \begin{bmatrix} 3 & 2 & 5 \\ -2 & 7 & 4 \\ 6 & -1 & 0 \end{bmatrix} \right) = \frac{1}{2} \begin{bmatrix} 6 & 0 & 11 \\ 0 & 14 & 3 \\ 11 & 3 & 0 \end{bmatrix} = \begin{bmatrix} 3 & 0 & 5.5 \\ 0 & 7 & 1.5 \\ 5.5 & 1.5 & 0 \end{bmatrix} $$
+                        <p>Step 3: Calculate skew-symmetric part matrix $Q = \frac{1}{2}(A - A^T)$:</p>
+                        $$ Q = \frac{1}{2} \left( \begin{bmatrix} 3 & -2 & 6 \\ 2 & 7 & -1 \\ 5 & 4 & 0 \end{bmatrix} - \begin{bmatrix} 3 & 2 & 5 \\ -2 & 7 & 4 \\ 6 & -1 & 0 \end{bmatrix} \right) = \frac{1}{2} \begin{bmatrix} 0 & -4 & 1 \\ 4 & 0 & -5 \\ -1 & 5 & 0 \end{bmatrix} = \begin{bmatrix} 0 & -2 & 0.5 \\ 2 & 0 & -2.5 \\ -0.5 & 2.5 & 0 \end{bmatrix} $$
+                        <p>Step 4: Verify $P + Q = \begin{bmatrix} 3 & -2 & 6 \\ 2 & 7 & -1 \\ 5 & 4 & 0 \end{bmatrix} = A$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.0.3: Expressing an Algebraic Matrix as Sum of Symmetric and Skew-Symmetric Matrices</div>
+                        <p><strong>Question:</strong> Express algebraic matrix $A = \begin{bmatrix} a & a & b \\ c & b & b \\ c & a & c \end{bmatrix}$ as the sum of a symmetric matrix and a skew-symmetric matrix.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Write transpose matrix $A^T$:</p>
+                        $$ A^T = \begin{bmatrix} a & c & c \\ a & b & a \\ b & b & c \end{bmatrix} $$
+                        <p>Step 2: Compute symmetric matrix $P = \frac{1}{2}(A + A^T)$:</p>
+                        $$ P = \frac{1}{2} \begin{bmatrix} 2a & a+c & b+c \\ a+c & 2b & b+a \\ b+c & b+a & 2c \end{bmatrix} $$
+                        <p>Step 3: Compute skew-symmetric matrix $Q = \frac{1}{2}(A - A^T)$:</p>
+                        $$ Q = \frac{1}{2} \begin{bmatrix} 0 & a-c & b-c \\ c-a & 0 & b-a \\ c-b & a-b & 0 \end{bmatrix} $$
+                        <p>Matrix $A = P + Q$ where $P$ is symmetric and $Q$ is skew-symmetric.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.0.4: Verification of Reversal Law for Matrix Transpose</div>
+                        <p><strong>Question:</strong> If matrix $A = \begin{bmatrix} 1 & 2 & -1 \\ 3 & 0 & 2 \\ 4 & 5 & 0 \end{bmatrix}$ and matrix $B = \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ 0 & 1 & 3 \end{bmatrix}$, verify that $(A B)^T = B^T A^T$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Multiply matrix $A$ and matrix $B$:</p>
+                        $$ A B = \begin{bmatrix} 1 & 2 & -1 \\ 3 & 0 & 2 \\ 4 & 5 & 0 \end{bmatrix} \begin{bmatrix} 1 & 0 & 0 \\ 2 & 1 & 0 \\ 0 & 1 & 3 \end{bmatrix} = \begin{bmatrix} 1+4+0 & 0+2-1 & 0+0-3 \\ 3+0+0 & 0+0+2 & 0+0+6 \\ 4+10+0 & 0+5+0 & 0+0+0 \end{bmatrix} = \begin{bmatrix} 5 & 1 & -3 \\ 3 & 2 & 6 \\ 14 & 5 & 0 \end{bmatrix} $$
+                        <p>Step 2: Take transpose matrix $(AB)^T$:</p>
+                        $$ (A B)^T = \begin{bmatrix} 5 & 3 & 14 \\ 1 & 2 & 5 \\ -3 & 6 & 0 \end{bmatrix} $$
+                        <p>Step 3: Write $B^T$ and $A^T$ and multiply $B^T A^T$:</p>
+                        $$ B^T = \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 3 \end{bmatrix}, \quad A^T = \begin{bmatrix} 1 & 3 & 4 \\ 2 & 0 & 5 \\ -1 & 2 & 0 \end{bmatrix} $$
+                        $$ B^T A^T = \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & 1 \\ 0 & 0 & 3 \end{bmatrix} \begin{bmatrix} 1 & 3 & 4 \\ 2 & 0 & 5 \\ -1 & 2 & 0 \end{bmatrix} = \begin{bmatrix} 1+4+0 & 3+0+0 & 4+10+0 \\ 0+2-1 & 0+0+2 & 0+5+0 \\ 0+0-3 & 0+0+6 & 0+0+0 \end{bmatrix} = \begin{bmatrix} 5 & 3 & 14 \\ 1 & 2 & 5 \\ -3 & 6 & 0 \end{bmatrix} $$
+                        <p>Since $(A B)^T = B^T A^T$, reversal law is verified.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.0.5: Proof of Symmetry for B^T A B</div>
+                        <p><strong>Question:</strong> If matrix $A$ and matrix $B$ are square matrices of the same order and matrix $A$ is a symmetric matrix, show that matrix $B^T A B$ is also a symmetric matrix.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Let matrix $C = B^T A B$. We must show that $C^T = C$.</p>
+                        <p>Step 2: Take transpose of matrix $C$ using reversal law $(XYZ)^T = Z^T Y^T X^T$:</p>
+                        $$ C^T = (B^T A B)^T = B^T A^T (B^T)^T $$
+                        <p>Step 3: We know $(B^T)^T = B$. Also, since matrix $A$ is symmetric, $A^T = A$. Substitute these:</p>
+                        $$ C^T = B^T A B = C $$
+                        <p>Since $C^T = C$, matrix $B^T A B$ is a symmetric matrix.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.0 आव्यूह बीजगणित के मूल सिद्धांत (Basics of Matrix Algebra)</h2>
+                    <p>Matrix (आव्यूह) पंक्तियों (rows) और स्तंभों (columns) में व्यवस्थित संख्याओं की एक आयताकार व्यवस्था (rectangular array) होती है।</p>
+                    <p><strong>Matrix का क्रम (Order):</strong> $m$ पंक्तियों तथा $n$ स्तंभों वाले matrix का क्रम $m \times n$ होता है।</p>
+                    <p><strong>मूल आव्यूह प्रकार:</strong> Row matrix, Column matrix, Zero matrix, Square matrix, Diagonal matrix, Scalar matrix, Identity matrix ($I$), Upper triangular, Lower triangular, Transpose matrix ($A^T$), Symmetric matrix ($A^T = A$), और Skew-Symmetric matrix ($A^T = -A$)।</p>
+                    <p><strong>प्रमेय 1.0.1:</strong> $(A B)^T = B^T A^T$ (Reversal Law for Transpose)।</p>
+                    <p><strong>प्रमेय 1.0.2:</strong> प्रत्येक वास्तविक वर्ग matrix $A$ को एक Symmetric matrix $P$ तथा एक Skew-Symmetric matrix $Q$ के योग के रूप में अद्वितीय रूप से लिखा जा सकता है: $A = P + Q$, जहाँ $P = \frac{1}{2}(A + A^T)$ और $Q = \frac{1}{2}(A - A^T)$।</p>
+                </div>
+            </div>
+        </section>
+
         <!-- 1.1 Special Matrices -->
-        <section class="page-section active" id="sec11">
+        <section class="page-section" id="sec11">
             <div class="section-card">
                 <div class="english-content">
                     <h2>1.1 Types of Special Matrices</h2>
-                    <p>Matrices are rectangular arrays of numbers arranged in rows and columns. In linear algebra, we deal with both real numbers and complex numbers. Matrices having special properties are very helpful in mathematics and physics problems.</p>
+                    <p>Matrices having special algebraic properties are very helpful in mathematics and physics problems. This section presents complex and real matrix structures.</p>
 
                     <div class="definition">
                         <div class="card-title">1. Conjugate Transpose of a Matrix ($A^H$ or $A^\dagger$)</div>
@@ -528,16 +633,6 @@
                     <p><strong>Idempotent Matrix:</strong> यदि $A^2 = A$ हो, तो matrix $A$ को Idempotent Matrix कहते हैं।</p>
                     <p><strong>Involutory Matrix:</strong> यदि $A^2 = I$ हो, तो matrix $A$ को Involutory Matrix कहते हैं।</p>
                     <p><strong>Nilpotent Matrix:</strong> यदि $A^k = 0$ हो, तो matrix $A$ को Nilpotent Matrix कहते हैं।</p>
-
-                    <h3>प्रमेय 1.1 का प्रमाण (Theorem 1.1 Proof in Hinglish)</h3>
-                    <p><strong>कथन:</strong> प्रत्येक वर्ग Matrix $A$ को अद्वितीय रूप से एक Hermitian Matrix $B$ और एक Skew-Hermitian Matrix $C$ के योग के रूप में लिखा जा सकता है: $A = B + C$, जहाँ $B = \frac{1}{2}(A + A^H)$ और $C = \frac{1}{2}(A - A^H)$।</p>
-                    <p><strong>प्रमाण:</strong></p>
-                    <p><strong>चरण 1 (अस्तित्व):</strong> Matrix $A$ को हम इस प्रकार लिख सकते हैं:</p>
-                    $$ A = \frac{1}{2}(2A) = \frac{1}{2}(A + A^H + A - A^H) = \frac{1}{2}(A + A^H) + \frac{1}{2}(A - A^H) $$
-                    <p>मान लीजिए $B = \frac{1}{2}(A + A^H)$ तथा $C = \frac{1}{2}(A - A^H)$।</p>
-                    <p>अब $B^H = \left(\frac{1}{2}(A + A^H)\right)^H = \frac{1}{2}(A^H + A) = B$ (Hermitian)।</p>
-                    <p>तथा $C^H = \left(\frac{1}{2}(A - A^H)\right)^H = \frac{1}{2}(A^H - A) = -C$ (Skew-Hermitian)।</p>
-                    <p><strong>चरण 2 (अद्वितीयता):</strong> यदि $A = B_1 + C_1$ हो, तो $A^H = B_1 - C_1$। जोड़ने पर $2B_1 = A + A^H \implies B_1 = B$ तथा घटाने पर $2C_1 = A - A^H \implies C_1 = C$। अतः रूप अद्वितीय है। सिद्ध हुआ।</p>
                 </div>
             </div>
         </section>
