@@ -626,28 +626,61 @@ $$ \det(A) = (3)(4) - (2)(1) = 12 - 2 = 10 $$
                         <div class="card-title">Example 2.2.2: Eigenvalues of Matrix Inverse</div>
                         <p><strong>Question:</strong> If matrix $A$ has eigenvalues $2$ and $5$, find eigenvalues of $A^{-1}$ and $A^3$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Eigenvalues of $A^{-1}$ are $1/2 = 0.5$ and $1/5 = 0.2$. Eigenvalues of $A^3$ are $2^3 = 8$ and $5^3 = 125$.</p>
+                        <p><strong>Eigenvalues of $A^{-1}$:</strong></p>
+$$ \frac{1}{\lambda_1} = \frac{1}{2} = 0.5 $$
+$$ \frac{1}{\lambda_2} = \frac{1}{5} = 0.2 $$
+<p><strong>Eigenvalues of $A^3$:</strong></p>
+$$ \lambda_1^3 = 2^3 = 8 $$
+$$ \lambda_2^3 = 5^3 = 125 $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.2.3: Eigenvalues of Polynomial in A</div>
                         <p><strong>Question:</strong> If $\lambda$ is an eigenvalue of $A$, find eigenvalues of matrix $B = A^2 - 2A + 3I$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>By spectral mapping theorem, eigenvalue of $B$ is $\mu = \lambda^2 - 2\lambda + 3$.</p>
+                        <p><strong>Spectral Mapping Formula:</strong></p>
+<p>By spectral mapping theorem, eigenvalue $\mu$ of matrix $B = A^2 - 2A + 3I$ corresponding to eigenvalue $\lambda$ of $A$ is:</p>
+$$ \mu = \lambda^2 - 2\lambda + 3 $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.2.4: Eigenvalues of Real Symmetric Matrix</div>
                         <p><strong>Question:</strong> Prove that all eigenvalues of a real symmetric matrix $A$ are real numbers.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Let $A x = \lambda x$ with $x \neq 0$. Multiply by $\overline{x}^T$ on left: $\overline{x}^T A x = \lambda \overline{x}^T x$. Take conjugate transpose: $\overline{x}^T A x = \overline{\lambda} \overline{x}^T x$. Subtracting gives $(\lambda - \overline{\lambda})\overline{x}^T x = 0 \implies \lambda = \overline{\lambda} \implies \lambda$ is real.</p>
+                        <p><strong>Step 1: Eigenvector Equation</strong></p>
+                        <p>Let $\lambda$ be an eigenvalue of real symmetric matrix $A$ corresponding to non-zero eigenvector $x$:</p>
+                        $$ A x = \lambda x $$
+                        <p><strong>Step 2: Pre-multiply by Conjugate Transpose</strong></p>
+                        <p>Pre-multiplying both sides by $\overline{x}^T$:</p>
+                        $$ \overline{x}^T A x = \overline{x}^T (\lambda x) $$
+                        $$ \overline{x}^T A x = \lambda (\overline{x}^T x) $$
+                        <p><strong>Step 3: Conjugate Transpose of Product</strong></p>
+                        <p>Taking conjugate transpose of both sides:</p>
+                        $$ (\overline{x}^T A x)^H = (\lambda \overline{x}^T x)^H $$
+                        $$ x^H A^H \overline{x} = \overline{\lambda} x^H \overline{x} $$
+                        <p>Since matrix $A$ is real symmetric ($A^H = A^T = A$):</p>
+                        $$ \overline{x}^T A x = \overline{\lambda} (\overline{x}^T x) $$
+                        <p><strong>Step 4: Subtract Equations</strong></p>
+                        <p>Subtracting the two expressions for $\overline{x}^T A x$:</p>
+                        $$ \lambda (\overline{x}^T x) - \overline{\lambda} (\overline{x}^T x) = 0 $$
+                        $$ (\lambda - \overline{\lambda})(\overline{x}^T x) = 0 $$
+                        <p>Since $x \neq 0$, the inner product $\overline{x}^T x = \|x\|^2 \neq 0$. Therefore:</p>
+                        $$ \lambda - \overline{\lambda} = 0 $$
+                        $$ \lambda = \overline{\lambda} $$
+                        <p><strong>Conclusion:</strong></p>
+                        <p>Eigenvalue $\lambda$ equals its complex conjugate, which proves that $\lambda$ is a real number.</p>
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.2.5: Zero Eigenvalue and Matrix Singularity</div>
                         <p><strong>Question:</strong> Show that matrix $A$ is singular if and only if at least one eigenvalue of $A$ is zero.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Product of eigenvalues is $\det(A)$. Thus $\det(A) = 0 \iff$ at least one eigenvalue $\lambda_i = 0$.</p>
+                        <p><strong>Product Property of Eigenvalues:</strong></p>
+$$ \det(A) = \prod_{i=1}^n \lambda_i $$
+<p>Matrix $A$ is singular if and only if:</p>
+$$ \det(A) = 0 $$
+$$ \iff \prod_{i=1}^n \lambda_i = 0 $$
+$$ \iff \text{at least one eigenvalue } \lambda_i = 0 $$
                     </div>
                 </div>
 
@@ -779,30 +812,88 @@ $$ A^4 = 15A - 14I $$
 
                     <div class="example">
                         <div class="card-title">Example 2.4.1: Minimal Polynomial of Identity Matrix</div>
-                        <p><strong>Question:</strong> Find minimal polynomial of identity matrix $I_3$.</p>
+                        <p><strong>Question:</strong> Find the minimal polynomial of the identity matrix $I_3$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Characteristic polynomial $p(\lambda) = (\lambda-1)^3$. Test linear polynomial $m(\lambda) = \lambda - 1$. $m(I_3) = I_3 - I_3 = 0$. Thus minimal polynomial is $m(\lambda) = \lambda - 1$.</p>
+                        <p><strong>Step 1: Characteristic Polynomial</strong></p>
+                        <p>The characteristic polynomial of $3 \times 3$ identity matrix $I_3$ is:</p>
+                        $$ p(\lambda) = \det(I_3 - \lambda I_3) $$
+                        $$ p(\lambda) = (1-\lambda)^3 $$
+                        $$ p(\lambda) = (\lambda-1)^3 $$
+                        <p><strong>Step 2: Test Monic Polynomial of Degree 1</strong></p>
+                        <p>Consider the degree 1 candidate polynomial:</p>
+                        $$ m(\lambda) = \lambda - 1 $$
+                        <p>Substitute matrix $I_3$ into candidate polynomial:</p>
+                        $$ m(I_3) = I_3 - 1 \cdot I_3 $$
+                        $$ m(I_3) = I_3 - I_3 $$
+                        $$ m(I_3) = 0 $$
+                        <p><strong>Conclusion:</strong></p>
+                        <p>Since $m(\lambda) = \lambda - 1$ is a monic polynomial of degree 1 satisfying $m(I_3) = 0$, the minimal polynomial of $I_3$ is:</p>
+                        $$ m(\lambda) = \lambda - 1 $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.4.2: Minimal Polynomial of a 3x3 Matrix</div>
-                        <p><strong>Question:</strong> Find minimal polynomial of matrix $A = \begin{bmatrix} 2 & 1 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Question:</strong> Find the minimal polynomial of matrix $A = \begin{bmatrix} 2 & 1 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Characteristic polynomial $p(\lambda) = (\lambda-2)^3$. Test $m(\lambda) = (\lambda-2)^2$. $(A - 2I)^2 = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}^2 = 0$. Minimal polynomial $m(\lambda) = (\lambda-2)^2$.</p>
+                        <p><strong>Step 1: Characteristic Polynomial</strong></p>
+                        <p>Evaluating determinant $\det(A - \lambda I) = 0$:</p>
+                        $$ p(\lambda) = (2-\lambda)^3 $$
+                        $$ p(\lambda) = (\lambda-2)^3 $$
+                        <p><strong>Step 2: Test Linear Candidate $m_1(\lambda) = \lambda - 2$</strong></p>
+                        $$ A - 2I = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} \neq 0 $$
+                        <p>Thus $m_1(\lambda)$ is not the minimal polynomial.</p>
+
+                        <p><strong>Step 3: Test Quadratic Candidate $m_2(\lambda) = (\lambda-2)^2$</strong></p>
+                        $$ (A - 2I)^2 = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} $$
+                        $$ (A - 2I)^2 = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} = 0 $$
+                        <p><strong>Conclusion:</strong></p>
+                        <p>The lowest degree monic polynomial annihilating matrix $A$ is:</p>
+                        $$ m(\lambda) = (\lambda-2)^2 $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.4.3: Minimal Polynomial of Diagonalizable Matrix</div>
-                        <p><strong>Question:</strong> Find minimal polynomial of matrix $A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Question:</strong> Find the minimal polynomial of matrix $A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Distinct eigenvalues are $1$ and $2$. Monic polynomial with distinct roots is $m(\lambda) = (\lambda-1)(\lambda-2)$. $(A - I)(A - 2I) = 0$. Minimal polynomial is $m(\lambda) = (\lambda-1)(\lambda-2)$.</p>
+                        <p><strong>Step 1: Characteristic Polynomial and Eigenvalues</strong></p>
+                        $$ p(\lambda) = (\lambda-1)(\lambda-2)^2 $$
+                        <p>Distinct eigenvalues are $\lambda_1 = 1$ and $\lambda_2 = 2$.</p>
+
+                        <p><strong>Step 2: Candidate Polynomial of Distinct Factors</strong></p>
+                        <p>Construct candidate polynomial from distinct linear factors:</p>
+                        $$ m(\lambda) = (\lambda-1)(\lambda-2) $$
+                        $$ m(\lambda) = \lambda^2 - 3\lambda + 2 $$
+
+                        <p><strong>Step 3: Evaluate Candidate Matrix Polynomial</strong></p>
+                        $$ A - I = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} $$
+                        $$ A - 2I = \begin{bmatrix} -1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} $$
+                        <p>Matrix product:</p>
+                        $$ (A - I)(A - 2I) = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \begin{bmatrix} -1 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} $$
+                        $$ (A - I)(A - 2I) = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} = 0 $$
+                        <p><strong>Conclusion:</strong></p>
+                        <p>Minimal polynomial is:</p>
+                        $$ m(\lambda) = (\lambda-1)(\lambda-2) $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.4.4: Nilpotent Matrix Minimal Polynomial</div>
-                        <p><strong>Question:</strong> Find minimal polynomial of nilpotent matrix $N = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix}$.</p>
+                        <p><strong>Question:</strong> Find the minimal polynomial of nilpotent matrix $N = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Characteristic polynomial is $\lambda^3$. Since $N^2 \neq 0$ and $N^3 = 0$, minimal polynomial is $m(\lambda) = \lambda^3$.</p>
+                        <p><strong>Step 1: Characteristic Polynomial</strong></p>
+                        $$ p(\lambda) = \lambda^3 $$
+
+                        <p><strong>Step 2: Evaluate Powers of Matrix $N$</strong></p>
+                        <p>First power:</p>
+                        $$ N = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix} \neq 0 $$
+                        <p>Second power:</p>
+                        $$ N^2 = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix} $$
+                        $$ N^2 = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} \neq 0 $$
+                        <p>Third power:</p>
+                        $$ N^3 = N^2 \cdot N = \begin{bmatrix} 0 & 0 & 1 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix} $$
+                        $$ N^3 = \begin{bmatrix} 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix} = 0 $$
+                        <p><strong>Conclusion:</strong></p>
+                        <p>Index of nilpotency is 3, so minimal polynomial is:</p>
+                        $$ m(\lambda) = \lambda^3 $$
                     </div>
                 </div>
 
