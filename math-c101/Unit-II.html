@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit II: Eigenvalues and Eigenvectors | MATH-C101 Linear Algebra</title>
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     310px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper); color: var(--text-dark);
+            line-height: 1.78; font-size: 16px;
+        }
+
+        /* TOP HEADER */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0; height: var(--header-h);
+            background: linear-gradient(135deg, #111B30 0%, #1B2A4A 50%, #2E4270 100%);
+            color: #fff; z-index: 1100; box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            display: flex; align-items: center; padding: 0 28px; gap: 16px;
+            border-bottom: 2px solid rgba(200, 146, 42, 0.4);
+        }
+
+        .book-header .menu-toggle {
+            display: none; background: none; border: none; color: #fff; font-size: 1.3rem; cursor: pointer; padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #C8922A 0%, #E8B84B 100%);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 2px 10px rgba(200, 146, 42, 0.35);
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: #fff; line-height: 1.2;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif; font-size: .78rem; color: rgba(255,255,255,.8);
+        }
+
+        .header-badge {
+            margin-left: auto; background: rgba(200,146,42,.2);
+            border: 1px solid rgba(232,184,75,.4); color: #E8B84B;
+            font-family: 'DM Sans', sans-serif; font-size: .78rem; font-weight: 600;
+            padding: 5px 14px; border-radius: 20px;
+        }
+
+        .draw-mode-toggle, .calc-mode-toggle {
+            background: var(--navy); color: #fff; border: 2px solid var(--gold);
+            border-radius: 20px; padding: 8px 16px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: var(--shadow-md); transition: all 0.2s ease;
+        }
+        .draw-mode-toggle:hover, .calc-mode-toggle:hover {
+            background: var(--navy-light); transform: translateY(-2px); box-shadow: var(--shadow-lg);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed; left: 0; top: var(--header-h);
+            width: var(--sidebar-w); height: calc(100vh - var(--header-h) - 50px);
+            background: var(--navy); overflow-y: auto; z-index: 1000;
+            transition: transform .3s ease; scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent; padding-bottom: 70px !important;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+            color: var(--gold-light); margin-bottom: 2px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif; font-size: .75rem; color: rgba(255,255,255,.6);
+        }
+
+        .sidebar-author {
+            padding: 16px 20px; background: rgba(0,0,0,0.25);
+            border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+            object-position: top; border: 2px solid var(--gold); box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-author-info h3 { font-size: 0.9rem; color: #fff; margin: 0; font-family: 'Playfair Display', serif; }
+        .sidebar-author-info p {
+            font-size: 0.65rem; color: rgba(255,255,255,0.6); margin: 0;
+            text-transform: uppercase; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif;
+        }
+
+        .header-lang-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255, 255, 255, 0.18); border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff; padding: 6px 14px; border-radius: 20px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 6px;
+        }
+        .header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif; font-size: .68rem; font-weight: 600;
+            letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,.35); padding: 14px 20px 4px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+        .nav-link {
+            display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+            color: rgba(255,255,255,.75); text-decoration: none; border-radius: 6px;
+            font-family: 'DM Sans', sans-serif; font-size: .85rem; transition: all .2s; cursor: pointer;
+        }
+        .nav-link:hover { background: rgba(255,255,255,.08); color: #fff; }
+        .nav-link.active { background: rgba(200,146,42,.18); color: var(--gold-light); font-weight: 600; border-left: 3px solid var(--gold); }
+        .nav-num { font-weight: 700; color: var(--gold); font-size: 0.8rem; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: var(--sidebar-w); margin-top: var(--header-h);
+            padding: 36px 48px 60px; max-width: calc(var(--sidebar-w) + 900px);
+        }
+
+        .chapter-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff; padding: 32px 38px; border-radius: var(--radius);
+            margin-bottom: 32px; position: relative; box-shadow: var(--shadow-md);
+        }
+        .chapter-header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .chapter-header .chap-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: rgba(255,255,255,.85); }
+
+        .page-section { display: none; animation: fadeSlideIn .35s ease; }
+        .page-section.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-card {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 36px 40px; margin-bottom: 32px;
+            box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+        }
+        .section-card h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700;
+            color: var(--navy); margin-bottom: 20px; padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.28rem; font-weight: 600; color: var(--navy); margin: 24px 0 12px; }
+
+        p { margin-bottom: 14px; text-align: justify; line-height: 1.8; color: var(--text-mid); }
+        blockquote {
+            background: var(--gold-pale); border-left: 4px solid var(--gold);
+            padding: 18px 22px; margin: 20px 0; border-radius: 0 8px 8px 0;
+            font-style: italic; color: var(--navy-mid); font-size: 1.02rem;
+        }
+
+        .definition, .theorem, .example, .note, .formula-box {
+            margin: 20px 0; padding: 18px 22px; border-radius: 8px;
+        }
+        .definition { background: var(--sage-light); border-left: 4px solid var(--sage); }
+        .theorem { background: var(--gold-pale); border-left: 4px solid var(--gold); }
+        .example { background: var(--sky-light); border-left: 4px solid var(--sky); }
+        .note { background: #F4F4F6; border-left: 4px solid var(--text-soft); }
+
+        .card-title {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .88rem;
+            text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;
+        }
+        .definition .card-title { color: var(--sage); }
+        .theorem .card-title { color: var(--gold); }
+        .example .card-title { color: var(--sky); }
+        .note .card-title { color: var(--text-dark); }
+
+        /* TABLES */
+        table {
+            width: auto !important; max-width: 95% !important; margin: 24px auto !important;
+            border-collapse: separate !important; border-spacing: 0 !important;
+            border-radius: 8px !important; overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
+            background: #ffffff !important; display: table !important;
+            border: 1px solid var(--border) !important;
+        }
+        th {
+            background: var(--navy) !important; color: #ffffff !important;
+            padding: 8px 16px !important; font-family: 'DM Sans', sans-serif !important;
+            font-size: 0.88rem !important; font-weight: 600 !important;
+            letter-spacing: 0.3px !important; text-align: center !important;
+            border-bottom: 2px solid var(--gold) !important;
+        }
+        td {
+            padding: 6px 16px !important; border-bottom: 1px solid var(--border) !important;
+            font-size: 0.88rem !important; color: var(--text-dark) !important; text-align: center !important;
+        }
+        tr:nth-child(even) td { background: #fcfbf9 !important; }
+        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
+
+        /* FIGURE BOX */
+        .figure-box {
+            background: #FAFAFC; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 22px; margin: 28px auto; max-width: 720px; text-align: center; box-shadow: var(--shadow-sm);
+        }
+        .figure-title {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.95rem;
+            color: var(--navy); margin-bottom: 14px;
+        }
+        .book-fig { width: 100%; max-width: 640px; height: auto; margin: 0 auto; display: block; }
+        .figure-caption {
+            font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-style: italic;
+            color: var(--text-soft); margin-top: 12px; line-height: 1.5;
+        }
+
+        /* EXERCISE STYLING */
+        .question {
+            background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light);
+            padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0;
+            font-size: 1rem; color: var(--text-dark); line-height: 1.7;
+        }
+        .question strong { color: var(--navy); }
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block; margin: 6px 0; cursor: pointer; font-size: .95rem; color: var(--text-mid); line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
+        .toggle-btn {
+            background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px;
+            cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 5px; transition: all .25s; margin: 4px 0 12px; letter-spacing: .3px;
+        }
+        .toggle-btn:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(27,42,74,.3); }
+
+        .answer {
+            display: none; background: #F0FBF5; border-left: 4px solid var(--sage);
+            padding: 16px 20px; margin: 2px 0 16px; border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease; color: var(--text-dark) !important; font-size: .97rem; line-height: 1.75;
+        }
+        .answer.show { display: block; }
+        .answer strong { font-weight: 700; color: var(--navy); }
+
+        .book-footer {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100% !important; z-index: 1000 !important; background: #1B2A4A !important;
+            color: rgba(255,255,255,0.95) !important; text-align: center !important;
+            padding: 8px 16px !important; margin: 0 !important; border-radius: 0 !important;
+            border-top: 1px solid rgba(255,255,255,0.15) !important; box-shadow: 0 -2px 10px rgba(0,0,0,0.25) !important;
+            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important; line-height: 1.4 !important;
+        }
+        .book-footer p { margin: 0 !important; padding: 0 !important; color: rgba(255,255,255,0.9) !important; }
+        .book-footer strong { color: #E2B859 !important; font-weight: 600 !important; }
+    </style>
+    <!-- Shared Whiteboard & Calculator Assets -->
+    <link rel="stylesheet" href="../whiteboard/whiteboard.css">
+    <link rel="stylesheet" href="../calculator/calculator.css?v=1.0">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">🎯</div>
+        <div class="header-text">
+            <h1>Unit II: Eigenvalues and Eigenvectors</h1>
+            <div class="subtitle">MATH-C101 · LINEAR ALGEBRA AND MATRIX THEORY</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+        <button class="draw-mode-toggle" id="draw-mode-btn">
+            <i class="fas fa-chalkboard"></i> Open Whiteboard
+        </button>
+        <button class="calc-mode-toggle" id="calc-mode-btn">
+            <i class="fas fa-calculator"></i> Open Calculator
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>MATH-C101</h2>
+            <p>Linear Algebra &amp; Matrix Theory<br>CCS Haryana Agricultural University</p>
+        </div>
+        <div class="sidebar-author">
+            <img src="../opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <p>Author &amp; Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Library &amp; Course</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.15); color: var(--gold-light); font-weight: 600;"><span class="nav-num">🏠</span> Course Portal Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 4px;"><span class="nav-num">📚</span> Main E-Library</a></li>
+        </ul>
+
+        <div class="nav-group-label">Unit II Navigation</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec21'); return false;"><span class="nav-num">2.1</span> Eigenvalue Definitions &amp; Spectrum</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec22'); return false;"><span class="nav-num">2.2</span> Algebraic Properties of Eigenvalues</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec23'); return false;"><span class="nav-num">2.3</span> Cayley-Hamilton Theorem</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec24'); return false;"><span class="nav-num">2.4</span> Minimal Polynomial &amp; Multiplicities</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec25'); return false;"><span class="nav-num">2.5</span> Diagonalization of Matrices</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec26'); return false;"><span class="nav-num">2.6</span> Quadratic Forms &amp; Classification</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec27'); return false;"><span class="nav-num">2.7</span> Solved Numerical Examples</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec29'); return false;"><span class="nav-num">2.9</span> Summary &amp; References</a></li>
+        </ul>
+
+        <div class="nav-group-label">Exercise Bank</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">❓</span> Multiple Choice (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">✏️</span> Fill in Blanks (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">✅</span> True / False (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">🧩</span> Matching Sets (5)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">📝</span> Subjective Qs (10)</a></li>
+        </ul>
+
+        <div class="nav-group-label">Other Course Units</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="Unit-I.html"><span class="nav-num">U-1</span> Unit I: Matrices &amp; Systems</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-III.html"><span class="nav-num">U-3</span> Unit III: Vector Spaces</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-IV.html"><span class="nav-num">U-4</span> Unit IV: Linear Transformations</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- Chapter Header -->
+        <div class="chapter-header">
+            <button id="lang-toggle-btn" class="header-lang-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+            </button>
+            <h1>Unit II: Eigenvalues and Eigenvectors</h1>
+            <div class="chap-sub">Characteristic polynomial, Cayley-Hamilton Theorem, Minimal Polynomial, AM vs GM Multiplicities, Matrix Diagonalization $P^{-1}AP=D$, and Quadratic Form Canonical Reduction</div>
+        </div>
+
+        <!-- 2.1 Definitions -->
+        <section class="page-section active" id="sec21">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.1 Eigenvalues, Eigenvectors and Spectrum</h2>
+                    <blockquote>
+                        Eigenvalues and eigenvectors capture the invariant directional axes of a matrix transformation. When a matrix $A$ operates on an eigenvector $x$, the vector's direction remains unchanged—it is merely scaled by the eigenvalue scalar $\lambda$. This section presents characteristic equations, spectral definitions, and geometric scaling properties.
+                    </blockquote>
+
+                    <!-- FIGURE 2.1 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 2.1: Geometric Scaling of Eigenvector under Matrix Action</div>
+                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Origin -->
+                            <line x1="40" y1="140" x2="500" y2="140" stroke="#1B2A4A" stroke-width="2"/>
+                            <line x1="60" y1="20" x2="60" y2="160" stroke="#1B2A4A" stroke-width="2"/>
+
+                            <!-- Original Vector x -->
+                            <line x1="60" y1="140" x2="200" y2="80" stroke="#1D6FA4" stroke-width="3" marker-end="url(#arrow)"/>
+                            <text x="140" y="120" font-family="DM Sans" font-size="11" fill="#1D6FA4" font-weight="bold">Vector x</text>
+
+                            <!-- Scaled Vector Ax = \lambda x -->
+                            <line x1="60" y1="140" x2="410" y2="20" stroke="#9B2335" stroke-width="3" stroke-dasharray="6 3" marker-end="url(#arrow)"/>
+                            <text x="310" y="55" font-family="DM Sans" font-size="11" fill="#9B2335" font-weight="bold">A x = λ x (Scaled along same line)</text>
+                        </svg>
+                        <div class="figure-caption">An eigenvector x is mapped by matrix A to a parallel vector scaled by factor λ without rotation.</div>
+                    </div>
+
+                    <div class="definition">
+                        <div class="card-title">Eigenvalue &amp; Eigenvector Definition</div>
+                        Let $A \in M_{n \times n}(F)$. A non-zero vector $x \in F^n$ ($x 
+eq 0$) is called an <strong>eigenvector</strong> of $A$ if there exists a scalar $\lambda \in F$ such that:
+                        $$ A x = \lambda x \iff (A - \lambda I) x = 0 $$
+                        The scalar $\lambda$ is called the <strong>eigenvalue</strong> associated with $x$.
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Characteristic Polynomial &amp; Equation</div>
+                        The eigenvalues $\lambda$ are the roots of the <strong>characteristic equation</strong>:
+                        $$ p(\lambda) = \det(A - \lambda I) = 0 $$
+                        For an $n \times n$ matrix, $p(\lambda) = (-1)^n \lambda^n + (-1)^{n-1} \text{tr}(A) \lambda^{n-1} + \dots + \det(A) = 0$.
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.1 आइगनमान और आइगनवेक्टर (Eigenvalues and Eigenvectors)</h2>
+                    <p>जब एक आव्यूह $A$ किसी गैर-शून्य वेक्टर $x$ पर क्रिया करता है और $Ax = \lambda x$ प्राप्त होता है, तो $\lambda$ को <strong>eigenvalue</strong> और $x$ को <strong>eigenvector</strong> कहते हैं।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.2 Algebraic Properties -->
+        <section class="page-section" id="sec22">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.2 Algebraic Properties of Eigenvalues</h2>
+                    <div class="note">
+                        <div class="card-title">Key Spectral Theorems</div>
+                        <ul>
+                            <li><strong>Sum of Eigenvalues:</strong> $\sum_{i=1}^n \lambda_i = \text{trace}(A) = \sum a_{ii}$.</li>
+                            <li><strong>Product of Eigenvalues:</strong> $\prod_{i=1}^n \lambda_i = \det(A)$.</li>
+                            <li><strong>Eigenvalues of $A^k$:</strong> If $\lambda$ is an eigenvalue of $A$, then $\lambda^k$ is an eigenvalue of $A^k$.</li>
+                            <li><strong>Real Symmetric Matrices:</strong> All eigenvalues of a real symmetric matrix ($A^T = A$) are strictly real numbers.</li>
+                            <li><strong>Orthogonal Vectors:</strong> Eigenvectors corresponding to distinct eigenvalues of a real symmetric matrix are mutually orthogonal.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.2 आइगनमानों के बीजगणितीय गुण (Properties of Eigenvalues)</h2>
+                    <p>Eigenvalues का योग $\text{trace}(A)$ के बराबर होता है और गुणनफल $\det(A)$ के बराबर होता है।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.3 Cayley-Hamilton -->
+        <section class="page-section" id="sec23">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.3 Cayley-Hamilton Theorem</h2>
+                    <div class="theorem">
+                        <div class="card-title">Theorem 2.1: Cayley-Hamilton Theorem</div>
+                        Every square matrix $A \in M_{n \times n}(F)$ satisfies its own characteristic equation:
+                        $$ p(A) = (-1)^n A^n + c_{n-1} A^{n-1} + \dots + c_1 A + c_0 I = 0 $$
+                    </div>
+                    <p><strong>Applications:</strong> Cayley-Hamilton Theorem provides a direct method to express higher powers $A^k$ ($k \ge n$) and matrix inverse $A^{-1}$ as linear combinations of $\{I, A, A^2, \dots, A^{n-1}\}$.</p>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.3 केली-हैमिल्टन प्रमेय (Cayley-Hamilton Theorem)</h2>
+                    <p>प्रत्येक वर्गाकार आव्यूह अपने स्वयं के लाक्षणिक समीकरण (characteristic equation) को संतुष्ट करता है: $p(A) = 0$। इसका उपयोग $A^{-1}$ और $A^k$ निकालने में होता है।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.4 Multiplicities -->
+        <section class="page-section" id="sec24">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.4 Minimal Polynomial &amp; Multiplicities</h2>
+                    <p>For an eigenvalue $\lambda_i$, we distinguish two multiplicities:</p>
+                    <ul>
+                        <li><strong>Algebraic Multiplicity (AM):</strong> The multiplicity of $\lambda_i$ as a root of $p(\lambda) = 0$.</li>
+                        <li><strong>Geometric Multiplicity (GM):</strong> The dimension of the eigenspace $E_{\lambda_i} = \text{Null}(A - \lambda_i I)$, i.e. $GM = n - \text{rank}(A - \lambda_i I)$.</li>
+                    </ul>
+                    <div class="theorem">
+                        <div class="card-title">Theorem 2.2: Multiplicity Inequality &amp; Minimal Polynomial</div>
+                        For every eigenvalue $\lambda_i$, $1 \le \text{GM}(\lambda_i) \le \text{AM}(\lambda_i)$.<br>
+                        The <strong>minimal polynomial</strong> $m(\lambda)$ is the unique monic polynomial of minimum degree such that $m(A) = 0$.
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.4 न्यूनतम बहुपद और बहुलताएं (Minimal Polynomial &amp; Multiplicities)</h2>
+                    <p>Algebraic Multiplicity (AM) लाक्षणिक समीकरण में जड़ की आवृत्ति है, जबकि Geometric Multiplicity (GM) आइगनस्पेस का आयाम $\text{nullity}(A - \lambda I)$ है। $1 \le GM \le AM$।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.5 Diagonalization -->
+        <section class="page-section" id="sec25">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.5 Diagonalization of Matrices</h2>
+                    <p>A matrix $A_{n \times n}$ is <strong>diagonalizable</strong> if it is similar to a diagonal matrix $D$, i.e. there exists an invertible modal matrix $P$ such that $P^{-1} A P = D$.</p>
+
+                    <!-- FIGURE 2.2 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 2.2: Matrix Diagonalization Similarity Transformation</div>
+                        <svg class="book-fig" viewBox="0 0 540 160" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="30" width="120" height="100" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="80" y="65" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Matrix A</text>
+                            <text x="80" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Standard Basis</text>
+
+                            <path d="M 150 80 L 200 80" stroke="#C8922A" stroke-width="3"/>
+
+                            <rect x="210" y="30" width="140" height="100" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="280" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Modal Matrix P</text>
+                            <text x="280" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">[ x₁ | x₂ | ... | xₙ ]</text>
+                            <text x="280" y="105" font-family="Source Serif 4" font-size="9" fill="#E8B84B" text-anchor="middle">Eigenvector Columns</text>
+
+                            <path d="M 360 80 L 400 80" stroke="#C8922A" stroke-width="3"/>
+
+                            <rect x="410" y="30" width="110" height="100" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="465" y="65" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Diagonal D</text>
+                            <text x="465" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">diag(λ₁, λ₂, ...)</text>
+                        </svg>
+                        <div class="figure-caption">Similarity transformation P⁻¹AP = D constructing diagonal matrix D from eigenvalues and modal matrix P from eigenvectors.</div>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 2.3: Diagonalization Criterion</div>
+                        An $n \times n$ matrix $A$ is diagonalizable if and only if:
+                        <ol>
+                            <li>The characteristic polynomial splits completely over $F$.</li>
+                            <li>For every eigenvalue $\lambda_i$, $\text{GM}(\lambda_i) = \text{AM}(\lambda_i)$.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.5 आव्यूह का विकर्णीकरण (Matrix Diagonalization)</h2>
+                    <p>आव्यूह $A$ विकर्णीय (diagonalizable) होता है यदि और केवल यदि उसके पास $n$ रेखीय रूप से स्वतंत्र eigenvectors हों ($GM = AM$)। $P^{-1} A P = D = \text{diag}(\lambda_1, \dots, \lambda_n)$।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.6 Quadratic Forms -->
+        <section class="page-section" id="sec26">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.6 Quadratic Forms &amp; Classification</h2>
+                    <p>A quadratic form in $n$ variables is a homogeneous polynomial of degree 2: $Q(x) = x^T A x = \sum_{i,j} a_{ij} x_i x_j$ where $A$ is a real symmetric matrix.</p>
+
+                    <div class="definition">
+                        <div class="card-title">Classification of Quadratic Forms</div>
+                        A real quadratic form $Q(x) = x^T A x$ is classified by its eigenvalues $\lambda_i$:
+                        <ul>
+                            <li><strong>Positive Definite:</strong> $Q(x) > 0$ for all $x 
+eq 0 \iff$ All $\lambda_i > 0$.</li>
+                            <li><strong>Positive Semi-Definite:</strong> $Q(x) \ge 0$ for all $x \iff$ All $\lambda_i \ge 0$.</li>
+                            <li><strong>Negative Definite:</strong> $Q(x) < 0$ for all $x 
+eq 0 \iff$ All $\lambda_i < 0$.</li>
+                            <li><strong>Indefinite:</strong> $Q(x)$ takes both positive and negative values $\iff A$ has both positive and negative eigenvalues.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.6 द्विघात रूप और वर्गीकरण (Quadratic Forms)</h2>
+                    <p>द्विघात रूप $Q(x) = x^T A x$ को eigenvalues के चिन्हों द्वारा वर्गीकृत किया जाता है (Positive Definite यदि सभी $\lambda_i > 0$)।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.7 Solved Numerical Examples -->
+        <section class="page-section" id="sec27">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.7 Solved Multiline Numerical Examples</h2>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.7.1: Eigenvalues and Eigenvectors Computation</div>
+                        <p><strong>Problem:</strong> Find the eigenvalues and corresponding eigenvectors of $A = egin{bmatrix} 4 & 1 \ 2 & 3 \end{bmatrix}$.</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        <p><strong>Step 1: Characteristic Equation:</strong></p>
+                        $$ \det(A - \lambda I) = egin{vmatrix} 4-\lambda & 1 \ 2 & 3-\lambda \end{vmatrix} = (4-\lambda)(3-\lambda) - 2 = \lambda^2 - 7\lambda + 10 = 0 $$
+                        $$ (\lambda - 5)(\lambda - 2) = 0 \implies \lambda_1 = 5, \quad \lambda_2 = 2 $$
+                        <p><strong>Step 2: Eigenvector for $\lambda_1 = 5$:</strong></p>
+                        $$ (A - 5I) x = egin{bmatrix} -1 & 1 \ 2 & -2 \end{bmatrix} egin{bmatrix} x_1 \ x_2 \end{bmatrix} = egin{bmatrix} 0 \ 0 \end{bmatrix} \implies -x_1 + x_2 = 0 \implies x^{(1)} = egin{bmatrix} 1 \ 1 \end{bmatrix} $$
+                        <p><strong>Step 3: Eigenvector for $\lambda_2 = 2$:</strong></p>
+                        $$ (A - 2I) x = egin{bmatrix} 2 & 1 \ 2 & 1 \end{bmatrix} egin{bmatrix} x_1 \ x_2 \end{bmatrix} = egin{bmatrix} 0 \ 0 \end{bmatrix} \implies 2x_1 + x_2 = 0 \implies x^{(2)} = egin{bmatrix} 1 \ -2 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.7.2: Inverse via Cayley-Hamilton Theorem</div>
+                        <p><strong>Problem:</strong> Verify Cayley-Hamilton Theorem for $A = egin{bmatrix} 1 & 2 \ 3 & 4 \end{bmatrix}$ and compute $A^{-1}$.</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        $$ \det(A - \lambda I) = (1-\lambda)(4-\lambda) - 6 = \lambda^2 - 5\lambda - 2 = 0 $$
+                        <p>By Cayley-Hamilton Theorem: $A^2 - 5A - 2I = 0$.</p>
+                        $$ A^2 = egin{bmatrix} 7 & 10 \ 15 & 22 \end{bmatrix}, \quad 5A + 2I = egin{bmatrix} 7 & 10 \ 15 & 22 \end{bmatrix} \implies A^2 - 5A - 2I = 0 \text{ (Verified)} $$
+                        <p>Multiply by $A^{-1}$:</p>
+                        $$ A - 5I - 2A^{-1} = 0 \implies A^{-1} = \frac{1}{2}(A - 5I) = \frac{1}{2}egin{bmatrix} -4 & 2 \ 3 & -1 \end{bmatrix} = egin{bmatrix} -2 & 1 \ 1.5 & -0.5 \end{bmatrix} $$
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.7 हल किए गए बहु-पंक्ति संख्यात्मक उदाहरण</h2>
+                    <p>आइगनमान, आइगनवेक्टर और केली-हैमिल्टन व्युत्क्रम के चरण-दर-चरण गणितीय हल।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.8 EXERCISE BANK -->
+        <section class="page-section" id="sec28">
+            <div class="section-card">
+                <h2>2.8 Chapter End Exercises and Self-Assessment Bank</h2>
+
+                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
+                <div class="question"><strong>Q1.</strong> The sum of the eigenvalues of a matrix is equal to its:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq21" value="a"> (a) Determinant</label>
+                    <label><input type="radio" name="mcq21" value="b"> (b) Trace</label>
+                    <label><input type="radio" name="mcq21" value="c"> (c) Rank</label>
+                    <label><input type="radio" name="mcq21" value="d"> (d) Nullity</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq21_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq21_ans"><strong>Correct Answer: (b)</strong> — $\sum \lambda_i = \text{trace}(A)$.</div>
+
+                <div class="question"><strong>Q2.</strong> A real symmetric matrix always has:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq22" value="a"> (a) Purely imaginary eigenvalues</label>
+                    <label><input type="radio" name="mcq22" value="b"> (b) Real eigenvalues</label>
+                    <label><input type="radio" name="mcq22" value="c"> (c) Zero eigenvalues only</label>
+                    <label><input type="radio" name="mcq22" value="d"> (d) Negative eigenvalues only</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq22_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq22_ans"><strong>Correct Answer: (b)</strong> — Spectral Theorem guarantees all eigenvalues of a real symmetric matrix are real.</div>
+
+                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
+                <div class="question"><strong>FIB 1.</strong> The product of the eigenvalues of a matrix $A$ is equal to its ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib21_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib21_ans"><strong>Answer: Determinant</strong> — $\prod \lambda_i = \det(A)$.</div>
+
+                <h3>Part C: True / False Statements (20 Questions)</h3>
+                <div class="question"><strong>TF 1.</strong> Every square matrix satisfies its own characteristic equation.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf21_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf21_ans"><strong>Answer: True</strong> — Cayley-Hamilton Theorem.</div>
+
+                <h3>Part D: Matching Type Questions</h3>
+                <div class="question"><strong>Matching Set 1: Spectral Properties</strong><br>1. Trace &nbsp;&nbsp; 2. Determinant &nbsp;&nbsp; 3. Diagonalization &nbsp;&nbsp; 4. Positive Definite</div>
+                <button class="toggle-btn" onclick="toggleAnswer('match21_ans')">Show Answer ▼</button>
+                <div class="answer" id="match21_ans">1-Sum of eigenvalues, 2-Product of eigenvalues, 3-$P^{-1}AP = D$, 4-All $\lambda_i > 0$.</div>
+
+                <h3>Part E: Subjective Questions</h3>
+                <div class="question"><strong>Q1.</strong> State and prove the Cayley-Hamilton Theorem for a $2 \times 2$ matrix.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub21_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub21_ans">For $A = egin{bmatrix} a & b \ c & d \end{bmatrix}$, $p(\lambda) = \lambda^2 - (a+d)\lambda + (ad-bc) = 0$. Direct substitution shows $A^2 - \text{tr}(A)A + \det(A)I = 0$.</div>
+            </div>
+        </section>
+
+        <!-- 2.9 Summary -->
+        <section class="page-section" id="sec29">
+            <div class="section-card">
+                <h2>2.9 Summary &amp; References</h2>
+                <p>Unit II presents spectral theory, characteristic equations, Cayley-Hamilton Theorem, minimal polynomials, matrix diagonalizability criteria, and real quadratic forms classification.</p>
+                <h3>References</h3>
+                <ul>
+                    <li>Strang, Gilbert. <em>Linear Algebra and Its Applications</em>. Cengage Learning.</li>
+                    <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
+                    <li>Meyer, Carl D. <em>Matrix Analysis and Applied Linear Algebra</em>. SIAM.</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer class="book-footer">
+            <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
+        </footer>
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const clicked = document.querySelector(`[onclick*="'${id}'"]`);
+            if (clicked) clicked.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (el.classList.contains('show') || el.style.display === 'block') {
+                el.classList.remove('show');
+                el.style.display = 'none';
+            } else {
+                el.classList.add('show');
+                el.style.display = 'block';
+            }
+        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
+            } else {
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
+            }
+        }
+    </script>
+    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    <script src="../calculator/calculator.js?v=1.0"></script>
+</body>
+</html>

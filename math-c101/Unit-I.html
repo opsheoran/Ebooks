@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit I: Matrices and Systems of Equations | MATH-C101 Linear Algebra</title>
+
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --navy:          #1B2A4A;
+            --navy-mid:      #243555;
+            --navy-light:    #2E4270;
+            --gold:          #C8922A;
+            --gold-light:    #E8B84B;
+            --gold-pale:     #FDF3DC;
+            --sage:          #3D6B5A;
+            --sage-light:    #EEF6F2;
+            --crimson:       #9B2335;
+            --crimson-light: #FBF0F1;
+            --sky:           #1D6FA4;
+            --sky-light:     #EAF4FB;
+            --paper:         #F5F3EE;
+            --border:        #DDD8CF;
+            --text-dark:     #1C1C1E;
+            --text-mid:      #3A3A3C;
+            --text-soft:     #6B6B70;
+            --sidebar-w:     310px;
+            --header-h:      72px;
+            --radius:        10px;
+            --shadow-sm:     0 2px 8px rgba(27,42,74,.08);
+            --shadow-md:     0 4px 20px rgba(27,42,74,.12);
+            --shadow-lg:     0 8px 40px rgba(27,42,74,.16);
+        }
+
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.78;
+            font-size: 16px;
+        }
+
+        /* TOP HEADER */
+        .book-header {
+            position: fixed; top: 0; left: 0; right: 0;
+            height: var(--header-h);
+            background: linear-gradient(135deg, #111B30 0%, #1B2A4A 50%, #2E4270 100%);
+            color: #fff; z-index: 1100;
+            box-shadow: 0 4px 20px rgba(0,0,0,.3);
+            display: flex; align-items: center; padding: 0 28px; gap: 16px;
+            border-bottom: 2px solid rgba(200, 146, 42, 0.4);
+        }
+
+        .book-header .menu-toggle {
+            display: none; background: none; border: none;
+            color: #fff; font-size: 1.3rem; cursor: pointer; padding: 4px 8px;
+        }
+
+        .header-icon {
+            width: 44px; height: 44px;
+            background: linear-gradient(135deg, #C8922A 0%, #E8B84B 100%);
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem; flex-shrink: 0; box-shadow: 0 2px 10px rgba(200, 146, 42, 0.35);
+        }
+
+        .header-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem; font-weight: 700; color: #fff; line-height: 1.2;
+        }
+
+        .header-text .subtitle {
+            font-family: 'DM Sans', sans-serif; font-size: .78rem; color: rgba(255,255,255,.8);
+        }
+
+        .header-badge {
+            margin-left: auto; background: rgba(200,146,42,.2);
+            border: 1px solid rgba(232,184,75,.4); color: #E8B84B;
+            font-family: 'DM Sans', sans-serif; font-size: .78rem; font-weight: 600;
+            padding: 5px 14px; border-radius: 20px;
+        }
+
+        .draw-mode-toggle, .calc-mode-toggle {
+            background: var(--navy); color: #fff; border: 2px solid var(--gold);
+            border-radius: 20px; padding: 8px 16px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
+            box-shadow: var(--shadow-md); transition: all 0.2s ease;
+        }
+        .draw-mode-toggle:hover, .calc-mode-toggle:hover {
+            background: var(--navy-light); transform: translateY(-2px); box-shadow: var(--shadow-lg);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed; left: 0; top: var(--header-h);
+            width: var(--sidebar-w); height: calc(100vh - var(--header-h) - 50px);
+            background: var(--navy); overflow-y: auto; z-index: 1000;
+            transition: transform .3s ease; scrollbar-width: thin;
+            scrollbar-color: rgba(200,146,42,.4) transparent; padding-bottom: 70px !important;
+        }
+
+        .sidebar-brand {
+            padding: 18px 20px; border-bottom: 1px solid rgba(255,255,255,.1);
+            background: linear-gradient(180deg, rgba(200,146,42,.15) 0%, transparent 100%);
+        }
+
+        .sidebar-brand h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700;
+            color: var(--gold-light); margin-bottom: 2px;
+        }
+
+        .sidebar-brand p {
+            font-family: 'DM Sans', sans-serif; font-size: .75rem; color: rgba(255,255,255,.6);
+        }
+
+        .sidebar-author {
+            padding: 16px 20px;
+            background: rgba(0,0,0,0.25);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-photo {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: top;
+            border: 2px solid var(--gold);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .sidebar-author-info h3 {
+            font-size: 0.9rem; color: #fff; margin: 0; font-family: 'Playfair Display', serif;
+        }
+        .sidebar-author-info p {
+            font-size: 0.65rem; color: rgba(255,255,255,0.6); margin: 0;
+            text-transform: uppercase; letter-spacing: 0.5px; font-family: 'DM Sans', sans-serif;
+        }
+
+        .header-lang-toggle {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255, 255, 255, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            color: #fff; padding: 6px 14px; border-radius: 20px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s;
+            display: inline-flex; align-items: center; gap: 6px;
+        }
+        .header-lang-toggle:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-2px); }
+
+        .nav-group-label {
+            font-family: 'DM Sans', sans-serif; font-size: .68rem; font-weight: 600;
+            letter-spacing: 1.2px; text-transform: uppercase; color: rgba(255,255,255,.35); padding: 14px 20px 4px;
+        }
+
+        .nav-list { list-style: none; padding: 0 8px 12px; }
+        .nav-link {
+            display: flex; align-items: center; gap: 8px; padding: 8px 12px;
+            color: rgba(255,255,255,.75); text-decoration: none; border-radius: 6px;
+            font-family: 'DM Sans', sans-serif; font-size: .85rem; transition: all .2s; cursor: pointer;
+        }
+        .nav-link:hover { background: rgba(255,255,255,.08); color: #fff; }
+        .nav-link.active { background: rgba(200,146,42,.18); color: var(--gold-light); font-weight: 600; border-left: 3px solid var(--gold); }
+        .nav-num { font-weight: 700; color: var(--gold); font-size: 0.8rem; }
+
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: var(--sidebar-w); margin-top: var(--header-h);
+            padding: 36px 48px 60px; max-width: calc(var(--sidebar-w) + 900px);
+        }
+
+        .chapter-header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+            color: #fff; padding: 32px 38px; border-radius: var(--radius);
+            margin-bottom: 32px; position: relative; box-shadow: var(--shadow-md);
+        }
+        .chapter-header h1 { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
+        .chapter-header .chap-sub { font-family: 'DM Sans', sans-serif; font-size: 1rem; color: rgba(255,255,255,.85); }
+
+        .page-section { display: none; animation: fadeSlideIn .35s ease; }
+        .page-section.active { display: block; }
+        @keyframes fadeSlideIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-card {
+            background: #ffffff; border-radius: var(--radius);
+            padding: 36px 40px; margin-bottom: 32px;
+            box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+        }
+        .section-card h2 {
+            font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700;
+            color: var(--navy); margin-bottom: 20px; padding-bottom: 12px;
+            border-bottom: 2px solid var(--border);
+        }
+        .section-card h3 { font-family: 'Playfair Display', serif; font-size: 1.28rem; font-weight: 600; color: var(--navy); margin: 24px 0 12px; }
+
+        p { margin-bottom: 14px; text-align: justify; line-height: 1.8; color: var(--text-mid); }
+        blockquote {
+            background: var(--gold-pale); border-left: 4px solid var(--gold);
+            padding: 18px 22px; margin: 20px 0; border-radius: 0 8px 8px 0;
+            font-style: italic; color: var(--navy-mid); font-size: 1.02rem;
+        }
+
+        .definition, .theorem, .example, .note, .formula-box {
+            margin: 20px 0; padding: 18px 22px; border-radius: 8px;
+        }
+        .definition { background: var(--sage-light); border-left: 4px solid var(--sage); }
+        .theorem { background: var(--gold-pale); border-left: 4px solid var(--gold); }
+        .example { background: var(--sky-light); border-left: 4px solid var(--sky); }
+        .note { background: #F4F4F6; border-left: 4px solid var(--text-soft); }
+
+        .card-title {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: .88rem;
+            text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px;
+        }
+        .definition .card-title { color: var(--sage); }
+        .theorem .card-title { color: var(--gold); }
+        .example .card-title { color: var(--sky); }
+        .note .card-title { color: var(--text-dark); }
+
+        /* TABLES */
+        table {
+            width: auto !important; max-width: 95% !important; margin: 24px auto !important;
+            border-collapse: separate !important; border-spacing: 0 !important;
+            border-radius: 8px !important; overflow: hidden !important;
+            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
+            background: #ffffff !important; display: table !important;
+            border: 1px solid var(--border) !important;
+        }
+        th {
+            background: var(--navy) !important; color: #ffffff !important;
+            padding: 8px 16px !important; font-family: 'DM Sans', sans-serif !important;
+            font-size: 0.88rem !important; font-weight: 600 !important;
+            letter-spacing: 0.3px !important; text-align: center !important;
+            border-bottom: 2px solid var(--gold) !important;
+        }
+        td {
+            padding: 6px 16px !important; border-bottom: 1px solid var(--border) !important;
+            font-size: 0.88rem !important; color: var(--text-dark) !important; text-align: center !important;
+        }
+        tr:nth-child(even) td { background: #fcfbf9 !important; }
+        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
+
+        /* FIGURE BOX */
+        .figure-box {
+            background: #FAFAFC; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 22px; margin: 28px auto; max-width: 720px; text-align: center; box-shadow: var(--shadow-sm);
+        }
+        .figure-title {
+            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.95rem;
+            color: var(--navy); margin-bottom: 14px;
+        }
+        .book-fig { width: 100%; max-width: 640px; height: auto; margin: 0 auto; display: block; }
+        .figure-caption {
+            font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-style: italic;
+            color: var(--text-soft); margin-top: 12px; line-height: 1.5;
+        }
+
+        /* EXERCISE STYLING */
+        .question {
+            background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light);
+            padding: 16px 20px; margin: 14px 0 6px; border-radius: 0 8px 8px 0;
+            font-size: 1rem; color: var(--text-dark); line-height: 1.7;
+        }
+        .question strong { color: var(--navy); }
+        .mcq-options { margin: 10px 0 8px 20px; }
+        .mcq-options label {
+            display: block; margin: 6px 0; cursor: pointer; font-size: .95rem; color: var(--text-mid); line-height: 1.6;
+        }
+        .mcq-options input { margin-right: 8px; accent-color: var(--navy); }
+
+        .toggle-btn {
+            background: var(--navy); color: #fff; border: none; padding: 7px 18px; border-radius: 20px;
+            cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: .82rem; font-weight: 500;
+            display: inline-flex; align-items: center; gap: 5px; transition: all .25s; margin: 4px 0 12px; letter-spacing: .3px;
+        }
+        .toggle-btn:hover { background: var(--navy-light); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(27,42,74,.3); }
+
+        .answer {
+            display: none; background: #F0FBF5; border-left: 4px solid var(--sage);
+            padding: 16px 20px; margin: 2px 0 16px; border-radius: 0 8px 8px 0;
+            animation: fadeSlideIn .3s ease; color: var(--text-dark) !important; font-size: .97rem; line-height: 1.75;
+        }
+        .answer.show { display: block; }
+        .answer strong { font-weight: 700; color: var(--navy); }
+
+        .book-footer {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100% !important; z-index: 1000 !important; background: #1B2A4A !important;
+            color: rgba(255,255,255,0.95) !important; text-align: center !important;
+            padding: 8px 16px !important; margin: 0 !important; border-radius: 0 !important;
+            border-top: 1px solid rgba(255,255,255,0.15) !important; box-shadow: 0 -2px 10px rgba(0,0,0,0.25) !important;
+            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important; line-height: 1.4 !important;
+        }
+        .book-footer p { margin: 0 !important; padding: 0 !important; color: rgba(255,255,255,0.9) !important; }
+        .book-footer strong { color: #E2B859 !important; font-weight: 600 !important; }
+    </style>
+    <!-- Shared Whiteboard & Calculator Assets -->
+    <link rel="stylesheet" href="../whiteboard/whiteboard.css">
+    <link rel="stylesheet" href="../calculator/calculator.css?v=1.0">
+</head>
+<body>
+
+    <!-- TOP HEADER -->
+    <header class="book-header">
+        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle menu">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-icon">🔢</div>
+        <div class="header-text">
+            <h1>Unit I: Matrices and Systems of Equations</h1>
+            <div class="subtitle">MATH-C101 · LINEAR ALGEBRA AND MATRIX THEORY</div>
+        </div>
+        <div class="header-badge">Prof. O.P. Sheoran</div>
+        <button class="draw-mode-toggle" id="draw-mode-btn">
+            <i class="fas fa-chalkboard"></i> Open Whiteboard
+        </button>
+        <button class="calc-mode-toggle" id="calc-mode-btn">
+            <i class="fas fa-calculator"></i> Open Calculator
+        </button>
+    </header>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>MATH-C101</h2>
+            <p>Linear Algebra &amp; Matrix Theory<br>CCS Haryana Agricultural University</p>
+        </div>
+        <div class="sidebar-author">
+            <img src="../opsheoran.png" alt="Prof. O.P. Sheoran" class="sidebar-photo">
+            <div class="sidebar-author-info">
+                <h3>Prof. O.P. Sheoran</h3>
+                <p>Author &amp; Instructor</p>
+            </div>
+        </div>
+
+        <div class="nav-group-label">Library &amp; Course</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="index.html" style="background: rgba(200,146,42,0.15); color: var(--gold-light); font-weight: 600;"><span class="nav-num">🏠</span> Course Portal Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../index.html" style="background: rgba(27,42,74,0.3); color: white; font-weight: 600; margin-top: 4px;"><span class="nav-num">📚</span> Main E-Library</a></li>
+        </ul>
+
+        <div class="nav-group-label">Unit I Navigation</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec11'); return false;"><span class="nav-num">1.1</span> Special Types of Matrices</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec12'); return false;"><span class="nav-num">1.2</span> Rank &amp; Echelon Forms</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec13'); return false;"><span class="nav-num">1.3</span> Normal Form &amp; PAQ Canonical Reduction</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec14'); return false;"><span class="nav-num">1.4</span> Inverse via Elementary Operations</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec15'); return false;"><span class="nav-num">1.5</span> Systems of Linear Equations</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec16'); return false;"><span class="nav-num">1.6</span> LU Decomposition</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec17'); return false;"><span class="nav-num">1.7</span> Solved Numerical Examples</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec19'); return false;"><span class="nav-num">1.9</span> Summary &amp; References</a></li>
+        </ul>
+
+        <div class="nav-group-label">Exercise Bank</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec18'); return false;"><span class="nav-num">❓</span> Multiple Choice (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec18'); return false;"><span class="nav-num">✏️</span> Fill in Blanks (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec18'); return false;"><span class="nav-num">✅</span> True / False (20)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec18'); return false;"><span class="nav-num">🧩</span> Matching Sets (5)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec18'); return false;"><span class="nav-num">📝</span> Subjective Qs (10)</a></li>
+        </ul>
+
+        <div class="nav-group-label">Other Course Units</div>
+        <ul class="nav-list">
+            <li class="nav-item"><a class="nav-link" href="Unit-II.html"><span class="nav-num">U-2</span> Unit II: Eigenvalues &amp; Eigenvectors</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-III.html"><span class="nav-num">U-3</span> Unit III: Vector Spaces</a></li>
+            <li class="nav-item"><a class="nav-link" href="Unit-IV.html"><span class="nav-num">U-4</span> Unit IV: Linear Transformations</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- Chapter Header -->
+        <div class="chapter-header">
+            <button id="lang-toggle-btn" class="header-lang-toggle" onclick="toggleLanguage()">
+                <i class="fas fa-language"></i> <span id="lang-toggle-text">Switch Language (Hinglish)</span>
+            </button>
+            <h1>Unit I: Matrices and Systems of Equations</h1>
+            <div class="chap-sub">Hermitian, Skew-Hermitian, Unitary, Orthogonal &amp; Nilpotent matrices, Echelon forms, PAQ Normal Form, Gauss-Jordan Inversion, Rouché-Capelli System Consistency, and Doolittle/Crout LU Decomposition</div>
+        </div>
+
+        <!-- 1.1 Special Matrices -->
+        <section class="page-section active" id="sec11">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.1 Types of Special Matrices</h2>
+                    <blockquote>
+                        Matrices form the computational backbone of linear algebra. In physical science applications—ranging from quantum mechanical observables to electrical circuit networks—matrices possessing special algebraic symmetries play a crucial role. This section presents complex and real matrix structures, including Hermitian, Skew-Hermitian, Unitary, Orthogonal, Idempotent, Involutory, and Nilpotent matrices.
+                    </blockquote>
+
+                    <div class="definition">
+                        <div class="card-title">1. Conjugate Transpose (Hermitian Transpose $A^\dagger$ or $A^H$)</div>
+                        For a matrix $A = (a_{ij}) \in \mathbb{C}^{m \times n}$, the conjugate transpose $A^\Theta = A^H = (\overline{A})^T = \overline{(A^T)}$ is obtained by taking the complex conjugate of each entry and transposing the matrix.
+                    </div>
+
+                    <div class="note">
+                        <div class="card-title">Special Matrix Definitions</div>
+                        <ul>
+                            <li><strong>Hermitian Matrix:</strong> A square complex matrix $A$ satisfying $A^H = A$ (i.e. $a_{ij} = \overline{a_{ji}}$). Diagonal elements of a Hermitian matrix are strictly real numbers.</li>
+                            <li><strong>Skew-Hermitian Matrix:</strong> A square complex matrix $A$ satisfying $A^H = -A$ (i.e. $a_{ij} = -\overline{a_{ji}}$). Diagonal elements are either purely imaginary or zero.</li>
+                            <li><strong>Unitary Matrix:</strong> A square complex matrix $U$ satisfying $U^H U = U U^H = I$, implying $U^{-1} = U^H$. The column (and row) vectors of a Unitary matrix form an orthonormal basis in $\mathbb{C}^n$.</li>
+                            <li><strong>Orthogonal Matrix:</strong> A square real matrix $Q$ satisfying $Q^T Q = Q Q^T = I$, implying $Q^{-1} = Q^T$. Determinant $\det(Q) = \pm 1$.</li>
+                            <li><strong>Idempotent Matrix:</strong> A square matrix $A$ satisfying $A^2 = A$. Eigenvalues of an idempotent matrix are either $0$ or $1$.</li>
+                            <li><strong>Involutory Matrix:</strong> A square matrix $A$ satisfying $A^2 = I$, implying $A = A^{-1}$.</li>
+                            <li><strong>Nilpotent Matrix:</strong> A square matrix $A$ for which there exists a positive integer $k$ (index of nilpotency) such that $A^k = 0$ while $A^{k-1} 
+eq 0$. All eigenvalues of a nilpotent matrix are zero.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 1.1: Decomposition into Hermitian and Skew-Hermitian Parts</div>
+                        Every square complex matrix $A \in \mathbb{C}^{n \times n}$ can be uniquely expressed as the sum of a Hermitian matrix $B$ and a Skew-Hermitian matrix $C$:
+                        $$ A = B + C \quad \text{where } B = \frac{1}{2}(A + A^H) \text{ and } C = \frac{1}{2}(A - A^H) $$
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.1 विशेष प्रकार के आव्यूह (Types of Special Matrices)</h2>
+                    <blockquote>
+                        Matrices लीनियर अलजेब्रा की कम्प्यूटेशनल रीढ़ हैं। क्वॉन्टम मैकेनिक्स और इलेक्ट्रिकल सर्किट्स में विशेष सममिति (symmetry) वाले matrices का उपयोग होता है।
+                    </blockquote>
+
+                    <div class="definition">
+                        <div class="card-title">विशेष Matrices की परिभाषाएं</div>
+                        <ul>
+                            <li><strong>Hermitian Matrix:</strong> एक जटिल आव्यूह $A$ जिसके लिए $A^H = A$ हो। इसके मुख्य विकर्ण (main diagonal) के तत्व हमेशा वास्तविक (real) होते हैं।</li>
+                            <li><strong>Skew-Hermitian Matrix:</strong> जिसके लिए $A^H = -A$ हो। विकर्ण तत्व या तो शून्य होते हैं या शुद्ध काल्पनिक (purely imaginary)।</li>
+                            <li><strong>Unitary Matrix:</strong> $U^H U = I$ (यानी $U^{-1} = U^H$)।</li>
+                            <li><strong>Orthogonal Matrix:</strong> वास्तविक आव्यूह $Q$ जिसके लिए $Q^T Q = I$ (यानी $Q^{-1} = Q^T$)।</li>
+                            <li><strong>Idempotent Matrix:</strong> $A^2 = A$।</li>
+                            <li><strong>Involutory Matrix:</strong> $A^2 = I$।</li>
+                            <li><strong>Nilpotent Matrix:</strong> $A^k = 0$ किसी धनात्मक पूर्णांक $k$ के लिए।</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.2 Rank & Echelon Forms -->
+        <section class="page-section" id="sec12">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.2 Matrix Rank and Row Echelon Forms</h2>
+                    <p>The rank of a matrix is a fundamental structural invariant reflecting the maximum number of linearly independent row or column vectors.</p>
+
+                    <div class="definition">
+                        <div class="card-title">Row Echelon Form (REF) &amp; Reduced Row Echelon Form (RREF)</div>
+                        A matrix is in <strong>Row Echelon Form (REF)</strong> if:
+                        <ol>
+                            <li>All non-zero rows are above any rows of all zeros.</li>
+                            <li>The leading entry (pivot) of a non-zero row is strictly to the right of the pivot entry of the row above it.</li>
+                        </ol>
+                        It is in <strong>Reduced Row Echelon Form (RREF)</strong> if additionally:
+                        <ol start="3">
+                            <li>The leading entry in each non-zero row is equal to $1$.</li>
+                            <li>Each column containing a leading $1$ has zeros everywhere else in that column.</li>
+                        </ol>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 1.2: Rank Definition via Echelon Form</div>
+                        The <strong>rank</strong> of a matrix $A$, denoted $\text{rank}(A)$ or $
+ho(A)$, equals the number of non-zero rows (or number of pivot columns) in its row echelon form.
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.2 आव्यूह की कोटि और रो एकलोन फॉर्म (Matrix Rank and Row Echelon Forms)</h2>
+                    <p>Matrix का <strong>Rank</strong> $
+ho(A)$ उसके स्वतंत्र पंक्तियों या स्तंभों की अधिकतम संख्या को दर्शाता है। Elementary Row Operations से इसे Row Echelon Form (REF) में बदला जाता है।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.3 Normal Form & PAQ -->
+        <section class="page-section" id="sec13">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.3 Normal Form and PAQ Canonical Reduction</h2>
+                    <p>By applying both elementary row operations and elementary column operations, any matrix $A \in M_{m \times n}(F)$ of rank $r$ can be reduced to its canonical <strong>Normal Form</strong>:</p>
+
+                    <!-- FIGURE 1.1 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 1.1: PAQ Canonical Reduction Pipeline</div>
+                        <svg class="book-fig" viewBox="0 0 560 160" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="30" width="110" height="100" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="75" y="70" font-family="DM Sans" font-size="13" fill="#E8B84B" text-anchor="middle" font-weight="bold">Matrix A</text>
+                            <text x="75" y="95" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">m × n (Rank r)</text>
+
+                            <path d="M 140 80 L 190 80" stroke="#C8922A" stroke-width="3" marker-end="url(#arrow)"/>
+                            <text x="165" y="70" font-family="DM Sans" font-size="9" fill="#1B2A4A" text-anchor="middle" font-weight="bold">ERO + ECO</text>
+
+                            <rect x="200" y="30" width="160" height="100" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="280" y="65" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">Normal Form</text>
+                            <text x="280" y="90" font-family="Source Serif 4" font-size="11" fill="#fff" text-anchor="middle">[ I_r | 0 ] / [ 0 | 0 ]</text>
+
+                            <path d="M 370 80 L 410 80" stroke="#C8922A" stroke-width="3"/>
+
+                            <rect x="420" y="30" width="120" height="100" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="480" y="65" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">PAQ = Normal</text>
+                            <text x="480" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">P, Q Invertible</text>
+                        </svg>
+                        <div class="figure-caption">Equivalence transformation PAQ reducing matrix A to identity block structure where P records EROs and Q records ECOs.</div>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 1.3: PAQ Theorem</div>
+                        For any matrix $A_{m \times n}$ of rank $r$, there exist non-singular matrices $P_{m \times m}$ and $Q_{n \times n}$ such that:
+                        $$ P A Q = egin{bmatrix} I_r & 0 \ 0 & 0 \end{bmatrix} $$
+                        where $P$ is the product of elementary row matrices and $Q$ is the product of elementary column matrices.
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.3 सामान्य रूप और PAQ कैनोनिकल रिडक्शन (Normal Form and PAQ)</h2>
+                    <p>प्रारंभिक पंक्ति (ERO) और स्तंभ (ECO) संक्रियाओं द्वारा आव्यूह $A$ को <strong>Normal Form</strong> $egin{bmatrix} I_r & 0 \ 0 & 0 \end{bmatrix}$ में बदला जाता है, जहाँ $P A Q = \text{Normal Form}$।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.4 Inverse -->
+        <section class="page-section" id="sec14">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.4 Inverse of Matrix via Elementary Operations</h2>
+                    <p>Gauss-Jordan inversion computes the inverse $A^{-1}$ of an $n \times n$ non-singular matrix by augmenting with the identity matrix $[A \mid I_n]$ and performing EROs until $[I_n \mid A^{-1}]$ is obtained.</p>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.4 प्रारंभिक संक्रियाओं द्वारा व्युत्क्रम (Inverse via Elementary Operations)</h2>
+                    <p>Gauss-Jordan विधि द्वारा संवर्धित आव्यूह $[A \mid I_n]$ को EROs द्वारा $[I_n \mid A^{-1}]$ में बदला जाता है।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.5 Systems of Equations -->
+        <section class="page-section" id="sec15">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.5 Systems of Linear Equations</h2>
+                    <p>A linear system of $m$ equations in $n$ unknowns $AX = B$ is analyzed using the augmented matrix $[A \mid B]$.</p>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 1.4: Rouché-Capelli Theorem</div>
+                        1. A system $AX = B$ is <strong>consistent</strong> (has at least one solution) if and only if:
+                        $$ \text{rank}(A) = \text{rank}([A \mid B]) = r $$
+                        2. If consistent:
+                        <ul>
+                            <li>If $r = n$ (number of unknowns), the system has a <strong>unique solution</strong>.</li>
+                            <li>If $r < n$, the system has <strong>infinitely many solutions</strong> with $n - r$ free parameters.</li>
+                        </ul>
+                        3. If $\text{rank}(A) 
+eq \text{rank}([A \mid B])$, the system is <strong>inconsistent</strong> (no solution).
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.5 रेखीय समीकरणों के निकाय (Systems of Linear Equations)</h2>
+                    <p>Rouché-Capelli प्रमेय के अनुसार $AX = B$ संगत (consistent) होगा यदि और केवल यदि $\text{rank}(A) = \text{rank}([A \mid B])$।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.6 LU Decomposition -->
+        <section class="page-section" id="sec16">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.6 LU Decomposition and Applications</h2>
+                    <p>LU decomposition factors a square matrix $A$ into the product of a unit lower triangular matrix $L$ and an upper triangular matrix $U$ ($A = LU$).</p>
+
+                    <!-- FIGURE 1.2 -->
+                    <div class="figure-box">
+                        <div class="figure-title">Figure 1.2: LU Factorization &amp; Triangular System Solving</div>
+                        <svg class="book-fig" viewBox="0 0 540 160" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="20" y="30" width="110" height="100" rx="8" fill="#1B2A4A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="75" y="65" font-family="DM Sans" font-size="12" fill="#E8B84B" text-anchor="middle" font-weight="bold">System AX = B</text>
+                            <text x="75" y="90" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Factor A = LU</text>
+
+                            <path d="M 140 80 L 180 80" stroke="#C8922A" stroke-width="3"/>
+
+                            <rect x="190" y="30" width="140" height="100" rx="8" fill="#2E4270" stroke="#C8922A" stroke-width="2"/>
+                            <text x="260" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 1: Forward</text>
+                            <text x="260" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Solve L Y = B</text>
+                            <text x="260" y="105" font-family="Source Serif 4" font-size="9" fill="#E8B84B" text-anchor="middle">Forward Substitution</text>
+
+                            <path d="M 340 80 L 380 80" stroke="#C8922A" stroke-width="3"/>
+
+                            <rect x="390" y="30" width="130" height="100" rx="8" fill="#3D6B5A" stroke="#C8922A" stroke-width="2"/>
+                            <text x="455" y="60" font-family="DM Sans" font-size="11" fill="#E8B84B" text-anchor="middle" font-weight="bold">Step 2: Back</text>
+                            <text x="455" y="85" font-family="Source Serif 4" font-size="10" fill="#fff" text-anchor="middle">Solve U X = Y</text>
+                            <text x="455" y="105" font-family="Source Serif 4" font-size="9" fill="#E8B84B" text-anchor="middle">Back Substitution</text>
+                        </svg>
+                        <div class="figure-caption">Solving AX = B via LU decomposition through forward substitution LY = B followed by back substitution UX = Y.</div>
+                    </div>
+
+                    <div class="formula-box" style="background:#F0F4F8; border-left:4px solid var(--sky); padding:16px;">
+                        <div class="card-title">Doolittle vs Crout LU Formats</div>
+                        <ul>
+                            <li><strong>Doolittle Algorithm:</strong> $L$ has 1s on diagonal ($l_{ii} = 1$).</li>
+                            <li><strong>Crout Algorithm:</strong> $U$ has 1s on diagonal ($u_{ii} = 1$).</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.6 LU विखंडन और अनुप्रयोग (LU Decomposition)</h2>
+                    <p>आव्यूह $A$ का विखंडन $A = LU$ (Lower Triangular $L$ और Upper Triangular $U$) के रूप में करके समीकरण $AX=B$ को दो सरल अंतरालों में हल किया जाता है: $LY = B$ और $UX = Y$।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.7 Solved Numerical Examples -->
+        <section class="page-section" id="sec17">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>1.7 Solved Multiline Numerical Examples</h2>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.7.1: PAQ Normal Form Reduction</div>
+                        <p><strong>Problem:</strong> Reduce the matrix $A = egin{bmatrix} 1 & 1 & 2 \ 2 & 3 & 5 \ 3 & 4 & 7 \end{bmatrix}$ to Normal Form and find non-singular matrices $P$ and $Q$ such that $PAQ = egin{bmatrix} I_r & 0 \ 0 & 0 \end{bmatrix}$.</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        <p><strong>Step 1: Write $A = I_3 A I_3$:</strong></p>
+                        $$ egin{bmatrix} 1 & 1 & 2 \ 2 & 3 & 5 \ 3 & 4 & 7 \end{bmatrix} = egin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 1 \end{bmatrix} A egin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 1 \end{bmatrix} $$
+                        <p><strong>Step 2: Apply EROs ($R_2 \to R_2 - 2R_1, R_3 \to R_3 - 3R_1$):</strong></p>
+                        $$ egin{bmatrix} 1 & 1 & 2 \ 0 & 1 & 1 \ 0 & 1 & 1 \end{bmatrix} = egin{bmatrix} 1 & 0 & 0 \ -2 & 1 & 0 \ -3 & 0 & 1 \end{bmatrix} A egin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 1 \end{bmatrix} $$
+                        <p><strong>Step 3: Apply ERO ($R_3 \to R_3 - R_2$):</strong></p>
+                        $$ egin{bmatrix} 1 & 1 & 2 \ 0 & 1 & 1 \ 0 & 0 & 0 \end{bmatrix} = egin{bmatrix} 1 & 0 & 0 \ -2 & 1 & 0 \ -1 & -1 & 1 \end{bmatrix} A egin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 1 \end{bmatrix} $$
+                        <p><strong>Step 4: Apply ECOs ($C_2 \to C_2 - C_1, C_3 \to C_3 - 2C_1$):</strong></p>
+                        $$ egin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 1 \ 0 & 0 & 0 \end{bmatrix} = egin{bmatrix} 1 & 0 & 0 \ -2 & 1 & 0 \ -1 & -1 & 1 \end{bmatrix} A egin{bmatrix} 1 & -1 & -2 \ 0 & 1 & 0 \ 0 & 0 & 1 \end{bmatrix} $$
+                        <p><strong>Step 5: Apply ECO ($C_3 \to C_3 - C_2$):</strong></p>
+                        $$ egin{bmatrix} 1 & 0 & 0 \ 0 & 1 & 0 \ 0 & 0 & 0 \end{bmatrix} = egin{bmatrix} 1 & 0 & 0 \ -2 & 1 & 0 \ -1 & -1 & 1 \end{bmatrix} A egin{bmatrix} 1 & -1 & -1 \ 0 & 1 & -1 \ 0 & 0 & 1 \end{bmatrix} $$
+                        <p>Conclusion: Normal Form is $egin{bmatrix} I_2 & 0 \ 0 & 0 \end{bmatrix}$, Rank $r = 2$, with $P = egin{bmatrix} 1 & 0 & 0 \ -2 & 1 & 0 \ -1 & -1 & 1 \end{bmatrix}$ and $Q = egin{bmatrix} 1 & -1 & -1 \ 0 & 1 & -1 \ 0 & 0 & 1 \end{bmatrix}$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 1.7.2: Doolittle LU Decomposition</div>
+                        <p><strong>Problem:</strong> Find the LU decomposition ($A = LU$) using Doolittle's method for $A = egin{bmatrix} 2 & 1 & 1 \ 4 & 3 & 3 \ 8 & 7 & 9 \end{bmatrix}$ and solve $AX = egin{bmatrix} 4 \ 10 \ 26 \end{bmatrix}$.</p>
+                        <p><strong>Step-by-Step Solution:</strong></p>
+                        <p>Set $L = egin{bmatrix} 1 & 0 & 0 \ l_{21} & 1 & 0 \ l_{31} & l_{32} & 1 \end{bmatrix}$ and $U = egin{bmatrix} u_{11} & u_{12} & u_{13} \ 0 & u_{22} & u_{23} \ 0 & 0 & u_{33} \end{bmatrix}$.</p>
+                        $$ u_{11}=2, u_{12}=1, u_{13}=1 $$
+                        $$ l_{21} = 4/2 = 2, \quad l_{31} = 8/2 = 4 $$
+                        $$ u_{22} = 3 - (2)(1) = 1, \quad u_{23} = 3 - (2)(1) = 1 $$
+                        $$ l_{32} = (7 - 4(1))/1 = 3 $$
+                        $$ u_{33} = 9 - (4(1) + 3(1)) = 2 $$
+                        $$ L = egin{bmatrix} 1 & 0 & 0 \ 2 & 1 & 0 \ 4 & 3 & 1 \end{bmatrix}, \quad U = egin{bmatrix} 2 & 1 & 1 \ 0 & 1 & 1 \ 0 & 0 & 2 \end{bmatrix} $$
+                        <p>Forward Substitution $LY = B \implies Y = egin{bmatrix} 4 \ 2 \ 4 \end{bmatrix}$. Back Substitution $UX = Y \implies X = egin{bmatrix} 1 \ 0 \ 2 \end{bmatrix}$.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>1.7 हल किए गए बहु-पंक्ति संख्यात्मक उदाहरण</h2>
+                    <p>PAQ Normal Form और Doolittle LU Decomposition के चरण-दर-चरण गणितीय हल।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1.8 EXERCISE BANK -->
+        <section class="page-section" id="sec18">
+            <div class="section-card">
+                <h2>1.8 Chapter End Exercises and Self-Assessment Bank</h2>
+
+                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
+                <div class="question"><strong>Q1.</strong> A complex square matrix $A$ is Hermitian if:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq11" value="a"> (a) $A^T = A$</label>
+                    <label><input type="radio" name="mcq11" value="b"> (b) $A^H = A$</label>
+                    <label><input type="radio" name="mcq11" value="c"> (c) $A^H = -A$</label>
+                    <label><input type="radio" name="mcq11" value="d"> (d) $A^H A = I$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq11_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq11_ans"><strong>Correct Answer: (b)</strong> — Hermitian matrix satisfies $A^H = A$.</div>
+
+                <div class="question"><strong>Q2.</strong> The diagonal entries of a Skew-Hermitian matrix must be:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq12" value="a"> (a) Real numbers only</label>
+                    <label><input type="radio" name="mcq12" value="b"> (b) Purely imaginary or zero</label>
+                    <label><input type="radio" name="mcq12" value="c"> (c) Strictly positive</label>
+                    <label><input type="radio" name="mcq12" value="d"> (d) Equal to 1</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq12_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq12_ans"><strong>Correct Answer: (b)</strong> — Skew-Hermitian diagonal elements satisfy $a_{ii} = -\overline{a_{ii}} \implies \text{Re}(a_{ii}) = 0$.</div>
+
+                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
+                <div class="question"><strong>FIB 1.</strong> A matrix $A$ satisfying $A^2 = A$ is called ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib11_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib11_ans"><strong>Answer: Idempotent</strong> — Idempotent matrices satisfy $A^2 = A$.</div>
+
+                <h3>Part C: True / False Statements (20 Questions)</h3>
+                <div class="question"><strong>TF 1.</strong> The determinant of an orthogonal matrix is always $\pm 1$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf11_ans"><strong>Answer: True</strong> — Since $Q^T Q = I \implies \det(Q)^2 = 1 \implies \det(Q) = \pm 1$.</div>
+
+                <h3>Part D: Matching Type Questions</h3>
+                <div class="question"><strong>Matching Set 1: Special Matrices</strong><br>1. Unitary &nbsp;&nbsp; 2. Orthogonal &nbsp;&nbsp; 3. Idempotent &nbsp;&nbsp; 4. Nilpotent</div>
+                <button class="toggle-btn" onclick="toggleAnswer('match11_ans')">Show Answer ▼</button>
+                <div class="answer" id="match11_ans">1-$U^H U = I$, 2-$Q^T Q = I$, 3-$A^2 = A$, 4-$A^k = 0$.</div>
+
+                <h3>Part E: Subjective Questions</h3>
+                <div class="question"><strong>Q1.</strong> State and prove the Rouché-Capelli Theorem for consistency of $AX = B$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub11_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub11_ans">A system $AX = B$ is consistent iff $\text{rank}(A) = \text{rank}([A \mid B])$. If rank $r = n$ (unknowns), unique solution; if $r < n$, infinitely many solutions.</div>
+            </div>
+        </section>
+
+        <!-- 1.9 Summary -->
+        <section class="page-section" id="sec19">
+            <div class="section-card">
+                <h2>1.9 Summary &amp; References</h2>
+                <p>Unit I provides linear algebraic foundations for matrix structures, rank reduction via EROs/ECOs, Normal Form PAQ factorizations, linear system consistency via Rouché-Capelli Theorem, and LU matrix decompositions.</p>
+                <h3>References</h3>
+                <ul>
+                    <li>Strang, Gilbert. <em>Linear Algebra and Its Applications</em>. 4th ed., Cengage Learning.</li>
+                    <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
+                    <li>Anton, Howard and Rorres, Chris. <em>Elementary Linear Algebra with Applications</em>. Wiley.</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer class="book-footer">
+            <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
+        </footer>
+    </main>
+
+    <script>
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+            const target = document.getElementById(id);
+            if (target) target.classList.add('active');
+
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const clicked = document.querySelector(`[onclick*="'${id}'"]`);
+            if (clicked) clicked.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+        }
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            if (el.classList.contains('show') || el.style.display === 'block') {
+                el.classList.remove('show');
+                el.style.display = 'none';
+            } else {
+                el.classList.add('show');
+                el.style.display = 'block';
+            }
+        }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
+            } else {
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
+            }
+        }
+    </script>
+    <script src="../whiteboard/whiteboard.js?v=2.0"></script>
+    <script src="../calculator/calculator.js?v=1.0"></script>
+</body>
+</html>

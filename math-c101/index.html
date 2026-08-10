@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATH-C101: Linear Algebra and Matrix Theory | Course Manual</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --navy: #1B2A4A;
+            --navy-mid: #243555;
+            --navy-light: #2E4270;
+            --gold: #C8922A;
+            --gold-light: #E8B84B;
+            --gold-pale: #FDF3DC;
+            --sage: #3D6B5A;
+            --sage-light: #EEF6F2;
+            --sky: #1D6FA4;
+            --sky-light: #EAF4FB;
+            --paper: #F5F3EE;
+            --border: #DDD8CF;
+            --text-dark: #1C1C1E;
+            --text-soft: #6B6B70;
+            --shadow-sm: 0 2px 8px rgba(27,42,74,.08);
+            --shadow-md: 0 4px 20px rgba(27,42,74,.12);
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--paper);
+            color: var(--text-dark);
+            line-height: 1.7;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #111B30 0%, #1B2A4A 50%, #2E4270 100%);
+            color: #fff;
+            padding: 50px 30px 40px;
+            text-align: center;
+            border-bottom: 4px solid var(--gold);
+            position: relative;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.3);
+        }
+
+        header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        header .subtitle {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .meta-badge {
+            background: rgba(200,146,42,0.2);
+            border: 1px solid rgba(232,184,75,0.4);
+            color: #E8B84B;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 20px;
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 24px 60px;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin: 32px 0;
+        }
+
+        .unit-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 28px 24px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+            border-top: 4px solid var(--navy);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .unit-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-top-color: var(--gold);
+        }
+
+        .unit-num {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .unit-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.35rem;
+            color: var(--navy);
+            margin-bottom: 12px;
+        }
+
+        .unit-card p {
+            font-size: 0.92rem;
+            color: var(--text-soft);
+            margin-bottom: 20px;
+            flex: 1;
+        }
+
+        .btn-open {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--navy);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .unit-card:hover .btn-open {
+            color: var(--gold);
+        }
+
+        .info-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
+        }
+
+        .info-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            color: var(--navy);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--gold-pale);
+            padding-bottom: 8px;
+        }
+
+        .info-section ul {
+            margin-left: 20px;
+            margin-bottom: 16px;
+        }
+
+        .info-section li {
+            margin-bottom: 8px;
+            color: var(--text-dark);
+        }
+
+        .references-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+
+        .references-table th, .references-table td {
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        .references-table th {
+            background: var(--navy);
+            color: #fff;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .book-footer {
+            position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
+            width: 100% !important; z-index: 1000 !important; background: #1B2A4A !important;
+            color: rgba(255,255,255,0.95) !important; text-align: center !important;
+            padding: 8px 16px !important; margin: 0 !important; border-radius: 0 !important;
+            border-top: 1px solid rgba(255,255,255,0.15) !important; box-shadow: 0 -2px 10px rgba(0,0,0,0.25) !important;
+            font-family: 'DM Sans', sans-serif !important; font-size: 0.82rem !important; line-height: 1.4 !important;
+        }
+        .book-footer p { margin: 0 !important; padding: 0 !important; color: rgba(255,255,255,0.9) !important; }
+        .book-footer strong { color: #E2B859 !important; font-weight: 600 !important; }
+        body { padding-bottom: 50px !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>MATH-C101: Linear Algebra and Matrix Theory</h1>
+        <div class="subtitle">Core Course Manual · B.Sc. Physical Science</div>
+        <div class="header-meta">
+            <span class="meta-badge">4 Credits (4+0)</span>
+            <span class="meta-badge">Duration: 4 Months</span>
+            <span class="meta-badge">Prof. O.P. Sheoran</span>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- COURSE OBJECTIVES & OUTCOMES -->
+        <div class="info-section">
+            <h2>Course Objectives &amp; Learning Outcomes</h2>
+            <p><strong>Course Objectives:</strong></p>
+            <ul>
+                <li>To familiarize students with vector spaces, subspaces, and linear transformations.</li>
+                <li>To develop high competence in matrix operations, rank reduction, canonical forms, and systems of linear equations.</li>
+                <li>To establish the explicit relationship between linear transformations and their matrix representations.</li>
+                <li>To introduce eigenvalue problems, diagonalizability criteria, and quadratic forms with physical science applications.</li>
+            </ul>
+
+            <p><strong>Learning Outcomes:</strong> Upon successful completion of this course, students will be able to:</p>
+            <ul>
+                <li>Identify, construct, and analyze vector spaces, subspaces, quotient spaces, bases, and dimensions.</li>
+                <li>Perform advanced matrix reductions (Row Echelon, Normal PAQ form, LU Decomposition).</li>
+                <li>Analyze and solve linear systems using Rouché-Capelli consistency criteria and matrix factorizations.</li>
+                <li>Compute eigenvalues, eigenvectors, characteristic polynomials, and apply the Cayley-Hamilton Theorem.</li>
+                <li>Diagonalize matrices and classify real quadratic forms using Sylvester's Law of Inertia.</li>
+                <li>Construct matrix representations of linear transformations, verify the Rank-Nullity Theorem, and analyze vector space isomorphisms.</li>
+            </ul>
+        </div>
+
+        <!-- UNITS GRID -->
+        <h2 style="font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--navy); margin-bottom: 16px;">Course Units</h2>
+        <div class="card-grid">
+
+            <a href="Unit-I.html" class="unit-card">
+                <div class="unit-num">Unit 1</div>
+                <h3>Matrices and Systems of Equations</h3>
+                <p>Special matrices (Hermitian, Unitary, Orthogonal, Idempotent, Nilpotent), Matrix Rank, Echelon Forms, Normal PAQ Form, Inversion, Systems of Equations, and LU Decomposition.</p>
+                <div class="btn-open">Study Unit 1 <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="Unit-II.html" class="unit-card">
+                <div class="unit-num">Unit 2</div>
+                <h3>Eigenvalues and Eigenvectors</h3>
+                <p>Characteristic polynomial, Cayley-Hamilton Theorem, Minimal Polynomial, Algebraic vs Geometric Multiplicity, Matrix Diagonalization, and Quadratic Forms classification.</p>
+                <div class="btn-open">Study Unit 2 <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="Unit-III.html" class="unit-card">
+                <div class="unit-num">Unit 3</div>
+                <h3>Vector Spaces</h3>
+                <p>Groups &amp; Fields, Vector Spaces, Subspaces, Quotient Spaces V/W, Linear Independence &amp; Dependence, Linear Span, Basis, and Dimension theorems.</p>
+                <div class="btn-open">Study Unit 3 <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+            <a href="Unit-IV.html" class="unit-card">
+                <div class="unit-num">Unit 4</div>
+                <h3>Linear Transformations</h3>
+                <p>Linear Mappings, Kernel &amp; Range, Rank-Nullity Theorem, Matrix Representation, Change of Basis Matrix, Inverse Transformations, and Vector Space Isomorphisms.</p>
+                <div class="btn-open">Study Unit 4 <i class="fas fa-arrow-right"></i></div>
+            </a>
+
+        </div>
+
+        <!-- REFERENCES TABLE -->
+        <div class="info-section">
+            <h2>Suggested Textbooks &amp; References</h2>
+            <table class="references-table">
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Title</th>
+                        <th>Authors</th>
+                        <th>Publisher</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>Linear Algebra and Its Applications</td><td>Gilbert Strang</td><td>Cengage Learning</td></tr>
+                    <tr><td>2</td><td>Linear Algebra</td><td>Friedberg, Insel, and Spence</td><td>Pearson</td></tr>
+                    <tr><td>3</td><td>Linear Algebra Done Right</td><td>Sheldon Axler</td><td>Springer</td></tr>
+                    <tr><td>4</td><td>Elementary Linear Algebra with Applications</td><td>Howard Anton and Chris Rorres</td><td>John Wiley &amp; Sons</td></tr>
+                    <tr><td>5</td><td>Matrix Analysis and Applied Linear Algebra</td><td>Carl D. Meyer</td><td>SIAM</td></tr>
+                    <tr><td>6</td><td>Linear Algebra</td><td>Vivek Sahai and Vikas Bist</td><td>Narosa</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+    </main>
+
+    <footer class="book-footer">
+        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p>
+    </footer>
+
+</body>
+</html>
