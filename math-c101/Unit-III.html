@@ -1629,15 +1629,22 @@
         function showSection(id) {
             document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
             const target = document.getElementById(id);
-            if (target) target.classList.add('active');
+            if (target) {
+                target.classList.add('active');
+            }
 
             document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            const clicked = document.querySelector(`[onclick*="'${id}'"]`);
-            if (clicked) clicked.classList.add('active');
+            try {
+                if (window.event && window.event.target) {
+                    const link = window.event.target.closest('.nav-link');
+                    if (link) link.classList.add('active');
+                }
+            } catch (e) {}
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
             if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
+                const sb = document.getElementById('sidebar');
+                if (sb) sb.classList.remove('open');
             }
         }
         function toggleAnswer(id) {
