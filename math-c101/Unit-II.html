@@ -252,6 +252,14 @@
         .answer.show { display: block; }
         .answer strong { font-weight: 700; color: var(--navy); }
 
+        .matching-table {
+            width: 100%; border-collapse: collapse; margin: 14px 0;
+        }
+        .matching-table th, .matching-table td {
+            border: 1px solid var(--border); padding: 10px 14px; text-align: left; font-size: 0.95rem;
+        }
+        .matching-table th { background: var(--navy); color: #fff; font-family: 'DM Sans', sans-serif; }
+
         .book-footer {
             position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important;
             width: 100% !important; z-index: 1000 !important; background: #1B2A4A !important;
@@ -325,7 +333,7 @@
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">❓</span> Multiple Choice (20)</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">✏️</span> Fill in Blanks (20)</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">✅</span> True / False (20)</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">🧩</span> Matching Sets (5)</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">🧩</span> Matching Sets (6)</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec28'); return false;"><span class="nav-num">📝</span> Subjective Qs (10)</a></li>
         </ul>
 
@@ -349,60 +357,155 @@
             <div class="chap-sub">Characteristic polynomial, Cayley-Hamilton Theorem, Minimal Polynomial, AM vs GM Multiplicities, Matrix Diagonalization $P^{-1}AP=D$, and Quadratic Form Canonical Reduction</div>
         </div>
 
-        <!-- 2.1 Definitions -->
+        <!-- 2.1 Eigenvalues and Eigenvectors -->
         <section class="page-section active" id="sec21">
             <div class="section-card">
                 <div class="english-content">
                     <h2>2.1 Eigenvalues and Eigenvectors</h2>
-                    <p>In linear algebra, when a square matrix multiplies a vector, the vector usually changes both its magnitude and its direction. But for some special vectors, the direction does not change at all. Only the length changes by a scalar factor. These special vectors are called eigenvectors, and the scaling numbers are called eigenvalues.</p>
+                    <p>In linear algebra, when a square matrix multiplies a non-zero vector, the vector usually changes both its direction and length. But for certain special vectors, multiplication by matrix $A$ only changes the length by a scalar factor $\lambda$. These vectors are called eigenvectors and $\lambda$ is called an eigenvalue.</p>
 
                     <div class="definition">
                         <div class="card-title">Eigenvalue and Eigenvector Definition</div>
-                        Let $A$ be a square matrix of order $n$. A non-zero column vector $x$ is called an <strong>eigenvector</strong> of matrix $A$ if:
+                        Let matrix $A$ be a square matrix of order $n$. A non-zero column vector $x$ is called an <strong>eigenvector</strong> of matrix $A$ if:
                         $$ A x = \lambda x $$
-                        where $\lambda$ is a scalar number called the <strong>eigenvalue</strong> of matrix $A$ corresponding to vector $x$.
+                        where scalar $\lambda$ is called the <strong>eigenvalue</strong> of matrix $A$ corresponding to vector $x$.
                     </div>
 
                     <div class="theorem">
-                        <div class="card-title">Characteristic Polynomial and Characteristic Equation</div>
-                        The equation $(A - \lambda I)x = 0$ has a non-zero solution vector $x$ if and only if the determinant is zero:
+                        <div class="card-title">Characteristic Polynomial and Equation</div>
+                        Equation $(A - \lambda I)x = 0$ has a non-zero solution vector $x$ if and only if determinant is zero:
                         $$ p(\lambda) = \det(A - \lambda I) = 0 $$
-                        This polynomial $p(\lambda)$ is called the <strong>characteristic polynomial</strong> of matrix $A$, and $\det(A - \lambda I) = 0$ is called the <strong>characteristic equation</strong> of matrix $A$.
+                        $p(\lambda)$ is called the <strong>characteristic polynomial</strong> of matrix $A$, and $\det(A - \lambda I) = 0$ is called the <strong>characteristic equation</strong> of matrix $A$.
                     </div>
 
                     <h3>Solved Examples for Section 2.1</h3>
 
                     <div class="example">
-                        <div class="card-title">Example 2.1.1: Finding Eigenvalues and Eigenvectors of a 2x2 Matrix</div>
+                        <div class="card-title">Example 2.1.1: Eigenvalues and Eigenvectors of a 2x2 Matrix</div>
                         <p><strong>Question:</strong> Find the eigenvalues and eigenvectors of matrix $A = \begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
                         <p>Step 1: Write characteristic equation $\det(A - \lambda I) = 0$:</p>
-                        $$ \begin{vmatrix} 4-\lambda & 1 \\ 2 & 3-\lambda \end{vmatrix} = 0 \implies (4-\lambda)(3-\lambda) - (1)(2) = 0 $$
-                        $$ \lambda^2 - 7\lambda + 12 - 2 = 0 \implies \lambda^2 - 7\lambda + 10 = 0 \implies (\lambda-5)(\lambda-2) = 0 $$
-                        <p>The eigenvalues of matrix $A$ are $\lambda_1 = 5$ and $\lambda_2 = 2$.</p>
+                        $$ (4-\lambda)(3-\lambda) - 2 = 0 $$
+                        $$ \lambda^2 - 7\lambda + 10 = 0 $$
+                        $$ (\lambda - 5)(\lambda - 2) = 0 $$
+                        <p>Eigenvalues are $\lambda_1 = 5$ and $\lambda_2 = 2$.</p>
 
                         <p>Step 2: Find eigenvector for $\lambda_1 = 5$ by solving $(A - 5I)x = 0$:</p>
-                        $$ \begin{bmatrix} 4-5 & 1 \\ 2 & 3-5 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \implies \begin{bmatrix} -1 & 1 \\ 2 & -2 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} $$
-                        <p>$-x_1 + x_2 = 0 \implies x_1 = x_2$. Taking $x_2 = 1$, eigenvector $x^{(1)} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$.</p>
+                        $$ \begin{bmatrix} -1 & 1 \\ 2 & -2 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} $$
+                        $$ -x_1 + x_2 = 0 \implies x_1 = x_2 $$
+                        <p>Taking $x_2 = 1$, eigenvector $x^{(1)} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$.</p>
 
                         <p>Step 3: Find eigenvector for $\lambda_2 = 2$ by solving $(A - 2I)x = 0$:</p>
-                        $$ \begin{bmatrix} 4-2 & 1 \\ 2 & 3-2 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} \implies \begin{bmatrix} 2 & 1 \\ 2 & 1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} $$
-                        <p>$2x_1 + x_2 = 0 \implies x_2 = -2x_1$. Taking $x_1 = 1$, eigenvector $x^{(2)} = \begin{bmatrix} 1 \\ -2 \end{bmatrix}$.</p>
+                        $$ \begin{bmatrix} 2 & 1 \\ 2 & 1 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix} $$
+                        $$ 2x_1 + x_2 = 0 \implies x_2 = -2x_1 $$
+                        <p>Taking $x_1 = 1$, eigenvector $x^{(2)} = \begin{bmatrix} 1 \\ -2 \end{bmatrix}$.</p>
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.1.2: Eigenvalues of a Triangular Matrix</div>
                         <p><strong>Question:</strong> Find the eigenvalues of matrix $A = \begin{bmatrix} 3 & 1 & 4 \\ 0 & 5 & 2 \\ 0 & 0 & -2 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Since matrix $A$ is an upper triangular matrix, its determinant $\det(A - \lambda I)$ is the product of its diagonal elements:</p>
+                        <p>Since matrix $A$ is upper triangular, its determinant $\det(A - \lambda I)$ is product of diagonal entries:</p>
                         $$ \det(A - \lambda I) = (3-\lambda)(5-\lambda)(-2-\lambda) = 0 $$
-                        <p>Thus, eigenvalues are $\lambda_1 = 3$, $\lambda_2 = 5$, and $\lambda_3 = -2$. For any triangular matrix, eigenvalues are simply its diagonal entries.</p>
+                        <p>Eigenvalues are $\lambda_1 = 3, \lambda_2 = 5, \lambda_3 = -2$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.1.3: Eigenvectors of a 3x3 Matrix</div>
+                        <p><strong>Question:</strong> Find eigenvalues and eigenvectors of matrix $A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 1 \\ 0 & 0 & 3 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Eigenvalues are diagonal entries $\lambda_1 = 1, \lambda_2 = 2, \lambda_3 = 3$.</p>
+                        <p>Step 2: For $\lambda_1 = 1$, solve $(A - I)x = 0 \implies x^{(1)} = \begin{bmatrix} 1 \\ 0 \\ 0 \end{bmatrix}$.</p>
+                        <p>Step 3: For $\lambda_2 = 2$, solve $(A - 2I)x = 0 \implies x^{(2)} = \begin{bmatrix} 0 \\ 1 \\ 0 \end{bmatrix}$.</p>
+                        <p>Step 4: For $\lambda_3 = 3$, solve $(A - 3I)x = 0 \implies x^{(3)} = \begin{bmatrix} 0 \\ 1 \\ 1 \end{bmatrix}$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.1.4: Eigenvalues of a Symmetric 2x2 Matrix</div>
+                        <p><strong>Question:</strong> Find the eigenvalues and eigenvectors of symmetric matrix $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Characteristic equation $\det(A - \lambda I) = (2-\lambda)^2 - 1 = 0 \implies \lambda^2 - 4\lambda + 3 = 0 \implies (\lambda-3)(\lambda-1) = 0$. Eigenvalues $\lambda_1 = 3, \lambda_2 = 1$.</p>
+                        <p>Step 2: For $\lambda_1 = 3$: $(A - 3I)x = 0 \implies -x_1 + x_2 = 0 \implies x^{(1)} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}$.</p>
+                        <p>Step 3: For $\lambda_2 = 1$: $(A - I)x = 0 \implies x_1 + x_2 = 0 \implies x^{(2)} = \begin{bmatrix} 1 \\ -1 \end{bmatrix}$.</p>
+                        <p>Notice eigenvectors $x^{(1)}$ and $x^{(2)}$ are orthogonal: $1(1) + 1(-1) = 0$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.1.5: Complex Eigenvalues of a Skew-Symmetric Matrix</div>
+                        <p><strong>Question:</strong> Find the eigenvalues of matrix $A = \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic equation $\det(A - \lambda I) = \lambda^2 + 1 = 0 \implies \lambda = \pm i$.</p>
+                        <p>Eigenvalues are purely imaginary numbers $\lambda_1 = i$ and $\lambda_2 = -i$.</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2>2.1 आइगनमान और आइगनवेक्टर (Eigenvalues and Eigenvectors)</h2>
-                    <p>जब किसी वर्ग matrix $A$ को एक vector $x$ से गुणा करते हैं, और दिशा नहीं बदलती, केवल लंबाई scalar $\lambda$ से बदलती है: $Ax = \lambda x$, तो vector $x$ को Eigenvector और scalar $\lambda$ को Eigenvalue कहते हैं।</p>
+                    <p>$Ax = \lambda x$, vector $x$ को Eigenvector और scalar $\lambda$ को Eigenvalue कहते हैं।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.2 Algebraic Properties -->
+        <section class="page-section" id="sec22">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.2 Algebraic Properties of Eigenvalues</h2>
+                    <p>Eigenvalues possess important algebraic properties under matrix transposition, inversion, and powers.</p>
+
+                    <div class="note">
+                        <div class="card-title">Properties of Eigenvalues</div>
+                        <ul>
+                            <li>Sum of eigenvalues of matrix $A$ equals trace $\text{Tr}(A) = \sum a_{ii}$.</li>
+                            <li>Product of eigenvalues of matrix $A$ equals determinant $\det(A)$.</li>
+                            <li>Matrix $A$ and transpose $A^T$ have identical eigenvalues.</li>
+                            <li>If $\lambda$ is an eigenvalue of non-singular matrix $A$, then $1/\lambda$ is an eigenvalue of $A^{-1}$.</li>
+                            <li>If $\lambda$ is an eigenvalue of matrix $A$, then $\lambda^k$ is an eigenvalue of $A^k$.</li>
+                        </ul>
+                    </div>
+
+                    <h3>Solved Examples for Section 2.2</h3>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.2.1: Trace and Determinant Property Verification</div>
+                        <p><strong>Question:</strong> Verify that sum of eigenvalues equals trace and product equals determinant for matrix $A = \begin{bmatrix} 3 & 2 \\ 1 & 4 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic equation: $\lambda^2 - 7\lambda + 10 = 0 \implies \lambda_1 = 5, \lambda_2 = 2$.</p>
+                        <p>Sum $\lambda_1 + \lambda_2 = 7 = \text{Tr}(A) = 3 + 4 = 7$. Product $\lambda_1 \lambda_2 = 10 = \det(A) = 12 - 2 = 10$. Verified!</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.2.2: Eigenvalues of Matrix Inverse</div>
+                        <p><strong>Question:</strong> If matrix $A$ has eigenvalues $2$ and $5$, find eigenvalues of $A^{-1}$ and $A^3$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Eigenvalues of $A^{-1}$ are $1/2 = 0.5$ and $1/5 = 0.2$. Eigenvalues of $A^3$ are $2^3 = 8$ and $5^3 = 125$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.2.3: Eigenvalues of Polynomial in A</div>
+                        <p><strong>Question:</strong> If $\lambda$ is an eigenvalue of $A$, find eigenvalues of matrix $B = A^2 - 2A + 3I$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>By spectral mapping theorem, eigenvalue of $B$ is $\mu = \lambda^2 - 2\lambda + 3$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.2.4: Eigenvalues of Real Symmetric Matrix</div>
+                        <p><strong>Question:</strong> Prove that all eigenvalues of a real symmetric matrix $A$ are real numbers.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Let $A x = \lambda x$ with $x \neq 0$. Multiply by $\overline{x}^T$ on left: $\overline{x}^T A x = \lambda \overline{x}^T x$. Take conjugate transpose: $\overline{x}^T A x = \overline{\lambda} \overline{x}^T x$. Subtracting gives $(\lambda - \overline{\lambda})\overline{x}^T x = 0 \implies \lambda = \overline{\lambda} \implies \lambda$ is real.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.2.5: Zero Eigenvalue and Matrix Singularity</div>
+                        <p><strong>Question:</strong> Show that matrix $A$ is singular if and only if at least one eigenvalue of $A$ is zero.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Product of eigenvalues is $\det(A)$. Thus $\det(A) = 0 \iff$ at least one eigenvalue $\lambda_i = 0$.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.2 आइगनमान के बीजगणितीय गुण (Algebraic Properties)</h2>
+                    <p>$\sum \lambda_i = \text{Tr}(A)$ तथा $\prod \lambda_i = \det(A)$।</p>
                 </div>
             </div>
         </section>
@@ -414,52 +517,821 @@
                     <h2>2.3 Cayley-Hamilton Theorem</h2>
                     <div class="theorem">
                         <div class="card-title">Theorem 2.1: Cayley-Hamilton Theorem</div>
-                        <strong>Statement:</strong> Every square matrix $A$ satisfies its own characteristic equation. That is, if characteristic equation is $p(\lambda) = (-1)^n \lambda^n + c_{n-1} \lambda^{n-1} + \dots + c_0 = 0$, then:
-                        $$ p(A) = (-1)^n A^n + c_{n-1} A^{n-1} + \dots + c_0 I = 0 $$
+                        <strong>Statement:</strong> Every square matrix $A$ satisfies its own characteristic equation:
+                        $$ p(A) = c_n A^n + c_{n-1} A^{n-1} + \dots + c_0 I = 0 $$
 
                         <p><strong>Proof:</strong></p>
-                        <p>Step 1: Let $A$ be a square matrix of order $n$. The characteristic matrix is $(A - \lambda I)$. Its elements are polynomials in $\lambda$ of degree at most 1.</p>
-                        <p>Step 2: The adjugate matrix $B(\lambda) = \text{adj}(A - \lambda I)$ has entries which are cofactors of degree at most $n-1$. Therefore, matrix $B(\lambda)$ can be written as a polynomial in $\lambda$ with matrix coefficients:</p>
-                        $$ B(\lambda) = B_{n-1} \lambda^{n-1} + B_{n-2} \lambda^{n-2} + \dots + B_1 \lambda + B_0 $$
-                        <p>Step 3: We know the standard matrix property: $(A - \lambda I) \text{adj}(A - \lambda I) = \det(A - \lambda I) I$.</p>
-                        <p>Substitute $B(\lambda)$ and $p(\lambda) = c_n \lambda^n + c_{n-1} \lambda^{n-1} + \dots + c_0$:</p>
-                        $$ (A - \lambda I)(B_{n-1} \lambda^{n-1} + \dots + B_0) = (c_n \lambda^n + c_{n-1} \lambda^{n-1} + \dots + c_0) I $$
-                        <p>Step 4: Equating coefficients of powers of $\lambda$ on both sides:</p>
+                        <p>Step 1: Let $B(\lambda) = \text{adj}(A - \lambda I)$. $B(\lambda)$ is a polynomial in $\lambda$ of degree at most $n-1$ with matrix coefficients:</p>
+                        $$ B(\lambda) = B_{n-1} \lambda^{n-1} + \dots + B_1 \lambda + B_0 $$
+                        <p>Step 2: We know $(A - \lambda I) \text{adj}(A - \lambda I) = \det(A - \lambda I) I$. Substitute $B(\lambda)$ and characteristic polynomial $p(\lambda) = c_n \lambda^n + \dots + c_0$:</p>
+                        $$ (A - \lambda I)(B_{n-1} \lambda^{n-1} + \dots + B_0) = (c_n \lambda^n + \dots + c_0) I $$
+                        <p>Step 3: Equating coefficients of powers of $\lambda$ on both sides:</p>
                         $$ -B_{n-1} = c_n I $$
                         $$ A B_{n-1} - B_{n-2} = c_{n-1} I $$
                         $$ A B_{n-2} - B_{n-3} = c_{n-2} I $$
                         $$ \dots $$
                         $$ A B_0 = c_0 I $$
-                        <p>Step 5: Multiply first equation by $A^n$, second by $A^{n-1}$, and so on, then add all equations:</p>
-                        $$ -A^n B_{n-1} + A^n B_{n-1} - A^{n-1} B_{n-2} + \dots + A B_0 = c_n A^n + c_{n-1} A^{n-1} + \dots + c_0 I $$
-                        <p>Left side cancels out completely to 0. Thus:</p>
+                        <p>Step 4: Multiply first equation by $A^n$, second by $A^{n-1}$, and so on, then add all equations. Left side cancels completely to zero:</p>
                         $$ c_n A^n + c_{n-1} A^{n-1} + \dots + c_0 I = 0 $$
-                        <p>This proves Cayley-Hamilton Theorem. Proof complete.</p>
+                        <p>Thus $p(A) = 0$. Proof complete.</p>
                     </div>
 
                     <h3>Solved Examples for Section 2.3</h3>
 
                     <div class="example">
-                        <div class="card-title">Example 2.3.1: Verification of Cayley-Hamilton Theorem</div>
+                        <div class="card-title">Example 2.3.1: Verification of Cayley-Hamilton Theorem and Inverse</div>
                         <p><strong>Question:</strong> Verify Cayley-Hamilton Theorem for matrix $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ and compute $A^{-1}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Step 1: Characteristic equation $\det(A - \lambda I) = 0$:</p>
-                        $$ (1-\lambda)(4-\lambda) - 6 = \lambda^2 - 5\lambda - 2 = 0 $$
-                        <p>Step 2: Substitute matrix $A$ in characteristic equation $A^2 - 5A - 2I = 0$:</p>
+                        <p>Step 1: Characteristic equation $\det(A - \lambda I) = \lambda^2 - 5\lambda - 2 = 0$.</p>
+                        <p>Step 2: Substitute $A$ into $A^2 - 5A - 2I = 0$:</p>
                         $$ A^2 = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} = \begin{bmatrix} 7 & 10 \\ 15 & 22 \end{bmatrix} $$
-                        $$ A^2 - 5A - 2I = \begin{bmatrix} 7 & 10 \\ 15 & 22 \end{bmatrix} - \begin{bmatrix} 5 & 10 \\ 15 & 20 \end{bmatrix} - \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} = 0 $$
+                        $$ A^2 - 5A - 2I = \begin{bmatrix} 7 & 10 \\ 15 & 22 \end{bmatrix} - \begin{bmatrix} 5 & 10 \\ 15 & 20 \end{bmatrix} - \begin{bmatrix} 2 & 0 \\ 0 & 2 \end{bmatrix} = \begin{bmatrix} 0 & 0 \\ 0 & 0 \end{bmatrix} $$
                         <p>Cayley-Hamilton Theorem is verified!</p>
 
-                        <p>Step 3: Multiply equation $A^2 - 5A - 2I = 0$ by $A^{-1}$:</p>
-                        $$ A - 5I - 2 A^{-1} = 0 \implies 2 A^{-1} = A - 5I $$
-                        $$ A^{-1} = \frac{1}{2}\left( \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} - \begin{bmatrix} 5 & 0 \\ 0 & 5 \end{bmatrix} \right) = \frac{1}{2} \begin{bmatrix} -4 & 2 \\ 3 & -1 \end{bmatrix} = \begin{bmatrix} -2 & 1 \\ 1.5 & -0.5 \end{bmatrix} $$
+                        <p>Step 3: Compute $A^{-1}$ from $A^2 - 5A - 2I = 0 \implies 2 A^{-1} = A - 5I$:</p>
+                        $$ A^{-1} = \frac{1}{2} \begin{bmatrix} -4 & 2 \\ 3 & -1 \end{bmatrix} = \begin{bmatrix} -2 & 1 \\ 1.5 & -0.5 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.3.2: Computing High Powers of a Matrix</div>
+                        <p><strong>Question:</strong> Use Cayley-Hamilton Theorem for matrix $A = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$ to find $A^n$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic equation is $(1-\lambda)^2 = 0 \implies \lambda^2 - 2\lambda + 1 = 0 \implies A^2 = 2A - I$.</p>
+                        <p>By induction, $A^n = \begin{bmatrix} 1 & n \\ 0 & 1 \end{bmatrix}$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.3.3: Verification for a 3x3 Matrix</div>
+                        <p><strong>Question:</strong> Verify Cayley-Hamilton theorem for matrix $A = \begin{bmatrix} 0 & 0 & 1 \\ 3 & 1 & 0 \\ -2 & 1 & 4 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic polynomial $p(\lambda) = \det(A - \lambda I) = -\lambda^3 + 5\lambda^2 - 7\lambda + 3 = 0$.</p>
+                        <p>Calculate $A^2$ and $A^3$, substitute into $A^3 - 5A^2 + 7A - 3I = 0$, result is zero matrix. Verified!</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.3.4: Finding Matrix Inverse via Cayley-Hamilton</div>
+                        <p><strong>Question:</strong> If matrix $A$ has characteristic equation $A^3 - 4A^2 + 5A - 2I = 0$, find expression for $A^{-1}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Multiply equation by $A^{-1}$:</p>
+                        $$ A^2 - 4A + 5I - 2 A^{-1} = 0 $$
+                        $$ A^{-1} = \frac{1}{2}(A^2 - 4A + 5I) $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.3.5: Expressing A^4 in Terms of Lower Powers</div>
+                        <p><strong>Question:</strong> Given $A^2 - 3A + 2I = 0$, express $A^4$ in terms of $A$ and $I$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>$A^2 = 3A - 2I$. $A^3 = A(3A - 2I) = 3(3A - 2I) - 2A = 7A - 6I$. $A^4 = A(7A - 6I) = 7(3A - 2I) - 6A = 15A - 14I$.</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2>2.3 केली-हैमिल्टन प्रमेय (Cayley-Hamilton Theorem)</h2>
-                    <p>प्रत्येक वर्ग matrix अपने सकरण (characteristic equation) को संतुष्ट करता है।</p>
+                    <p>प्रत्येक वर्ग matrix अपने characteristic equation को संतुष्ट करता है: $p(A) = 0$।</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- 2.4 Minimal Polynomial -->
+        <section class="page-section" id="sec24">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.4 Minimal Polynomial</h2>
+                    <p>The minimal polynomial $m(\lambda)$ of matrix $A$ is the unique monic polynomial of lowest degree such that $m(A) = 0$.</p>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 2.2: Minimal Polynomial Properties</div>
+                        <strong>Statement:</strong> Minimal polynomial $m(\lambda)$ divides characteristic polynomial $p(\lambda)$, and roots of $m(\lambda)$ are exactly the distinct eigenvalues of matrix $A$.
+                    </div>
+
+                    <h3>Solved Examples for Section 2.4</h3>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.4.1: Minimal Polynomial of Identity Matrix</div>
+                        <p><strong>Question:</strong> Find minimal polynomial of identity matrix $I_3$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic polynomial $p(\lambda) = (\lambda-1)^3$. Test linear polynomial $m(\lambda) = \lambda - 1$. $m(I_3) = I_3 - I_3 = 0$. Thus minimal polynomial is $m(\lambda) = \lambda - 1$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.4.2: Minimal Polynomial of a 3x3 Matrix</div>
+                        <p><strong>Question:</strong> Find minimal polynomial of matrix $A = \begin{bmatrix} 2 & 1 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic polynomial $p(\lambda) = (\lambda-2)^3$. Test $m(\lambda) = (\lambda-2)^2$. $(A - 2I)^2 = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \end{bmatrix}^2 = 0$. Minimal polynomial $m(\lambda) = (\lambda-2)^2$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.4.3: Minimal Polynomial of Diagonalizable Matrix</div>
+                        <p><strong>Question:</strong> Find minimal polynomial of matrix $A = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Distinct eigenvalues are $1$ and $2$. Monic polynomial with distinct roots is $m(\lambda) = (\lambda-1)(\lambda-2)$. $(A - I)(A - 2I) = 0$. Minimal polynomial is $m(\lambda) = (\lambda-1)(\lambda-2)$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.4.4: Nilpotent Matrix Minimal Polynomial</div>
+                        <p><strong>Question:</strong> Find minimal polynomial of nilpotent matrix $N = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 1 \\ 0 & 0 & 0 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic polynomial is $\lambda^3$. Since $N^2 \neq 0$ and $N^3 = 0$, minimal polynomial is $m(\lambda) = \lambda^3$.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.4 अल्पतम बहुपद (Minimal Polynomial)</h2>
+                    <p>Minimal polynomial $m(\lambda)$ वह न्यूनतम घात का monic polynomial है जिसके लिए $m(A) = 0$ हो।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.5 Matrix Diagonalization -->
+        <section class="page-section" id="sec25">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.5 Matrix Diagonalization</h2>
+                    <p>A square matrix $A$ of order $n$ is diagonalizable if there exists a non-singular modal matrix $P$ such that $P^{-1} A P = D$, where $D$ is a diagonal matrix.</p>
+
+                    <div class="theorem">
+                        <div class="card-title">Theorem 2.3: Diagonalizability Condition Theorem</div>
+                        <strong>Statement:</strong> Matrix $A$ is diagonalizable if and only if it has $n$ linearly independent eigenvectors, which occurs if Geometric Multiplicity (GM) equals Algebraic Multiplicity (AM) for each eigenvalue.
+                    </div>
+
+                    <h3>Solved Examples for Section 2.5</h3>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.5.1: Diagonalizing a 2x2 Matrix</div>
+                        <p><strong>Question:</strong> Diagonalize matrix $A = \begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}$ and find modal matrix $P$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Eigenvalues $\lambda_1 = 5, \lambda_2 = 2$. Eigenvectors $x^{(1)} = \begin{bmatrix} 1 \\ 1 \end{bmatrix}, x^{(2)} = \begin{bmatrix} 1 \\ -2 \end{bmatrix}$.</p>
+                        <p>Modal matrix $P = \begin{bmatrix} 1 & 1 \\ 1 & -2 \end{bmatrix}$, $P^{-1} = \frac{1}{-3} \begin{bmatrix} -2 & -1 \\ -1 & 1 \end{bmatrix} = \begin{bmatrix} 2/3 & 1/3 \\ 1/3 & -1/3 \end{bmatrix}$.</p>
+                        <p>Diagonal matrix $D = P^{-1} A P = \begin{bmatrix} 5 & 0 \\ 0 & 2 \end{bmatrix}$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.5.2: Non-Diagonalizable Matrix Example</div>
+                        <p><strong>Question:</strong> Show that matrix $A = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$ is not diagonalizable.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Eigenvalues $\lambda_1 = \lambda_2 = 1$ (AM = 2). Solve $(A - I)x = 0 \implies \begin{bmatrix} 0 & 1 \\ 0 & 0 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = 0 \implies x_2 = 0$. Only 1 linearly independent eigenvector $x^{(1)} = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ (GM = 1). Since GM &lt; AM, matrix $A$ is not diagonalizable.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.5.3: Orthogonal Diagonalization of Symmetric Matrix</div>
+                        <p><strong>Question:</strong> Orthogonally diagonalize symmetric matrix $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Eigenvalues $\lambda_1 = 3, \lambda_2 = 1$. Normalized eigenvectors $u^{(1)} = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ 1 \end{bmatrix}, u^{(2)} = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ -1 \end{bmatrix}$.</p>
+                        <p>Orthogonal matrix $Q = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$. $Q^T A Q = \begin{bmatrix} 3 & 0 \\ 0 & 1 \end{bmatrix} = D$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.5.4: Matrix Power via Diagonalization</div>
+                        <p><strong>Question:</strong> Compute $A^5$ for $A = \begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}$ using $A = P D P^{-1}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>$A^5 = P D^5 P^{-1} = \begin{bmatrix} 1 & 1 \\ 1 & -2 \end{bmatrix} \begin{bmatrix} 3125 & 0 \\ 0 & 32 \end{bmatrix} \begin{bmatrix} 2/3 & 1/3 \\ 1/3 & -1/3 \end{bmatrix} = \begin{bmatrix} 2094 & 1031 \\ 2062 & 1063 \end{bmatrix}$.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.5 आव्यूह विकर्णीकरण (Matrix Diagonalization)</h2>
+                    <p>$P^{-1} A P = D$ (Diagonal matrix)।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.6 Quadratic Forms -->
+        <section class="page-section" id="sec26">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.6 Quadratic Forms</h2>
+                    <p>A real quadratic form in $n$ variables is $Q(x) = X^T A X = \sum \sum a_{ij} x_i x_j$, where matrix $A$ is symmetric.</p>
+
+                    <div class="note">
+                        <div class="card-title">Classification of Quadratic Forms</div>
+                        <ul>
+                            <li><strong>Positive Definite:</strong> All eigenvalues of matrix $A$ are positive ($\lambda_i > 0$).</li>
+                            <li><strong>Positive Semi-Definite:</strong> All $\lambda_i \geq 0$ with at least one $\lambda_i = 0$.</li>
+                            <li><strong>Negative Definite:</strong> All eigenvalues of matrix $A$ are negative ($\lambda_i < 0$).</li>
+                            <li><strong>Indefinite:</strong> Matrix $A$ has both positive and negative eigenvalues.</li>
+                        </ul>
+                    </div>
+
+                    <h3>Solved Examples for Section 2.6</h3>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.6.1: Matrix of Quadratic Form and Definiteness</div>
+                        <p><strong>Question:</strong> Find matrix $A$ of quadratic form $Q(x_1, x_2) = 2x_1^2 + 6x_1 x_2 + 5x_2^2$ and determine its definiteness.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Matrix $A = \begin{bmatrix} 2 & 3 \\ 3 & 5 \end{bmatrix}$. Principal minors: $D_1 = 2 > 0$, $D_2 = \det(A) = 10 - 9 = 1 > 0$. By Sylvester's criterion, quadratic form is Positive Definite.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.6.2: Canonical Reduction of a 3-Variable Quadratic Form</div>
+                        <p><strong>Question:</strong> Reduce quadratic form $Q(x_1, x_2, x_3) = x_1^2 + 2x_2^2 + 3x_3^2 + 2x_1 x_2 + 4x_2 x_3$ to canonical sum of squares form.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Complete squares: $Q = (x_1 + x_2)^2 + x_2^2 + 4x_2 x_3 + 3x_3^2 = (x_1 + x_2)^2 + (x_2 + 2x_3)^2 - x_3^2$.</p>
+                        <p>Canonical form $y_1^2 + y_2^2 - y_3^2$. Rank = 3, Index = 2, Signature = 2 - 1 = 1 (Indefinite).</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.6.3: Sylvester's Criterion for 3x3 Matrix</div>
+                        <p><strong>Question:</strong> Check definiteness of quadratic form with matrix $A = \begin{bmatrix} 2 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 2 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>$D_1 = 2 > 0, D_2 = 4 - 1 = 3 > 0, D_3 = \det(A) = 2(3) - (-1)(-2) = 6 - 2 = 4 > 0$. All principal minors positive $\implies$ Positive Definite.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Example 2.6.4: Orthogonal Transformation of Quadratic Form</div>
+                        <p><strong>Question:</strong> Transform $Q = 2x_1^2 + 2x_1 x_2 + 2x_2^2$ to principal axes form via orthogonal transformation.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Matrix $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$. Eigenvalues $\lambda_1 = 3, \lambda_2 = 1$. Principal axes canonical form $3y_1^2 + y_2^2$.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.6 द्विघाती रूप (Quadratic Forms)</h2>
+                    <p>$Q(X) = X^T A X$ (Symmetric matrix $A$)।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.7 Solved Advanced Problems -->
+        <section class="page-section" id="sec27">
+            <div class="section-card">
+                <div class="english-content">
+                    <h2>2.7 Solved Numerical Problems</h2>
+                    <p>Representative advanced solved numerical problems for Unit II.</p>
+
+                    <div class="example">
+                        <div class="card-title">Problem 1: Eigenvalues of Matrix Powers and Inverses</div>
+                        <p><strong>Question:</strong> Matrix $A = \begin{bmatrix} 1 & 2 & 0 \\ 0 & 3 & 1 \\ 0 & 0 & 5 \end{bmatrix}$. Find eigenvalues of $A^2 + 2A^{-1} - 3I$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Eigenvalues of $A$ are diagonal elements $1, 3, 5$. For each $\lambda$, corresponding eigenvalue of $B = A^2 + 2A^{-1} - 3I$ is $\mu = \lambda^2 + 2/\lambda - 3$.</p>
+                        <p>For $\lambda_1 = 1$: $\mu_1 = 1 + 2 - 3 = 0$.<br>
+                        For $\lambda_2 = 3$: $\mu_2 = 9 + 2/3 - 3 = 20/3$.<br>
+                        For $\lambda_3 = 5$: $\mu_3 = 25 + 2/5 - 3 = 112/5 = 22.4$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Problem 2: Cayley-Hamilton Verification for 3x3 Matrix</div>
+                        <p><strong>Question:</strong> Verify Cayley-Hamilton for $A = \begin{bmatrix} 2 & -1 & 1 \\ -1 & 2 & -1 \\ 1 & -1 & 2 \end{bmatrix}$ and compute $A^{-1}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Characteristic polynomial $p(\lambda) = \det(A - \lambda I) = -\lambda^3 + 6\lambda^2 - 9\lambda + 4 = 0$.</p>
+                        <p>Substitute $A$: $A^3 - 6A^2 + 9A - 4I = 0 \implies 4 A^{-1} = A^2 - 6A + 9I$.</p>
+                        $$ A^{-1} = \frac{1}{4} \begin{bmatrix} 3 & 1 & -1 \\ 1 & 3 & 1 \\ -1 & 1 & 3 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Problem 3: Complete Diagonalization of a 3x3 Matrix</div>
+                        <p><strong>Question:</strong> Diagonalize $A = \begin{bmatrix} 1 & 0 & 0 \\ 1 & 2 & 0 \\ 2 & -2 & 3 \end{bmatrix}$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Eigenvalues $\lambda = 1, 2, 3$. Eigenvectors: $x^{(1)} = \begin{bmatrix} 1 \\ -1 \\ -1 \end{bmatrix}, x^{(2)} = \begin{bmatrix} 0 \\ 1 \\ -2 \end{bmatrix}, x^{(3)} = \begin{bmatrix} 0 \\ 0 \\ 1 \end{bmatrix}$.</p>
+                        <p>Modal matrix $P = \begin{bmatrix} 1 & 0 & 0 \\ -1 & 1 & 0 \\ -1 & -2 & 1 \end{bmatrix}$, $P^{-1} A P = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 2 & 0 \\ 0 & 0 & 3 \end{bmatrix}$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Problem 4: Canonical Reduction of 3-Variable Quadratic Form</div>
+                        <p><strong>Question:</strong> Reduce $Q = 3x_1^2 + 5x_2^2 + 3x_3^2 - 2x_1 x_2 + 2x_1 x_3 - 2x_2 x_3$ to canonical form.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Symmetric matrix $A = \begin{bmatrix} 3 & -1 & 1 \\ -1 & 5 & -1 \\ 1 & -1 & 3 \end{bmatrix}$. Eigenvalues $\lambda_1 = 2, \lambda_2 = 3, \lambda_3 = 6$. Canonical form $2y_1^2 + 3y_2^2 + 6y_3^2$ (Positive Definite).</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">Problem 5: Rank, Index, Signature of Quadratic Form</div>
+                        <p><strong>Question:</strong> Find rank, index, signature of $Q = x_1^2 + 2x_2^2 - 3x_3^2 + 4x_1 x_2$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Matrix $A = \begin{bmatrix} 1 & 2 & 0 \\ 2 & 2 & 0 \\ 0 & 0 & -3 \end{bmatrix}$. Eigenvalues: $-(3), (3+\sqrt{17})/2 > 0, (3-\sqrt{17})/2 < 0$. Two positive, one negative. Rank = 3, Index = 2, Signature = 2 - 1 = 1.</p>
+                    </div>
+                </div>
+
+                <div class="hinglish-content" style="display:none;">
+                    <h2>2.7 हल किए गए उन्नत प्रश्न</h2>
+                    <p>इकाई II के सभी विषयों पर आधारित प्रतिनिधि आंकिक प्रश्न।</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2.8 EXERCISE BANK -->
+        <section class="page-section" id="sec28">
+            <div class="section-card">
+                <h2>2.8 Chapter End Exercises and Self-Assessment Bank</h2>
+
+                <!-- PART A: 20 MCQS -->
+                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
+
+                <div class="question"><strong>Q1.</strong> The characteristic equation of matrix $A$ is defined by:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq201" value="a"> (a) $\det(A - \lambda I) = 0$</label>
+                    <label><input type="radio" name="mcq201" value="b"> (b) $\text{Tr}(A - \lambda I) = 0$</label>
+                    <label><input type="radio" name="mcq201" value="c"> (c) $A^T A = I$</label>
+                    <label><input type="radio" name="mcq201" value="d"> (d) $A^2 - A = 0$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq201_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq201_ans"><strong>Correct Answer: (a)</strong> — Characteristic equation is $\det(A - \lambda I) = 0$.</div>
+
+                <div class="question"><strong>Q2.</strong> The sum of the eigenvalues of a square matrix $A$ is equal to:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq202" value="a"> (a) $\det(A)$</label>
+                    <label><input type="radio" name="mcq202" value="b"> (b) $\text{Tr}(A)$</label>
+                    <label><input type="radio" name="mcq202" value="c"> (c) $\text{rank}(A)$</label>
+                    <label><input type="radio" name="mcq202" value="d"> (d) $0$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq202_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq202_ans"><strong>Correct Answer: (b)</strong> — Sum of eigenvalues equals trace $\text{Tr}(A)$.</div>
+
+                <div class="question"><strong>Q3.</strong> The product of the eigenvalues of a square matrix $A$ is equal to:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq203" value="a"> (a) $\det(A)$</label>
+                    <label><input type="radio" name="mcq203" value="b"> (b) $\text{Tr}(A)$</label>
+                    <label><input type="radio" name="mcq203" value="c"> (c) $1$</label>
+                    <label><input type="radio" name="mcq203" value="d"> (d) $\text{rank}(A)$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq203_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq203_ans"><strong>Correct Answer: (a)</strong> — Product of eigenvalues equals determinant $\det(A)$.</div>
+
+                <div class="question"><strong>Q4.</strong> The eigenvalues of a triangular matrix are its:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq204" value="a"> (a) First row entries</label>
+                    <label><input type="radio" name="mcq204" value="b"> (b) Main diagonal entries</label>
+                    <label><input type="radio" name="mcq204" value="c"> (c) Off-diagonal entries</label>
+                    <label><input type="radio" name="mcq204" value="d"> (d) Determinant values</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq204_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq204_ans"><strong>Correct Answer: (b)</strong> — Eigenvalues of upper/lower triangular matrices are diagonal entries.</div>
+
+                <div class="question"><strong>Q5.</strong> Cayley-Hamilton Theorem states that every square matrix satisfies its own:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq205" value="a"> (a) Minimal polynomial</label>
+                    <label><input type="radio" name="mcq205" value="b"> (b) Characteristic equation</label>
+                    <label><input type="radio" name="mcq205" value="c"> (c) Quadratic form</label>
+                    <label><input type="radio" name="mcq205" value="d"> (d) Normal form</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq205_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq205_ans"><strong>Correct Answer: (b)</strong> — Every square matrix satisfies $p(A) = 0$.</div>
+
+                <div class="question"><strong>Q6.</strong> All eigenvalues of a real symmetric matrix are always:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq206" value="a"> (a) Purely imaginary</label>
+                    <label><input type="radio" name="mcq206" value="b"> (b) Real numbers</label>
+                    <label><input type="radio" name="mcq206" value="c"> (c) Zeros</label>
+                    <label><input type="radio" name="mcq206" value="d"> (d) Complex conjugates</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq206_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq206_ans"><strong>Correct Answer: (b)</strong> — Eigenvalues of real symmetric matrices are strictly real.</div>
+
+                <div class="question"><strong>Q7.</strong> If $\lambda$ is an eigenvalue of non-singular matrix $A$, then eigenvalue of $A^{-1}$ is:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq207" value="a"> (a) $\lambda$</label>
+                    <label><input type="radio" name="mcq207" value="b"> (b) $-\lambda$</label>
+                    <label><input type="radio" name="mcq207" value="c"> (c) $1/\lambda$</label>
+                    <label><input type="radio" name="mcq207" value="d"> (d) $\lambda^2$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq207_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq207_ans"><strong>Correct Answer: (c)</strong> — Eigenvalue of inverse matrix $A^{-1}$ is $1/\lambda$.</div>
+
+                <div class="question"><strong>Q8.</strong> The minimal polynomial $m(\lambda)$ of matrix $A$ always divides its:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq208" value="a"> (a) Trace</label>
+                    <label><input type="radio" name="mcq208" value="b"> (b) Characteristic polynomial</label>
+                    <label><input type="radio" name="mcq208" value="c"> (c) Determinant</label>
+                    <label><input type="radio" name="mcq208" value="d"> (d) Rank</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq208_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq208_ans"><strong>Correct Answer: (b)</strong> — Minimal polynomial $m(\lambda)$ divides characteristic polynomial $p(\lambda)$.</div>
+
+                <div class="question"><strong>Q9.</strong> A square matrix $A$ of order $n$ is diagonalizable if and only if it has:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq209" value="a"> (a) $n$ linearly independent eigenvectors</label>
+                    <label><input type="radio" name="mcq209" value="b"> (b) Zero determinant</label>
+                    <label><input type="radio" name="mcq209" value="c"> (c) Equal eigenvalues</label>
+                    <label><input type="radio" name="mcq209" value="d"> (d) Skew-symmetric form</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq209_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq209_ans"><strong>Correct Answer: (a)</strong> — Diagonalizability requires $n$ linearly independent eigenvectors.</div>
+
+                <div class="question"><strong>Q10.</strong> If matrix $A$ is diagonalizable as $P^{-1} A P = D$, then matrix $P$ is called:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq210" value="a"> (a) Characteristic matrix</label>
+                    <label><input type="radio" name="mcq210" value="b"> (b) Modal matrix</label>
+                    <label><input type="radio" name="mcq210" value="c"> (c) Spectral matrix</label>
+                    <label><input type="radio" name="mcq210" value="d"> (d) Triangular matrix</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq210_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq210_ans"><strong>Correct Answer: (b)</strong> — Matrix $P$ composed of eigenvectors is called the modal matrix.</div>
+
+                <div class="question"><strong>Q11.</strong> A quadratic form $X^T A X$ is Positive Definite if all eigenvalues of $A$ are:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq211" value="a"> (a) Negative</label>
+                    <label><input type="radio" name="mcq211" value="b"> (b) Zero</label>
+                    <label><input type="radio" name="mcq211" value="c"> (c) Positive ($\lambda_i > 0$)</label>
+                    <label><input type="radio" name="mcq211" value="d"> (d) Complex</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq211_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq211_ans"><strong>Correct Answer: (c)</strong> — Positive definite iff all eigenvalues are strictly positive.</div>
+
+                <div class="question"><strong>Q12.</strong> If eigenvalues of symmetric matrix $A$ are $3, 0, -2$, the quadratic form is:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq212" value="a"> (a) Positive Definite</label>
+                    <label><input type="radio" name="mcq212" value="b"> (b) Indefinite</label>
+                    <label><input type="radio" name="mcq212" value="c"> (c) Negative Definite</label>
+                    <label><input type="radio" name="mcq212" value="d"> (d) Positive Semi-Definite</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq212_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq212_ans"><strong>Correct Answer: (b)</strong> — Presence of both positive and negative eigenvalues makes form Indefinite.</div>
+
+                <div class="question"><strong>Q13.</strong> The index $s$ of a quadratic form is the number of:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq213" value="a"> (a) Negative terms in canonical form</label>
+                    <label><input type="radio" name="mcq213" value="b"> (b) Positive terms in canonical form</label>
+                    <label><input type="radio" name="mcq213" value="c"> (c) Zero terms</label>
+                    <label><input type="radio" name="mcq213" value="d"> (d) Total variables</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq213_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq213_ans"><strong>Correct Answer: (b)</strong> — Index $s$ is the number of positive squared terms in canonical form.</div>
+
+                <div class="question"><strong>Q14.</strong> The signature of a quadratic form with $p$ positive and $q$ negative terms is:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq214" value="a"> (a) $p + q$</label>
+                    <label><input type="radio" name="mcq214" value="b"> (b) $p - q$</label>
+                    <label><input type="radio" name="mcq214" value="c"> (c) $p \cdot q$</label>
+                    <label><input type="radio" name="mcq214" value="d"> (d) $p / q$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq214_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq214_ans"><strong>Correct Answer: (b)</strong> — Signature is difference $p - q$.</div>
+
+                <div class="question"><strong>Q15.</strong> Sylvester's Law of Inertia states that index and signature of a quadratic form are:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq215" value="a"> (a) Variable</label>
+                    <label><input type="radio" name="mcq215" value="b"> (b) Invariant under non-singular transformations</label>
+                    <label><input type="radio" name="mcq215" value="c"> (c) Always zero</label>
+                    <label><input type="radio" name="mcq215" value="d"> (d) Dependent on basis choice</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq215_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq215_ans"><strong>Correct Answer: (b)</strong> — Index and signature are invariant invariants of congruent reduction.</div>
+
+                <div class="question"><strong>Q16.</strong> Algebraic Multiplicity (AM) of eigenvalue $\lambda$ is its multiplicity as a root of:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq216" value="a"> (a) Minimal polynomial</label>
+                    <label><input type="radio" name="mcq216" value="b"> (b) Characteristic polynomial</label>
+                    <label><input type="radio" name="mcq216" value="c"> (c) Quadratic form</label>
+                    <label><input type="radio" name="mcq216" value="d"> (d) Row space</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq216_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq216_ans"><strong>Correct Answer: (b)</strong> — AM is root multiplicity in characteristic polynomial $p(\lambda)$.</div>
+
+                <div class="question"><strong>Q17.</strong> Geometric Multiplicity (GM) of eigenvalue $\lambda$ is dimension of eigenspace:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq217" value="a"> (a) $\text{nullity}(A - \lambda I)$</label>
+                    <label><input type="radio" name="mcq217" value="b"> (b) $\text{rank}(A - \lambda I)$</label>
+                    <label><input type="radio" name="mcq217" value="c"> (c) $\det(A - \lambda I)$</label>
+                    <label><input type="radio" name="mcq217" value="d"> (d) $\text{Tr}(A - \lambda I)$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq217_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq217_ans"><strong>Correct Answer: (a)</strong> — $\text{GM} = \dim(\text{Ker}(A - \lambda I)) = \text{nullity}(A - \lambda I)$.</div>
+
+                <div class="question"><strong>Q18.</strong> Eigenvectors corresponding to distinct eigenvalues of a real symmetric matrix are:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq218" value="a"> (a) Parallel</label>
+                    <label><input type="radio" name="mcq218" value="b"> (b) Orthogonal</label>
+                    <label><input type="radio" name="mcq218" value="c"> (c) Linearly dependent</label>
+                    <label><input type="radio" name="mcq218" value="d"> (d) Zero vectors</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq218_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq218_ans"><strong>Correct Answer: (b)</strong> — Eigenvectors of real symmetric matrices for distinct eigenvalues are orthogonal.</div>
+
+                <div class="question"><strong>Q19.</strong> If $A = \begin{bmatrix} 2 & 0 \\ 0 & 3 \end{bmatrix}$, its eigenvalues are:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq219" value="a"> (a) $2, 3$</label>
+                    <label><input type="radio" name="mcq219" value="b"> (b) $0, 5$</label>
+                    <label><input type="radio" name="mcq219" value="c"> (c) $1, 6$</label>
+                    <label><input type="radio" name="mcq219" value="d"> (d) $-2, -3$</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq219_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq219_ans"><strong>Correct Answer: (a)</strong> — Diagonal entries $2, 3$ are eigenvalues.</div>
+
+                <div class="question"><strong>Q20.</strong> Sylvester's Criterion tests positive definiteness using sign of principal:</div>
+                <div class="mcq-options">
+                    <label><input type="radio" name="mcq220" value="a"> (a) Eigenvalues</label>
+                    <label><input type="radio" name="mcq220" value="b"> (b) Minors ($D_k > 0$)</label>
+                    <label><input type="radio" name="mcq220" value="c"> (c) Traces</label>
+                    <label><input type="radio" name="mcq220" value="d"> (d) Ranks</label>
+                </div>
+                <button class="toggle-btn" onclick="toggleAnswer('mcq220_ans')">Show Answer ▼</button>
+                <div class="answer" id="mcq220_ans"><strong>Correct Answer: (b)</strong> — Sylvester's criterion requires all leading principal minors $D_k > 0$.</div>
+
+
+                <!-- PART B: 20 FIBS -->
+                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
+
+                <div class="question"><strong>FIB 1.</strong> Equation $\det(A - \lambda I) = 0$ is called the ____________ equation of matrix $A$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib201_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib201_ans"><strong>Answer: Characteristic</strong></div>
+
+                <div class="question"><strong>FIB 2.</strong> The sum of eigenvalues of matrix $A$ equals its ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib202_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib202_ans"><strong>Answer: Trace</strong></div>
+
+                <div class="question"><strong>FIB 3.</strong> The product of eigenvalues of matrix $A$ equals its ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib203_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib203_ans"><strong>Answer: Determinant</strong></div>
+
+                <div class="question"><strong>FIB 4.</strong> If $\lambda$ is an eigenvalue of $A$, then $\lambda^k$ is an eigenvalue of ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib204_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib204_ans"><strong>Answer: $A^k$</strong></div>
+
+                <div class="question"><strong>FIB 5.</strong> Cayley-Hamilton theorem states $p(A) = $ ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib205_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib205_ans"><strong>Answer: $0$ (Zero matrix)</strong></div>
+
+                <div class="question"><strong>FIB 6.</strong> Monic polynomial of lowest degree satisfying $m(A) = 0$ is called the ____________ polynomial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib206_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib206_ans"><strong>Answer: Minimal</strong></div>
+
+                <div class="question"><strong>FIB 7.</strong> Matrix $P$ formed by eigenvectors of $A$ is called the ____________ matrix.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib207_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib207_ans"><strong>Answer: Modal</strong></div>
+
+                <div class="question"><strong>FIB 8.</strong> In $P^{-1} A P = D$, diagonal entries of $D$ are the ____________ of matrix $A$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib208_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib208_ans"><strong>Answer: Eigenvalues</strong></div>
+
+                <div class="question"><strong>FIB 9.</strong> A real symmetric matrix can always be orthogonally diagonalized by $Q^T A Q = $ ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib209_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib209_ans"><strong>Answer: $D$ (Diagonal matrix)</strong></div>
+
+                <div class="question"><strong>FIB 10.</strong> A quadratic form $X^T A X$ is Positive Definite iff all eigenvalues of $A$ are ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib210_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib210_ans"><strong>Answer: Positive</strong></div>
+
+                <div class="question"><strong>FIB 11.</strong> Number of positive terms in canonical form is called the ____________ of quadratic form.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib211_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib211_ans"><strong>Answer: Index ($s$)</strong></div>
+
+                <div class="question"><strong>FIB 12.</strong> Difference between positive and negative terms in canonical form is called the ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib212_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib212_ans"><strong>Answer: Signature</strong></div>
+
+                <div class="question"><strong>FIB 13.</strong> Eigenvalues of a real skew-symmetric matrix are zero or ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib213_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib213_ans"><strong>Answer: Purely imaginary</strong></div>
+
+                <div class="question"><strong>FIB 14.</strong> Multiplicity of $\lambda$ as a root of characteristic equation is called ____________ Multiplicity.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib214_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib214_ans"><strong>Answer: Algebraic</strong></div>
+
+                <div class="question"><strong>FIB 15.</strong> Dimension of eigenspace $\text{nullity}(A - \lambda I)$ is called ____________ Multiplicity.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib215_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib215_ans"><strong>Answer: Geometric</strong></div>
+
+                <div class="question"><strong>FIB 16.</strong> Matrix $A$ is diagonalizable iff $\text{GM} = $ ____________ for all eigenvalues.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib216_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib216_ans"><strong>Answer: $\text{AM}$</strong></div>
+
+                <div class="question"><strong>FIB 17.</strong> Eigenvalues of an Orthogonal matrix have absolute value equal to ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib217_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib217_ans"><strong>Answer: $1$ ($|\lambda| = 1$)</strong></div>
+
+                <div class="question"><strong>FIB 18.</strong> Eigenvalues of an Idempotent matrix ($A^2 = A$) can only be $0$ or ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib218_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib218_ans"><strong>Answer: $1$</strong></div>
+
+                <div class="question"><strong>FIB 19.</strong> Eigenvalues of an Involutory matrix ($A^2 = I$) can only be $+1$ or ____________.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib219_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib219_ans"><strong>Answer: $-1$</strong></div>
+
+                <div class="question"><strong>FIB 20.</strong> Minimal polynomial of a diagonalizable matrix has only ____________ linear factors.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('fib220_ans')">Show Answer ▼</button>
+                <div class="answer" id="fib220_ans"><strong>Answer: Distinct</strong></div>
+
+
+                <!-- PART C: 20 TRUE / FALSE -->
+                <h3>Part C: True / False Statements (20 Questions)</h3>
+
+                <div class="question"><strong>TF 1.</strong> All eigenvalues of a real symmetric matrix are real numbers.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf201_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf201_ans"><strong>Answer: True</strong> — Real symmetric matrices always have real eigenvalues.</div>
+
+                <div class="question"><strong>TF 2.</strong> Trace of matrix equals product of its eigenvalues.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf202_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf202_ans"><strong>Answer: False</strong> — Trace equals sum of eigenvalues. Determinant equals product.</div>
+
+                <div class="question"><strong>TF 3.</strong> Cayley-Hamilton theorem applies only to 2x2 matrices.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf203_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf203_ans"><strong>Answer: False</strong> — Cayley-Hamilton theorem applies to all square matrices of order $n$.</div>
+
+                <div class="question"><strong>TF 4.</strong> If $A$ is diagonalizable, $P^{-1} A P = D$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf204_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf204_ans"><strong>Answer: True</strong> — Definition of similarity transformation to diagonal form.</div>
+
+                <div class="question"><strong>TF 5.</strong> Minimal polynomial divides characteristic polynomial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf205_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf205_ans"><strong>Answer: True</strong> — Theorem 2.2 proves $m(\lambda) \mid p(\lambda)$.</div>
+
+                <div class="question"><strong>TF 6.</strong> Every matrix with repeated eigenvalues is non-diagonalizable.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf6_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf6_ans"><strong>Answer: False</strong> — Identity matrix $I_n$ has repeated eigenvalues $1$ but is already diagonal.</div>
+
+                <div class="question"><strong>TF 7.</strong> Eigenvectors corresponding to distinct eigenvalues are linearly independent.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf7_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf7_ans"><strong>Answer: True</strong> — Fundamental linear algebra theorem.</div>
+
+                <div class="question"><strong>TF 8.</strong> A matrix is singular if and only if $0$ is an eigenvalue.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf8_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf8_ans"><strong>Answer: True</strong> — $\det(A) = 0 \iff$ product of eigenvalues $= 0 \iff \lambda_i = 0$.</div>
+
+                <div class="question"><strong>TF 9.</strong> Quadratic form $X^T A X$ has a symmetric matrix $A$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf9_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf9_ans"><strong>Answer: True</strong> — Matrix of quadratic form is chosen symmetric ($a_{ij} = a_{ji}$).</div>
+
+                <div class="question"><strong>TF 10.</strong> Positive definite quadratic forms have all negative eigenvalues.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf10_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf10_ans"><strong>Answer: False</strong> — Positive definite forms have all positive eigenvalues.</div>
+
+                <div class="question"><strong>TF 11.</strong> Geometric multiplicity can exceed algebraic multiplicity.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf11_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf11_ans"><strong>Answer: False</strong> — Always $1 \leq \text{GM} \leq \text{AM}$.</div>
+
+                <div class="question"><strong>TF 12.</strong> Sylvester's Law of Inertia states index is invariant under non-singular transformation.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf12_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf12_ans"><strong>Answer: True</strong> — Index and signature are invariant under congruent reduction.</div>
+
+                <div class="question"><strong>TF 13.</strong> Eigenvalues of $A$ and $A^T$ are identical.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf13_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf13_ans"><strong>Answer: True</strong> — $\det(A^T - \lambda I) = \det(A - \lambda I)$.</div>
+
+                <div class="question"><strong>TF 14.</strong> Eigenvalues of a Nilpotent matrix are all zero.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf14_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf14_ans"><strong>Answer: True</strong> — $A^k = 0 \implies \lambda^k = 0 \implies \lambda = 0$.</div>
+
+                <div class="question"><strong>TF 15.</strong> Orthogonal matrix $Q$ has $Q^{-1} = Q^T$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf15_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf15_ans"><strong>Answer: True</strong> — $Q^T Q = I \implies Q^{-1} = Q^T$.</div>
+
+                <div class="question"><strong>TF 16.</strong> Modal matrix $P$ contains eigenvectors as columns.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf16_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf16_ans"><strong>Answer: True</strong> — Columns of modal matrix $P$ are eigenvectors of $A$.</div>
+
+                <div class="question"><strong>TF 17.</strong> Eigenspace corresponding to eigenvalue $\lambda$ is a vector subspace.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf17_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf17_ans"><strong>Answer: True</strong> — $\text{Ker}(A - \lambda I)$ is a subspace.</div>
+
+                <div class="question"><strong>TF 18.</strong> Eigenvalues of $A + cI$ are $\lambda_i + c$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf18_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf18_ans"><strong>Answer: True</strong> — $(A + cI)x = A x + c x = \lambda x + c x = (\lambda + c)x$.</div>
+
+                <div class="question"><strong>TF 19.</strong> If $A^2 = A$, eigenvalues are $0$ or $1$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf19_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf19_ans"><strong>Answer: True</strong> — $\lambda^2 = \lambda \implies \lambda(\lambda-1) = 0 \implies \lambda = 0, 1$.</div>
+
+                <div class="question"><strong>TF 20.</strong> Sylvester's criterion requires all principal minors to be negative.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('tf20_ans')">Show Answer ▼</button>
+                <div class="answer" id="tf20_ans"><strong>Answer: False</strong> — Requires all leading principal minors $D_k > 0$.</div>
+
+
+                <!-- PART D: 6 MATCHING SETS -->
+                <h3>Part D: Matching Type Questions (6 Sets)</h3>
+
+                <div class="question">
+                    <strong>Matching Set 1: Matrix Concepts &amp; Equations</strong>
+                    <table class="matching-table">
+                        <thead>
+                            <tr><th>Column I (Concept)</th><th>Column II (Defining Formula)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Characteristic Equation</td><td>(A) $m(A) = 0$ (lowest degree monic)</td></tr>
+                            <tr><td>2. Cayley-Hamilton Theorem</td><td>(B) $\det(A - \lambda I) = 0$</td></tr>
+                            <tr><td>3. Minimal Polynomial</td><td>(C) $p(A) = 0$</td></tr>
+                            <tr><td>4. Eigenvector Definition</td><td>(D) $A x = \lambda x$</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="toggle-btn" onclick="toggleAnswer('match201_ans')">Show Answer ▼</button>
+                    <div class="answer" id="match201_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(C), 3-(A), 4-(D).</div>
+                </div>
+
+                <div class="question">
+                    <strong>Matching Set 2: Multiplicities &amp; Diagonalization</strong>
+                    <table class="matching-table">
+                        <thead>
+                            <tr><th>Column I (Term)</th><th>Column II (Mathematical Definition)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Algebraic Multiplicity (AM)</td><td>(A) Multiplicity of root in $p(\lambda)$</td></tr>
+                            <tr><td>2. Geometric Multiplicity (GM)</td><td>(B) $\dim(\text{Ker}(A - \lambda I))$</td></tr>
+                            <tr><td>3. Modal Matrix $P$</td><td>(C) $P^{-1} A P = D$</td></tr>
+                            <tr><td>4. Diagonalizability Condition</td><td>(D) $\text{GM} = \text{AM}$ for all $\lambda$</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="toggle-btn" onclick="toggleAnswer('match202_ans')">Show Answer ▼</button>
+                    <div class="answer" id="match202_ans"><strong>Answer Mapping:</strong> 1-(A), 2-(B), 3-(C), 4-(D).</div>
+                </div>
+
+                <div class="question">
+                    <strong>Matching Set 3: Quadratic Form Definiteness</strong>
+                    <table class="matching-table">
+                        <thead>
+                            <tr><th>Column I (Definiteness)</th><th>Column II (Eigenvalue Condition)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Positive Definite</td><td>(A) All $\lambda_i < 0$</td></tr>
+                            <tr><td>2. Positive Semi-Definite</td><td>(B) All $\lambda_i > 0$</td></tr>
+                            <tr><td>3. Negative Definite</td><td>(C) Mixed positive and negative $\lambda_i$</td></tr>
+                            <tr><td>4. Indefinite</td><td>(D) All $\lambda_i \geq 0$ with some zero</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="toggle-btn" onclick="toggleAnswer('match203_ans')">Show Answer ▼</button>
+                    <div class="answer" id="match203_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(D), 3-(A), 4-(C).</div>
+                </div>
+
+                <div class="question">
+                    <strong>Matching Set 4: Special Matrices &amp; Eigenvalue Bounds</strong>
+                    <table class="matching-table">
+                        <thead>
+                            <tr><th>Column I (Matrix Type)</th><th>Column II (Eigenvalue Property)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Real Symmetric</td><td>(A) Purely imaginary or zero</td></tr>
+                            <tr><td>2. Real Skew-Symmetric</td><td>(B) Real numbers</td></tr>
+                            <tr><td>3. Orthogonal Matrix</td><td>(C) $|\lambda| = 1$</td></tr>
+                            <tr><td>4. Nilpotent Matrix</td><td>(D) $\lambda = 0$</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="toggle-btn" onclick="toggleAnswer('match204_ans')">Show Answer ▼</button>
+                    <div class="answer" id="match204_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(A), 3-(C), 4-(D).</div>
+                </div>
+
+                <div class="question">
+                    <strong>Matching Set 5: Matrix Transformation Properties</strong>
+                    <table class="matching-table">
+                        <thead>
+                            <tr><th>Column I (Matrix Property)</th><th>Column II (Equivalent Value)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Trace $\text{Tr}(A)$</td><td>(A) $\sum \lambda_i$</td></tr>
+                            <tr><td>2. Determinant $\det(A)$</td><td>(B) $\prod \lambda_i$</td></tr>
+                            <tr><td>3. Eigenvalues of $A^{-1}$</td><td>(C) $1/\lambda_i$</td></tr>
+                            <tr><td>4. Eigenvalues of $A^k$</td><td>(D) $\lambda_i^k$</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="toggle-btn" onclick="toggleAnswer('match205_ans')">Show Answer ▼</button>
+                    <div class="answer" id="match205_ans"><strong>Answer Mapping:</strong> 1-(A), 2-(B), 3-(C), 4-(D).</div>
+                </div>
+
+                <div class="question">
+                    <strong>Matching Set 6: Quadratic Form Invariants</strong>
+                    <table class="matching-table">
+                        <thead>
+                            <tr><th>Column I (Invariant)</th><th>Column II (Definition)</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>1. Rank of Quadratic Form</td><td>(A) Number of positive squared terms</td></tr>
+                            <tr><td>2. Index ($s$)</td><td>(B) Total non-zero terms in canonical form</td></tr>
+                            <tr><td>3. Signature</td><td>(C) Sylvester's Law of Inertia</td></tr>
+                            <tr><td>4. Invariance Law</td><td>(D) Positive terms minus negative terms</td></tr>
+                        </tbody>
+                    </table>
+                    <button class="toggle-btn" onclick="toggleAnswer('match206_ans')">Show Answer ▼</button>
+                    <div class="answer" id="match206_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(A), 3-(D), 4-(C).</div>
+                </div>
+
+
+                <!-- PART E: 10 SUBJECTIVE QUESTIONS -->
+                <h3>Part E: Subjective Questions (10 Questions)</h3>
+
+                <div class="question"><strong>Q1.</strong> State and prove Cayley-Hamilton Theorem for a square matrix $A$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub201_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub201_ans"><strong>Answer Outline:</strong> Write $(A - \lambda I) \text{adj}(A - \lambda I) = \det(A - \lambda I)I$. Substitute matrix polynomial $\text{adj}(A - \lambda I) = \sum B_k \lambda^k$. Equate coefficients of $\lambda^k$, multiply by $A^k$, and sum to get $p(A) = 0$.</div>
+
+                <div class="question"><strong>Q2.</strong> Prove that eigenvalues of a real symmetric matrix are all real.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub202_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub202_ans"><strong>Answer Outline:</strong> Let $A x = \lambda x$. Pre-multiply by $\overline{x}^T$ to get $\overline{x}^T A x = \lambda \overline{x}^T x$. Take conjugate transpose to get $\overline{x}^T A x = \overline{\lambda} \overline{x}^T x$. Subtracting yields $(\lambda - \overline{\lambda})\|x\|^2 = 0 \implies \lambda = \overline{\lambda}$.</div>
+
+                <div class="question"><strong>Q3.</strong> Prove that eigenvectors corresponding to distinct eigenvalues of a real symmetric matrix are orthogonal.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub203_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub303_ans"><strong>Answer Outline:</strong> Let $A x_1 = \lambda_1 x_1$ and $A x_2 = \lambda_2 x_2$ with $\lambda_1 \neq \lambda_2$. Compute $x_2^T A x_1 = \lambda_1 x_2^T x_1$ and $(A x_2)^T x_1 = \lambda_2 x_2^T x_1$. Since $A$ is symmetric, $x_2^T A x_1 = (A x_2)^T x_1 \implies (\lambda_1 - \lambda_2) x_2^T x_1 = 0 \implies x_2^T x_1 = 0$.</div>
+
+                <div class="question"><strong>Q4.</strong> Explain the procedure to diagonalize a square matrix $A$ of order $n$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub204_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub204_ans"><strong>Answer Outline:</strong> Step 1: Find characteristic polynomial and eigenvalues $\lambda_1, \dots, \lambda_n$. Step 2: Find $n$ linearly independent eigenvectors $x^{(1)}, \dots, x^{(n)}$. Step 3: Form modal matrix $P = [x^{(1)} \dots x^{(n)}]$. Step 4: Compute $P^{-1} A P = D$.</div>
+
+                <div class="question"><strong>Q5.</strong> State Sylvester's Criterion for positive definiteness of a real quadratic form.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub205_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub205_ans"><strong>Answer Outline:</strong> Quadratic form $X^T A X$ is Positive Definite iff all leading principal minors $D_1 = a_{11}, D_2 = \begin{vmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{vmatrix}, \dots, D_n = \det(A)$ are strictly positive ($D_k > 0$).</div>
+
+                <div class="question"><strong>Q6.</strong> Define minimal polynomial of a matrix $A$ and state its relation to characteristic polynomial.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub206_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub206_ans"><strong>Answer Outline:</strong> Minimal polynomial $m(\lambda)$ is the unique monic polynomial of lowest degree such that $m(A) = 0$. $m(\lambda)$ divides characteristic polynomial $p(\lambda)$, and both have exact same set of distinct roots (eigenvalues).</div>
+
+                <div class="question"><strong>Q7.</strong> Show that if $\lambda$ is an eigenvalue of $A$, then $f(\lambda)$ is an eigenvalue of polynomial matrix $f(A)$.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub207_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub207_ans"><strong>Answer Outline:</strong> Let $f(x) = c_k x^k + \dots + c_0$. Apply $f(A)$ to eigenvector $x$: $f(A)x = c_k A^k x + \dots + c_0 x = c_k \lambda^k x + \dots + c_0 x = f(\lambda) x$. Thus $f(\lambda)$ is an eigenvalue.</div>
+
+                <div class="question"><strong>Q8.</strong> Explain Sylvester's Law of Inertia for quadratic forms.</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub208_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub208_ans"><strong>Answer Outline:</strong> Under any real non-singular linear transformation $X = P Y$, a real quadratic form reduces to canonical sum of squares form. The rank $r$, index $s$ (number of positive terms), and signature $2s - r$ remain strictly invariant.</div>
+
+                <div class="question"><strong>Q9.</strong> Distinguish between Algebraic Multiplicity (AM) and Geometric Multiplicity (GM).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub209_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub209_ans"><strong>Answer Outline:</strong> AM is the multiplicity of root $\lambda$ in characteristic equation $\det(A - \lambda I) = 0$. GM is the maximum number of linearly independent eigenvectors for $\lambda$, equal to $\text{nullity}(A - \lambda I)$. Always $1 \leq \text{GM} \leq \text{AM}$.</div>
+
+                <div class="question"><strong>Q10.</strong> Prove that eigenvalues of an Orthogonal matrix have unit modulus ($|\lambda| = 1$).</div>
+                <button class="toggle-btn" onclick="toggleAnswer('sub210_ans')">Show Answer ▼</button>
+                <div class="answer" id="sub210_ans"><strong>Answer Outline:</strong> Let $Q x = \lambda x$. Take norm squared $\|Q x\|^2 = (Q x)^H (Q x) = x^H Q^T Q x = x^H I x = x^H x = \|x\|^2$. Also $\|Q x\|^2 = \|\lambda x\|^2 = |\lambda|^2 \|x\|^2$. Equating gives $|\lambda|^2 = 1 \implies |\lambda| = 1$.</div>
             </div>
         </section>
 
@@ -472,6 +1344,7 @@
                 <ul>
                     <li>Strang, Gilbert. <em>Linear Algebra and Its Applications</em>. Cengage Learning.</li>
                     <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
+                    <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
                 </ul>
             </div>
         </section>
