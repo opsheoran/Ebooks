@@ -864,14 +864,27 @@ $$ x^{(1)} = \begin{bmatrix} 1 \\ 0 \end{bmatrix} $$
                         <p><strong>Question:</strong> Orthogonally diagonalize symmetric matrix $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
                         <p>Eigenvalues $\lambda_1 = 3, \lambda_2 = 1$. Normalized eigenvectors $u^{(1)} = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ 1 \end{bmatrix}, u^{(2)} = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 \\ -1 \end{bmatrix}$.</p>
-                        <p>Orthogonal matrix $Q = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}$. $Q^T A Q = \begin{bmatrix} 3 & 0 \\ 0 & 1 \end{bmatrix} = D$.</p>
+                        <p><strong>Normalized Orthogonal Modal Matrix:</strong></p>
+$$ Q = \frac{1}{\sqrt{2}} \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} $$
+<p><strong>Orthogonal Similarity Transformation:</strong></p>
+$$ Q^T A Q = D $$
+$$ \begin{bmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ 1/\sqrt{2} & -1/\sqrt{2} \end{bmatrix} \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix} \begin{bmatrix} 1/\sqrt{2} & 1/\sqrt{2} \\ 1/\sqrt{2} & -1/\sqrt{2} \end{bmatrix} = \begin{bmatrix} 3 & 0 \\ 0 & 1 \end{bmatrix} $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.5.4: Matrix Power via Diagonalization</div>
                         <p><strong>Question:</strong> Compute $A^5$ for $A = \begin{bmatrix} 4 & 1 \\ 2 & 3 \end{bmatrix}$ using $A = P D P^{-1}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>$A^5 = P D^5 P^{-1} = \begin{bmatrix} 1 & 1 \\ 1 & -2 \end{bmatrix} \begin{bmatrix} 3125 & 0 \\ 0 & 32 \end{bmatrix} \begin{bmatrix} 2/3 & 1/3 \\ 1/3 & -1/3 \end{bmatrix} = \begin{bmatrix} 2094 & 1031 \\ 2062 & 1063 \end{bmatrix}$.</p>
+                        <p><strong>Matrix Power Formula:</strong></p>
+$$ A^5 = P D^5 P^{-1} $$
+<p><strong>Diagonal Matrix Power:</strong></p>
+$$ D^5 = \begin{bmatrix} 5^5 & 0 \\ 0 & 2^5 \end{bmatrix} = \begin{bmatrix} 3125 & 0 \\ 0 & 32 \end{bmatrix} $$
+<p><strong>Hand Matrix Multiplication Step 1:</strong></p>
+$$ P D^5 = \begin{bmatrix} 1 & 1 \\ 1 & -2 \end{bmatrix} \begin{bmatrix} 3125 & 0 \\ 0 & 32 \end{bmatrix} = \begin{bmatrix} 3125 & 32 \\ 3125 & -64 \end{bmatrix} $$
+<p><strong>Hand Matrix Multiplication Step 2:</strong></p>
+$$ (P D^5) P^{-1} = \begin{bmatrix} 3125 & 32 \\ 3125 & -64 \end{bmatrix} \begin{bmatrix} 2/3 & 1/3 \\ 1/3 & -1/3 \end{bmatrix} $$
+$$ = \begin{bmatrix} \frac{6250+32}{3} & \frac{3125-32}{3} \\ \frac{6250-64}{3} & \frac{3125+64}{3} \end{bmatrix} $$
+$$ = \begin{bmatrix} 2094 & 1031 \\ 2062 & 1063 \end{bmatrix} $$
                     </div>
                 </div>
 
@@ -913,21 +926,47 @@ $$ x^{(1)} = \begin{bmatrix} 1 \\ 0 \end{bmatrix} $$
                         <p><strong>Question:</strong> Reduce quadratic form $Q(x_1, x_2, x_3) = x_1^2 + 2x_2^2 + 3x_3^2 + 2x_1 x_2 + 4x_2 x_3$ to canonical sum of squares form.</p>
                         <p><strong>Solution:</strong></p>
                         <p>Complete squares: $Q = (x_1 + x_2)^2 + x_2^2 + 4x_2 x_3 + 3x_3^2 = (x_1 + x_2)^2 + (x_2 + 2x_3)^2 - x_3^2$.</p>
-                        <p>Canonical form $y_1^2 + y_2^2 - y_3^2$. Rank = 3, Index = 2, Signature = 2 - 1 = 1 (Indefinite).</p>
+                        <p><strong>Canonical Form (Sum of Squares):</strong></p>
+$$ Q(y_1, y_2, y_3) = y_1^2 + y_2^2 - y_3^2 $$
+<p><strong>Rank of Quadratic Form (Non-Zero Coefficients):</strong></p>
+$$ r = 3 $$
+<p><strong>Index of Quadratic Form (Positive Coefficients):</strong></p>
+$$ s = 2 $$
+<p><strong>Signature of Quadratic Form (Positive minus Negative Coefficients):</strong></p>
+$$ \text{Signature} = s - (r - s) = 2 - 1 = 1 $$
+<p><strong>Definiteness Classification:</strong></p>
+$$ \text{Classification: Indefinite (contains both positive and negative squares)} $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.6.3: Sylvester's Criterion for 3x3 Matrix</div>
                         <p><strong>Question:</strong> Check definiteness of quadratic form with matrix $A = \begin{bmatrix} 2 & -1 & 0 \\ -1 & 2 & -1 \\ 0 & -1 & 2 \end{bmatrix}$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>$D_1 = 2 > 0, D_2 = 4 - 1 = 3 > 0, D_3 = \det(A) = 2(3) - (-1)(-2) = 6 - 2 = 4 > 0$. All principal minors positive $\implies$ Positive Definite.</p>
+                        <p><strong>First Leading Principal Minor:</strong></p>
+$$ D_1 = 2 > 0 $$
+<p><strong>Second Leading Principal Minor:</strong></p>
+$$ D_2 = \begin{vmatrix} 2 & -1 \\ -1 & 2 \end{vmatrix} = 4 - 1 = 3 > 0 $$
+<p><strong>Third Leading Principal Minor:</strong></p>
+$$ D_3 = \det(A) = 2(4-1) - (-1)(-2-0) + 0 = 6 - 2 = 4 > 0 $$
+<p><strong>Sylvester\'s Definiteness Criterion:</strong></p>
+<p>Since $D_1 > 0, D_2 > 0, D_3 > 0$ are all strictly positive, the quadratic form is:</p>
+$$ \text{Classification: Positive Definite} $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Example 2.6.4: Orthogonal Transformation of Quadratic Form</div>
                         <p><strong>Question:</strong> Transform $Q = 2x_1^2 + 2x_1 x_2 + 2x_2^2$ to principal axes form via orthogonal transformation.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Matrix $A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix}$. Eigenvalues $\lambda_1 = 3, \lambda_2 = 1$. Principal axes canonical form $3y_1^2 + y_2^2$.</p>
+                        <p><strong>Symmetric Matrix of Quadratic Form:</strong></p>
+$$ A = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix} $$
+<p><strong>Hand-Calculated Eigenvalues:</strong></p>
+$$ \lambda_1 = 3 $$
+$$ \lambda_2 = 1 $$
+<p><strong>Principal Axes Canonical Form:</strong></p>
+$$ Q(y_1, y_2) = \lambda_1 y_1^2 + \lambda_2 y_2^2 $$
+$$ Q(y_1, y_2) = 3y_1^2 + y_2^2 $$
+<p><strong>Definiteness Classification:</strong></p>
+$$ \text{Classification: Positive Definite (since both } \lambda_1 > 0, \lambda_2 > 0) $$
                     </div>
                 </div>
 
@@ -965,7 +1004,9 @@ $$ A^3 - 6A^2 + 9A - 4I = 0 $$
 <p>Multiplying by $A^{-1}$:</p>
 $$ A^2 - 6A + 9I - 4 A^{-1} = 0 $$
 $$ 4 A^{-1} = A^2 - 6A + 9I $$
-                        $$ A^{-1} = \frac{1}{4} \begin{bmatrix} 3 & 1 & -1 \\ 1 & 3 & 1 \\ -1 & 1 & 3 \end{bmatrix} $$
+                        <p><strong>Inverse Matrix $A^{-1}$:</strong></p>
+$$ A^{-1} = \frac{1}{4} (A^2 - 6A + 9I) $$
+$$ A^{-1} = \frac{1}{4} \begin{bmatrix} 3 & 1 & -1 \\ 1 & 3 & 1 \\ -1 & 1 & 3 \end{bmatrix} $$
                     </div>
 
                     <div class="example">
@@ -980,14 +1021,36 @@ $$ 4 A^{-1} = A^2 - 6A + 9I $$
                         <div class="card-title">Problem 4: Canonical Reduction of 3-Variable Quadratic Form</div>
                         <p><strong>Question:</strong> Reduce $Q = 3x_1^2 + 5x_2^2 + 3x_3^2 - 2x_1 x_2 + 2x_1 x_3 - 2x_2 x_3$ to canonical form.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Symmetric matrix $A = \begin{bmatrix} 3 & -1 & 1 \\ -1 & 5 & -1 \\ 1 & -1 & 3 \end{bmatrix}$. Eigenvalues $\lambda_1 = 2, \lambda_2 = 3, \lambda_3 = 6$. Canonical form $2y_1^2 + 3y_2^2 + 6y_3^2$ (Positive Definite).</p>
+                        <p><strong>Symmetric Matrix of Quadratic Form:</strong></p>
+$$ A = \begin{bmatrix} 3 & -1 & 1 \\ -1 & 5 & -1 \\ 1 & -1 & 3 \end{bmatrix} $$
+<p><strong>Calculated Eigenvalues:</strong></p>
+$$ \lambda_1 = 2 $$
+$$ \lambda_2 = 3 $$
+$$ \lambda_3 = 6 $$
+<p><strong>Canonical Form (Principal Axes Transformation):</strong></p>
+$$ Q(y_1, y_2, y_3) = 2y_1^2 + 3y_2^2 + 6y_3^2 $$
+<p><strong>Definiteness Classification:</strong></p>
+$$ \text{Classification: Positive Definite (since all } \lambda_1 > 0, \lambda_2 > 0, \lambda_3 > 0) $$
                     </div>
 
                     <div class="example">
                         <div class="card-title">Problem 5: Rank, Index, Signature of Quadratic Form</div>
                         <p><strong>Question:</strong> Find rank, index, signature of $Q = x_1^2 + 2x_2^2 - 3x_3^2 + 4x_1 x_2$.</p>
                         <p><strong>Solution:</strong></p>
-                        <p>Matrix $A = \begin{bmatrix} 1 & 2 & 0 \\ 2 & 2 & 0 \\ 0 & 0 & -3 \end{bmatrix}$. Eigenvalues: $-(3), (3+\sqrt{17})/2 > 0, (3-\sqrt{17})/2 < 0$. Two positive, one negative. Rank = 3, Index = 2, Signature = 2 - 1 = 1.</p>
+                        <p><strong>Matrix of Quadratic Form:</strong></p>
+$$ A = \begin{bmatrix} 1 & 2 & 0 \\ 2 & 2 & 0 \\ 0 & 0 & -3 \end{bmatrix} $$
+<p><strong>Calculated Eigenvalues:</strong></p>
+$$ \lambda_1 = -3 $$
+$$ \lambda_2 = \frac{3 + \sqrt{17}}{2} > 0 $$
+$$ \lambda_3 = \frac{3 - \sqrt{17}}{2} < 0 $$
+<p><strong>Rank of Quadratic Form:</strong></p>
+$$ r = 3 $$
+<p><strong>Index of Quadratic Form (Positive Eigenvalues):</strong></p>
+$$ s = 1 $$
+<p><strong>Signature of Quadratic Form:</strong></p>
+$$ \text{Signature} = s - (r - s) = 1 - 2 = -1 $$
+<p><strong>Definiteness Classification:</strong></p>
+$$ \text{Classification: Indefinite (contains both positive and negative eigenvalues)} $$
                     </div>
                 </div>
 
