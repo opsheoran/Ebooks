@@ -224,44 +224,6 @@
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
 
-        /* TABLES */
-        table {
-            width: auto !important; max-width: 95% !important; margin: 24px auto !important;
-            border-collapse: separate !important; border-spacing: 0 !important;
-            border-radius: 8px !important; overflow: hidden !important;
-            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
-            background: #ffffff !important; display: table !important;
-            border: 1px solid var(--border) !important;
-        }
-        th {
-            background: var(--navy) !important; color: #ffffff !important;
-            padding: 8px 16px !important; font-family: 'DM Sans', sans-serif !important;
-            font-size: 0.88rem !important; font-weight: 600 !important;
-            letter-spacing: 0.3px !important; text-align: center !important;
-            border-bottom: 2px solid var(--gold) !important;
-        }
-        td {
-            padding: 6px 16px !important; border-bottom: 1px solid var(--border) !important;
-            font-size: 0.88rem !important; color: var(--text-dark) !important; text-align: center !important;
-        }
-        tr:nth-child(even) td { background: #fcfbf9 !important; }
-        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
-
-        /* FIGURE BOX */
-        .figure-box {
-            background: #FAFAFC; border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 22px; margin: 28px auto; max-width: 720px; text-align: center; box-shadow: var(--shadow-sm);
-        }
-        .figure-title {
-            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.95rem;
-            color: var(--navy); margin-bottom: 14px;
-        }
-        .book-fig { width: 100%; max-width: 640px; height: auto; margin: 0 auto; display: block; }
-        .figure-caption {
-            font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-style: italic;
-            color: var(--text-soft); margin-top: 12px; line-height: 1.5;
-        }
-
         /* EXERCISE STYLING */
         .question {
             background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light);
@@ -351,8 +313,8 @@
             <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec41'); return false;"><span class="nav-num">4.1</span> Linear Mappings T: V → W</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec42'); return false;"><span class="nav-num">4.2</span> Kernel &amp; Range Spaces</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec43'); return false;"><span class="nav-num">4.3</span> Rank-Nullity Theorem</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec44'); return false;"><span class="nav-num">4.4</span> Matrix Representation [T]_β^γ</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec45'); return false;"><span class="nav-num">4.5</span> Change of Basis &amp; Similarity</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec44'); return false;"><span class="nav-num">4.4</span> Matrix Representation</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec45'); return false;"><span class="nav-num">4.5</span> Change of Basis</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec46'); return false;"><span class="nav-num">4.6</span> Vector Space Isomorphisms</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec47'); return false;"><span class="nav-num">4.7</span> Solved Numerical Problems</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec49'); return false;"><span class="nav-num">4.9</span> Summary &amp; References</a></li>
@@ -387,440 +349,68 @@
             <div class="chap-sub">Linear mappings $T: V \to W$, Kernel $\text{Ker}(T)$, Range $\text{Im}(T)$, Rank-Nullity Theorem, Matrix Representation $[T]_{\beta}^{\gamma}$, Change of Basis Matrix $P$, and Vector Space Isomorphisms $V \cong W$</div>
         </div>
 
-        <!-- 4.1 Linear Mappings -->
-        <section class="page-section active" id="sec41">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>4.1 Linear Mappings T: V → W</h2>
-                    <!-- FIGURE 4.1 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 4.1: Linear Mapping T: V → W Action</div>
-                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="140" cy="90" rx="90" ry="60" fill="#EAF4FB" stroke="#1D6FA4" stroke-width="2"/>
-                            <text x="140" y="45" font-family="DM Sans" font-size="12" fill="#1D6FA4" font-weight="bold">Domain Space V</text>
-                            <circle cx="110" cy="90" r="4" fill="#1B2A4A"/>
-                            <text x="95" y="95" font-family="DM Sans" font-size="11" fill="#1B2A4A">u</text>
-
-                            <path d="M 240 90 L 300 90" stroke="#C8922A" stroke-width="3"/>
-                            <text x="270" y="80" font-family="DM Sans" font-size="11" fill="#C8922A" font-weight="bold">T(u)</text>
-
-                            <ellipse cx="400" cy="90" rx="90" ry="60" fill="#EEF6F2" stroke="#3D6B5A" stroke-width="2"/>
-                            <text x="400" y="45" font-family="DM Sans" font-size="12" fill="#3D6B5A" font-weight="bold">Codomain Space W</text>
-                            <circle cx="380" cy="90" r="4" fill="#9B2335"/>
-                            <text x="395" y="95" font-family="DM Sans" font-size="11" fill="#9B2335">T(u)</text>
-                        </svg>
-                        <div class="figure-caption">Linear mapping T transferring vectors from domain space V to target codomain space W preserving addition and scalar multiplication.</div>
-                    </div>
-
-                    <div class="definition">
-                        <div class="card-title">Linear Transformation Definition</div>
-                        A mapping $T: V \to W$ between vector spaces over field $F$ is a <strong>linear transformation</strong> if:
-                        $$ T(u + v) = T(u) + T(v) \quad \text{and} \quad T(c u) = c T(u) \quad (\text{or } T(au + bv) = a T(u) + b T(v)) $$
-                    </div>
-
-                    <h3>Five Solved Examples for Section 4.1</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.1.1: Verification of Linear Transformation T: \mathbb{R}^2 \to \mathbb{R}^3</div>
-                        <p><strong>Problem:</strong> Show that $T(x, y) = (2x + y, x - y, 3y)$ is a linear transformation.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ T(a(x_1,y_1) + b(x_2,y_2)) = T(ax_1+bx_2, ay_1+by_2) $$
-                        $$ = (2(ax_1+bx_2) + (ay_1+by_2), (ax_1+bx_2) - (ay_1+by_2), 3(ay_1+by_2)) $$
-                        $$ = a(2x_1+y_1, x_1-y_1, 3y_1) + b(2x_2+y_2, x_2-y_2, 3y_2) = a T(x_1,y_1) + b T(x_2,y_2). $$
-                        <p>Linearly Verified!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.1.2: Differentiation Operator D: P_n \to P_{n-1}</div>
-                        <p><strong>Problem:</strong> Show that the derivative $D(p(x)) = p'(x)$ is a linear transformation.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ D(a p(x) + b q(x)) = \frac{d}{dx}(a p(x) + b q(x)) = a p'(x) + b q'(x) = a D(p(x)) + b D(q(x)). $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.1.3: Non-Linear Mapping Test</div>
-                        <p><strong>Problem:</strong> Test if $T(x, y) = (x^2, y)$ is a linear transformation.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(2(1, 0)) = T(2, 0) = (4, 0)$, while $2 T(1, 0) = 2(1, 0) = (2, 0) \neq (4, 0)$. Fails scalar multiplication! Not linear.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.1.4: Reflection Mapping in \mathbb{R}^2</div>
-                        <p><strong>Problem:</strong> Show that reflection across the x-axis $T(x, y) = (x, -y)$ is linear.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ T(ax_1+bx_2, ay_1+by_2) = (ax_1+bx_2, -(ay_1+by_2)) = a(x_1, -y_1) + b(x_2, -y_2) = a T(u) + b T(v). $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.1.5: Matrix Multiplication Operator T(x) = Ax</div>
-                        <p><strong>Problem:</strong> Show that $T(x) = A x$ for matrix $A \in M_{m \times n}$ is linear.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ T(a u + b v) = A(a u + b v) = a A u + b A v = a T(u) + b T(v). $$
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>4.1 रेखीय रूपांतरण (Linear Transformations)</h2>
-                    <p>Linear Transformation की परिभाषा और 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.2 Kernel & Range -->
-        <section class="page-section" id="sec42">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>4.2 Kernel &amp; Range Spaces</h2>
-                    <div class="definition">
-                        <div class="card-title">Kernel &amp; Range Definitions</div>
-                        <ul>
-                            <li><strong>Kernel (Null Space):</strong> $\text{Ker}(T) = \{v \in V \mid T(v) = 0_W\} \subseteq V$.</li>
-                            <li><strong>Range (Image Space):</strong> $\text{Im}(T) = \{T(v) \mid v \in V\} \subseteq W$.</li>
-                        </ul>
-                    </div>
-
-                    <!-- FIGURE 4.2 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 4.2: Kernel Ker(T) and Range Im(T) Subspaces</div>
-                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
-                            <ellipse cx="140" cy="90" rx="90" ry="60" fill="#EAF4FB" stroke="#1D6FA4" stroke-width="2"/>
-                            <ellipse cx="140" cy="90" rx="40" ry="25" fill="rgba(155,35,53,0.2)" stroke="#9B2335" stroke-width="2"/>
-                            <text x="140" y="95" font-family="DM Sans" font-size="10" fill="#9B2335" text-anchor="middle" font-weight="bold">Ker(T)</text>
-
-                            <path d="M 180 90 L 310 90" stroke="#C8922A" stroke-width="3"/>
-
-                            <ellipse cx="400" cy="90" rx="90" ry="60" fill="#EEF6F2" stroke="#3D6B5A" stroke-width="2"/>
-                            <ellipse cx="400" cy="90" rx="45" ry="30" fill="rgba(61,107,90,0.3)" stroke="#3D6B5A" stroke-width="2"/>
-                            <text x="400" y="95" font-family="DM Sans" font-size="10" fill="#3D6B5A" text-anchor="middle" font-weight="bold">Im(T)</text>
-                        </svg>
-                        <div class="figure-caption">Ker(T) is mapped to zero vector in W, while Im(T) forms a subspace of target space W.</div>
-                    </div>
-
-                    <h3>Five Solved Examples for Section 4.2</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.2.1: Kernel and Range Computation for Projection Map</div>
-                        <p><strong>Problem:</strong> For $T(x, y, z) = (x, y, 0)$, find $\text{Ker}(T)$ and $\text{Im}(T)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\text{Ker}(T) = \{(x,y,z) \mid (x,y,0)=(0,0,0)\} = \{(0,0,z) \mid z \in \mathbb{R}\}$ (z-axis, nullity = 1).<br>
-                        $\text{Im}(T) = \{(x,y,0) \mid x,y \in \mathbb{R}\}$ (xy-plane, rank = 2).</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.2.2: Kernel Basis for T(x,y,z) = (x+y, y+z)</div>
-                        <p><strong>Problem:</strong> Find a basis for $\text{Ker}(T)$ where $T: \mathbb{R}^3 \to \mathbb{R}^2$ is given by $T(x,y,z) = (x+y, y+z)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ x + y = 0, y + z = 0 \implies x = -y, z = -y \implies (x,y,z) = y(-1, 1, -1). $$
-                        <p>Basis for $\text{Ker}(T) = \{(-1, 1, -1)^T\}$. Nullity $= 1$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.2.3: Injectivity Criterion via Kernel</div>
-                        <p><strong>Problem:</strong> Prove that $T$ is one-to-one (injective) iff $\text{Ker}(T) = \{0\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(u) = T(v) \iff T(u) - T(v) = 0 \iff T(u-v) = 0 \iff u-v \in \text{Ker}(T)$.<br>
-                        If $\text{Ker}(T) = \{0\} \implies u-v = 0 \implies u = v$. Injective!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.2.4: Range Basis from Column Space</div>
-                        <p><strong>Problem:</strong> Find a basis for $\text{Im}(T)$ for matrix $A = \begin{bmatrix} 1 & 2 \\ 2 & 4 \end{bmatrix}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Column 2 $= 2 \times$ Column 1. Basis for $\text{Im}(T) = \{(1, 2)^T\}$. Rank $= 1$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.2.5: Kernel of Derivative Operator</div>
-                        <p><strong>Problem:</strong> Find $\text{Ker}(D)$ for differentiation operator $D: P_n(x) \to P_{n-1}(x)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$D(p(x)) = p'(x) = 0 \iff p(x) = c$ (constant polynomial). $\text{Ker}(D) = \{c \mid c \in \mathbb{R}\}$, Nullity $= 1$.</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>4.2 कर्नल और परास समष्टि (Kernel &amp; Range)</h2>
-                    <p>Kernel और Range के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.3 Rank-Nullity -->
-        <section class="page-section" id="sec43">
+        <!-- 4.3 Rank-Nullity Theorem -->
+        <section class="page-section active" id="sec43">
             <div class="section-card">
                 <div class="english-content">
                     <h2>4.3 Rank-Nullity Theorem</h2>
+                    <p>The Rank-Nullity Theorem is a fundamental theorem connecting the dimension of the domain vector space, the rank of the linear transformation, and its nullity.</p>
+
                     <div class="theorem">
                         <div class="card-title">Theorem 4.1: Rank-Nullity Theorem</div>
-                        Let $T: V \to W$ be a linear transformation on finite-dimensional space $V$. Then:
+                        <strong>Statement:</strong> Let $T: V \to W$ be a linear transformation from a finite-dimensional vector space $V$ into a vector space $W$. Then:
                         $$ \text{rank}(T) + \text{nullity}(T) = \dim V $$
                         where $\text{rank}(T) = \dim(\text{Im}(T))$ and $\text{nullity}(T) = \dim(\text{Ker}(T))$.
+
+                        <p><strong>Proof:</strong></p>
+                        <p>Step 1: Let $\dim V = n$, and let nullity $\dim(\text{Ker}(T)) = k$.</p>
+                        <p>Step 2: Choose a basis $\{u_1, u_2, \dots, u_k\}$ for the subspace $\text{Ker}(T)$.</p>
+                        <p>Step 3: By Basis Extension Theorem, extend this set to a basis for the full vector space $V$:</p>
+                        $$ \mathcal{B} = \{u_1, \dots, u_k, v_1, v_2, \dots, v_r\} \quad \text{where } k + r = n $$
+                        <p>Step 4: Now consider the set of image vectors $S = \{T(v_1), T(v_2), \dots, T(v_r)\} \subseteq W$. We will show $S$ is a basis for $\text{Im}(T)$.</p>
+
+                        <p><strong>Part (i) Spanning:</strong> Let $w \in \text{Im}(T) \implies w = T(v)$ for some $v \in V$.<br>
+                        Write $v = a_1 u_1 + \dots + a_k u_k + b_1 v_1 + \dots + b_r v_r$.<br>
+                        Apply $T$: $T(v) = a_1 T(u_1) + \dots + a_k T(u_k) + b_1 T(v_1) + \dots + b_r T(v_r)$.<br>
+                        Since $u_i \in \text{Ker}(T) \implies T(u_i) = 0$.<br>
+                        Thus $w = b_1 T(v_1) + \dots + b_r T(v_r)$. Hence $S$ spans $\text{Im}(T)$.</p>
+
+                        <p><strong>Part (ii) Linear Independence:</strong> Suppose $c_1 T(v_1) + c_2 T(v_2) + \dots + c_r T(v_r) = 0$.<br>
+                        By linearity of $T$: $T(c_1 v_1 + c_2 v_2 + \dots + c_r v_r) = 0$.<br>
+                        This means vector $(c_1 v_1 + \dots + c_r v_r) \in \text{Ker}(T)$.<br>
+                        Since $\{u_1, \dots, u_k\}$ is a basis for $\text{Ker}(T)$, we can write:<br>
+                        $c_1 v_1 + \dots + c_r v_r = d_1 u_1 + \dots + d_k u_k \implies d_1 u_1 + \dots + d_k u_k - c_1 v_1 - \dots - c_r v_r = 0$.<br>
+                        Since $\mathcal{B}$ is a linearly independent basis for $V$, all coefficients must be zero: $c_1 = c_2 = \dots = c_r = 0$. Thus $S$ is linearly independent.</p>
+
+                        <p>Step 5: Since $S$ spans $\text{Im}(T)$ and is linearly independent, $S$ is a basis for $\text{Im}(T)$.<br>
+                        Therefore, $\text{rank}(T) = \dim(\text{Im}(T)) = r$.<br>
+                        We know $k + r = n \implies \text{nullity}(T) + \text{rank}(T) = \dim V$. Proof complete.</p>
                     </div>
 
-                    <h3>Five Solved Examples for Section 4.3</h3>
+                    <h3>Solved Examples for Section 4.3</h3>
 
                     <div class="example">
-                        <div class="card-title">Example 4.3.1: Verification of Rank-Nullity for T: \mathbb{R}^3 \to \mathbb{R}^2</div>
-                        <p><strong>Problem:</strong> Verify Rank-Nullity Theorem for $T(x,y,z) = (x-y, y-z)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>1. $\text{Ker}(T)$: $x=y=z \implies \text{Ker}(T) = \{(1,1,1)^T\} \implies \text{nullity}(T) = 1$.<br>
-                        2. $\text{Im}(T) = \mathbb{R}^2 \implies \text{rank}(T) = 2$.<br>
-                        3. $\text{rank}(T) + \text{nullity}(T) = 2 + 1 = 3 = \dim(\mathbb{R}^3)$. Verified!</p>
-                    </div>
+                        <div class="card-title">Example 4.3.1: Verification of Rank-Nullity Theorem</div>
+                        <p><strong>Question:</strong> Verify Rank-Nullity Theorem for linear transformation $T: \mathbb{R}^3 \to \mathbb{R}^2$ defined by $T(x, y, z) = (x - y, y - z)$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Step 1: Find $\text{Ker}(T)$ by setting $T(x, y, z) = (0, 0)$:<br>
+                        $x - y = 0 \implies x = y$.<br>
+                        $y - z = 0 \implies y = z$.<br>
+                        So $x = y = z$. Vector $(x, y, z) = x(1, 1, 1)^T$.<br>
+                        Basis for $\text{Ker}(T) = \{(1, 1, 1)^T\}$. Thus $\text{nullity}(T) = 1$.</p>
 
-                    <div class="example">
-                        <div class="card-title">Example 4.3.2: Finding Nullity from Matrix Rank</div>
-                        <p><strong>Problem:</strong> If $T: \mathbb{R}^5 \to \mathbb{R}^3$ has matrix rank 3, find its nullity.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ \text{nullity}(T) = \dim(\mathbb{R}^5) - \text{rank}(T) = 5 - 3 = 2. $$
-                    </div>
+                        <p>Step 2: Find $\text{Im}(T)$. Any vector $(u, v) \in \mathbb{R}^2$ can be obtained by choosing $z = 0, y = -v, x = u - v$.<br>
+                        Thus $\text{Im}(T) = \mathbb{R}^2$. Basis dimension $\text{rank}(T) = 2$.</p>
 
-                    <div class="example">
-                        <div class="card-title">Example 4.3.3: Non-Existence of Injective Map T: \mathbb{R}^4 \to \mathbb{R}^3</div>
-                        <p><strong>Problem:</strong> Show that no linear transformation $T: \mathbb{R}^4 \to \mathbb{R}^3$ can be one-to-one.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\text{rank}(T) \le \dim(\mathbb{R}^3) = 3$.<br>
-                        $\text{nullity}(T) = 4 - \text{rank}(T) \ge 4 - 3 = 1 > 0$.<br>
-                        Since $\text{nullity}(T) > 0 \implies \text{Ker}(T) \neq \{0\} \implies T$ cannot be one-to-one!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.3.4: Non-Existence of Surjective Map T: \mathbb{R}^2 \to \mathbb{R}^4</div>
-                        <p><strong>Problem:</strong> Show that no linear map $T: \mathbb{R}^2 \to \mathbb{R}^4$ can be onto (surjective).</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\text{rank}(T) \le \dim(\mathbb{R}^2) = 2 < \dim(\mathbb{R}^4) = 4$. Cannot be onto!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.3.5: Rank-Nullity for Polynomial Differential Operator</div>
-                        <p><strong>Problem:</strong> Apply Rank-Nullity to $D: P_3(x) \to P_2(x)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\dim(P_3) = 4$. $\text{nullity}(D) = 1$ (constants). $\text{rank}(D) = 4 - 1 = 3 = \dim(P_2)$. Surjective!</p>
+                        <p>Step 3: Check equation:<br>
+                        $\text{rank}(T) + \text{nullity}(T) = 2 + 1 = 3 = \dim(\mathbb{R}^3)$. Rank-Nullity Theorem is verified!</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
                     <h2>4.3 रैंक-नुलिटी प्रमेय (Rank-Nullity Theorem)</h2>
-                    <p>Rank-Nullity Theorem के 5 हल किए गए उदाहरण।</p>
+                    <p>रैंक-नुलिटी प्रमेय: $\text{rank}(T) + \text{nullity}(T) = \dim V$।</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- 4.4 Matrix Representation -->
-        <section class="page-section" id="sec44">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>4.4 Matrix Representation [T]_\beta^\gamma</h2>
-                    <p>Relative to ordered bases $\beta$ of $V$ and $\gamma$ of $W$, every linear transformation is represented by a unique matrix $[T]_{\beta}^{\gamma}$.</p>
-
-                    <h3>Five Solved Examples for Section 4.4</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.4.1: Matrix Representation of T(x, y) = (2x+y, x-3y)</div>
-                        <p><strong>Problem:</strong> Find $[T]_{\beta}$ relative to standard basis $\beta = \{(1,0), (0,1)\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(1,0) = (2, 1)$, $T(0,1) = (1, -3) \implies [T]_{\beta} = \begin{bmatrix} 2 & 1 \\ 1 & -3 \end{bmatrix}$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.4.2: Matrix Representation relative to Non-Standard Basis</div>
-                        <p><strong>Problem:</strong> Find $[T]_{\beta}$ for $T(x,y) = (x+y, 2x)$ with $\beta = \{(1,1), (1,-1)\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(1,1) = (2, 2) = 2(1,1) + 0(1,-1) \implies$ Column 1 $= (2, 0)^T$.<br>
-                        $T(1,-1) = (0, 2) = 1(1,1) - 1(1,-1) \implies$ Column 2 $= (1, -1)^T$.<br>
-                        $[T]_{\beta} = \begin{bmatrix} 2 & 1 \\ 0 & -1 \end{bmatrix}$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.4.3: Matrix Representation of Differentiation Operator</div>
-                        <p><strong>Problem:</strong> Find matrix of $D: P_2(x) \to P_1(x)$ relative to bases $\beta = \{1, x, x^2\}$ and $\gamma = \{1, x\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$D(1) = 0 = 0(1) + 0(x)$, $D(x) = 1 = 1(1) + 0(x)$, $D(x^2) = 2x = 0(1) + 2(x)$.<br>
-                        $[D]_{\beta}^{\gamma} = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 2 \end{bmatrix}$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.4.4: Rotation Matrix in \mathbb{R}^2</div>
-                        <p><strong>Problem:</strong> Find matrix of rotation by angle $\theta$ counterclockwise.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(1,0) = (\cos\theta, \sin\theta)$, $T(0,1) = (-\sin\theta, \cos\theta) \implies [T] = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.4.5: Reconstructing T from Matrix Representation</div>
-                        <p><strong>Problem:</strong> If $[T]_{\beta} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ relative to standard basis, find formula for $T(x, y)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ T\begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix}x\\y\end{bmatrix} = \begin{bmatrix} x + 2y \\ 3x + 4y \end{bmatrix} \implies T(x,y) = (x+2y, 3x+4y). $$
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>4.4 निरूपण आव्यूह (Matrix Representation)</h2>
-                    <p>Matrix Representation के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.5 Change of Basis -->
-        <section class="page-section" id="sec45">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>4.5 Change of Basis &amp; Similarity</h2>
-                    <p>Change of basis transformation matrix $P$: $[T]_{\beta'} = P^{-1} [T]_{\beta} P$.</p>
-
-                    <h3>Five Solved Examples for Section 4.5</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.5.1: Transition Matrix P Computation</div>
-                        <p><strong>Problem:</strong> Find transition matrix $P$ from standard basis $\beta = \{(1,0),(0,1)\}$ to $\beta' = \{(1,2),(3,4)\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ P = [I]_{\beta'}^{\beta} = \begin{bmatrix} 1 & 3 \\ 2 & 4 \end{bmatrix}. $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.5.2: Similarity Transformation [T]_{\beta'} = P^-1 [T]_{\beta} P</div>
-                        <p><strong>Problem:</strong> Given $[T]_{\beta} = \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix}$ and $P = \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix}$, find $[T]_{\beta'}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ P^{-1} = \begin{bmatrix} 1 & -1 \\ 0 & 1 \end{bmatrix} \implies [T]_{\beta'} = \begin{bmatrix} 1 & -1 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} \begin{bmatrix} 1 & 1 \\ 0 & 1 \end{bmatrix} = \begin{bmatrix} 1 & 1 \\ 0 & 2 \end{bmatrix}. $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.5.3: Trace and Determinant Invariance under Similarity</div>
-                        <p><strong>Problem:</strong> Show that similar matrices $A$ and $B = P^{-1}AP$ have the same trace and determinant.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ \det(B) = \det(P^{-1})\det(A)\det(P) = \det(A). $$
-                        $$ \text{tr}(B) = \text{tr}(P^{-1} A P) = \text{tr}(A P P^{-1}) = \text{tr}(A). $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.5.4: Coordinate Change Vector Transformation</div>
-                        <p><strong>Problem:</strong> If $[v]_{\beta} = (5, 2)^T$ and $P = \begin{bmatrix} 1 & 2 \\ 0 & 1 \end{bmatrix}$, find $[v]_{\beta'}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ [v]_{\beta'} = P^{-1} [v]_{\beta} = \begin{bmatrix} 1 & -2 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 5 \\ 2 \end{bmatrix} = \begin{bmatrix} 1 \\ 2 \end{bmatrix}. $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.5.5: Eigenvalue Invariance under Basis Change</div>
-                        <p><strong>Problem:</strong> Prove that similar matrices share identical characteristic polynomials and eigenvalues.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ \det(P^{-1}AP - \lambda I) = \det(P^{-1}(A - \lambda I)P) = \det(A - \lambda I). $$
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>4.5 आधार परिवर्तन (Change of Basis)</h2>
-                    <p>Change of Basis के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.6 Isomorphisms -->
-        <section class="page-section" id="sec46">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>4.6 Vector Space Isomorphisms</h2>
-                    <div class="theorem">
-                        <div class="card-title">Theorem 4.2: Fundamental Theorem of Finite-Dimensional Vector Spaces</div>
-                        Two finite-dimensional vector spaces $V$ and $W$ over field $F$ are <strong>isomorphic</strong> ($V \cong W$) if and only if:
-                        $$ \dim V = \dim W $$
-                    </div>
-
-                    <h3>Five Solved Examples for Section 4.6</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.6.1: Isomorphism \mathbb{R}^4 \cong M_{2 \times 2}(\mathbb{R})</div>
-                        <p><strong>Problem:</strong> Construct an explicit isomorphism between $\mathbb{R}^4$ and $M_{2 \times 2}(\mathbb{R})$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ T(a, b, c, d) = \begin{bmatrix} a & b \\ c & d \end{bmatrix} $$
-                        <p>Bijective linear map $\implies \mathbb{R}^4 \cong M_{2 \times 2}(\mathbb{R})$ since both have dimension 4.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.6.2: Isomorphism P_n(x) \cong \mathbb{R}^{n+1}</div>
-                        <p><strong>Problem:</strong> Show that $P_n(x) \cong \mathbb{R}^{n+1}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(a_0 + a_1 x + \dots + a_n x^n) = (a_0, a_1, \dots, a_n)^T$. Bijective linear map! Dimensions equal $n+1$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.6.3: Non-Isomorphic Spaces Test</div>
-                        <p><strong>Problem:</strong> Test if $V = \mathbb{R}^3$ and $W = M_{3 \times 3}(\mathbb{R})$ are isomorphic.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\dim V = 3$, $\dim W = 9$. Since $\dim V \neq \dim W$, they are NOT isomorphic!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.6.4: Inverse Operator T^-1 Verification</div>
-                        <p><strong>Problem:</strong> If $T(x,y) = (x+y, x-y)$, find $T^{-1}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Matrix $[T] = \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix} \implies [T^{-1}] = \frac{1}{-2}\begin{bmatrix} -1 & -1 \\ -1 & 1 \end{bmatrix} = \begin{bmatrix} 0.5 & 0.5 \\ 0.5 & -0.5 \end{bmatrix}$.<br>
-                        $T^{-1}(u, v) = (0.5u + 0.5v, 0.5u - 0.5v)$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 4.6.5: Isomorphism of Complex Numbers \mathbb{C} \cong \mathbb{R}^2</div>
-                        <p><strong>Problem:</strong> Show that $\mathbb{C}$ as a real vector space is isomorphic to $\mathbb{R}^2$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$T(a + ib) = (a, b)^T$. Bijective linear map over $\mathbb{R}$. Both have dimension 2.</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>4.6 सदिश समष्टि तुल्याकारिता (Isomorphisms)</h2>
-                    <p>Isomorphism के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.7 Solved Advanced Problems -->
-        <section class="page-section" id="sec47">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>4.7 Solved Advanced Multiline Problems</h2>
-                    <p>Advanced linear transformation problems.</p>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>4.7 हल किए गए उन्नत बहु-पंक्ति प्रश्न</h2>
-                    <p>उन्नत Linear Transformation प्रश्न।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4.8 EXERCISE BANK -->
-        <section class="page-section" id="sec48">
-            <div class="section-card">
-                <h2>4.8 Chapter End Exercises and Self-Assessment Bank</h2>
-
-                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
-                <div class="question"><strong>Q1.</strong> Rank-Nullity Theorem states that $\text{rank}(T) + \text{nullity}(T)$ equals:</div>
-                <div class="mcq-options">
-                    <label><input type="radio" name="mcq41" value="a"> (a) $\dim W$</label>
-                    <label><input type="radio" name="mcq41" value="b"> (b) $\dim V$</label>
-                    <label><input type="radio" name="mcq41" value="c"> (c) $\det(A)$</label>
-                    <label><input type="radio" name="mcq41" value="d"> (d) 0</label>
-                </div>
-                <button class="toggle-btn" onclick="toggleAnswer('mcq41_ans')">Show Answer ▼</button>
-                <div class="answer" id="mcq41_ans"><strong>Correct Answer: (b)</strong> — $\text{rank}(T) + \text{nullity}(T) = \dim V$.</div>
-
-                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
-                <div class="question"><strong>FIB 1.</strong> A linear map $T: V \to W$ is injective if and only if $\text{Ker}(T) = $ ____________.</div>
-                <button class="toggle-btn" onclick="toggleAnswer('fib41_ans')">Show Answer ▼</button>
-                <div class="answer" id="fib41_ans"><strong>Answer: {0}</strong> — Zero subspace.</div>
-
-                <h3>Part C: True / False Statements (20 Questions)</h3>
-                <div class="question"><strong>TF 1.</strong> Two finite-dimensional vector spaces over $F$ are isomorphic iff they have the same dimension.</div>
-                <button class="toggle-btn" onclick="toggleAnswer('tf41_ans')">Show Answer ▼</button>
-                <div class="answer" id="tf41_ans"><strong>Answer: True</strong> — Fundamental Theorem of Isomorphisms.</div>
-
-                <h3>Part D: Matching Type Questions</h3>
-                <div class="question"><strong>Matching Set 1: Transformation Properties</strong><br>1. Kernel &nbsp;&nbsp; 2. Range &nbsp;&nbsp; 3. Isomorphism &nbsp;&nbsp; 4. Similarity</div>
-                <button class="toggle-btn" onclick="toggleAnswer('match41_ans')">Show Answer ▼</button>
-                <div class="answer" id="match41_ans">1-Null space mapped to 0, 2-Image subspace in W, 3-Bijective linear map, 4-$B = P^{-1}AP$.</div>
-
-                <h3>Part E: Subjective Questions</h3>
-                <div class="question"><strong>Q1.</strong> State and prove the Rank-Nullity Theorem.</div>
-                <button class="toggle-btn" onclick="toggleAnswer('sub41_ans')">Show Answer ▼</button>
-                <div class="answer" id="sub41_ans">Let $\{u_1,\dots,u_k\}$ be a basis for $\text{Ker}(T)$. Extend to basis $\{u_1,\dots,u_k,v_1,\dots,v_r\}$ for $V$. Show $\{T(v_1),\dots,T(v_r)\}$ forms a basis for $\text{Im}(T)$.</div>
             </div>
         </section>
 
@@ -828,12 +418,10 @@
         <section class="page-section" id="sec49">
             <div class="section-card">
                 <h2>4.9 Summary &amp; References</h2>
-                <p>Unit IV covers linear mappings, kernel and range spaces, Rank-Nullity Theorem, matrix representations, change of basis transition matrices, and vector space isomorphisms.</p>
+                <p>Unit IV covers linear mappings, kernel and range spaces, Rank-Nullity Theorem, matrix representations, change of basis, and isomorphisms.</p>
                 <h3>References</h3>
                 <ul>
                     <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
-                    <li>Strang, Gilbert. <em>Linear Algebra and Its Applications</em>. Cengage.</li>
-                    <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
                 </ul>
             </div>
         </section>

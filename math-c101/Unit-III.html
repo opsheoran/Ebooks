@@ -224,44 +224,6 @@
         .example .card-title { color: var(--sky); }
         .note .card-title { color: var(--text-dark); }
 
-        /* TABLES */
-        table {
-            width: auto !important; max-width: 95% !important; margin: 24px auto !important;
-            border-collapse: separate !important; border-spacing: 0 !important;
-            border-radius: 8px !important; overflow: hidden !important;
-            box-shadow: 0 2px 8px rgba(27, 42, 74, 0.08) !important;
-            background: #ffffff !important; display: table !important;
-            border: 1px solid var(--border) !important;
-        }
-        th {
-            background: var(--navy) !important; color: #ffffff !important;
-            padding: 8px 16px !important; font-family: 'DM Sans', sans-serif !important;
-            font-size: 0.88rem !important; font-weight: 600 !important;
-            letter-spacing: 0.3px !important; text-align: center !important;
-            border-bottom: 2px solid var(--gold) !important;
-        }
-        td {
-            padding: 6px 16px !important; border-bottom: 1px solid var(--border) !important;
-            font-size: 0.88rem !important; color: var(--text-dark) !important; text-align: center !important;
-        }
-        tr:nth-child(even) td { background: #fcfbf9 !important; }
-        tr:hover td { background: var(--gold-pale) !important; transition: background 0.15s ease !important; }
-
-        /* FIGURE BOX */
-        .figure-box {
-            background: #FAFAFC; border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 22px; margin: 28px auto; max-width: 720px; text-align: center; box-shadow: var(--shadow-sm);
-        }
-        .figure-title {
-            font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 0.95rem;
-            color: var(--navy); margin-bottom: 14px;
-        }
-        .book-fig { width: 100%; max-width: 640px; height: auto; margin: 0 auto; display: block; }
-        .figure-caption {
-            font-family: 'Source Serif 4', serif; font-size: 0.88rem; font-style: italic;
-            color: var(--text-soft); margin-top: 12px; line-height: 1.5;
-        }
-
         /* EXERCISE STYLING */
         .question {
             background: #fff; border: 1px solid var(--border); border-left: 4px solid var(--navy-light);
@@ -349,11 +311,11 @@
         <div class="nav-group-label">Unit III Navigation</div>
         <ul class="nav-list">
             <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('sec31'); return false;"><span class="nav-num">3.1</span> Groups &amp; Fields</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec32'); return false;"><span class="nav-num">3.2</span> Vector Spaces Definition &amp; Axioms</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec32'); return false;"><span class="nav-num">3.2</span> Vector Space Axioms</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec33'); return false;"><span class="nav-num">3.3</span> Subspaces &amp; Direct Sums</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec34'); return false;"><span class="nav-num">3.4</span> Quotient Spaces V/W</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec35'); return false;"><span class="nav-num">3.5</span> Linear Span &amp; Combinations</a></li>
-            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec36'); return false;"><span class="nav-num">3.6</span> Linear Independence &amp; Dependence</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec35'); return false;"><span class="nav-num">3.5</span> Linear Span</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec36'); return false;"><span class="nav-num">3.6</span> Linear Independence</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec37'); return false;"><span class="nav-num">3.7</span> Basis and Dimension</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec38'); return false;"><span class="nav-num">3.8</span> Solved Numerical Problems</a></li>
             <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('sec310'); return false;"><span class="nav-num">3.10</span> Summary &amp; References</a></li>
@@ -388,498 +350,61 @@
             <div class="chap-sub">Groups, Fields, Vector space axioms, Subspaces, Direct sums $V = U \oplus W$, Quotient spaces $V/W$, Linear independence, Wronskian, Basis, and Dimension theorems</div>
         </div>
 
-        <!-- 3.1 Groups & Fields -->
-        <section class="page-section active" id="sec31">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.1 Groups and Fields</h2>
-                    <div class="definition">
-                        <div class="card-title">Field Definition</div>
-                        A <strong>field</strong> $(F, +, \cdot)$ is a set $F$ equipped with two binary operations (addition $+$ and multiplication $\cdot$) satisfying:
-                        <ol>
-                            <li>$(F, +)$ is an abelian group with additive identity $0$.</li>
-                            <li>$(F \setminus \{0\}, \cdot)$ is an abelian group with multiplicative identity $1$.</li>
-                            <li>Multiplication distributes over addition: $a(b + c) = ab + ac$.</li>
-                        </ol>
-                        Standard fields in linear algebra: Real numbers $\mathbb{R}$, Complex numbers $\mathbb{C}$, Rational numbers $\mathbb{Q}$.
-                    </div>
-
-                    <h3>Five Solved Examples for Section 3.1</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.1.1: Verification of Field Axioms for Rational Numbers \mathbb{Q}</div>
-                        <p><strong>Problem:</strong> Show that the set of rational numbers $\mathbb{Q}$ forms a field under standard addition and multiplication.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>1. Addition is closed, associative, has identity 0, inverse $-a/b$, and is commutative.<br>
-                        2. Multiplication is closed for non-zero elements, associative, has identity 1, inverse $b/a$ ($a \neq 0$), and is commutative.<br>
-                        3. Distributivity holds. Thus $\mathbb{Q}$ is a field.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.1.2: Field Verification for \mathbb{Q}(\sqrt{2})</div>
-                        <p><strong>Problem:</strong> Show that $F = \{a + b\sqrt{2} \mid a, b \in \mathbb{Q}\}$ is a field under real number operations.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Check multiplicative inverse of non-zero $a + b\sqrt{2}$:</p>
-                        $$ \frac{1}{a + b\sqrt{2}} = \frac{a - b\sqrt{2}}{(a + b\sqrt{2})(a - b\sqrt{2})} = \frac{a}{a^2 - 2b^2} - \frac{b}{a^2 - 2b^2}\sqrt{2} \in F $$
-                        <p>Since $a^2 - 2b^2 \neq 0$ for non-zero rational $(a,b)$, every non-zero element has an inverse. Hence $F$ is a subfield of $\mathbb{R}$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.1.3: Finite Field \mathbb{Z}_p for Prime p = 5</div>
-                        <p><strong>Problem:</strong> Construct addition and multiplication tables for $\mathbb{Z}_5 = \{0, 1, 2, 3, 4\}$ modulo 5 and find multiplicative inverses.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Inverses modulo 5: $1^{-1} = 1$, $2^{-1} = 3$ (since $2 \times 3 = 6 \equiv 1$), $3^{-1} = 2$, $4^{-1} = 4$ (since $4 \times 4 = 16 \equiv 1$). Hence $\mathbb{Z}_5$ is a finite field.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.1.4: Non-Field Property of Integers \mathbb{Z}</div>
-                        <p><strong>Problem:</strong> Explain why the set of integers $\mathbb{Z}$ is NOT a field.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Element $2 \in \mathbb{Z}$ has no multiplicative inverse in $\mathbb{Z}$ ($1/2 \notin \mathbb{Z}$). $\mathbb{Z}$ is an integral domain, not a field.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.1.5: Complex Field \mathbb{C} Addition and Multiplication Identity</div>
-                        <p><strong>Problem:</strong> Verify field additive and multiplicative identities for complex numbers $z = x + iy \in \mathbb{C}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ (x+iy) + (0+0i) = x+iy \implies 0+0i = 0_{\mathbb{C}} $$
-                        $$ (x+iy)(1+0i) = x(1) - y(0) + i(x(0) + y(1)) = x+iy \implies 1+0i = 1_{\mathbb{C}} $$
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.1 समूह और क्षेत्र (Groups and Fields)</h2>
-                    <p>Field की परिभाषा और 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.2 Vector Space Definition -->
-        <section class="page-section" id="sec32">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.2 Vector Spaces Definition and Axioms</h2>
-                    <div class="definition">
-                        <div class="card-title">Vector Space Definition</div>
-                        A <strong>vector space</strong> $V(F)$ is a set $V$ equipped with vector addition $+: V \times V \to V$ and scalar multiplication $\cdot: F \times V \to V$ satisfying 8 axioms.
-                    </div>
-
-                    <h3>Five Solved Examples for Section 3.2</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.2.1: Euclidean Space \mathbb{R}^n</div>
-                        <p><strong>Problem:</strong> Show that $V = \mathbb{R}^n$ with component-wise operations forms a vector space over $\mathbb{R}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>For $u = (u_1,\dots,u_n), v = (v_1,\dots,v_n)$, $u+v = (u_1+v_1,\dots,u_n+v_n)$ and $c u = (cu_1,\dots,cu_n)$ satisfy all 8 axioms with $0 = (0,\dots,0)$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.2.2: Matrix Space M_{m \times n}(F)</div>
-                        <p><strong>Problem:</strong> Show that the set of all $2 \times 2$ real matrices $M_{2 \times 2}(\mathbb{R})$ is a vector space over $\mathbb{R}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Matrix addition is associative, commutative, has zero matrix $\begin{bmatrix}0&0\\0&0\end{bmatrix}$, inverse $-A$, and scalar multiplication distributes. Dimension is $2 \times 2 = 4$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.2.3: Polynomial Vector Space P_n(x)</div>
-                        <p><strong>Problem:</strong> Show that $P_n(x) = \{a_0 + a_1 x + \dots + a_n x^n \mid a_i \in \mathbb{R}\}$ forms a vector space over $\mathbb{R}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Sum of polynomials of degree $\le n$ is degree $\le n$. Scalar multiple is degree $\le n$. Zero polynomial acts as additive identity.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.2.4: Continuous Functions Space C[a,b]</div>
-                        <p><strong>Problem:</strong> Show that the set of continuous real-valued functions $C[a,b]$ forms a vector space under pointwise addition and scalar multiplication.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Sum of continuous functions is continuous. Scalar multiple of continuous function is continuous. Zero function $f(x)=0$ is continuous.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.2.5: Non-Vector Space Failure Example</div>
-                        <p><strong>Problem:</strong> Test whether $V = \{(x, y) \in \mathbb{R}^2 \mid x > 0, y > 0\}$ with standard operations is a vector space over $\mathbb{R}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Take $u = (1, 2) \in V$ and scalar $c = -1 \in \mathbb{R}$. Scalar product $c u = -1(1, 2) = (-1, -2) \notin V$ (since coordinates are not positive). Fails scalar closure! Not a vector space.</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.2 सदिश समष्टि की परिभाषा (Vector Space Definition)</h2>
-                    <p>Vector Space के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.3 Subspaces & Direct Sums -->
-        <section class="page-section" id="sec33">
+        <!-- 3.3 Subspaces -->
+        <section class="page-section active" id="sec33">
             <div class="section-card">
                 <div class="english-content">
                     <h2>3.3 Subspaces and Direct Sums</h2>
+                    <p>A non-empty subset $W$ of a vector space $V$ is called a subspace if $W$ itself forms a vector space under the same operations as $V$.</p>
+
                     <div class="theorem">
-                        <div class="card-title">Theorem 3.1: Subspace Test</div>
-                        A non-empty subset $W \subseteq V$ is a <strong>subspace</strong> of $V(F)$ if and only if for all $u, v \in W$ and all $a, b \in F$:
+                        <div class="card-title">Theorem 3.1: Subspace Test Theorem</div>
+                        <strong>Statement:</strong> A non-empty subset $W \subseteq V$ is a subspace of $V(F)$ if and only if for all vectors $u, v \in W$ and all scalars $a, b \in F$:
                         $$ a u + b v \in W $$
+
+                        <p><strong>Proof:</strong></p>
+                        <p>($\implies$) Suppose $W$ is a subspace of $V$. By vector space axioms, $W$ is closed under vector addition and scalar multiplication. Thus for $u, v \in W$, $a u \in W$ and $b v \in W \implies a u + b v \in W$.</p>
+                        <p>($\impliedby$) Suppose $a u + b v \in W$ holds for all $u, v \in W$ and $a, b \in F$.</p>
+                        <p>1. Take $a = 1, b = 1 \implies u + v \in W$ (Closure under addition).</p>
+                        <p>2. Take $a = c, b = 0 \implies c u \in W$ (Closure under scalar multiplication).</p>
+                        <p>3. Take $a = 0, b = 0 \implies 0 u + 0 v = 0 \in W$ (Contains zero vector).</p>
+                        <p>4. Take $a = -1, b = 0 \implies -u \in W$ (Contains additive inverse).</p>
+                        <p>Other associative and commutative properties hold naturally because $W \subseteq V$. Thus $W$ is a subspace. Proof complete.</p>
                     </div>
 
-                    <!-- FIGURE 3.1 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 3.1: Direct Sum Decomposition V = U ⊕ W</div>
-                        <svg class="book-fig" viewBox="0 0 540 180" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="20" y="20" width="500" height="140" rx="10" fill="#F4F4F6" stroke="#1B2A4A" stroke-width="2"/>
-                            <text x="40" y="45" font-family="DM Sans" font-size="12" fill="#1B2A4A" font-weight="bold">Vector Space V</text>
-                            <ellipse cx="180" cy="95" rx="120" ry="50" fill="rgba(29,111,164,0.2)" stroke="#1D6FA4" stroke-width="2"/>
-                            <text x="130" y="95" font-family="DM Sans" font-size="11" fill="#1D6FA4" font-weight="bold">Subspace U</text>
-                            <ellipse cx="360" cy="95" rx="120" ry="50" fill="rgba(61,107,90,0.2)" stroke="#3D6B5A" stroke-width="2"/>
-                            <text x="390" y="95" font-family="DM Sans" font-size="11" fill="#3D6B5A" font-weight="bold">Subspace W</text>
-                            <circle cx="270" cy="95" r="5" fill="#9B2335"/>
-                            <text x="270" y="80" font-family="DM Sans" font-size="10" fill="#9B2335" text-anchor="middle" font-weight="bold">U ∩ W = {0}</text>
-                        </svg>
-                        <div class="figure-caption">Direct sum V = U ⊕ W where subspaces U and W intersect only at the zero vector {0}.</div>
+                    <div class="theorem">
+                        <div class="card-title">Theorem 3.2: Dimension of Sum of Subspaces</div>
+                        <strong>Statement:</strong> If $U$ and $W$ are finite-dimensional subspaces of $V$, then:
+                        $$ \dim(U + W) = \dim U + \dim W - \dim(U \cap W) $$
+
+                        <p><strong>Proof:</strong></p>
+                        <p>Let $\dim(U \cap W) = k$. Let $\{v_1, \dots, v_k\}$ be a basis for $U \cap W$.</p>
+                        <p>Extend this basis to a basis of $U$: $\{v_1, \dots, v_k, u_1, \dots, u_m\}$, so $\dim U = k + m$.</p>
+                        <p>Extend the same basis to a basis of $W$: $\{v_1, \dots, v_k, w_1, \dots, w_n\}$, so $\dim W = k + n$.</p>
+                        <p>Now consider set $S = \{v_1, \dots, v_k, u_1, \dots, u_m, w_1, \dots, w_n\}$. We will show $S$ is a basis for $U + W$.</p>
+                        <p>1. Any element in $U + W$ is $u + w$. Since $u$ is a combination of $\{v_i, u_j\}$ and $w$ is a combination of $\{v_i, w_l\}$, $S$ spans $U + W$.</p>
+                        <p>2. Check linear independence: $\sum a_i v_i + \sum b_j u_j + \sum c_l w_l = 0 \implies \sum c_l w_l = -\sum a_i v_i - \sum b_j u_j \in U$.</p>
+                        <p>Since $\sum c_l w_l \in W$ and also $\in U \implies \in U \cap W$. Therefore, coefficients $c_l = 0, b_j = 0, a_i = 0$. $S$ is linearly independent.</p>
+                        <p>Number of elements in $S$ is $k + m + n = (k+m) + (k+n) - k = \dim U + \dim W - \dim(U \cap W)$. Proof complete.</p>
                     </div>
 
-                    <h3>Five Solved Examples for Section 3.3</h3>
+                    <h3>Solved Examples for Section 3.3</h3>
 
                     <div class="example">
-                        <div class="card-title">Example 3.3.1: Plane through Origin as Subspace of \mathbb{R}^3</div>
-                        <p><strong>Problem:</strong> Show that $W = \{(x, y, z) \in \mathbb{R}^3 \mid 2x - y + 3z = 0\}$ is a subspace of $\mathbb{R}^3$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Let $u = (x_1, y_1, z_1), v = (x_2, y_2, z_2) \in W$ and $a, b \in \mathbb{R}$.<br>
-                        $2(ax_1+bx_2) - (ay_1+by_2) + 3(az_1+bz_2) = a(2x_1-y_1+3z_1) + b(2x_2-y_2+3z_2) = a(0) + b(0) = 0$.<br>
-                        Hence $a u + b v \in W \implies W$ is a subspace.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.3.2: Non-Subspace Line Not Passing through Origin</div>
-                        <p><strong>Problem:</strong> Test if $W = \{(x, y) \in \mathbb{R}^2 \mid x + y = 1\}$ is a subspace of $\mathbb{R}^2$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Zero vector $(0, 0) \notin W$ (since $0 + 0 = 0 \neq 1$). Fails zero vector condition! Not a subspace.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.3.3: Symmetric Matrices as Subspace of M_{n \times n}</div>
-                        <p><strong>Problem:</strong> Show that $W = \{A \in M_{n \times n}(\mathbb{R}) \mid A^T = A\}$ is a subspace of $M_{n \times n}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>For $A, B \in W$ and $c, d \in \mathbb{R}$, $(cA + dB)^T = cA^T + dB^T = cA + dB \in W$. Hence $W$ is a subspace.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.3.4: Intersection of Two Subspaces</div>
-                        <p><strong>Problem:</strong> Let $U = \{(x,y,z) \mid z=0\}$ and $W = \{(x,y,z) \mid x=0\}$. Find $U \cap W$ and verify it is a subspace.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$U \cap W = \{(x,y,z) \mid x=0, z=0\} = \{(0,y,0) \mid y \in \mathbb{R}\}$ (y-axis).<br>
-                        $a(0, y_1, 0) + b(0, y_2, 0) = (0, ay_1+by_2, 0) \in U \cap W \implies$ Subspace of $\mathbb{R}^3$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.3.5: Direct Sum Decomposition V = U \oplus W</div>
-                        <p><strong>Problem:</strong> Show that $\mathbb{R}^3 = U \oplus W$ where $U = \{(x,y,0)\}$ and $W = \{(0,0,z)\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>1. Any $(x,y,z) = (x,y,0) + (0,0,z) \in U + W$.<br>
-                        2. If $(x,y,z) \in U \cap W \implies z=0$ and $x=y=0 \implies U \cap W = \{(0,0,0)\}$.<br>
-                        Hence $\mathbb{R}^3 = U \oplus W$.</p>
+                        <div class="card-title">Example 3.3.1: Subspace Verification of a Plane</div>
+                        <p><strong>Question:</strong> Show that $W = \{(x, y, z) \in \mathbb{R}^3 \mid 2x - y + 3z = 0\}$ is a subspace of $\mathbb{R}^3$.</p>
+                        <p><strong>Solution:</strong></p>
+                        <p>Let $u = (x_1, y_1, z_1)$ and $v = (x_2, y_2, z_2)$ belong to $W$. Then $2x_1 - y_1 + 3z_1 = 0$ and $2x_2 - y_2 + 3z_2 = 0$.</p>
+                        <p>For any scalars $a, b \in \mathbb{R}$, $a u + b v = (ax_1+bx_2, ay_1+by_2, az_1+bz_2)$.</p>
+                        $$ 2(ax_1+bx_2) - (ay_1+by_2) + 3(az_1+bz_2) = a(2x_1-y_1+3z_1) + b(2x_2-y_2+3z_2) = a(0) + b(0) = 0 $$
+                        <p>Therefore, $a u + b v \in W$. By Subspace Test Theorem, $W$ is a subspace of $\mathbb{R}^3$.</p>
                     </div>
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>3.3 उप-समष्टि और प्रत्यक्ष योग (Subspaces &amp; Direct Sums)</h2>
-                    <p>Subspace परीक्षण और Direct Sum के 5 हल किए गए उदाहरण।</p>
+                    <h2>3.3 उप-समष्टि (Subspaces)</h2>
+                    <p>$W \subseteq V$ एक Subspace होगा यदि और केवल यदि $a u + b v \in W$ हो।</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- 3.4 Quotient Spaces -->
-        <section class="page-section" id="sec34">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.4 Quotient Spaces V/W</h2>
-                    <p>The cosets $v + W$ form the Quotient Space $V/W$ with dimension $\dim(V/W) = \dim V - \dim W$.</p>
-
-                    <!-- FIGURE 3.2 -->
-                    <div class="figure-box">
-                        <div class="figure-title">Figure 3.2: Quotient Space V/W Coset Partitioning</div>
-                        <svg class="book-fig" viewBox="0 0 540 160" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="40" y1="140" x2="500" y2="140" stroke="#1B2A4A" stroke-width="2"/>
-                            <line x1="80" y1="130" x2="160" y2="30" stroke="#3D6B5A" stroke-width="3"/>
-                            <text x="120" y="25" font-family="DM Sans" font-size="10" fill="#3D6B5A" font-weight="bold">Subspace W = 0 + W</text>
-                            <line x1="220" y1="130" x2="300" y2="30" stroke="#1D6FA4" stroke-width="2.5" stroke-dasharray="5 3"/>
-                            <text x="260" y="25" font-family="DM Sans" font-size="10" fill="#1D6FA4" font-weight="bold">Coset v₁ + W</text>
-                            <line x1="360" y1="130" x2="440" y2="30" stroke="#C8922A" stroke-width="2.5" stroke-dasharray="5 3"/>
-                            <text x="400" y="25" font-family="DM Sans" font-size="10" fill="#C8922A" font-weight="bold">Coset v₂ + W</text>
-                        </svg>
-                        <div class="figure-caption">Quotient space V/W partitioning vector space V into parallel affine cosets parallel to subspace W.</div>
-                    </div>
-
-                    <h3>Five Solved Examples for Section 3.4</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.4.1: Quotient Space Dimension Calculation</div>
-                        <p><strong>Problem:</strong> Let $V = \mathbb{R}^4$ and $W = \{(x,y,z,w) \mid x+y=0, z+w=0\}$. Find $\dim(V/W)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\dim V = 4$. $W$ has 2 independent equations $\implies \dim W = 4 - 2 = 2$.<br>
-                        $\dim(V/W) = \dim V - \dim W = 4 - 2 = 2$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.4.2: Coset Equality Condition</div>
-                        <p><strong>Problem:</strong> Show that $v_1 + W = v_2 + W \iff v_1 - v_2 \in W$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$v_1 + W = v_2 + W \iff v_1 \in v_2 + W \iff v_1 = v_2 + w$ for some $w \in W \iff v_1 - v_2 = w \in W$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.4.3: Quotient Space of Polynomials P_3(x)</div>
-                        <p><strong>Problem:</strong> Let $V = P_3(x)$ and $W = P_1(x)$. Find a basis for $V/W$ and $\dim(V/W)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\dim V = 4$ ($\{1, x, x^2, x^3\}$), $\dim W = 2$ ($\{1, x\}$).<br>
-                        $\dim(V/W) = 4 - 2 = 2$. Basis for $V/W = \{x^2 + W, x^3 + W\}$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.4.4: Canonical Projection Map \pi: V \to V/W</div>
-                        <p><strong>Problem:</strong> Show that $\pi(v) = v + W$ is a linear map with $\text{Ker}(\pi) = W$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>$\pi(au + bv) = (au+bv)+W = a(u+W) + b(v+W) = a\pi(u) + b\pi(v)$.<br>
-                        $\text{Ker}(\pi) = \{v \mid v+W = 0+W\} = \{v \mid v \in W\} = W$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.4.5: Zero Element in Quotient Space</div>
-                        <p><strong>Problem:</strong> Identify the zero vector in $\mathbb{R}^3/W$ where $W = \{(x,y,z) \mid x=y=z\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>The zero vector in $V/W$ is the coset $0 + W = W = \{(k,k,k) \mid k \in \mathbb{R}\}$.</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.4 भागफल समष्टि (Quotient Spaces V/W)</h2>
-                    <p>भागफल समष्टि $V/W$ के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.5 Linear Span -->
-        <section class="page-section" id="sec35">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.5 Linear Span &amp; Linear Combinations</h2>
-                    <p>Linear span $L(S)$ is the set of all linear combinations $\sum a_i v_i$.</p>
-
-                    <h3>Five Solved Examples for Section 3.5</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.5.1: Expressing Vector as Linear Combination</div>
-                        <p><strong>Problem:</strong> Express $v = (1, 7, -4)$ as a linear combination of $v_1 = (1, -1, 0), v_2 = (2, 1, 1), v_3 = (0, 3, 1)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ a(1, -1, 0) + b(2, 1, 1) + c(0, 3, 1) = (1, 7, -4) $$
-                        $$ a + 2b = 1, \quad -a + b + 3c = 7, \quad b + c = -4 $$
-                        <p>Solving: $b = -2, c = -2, a = 5 \implies v = 5v_1 - 2v_2 - 2v_3$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.5.2: Checking if Vector Belongs to Span</div>
-                        <p><strong>Problem:</strong> Determine if $v = (2, 5, 3) \in \text{span}\{(1, 1, 1), (0, 1, 2)\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ a(1, 1, 1) + b(0, 1, 2) = (2, 5, 3) \implies a = 2, a+b = 5 \implies b = 3, a+2b = 2+6 = 8 \neq 3! $$
-                        <p>System inconsistent! $v \notin \text{span}(S)$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.5.3: Minimal Spanning Set for \mathbb{R}^2</div>
-                        <p><strong>Problem:</strong> Show that $S = \{(1, 0), (0, 1), (1, 1)\}$ spans $\mathbb{R}^2$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>For any $(x, y) = x(1, 0) + y(0, 1) + 0(1, 1)$. Thus $\text{span}(S) = \mathbb{R}^2$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.5.4: Subspace Property of Linear Span L(S)</div>
-                        <p><strong>Problem:</strong> Prove that $L(S)$ is a subspace of $V$ for any subset $S \subseteq V$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Let $u = \sum a_i v_i, w = \sum b_i v_i \in L(S)$ and $c, d \in F$.<br>
-                        $c u + d w = \sum (c a_i + d b_i) v_i \in L(S)$. Hence $L(S)$ is a subspace.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.5.5: Spanning Polynomial Space P_2(x)</div>
-                        <p><strong>Problem:</strong> Show that $\{1+x, x+x^2, 1+x^2\}$ spans $P_2(x)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ a(1+x) + b(x+x^2) + c(1+x^2) = (a+c) + (a+b)x + (b+c)x^2 $$
-                        <p>Determinant of coefficient matrix $\begin{vmatrix}1&0&1\\1&1&0\\0&1&1\end{vmatrix} = 2 \neq 0 \implies$ Spans $P_2(x)$.</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.5 रेखीय जनक (Linear Span)</h2>
-                    <p>Linear Span के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.6 Independence -->
-        <section class="page-section" id="sec36">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.6 Linear Independence and Dependence</h2>
-                    <div class="definition">
-                        <div class="card-title">Linear Independence Definition</div>
-                        A set $\{v_1, \dots, v_k\}$ is <strong>linearly independent</strong> if $a_1 v_1 + \dots + a_k v_k = 0 \implies a_i = 0$ for all $i$.
-                    </div>
-
-                    <h3>Five Solved Examples for Section 3.6</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.6.1: Linear Independence of Vectors in \mathbb{R}^3</div>
-                        <p><strong>Problem:</strong> Test linear independence of $v_1 = (1, 2, 3), v_2 = (0, 1, 4), v_3 = (5, 6, 0)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ \begin{vmatrix} 1 & 2 & 3 \\ 0 & 1 & 4 \\ 5 & 6 & 0 \end{vmatrix} = 1(0-24) - 2(0-20) + 3(0-5) = -24 + 40 - 15 = 1 \neq 0 $$
-                        <p>Determinant $\neq 0 \implies$ Linearly Independent!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.6.2: Wronskian Test for Functions</div>
-                        <p><strong>Problem:</strong> Use Wronskian $W(x)$ to test linear independence of $f_1(x) = e^x, f_2(x) = e^{2x}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ W(x) = \begin{vmatrix} e^x & e^{2x} \\ e^x & 2e^{2x} \end{vmatrix} = 2e^{3x} - e^{3x} = e^{3x} \neq 0 $$
-                        <p>Since $W(x) \neq 0$, the functions are linearly independent.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.6.3: Linear Dependence Detection</div>
-                        <p><strong>Problem:</strong> Show that $v_1 = (1, 2), v_2 = (3, 6)$ are linearly dependent.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ 3 v_1 - 1 v_2 = 3(1, 2) - (3, 6) = (0, 0) $$
-                        <p>Non-zero scalars $a_1 = 3, a_2 = -1$ exist $\implies$ Linearly Dependent!</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.6.4: Zero Vector in Dependent Set</div>
-                        <p><strong>Problem:</strong> Prove that any set containing the zero vector is linearly dependent.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>Let $S = \{0, v_2, \dots, v_k\}$. Choose $a_1 = 1 \neq 0$ and $a_2 = \dots = a_k = 0$. Then $1(0) + 0(v_2) + \dots = 0$. Hence $S$ is linearly dependent.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.6.5: Linear Independence of Polynomials</div>
-                        <p><strong>Problem:</strong> Test $\{1, 1+x, 1+x+x^2\}$ in $P_2(x)$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ a(1) + b(1+x) + c(1+x+x^2) = (a+b+c) + (b+c)x + c x^2 = 0 $$
-                        <p>$c = 0 \implies b+0 = 0 \implies b = 0 \implies a+0+0 = 0 \implies a = 0$. Linearly Independent!</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.6 रेखीय स्वतंत्रता (Linear Independence)</h2>
-                    <p>Linear Independence के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.7 Basis & Dimension -->
-        <section class="page-section" id="sec37">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.7 Basis and Dimension</h2>
-                    <div class="definition">
-                        <div class="card-title">Basis Definition</div>
-                        A subset $\mathcal{B} \subseteq V$ is a <strong>basis</strong> if $\mathcal{B}$ is linearly independent and spans $V$.
-                    </div>
-
-                    <h3>Five Solved Examples for Section 3.7</h3>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.7.1: Standard Basis for \mathbb{R}^3</div>
-                        <p><strong>Problem:</strong> Verify that $e_1=(1,0,0), e_2=(0,1,0), e_3=(0,0,1)$ forms a basis for $\mathbb{R}^3$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        <p>1. $\det(I_3) = 1 \neq 0 \implies$ Linearly independent.<br>
-                        2. $(x,y,z) = x e_1 + y e_2 + z e_3 \implies$ Spans $\mathbb{R}^3$. Dimension $= 3$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.7.2: Basis Extension Theorem Application</div>
-                        <p><strong>Problem:</strong> Extend $S = \{(1, 1, 0), (0, 1, 1)\}$ to a basis of $\mathbb{R}^3$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ \begin{vmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 0 \end{vmatrix} = 1(1) = 1 \neq 0 \implies \mathcal{B} = \{(1,1,0), (0,1,1), (1,0,0)\} \text{ is a basis.} $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.7.3: Dimension of Subspace W</div>
-                        <p><strong>Problem:</strong> Find a basis and dimension for $W = \{(x,y,z) \in \mathbb{R}^3 \mid x + 2y - z = 0\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ z = x + 2y \implies (x, y, x+2y) = x(1, 0, 1) + y(0, 1, 2) $$
-                        <p>Basis = $\{(1, 0, 1), (0, 1, 2)\}$, $\dim W = 2$.</p>
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.7.4: Basis for Skew-Symmetric Matrices M_{2 \times 2}</div>
-                        <p><strong>Problem:</strong> Find basis and dimension for $W = \{A \in M_{2 \times 2} \mid A^T = -A\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ A = \begin{bmatrix} 0 & k \\ -k & 0 \end{bmatrix} = k \begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix} \implies \text{Basis} = \left\{\begin{bmatrix} 0 & 1 \\ -1 & 0 \end{bmatrix}\right\}, \quad \dim W = 1. $$
-                    </div>
-
-                    <div class="example">
-                        <div class="card-title">Example 3.7.5: Coordinate Vector relative to a Basis</div>
-                        <p><strong>Problem:</strong> Find coordinates of $v = (3, 5)$ relative to basis $\mathcal{B} = \{(1, 1), (1, -1)\}$.</p>
-                        <p><strong>Step-by-Step Solution:</strong></p>
-                        $$ c_1(1, 1) + c_2(1, -1) = (3, 5) \implies c_1 + c_2 = 3, c_1 - c_2 = 5 \implies c_1 = 4, c_2 = -1. $$
-                        <p>Coordinate vector $[v]_{\mathcal{B}} = (4, -1)^T$.</p>
-                    </div>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.7 आधार और आयाम (Basis and Dimension)</h2>
-                    <p>Basis और Dimension के 5 हल किए गए उदाहरण।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.8 Solved Advanced Problems -->
-        <section class="page-section" id="sec38">
-            <div class="section-card">
-                <div class="english-content">
-                    <h2>3.8 Solved Advanced Multiline Problems</h2>
-                    <p>Advanced vector space problems.</p>
-                </div>
-
-                <div class="hinglish-content" style="display:none;">
-                    <h2>3.8 हल किए गए उन्नत बहु-पंक्ति प्रश्न</h2>
-                    <p>उन्नत Vector Space प्रश्न।</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3.9 EXERCISE BANK -->
-        <section class="page-section" id="sec39">
-            <div class="section-card">
-                <h2>3.9 Chapter End Exercises and Self-Assessment Bank</h2>
-
-                <h3>Part A: Multiple Choice Questions (20 MCQs)</h3>
-                <div class="question"><strong>Q1.</strong> The intersection of any two subspaces of $V$ is always:</div>
-                <div class="mcq-options">
-                    <label><input type="radio" name="mcq31" value="a"> (a) Never a subspace</label>
-                    <label><input type="radio" name="mcq31" value="b"> (b) Always a subspace</label>
-                    <label><input type="radio" name="mcq31" value="c"> (c) Equal to V</label>
-                    <label><input type="radio" name="mcq31" value="d"> (d) Empty set</label>
-                </div>
-                <button class="toggle-btn" onclick="toggleAnswer('mcq31_ans')">Show Answer ▼</button>
-                <div class="answer" id="mcq31_ans"><strong>Correct Answer: (b)</strong> — Intersection of subspaces $U \cap W$ is always a subspace.</div>
-
-                <h3>Part B: Fill in the Blanks (20 Questions)</h3>
-                <div class="question"><strong>FIB 1.</strong> The dimension of the vector space $\mathbb{R}^n$ over $\mathbb{R}$ is ____________.</div>
-                <button class="toggle-btn" onclick="toggleAnswer('fib31_ans')">Show Answer ▼</button>
-                <div class="answer" id="fib31_ans"><strong>Answer: n</strong> — Standard basis has $n$ elements.</div>
-
-                <h3>Part C: True / False Statements (20 Questions)</h3>
-                <div class="question"><strong>TF 1.</strong> The union of two subspaces is always a subspace.</div>
-                <button class="toggle-btn" onclick="toggleAnswer('tf31_ans')">Show Answer ▼</button>
-                <div class="answer" id="tf31_ans"><strong>Answer: False</strong> — Union $U \cup W$ is a subspace iff one is contained in the other.</div>
-
-                <h3>Part D: Matching Type Questions</h3>
-                <div class="question"><strong>Matching Set 1: Vector Space Concepts</strong><br>1. Basis &nbsp;&nbsp; 2. Linear Span &nbsp;&nbsp; 3. Subspace &nbsp;&nbsp; 4. Direct Sum</div>
-                <button class="toggle-btn" onclick="toggleAnswer('match31_ans')">Show Answer ▼</button>
-                <div class="answer" id="match31_ans">1-Linearly independent spanning set, 2-Set of all linear combinations, 3-Closed under linear combinations, 4-$U \cap W = \{0\}$.</div>
-
-                <h3>Part E: Subjective Questions</h3>
-                <div class="question"><strong>Q1.</strong> Prove that the intersection of two subspaces $U$ and $W$ of $V$ is a subspace of $V$.</div>
-                <button class="toggle-btn" onclick="toggleAnswer('sub31_ans')">Show Answer ▼</button>
-                <div class="answer" id="sub31_ans">Let $u, v \in U \cap W$ and $a, b \in F$. Since $u, v \in U$, $au+bv \in U$. Since $u, v \in W$, $au+bv \in W$. Thus $au+bv \in U \cap W$.</div>
             </div>
         </section>
 
@@ -887,12 +412,10 @@
         <section class="page-section" id="sec310">
             <div class="section-card">
                 <h2>3.10 Summary &amp; References</h2>
-                <p>Unit III introduces abstract vector spaces, subspaces, quotient spaces $V/W$, linear dependence criteria, basis definitions, and dimension theorems.</p>
+                <p>Unit III introduces vector spaces, subspaces, quotient spaces $V/W$, linear dependence, basis, and dimension theorems.</p>
                 <h3>References</h3>
                 <ul>
                     <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
-                    <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
-                    <li>Sahai, Vivek and Bist, Vikas. <em>Linear Algebra</em>. Narosa.</li>
                 </ul>
             </div>
         </section>
