@@ -321,6 +321,47 @@
             .stats-row { grid-template-columns: repeat(2, 1fr) !important; }
         }
 
+    
+/* ── SECTION CARD PREV / NEXT NAVIGATION BUTTONS (APPLICATION THEME) ── */
+.section-card-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 32px;
+    padding-top: 20px;
+    border-top: 2px dashed var(--border, #DDD8CF);
+    gap: 12px;
+}
+.sec-nav-btn {
+    background: linear-gradient(135deg, var(--navy, #1B2A4A) 0%, var(--navy-light, #2E4270) 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--gold, #C8922A) !important;
+    padding: 8px 20px !important;
+    border-radius: 20px !important;
+    font-family: 'DM Sans', sans-serif !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.25s ease !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    box-shadow: 0 2px 8px rgba(27,42,74,0.18) !important;
+}
+.sec-nav-btn:hover {
+    background: linear-gradient(135deg, var(--gold, #C8922A) 0%, var(--gold-light, #E8B84B) 100%) !important;
+    color: #1B2A4A !important;
+    border-color: var(--gold-light, #E8B84B) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 16px rgba(200,146,42,0.4) !important;
+}
+.sec-nav-btn:disabled, .sec-nav-btn.disabled {
+    opacity: 0.45 !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
     </style>
     <!-- Shared Whiteboard & Calculator Assets -->
     <link rel="stylesheet" href="../whiteboard/whiteboard.css">
@@ -330,6 +371,30 @@
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
+<script>
+window.navigateSection = function(direction) {
+    const sections = Array.from(document.querySelectorAll('section.page-section'));
+    if (!sections.length) return;
+
+    let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
+    if (currentIndex === -1) currentIndex = 0;
+
+    let targetIndex = currentIndex + direction;
+
+    if (targetIndex >= 0 && targetIndex < sections.length) {
+        const targetSecId = sections[targetIndex].id;
+        if (typeof window.showSection === 'function') {
+            window.showSection(targetSecId);
+        } else if (typeof showSection === 'function') {
+            showSection(targetSecId);
+        } else {
+            sections.forEach(s => s.classList.remove('active'));
+            sections[targetIndex].classList.add('active');
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+};
+</script>
 </head>
 <body>
 
@@ -2635,28 +2700,6 @@ window.currentLang = window.currentLang || 'en';
 
     </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
-    <script src="../calculator/calculator.js?v=1.0">/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
-        function navigateSection(direction) {
-            const sections = Array.from(document.querySelectorAll('section.page-section'));
-            if (!sections.length) return;
-
-            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
-            if (currentIndex === -1) currentIndex = 0;
-
-            let targetIndex = currentIndex + direction;
-
-            if (targetIndex >= 0 && targetIndex < sections.length) {
-                const targetSecId = sections[targetIndex].id;
-                if (typeof showSection === 'function') {
-                    showSection(targetSecId);
-                } else {
-                    sections.forEach(s => s.classList.remove('active'));
-                    sections[targetIndex].classList.add('active');
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-    </script>
+    
 </body>
 </html>
