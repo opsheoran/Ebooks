@@ -650,29 +650,77 @@
         saveHistoryState();
     });
 
-    // 10. Draggable Popup Logic
-    let isDragging = false, dragStartX, dragStartY, popupStartLeft, popupStartTop;
-    
-    dragHandle.addEventListener('mousedown', (e) => {
-        if(e.target.closest('button')) return;
+    // 10. Universal Multi-Device (Touch, Pen, Mouse) Draggable Popup Logic
+    // 10. Universal Multi-Device (Touch, Pen, Mouse) Draggable Popup Logic
+    let isDragging = false;
+    let dragStartX = 0, dragStartY = 0;
+    let popupStartLeft = 0, popupStartTop = 0;
+
+    function startDrag(e) {
+        if (e.target.closest('button') || e.target.closest('input') || e.target.closest('select')) return;
+        
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
         isDragging = true;
-        dragStartX = e.clientX;
-        dragStartY = e.clientY;
+        dragStartX = clientX;
+        dragStartY = clientY;
+        
         const rect = popup.getBoundingClientRect();
         popupStartLeft = rect.left;
         popupStartTop = rect.top;
-        popup.style.transform = 'none'; 
+        
+        popup.style.transform = 'none';
         popup.style.left = popupStartLeft + 'px';
         popup.style.top = popupStartTop + 'px';
-    });
 
-    document.addEventListener('mousemove', (e) => {
+        if (e.cancelable) e.preventDefault();
+    }
+
+    function doDrag(e) {
         if (!isDragging) return;
-        popup.style.left = (popupStartLeft + e.clientX - dragStartX) + 'px';
-        popup.style.top = (popupStartTop + e.clientY - dragStartY) + 'px';
-    });
+        
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        
+        const deltaX = clientX - dragStartX;
+        const deltaY = clientY - dragStartY;
+        
+        let newLeft = popupStartLeft + deltaX;
+        let newTop = popupStartTop + deltaY;
+        
+        const maxLeft = window.innerWidth - 100;
+        const maxTop = window.innerHeight - 60;
+        newLeft = Math.max(10, Math.min(newLeft, maxLeft));
+        newTop = Math.max(10, Math.min(newTop, maxTop));
+        
+        popup.style.left = newLeft + 'px';
+        popup.style.top = newTop + 'px';
+        
+        if (e.cancelable) e.preventDefault();
+    }
 
-    document.addEventListener('mouseup', () => { isDragging = false; });
+    function endDrag() {
+        isDragging = false;
+    }
+
+    if (dragHandle) {
+        // Mouse events
+        dragHandle.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', doDrag);
+        document.addEventListener('mouseup', endDrag);
+
+        // Touch events for digital panel / finger / iPad
+        dragHandle.addEventListener('touchstart', startDrag, { passive: false });
+        document.addEventListener('touchmove', doDrag, { passive: false });
+        document.addEventListener('touchend', endDrag);
+        document.addEventListener('touchcancel', endDrag);
+
+        // Pointer events for digital pen / stylus / smart board
+        dragHandle.addEventListener('pointerdown', startDrag);
+        document.addEventListener('pointermove', doDrag);
+        document.addEventListener('pointerup', endDrag);
+    }
 
     // 11. Toggle Logic
     document.getElementById('popup-close-btn').addEventListener('click', () => {
