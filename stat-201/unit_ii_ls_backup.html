@@ -1013,6 +1013,7 @@ svg.book-fig, .figure-box svg, canvas {
         }
 
     </style>
+<script>window.currentLang = window.currentLang || 'en';</script>
 </head>
 <body>
 
@@ -2614,27 +2615,26 @@ svg.book-fig, .figure-box svg, canvas {
     });
 
     let isHinglish = false;
-    var currentLang = 'en';
+window.currentLang = window.currentLang || 'en';
         function toggleLanguage() {
-            if (typeof currentLang === 'undefined') {
-                currentLang = 'en';
-            }
             const btnText = document.getElementById('lang-toggle-text');
             const engContents = document.querySelectorAll('.english-content');
             const hinContents = document.querySelectorAll('.hinglish-content');
             
-            if (currentLang === 'en') {
+            if (window.currentLang === 'en') {
                 if (btnText) btnText.innerHTML = 'Switch Language (English)';
                 engContents.forEach(el => el.style.display = 'none');
                 hinContents.forEach(el => el.style.display = 'block');
-                currentLang = 'hi';
+                window.currentLang = 'hi';
             } else {
                 if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
                 hinContents.forEach(el => el.style.display = 'none');
                 engContents.forEach(el => el.style.display = 'block');
-                currentLang = 'en';
+                window.currentLang = 'en';
             }
         }
+        window.toggleLanguage = toggleLanguage;
+
 
 </script>
 </body>

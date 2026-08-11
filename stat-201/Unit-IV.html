@@ -1100,6 +1100,7 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
         }
 
     </style>
+<script>window.currentLang = window.currentLang || 'en';</script>
 </head>
 <body>
 
@@ -2215,27 +2216,26 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
     <script>
         let isHinglish = false;
-        var currentLang = 'en';
+window.currentLang = window.currentLang || 'en';
         function toggleLanguage() {
-            if (typeof currentLang === 'undefined') {
-                currentLang = 'en';
-            }
             const btnText = document.getElementById('lang-toggle-text');
             const engContents = document.querySelectorAll('.english-content');
             const hinContents = document.querySelectorAll('.hinglish-content');
             
-            if (currentLang === 'en') {
+            if (window.currentLang === 'en') {
                 if (btnText) btnText.innerHTML = 'Switch Language (English)';
                 engContents.forEach(el => el.style.display = 'none');
                 hinContents.forEach(el => el.style.display = 'block');
-                currentLang = 'hi';
+                window.currentLang = 'hi';
             } else {
                 if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
                 hinContents.forEach(el => el.style.display = 'none');
                 engContents.forEach(el => el.style.display = 'block');
-                currentLang = 'en';
+                window.currentLang = 'en';
             }
         }
+        window.toggleLanguage = toggleLanguage;
+
 );
     </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
