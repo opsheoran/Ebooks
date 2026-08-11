@@ -326,6 +326,8 @@
         if (!calcPopup) initCalculator();
         calcPopup.classList.toggle('active');
     }
+    window.toggleCalculator = toggleCalculator;
+    window.openCalculator = toggleCalculator;
 
     function makeDraggable() {
         const header = document.getElementById('calc-header');
