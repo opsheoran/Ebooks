@@ -412,7 +412,7 @@
         <section class="page-section active" id="sec41">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.1 Linear Transformations and Operators</h2>
+<h2>4.1 Linear Transformations and Operators</h2>
                     <p>A mapping $T: V \to W$ between two vector spaces over the same field $F$ is a <strong>linear transformation</strong> if it preserves vector addition and scalar multiplication.</p>
 
                     <div class="definition">
@@ -510,17 +510,110 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.1 एकघाती रूपान्तरण (Linear Transformation)</h2>
-                    <p>यदि $T(\alpha u + \beta v) = \alpha T(u) + \beta T(v)$, तो $T$ linear transformation है।</p>
+<h2>4.1 Linear Transformations and Operators (Hinglish व्याख्या)</h2>
+                    <p>A mapping $T: V \to W$ between two vector spaces over the same field $F$ is a <strong>linear transformation</strong> if it preserves vector addition and scalar multiplication.</p>
+
+                    <div class="definition">
+                        <div class="card-title">परिभाषा (Definition) 4.1: Linear Transformation</div>
+                        Function $T: V \to W$ एक Linear Transformation है if for all vectors $u, v \in V$ and scalars $\alpha, \beta \in F$:
+                        $$ T(\alpha u + \beta v) = \alpha T(u) + \beta T(v) $$
+                        If $V = W$, $T$ is called a <strong>linear operator</strong> on $V$.
+                    </div>
+
+                    <h3>Solved Examples for Section 4.1</h3>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.1.1: Verification of Linearity for R^2 to R^2 Mapping</div>
+                        <p><strong>प्रश्न (Question):</strong> जाँच कीजिए कि क्या $T: \mathbb{R}^2 \to \mathbb{R}^2$ defined by $T(x_1, x_2) = (2x_1 + x_2, \; x_1 - 3x_2)$ is a linear transformation.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: Define Input Vectors and Scalars</strong></p>
+                        <p>मान लीजिए $u = (u_1, u_2)$ and $v = (v_1, v_2)$ be in $\mathbb{R}^2$, and $\alpha, \beta \in \mathbb{R}$.</p>
+                        <p>Form linear combination vector:</p>
+                        $$ w = \alpha u + \beta v = (\alpha u_1 + \beta v_1, \; \alpha u_2 + \beta v_2) $$
+
+                        <p><strong>Step 2: Apply Transformation T to Combination Vector</strong></p>
+                        $$ T(w) = T(\alpha u_1 + \beta v_1, \; \alpha u_2 + \beta v_2) $$
+                        $$ = \left( 2(\alpha u_1 + \beta v_1) + (\alpha u_2 + \beta v_2), \;\; (\alpha u_1 + \beta v_1) - 3(\alpha u_2 + \beta v_2) \right) $$
+
+                        <p><strong>Step 3: Group Terms by Scalars \alpha and \beta</strong></p>
+                        $$ = \left( \alpha(2u_1 + u_2) + \beta(2v_1 + v_2), \;\; \alpha(u_1 - 3u_2) + \beta(v_1 - 3v_2) \right) $$
+                        $$ = \alpha(2u_1 + u_2, \; u_1 - 3u_2) + \beta(2v_1 + v_2, \; v_1 - 3v_2) $$
+                        $$ = \alpha T(u_1, u_2) + \beta T(v_1, v_2) $$
+                        $$ = \alpha T(u) + \beta T(v) $$
+
+                        <p><strong>निष्कर्ष (Conclusion):</strong></p>
+                        $$ T(\alpha u + \beta v) = \alpha T(u) + \beta T(v) $$
+                        <p>अतः $T$ is a linear transformation.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.1.2: Non-Linear Mapping Example</div>
+                        <p><strong>प्रश्न (Question):</strong> जाँच कीजिए कि क्या $T: \mathbb{R}^2 \to \mathbb{R}^2$ defined by $T(x_1, x_2) = (x_1^2, \; x_2)$ is a linear transformation.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: परीक्षण कीजिए Scalar Multiplication Property</strong></p>
+                        <p>मान लीजिए $u = (1, 0)$ and scalar $\alpha = 2$:</p>
+                        $$ T(u) = T(1, 0) = (1^2, 0) = (1, 0) $$
+                        $$ \alpha T(u) = 2(1, 0) = (2, 0) $$
+                        <p>Now evaluate $T(\alpha u) = T(2, 0)$:</p>
+                        $$ T(2, 0) = (2^2, 0) = (4, 0) $$
+
+                        <p><strong>Step 2: Compare Results</strong></p>
+                        $$ T(2u) = (4, 0) \neq (2, 0) = 2 T(u) $$
+
+                        <p><strong>निष्कर्ष (Conclusion):</strong></p>
+                        $$ T(2u) \neq 2 T(u) $$
+                        <p>अतः $T$ is NOT a linear transformation.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.1.3: Derivative Operator on Polynomial Space</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि the differentiation operator $D: P_n(x) \to P_{n-1}(x)$ defined by $D(p(x)) = \frac{d}{dx} p(x)$ is a linear transformation.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>By calculus rules of differentiation:</p>
+                        $$ D(\alpha p(x) + \beta q(x)) = \frac{d}{dx}\left[ \alpha p(x) + \beta q(x) \right] $$
+                        $$ = \alpha \frac{d}{dx} p(x) + \beta \frac{d}{dx} q(x) $$
+                        $$ = \alpha D(p(x)) + \beta D(q(x)) $$
+                        <p>अतः differentiation $D$ is a linear operator.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.1.4: Integration Operator</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि $T: P_n(x) \to \mathbb{R}$ defined by $T(p(x)) = \int_0^1 p(x) dx$ is a linear transformation.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ T(\alpha p(x) + \beta q(x)) = \int_0^1 \left[ \alpha p(x) + \beta q(x) \right] dx $$
+                        $$ = \alpha \int_0^1 p(x) dx + \beta \int_0^1 q(x) dx $$
+                        $$ = \alpha T(p(x)) + \beta T(q(x)) $$
+                        <p>Integration $T$ is a linear transformation.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.1.5: Matrix Multiplication Operator</div>
+                        <p><strong>प्रश्न (Question):</strong> For a fixed $m \times n$ matrix $A$, show that $T: \mathbb{R}^n \to \mathbb{R}^m$ defined by $T(x) = A x$ is a linear transformation.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ T(\alpha u + \beta v) = A(\alpha u + \beta v) $$
+                        $$ = A(\alpha u) + A(\beta v) $$
+                        $$ = \alpha (A u) + \beta (A v) $$
+                        $$ = \alpha T(u) + \beta T(v) $$
+                        <p>Matrix multiplication is always a linear transformation.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.1.6: Non-Linear Mapping with Constant Term</div>
+                        <p><strong>प्रश्न (Question):</strong> जाँच कीजिए कि क्या $T(x, y) = (x + 1, \; y)$ is a linear transformation.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>Evaluate zero vector image:</p>
+                        $$ T(0, 0) = (0 + 1, \; 0) = (1, 0) \neq (0, 0) $$
+                        <p>चूँकि linear transformations must map zero vector to zero vector ($T(0) = 0$), $T$ is NOT linear.</p>
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.2 Kernel, Image, Rank and Nullity -->
         <section class="page-section" id="sec42">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.2 Kernel, Image, Rank and Nullity</h2>
+<h2>4.2 Kernel, Image, Rank and Nullity</h2>
                     <div class="definition">
                         <div class="card-title">Definition 4.2: Kernel and Image</div>
                         For linear transformation $T: V \to W$:
@@ -609,17 +702,101 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.2 अष्टि, प्रतिबिम्ब एवं रैंक-नुलिटी (Kernel &amp; Rank-Nullity)</h2>
-                    <p>Rank-Nullity Theorem: $\rho(T) + \nu(T) = \dim(V)$।</p>
+<h2>4.2 Kernel, Image, Rank and Nullity (Hinglish व्याख्या)</h2>
+                    <div class="definition">
+                        <div class="card-title">परिभाषा (Definition) 4.2: Kernel and Image</div>
+                        For linear transformation $T: V \to W$:
+                        <ul>
+                            <li><strong>Kernel (Null Space):</strong> $\text{Ker}(T) = \{v \in V \mid T(v) = 0\}$.</li>
+                            <li><strong>Image (Range Space):</strong> $\text{Im}(T) = \{T(v) \in W \mid v \in V\}$.</li>
+                            <li><strong>Nullity:</strong> $\nu(T) = \dim(\text{Ker}(T))$.</li>
+                            <li><strong>Rank:</strong> $\rho(T) = \dim(\text{Im}(T))$.</li>
+                        </ul>
+                    </div>
+
+                    <div class="theorem">
+                        <div class="card-title">प्रमेय (Theorem) 4.1: Rank-Nullity Theorem (Sylvester's Law)</div>
+                        <strong>कथन (Statement):</strong> If $V$ is a finite-dimensional vector space and $T: V \to W$ is a linear transformation, then:
+                        $$ \text{Rank}(T) + \text{Nullity}(T) = \dim(V) $$
+                        $$ \rho(T) + \nu(T) = \dim(V) $$
+                    </div>
+
+                    <h3>Solved Examples for Section 4.2</h3>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.2.1: Hand Calculation of Kernel, Image, Rank, and Nullity</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए kernel, image, rank, and nullity of $T: \mathbb{R}^3 \to \mathbb{R}^3$ defined by $T(x_1, x_2, x_3) = (x_1 - x_2 + 2x_3, \;\; 2x_1 + x_2, \;\; 3x_1 + 2x_3)$. सत्यापित कीजिए Rank-Nullity theorem.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: ज्ञात कीजिए Kernel \text{Ker}(T)</strong></p>
+                        <p>Set $T(x_1, x_2, x_3) = (0, 0, 0)$:</p>
+                        $$ x_1 - x_2 + 2x_3 = 0 $$
+                        $$ 2x_1 + x_2 = 0 $$
+                        $$ 3x_1 + 2x_3 = 0 $$
+                        <p>Row 2 से: $x_2 = -2x_1$. Row 3 से: $x_3 = -1.5 x_1$.</p>
+                        <p>प्रतिस्थापित करने पर: into Row 1:</p>
+                        $$ x_1 - (-2x_1) + 2(-1.5x_1) = x_1 + 2x_1 - 3x_1 = 0 $$
+                        <p>Variable $x_1$ is free! Taking $x_1 = 2$:</p>
+                        $$ x_2 = -4 $$
+                        $$ x_3 = -3 $$
+                        <p>Basis for $\text{Ker}(T)$ is $\{(2, -4, -3)\}$.</p>
+                        <p><strong>Nullity:</strong></p>
+                        $$ \nu(T) = \dim(\text{Ker}(T)) = 1 $$
+
+                        <p><strong>Step 2: ज्ञात कीजिए Rank \rho(T) via Rank-Nullity Theorem</strong></p>
+                        $$ \rho(T) = \dim(\mathbb{R}^3) - \nu(T) $$
+                        $$ \rho(T) = 3 - 1 = 2 $$
+
+                        <p><strong>Step 3: सत्यापित कीजिए Rank-Nullity Formula</strong></p>
+                        $$ \rho(T) + \nu(T) = 2 + 1 = 3 = \dim(\mathbb{R}^3) $$
+                        <p>Rank-Nullity Theorem is verified!</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.2.2: Projection Operator Kernel and Image</div>
+                        <p><strong>प्रश्न (Question):</strong> For projection $P: \mathbb{R}^3 \to \mathbb{R}^3$ defined by $P(x, y, z) = (x, y, 0)$, find $\text{Ker}(P)$ and $\text{Im}(P)$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>Kernel condition $P(x, y, z) = (0, 0, 0) \implies (x, y, 0) = (0, 0, 0) \implies x = 0, y = 0$.</p>
+                        $$ \text{Ker}(P) = \{(0, 0, z) \mid z \in \mathbb{R}\} \implies \nu(P) = 1 $$
+                        $$ \text{Im}(P) = \{(x, y, 0) \mid x, y \in \mathbb{R}\} \implies \rho(P) = 2 $$
+                        $$ \rho(P) + \nu(P) = 2 + 1 = 3 = \dim(\mathbb{R}^3) $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.2.3: Zero Transformation Rank and Nullity</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए rank and nullity of zero transformation $T_0: V \to W$ जहाँ $\dim(V) = n$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ \text{Ker}(T_0) = V \implies \nu(T_0) = n $$
+                        $$ \text{Im}(T_0) = \{0\} \implies \rho(T_0) = 0 $$
+                        $$ \rho(T_0) + \nu(T_0) = 0 + n = n $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.2.4: Identity Operator Rank and Nullity</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए rank and nullity of identity operator $I: V \to V$ जहाँ $\dim(V) = n$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ \text{Ker}(I) = \{0\} \implies \nu(I) = 0 $$
+                        $$ \text{Im}(I) = V \implies \rho(I) = n $$
+                        $$ \rho(I) + \nu(I) = n + 0 = n $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.2.5: Differential Operator Rank-Nullity</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए kernel and image of $D: P_2(x) \to P_1(x)$ defined by $D(p(x)) = p'(x)$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>$p'(x) = 0 \implies p(x) = c$ (constant polynomials).</p>
+                        $$ \text{Ker}(D) = \text{span}\{1\} \implies \nu(D) = 1 $$
+                        $$ \text{Im}(D) = P_1(x) = \text{span}\{1, x\} \implies \rho(D) = 2 $$
+                        $$ \rho(D) + \nu(D) = 2 + 1 = 3 = \dim(P_2(x)) $$
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.3 Matrix Representation -->
         <section class="page-section" id="sec43">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.3 Matrix Representation of Linear Transformations</h2>
+<h2>4.3 Matrix Representation of Linear Transformations</h2>
                     <p>Given a linear transformation $T: V \to W$ and ordered bases $B_1 = \{v_1, \dots, v_n\}$ for $V$ and $B_2 = \{w_1, \dots, w_m\}$ for $W$, the <strong>matrix representation</strong> $[T]_{B_1, B_2}$ is the $m \times n$ matrix whose $j$-th column is the coordinate vector $[T(v_j)]_{B_2}$.</p>
 
                     <h3>Solved Examples for Section 4.3</h3>
@@ -687,17 +864,80 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.3 आव्यूह निरूपण (Matrix Representation)</h2>
-                    <p>$[T]_{B_1, B_2}$ आव्यूह निरूपण को प्रदर्शित करता है।</p>
+<h2>4.3 Matrix Representation of Linear Transformations (Hinglish व्याख्या)</h2>
+                    <p>Given a linear transformation $T: V \to W$ and ordered bases $B_1 = \{v_1, \dots, v_n\}$ for $V$ and $B_2 = \{w_1, \dots, w_m\}$ for $W$, the <strong>matrix representation</strong> $[T]_{B_1, B_2}$ is the $m \times n$ matrix whose $j$-th column is the coordinate vector $[T(v_j)]_{B_2}$.</p>
+
+                    <h3>Solved Examples for Section 4.3</h3>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.3.1: Hand Calculation of Matrix Representation</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए: matrix representation $[T]_B$ of operator $T(x_1, x_2) = (2x_1 + x_2, \; x_1 - 3x_2)$ with respect to standard basis $B = \{(1, 0), (0, 1)\}$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: Evaluate Operator on Basis Vectors</strong></p>
+                        $$ T(1, 0) = (2(1) + 0, \; 1 - 3(0)) = (2, 1) $$
+                        $$ T(0, 1) = (2(0) + 1, \; 0 - 3(1)) = (1, -3) $$
+
+                        <p><strong>Step 2: Write Images as Columns of Matrix</strong></p>
+                        $$ [T(1, 0)]_B = \begin{bmatrix} 2 \\ 1 \end{bmatrix} $$
+                        $$ [T(0, 1)]_B = \begin{bmatrix} 1 \\ -3 \end{bmatrix} $$
+
+                        <p><strong>निष्कर्ष (Conclusion):</strong></p>
+                        $$ [T]_B = \begin{bmatrix} 2 & 1 \\ 1 & -3 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.3.2: Matrix Representation with Non-Standard Basis</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए $[T]_B$ for $T(x_1, x_2) = (x_1 + x_2, \; 2x_1 - x_2)$ relative to non-standard basis $B = \{(1, 1), (1, -1)\}$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: Evaluate $T$ on Basis Vectors</strong></p>
+                        $$ T(1, 1) = (1+1, \; 2(1)-1) = (2, 1) $$
+                        $$ T(1, -1) = (1-1, \; 2(1)-(-1)) = (0, 3) $$
+
+                        <p><strong>Step 2: व्यक्त कीजिए Images in Terms of Basis B</strong></p>
+                        <p>For $(2, 1) = c_1(1, 1) + c_2(1, -1)$:</p>
+                        $$ c_1 + c_2 = 2, \quad c_1 - c_2 = 1 \implies c_1 = 1.5, c_2 = 0.5 $$
+                        <p>For $(0, 3) = d_1(1, 1) + d_2(1, -1)$:</p>
+                        $$ d_1 + d_2 = 0, \quad d_1 - d_2 = 3 \implies d_1 = 1.5, d_2 = -1.5 $$
+
+                        <p><strong>निष्कर्ष (Conclusion):</strong></p>
+                        $$ [T]_B = \begin{bmatrix} 1.5 & 1.5 \\ 0.5 & -1.5 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.3.3: Matrix Representation of Differential Operator</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए matrix representation of derivative operator $D: P_2(x) \to P_2(x)$ relative to standard basis $B = \{1, x, x^2\}$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ D(1) = 0 = 0(1) + 0(x) + 0(x^2) $$
+                        $$ D(x) = 1 = 1(1) + 0(x) + 0(x^2) $$
+                        $$ D(x^2) = 2x = 0(1) + 2(x) + 0(x^2) $$
+                        <p>Matrix representation:</p>
+                        $$ [D]_B = \begin{bmatrix} 0 & 1 & 0 \\ 0 & 0 & 2 \\ 0 & 0 & 0 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.3.4: Reflection Operator Matrix</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए matrix representation of reflection operator across x-axis $T(x, y) = (x, -y)$ in standard basis.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ T(1, 0) = (1, 0), \quad T(0, 1) = (0, -1) $$
+                        $$ [T] = \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.3.5: Rotation Operator Matrix</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए matrix representation of counter-clockwise rotation by angle $\theta$ in $\mathbb{R}^2$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ T(1, 0) = (\cos\theta, \sin\theta), \quad T(0, 1) = (-\sin\theta, \cos\theta) $$
+                        $$ [T] = \begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix} $$
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.4 Change of Basis -->
         <section class="page-section" id="sec44">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.4 Change of Basis and Matrix Similarity</h2>
+<h2>4.4 Change of Basis and Matrix Similarity</h2>
                     <p>When changing from basis $B$ to new basis $B'$, the matrix representation transforms via transition matrix $P = [I]_{B', B}$:</p>
                     $$ [T]_{B'} = P^{-1} [T]_B P $$
 
@@ -755,17 +995,70 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.4 आधार परिवर्तन (Change of Basis)</h2>
-                    <p>$[T]_{B'} = P^{-1} [T]_B P$ द्वारा आधार परिवर्तन होता है।</p>
+<h2>4.4 Change of Basis and Matrix Similarity (Hinglish व्याख्या)</h2>
+                    <p>When changing from basis $B$ to new basis $B'$, the matrix representation transforms via transition matrix $P = [I]_{B', B}$:</p>
+                    $$ [T]_{B'} = P^{-1} [T]_B P $$
+
+                    <div class="theorem">
+                        <div class="card-title">प्रमेय (Theorem) 4.2: Similarity Theorem</div>
+                        Two matrices $A$ and $B$ represent the same linear operator $T$ under different bases if and only if they are <strong>similar matrices</strong> ($B = P^{-1} A P$).
+                    </div>
+
+                    <h3>Solved Examples for Section 4.4</h3>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.4.1: Hand Calculation of Transition Matrix and Similarity</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए transition matrix $P$ from standard basis $B = \{(1, 0), (0, 1)\}$ to $B' = \{(1, 1), (1, 2)\}$ and verify $[T]_{B'} = P^{-1} [T]_B P$ for $T(x_1, x_2) = (x_1, 2x_2)$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: Transition Matrix P</strong></p>
+                        <p>Columns of $P$ are vectors of new basis $B'$ expressed in standard basis $B$:</p>
+                        $$ P = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix} $$
+
+                        <p><strong>Step 2: Inverse Transition Matrix P^-1</strong></p>
+                        $$ \det(P) = (1)(2) - (1)(1) = 1 $$
+                        $$ P^{-1} = \begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix} $$
+
+                        <p><strong>Step 3: Standard Basis Matrix Representation [T]_B</strong></p>
+                        $$ [T]_B = \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} $$
+
+                        <p><strong>Step 4: Compute Similarity Product P^-1 [T]_B P</strong></p>
+                        $$ [T]_B P = \begin{bmatrix} 1 & 0 \\ 0 & 2 \end{bmatrix} \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix} = \begin{bmatrix} 1 & 1 \\ 2 & 4 \end{bmatrix} $$
+                        $$ P^{-1} ([T]_B P) = \begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} 1 & 1 \\ 2 & 4 \end{bmatrix} = \begin{bmatrix} 0 & -2 \\ 1 & 3 \end{bmatrix} $$
+
+                        <p><strong>निष्कर्ष (Conclusion):</strong></p>
+                        $$ [T]_{B'} = \begin{bmatrix} 0 & -2 \\ 1 & 3 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.4.2: Change of Basis Coordinate Formula</div>
+                        <p><strong>प्रश्न (Question):</strong> If $[v]_B = \begin{bmatrix} 3 \\ 4 \end{bmatrix}$ and transition matrix $P = \begin{bmatrix} 1 & 1 \\ 1 & 2 \end{bmatrix}$, find $[v]_{B'}$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ [v]_{B'} = P^{-1} [v]_B = \begin{bmatrix} 2 & -1 \\ -1 & 1 \end{bmatrix} \begin{bmatrix} 3 \\ 4 \end{bmatrix} = \begin{bmatrix} 6-4 \\ -3+4 \end{bmatrix} = \begin{bmatrix} 2 \\ 1 \end{bmatrix} $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.4.3: Invariant Properties of Similar Matrices</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि similar matrices $A$ and $B = P^{-1} A P$ have the same trace and determinant.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ \det(B) = \det(P^{-1} A P) = \det(P^{-1}) \det(A) \det(P) = \det(A) $$
+                        $$ \text{Tr}(B) = \text{Tr}(P^{-1} A P) = \text{Tr}(A P P^{-1}) = \text{Tr}(A) $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.4.4: Transition Matrix Inverse Identity</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि if $P$ is transition matrix from $B$ to $B'$, then $P^{-1}$ is transition matrix from $B'$ to $B$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ [I]_{B', B} [I]_{B, B'} = [I]_{B, B} = I \implies [I]_{B, B'} = ([I]_{B', B})^{-1} = P^{-1} $$
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.5 Linear Functionals and Dual Space -->
         <section class="page-section" id="sec45">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.5 Linear Functionals and Dual Spaces</h2>
+<h2>4.5 Linear Functionals and Dual Spaces</h2>
                     <div class="definition">
                         <div class="card-title">Definition 4.3: Linear Functional and Dual Space</div>
                         A <strong>linear functional</strong> $f$ on vector space $V(F)$ is a linear transformation $f: V \to F$. The set of all linear functionals on $V$ forms the <strong>dual space</strong> $V^* = \mathcal{L}(V, F)$, with $\dim(V^*) = \dim(V)$.
@@ -829,17 +1122,76 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.5 एकघाती फलनक एवं द्वैत समष्टि (Dual Spaces)</h2>
-                    <p>$V^*$ द्वैत समष्टि (dual space) है तथा $f_i(v_j) = \delta_{ij}$।</p>
+<h2>4.5 Linear Functionals and Dual Spaces (Hinglish व्याख्या)</h2>
+                    <div class="definition">
+                        <div class="card-title">परिभाषा (Definition) 4.3: Linear Functional and Dual Space</div>
+                        A <strong>linear functional</strong> $f$ on vector space $V(F)$ एक Linear Transformation है $f: V \to F$. The set of all linear functionals on $V$ forms the <strong>dual space</strong> $V^* = \mathcal{L}(V, F)$, with $\dim(V^*) = \dim(V)$.
+                    </div>
+
+                    <div class="definition">
+                        <div class="card-title">परिभाषा (Definition) 4.4: Dual Basis</div>
+                        Given basis $B = \{v_1, v_2, \dots, v_n\}$ for $V$, the <strong>dual basis</strong> $B^* = \{f_1, f_2, \dots, f_n\}$ for $V^*$ satisfies Kronecker delta condition:
+                        $$ f_i(v_j) = \delta_{ij} = \begin{cases} 1 & \text{if } i = j \\ 0 & \text{if } i \neq j \end{cases} $$
+                    </div>
+
+                    <h3>Solved Examples for Section 4.5</h3>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.5.1: Hand Calculation of Dual Basis in R^2</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए dual basis $B^* = \{f_1, f_2\}$ for basis $B = \{v_1 = (1, 1), v_2 = (1, 2)\}$ of $\mathbb{R}^2$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: Define Linear Functionals</strong></p>
+                        <p>मान लीजिए $f_1(x_1, x_2) = a_1 x_1 + a_2 x_2$ and $f_2(x_1, x_2) = b_1 x_1 + b_2 x_2$.</p>
+
+                        <p><strong>Step 2: Apply Dual Basis Conditions for f_1</strong></p>
+                        $$ f_1(v_1) = f_1(1, 1) = a_1(1) + a_2(1) = 1 $$
+                        $$ f_1(v_2) = f_1(1, 2) = a_1(1) + a_2(2) = 0 $$
+                        <p>समीकरणों को घटाने पर: $a_2 = -1 \implies a_1 = 2$.</p>
+                        $$ f_1(x_1, x_2) = 2x_1 - x_2 $$
+
+                        <p><strong>Step 3: Apply Dual Basis Conditions for f_2</strong></p>
+                        $$ f_2(v_1) = f_2(1, 1) = b_1(1) + b_2(1) = 0 $$
+                        $$ f_2(v_2) = f_2(1, 2) = b_1(1) + b_2(2) = 1 $$
+                        <p>समीकरणों को घटाने पर: $b_2 = 1 \implies b_1 = -1$.</p>
+                        $$ f_2(x_1, x_2) = -x_1 + x_2 $$
+
+                        <p><strong>निष्कर्ष (Conclusion):</strong></p>
+                        <p>Dual basis $B^* = \{f_1, f_2\}$ is:</p>
+                        $$ f_1(x_1, x_2) = 2x_1 - x_2 $$
+                        $$ f_2(x_1, x_2) = -x_1 + x_2 $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.5.2: Trace Functional on Matrix Space</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि trace $\text{Tr}: M_{n \times n}(\mathbb{R}) \to \mathbb{R}$ is a linear functional.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ \text{Tr}(\alpha A + \beta B) = \sum_{i=1}^n (\alpha a_{ii} + \beta b_{ii}) = \alpha \sum a_{ii} + \beta \sum b_{ii} = \alpha \text{Tr}(A) + \beta \text{Tr}(B) $$
+                        <p>अतः trace is a linear functional in dual space $M_{n \times n}^*$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.5.3: Evaluation Functional on Polynomials</div>
+                        <p><strong>प्रश्न (Question):</strong> For a fixed $c \in \mathbb{R}$, show that evaluation mapping $L_c(p) = p(c)$ is a linear functional on $P_n(x)$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ L_c(\alpha p + \beta q) = (\alpha p + \beta q)(c) = \alpha p(c) + \beta q(c) = \alpha L_c(p) + \beta L_c(q) $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.5.4: Annihilator Definition and Dimension</div>
+                        <p><strong>प्रश्न (Question):</strong> For subspace $W \subseteq V$, define annihilator $W^0$ and state its dimension theorem.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ W^0 = \{f \in V^* \mid f(w) = 0 \text{ for all } w \in W\} $$
+                        $$ \dim(W) + \dim(W^0) = \dim(V) $$
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.6 Adjoint & Self-Adjoint Operators -->
         <section class="page-section" id="sec46">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.6 Adjoint &amp; Self-Adjoint Operators</h2>
+<h2>4.6 Adjoint &amp; Self-Adjoint Operators</h2>
                     <div class="definition">
                         <div class="card-title">Definition 4.5: Adjoint Operator</div>
                         Let $T$ be a linear operator on inner product space $V$. The <strong>adjoint operator</strong> $T^*$ is the unique operator satisfying:
@@ -890,17 +1242,63 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.6 संलग्नी सम्कारक (Adjoint Operators)</h2>
-                    <p>$\langle T(u), v \rangle = \langle u, T^*(v) \rangle$ संलग्नी (adjoint) सम्कारक कहलाता है।</p>
+<h2>4.6 Adjoint &amp; Self-Adjoint Operators (Hinglish व्याख्या)</h2>
+                    <div class="definition">
+                        <div class="card-title">परिभाषा (Definition) 4.5: Adjoint Operator</div>
+                        मान लीजिए $T$ be a linear operator on inner product space $V$. The <strong>adjoint operator</strong> $T^*$ is the unique operator satisfying:
+                        $$ \langle T(u), v \rangle = \langle u, T^*(v) \rangle \quad \forall u, v \in V $$
+                        $T$ is <strong>self-adjoint (Hermitian)</strong> if $T^* = T$.
+                    </div>
+
+                    <h3>Solved Examples for Section 4.6</h3>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.6.1: Finding Adjoint of a 2x2 Matrix Operator</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए adjoint $T^*$ of linear operator $T(x_1, x_2) = (2x_1 + 3x_2, \; x_1 - 4x_2)$ on $\mathbb{R}^2$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p><strong>Step 1: Matrix Representation of T</strong></p>
+                        $$ [T] = \begin{bmatrix} 2 & 3 \\ 1 & -4 \end{bmatrix} $$
+
+                        <p><strong>Step 2: Transpose of Matrix Representation</strong></p>
+                        <p>Matrix representation of adjoint $T^*$ is transpose $[T^*] = [T]^T$:</p>
+                        $$ [T^*] = \begin{bmatrix} 2 & 1 \\ 3 & -4 \end{bmatrix} $$
+
+                        <p><strong>Step 3: Write Operator Formula for T^*</strong></p>
+                        $$ T^*(x_1, x_2) = (2x_1 + x_2, \; 3x_1 - 4x_2) $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.6.2: Self-Adjoint Operator Verification</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि operator $T(x_1, x_2) = (3x_1 + 2x_2, \; 2x_1 + 5x_2)$ is self-adjoint.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ [T] = \begin{bmatrix} 3 & 2 \\ 2 & 5 \end{bmatrix} $$
+                        $$ [T]^T = \begin{bmatrix} 3 & 2 \\ 2 & 5 \end{bmatrix} = [T] $$
+                        <p>चूँकि $[T^*] = [T]$, operator $T$ is self-adjoint.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.6.3: Adjoint Product Property (T_1 T_2)^*</div>
+                        <p><strong>प्रश्न (Question):</strong> Prove $(T_1 T_2)^* = T_2^* T_1^*$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ \langle (T_1 T_2) u, v \rangle = \langle T_1 (T_2 u), v \rangle = \langle T_2 u, T_1^* v \rangle = \langle u, T_2^* (T_1^* v) \rangle = \langle u, (T_2^* T_1^*) v \rangle $$
+                        <p>अतः $(T_1 T_2)^* = T_2^* T_1^*$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">उदाहरण (Example) 4.6.4: Unitary Operator Property</div>
+                        <p><strong>प्रश्न (Question):</strong> दर्शाइए कि an operator $U$ is unitary ($U^* U = I$) if and only if it preserves inner products ($\langle U u, U v \rangle = \langle u, v \rangle$).</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ \langle U u, U v \rangle = \langle u, U^* U v \rangle = \langle u, I v \rangle = \langle u, v \rangle $$
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.7 Solved Advanced Problems -->
         <section class="page-section" id="sec47">
             <div class="section-card">
                 <div class="english-content">
-                    <h2>4.7 Solved Numerical Problems</h2>
+<h2>4.7 Solved Numerical Problems</h2>
                     <p>Representative advanced solved numerical problems for Unit IV.</p>
 
                     <div class="example">
@@ -950,11 +1348,56 @@
                 </div>
 
                 <div class="hinglish-content" style="display:none;">
-                    <h2>4.7 हल किए गए उन्नत प्रश्न</h2>
-                    <p>इकाई IV के सभी प्रमुख विषयों पर आधारित विस्तृत आंकिक प्रश्न।</p>
+<h2>4.7 Solved Numerical Problems (Hinglish व्याख्या)</h2>
+                    <p>Representative advanced solved numerical problems for Unit IV.</p>
+
+                    <div class="example">
+                        <div class="card-title">समस्या (Problem) 1: Hand Calculation of Matrix Representation and Inverse</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए matrix representation $[T]_B$ for $T(x, y, z) = (x + 2y, \; y - z, \; x + z)$ in standard basis $B$ and determine if $T$ is invertible.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ T(1,0,0) = (1,0,1), \quad T(0,1,0) = (2,1,0), \quad T(0,0,1) = (0,-1,1) $$
+                        $$ [T]_B = \begin{bmatrix} 1 & 2 & 0 \\ 0 & 1 & -1 \\ 1 & 0 & 1 \end{bmatrix} $$
+                        $$ \det([T]_B) = 1(1-0) - 2(0-(-1)) + 0 = 1 - 2 = -1 \neq 0 $$
+                        <p>चूँकि determinant is non-zero, operator $T$ is invertible.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">समस्या (Problem) 2: Complete Rank-Nullity Verification</div>
+                        <p><strong>प्रश्न (Question):</strong> $T: \mathbb{R}^4 \to \mathbb{R}^3$ defined by $T(x_1,x_2,x_3,x_4) = (x_1 - x_2 + x_3 + x_4, \;\; 2x_1 + x_4, \;\; 3x_1 - x_2 + x_3 + 2x_4)$. ज्ञात कीजिए rank and nullity.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>Form matrix $A$ of transformation:</p>
+                        $$ A = \begin{bmatrix} 1 & -1 & 1 & 1 \\ 2 & 0 & 0 & 1 \\ 3 & -1 & 1 & 2 \end{bmatrix} $$
+                        <p>Notice Row 3 = Row 1 + Row 2. इस प्रकार rank $\rho(T) = 2$.</p>
+                        <p>By Rank-Nullity Theorem: $\nu(T) = 4 - \rho(T) = 4 - 2 = 2$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">समस्या (Problem) 3: Finding Linear Transformation from Basis Images</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए formula for $T: \mathbb{R}^2 \to \mathbb{R}^2$ given $T(1, 1) = (3, 1)$ and $T(1, -1) = (1, 5)$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>व्यक्त कीजिए arbitrary vector $(x, y) = c_1(1, 1) + c_2(1, -1)$:</p>
+                        $$ c_1 + c_2 = x, \quad c_1 - c_2 = y \implies c_1 = \frac{x+y}{2}, \; c_2 = \frac{x-y}{2} $$
+                        $$ T(x, y) = \frac{x+y}{2}(3, 1) + \frac{x-y}{2}(1, 5) $$
+                        $$ T(x, y) = (2x + y, \; 3y - 2x) $$
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">समस्या (Problem) 4: Complete Dual Basis Hand Calculation</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए dual basis $B^*$ for basis $B = \{(1,0,0), (1,1,0), (1,1,1)\}$ of $\mathbb{R}^3$.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        <p>$f_1(x,y,z) = x - y$, $f_2(x,y,z) = y - z$, $f_3(x,y,z) = z$.</p>
+                        <p>Verification: $f_1(1,0,0)=1, f_1(1,1,0)=0, f_1(1,1,1)=0$.</p>
+                    </div>
+
+                    <div class="example">
+                        <div class="card-title">समस्या (Problem) 5: Projection Operator Matrix and Adjoint</div>
+                        <p><strong>प्रश्न (Question):</strong> ज्ञात कीजिए adjoint $T^*$ of operator $T(x, y) = (2x + y, \; x + 2y)$. Show $T$ is self-adjoint.</p>
+                        <p><strong>हल (Solution):</strong></p>
+                        $$ [T] = \begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix} = [T]^T \implies T^* = T \implies \text{Self-Adjoint.} $$
+                    </div>
                 </div>
             </div>
-        </section>
+</section>
 
         <!-- 4.8 EXERCISE BANK -->
         <section class="page-section" id="sec48">
