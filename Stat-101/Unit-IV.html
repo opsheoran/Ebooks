@@ -1115,11 +1115,13 @@ svg.book-fig, .figure-box svg, canvas {
         if (!sections.length) return;
 
         let currentIndex = sections.findIndex(sec => {
-            const style = window.getComputedStyle(sec);
-            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+            return sec.classList.contains('active') || sec.style.display === 'block';
         });
 
-        if (currentIndex === -1) currentIndex = 0;
+        if (currentIndex === -1) {
+            currentIndex = 0;
+            showSection(sections[0].id);
+        }
 
         let targetIndex = currentIndex + direction;
 
@@ -1129,6 +1131,16 @@ svg.book-fig, .figure-box svg, canvas {
         }
     }
     window.navigateSection = navigateSection;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.substring(1);
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
+        if (hash && document.getElementById(hash)) {
+            showSection(hash);
+        } else if (sections.length > 0) {
+            showSection(sections[0].id);
+        }
+    });
 
     function toggleAnswer(id) {
         const el = document.getElementById(id);
@@ -1249,7 +1261,7 @@ svg.book-fig, .figure-box svg, canvas {
 <!-- ============================================================
      4.1  SKEWNESS: INTRODUCTION & INTERPRETATION
      ============================================================ -->
-<div class="topic-section active" id="skewness-intro">
+<div class="topic-section active" id="skewness-intro" style="display: block;">
 <section class="section-card">
 <h2 class="english-content">4.1 Skewness: Introduction &amp; Interpretation</h2>
 <h2 class="hinglish-content" style="display:none;">4.1 Skewness: परिचय और Interpretation</h2>

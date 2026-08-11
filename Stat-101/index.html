@@ -1355,11 +1355,13 @@ svg.book-fig, .figure-box svg, canvas {
         if (!sections.length) return;
 
         let currentIndex = sections.findIndex(sec => {
-            const style = window.getComputedStyle(sec);
-            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+            return sec.classList.contains('active') || sec.style.display === 'block';
         });
 
-        if (currentIndex === -1) currentIndex = 0;
+        if (currentIndex === -1) {
+            currentIndex = 0;
+            showSection(sections[0].id);
+        }
 
         let targetIndex = currentIndex + direction;
 
@@ -1369,6 +1371,16 @@ svg.book-fig, .figure-box svg, canvas {
         }
     }
     window.navigateSection = navigateSection;
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash.substring(1);
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
+        if (hash && document.getElementById(hash)) {
+            showSection(hash);
+        } else if (sections.length > 0) {
+            showSection(sections[0].id);
+        }
+    });
 
     function toggleAnswer(id) {
         const el = document.getElementById(id);
@@ -1805,12 +1817,6 @@ svg.book-fig, .figure-box svg, canvas {
 <!-- FOOTER -->
 <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>
 </main>
-<script src="../whiteboard/whiteboard.js?v=2.0">function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+<script src="../whiteboard/whiteboard.js?v=2.0"></script>
 </body>
 </html>
