@@ -148,7 +148,19 @@ window.currentLang = window.currentLang || 'en';
         window.toggleLanguage = toggleLanguage;
 
 
-    </script>
+    
+        function showTopic(id) {
+            if (typeof showSection === 'function') {
+                showSection(id);
+            } else {
+                document.querySelectorAll('.page-section, .topic-section').forEach(s => s.classList.remove('active'));
+                const target = document.getElementById(id);
+                if (target) target.classList.add('active');
+            }
+        }
+        window.showTopic = showTopic;
+
+</script>
 <script>window.currentLang = window.currentLang || 'en';</script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
