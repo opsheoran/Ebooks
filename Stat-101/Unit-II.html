@@ -6886,21 +6886,26 @@ svg.book-fig, .figure-box svg, canvas {
 <script src="../whiteboard/whiteboard.js?v=2.0"></script>
 <!-- UNIT II INTERACTIVE CHARTS ENGINE -->
 <script>
-window.chartInstances = window.chartInstances || {};
+function safeNewChart(canvasId, config) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) return null;
+    const existing = Chart.getChart(canvas);
+    if (existing) {
+        existing.destroy();
+    }
+    try {
+        return new Chart(canvas, config);
+    } catch(err) {
+        console.warn("Chart creation error on " + canvasId + ":", err);
+        return null;
+    }
+}
 
 function initUnit2Charts() {
-    console.log("Initializing Unit II charts...");
 
     try {
-        const canvas_0 = document.getElementById('simpleBarChart');
-        if (canvas_0) {
-            if (window.chartInstances['simpleBarChart']) {
-                window.chartInstances['simpleBarChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_simpleBar = document.getElementById('simpleBarChart').getContext('2d');
-              new Chart(ctx_simpleBar, {
+        (function() {
+            safeNewChart('simpleBarChart', {
                 type: 'bar',
                 data: {
                   labels: ['1990', '1991', '1992', '1993', '1994', '1995'],
@@ -6924,22 +6929,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart simpleBarChart init warning:", e);
+        console.warn("Chart block 0 error:", e);
     }
 
     try {
-        const canvas_1 = document.getElementById('multipleBarChart2');
-        if (canvas_1) {
-            if (window.chartInstances['multipleBarChart2']) {
-                window.chartInstances['multipleBarChart2'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_multiBar = document.getElementById('multipleBarChart2').getContext('2d');
-              new Chart(ctx_multiBar, {
+        (function() {
+            safeNewChart('multipleBarChart2', {
                 type: 'bar',
                 data: {
                   labels: ['1990-91', '1995-96', '2000-01'],
@@ -6968,22 +6965,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart multipleBarChart2 init warning:", e);
+        console.warn("Chart block 1 error:", e);
     }
 
     try {
-        const canvas_2 = document.getElementById('componentBarChart');
-        if (canvas_2) {
-            if (window.chartInstances['componentBarChart']) {
-                window.chartInstances['componentBarChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_compBar = document.getElementById('componentBarChart').getContext('2d');
-              new Chart(ctx_compBar, {
+        (function() {
+            safeNewChart('componentBarChart', {
                 type: 'bar',
                 data: {
                   labels: ['Gurgaon', 'Faridabad', 'Panipat', 'Rohtak'],
@@ -7012,24 +7001,17 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart componentBarChart init warning:", e);
+        console.warn("Chart block 2 error:", e);
     }
 
     try {
-        const canvas_3 = document.getElementById('subdividedRectanglesChart');
-        if (canvas_3) {
-            if (window.chartInstances['subdividedRectanglesChart']) {
-                window.chartInstances['subdividedRectanglesChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_subRect = document.getElementById('subdividedRectanglesChart').getContext('2d');
+        (function() {
+            const ctx_subRect = document.getElementById('subdividedRectanglesChart').getContext('2d');
               const farmA_data = [17.6, 23.5, 11.8, 23.5, 5.9, 11.8, 5.9];
               const farmB_data = [22.2, 27.8, 11.1, 16.7, 5.6, 11.1, 5.6];
-              new Chart(ctx_subRect, {
+              safeNewChart(ctx_subRect, {
                 type: 'bar',
                 data: {
                   labels: ['Farm A (Total 85)', 'Farm B (Total 180)'],
@@ -7065,22 +7047,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart subdividedRectanglesChart init warning:", e);
+        console.warn("Chart block 3 error:", e);
     }
 
     try {
-        const canvas_4 = document.getElementById('pictogramSubstituteChart');
-        if (canvas_4) {
-            if (window.chartInstances['pictogramSubstituteChart']) {
-                window.chartInstances['pictogramSubstituteChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_pictogram = document.getElementById('pictogramSubstituteChart').getContext('2d');
-              new Chart(ctx_pictogram, {
+        (function() {
+            safeNewChart('pictogramSubstituteChart', {
                 type: 'bar',
                 data: {
                   labels: ['2010', '2015', '2020', '2025'],
@@ -7102,22 +7076,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart pictogramSubstituteChart init warning:", e);
+        console.warn("Chart block 4 error:", e);
     }
 
     try {
-        const canvas_5 = document.getElementById('pieDiagramChart');
-        if (canvas_5) {
-            if (window.chartInstances['pieDiagramChart']) {
-                window.chartInstances['pieDiagramChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_pie = document.getElementById('pieDiagramChart').getContext('2d');
-              new Chart(ctx_pie, {
+        (function() {
+            safeNewChart('pieDiagramChart', {
                 type: 'pie',
                 data: {
                   labels: ['Seeds (51.4°)', 'Fertilizers (72.0°)', 'Labor (102.9°)', 'Machinery (61.7°)', 'Irrigation (41.1°)', 'Miscellaneous (30.9°)'],
@@ -7135,22 +7101,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart pieDiagramChart init warning:", e);
+        console.warn("Chart block 5 error:", e);
     }
 
     try {
-        const canvas_6 = document.getElementById('profitLossChart');
-        if (canvas_6) {
-            if (window.chartInstances['profitLossChart']) {
-                window.chartInstances['profitLossChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_profitLoss = document.getElementById('profitLossChart').getContext('2d');
-            new Chart(ctx_profitLoss, {
+        (function() {
+            safeNewChart('profitLossChart', {
               type: 'bar',
               data: {
                 labels: ['2010', '2020'],
@@ -7209,22 +7167,14 @@ function initUnit2Charts() {
                 }
               }
             });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart profitLossChart init warning:", e);
+        console.warn("Chart block 6 error:", e);
     }
 
     try {
-        const canvas_7 = document.getElementById('wheatYieldChart');
-        if (canvas_7) {
-            if (window.chartInstances['wheatYieldChart']) {
-                window.chartInstances['wheatYieldChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_wheatYield = document.getElementById('wheatYieldChart').getContext('2d');
-              new Chart(ctx_wheatYield, {
+        (function() {
+            safeNewChart('wheatYieldChart', {
                 type: 'line',
                 data: {
                   labels: ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'],
@@ -7261,22 +7211,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart wheatYieldChart init warning:", e);
+        console.warn("Chart block 7 error:", e);
     }
 
     try {
-        const canvas_8 = document.getElementById('wheatYieldHistogram');
-        if (canvas_8) {
-            if (window.chartInstances['wheatYieldHistogram']) {
-                window.chartInstances['wheatYieldHistogram'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_histogram = document.getElementById('wheatYieldHistogram').getContext('2d');
-              new Chart(ctx_histogram, {
+        (function() {
+            safeNewChart('wheatYieldHistogram', {
                 type: 'bar',
                 data: {
                   labels: ['19.5-25.5', '25.5-30.5', '30.5-35.5', '35.5-45.5', '45.5-60.5'],
@@ -7321,22 +7263,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart wheatYieldHistogram init warning:", e);
+        console.warn("Chart block 8 error:", e);
     }
 
     try {
-        const canvas_9 = document.getElementById('cornYieldPolygon');
-        if (canvas_9) {
-            if (window.chartInstances['cornYieldPolygon']) {
-                window.chartInstances['cornYieldPolygon'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_polygon = document.getElementById('cornYieldPolygon').getContext('2d');
-              new Chart(ctx_polygon, {
+        (function() {
+            safeNewChart('cornYieldPolygon', {
                 type: 'line',
                 data: {
                   labels: ['90', '110', '130', '150', '170', '190', '210'],
@@ -7373,22 +7307,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart cornYieldPolygon init warning:", e);
+        console.warn("Chart block 9 error:", e);
     }
 
     try {
-        const canvas_10 = document.getElementById('soybeanYieldCurve');
-        if (canvas_10) {
-            if (window.chartInstances['soybeanYieldCurve']) {
-                window.chartInstances['soybeanYieldCurve'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_curve = document.getElementById('soybeanYieldCurve').getContext('2d');
-              new Chart(ctx_curve, {
+        (function() {
+            safeNewChart('soybeanYieldCurve', {
                 type: 'line',
                 data: {
                   labels: ['30', '35', '40', '45', '50', '55', '60', '65', '70'],
@@ -7426,21 +7352,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart soybeanYieldCurve init warning:", e);
+        console.warn("Chart block 10 error:", e);
     }
 
     try {
-        const canvas_11 = document.getElementById('combinedChart');
-        if (canvas_11) {
-            if (window.chartInstances['combinedChart']) {
-                window.chartInstances['combinedChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_combined = document.getElementById('combinedChart').getContext('2d');
+        (function() {
+            const ctx_combined = document.getElementById('combinedChart').getContext('2d');
 
               const labels_combined = ['32.5', '37.5', '42.5', '47.5', '52.5', '57.5', '62.5'];
               const data_combined = [5, 12, 20, 25, 18, 10, 4];
@@ -7448,7 +7367,7 @@ function initUnit2Charts() {
               const poly_labels = ['27.5', ...labels_combined, '67.5'];
               const poly_data = [0, ...data_combined, 0];
 
-              new Chart(ctx_combined, {
+              safeNewChart(ctx_combined, {
                 data: {
                   labels: poly_labels,
                   datasets: [
@@ -7494,22 +7413,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart combinedChart init warning:", e);
+        console.warn("Chart block 11 error:", e);
     }
 
     try {
-        const canvas_12 = document.getElementById('ogiveChart');
-        if (canvas_12) {
-            if (window.chartInstances['ogiveChart']) {
-                window.chartInstances['ogiveChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_ogive = document.getElementById('ogiveChart').getContext('2d');
-              new Chart(ctx_ogive, {
+        (function() {
+            safeNewChart('ogiveChart', {
                 type: 'line',
                 data: {
                   labels: ['25', '30', '35', '40', '45', '50', '55', '60'],
@@ -7538,22 +7449,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart ogiveChart init warning:", e);
+        console.warn("Chart block 12 error:", e);
     }
 
     try {
-        const canvas_13 = document.getElementById('ogiveDiscreteChart');
-        if (canvas_13) {
-            if (window.chartInstances['ogiveDiscreteChart']) {
-                window.chartInstances['ogiveDiscreteChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_ogiveDiscrete = document.getElementById('ogiveDiscreteChart').getContext('2d');
-              new Chart(ctx_ogiveDiscrete, {
+        (function() {
+            safeNewChart('ogiveDiscreteChart', {
                 type: 'line',
                 data: {
                   labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
@@ -7583,21 +7486,14 @@ function initUnit2Charts() {
                   }
                 }
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart ogiveDiscreteChart init warning:", e);
+        console.warn("Chart block 13 error:", e);
     }
 
     try {
-        const canvas_14 = document.getElementById('ogiveChart_1');
-        if (canvas_14) {
-            if (window.chartInstances['ogiveChart_1']) {
-                window.chartInstances['ogiveChart_1'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                // Use a unique variable name like ctx_ogive_1
+        (function() {
+            // Use a unique variable name like ctx_ogive_1
                 const ctx_ogive_1 = document.getElementById('ogiveChart_1').getContext('2d');
 
                 const classBoundaries = [60, 80, 100, 120, 140, 160, 180, 200];
@@ -7616,7 +7512,7 @@ function initUnit2Charts() {
                 moreCumFreq.push(0);
 
                 // Use the new, unique variable name here
-                new Chart(ctx_ogive_1, {
+                safeNewChart(ctx_ogive_1, {
                   type: 'line',
                   data: {
                     labels: classBoundaries,
@@ -7657,21 +7553,14 @@ function initUnit2Charts() {
                     }
                   }
                 });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart ogiveChart_1 init warning:", e);
+        console.warn("Chart block 14 error:", e);
     }
 
     try {
-        const canvas_15 = document.getElementById('symmetricalCurve');
-        if (canvas_15) {
-            if (window.chartInstances['symmetricalCurve']) {
-                window.chartInstances['symmetricalCurve'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                // Common setup for all charts (labels, options)
+        (function() {
+            // Common setup for all charts (labels, options)
               const labels = ['1', '2', '3', '4', '5', '6', '7'];
               const options = {
                 responsive: true,
@@ -7681,52 +7570,40 @@ function initUnit2Charts() {
               };
 
               // Symmetrical Curve
-              const ctx_sym = document.getElementById('symmetricalCurve').getContext('2d');
-              new Chart(ctx_sym, {
+              safeNewChart('symmetricalCurve', {
                 type: 'line',
                 data: { labels, datasets: [{ data: [1, 4, 8, 10, 8, 4, 1], borderColor: 'blue', tension: 0.4 }] },
                 ...options
               });
 
               // Skewed Curve
-              const ctx_skew = document.getElementById('skewedCurve').getContext('2d');
-              new Chart(ctx_skew, {
+              safeNewChart('skewedCurve', {
                 type: 'line',
                 data: { labels, datasets: [{ data: [10, 8, 6, 4, 3, 2, 1], borderColor: 'green', tension: 0.4 }] },
                 ...options
               });
 
               // J-Shaped Curve
-              const ctx_j = document.getElementById('jShapeCurve').getContext('2d');
-              new Chart(ctx_j, {
+              safeNewChart('jShapeCurve', {
                 type: 'line',
                 data: { labels, datasets: [{ data: [3, 2, 1, 3, 5, 8, 11], borderColor: 'red', tension: 0.4 }] },
                 ...options
               });
 
               // U-Shaped Curve
-              const ctx_u = document.getElementById('uShapeCurve').getContext('2d');
-              new Chart(ctx_u, {
+              safeNewChart('uShapeCurve', {
                 type: 'line',
                 data: { labels, datasets: [{ data: [20, 15, 5, 2, 5, 15, 20], borderColor: 'purple', tension: 0.4 }] },
                 ...options
               });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart symmetricalCurve init warning:", e);
+        console.warn("Chart block 15 error:", e);
     }
 
     try {
-        const canvas_16 = document.getElementById('ratioChart');
-        if (canvas_16) {
-            if (window.chartInstances['ratioChart']) {
-                window.chartInstances['ratioChart'].destroy();
-            }
-            // Execute initialization
-            (function() {
-                const ctx_ratio = document.getElementById('ratioChart').getContext('2d');
-                  new Chart(ctx_ratio, {
+        (function() {
+            safeNewChart('ratioChart', {
                     type: 'line',
                     data: {
                       labels: ['2010', '2012', '2014', '2016', '2018', '2020'],
@@ -7773,10 +7650,9 @@ function initUnit2Charts() {
                       }
                     }
                   });
-            })();
-        }
+        })();
     } catch(e) {
-        console.warn("Chart ratioChart init warning:", e);
+        console.warn("Chart block 16 error:", e);
     }
 
 }
