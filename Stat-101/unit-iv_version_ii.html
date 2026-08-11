@@ -2955,135 +2955,28 @@ svg.book-fig, .figure-box svg, canvas {
     });
 
     let isHinglish = false;
-    function toggleLanguage() {
-        isHinglish = !isHinglish;
-        const btnText = document.getElementById('lang-toggle-text');
-        const engContents = document.querySelectorAll('.english-content');
-        const hinContents = document.querySelectorAll('.hinglish-content');
-
-        if (isHinglish) {
-            btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
-            engContents.forEach(el => el.style.display = 'none');
-            hinContents.forEach(el => el.style.display = 'block');
-        } else {
-            btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
-            hinContents.forEach(el => el.style.display = 'none');
-            engContents.forEach(el => el.style.display = 'block');
-        }
-    }
-
-    function showTopic(id) {
-        document.querySelectorAll('.topic-section').forEach(el => {
-            el.classList.remove('active');
-        });
-        document.querySelectorAll('.nav-link').forEach(el => {
-            el.classList.remove('active');
-        });
-        
-        const targetSection = document.getElementById(id);
-        if (targetSection) {
-            targetSection.classList.add('active');
-        }
-        
-        const activeLink = document.querySelector(`.nav-link[href="#${id}"]`);
-        if (activeLink) {
-            activeLink.classList.add('active');
-        }
-        
-        window.scrollTo(0,0);
-        
-        if (window.innerWidth <= 768) {
-            document.getElementById('sidebar').classList.remove('open');
-        }
-        
-        try {
-            history.replaceState(null, null, '#' + id);
-        } catch (e) {
-            console.warn('History state update failed:', e);
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const navItems = document.querySelectorAll('.sidebar .nav-list > .nav-item:not(.nav-sub)');
-        navItems.forEach(item => {
-            let nextEl = item.nextElementSibling;
-            const subItems = [];
-            while (nextEl && nextEl.classList.contains('nav-sub')) {
-                subItems.push(nextEl);
-                nextEl.style.display = 'none'; // Initially hide sub-items
-                nextEl = nextEl.nextElementSibling;
+    var currentLang = 'en';
+        function toggleLanguage() {
+            if (typeof currentLang === 'undefined') {
+                currentLang = 'en';
             }
-
-            if (subItems.length > 0) {
-                const link = item.querySelector('.nav-link');
-                if (link) {
-                    const arrow = document.createElement('span');
-                    arrow.innerHTML = ' &#9660;';
-                    arrow.style.fontSize = '0.8em';
-                    arrow.style.float = 'right';
-                    arrow.style.marginTop = '2px';
-                    arrow.style.transition = 'transform 0.3s';
-                    link.appendChild(arrow);
-
-                    link.addEventListener('click', function(e) {
-                        const isHidden = subItems[0].style.display === 'none';
-                        arrow.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
-                        subItems.forEach(sub => {
-                            sub.style.display = isHidden ? 'list-item' : 'none';
-                        });
-                    });
-                }
-            }
-        });
-    });
-
-    function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            let overlay = document.getElementById('sidebar-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'sidebar-overlay';
-                overlay.className = 'sidebar-overlay';
-                overlay.onclick = toggleSidebar;
-                document.body.appendChild(overlay);
-            }
-            if (sb) {
-                sb.classList.toggle('open');
-                if (sb.classList.contains('open')) {
-                    overlay.classList.add('active');
-                } else {
-                    overlay.classList.remove('active');
-                }
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
+            } else {
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
             }
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        const sb = document.getElementById('sidebar');
-                        const overlay = document.getElementById('sidebar-overlay');
-                        if (sb && sb.classList.contains('open')) {
-                            sb.classList.remove('open');
-                            if (overlay) overlay.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-
-        function toggleAnswer(id) {
-        const answer = document.getElementById(id);
-        const btn = event.target;
-        if (answer.classList.contains('show')) {
-            answer.classList.remove('show');
-            btn.innerHTML = 'Show Answer ▼';
-        } else {
-            answer.classList.add('show');
-            btn.innerHTML = 'Hide Answer ▲';
-        }
-    }
 </script>
 <script src="../whiteboard/whiteboard.js?v=2.0"></script>
 </html>

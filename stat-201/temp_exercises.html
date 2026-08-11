@@ -86,20 +86,28 @@
                 btn.innerHTML = "Show Answer ▼";
             }
         }
+        var currentLang = 'en';
         function toggleLanguage() {
-            var engs = document.querySelectorAll('.eng');
-            var hins = document.querySelectorAll('.hin');
-            var btn = document.querySelector('.lang-toggle');
-            if (btn.innerHTML.includes('Hinglish')) {
-                engs.forEach(el => el.style.display = 'none');
-                hins.forEach(el => el.style.display = 'block');
-                btn.innerHTML = "Switch Language (English)";
+            if (typeof currentLang === 'undefined') {
+                currentLang = 'en';
+            }
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
             } else {
-                engs.forEach(el => el.style.display = 'block');
-                hins.forEach(el => el.style.display = 'none');
-                btn.innerHTML = "Switch Language (Hinglish)";
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
             }
         }
+
     </script>
 </head>
 <body>

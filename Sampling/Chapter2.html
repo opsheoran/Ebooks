@@ -1749,24 +1749,28 @@
             window.scrollTo(0, 0);
         }
 
+        var currentLang = 'en';
         function toggleLanguage() {
-            document.body.classList.toggle('hinglish-active');
-            var btn = document.querySelector('.lang-toggle-btn');
-            if (document.body.classList.contains('hinglish-active')) {
-                btn.textContent = 'Switch to English';
+            if (typeof currentLang === 'undefined') {
+                currentLang = 'en';
+            }
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
             } else {
-                btn.textContent = 'Switch to Hinglish';
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
             }
-            if(window.MathJax) { MathJax.typesetPromise(); }
         }
-
-        function toggleAnswer(id) {
-            var answerDiv = document.getElementById(id);
-            if (answerDiv) {
-                answerDiv.classList.toggle('show');
-            }
-            if(window.MathJax) { MathJax.typesetPromise(); }
-        }</script>
+</script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
 
     <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>

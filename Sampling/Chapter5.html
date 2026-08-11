@@ -1116,22 +1116,28 @@
             window.scrollTo(0, 0);
         }
 
+        var currentLang = 'en';
         function toggleLanguage() {
-            document.body.classList.toggle('hinglish-active');
-            const btn = document.querySelector('.lang-toggle-btn');
-            if (document.body.classList.contains('hinglish-active')) {
-                btn.textContent = 'Switch to English';
-            } else {
-                btn.textContent = 'Switch to Hinglish';
+            if (typeof currentLang === 'undefined') {
+                currentLang = 'en';
             }
-            if(window.MathJax) { MathJax.typesetPromise(); }
+            const btnText = document.getElementById('lang-toggle-text');
+            const engContents = document.querySelectorAll('.english-content');
+            const hinContents = document.querySelectorAll('.hinglish-content');
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
+                engContents.forEach(el => el.style.display = 'none');
+                hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
+            } else {
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
+                hinContents.forEach(el => el.style.display = 'none');
+                engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
+            }
         }
-
-        function toggleAnswer(id) {
-            const answerDiv = document.getElementById(id);
-            answerDiv.classList.toggle('show');
-            if(window.MathJax) { MathJax.typesetPromise(); }
-        }</script>
+</script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
 
     

@@ -2215,93 +2215,28 @@ tr:hover td { background: var(--gold-pale) !important; transition: background 0.
 
     <script>
         let isHinglish = false;
+        var currentLang = 'en';
         function toggleLanguage() {
-            isHinglish = !isHinglish;
+            if (typeof currentLang === 'undefined') {
+                currentLang = 'en';
+            }
             const btnText = document.getElementById('lang-toggle-text');
             const engContents = document.querySelectorAll('.english-content');
             const hinContents = document.querySelectorAll('.hinglish-content');
-
-            if (isHinglish) {
-                btnText.innerHTML = 'Switch Language (English)';
+            
+            if (currentLang === 'en') {
+                if (btnText) btnText.innerHTML = 'Switch Language (English)';
                 engContents.forEach(el => el.style.display = 'none');
                 hinContents.forEach(el => el.style.display = 'block');
+                currentLang = 'hi';
             } else {
-                btnText.innerHTML = 'Switch Language (Hinglish)';
+                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
                 hinContents.forEach(el => el.style.display = 'none');
                 engContents.forEach(el => el.style.display = 'block');
+                currentLang = 'en';
             }
         }
-
-        function showTopic(id) {
-            document.querySelectorAll('.topic-section').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
-            
-            const targetSection = document.getElementById(id);
-            if (targetSection) targetSection.classList.add('active');
-            
-            window.scrollTo(0,0);
-            if (window.innerWidth <= 768) {
-                document.getElementById('sidebar').classList.remove('open');
-            }
-            if (window.MathJax && MathJax.typesetPromise) {
-                MathJax.typesetPromise([targetSection]).catch(console.error);
-            }
-        }
-
-        function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            let overlay = document.getElementById('sidebar-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'sidebar-overlay';
-                overlay.className = 'sidebar-overlay';
-                overlay.onclick = toggleSidebar;
-                document.body.appendChild(overlay);
-            }
-            if (sb) {
-                sb.classList.toggle('open');
-                if (sb.classList.contains('open')) {
-                    overlay.classList.add('active');
-                } else {
-                    overlay.classList.remove('active');
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        const sb = document.getElementById('sidebar');
-                        const overlay = document.getElementById('sidebar-overlay');
-                        if (sb && sb.classList.contains('open')) {
-                            sb.classList.remove('open');
-                            if (overlay) overlay.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-
-        function toggleAnswer(id) {
-            const answer = document.getElementById(id);
-            const btn = event.target;
-            if (answer.classList.contains('show')) {
-                answer.classList.remove('show');
-                btn.innerHTML = 'Show Answer ▼';
-            } else {
-                answer.classList.add('show');
-                btn.innerHTML = 'Hide Answer ▲';
-                if (window.MathJax && MathJax.typesetPromise) {
-                    MathJax.typesetPromise([answer]).catch(console.error);
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            showTopic('plane-regression');
-        });
+);
     </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
 </body>
