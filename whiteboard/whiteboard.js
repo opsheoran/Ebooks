@@ -308,7 +308,10 @@
                 }
             }
         } else {
+            const pos = getPos(e);
             ctx.putImageData(savedImageData, 0, 0); 
+            ctx.save();
+            ctx.scale(dpr, dpr);
             applyBrush(true);
             ctx.beginPath();
             if (currentTool === 'line') {
@@ -380,6 +383,7 @@
                 ctx.lineTo(startX + dx - headlen, startY + headlen*0.4);
             }
             ctx.stroke();
+            ctx.restore();
         }
     });
 
