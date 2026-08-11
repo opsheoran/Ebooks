@@ -100,20 +100,26 @@
     }
 
     function resizeCanvas() {
-        const rect = wrapContainer.getBoundingClientRect();
+        const rect = container.getBoundingClientRect();
+        if (!rect || rect.width <= 0 || rect.height <= 0) return;
         
-        // Save current ink before resize
-        let tempCanvas = document.createElement('canvas');
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        let tCtx = tempCanvas.getContext('2d');
+        const newWidth = Math.floor(rect.width * dpr);
+        const newHeight = Math.floor(rect.height * dpr);
+        if (newWidth <= 0 || newHeight <= 0) return;
+
+        // Save current ink before resize ONLY if existing canvas has valid dimensions
+        let tempCanvas = null;
         if (canvas.width > 0 && canvas.height > 0) {
+            tempCanvas = document.createElement('canvas');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            let tCtx = tempCanvas.getContext('2d');
             tCtx.drawImage(canvas, 0, 0);
         }
 
         // Scale canvas for sharp ink
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+        canvas.width = newWidth;
+        canvas.height = newHeight;
         canvas.style.width = rect.width + 'px';
         canvas.style.height = rect.height + 'px';
 
@@ -121,11 +127,13 @@
         ctx.lineJoin = 'round';
         ctx.lineCap = 'round';
 
-        // Restore ink
-        ctx.save();
-        ctx.setTransform(1, 0, 0, 1, 0, 0);
-        ctx.drawImage(tempCanvas, 0, 0);
-        ctx.restore();
+        // Restore ink ONLY if tempCanvas exists and has valid non-zero dimensions
+        if (tempCanvas && tempCanvas.width > 0 && tempCanvas.height > 0) {
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.drawImage(tempCanvas, 0, 0);
+            ctx.restore();
+        }
     }
 
     // Professional Resizer using ResizeObserver
