@@ -572,7 +572,7 @@
                     let tCtx = tempCanvas.getContext('2d');
                     
                     // Draw Paper Background
-                    tCtx.fillStyle = '#faf9f6'; 
+                    tCtx.fillStyle = '#ffffff'; 
                     tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
                     
                     tCtx.lineWidth = 1 * dpr;

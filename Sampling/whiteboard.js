@@ -406,7 +406,7 @@
             tempCanvas.height = canvas.height;
             let tCtx = tempCanvas.getContext('2d');
             
-            tCtx.fillStyle = '#faf9f6'; // Match notebook paper color
+            tCtx.fillStyle = '#ffffff'; // Match notebook paper color
             tCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
             
             // Draw Notebook Lines
