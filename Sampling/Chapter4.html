@@ -126,7 +126,8 @@ window.MathJax = {
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +161,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -307,7 +312,6 @@ window.MathJax = {
 <p>In the previous chapters, we discussed sampling techniques where sampling units were selected randomly at every step. Now, we shall discuss a technique that has the wonderful feature of selecting the entire sample with just one single random start. This procedure, where only the first unit is selected with the help of random numbers and the remaining units get selected automatically following a pre-designed pattern, is called <strong>systematic random sampling</strong> (or simply systematic sampling).</p>
 <p>Suppose the \( N \) units of the population are numbered from \( 1 \) to \( N \) in a specific order. Let us assume \( N = nk \), where \( n \) is the desired sample size and \( k \) is an integer. If we select a random number less than or equal to \( k \) and then select every \( k \)-th unit thereafter, the resulting sample is called an "every \( k \)-th systematic sample." This procedure is termed <strong>linear systematic sampling</strong>. However, if \( N \neq nk \), we can include every \( k \)-th unit in a circular manner until the whole list is exhausted, which is called <strong>circular systematic sampling</strong>.</p>
 <p>Systematic sampling is simple and foolproof. Besides its simplicity, it often provides estimates that are more efficient than simple random sampling and is widely used in various types of surveys. It has been thoroughly discussed by researchers like Madow and Madow (1944) and its practical applications have been demonstrated by Finney (1948) and Sukhatme et al. (1958). Additionally, Singh et al. (1968) suggested a modified procedure and illustrated its suitability by applying it to a survey for estimating milk yield.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">4.1</span> Introduction</h2>
@@ -315,7 +319,6 @@ window.MathJax = {
 <p>मान लीजिये population की \( N \) units को \( 1 \) से \( N \) तक किसी order में number किया गया है। मान लीजिये \( N = nk \), जहाँ \( n \) sample size है और \( k \) एक integer है। अगर हम \( k \) या उससे छोटा एक random number select करें, और उसके बाद हर \( k \)-th unit को select करते जाएँ, तो इस resultant sample को "every \( k \)-th systematic sample" कहते हैं। इस procedure को <strong>linear systematic sampling</strong> कहा जाता है। अगर \( N \neq nk \) हो, और हर \( k \)-th unit को circular manner में list खत्म होने तक include किया जाये, तो इसको <strong>circular systematic sampling</strong> कहते हैं।</p>
 <p>Systematic sampling simple और foolproof है। अपनी simplicity के अलावा, यह कई situations में simple random sampling से ज्यादा efficient estimates provide करती है और various surveys में widely use होती है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec4-2">
@@ -330,7 +333,6 @@ window.MathJax = {
 <div class="formula-box">\[ i, i+k, i+2k, \dots, i+(n-1)k \]
                 
 </div>
-
 </div>
 <p>This technique will generate \( k \) systematic samples with equal probability. Below is the schematic diagram showing \( k \) systematic samples in the population:</p>
 <table style="width: 100%; border-collapse: collapse; text-align: center; margin-bottom: 20px; font-size: 0.85em;">
@@ -413,14 +415,12 @@ window.MathJax = {
 <p>The main advantage of systematic sampling is its simplicity of selection, operational convenience, and even spread of the sample over the entire population. Therefore, it has been found very useful in forest surveys for estimating the volume of timber, in fisheries for estimating the total catch of fish, in milk yield surveys for estimation of the lactation yield, etc.</p>
 <p>Another advantage is that, except for populations with periodicities, systematic sampling provides an efficient estimate compared to alternative designs. Sometimes systematic sampling variances are much smaller than the variances for random selection of units within strata.</p>
 <p>In the case of periodicity in the population, systematic sampling has to be used with considerable care. If, for a periodic population, the sampling interval is an odd multiple of half the period of the cycle, systematic sampling provides zero variance. When the sampling interval is a simple multiple of the period of the cycle, systematic sampling is no better than selecting one unit at random. A serious disadvantage of systematic sampling lies in its use with populations having unforeseen periodicity which may substantially contribute bias to the estimate. Another disadvantage concerns the drawback of estimating the sampling variance of estimators with a single sample.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">4.3</span> Advantages and Disadvantages</h2>
 <p>Systematic sampling का सबसे बड़ा फायदा इसका simple selection process, operational convenience, और पूरे population पर sample का evenly spread होना है। इसलिए यह forest surveys (timber volume निकालना), fisheries, और milk yield surveys में बहुत useful मानी जाती है। Periodic populations को छोड़ कर, systematic sampling ज्यादा efficient estimates देती है। कई बार इसका variance stratified random sampling से भी छोटा होता है。</p>
 <p>लेकिन, अगर population में periodicity (एक regular wave जैसा pattern) हो, तो इसको बहुत ध्यान से use करना पड़ता है। अगर sampling interval cycle के period का simple multiple बन जाये, तो systematic sampling किसी single random unit जितनी ही बेकार हो जाती है। सबसे बड़ा disadvantage ये है कि unforeseen periodicity estimator में बहुत ज्यादा bias ला सकती है। एक और नुकसान यह है कि single sample की मदद से variance का unbiased estimate नहीं निकाला जा सकता।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec4-4">
@@ -429,7 +429,6 @@ window.MathJax = {
 <h2><span class="section-num">4.4</span> Estimation of Mean and its Sampling Variance</h2>
 <p>Let \( y_{ij} \) denote the \( j \)-th member of the \( i \)-th systematic sample, where \( i = 1, 2, \dots, k \) and \( j = 1, 2, \dots, n \). The mean of the \( i \)-th sample is denoted by \( \bar{y}_{.i} \). We consider the problem of estimating the population mean under the situation when \( N = nk \).</p>
 <div class="theorem"><h4>Theorem 4.4.1</h4><p>In systematic sampling with interval \( k \), the sample mean \( \bar{y}_{sys} \) is an unbiased estimator of the population mean \( \bar{Y} \). Its sampling variance is given by:</p>
-
 </div>
 <div class="derivation">
 <div class="formula-box">\[ V(\bar{y}_{sys}) = \frac{k-1}{k} S_b^2 \]</div>
@@ -449,7 +448,6 @@ window.MathJax = {
 <div class="formula-box">\[ V(\bar{y}_{sys}) = E(\bar{y}_{sys} - \bar{Y})^2 = \frac{1}{k} \sum_{i=1}^{k} (\bar{y}_{.i} - \bar{Y})^2 \]</div>
 <p>Substituting the sum of squares:</p>
 <div class="formula-box">\[ V(\bar{y}_{sys}) = \frac{1}{k} [ (k-1) S_b^2 ] = \frac{k-1}{k} S_b^2 \]</div>
-
 </div>
 <p>It should not be inferred from the above formula that the variance of the systematic sample mean will simply decrease if the sample size is increased. This makes it clear that systematic sampling is a delicate device and should be used carefully.</p>
 <div class="theorem"><h4>Theorem 4.4.2</h4><p>The sampling variance of the sample mean \( \bar{y}_{sys} \) is given by:</p></div>
@@ -512,7 +510,6 @@ window.MathJax = {
 <div class="formula-box">\[ V(\bar{y}_{sys}) = \frac{1}{k n^2} \left[ k n \left( \frac{N-1}{N} \right) S^2 + \rho k n (n-1) \left( \frac{N-1}{N} \right) S^2 \right] \]</div>
 <div class="formula-box">\[ V(\bar{y}_{sys}) = \frac{k n}{k n^2} \left( \frac{N-1}{N} \right) S^2 [1 + (n-1)\rho] \]</div>
 <div class="formula-box">\[ V(\bar{y}_{sys}) = \frac{N-1}{Nn} S^2 [1 + (n-1)\rho] \]</div>
-
 </div>
 <p><strong>Comparison with SRSWR:</strong></p>
 <div class="derivation">
@@ -558,7 +555,6 @@ window.MathJax = {
 <div class="formula-box">\[ S_w^2 = \frac{1}{n(k-1)} \sum_{j=1}^{n} \sum_{i=1}^{k} (y_{ij} - \bar{y}_{j.})^2 \]
                 
 </div>
-
 </div>
 <p>Clearly, the variance of the mean of this stratified sample will be:</p>
 <div class="derivation">
@@ -622,7 +618,6 @@ window.MathJax = {
 <div class="formula-box">\[ (N-1)S^2 = k(n-1)S_w^2 + N V(\bar{y}_{sys}) \]
                 
 </div>
-
 </div>
 <p>Substituting this in the variance formula, we get:</p>
 <div class="derivation">
@@ -670,7 +665,6 @@ window.MathJax = {
 <div class="formula-box">\[ \bar{y}_{.} = \frac{1}{m} \sum_{i=1}^{m} \bar{y}_i \]
                 
 </div>
-
 </div>
 <p>Then, an unbiased estimate of the variance of \( \bar{y}_{.} \) is:</p>
 <div class="derivation">
@@ -696,7 +690,6 @@ window.MathJax = {
 <div class="formula-box">\[ N' = N - (n-a)k - a + 1 \]
                 
 </div>
-
 </div>
 <p>The inclusion probabilities for individual units \( \pi_i \) and pairwise units \( \pi_{ij} \) are all known under this scheme. Hence, the Horvitz-Thompson estimator of the population mean simplifies to:</p>
 <div class="derivation">
@@ -735,7 +728,6 @@ window.MathJax = {
 <p>The Population Mean is:</p>
 <div class="derivation">
 <div class="formula-box">\[ \bar{Y} = a + \frac{N+1}{2} c \]</div>
-
 </div>
 <p>The Population variance is:</p>
 <div class="derivation">
@@ -816,7 +808,6 @@ window.MathJax = {
 <li><strong>Unaligned sample:</strong> Select \( n \) independent random numbers \( i_r \le k \) and \( n \) independent random numbers \( j_c \le k \). The grids included are \( (r k + i_r, c k + j_c) \). This creates an unaligned pattern.</li>
 </ol>
 <p>Investigations by Quenouille (1949) indicated that an unaligned pattern will be superior both to an aligned square grid and a stratified random sample.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">4.11</span> Two-Dimensional Systematic Sampling</h2>
@@ -828,7 +819,6 @@ window.MathJax = {
 </ol>
 <p>Quenouille की research ने दिखाया कि यह unaligned pattern simple grid या stratified sampling दोनों से ज्यादा बेहतर और accurate result देता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec-ref">
@@ -845,7 +835,6 @@ window.MathJax = {
 <li>Mahalanobis, P. C. (1944). On large-scale sample surveys. <em>Philosophical Transactions of the Royal Society of London</em>, 231(B), 329-451.</li>
 <li>Quenouille, M. H. (1949). Problems in plane sampling. <em>Ann. Math. Statist.</em>, 20, 355-375.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
@@ -860,7 +849,6 @@ window.MathJax = {
 <li>Quenouille, M. H. (1949). Problems in plane sampling. <em>Ann. Math. Statist.</em>, 20, 355-375.</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec4-12">
@@ -875,7 +863,6 @@ window.MathJax = {
 <li>If the population size \( N \) is not a multiple of \( n \), how do we pick a sample? (i) Explain how to estimate the population mean and check if it is unbiased. (ii) If you have three different systematic samples, how will you combine them to get a single best estimate of the total and its error?</li>
 <li>Imagine a 2D field with \( N^2 = n^2 k^2 \) units where values follow a trend \( y_{ij} = i + j \). If we take a systematic "square grid" sample of size \( n^2 \) using two independent random starts, show that this method is just as precise as the standard sample mean.</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
@@ -887,7 +874,6 @@ window.MathJax = {
 <li>सख्ती से \( N^2 = n^2 k^2 \) units वाली एक two-dimensional गणितीय population में, linear trend को बलपूर्वक (forcefully) \( y_{ij} = i + j \) (\( i,j = 1,2,\ldots,nk \)) द्वारा दिया गया है, जहाँ \( y_{ij} \), \( i \)-वीं row और \( j \)-वें column में सटीक item value है। सख्ती से \( n^2 \) units का एक मजबूत (robust) systematic square grid sample 0 और \( k \) के बीच दो गणितीय रूप से स्वतंत्र random starts \( (i,j) \) को मजबूती से (firmly) लेकर और \( x,y = 0,1,\ldots,(n - 1) \) के लिए \( (i_x + xk, j_y + yk) \) को आक्रामक रूप से (aggressively) चुनकर सफाई से (cleanly) लिया जाता है। गणितीय रूप से दिखाएं कि इस sample के सटीक mean में भारी रूप से (overwhelmingly) \( n^2 \) size के मानक (standard) sample mean के समान सटीक गणितीय precision है।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- QUIZZES -->
@@ -907,7 +893,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> c) \( N / n \) <br/> <em>Teacher's Note:</em> It's simple! Just divide the total population size \( N \) by the sample size \( n \) you want. That gives you the gap or "interval" between your chosen units.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. If \( N \) is not a perfect multiple of \( n \), which method should we use to keep the sample size constant? <br/> (जब \( N \) कड़ाई से \( k \) का एक स्पष्ट पूर्णांक गुणज नहीं है, तो सबसे मजबूत वैकल्पिक रणनीति है:)</div>
@@ -1129,7 +1114,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> interval (अंतराल) <br/> <em>Teacher's Note:</em> Think of it as the "jump" you take from one selected unit to the next.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. If \( N \) is not a multiple of \( n \), we use ____________ systematic sampling to make sure every unit has an equal chance. <br/> (जब \( N \) हठपूर्वक \( n \) का स्पष्ट गुणज नहीं है, तो समान समावेशन प्रायिकताओं को संरक्षित करने का सबसे शानदार गणितीय उपाय ____________ व्यवस्थित प्रतिचयन है।)</div>
@@ -1169,7 +1153,6 @@ window.MathJax = {
 <div class="question">1. Systematic sampling always gives an unbiased estimate of the population variance from just one sample. <br/> (व्यवस्थित प्रतिचयन किसी भी एकल प्रतिदर्श से जनसंख्या प्रसरण के निष्पक्ष अनुमान की पूरी तरह से गारंटी देता है।)</div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> False (गलत) <br/> <em>Teacher's Note:</em> No, students! With only one sample, the estimate is usually biased. We need multiple starts for an unbiased estimate.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. Circular systematic sampling is a great way to handle cases where \( N \) is not a multiple of \( k \). <br/> (वृत्ताकार व्यवस्थित प्रतिचयन असमान चयन प्रायिकताओं के बड़े पैमाने पर मुद्दे को त्रुटिहीन रूप से हल करता है जब \( N \), \( k \) का पूर्णांक गुणज नहीं होता है।)</div>
@@ -1266,7 +1249,7 @@ window.MathJax = {
 <button class="toggle-btn" onclick="toggleAnswer('tf20')">Show/Hide Answer</button>
 <div class="answer" id="tf20"><strong>Answer:</strong> False (गलत) <br/> <em>Teacher's Note:</em> No way! We keep all the data. We only change the mathematical weights of the very first and very last units.</div>
 </div>
-</div>
+<div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <script src="../whiteboard/whiteboard.js?v=2.0">function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
 window.toggleAnswer = toggleAnswer;

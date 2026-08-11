@@ -363,13 +363,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -403,10 +405,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -626,7 +632,6 @@ window.MathJax = {
 </ul>
 <div class="unit-card-footer"><span class="unit-btn">Open Unit IV <i class="fas fa-arrow-right"></i></span></div>
 </a>
-
 </div>
 </section>
 <!-- ══════════════════════════════ PREFACE SECTION ══════════════════════════════ -->
@@ -645,7 +650,6 @@ window.MathJax = {
 <li><strong>Comprehensive Exercise Bank:</strong> Over 224 self-assessment questions divided into 20 MCQs, 20 Fill in the Blanks, 20 True/False, 6 Matching Sets, and 10 Subjective Questions per unit.</li>
 <li><strong>Hinglish Toggle Support:</strong> Integrated language toggle for English and Hinglish explanations to support diverse learning needs.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- ══════════════════════════════ SYLLABUS SECTION ══════════════════════════════ -->
@@ -668,7 +672,6 @@ window.MathJax = {
 <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
 <li>Hoffman, K., and Kunze, R. <em>Linear Algebra</em>. Prentice-Hall.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- ══════════════════════════════ FROM THE AUTHOR SECTION ══════════════════════════════ -->
@@ -687,7 +690,6 @@ window.MathJax = {
 <h2>About the Author</h2>
 <p><strong>Dr. Manju Singh Tonk</strong> is Professor of Mathematics in the Department of Mathematics and Statistics at CCS Haryana Agricultural University, Hisar. With extensive academic experience in university teaching and mathematical research, Dr. Tonk specializes in Linear Algebra, Applied Mathematics, and Matrix Theory.</p>
 <p>This digital course manual has been designed to provide students with a rigorous, textbook-aligned learning platform featuring complete step-by-step hand calculations, display equations, interactive tools, and comprehensive exercise banks for university examinations.</p>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

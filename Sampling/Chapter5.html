@@ -120,13 +120,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +162,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -307,7 +313,6 @@ window.MathJax = {
 <h2><span class="section-num">5.1</span> Introduction</h2>
 <div class="quote">
                     "In a minute there is time / For decisions and revisions which a minute will reverse." -- <strong>T.S. Eliot</strong>
-
 </div>
 <p>Hello students! In Chapter 2, we learned about simple random sampling. In that method, every unit in the population has the same chance of being picked. But think about this: what if the units are not the same size? For example, if we are studying crop yield, a large farm will contribute much more to the total than a tiny garden. In such cases, giving every unit an equal chance doesn't seem very smart, does it?</p>
 <p>To get better results, we can use "extra" information about the size of each unit. We assign a higher chance of selection to bigger units and a lower chance to smaller ones. This method is called <strong>Probability Proportional to Size sampling</strong>, or simply <strong>PPS sampling</strong>. If the study variable (like yield) is closely related to the size (like area), this method works like magic and gives very accurate estimates.</p>
@@ -332,7 +337,6 @@ window.MathJax = {
 </ul>
 <p>Pps sampling की मुख्य mathematical theory परिणामस्वरूप simple random sampling की तुलना में काफी अधिक complex है। हम पहले pps sampling with replacement (pps wr) के लिए गणितीय रूप से appropriate theory पर विस्तार से चर्चा करेंगे और फिर pps sampling without replacement (pps wor) की advanced theory को मजबूती से प्रस्तुत करेंगे।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec5-2">
@@ -348,7 +352,6 @@ window.MathJax = {
                     <div class="proof-step">Since we have \( X_i \) tickets for unit \( i \) and total tickets are \( X \), the probability is \( X_i/X \).
                 
 </div>
-
 </div>
 <p>If we need a sample of size \( n \), we just repeat this process \( n \) times. If we put the unit back each time, it's called "with replacement". The only problem with this method is that if we have thousands of units, calculating these cumulative totals takes a lot of time and effort.</p>
 <h3>Example 5.1</h3>
@@ -439,7 +442,6 @@ window.MathJax = {
                     <div class="proof-step">So, our estimator \( \widehat{Y}_{pps} \) is indeed an unbiased estimator of the true population total \( Y \).
                 
 </div>
-
 </div>
 <h3>Sampling Variance</h3>
 <p>The variance tells us how much our estimate might fluctuate from sample to sample. Because each draw is independent (since we replace the units), the variance of the average is just \( 1/n \) times the variance of a single draw.</p>
@@ -538,7 +540,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \text{Percentage Gain} = \frac{\widehat{v}_{pps}(\bar{y}_{SR}) - \widehat{v}(\bar{y}_{pps})}{\widehat{v}(\bar{y}_{pps})} \times 100 \quad (5.4.3) $$
                     <div class="proof-step">This tells us how much more precise our PPS estimate is compared to a standard SRS estimate of the same size.</div>
-
 </div>
 <h3 style="margin-top: 40px;">Example 5.3</h3>
 <p>Let's look at a real-life example. A survey was done to study wheat yield. A sample of 20 farms was taken from 100 farms. The farms were picked with probability proportional to the area under wheat (PPS), with replacement. The total wheat area (\( X \)) was 484.5 hectares.</p>
@@ -614,14 +615,12 @@ window.MathJax = {
 <p>Hello students! Until now, we looked at PPS sampling where we put the unit back (with replacement). But what if we don't put it back? This is called <strong>PPS without replacement (WOR)</strong>.</p>
 <p>Think about it: if we don't put a unit back, we are forced to pick a new, different unit for the next draw. This means our sample will have more "unique" information. Because of this, PPS WOR is usually even more efficient and accurate than PPS with replacement. In many large surveys, if we pick a big chunk of the population, the gain in accuracy can be very high!</p>
 <p>However, there is a catch: the math for WOR is much more complicated. Since the population keeps changing (one unit is removed after every draw), the probabilities for the remaining units keep changing too. But don't worry, we will look at some standard ways to handle this.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">5.5</span> PPS Sampling without Replacement (बिना Replacement के PPS Sampling)</h2>
 <p>चूँकि बिना replacement के sampling के मामले में effective sample size स्वाभाविक रूप से replacement के साथ sampling की तुलना में गणितीय रूप से बड़ा होने की उम्मीद है, इसलिए बिना replacement के की गई rigorous sampling, replacement के साथ sampling की तुलना में मजबूती से एक अधिक efficient estimator प्रदान कर सकती है। Varying probabilities (wor) के साथ sampling के कठिन क्षेत्र में गणितीय कार्य की एक विशाल मात्रा व्यापक रूप से की गई है, लेकिन दुर्भाग्य से, अधिकांश theoretical procedures बहुत जटिल हैं और बड़े पैमाने पर field surveys में कड़ाई से आसानी से लागू नहीं होती हैं।</p>
 <p>यदि mathematical sampling fraction बहुत छोटा है, तो बड़े पैमाने के rigorous surveys में, replacement के साथ या बिना sampling की statistical efficiencies गणितीय रूप से नगण्य रूप से भिन्न होंगी। हालाँकि, यदि exact sampling fraction काफी बड़ा या मध्यम रूप से बड़ा है, तो गणितीय रूप से दृढ़ता से यह उम्मीद की जाती है कि कड़ाई से pps sampling (wor) के कारण efficiency में होने वाला precise gain भारी रूप से पर्याप्त होगा। इस तकनीकी अध्याय के शेष भाग में, हम व्यापक रूप से कुछ विशिष्ट advanced results पर चर्चा करेंगे जो इन दिनों गणितीय रूप से सबसे महत्वपूर्ण हो गए हैं।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec5-6">
@@ -640,7 +639,6 @@ window.MathJax = {
                     <div class="proof-step">Logic: Since unit \( j \) is gone, its probability \( p_j \) is subtracted from the total (which was 1). So the new denominator is \( 1 - p_j \).
                 
 </div>
-
 </div>
 <h3>Example 5.4</h3>
 <p>Suppose we have 8 orchards with different numbers of trees. We want to pick 2 orchards without replacement.</p>
@@ -723,14 +721,12 @@ window.MathJax = {
 <h2><span class="section-num">5.7</span> Estimation in PPS Sampling without Replacement: Total and its Sampling Variance</h2>
 <p>Hello students! As we discussed earlier, sampling without replacement (WOR) is generally more efficient than sampling with replacement. Why? Because when we don't put a unit back after picking it, we ensure that every unit in our sample is unique. This means we get more "new" information, which makes our estimates more accurate. This rule also applies to PPS sampling.</p>
 <p>Over the last few decades, researchers have developed many clever ways to handle the math for PPS without replacement. It's a bit tricky because as we pick units one by one, the probabilities for the remaining units keep changing. In the following sections, we will study two types of estimators: <strong>Ordered Estimators</strong> (where the order in which we pick the units matters) and <strong>Unordered Estimators</strong> (where the order doesn't matter).</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">5.7</span> Estimation in PPS Sampling without Replacement: Total and its Sampling Variance (बिना Replacement के PPS Sampling में Estimation)</h2>
 <p>जैसा कि पहले ही स्पष्ट रूप से बताया गया है, बिना replacement के मजबूती से sampling करना गणितीय रूप से full replacement के साथ की जाने वाली sampling की तुलना में काफी अधिक efficient है। यह strict mathematical rule मजबूती से pps sampling पर भी समान रूप से लागू होता है। इस प्रकार, हम सुरक्षित रूप से पाते हैं कि बिना replacement के strictly varying probabilities के साथ एक distinct sample को साफ तौर पर चुनने के लिए गणितीय रूप से कई exact sampling procedures मौजूद हैं। पिछले तीस वर्षों के दौरान strict varying probability true sampling की advanced theory का जबरदस्त mathematical development हुआ है।</p>
 <p>अत्यधिक दिलचस्प true mathematical results की एक अच्छी संख्या को कड़ाई से उद्धृत किया जा सकता है, लेकिन स्थान की strict theoretical limitations हमें पूरी तरह से विस्तृत चर्चा की अनुमति नहीं देती हैं। इसलिए, हम कड़ाई से खुद को उन स्पष्ट परिणामों तक सीमित रखेंगे जो गणितीय रूप से पूरी तरह सार्थक प्रतीत होते हैं और जिनसे true efficiency में पर्याप्त gain होता है। चूंकि true inclusion की exact unconditional probability ड्रा या चयनित units के order के साथ बदलती रहती है, इसलिए हम निम्नलिखित sections में कड़ाई से ordered और पूरी तरह unordered mathematical estimators दोनों की गहराई से जांच करेंगे।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec5-8">
@@ -782,7 +778,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_D) = \frac{1}{n(n-1)} \sum_{i=1}^n (z_i - \bar{z})^2 \quad (5.8.8) $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">5.8</span> Ordered Estimators (क्रमबद्ध अनुमानक)</h2>
@@ -869,7 +864,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{Y}_{HT} = \sum_{i \in s} \frac{y_i}{\pi_i} \quad (5.9.1) $$
                     <div class="proof-step">Logic: By dividing each value by its own inclusion probability, we "inflate" it to represent its share in the whole population. Summing these up gives us the total.</div>
-
 </div>
 <p>The variance of this estimator shows us how much it spreads. It depends on how individual units and pairs of units are included in the sample:</p>
 <div class="derivation">
@@ -930,7 +924,6 @@ window.MathJax = {
                     <div class="proof-step">Notice the term \( [1 - (n - 1)p_i] \). This is a "reduction term"—it makes the variance smaller! This means PPS Systematic sampling is usually more accurate than standard PPS with replacement.
                 
 </div>
-
 </div>
 </div>
 <div class="hinglish-content">
@@ -957,7 +950,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{Y}_{RHC} = \sum_{i=1}^n \frac{y_i}{p_i} Q_i \quad (5.11.1) $$
                     <p>where \( Q_i = \sum_{j \in G_i} p_j \), \( p_j \) being the initial probability of selection for the \( j \)-th unit in the \( i \)-th group (\( j = 1, \ldots, N_i, i = 1, \ldots, n \)).</p>
-
 </div>
 <h3>Theorem 5.11.1</h3>
 <p>In the random group selection method, the estimator \( \widehat{Y}_{RHC} \) is unbiased and its sampling variance is given by:</p>
@@ -984,7 +976,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{v}(\widehat{Y}_{RHC}) = \frac{\sum N_i^2 - N}{N^2 - \sum N_i^2} \sum_{i=1}^n Q_i \left( \frac{y_i}{p_i} - \widehat{Y}_{RHC} \right)^2 \quad (5.11.6) $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">5.11</span> Random Group Method (यादृच्छिक समूह विधि)</h2>
@@ -1045,7 +1036,6 @@ window.MathJax = {
                     $$ \pi_{ij} = 2p_i p_j \left( 1 + \sum_{k=1}^\infty \frac{W_k}{(1 - p_i)(1 - p_j)} \right) $$
                     <p>where \( W_k = \sum (p_i p_j)^k \).</p>
 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">5.12</span> Inclusion Probability Proportional to Size (\( \pi \)ps) Sampling Procedures (\( \pi \)ps प्रतिचयन प्रक्रियाएं)</h2>
@@ -1080,7 +1070,6 @@ window.MathJax = {
 <li>In sampling with unequal probabilities, wor, a sample of size 2 is drawn. The first unit is selected with pps and the second with pps of the remaining units. Show that Yates and Grundy's variance estimator is always positive for this sampling system.</li>
 <li>If the first unit in the sample is selected with pps, the second with pps of the remaining units, while the remaining \( (n-2) \) units are selected with equal probabilities without replacement. Prove that Yates and Grundy's variance estimator would be positive for this sampling system.</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2>Set of Problems (समस्याओं का समूह)</h2>
@@ -1090,7 +1079,6 @@ window.MathJax = {
 <li>यदि पहली unit pps से, दूसरी शेष के pps से और बाकी \( (n-2) \) units equal probabilities (wor) से चुनी जाएं, तो सिद्ध करें कि Yates और Grundy का variance estimator positive होगा।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- QUIZZES SECTION -->
@@ -1109,7 +1097,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> b) Size of the unit (\(X_i\)) <br/> <em>Explanation:</em> The core principle of Probability Proportional to Size (PPS) sampling is that larger units have a higher probability of selection, explicitly \( p_i = X_i/X \).</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. Which method uses cumulative totals to select a PPS sample? <br/> (PPS प्रतिदर्श चुनने के लिए कौन सी विधि संचयी योग का उपयोग करती है?)</div>
@@ -1133,7 +1120,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> cumulative (संचयी) <br/> <em>Explanation:</em> Lahiri's method selects units using pairs of random numbers against the maximum size \( M \), removing the tedious need to compute cumulative sums.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. The Horvitz-Thompson estimator is an example of an ____________ estimator. <br/> (हॉर्विट्ज़-थॉम्पसन अनुमानक एक ____________ अनुमानक का उदाहरण है।)</div>
@@ -1151,7 +1137,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> True (सही) <br/> <em>Explanation:</em> If all units are assigned an equal probability of selection, PPS mathematically collapses exactly into simple random sampling.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. Des Raj's estimator does not depend on the order in which units are selected. <br/> (देस राज का अनुमानक इस बात पर निर्भर नहीं करता है कि इकाइयों को किस क्रम में चुना गया है।)</div>
@@ -1171,7 +1156,6 @@ window.MathJax = {
 <li>Yates, F. (1960). <em>Sampling Methods for Censuses and Surveys</em>. Charles Griffin &amp; Co.</li>
 <li>Des Raj (1968). <em>Sampling Theory</em>. McGraw-Hill.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
@@ -1183,7 +1167,6 @@ window.MathJax = {
 <li>Des Raj (1968). <em>Sampling Theory</em>. McGraw-Hill.</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>

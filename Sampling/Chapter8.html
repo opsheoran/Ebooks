@@ -120,13 +120,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +162,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -305,7 +311,6 @@ window.MathJax = {
 <div class="quote">
                     "A Mathematician knows how to solve a problem but he can't do it"<br/>
                     -- <strong>W.E. Milne</strong>
-
 </div>
 <p>In random sampling, we assume that the population is divided into separate parts that we can identify. These are called sampling units. The tiniest part you can divide the population into is called an element. When we group these elements together, we call it a cluster. If we pick clusters as our sampling units, we call this method cluster sampling. Sometimes, we divide a whole area into small segments and every element belongs to exactly one segment. Then, we call it area sampling.</p>
 <p>Finding and identifying a single element usually takes a lot of time. But once you find one element, it is very easy to survey its neighbors. That is why in cluster sampling, our main job is to divide the population into the right clusters. Usually, clusters are made of elements that are close to each other. Because of this, elements in the same cluster often have similar qualities. A simple rule is to keep the number of elements in each cluster small, but have many clusters in total. Once we have the clusters, we pick some of them randomly (using equal or unequal chances). Then, we survey every single element inside the clusters we picked.</p>
@@ -335,7 +340,6 @@ window.MathJax = {
 <p>भले ही ऐसा frame available करा दिया जाए, elements के simple random sample पर enquiry base करना expensive होगा। Statistical efficiency के point of view से, एक cluster में units के similar होने की सामान्य tendency के कारण cluster sampling आमतौर पर simple random sampling की तुलना में कम efficient होती है। वास्तव में, cluster size बढ़ने के साथ cluster sampling की efficiency घटने की संभावना है। एक दिए गए sample size के लिए, एक छोटी sampling unit बड़ी sampling unit की तुलना में अधिक precise results लाएगी। अधिकांश practical situations में, efficiency में loss की भरपाई cost में reduction द्वारा की जा सकती है। इसलिए cluster sampling में efficiency per unit cost simple random sampling की तुलना में अधिक हो सकती है।</p>
 <p>Clusters का selection random हो सकता है या पहले एक unit जिसे key unit कहा जाता है उसे random पर select करके और फिर cluster बनाने के लिए required number में neighbouring units को randomly लेकर किया जा सकता है। उदाहरण के लिए, milk production को estimate करने के लिए, तीन villages का एक cluster पहले random पर एक key village select करके और फिर किसी specified area के block से दो और villages लेकर बनाया जा सकता है। Clusters overlapping या non-overlapping हो सकते हैं। पिछले chapters में discuss की गई विभिन्न sampling procedures, जैसे simple random, stratified या systematic sampling procedures, को clusters को ही sampling units मानकर cluster sampling में apply किया जा सकता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec8-2">
@@ -358,7 +362,6 @@ window.MathJax = {
 <li>\( S^2 = \sum_{i = 1}^N \sum_{j = 1}^M (y_{ij} - \bar{Y})^2/(NM - 1) = \) The variation between every single element in the entire population.</li>
 <li>\( \rho = \frac{E(y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{E(y_{ij} - \bar{Y})^2} = \frac{\sum_{i = 1}^N \sum_{j \neq k}^M (y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{(M - 1)(NM - 1)S^2} = \) The 'intracluster correlation coefficient'. This tells us how similar elements are within the same cluster.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">8.2</span> Notations (संकेतन)</h2>
@@ -379,7 +382,6 @@ window.MathJax = {
 <li>\( \rho = \frac{E(y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{E(y_{ij} - \bar{Y})^2} = \frac{\sum_{i = 1}^N \sum_{j \neq k}^M (y_{ij} - \bar{Y})(y_{ik} - \bar{Y})}{(M - 1)(NM - 1)S^2} = \) clusters के भीतर elements के बीच intracluster correlation co-efficient</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec8-3">
@@ -433,7 +435,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ V(\bar{y}_n) = \frac{S_b^2}{n} \quad \text{and its estimate is} \quad v(\bar{y}_n) = \frac{s_b^2}{n} $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">8.3</span> Equal Cluster Sampling: Estimator of Mean and its Variance (समान गुच्छ प्रतिचयन: माध्य का आकलक और उसका प्रसरण)</h2>
@@ -577,7 +578,6 @@ window.MathJax = {
                     <p>And the <strong>Intracluster Correlation (\( \rho \))</strong> is:</p>
                     $$ \widehat{\rho} = \frac{(1 - 0.576)}{(4 - 1) \times 0.576} = 0.245 $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">8.4</span> Relative Efficiency of Cluster Sampling (गुच्छ प्रतिचयन की सापेक्ष दक्षता)</h2>
@@ -667,7 +667,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ C = c_1nM + c_2n^{1/2} \quad (8.5.1) $$
                     <p>where \( c_1 \) is the cost per element and \( c_2 \) is the cost per unit of travel distance between clusters.</p>
-
 </div>
 <p>We already know the variance formula for our estimate. To use it effectively, we need to know how the variation <em>inside</em> a cluster (\( S_w^2 \)) changes when the cluster size (\( M \)) changes. Statisticians found an "empirical law" for this:</p>
 <div class="derivation">
@@ -750,7 +749,6 @@ window.MathJax = {
 <li>(iii) survey की cost पर्याप्त रूप से बड़ी है।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec8-6">
@@ -786,7 +784,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ v(\widehat{P}_c) = (1 - f)\frac{\sum_{i = 1}^n (p_i - \bar{p})^2}{n(n - 1)} \quad (8.6.8) $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">8.6</span> Cluster Sampling for Proportions (अनुपात के लिए गुच्छ प्रतिचयन)</h2>
@@ -869,7 +866,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ V(\bar{y}_n^*) = \frac{(1 - f)}{n} \frac{1}{(N - 1)}\sum_{i = 1}^N \left( \frac{M_i}{\bar{M}}\bar{y}_{i\cdot} - \bar{Y} \right)^2 $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">8.7</span> Unequal Cluster Sampling: Estimators of Mean and their Variances (असमान गुच्छ प्रतिचयन: माध्य के आकलक और उनके प्रसरण)</h2>
@@ -1000,7 +996,6 @@ window.MathJax = {
                 </div>
 <p>इसलिए, यह observe किया जाता है कि efficiency बढ़ती है क्योंकि clusters के बीच variation कम होता है। सामान्य तौर पर, cluster sampling तभी efficient होगी जब clusters के बीच variation यथासंभव (as small as possible) कम हो।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec8-9">
@@ -1100,7 +1095,6 @@ window.MathJax = {
                 </div>
 <p>यह देखा जा सकता है कि \( E \) हमेशा 1 से greater होता है। Other sampling schemes, जैसे pps, wor, sampling, और clusters के suitable arrangement के साथ pps systematic sampling का उपयोग भी efficiency बढ़ाने के लिए किया जा सकता है। Des Raj (1954, 1958), Zarcovic (1960), और Foreman और Brewer (1971) द्वारा super population model के तहत further comparisons किए गए हैं।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec-ref">
@@ -1116,7 +1110,6 @@ window.MathJax = {
 <li>Jessen, R. J. (1942). Statistical investigation of a sample survey for obtaining farm facts. <em>Iowa Agr. Exp. Stat. Res. Bull.</em>, 304.</li>
 <li>Sukhatme, P. V. (1954). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
@@ -1130,7 +1123,6 @@ window.MathJax = {
 <li>Sukhatme, P. V. (1954). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec8-10">
@@ -1158,7 +1150,6 @@ window.MathJax = {
 </ul>
 </li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
@@ -1196,7 +1187,6 @@ window.MathJax = {
 </li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- QUIZZES SECTION -->
@@ -1215,7 +1205,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> c) Within clusters should be maximum and between clusters minimum <br/> <em>Explanation:</em> High heterogeneity within clusters ensures each cluster accurately represents the whole population, making the selection of any cluster equally informative.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. As the size of the cluster increases, the efficiency of cluster sampling generally: <br/> (जैसे-जैसे गुच्छ का आकार बढ़ता है, गुच्छ प्रतिचयन की दक्षता आम तौर पर:)</div>
@@ -1437,7 +1426,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> element (तत्व) <br/> <em>Explanation:</em> A cluster is specifically composed of a localized group of these elementary units.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. When the entire geographical area containing the population is divided into segments, the cluster sampling procedure is often called ____________ sampling. <br/> (जब जनसंख्या वाले संपूर्ण भौगोलिक क्षेत्र को खंडों में विभाजित किया जाता है, तो गुच्छ प्रतिचयन प्रक्रिया को अक्सर ____________ प्रतिचयन कहा जाता है।)</div>
@@ -1545,7 +1533,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> False (गलत) <br/> <em>Explanation:</em> If \( \rho = 0 \), they are exactly equally efficient statistically. Cluster sampling only becomes *more* statistically efficient if \( \rho \) is negative.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. When \( M = 1 \), the mathematical formula for the variance of the cluster mean effortlessly matches the variance of a simple random sample. <br/> (जब \( M = 1 \), गुच्छ माध्य के प्रसरण का गणितीय सूत्र सरल यादृच्छिक प्रतिदर्श के प्रसरण से आसानी से मेल खाता है।)</div>

@@ -367,13 +367,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -407,10 +409,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -644,7 +650,6 @@ window.MathJax = {
                         $$ T(0, 0) = (0 + 1, \; 0) = (1, 0) \neq (0, 0) $$
                         <p>Since linear transformations must map zero vector to zero vector ($T(0) = 0$), $T$ is NOT linear.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.1 Linear Transformations and Operators (Hinglish व्याख्या)</h2>
@@ -826,7 +831,6 @@ window.MathJax = {
                         $$ \text{Im}(D) = P_1(x) = \text{span}\{1, x\} \implies \rho(D) = 2 $$
                         $$ \rho(D) + \nu(D) = 2 + 1 = 3 = \dim(P_2(x)) $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.2 Kernel, Image, Rank and Nullity (Hinglish व्याख्या)</h2>
@@ -915,7 +919,6 @@ window.MathJax = {
                         $$ \rho(D) + \nu(D) = 2 + 1 = 3 = \dim(P_2(x)) $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.3 Matrix Representation -->
@@ -987,7 +990,6 @@ window.MathJax = {
                         $$ T(1, 0) = (\cos\theta, \sin\theta), \quad T(0, 1) = (-\sin\theta, \cos\theta) $$
                         $$ [T] = \begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{bmatrix} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.3 Matrix Representation of Linear Transformations (Hinglish व्याख्या)</h2>
@@ -1056,7 +1058,6 @@ window.MathJax = {
                         $$ [T] = \begin{bmatrix} \cos\theta &amp; -\sin\theta \\ \sin\theta &amp; \cos\theta \end{bmatrix} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.4 Change of Basis -->
@@ -1119,7 +1120,6 @@ window.MathJax = {
 <p><strong>Solution:</strong></p>
                         $$ [I]_{B', B} [I]_{B, B'} = [I]_{B, B} = I \implies [I]_{B, B'} = ([I]_{B', B})^{-1} = P^{-1} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.4 Change of Basis and Matrix Similarity (Hinglish व्याख्या)</h2>
@@ -1179,7 +1179,6 @@ window.MathJax = {
                         $$ [I]_{B', B} [I]_{B, B'} = [I]_{B, B} = I \implies [I]_{B, B'} = ([I]_{B', B})^{-1} = P^{-1} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.5 Linear Functionals and Dual Space -->
@@ -1248,7 +1247,6 @@ window.MathJax = {
                         $$ W^0 = \{f \in V^* \mid f(w) = 0 \text{ for all } w \in W\} $$
                         $$ \dim(W) + \dim(W^0) = \dim(V) $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.5 Linear Functionals and Dual Spaces (Hinglish व्याख्या)</h2>
@@ -1314,7 +1312,6 @@ window.MathJax = {
                         $$ \dim(W) + \dim(W^0) = \dim(V) $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.6 Adjoint & Self-Adjoint Operators -->
@@ -1370,7 +1367,6 @@ window.MathJax = {
 <p><strong>Solution:</strong></p>
                         $$ \langle U u, U v \rangle = \langle u, U^* U v \rangle = \langle u, I v \rangle = \langle u, v \rangle $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.6 Adjoint &amp; Self-Adjoint Operators (Hinglish व्याख्या)</h2>
@@ -1423,7 +1419,6 @@ window.MathJax = {
                         $$ \langle U u, U v \rangle = \langle u, U^* U v \rangle = \langle u, I v \rangle = \langle u, v \rangle $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.7 Solved Advanced Problems -->
@@ -1472,7 +1467,6 @@ window.MathJax = {
 <p><strong>Solution:</strong></p>
                         $$ [T] = \begin{bmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{bmatrix} = [T]^T \implies T^* = T \implies \text{Self-Adjoint.} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>4.7 Solved Numerical Problems (Hinglish व्याख्या)</h2>
@@ -1518,7 +1512,6 @@ window.MathJax = {
                         $$ [T] = \begin{bmatrix} 2 &amp; 1 \\ 1 &amp; 2 \end{bmatrix} = [T]^T \implies T^* = T \implies \text{Self-Adjoint.} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.8 EXERCISE BANK -->
@@ -1848,7 +1841,6 @@ window.MathJax = {
 </table>
 <button class="toggle-btn" onclick="toggleAnswer('match401_ans')">Show Answer ▼</button>
 <div class="answer" id="match401_ans"><strong>Answer Mapping:</strong> 1-(A), 2-(B), 3-(C), 4-(D).</div>
-
 </div>
 <div class="question">
 <strong>Matching Set 2: Dual Space &amp; Functionals</strong>
@@ -1962,7 +1954,6 @@ window.MathJax = {
 <div class="question"><strong>Q10.</strong> Prove that unitary operators preserve inner products and distances ($\|U v\| = \|v\|$).</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub410_ans')">Show Answer ▼</button>
 <div class="answer" id="sub410_ans"><strong>Answer Outline:</strong> Compute $\|U v\|^2 = \langle U v, U v \rangle = \langle v, U^* U v \rangle$. Since $U^* U = I$, $\langle v, I v \rangle = \langle v, v \rangle = \|v\|^2$. Taking square roots yields $\|U v\| = \|v\|$.</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 4.9 Summary -->
@@ -1976,7 +1967,6 @@ window.MathJax = {
 <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
 <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

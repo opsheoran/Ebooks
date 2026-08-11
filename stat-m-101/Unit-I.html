@@ -506,13 +506,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -546,10 +548,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -851,7 +857,6 @@ window.MathJax = {
 <li><strong>Environment (पर्यावरण):</strong> बाहरी परिस्थितियां जैसे स्वच्छता, जलवायु और आवास जो Agent और Host के संपर्क को बढ़ावा देती हैं।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.2 Outbreak Protocol -->
@@ -953,7 +958,6 @@ window.MathJax = {
 <text fill="#E8B84B" font-family="DM Sans" font-size="10" text-anchor="middle" x="525" y="176">&amp; Final Report</text>
 </svg>
 <div class="figure-caption">Sequential steps in an outbreak investigation moving systematically from case verification to control action and reporting.</div>
-
 </div>
 <!-- FIGURE 1.6: THE EPIDEMIC CURVE (EPI CURVE) -->
 <div class="figure-box">
@@ -1084,7 +1088,6 @@ window.MathJax = {
 <p>स्वास्थ्य अधिकारियों और जनता को विस्तृत रिपोर्ट प्रस्तुत करें ताकि भविष्य में ऐसी घटनाओं को रोका जा सके।</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.3 Health Measures -->
@@ -1181,7 +1184,6 @@ window.MathJax = {
 <text fill="#9B2335" font-family="Source Serif 4" font-size="11" x="450" y="180">Recovery or Death (D)</text>
 </svg>
 <div class="figure-caption">Prevalence (\(P\)) is modeled as water in a bathtub filled by new incidence (\(I\)) and drained by recovery or mortality over duration (\(D\)).</div>
-
 </div>
 <p><em>Example:</em> Type 2 diabetes cannot be cured easily, but modern medicine allows patients to live with it for decades. Because duration is long, prevalence is high even if the annual incidence is modest. In contrast, a rotavirus infection lasts only a few days, so its prevalence at any moment is low even when many children are falling ill.</p>
 <h3>Attack Rate</h3>
@@ -1284,7 +1286,6 @@ window.MathJax = {
 </div>
 <p><strong>संबंध:</strong> Prevalence = Incidence $\times$ Average Duration of Disease ($P = I \times D$)।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.4 Case-Control -->
@@ -1323,7 +1324,6 @@ window.MathJax = {
 <text fill="#C8922A" font-family="DM Sans" font-size="12" font-weight="bold" text-anchor="middle" x="270" y="20">← RETROSPECTIVE INQUIRY (Past Exposure)</text>
 </svg>
 <div class="figure-caption">In a case-control study, investigation begins at present disease status and moves backward to ascertain past exposure odds.</div>
-
 </div>
 <h3>The 2×2 Contingency Table</h3>
 <p>Data from a case-control study are arranged as follows:</p>
@@ -1423,7 +1423,6 @@ window.MathJax = {
     जहाँ $a$ = Exposed Cases, $b$ = Exposed Controls, $c$ = Unexposed Cases, $d$ = Unexposed Controls।
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.5 Cohort -->
@@ -1459,7 +1458,6 @@ window.MathJax = {
 <text fill="#C8922A" font-family="DM Sans" font-size="12" font-weight="bold" text-anchor="middle" x="275" y="20">PROSPECTIVE FOLLOW-UP (Future Outcome) →</text>
 </svg>
 <div class="figure-caption">In a cohort study, healthy groups classified by exposure are followed forward in time to measure direct disease incidence.</div>
-
 </div>
 <h3>The 2×2 Contingency Table</h3>
 <p>In a cohort study, the table is built from incidence data:</p>
@@ -1617,7 +1615,6 @@ window.MathJax = {
     $$ \text{Relative Risk (RR)} = \frac{\text{Incidence in Exposed}}{\text{Incidence in Unexposed}} = \frac{a / (a+b)}{c / (c+d)} $$
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.6 Health Screening -->
@@ -1662,7 +1659,6 @@ window.MathJax = {
 <text fill="#3A3A3C" font-family="Source Serif 4" font-size="11" text-anchor="middle" x="405" y="182">Healthy &amp; Test (-)</text>
 </svg>
 <div class="figure-caption">Classification matrix comparing rapid screening results against true diagnosis from the gold standard.</div>
-
 </div>
 <h3>The 2×2 Screening Evaluation Matrix</h3>
 <p>The screening test result is compared with the true disease status as determined by the gold standard.</p>
@@ -1760,7 +1756,6 @@ window.MathJax = {
     $$ \text{Sensitivity} = \frac{a}{a+c}, \quad \text{Specificity} = \frac{d}{b+d} $$
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.7 Bias & Confounding -->
@@ -1823,7 +1818,6 @@ window.MathJax = {
 <li><strong>Confounding:</strong> एक तीसरा अवांछित चर (third variable) जो एक्सपोज़र और बीमारी दोनों से जुड़ा होता है।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.8 Solved Case Studies -->
@@ -1968,7 +1962,6 @@ window.MathJax = {
                     $$ CFR = \frac{15}{500} \times 100 = 3\% $$
                     <strong>Conclusion:</strong> Three percent of diagnosed dengue patients died during this outbreak. The figure helps health authorities judge severity and plan intensive-care resources.
                 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.8 हल किए गए केस स्टडीज (Solved Case Studies)</h2>
@@ -1978,7 +1971,6 @@ window.MathJax = {
     <br/><strong>Relative Risk = 7.5</strong> (सलाद खाने वालों में बीमारी का खतरा 7.5 गुना अधिक था)।
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.9 COMPLETE 75 QUESTION EXERCISE BANK (STAT-CC-101/102 SYSTEM) -->
@@ -2514,13 +2506,11 @@ window.MathJax = {
 <p><strong>Recall bias</strong> happens when cases and controls remember past exposures differently. <em>Example:</em> Mothers of children with birth defects may recall drug use during pregnancy more completely than mothers of healthy children.</p>
 <p><strong>Attrition bias</strong> happens when participants are lost to follow-up in a cohort study and those lost differ from those who remain. <em>Example:</em> Heavy smokers may drop out of a long-term smoking study, causing an underestimate of lung disease risk.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.9 स्व-मूल्यांकन अभ्यास बैंक (Self-Assessment Exercise Bank)</h2>
 <p>सभी 75 प्रश्नों के उत्तर और व्याख्याएं अंग्रेजी और हिंग्लिश दोनों में उपलब्ध हैं। उत्तर देखने के लिए Show Answer बटन पर क्लिक करें।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.10 Summary -->
@@ -2547,7 +2537,6 @@ window.MathJax = {
 <h2>1.10 सारांश और संदर्भ (Summary &amp; References)</h2>
 <p>Epidemiology स्वास्थ्य समस्याओं को समझने और नियंत्रित करने का विज्ञान है। यह अध्ययन संक्रामक और गैर-संक्रामक दोनों बीमारियों के निवारण में अत्यंत सहायक है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

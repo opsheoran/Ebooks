@@ -120,13 +120,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +162,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -307,7 +313,6 @@ window.MathJax = {
                     "Mine is a long and sad tale" said the Mouse, turning to Alice and sighing.<br/>
                     "It is a long tail, certainly" said Alice, looking down with wonder at the Mouse's tail, "but why do you call it sad?"<br/>
                     -- <strong>Lewis Carroll</strong>
-
 </div>
 <p>Hello students! In the previous chapter, we talked about <strong>Cluster Sampling</strong>. Remember? In cluster sampling, we divide the population into groups called clusters. Then we pick a few clusters and study every single person or unit inside those selected groups. While this is cheap and easy, there is a problem: since we only look at a few clusters, we don't get to see how units are spread across the whole population. This can make our results less accurate.</p>
 <p>So, what can we do? A logical idea is to pick more clusters but study only a few units from each. For example, instead of picking 2 villages and surveying every house, we could pick 5 villages and survey 10 houses from each. This method is called <strong>Two-Stage Sampling</strong> or <strong>Sub-sampling</strong>. Here, the clusters we pick first are called <strong>First-Stage Units (fsu)</strong> or Primary Sampling Units. The smaller units inside them are called <strong>Second-Stage Units (ssu)</strong>.</p>
@@ -323,7 +328,6 @@ window.MathJax = {
 <p>Chapter 8 में, हमने cluster sampling पर चर्चा की है जिसमें clusters को sampling units माना गया था और selected clusters के सभी elements को पूरी तरह से enumerate (गणना) किया गया था। वहाँ यह बताया गया है कि cluster sampling कुछ परिस्थितियों में किफायती (economical) है लेकिन यह method population पर sample के फैलाव को प्रतिबंधित (restricts) करती है जिसके परिणामस्वरूप आमतौर पर estimator के variance में वृद्धि होती है। इसलिए, यह उम्मीद करना तार्किक (logical) है कि elements को बड़ी संख्या में clusters पर वितरित (distributing) करके और clusters के sample में सभी elements को पूरी तरह से enumerate करने के बजाय प्रत्येक selected cluster में units के केवल एक sample का सर्वेक्षण (surveying) करके estimator की efficiency बढ़ाई जाएगी। इस प्रकार की sampling जिसमें पहले clusters को select करना और फिर प्रत्येक selected cluster से एक specified number में elements को select करना शामिल है, sub-sampling या two-stage sampling के रूप में जानी जाती है। ऐसे sampling designs में, clusters जो first stage में sampling की units बनाते हैं, उन्हें first stage units (fsu) या primary sampling units (psu) कहा जाता है और clusters के भीतर elements को second-stage units (ssu) कहा जाता है। इस procedure को तीन या अधिक चरणों (stages) में सामान्यीकृत (generalized) किया जा सकता है और इसे multi-stage sampling कहा जाता है। उदाहरण के लिए, एक जिले में फसल की उपज का अनुमान लगाने के लिए फसल सर्वेक्षणों में, एक ब्लॉक को एक primary sampling unit माना जा सकता है, गाँवों को second stage units, फसल के खेतों को third stage units, और एक निश्चित आकार के भूखंड (plot) को sampling की अंतिम इकाई (ultimate unit) माना जा सकता है।</p>
 <p>Multi-stage sampling व्यवहार में (in practice) बहुत उपयोगी पाई गई है और इस procedure का उपयोग आमतौर पर बड़े पैमाने पर सर्वेक्षणों में किया जा रहा है। Mahalanobis (1940) ने फसल सर्वेक्षणों में इस procedure का उपयोग किया और Ganguli (1941) ने इसे nested sampling कहा है। Cochran (1939), Hansen और Hurwitz (1943), Sukhatme (1953) और Lahiri (1954) ने कृषि और जनसंख्या सर्वेक्षणों में इसके उपयोग पर चर्चा की है। Roy (1957) और Singh (1958) ने इस sampling design के लिए variance components के अनुमान (estimation) पर विचार किया है। Multi-stage sampling procedure को random sampling और cluster sampling procedures का एक बेहतर संयोजन (combination) माना जा सकता है। इससे यह उम्मीद की जा सकती है कि यह (i) sampling variability के दृष्टिकोण से single stage random sampling की तुलना में कम efficient और cluster sampling की तुलना में अधिक efficient होगी, और (ii) लागत (cost) और परिचालन (operational) दृष्टिकोण से single stage random sampling की तुलना में अधिक efficient और cluster sampling की तुलना में कम efficient होगी। इस sampling procedure का मुख्य लाभ यह है कि, first stage में, fsu के frame की आवश्यकता होती है, जिसे आसानी से तैयार किया जा सकता है। Second stage में, ssu के frame की आवश्यकता केवल selected fsu के लिए होती है और इसी तरह आगे। यह design अधिक लचीला (flexible) है क्योंकि यह विभिन्न stages में विभिन्न selection procedures के उपयोग की अनुमति देता है। यह भी उल्लेख किया जाना चाहिए कि कई व्यावहारिक स्थितियों में multi-stage sampling एकमात्र विकल्प (only choice) हो सकती है जहाँ अंतिम-चरण इकाइयों (ultimate-stage units) का एक संतोषजनक (satisfactory) sampling frame आसानी से उपलब्ध नहीं है और ऐसा frame प्राप्त करने की लागत बड़ी है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec9-2">
@@ -337,7 +341,6 @@ window.MathJax = {
                     <p><strong>Rule 2: Variance (Spread)</strong></p>
                     $$ V(t) = V_1E_2(t) + E_1V_2(t) \quad (9.2.2) $$
                     <p>Here, \( E_1 \) and \( V_1 \) are the average and variance for the first stage (picking clusters). \( E_2 \) and \( V_2 \) are for the second stage (picking units inside those clusters).</p>
-
 </div>
 <p>Let's assume we have a population with \( N \) large clusters, and each cluster has \( M \) units. From these, we pick \( n \) clusters, and then from each selected cluster, we pick \( m \) units. We assume everything is picked randomly with equal chance. Here are the symbols we use:</p>
 <ul>
@@ -410,7 +413,6 @@ window.MathJax = {
                     $$ \widehat{Y} = NM\bar{y} $$
                     $$ V(\widehat{Y}) = N^2M^2 \left[ \frac{1 - f_1}{n}S_b^2 + \frac{1 - f_2}{nm}S_w^2 \right] $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">9.2</span> Two-Stage Sampling with Equal First-Stage Units: Estimation of Mean and its Variance (समान प्रथम-चरण इकाइयों के साथ द्वि-चरण प्रतिचयन: माध्य का अनुमान और उसका प्रसरण)</h2>
@@ -501,7 +503,6 @@ window.MathJax = {
 <li>\( c_1 \): Cost to visit one cluster (travel time, setting up camp).</li>
 <li>\( c_2 \): Cost to survey one unit inside a cluster.</li>
 </ul>
-
 </div>
 <p>Usually, \( c_1 \) is much higher than \( c_2 \). Think about it: traveling to a remote village is expensive, but interviewing one more person while you are already in that village is very cheap!</p>
 <p><strong>The Variance (Error):</strong></p>
@@ -524,7 +525,6 @@ window.MathJax = {
 <p><strong>(ii) Standard Error:</strong> We calculate the sample variance between fields (\( s_b^2 = 0.1642 \)) and within fields (\( s_w^2 = 0.3215 \)). Plugging these into our variance formula, we get \( SE = 0.120 \).</p>
 <p><strong>(iii) Finding the Best Allocation:</strong> If the cost is \( 100 = 4n + nm \), then \( c_1 = 4 \) and \( c_2 = 1 \). Using our formula, the best \( m \) is about 4, and the best \( n \) is about 13 fields.</p>
 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">9.3</span> Optimum Allocation: Equal First-Stage Units (इष्टतम आवंटन: समान प्रथम-चरण इकाइयाँ)</h2>
@@ -623,7 +623,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ V(\bar{y}) = \frac{1 - f_1}{n}S_b^2 + \frac{1 - f_2}{nm}S_w^2 + \frac{1 - f_3}{nml}S_u^2 \quad (9.4.1) $$
                     <p>Where \( f_1, f_2, f_3 \) are the sampling fractions at each of the three stages.</p>
-
 </div>
 <p>The logic is simple: Every time we take a sample instead of looking at everything, we add a bit of uncertainty (variance) to our final result. If we enumerated everything in the last stage (\( l=L \)), the third term would vanish.</p>
 <h3>Finding the Best Sample Sizes (\( n, m, l \))</h3>
@@ -697,7 +696,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ C = a + \frac{[(A_1c_1)^{1/2} + (A_2c_2)^{1/2} + (A_3c_3)^{1/2}]^2}{(V_0 - A_0)} \quad (9.4.8) $$
                 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
@@ -710,7 +708,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \bar{y}_{st} = \sum_{h=1}^k W_h \bar{y}_h \quad (9.5.1) $$
                     <p>Where \( \bar{y}_h \) is the sample average in stratum \( h \), and \( W_h \) is its relative size.</p>
-
 </div>
 <p><strong>Finding the Best Sample Sizes (\( n_h, m_h \)):</strong></p>
 <p>We use the same cost and variance logic. The best number of units per cluster (\( m_h \)) in a stratum depends on its local costs and variances. The number of clusters (\( n_h \)) is allocated similar to Neyman allocation in stratified sampling.</p>
@@ -759,7 +756,6 @@ window.MathJax = {
                 </div>
 <p>उपरोक्त relations से आसानी से देखा जा सकता है कि optimum \( m_h \) का formula बिल्कुल unstratified sampling के समान ही है। इसी तरह, \( n_h \) का optimum value, uni-stage stratified sampling के समान ही रूप लेता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec9-6">
@@ -780,7 +776,6 @@ window.MathJax = {
                     </li>
 </ul>
 <p>The unbiased estimator is technically better, but if clusters vary a lot in size, its variance can be very high. The biased simple mean (\( \bar{y}_1 \)) might actually have a smaller total error (MSE) if the size of the cluster doesn't affect the variable we are studying.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">9.6</span> Two-Stage Sampling with Unequal First Stage Units: Estimators of Mean and their Variances (असमान प्रथम चरण इकाइयों के साथ द्वि-चरण प्रतिचयन: माध्य के आकलक और उनके प्रसरण)</h2>
@@ -890,7 +885,6 @@ window.MathJax = {
 <p>यदि हम \( \sum_{i=1}^n \frac{M_i\bar{y}_{i\cdot}}{\bar{M}} = n\bar{y} \) और \( \sum_{i=1}^n M_i/\bar{M} = n\bar{u} \) लेते हैं, तो estimator \( \bar{y}_2 \) को ratio estimator \( \bar{y}/\bar{u} \) के रूप में लिखा जा सकता है। Relations (6.3.2) और (6.4.1) को लागू करके, हम bias और variance ज्ञात कर सकते हैं।</p>
 <p>वास्तव में \( \bar{y}_2 \) ratio to size estimator है, जिसके लिए \( \bar{M} \) का ज्ञान आवश्यक नहीं है। इसी तरह की तर्ज पर, कोई regression estimator और उसके bias को परिभाषित कर सकता है, और sampling variance बिना किसी कठिनाई के निकाला जा सकता है।</p>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
@@ -901,7 +895,6 @@ window.MathJax = {
 <p>When clusters have different sizes, we still want to find the best balance for \( n \) and \( m_i \). The cost function now accounts for the different number of units we might pick in each cluster. The basic idea is: if a cluster is very large or very diverse, we should pick more units from it.</p>
 <p><strong>The "Best" Allocation:</strong></p>
 <p>To minimize error for a fixed budget, the best number of units to pick from a cluster (\( m_{i(opt)} \)) should be proportional to its size and its internal diversity (\( S_i \)). We use similar formulas as before to calculate these "Optimum" values.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">9.7</span> Optimum Allocation: Unequal First-Stage Units (इष्टतम आवंटन: असमान प्रथम-चरण इकाइयाँ)</h2>
@@ -939,7 +932,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \lambda = \left( \frac{c_1}{c_2}\sum_{i=1}^N \frac{u_iS_i^2}{\Delta N\bar{M}^2} \right)^{1/2} \quad (9.7.9) $$
                 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
@@ -952,7 +944,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{Y}_{pps} = \frac{1}{n}\sum_{i=1}^n \frac{M_i\bar{y}_{i\cdot}}{p_i} \quad (9.8.1) $$
                     <p>Where \( p_i \) is the probability of selecting the \( i \)-th cluster. If we set \( p_i = M_i/M_0 \), this formula becomes much simpler!</p>
-
 </div>
 <p>The beauty of PPS sampling is that it "levels the playing field." Larger clusters are picked more often, but their results are weighted less in the final average, leading to a very stable and accurate estimate.</p>
 </div>
@@ -976,7 +967,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ v_w(\widehat{Y}_{pps}) = \sum_{i=1}^n \frac{M_i^2(1 - f_{2i})}{n^2p_i^2}\frac{s_{wi}^2}{m_i} \quad (9.8.4) $$
                 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
@@ -992,7 +982,6 @@ window.MathJax = {
 </ul>
 <p><strong>How do we do it?</strong></p>
 <p>We adjust the number of units we pick (\( m_i \)) from each cluster based on its size (\( M_i \)) and its probability of being picked (\( p_i \)). If we do the math right, the "total weight" for every person in the sample becomes a constant \( k \).</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">9.9</span> Self-weighting Designs (स्व-भारित डिजाइन)</h2>
@@ -1028,7 +1017,6 @@ window.MathJax = {
                 </div>
 <p>इस प्रकार, हम यह निष्कर्ष (conclude) निकाल सकते हैं कि self-weighting system न केवल computations करने के लिए बहुत सुविधाजनक (convenient) है बल्कि परिचालन दृष्टिकोण (operational point of view) से भी कुशल (efficient) है। बड़े पैमाने पर सर्वेक्षणों में, यह हमेशा वांछनीय होता है कि प्रत्येक इकाई के लिए वजन समान हो ताकि (i) सारणीकरण (tabulation) सरल हो जाए, (ii) विश्लेषण (analysis) आसान हो जाए, और (iii) लागत कम हो जाए। Self-weighting design का एक और लाभ यह है कि यह प्रत्येक चयनित fsu से एक निरंतर (constant) sample size देता है। इस प्रकार, अन्वेषक (investigators) विभिन्न fsu में अलग-अलग कार्यभार (varying work loads) के लिए जिम्मेदार नहीं होंगे। सिस्टम का एकमात्र नुकसान यह है कि इनमें से कुछ विधियों के परिणामस्वरूप biased estimates हो सकते हैं, हालांकि, कुछ मामलों में, छोटे variance के साथ।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec9-10">
@@ -1091,7 +1079,6 @@ window.MathJax = {
                     <p>\( l \), \( m \) and \( n \) के इन optimum values को प्रतिस्थापित करने पर, हमें minimum cost इस प्रकार मिलती है:</p>
                     $$ C = a + \frac{1}{V_0}(\sqrt{A_1c_1} + \sqrt{A_2c_2} + \sqrt{A_3c_3})^2 \quad (9.10.8) $$
                 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
@@ -1107,7 +1094,6 @@ window.MathJax = {
 <li>Hansen, M. H., &amp; Hurwitz, W. N. (1943). On the theory of sampling from finite populations. <em>Ann. Math. Statist.</em>, 14, 333-362.</li>
 <li>Sukhatme, P. V. (1953). <em>Sampling Theory of Surveys with Applications</em>. Iowa State College Press.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
@@ -1122,7 +1108,6 @@ window.MathJax = {
 <li>Murthy, M. N., &amp; Sethi, V. K. (1959). Self-weighting design at estimation stage. <em>Sankhya</em>, 21, 259-262.</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec9-11">
@@ -1137,7 +1122,6 @@ window.MathJax = {
 <li>Under a linear cost function, show that picking 2 units per cluster is better than picking just 1 if the travel cost is high enough.</li>
 <li>What is a self-weighting design? Why do big survey organizations like the NSSO prefer it?</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
@@ -1157,7 +1141,6 @@ window.MathJax = {
                     </li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- QUIZZES SECTION -->
@@ -1176,7 +1159,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> b) A sampling frame is only required for selected higher-stage units <br/> <em>Explanation:</em> Multi-stage sampling avoids the enormous cost of preparing a complete list (frame) of all ultimate elements in the population. You only need a frame of sub-units for the specific larger units already selected.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. When a multi-stage design is 'self-weighting', it means: <br/> (जब बहु-चरण डिज़ाइन 'स्व-भारित' होता है, तो इसका अर्थ है:)</div>
@@ -1398,7 +1380,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> primary sampling units (psu / fsu) / प्राथमिक प्रतिचयन इकाइयाँ <br/> <em>Explanation:</em> They form the backbone of the first macro-level randomization.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. By ensuring every sampled element ends up with an identical overall probability of selection, the design is made ____________. <br/> (यह सुनिश्चित करके कि प्रत्येक प्रतिदर्शित तत्व चयन की समान समग्र प्रायिकता के साथ समाप्त होता है, डिज़ाइन को ____________ बनाया जाता है।)</div>
@@ -1506,7 +1487,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> False (गलत) <br/> <em>Explanation:</em> It yields a *larger* variance due to the positive intra-cluster correlation. Its overwhelming advantage is lower cost, not smaller variance.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. A self-weighting survey design computationally allows the simple, unweighted average of the raw sample data to act cleanly as an unbiased estimate. <br/> (एक स्व-भारित सर्वेक्षण डिज़ाइन कम्प्यूटेशनल रूप से कच्चे प्रतिदर्श डेटा के सरल, बिना भारित औसत को एक निष्पक्ष अनुमान के रूप में स्पष्ट रूप से कार्य करने की अनुमति देता है।)</div>

@@ -490,13 +490,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -530,10 +532,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -722,9 +728,7 @@ window.MathJax = {
 <div class="card-title">Clinical Trial की परिभाषा</div>
     एक <strong>clinical trial</strong> मानव स्वयंसेवकों (human volunteers) पर किया जाने वाला शोध अध्ययन है जो नई दवा या इलाज उत्पाद (investigational product) की सुरक्षा (safety) और प्रभावशीलता (efficacy) का मूल्यांकन करता है।
 </div>
-
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.2 Classification -->
@@ -800,7 +804,6 @@ window.MathJax = {
 <li><strong>Screening trials:</strong> बीमारियों की शुरुआती पहचान के लिए।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.3 Phases -->
@@ -855,7 +858,6 @@ window.MathJax = {
 <text fill="#fff" font-family="Source Serif 4" font-size="10" text-anchor="middle" x="560" y="115">Long Safety</text>
 </svg>
 <div class="figure-caption">Step-by-step clinical drug development progression from early microdosing to post-marketing safety surveillance.</div>
-
 </div>
 <h3>Detailed Breakdown of Development Phases</h3>
 <div class="step-card">
@@ -938,7 +940,6 @@ window.MathJax = {
 <li><strong>Phase IV:</strong> बाजार अनुमोदन के बाद दीर्घकालिक सुरक्षा निगरानी (Post-marketing surveillance)।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.4 RCT -->
@@ -985,7 +986,6 @@ window.MathJax = {
 <text fill="#fff" font-family="DM Sans" font-size="11" text-anchor="middle" x="520" y="160">Measure Outcome</text>
 </svg>
 <div class="figure-caption">Experimental design of a randomized controlled trial showing random allocation to intervention and control arms.</div>
-
 </div>
 <h3>Core Methodological Elements</h3>
 <h4>1. Randomization</h4>
@@ -1027,7 +1027,6 @@ window.MathJax = {
 <li><strong>Blinding:</strong> सिंगल-ब्लाइंड, डबल-ब्लाइंड और ट्रिपल-ब्लाइंड तकनीक निष्पक्षता सुनिश्चित करती हैं।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.5 Ethics -->
@@ -1056,7 +1055,6 @@ window.MathJax = {
 <text fill="#fff" font-family="Source Serif 4" font-size="11" text-anchor="middle" x="405" y="158">Fair Selection &amp; Protection</text>
 </svg>
 <div class="figure-caption">Ethical framework derived from the Declaration of Helsinki and ICMR National Ethical Guidelines.</div>
-
 </div>
 <h3>Core Ethical Pillars</h3>
 <ol>
@@ -1075,7 +1073,6 @@ window.MathJax = {
 <li><strong>Vulnerable Populations:</strong> बच्चों और गर्भवती महिलाओं के लिए विशेष सुरक्षा।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.6 Multi-Centre -->
@@ -1112,7 +1109,6 @@ window.MathJax = {
 <line stroke="#C8922A" stroke-dasharray="3" stroke-width="2" x1="400" x2="312" y1="155" y2="120"></line>
 </svg>
 <div class="figure-caption">Data coordination and Data Safety Monitoring Board (DSMB) oversight across multiple clinical sites.</div>
-
 </div>
 <h3>Advantages &amp; Operational Challenges</h3>
 <p><strong>Advantages:</strong> Enables rapid recruitment of large sample sizes, enhances generalizability across diverse ethnic/geographic populations, and verifies intervention robustness in different clinical settings.</p>
@@ -1122,7 +1118,6 @@ window.MathJax = {
 <h2>2.6 मल्टी-सेंटर ट्रायल (Multi-Centre Trials)</h2>
 <p>एक ही प्रोटोकॉल के तहत कई अस्पतालों और शोध केंद्रों में एक साथ आयोजित किए जाने वाले ट्रायल। इनमें Data Safety and Monitoring Board (DSMB) निगरानी रखता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.7 Sample Size -->
@@ -1212,7 +1207,6 @@ window.MathJax = {
                     $$ (Z_{\alpha} + Z_{\beta})^2 = (1.96 + 0.84)^2 = (2.80)^2 = 7.84 $$
                     $$ n = \frac{2 \times 0.1275 \times 7.84}{(0.10)^2} = \frac{1.9992}{0.01} = 199.92 \approx 200 \text{ patients per arm.} $$
                 </div>
-
 </div>
 </div>
 <div class="hinglish-content" style="display:none;">
@@ -1269,7 +1263,6 @@ $$ n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2} $$
                     $$ n = \frac{2 p(1-p) (Z_{\alpha} + Z_{\beta})^2}{\Delta^2} = \frac{2 \times 0.85 \times 0.15 \times (1.96 + 0.84)^2}{(0.10)^2} = \frac{1.9992}{0.01} = 199.92 \approx 200 \text{ मरीज प्रति समूह} $$
                 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.8 Solved Examples -->
@@ -1302,7 +1295,6 @@ $$ n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2} $$
 <strong>Scenario:</strong> A company wishes to test an asthma inhaler in 10-year-old children. What special ethical considerations apply?
                     <br/><strong>Solution:</strong> Children are a vulnerable population. Safety must first be proven in adults. Informed consent must be signed by parents/guardians, and child assent must be obtained alongside IRB approval.
                 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.8 हल किए गए उदाहरण (Solved Examples)</h2>
@@ -1311,7 +1303,6 @@ $$ n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2} $$
     30 स्वस्थ स्वयंसेवकों में नई दवा की खुराक और सुरक्षा का परीक्षण <strong>Phase I</strong> ट्रायल कहलाता है।
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.9 COMPLETE 75 QUESTION EXERCISE BANK -->
@@ -1752,13 +1743,11 @@ $$ n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2} $$
 <p><strong>Solution:</strong></p>
 <p>This trial will require a relatively <strong>large sample size</strong>. The effect size (20 mg/dL difference) is small relative to the high standard deviation (30 mg/dL). Detecting subtle differences against background variation requires more participants to achieve 80% statistical power.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.9 अभ्यास और स्व-मूल्यांकन बैंक (Exercise Bank - 75 Questions)</h2>
 <p>सभी 75 MCQs, FIBs, True/False और Subjective प्रश्नों के समाधान हिंग्लिश मोड में उपलब्ध हैं।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.10 Summary -->
@@ -1783,7 +1772,6 @@ $$ n = \frac{(Z_{\alpha/2} + Z_{\beta})^2 \times 2p(1-p)}{(p_1 - p_2)^2} $$
 <h2>2.10 सारांश और संदर्भ (Summary &amp; References)</h2>
 <p>Clinical trials दवाओं की सुरक्षा और प्रभावशीलता सिद्ध करने की वैज्ञानिक पद्धति हैं।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

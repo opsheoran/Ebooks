@@ -1076,13 +1076,15 @@ svg.book-fig, .figure-box svg, canvas {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1116,10 +1118,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1416,7 +1422,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="english-content">After calculating all the values, we can put them into a final, neat table.</p>
 <p class="hinglish-content" style="; display: none;">सभी values calculate करने के बाद, हम उन्हें एक final, neat table में रख सकते हैं।</p>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -1649,7 +1654,6 @@ svg.book-fig, .figure-box svg, canvas {
 </table>
 <p class="english-content">This is called an ungrouped or discrete frequency distribution.</p><p class="hinglish-content" style="; display: none;">इसे ungrouped या discrete frequency distribution कहते हैं।</p>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -1752,7 +1756,6 @@ svg.book-fig, .figure-box svg, canvas {
 </tbody>
 </table>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -1815,7 +1818,7 @@ svg.book-fig, .figure-box svg, canvas {
 </table>
 <p class="english-content">The array is obtained by pairing leaves with stems in ascending order:</p>
 <p class="hinglish-content" style="; display: none;">Leaves को stems के साथ ascending order में जोड़कर array बनाई जाती है:</p>
-<p class="english-content">12, 18, 26, 27, 29, 30, 31, 35, 37, 39, 40, 42, 43, 48, 48, 49,<br>51, 52, 53, 54, 57, 58, 61, 62, 64, 65, 67, 68, 71, 74</br></p>
+<p class="english-content">12, 18, 26, 27, 29, 30, 31, 35, 37, 39, 40, 42, 43, 48, 48, 49,<br/>51, 52, 53, 54, 57, 58, 61, 62, 64, 65, 67, 68, 71, 74</p>
 <p class="hinglish-content" style="; display: none;">12, 18, 26, 27, 29, 30, 31, 35, 37, 39, 40, 42, 43, 48, 48, 49,<br/>51, 52, 53, 54, 57, 58, 61, 62, 64, 65, 67, 68, 71, 74</p>
 </div>
 <div class="example">
@@ -1864,7 +1867,6 @@ svg.book-fig, .figure-box svg, canvas {
 </tbody>
 </table>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -1945,7 +1947,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="simpleBarChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -1987,7 +1988,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="multipleBarChart2"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2031,7 +2031,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="componentBarChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2125,7 +2124,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="subdividedRectanglesChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2169,7 +2167,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="pictogramSubstituteChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2260,7 +2257,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="pieDiagramChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2401,7 +2397,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="wheatYieldChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2506,7 +2501,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="cornYieldPolygon"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2526,7 +2520,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="soybeanYieldCurve"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2619,7 +2612,6 @@ svg.book-fig, .figure-box svg, canvas {
 <canvas id="ogiveChart"></canvas>
 </div>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -2741,7 +2733,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="hinglish-content" style="; display: none;">इस rare type में frequencies दोनों ends पर highest और बीच में lowest होती हैं, जिससे curve 'U' जैसा दिखता है।</p>
 <canvas id="uShapeCurve"></canvas>
 </div>
-
 </div>
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
@@ -2953,7 +2944,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="english-content">Thus, the average annual income of these farmers is 3.1 lakh rupees.</p>
 <p class="hinglish-content" style="; display: none;">इस प्रकार, इन Farmers की Average Annual Income 3.1 लाख रुपये है।</p>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -3157,7 +3147,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="english-content">The overall average yield of paddy in these three states is 61.28 quintals per hectare.</p>
 <p class="hinglish-content" style="; display: none;">इन तीन States में Paddy की Overall Average Yield 61.28 quintals per hectare है।</p>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -5032,7 +5021,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="derivation">\(l = 10\), \(h = 5\), \(d_1 = 280 - 200 = 80\), \(d_2 = 280 - 120 = 160\)</p>
                     \[\text{Mode} = l + h \left( \frac{d_1}{d_1 + d_2} \right) = 10 + 5 \left( \frac{80}{80 + 160} \right) = 10 + 5 \left( \frac{80}{240} \right) = 10 + 5(0.3333) = 10 + 1.6665 = 11.67 \text{ cattle}\]
                 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -5089,7 +5077,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="english-content">Now \(3(\text{Median}) - 2(\text{Mean}) = 3(3.05) - 2(3.1) = 9.15 - 6.2 = 2.95\) lakh rupees, which is reasonably close to the calculated mode of 2.9 lakh rupees.</p>
 <p class="hinglish-content" style="; display: none;">अब \(3(\text{Median}) - 2(\text{Mean}) = 3(3.05) - 2(3.1) = 9.15 - 6.2 = 2.95\) Lakh Rupees आता है, जो Calculated Mode 2.9 Lakh Rupees के काफी करीब है।</p>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -5450,7 +5437,6 @@ svg.book-fig, .figure-box svg, canvas {
 <li>800 परिवारों में से 200 की आय 35 हजार रुपये से अधिक थी।</li>
 </ol>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
 </div>
@@ -5591,9 +5577,7 @@ svg.book-fig, .figure-box svg, canvas {
       </p>
 <div class="question"><strong>Q1.</strong> The process of arranging data in rows and columns is called:
         <div class="mcq-options"><p>(a) Classification    (b) Tabulation    (c) Frequency Distribution    (d) Graphical Representation</p>
-
 </div>
-
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button>
 <div class="answer" id="mcq-eng-1"><strong>Answer:</strong> (b) Tabulation</div>
@@ -6302,7 +6286,6 @@ svg.book-fig, .figure-box svg, canvas {
 <tr><th>Frequency</th><td>4</td><td>16</td><td>\(f_3\)</td><td>\(f_4\)</td><td>\(f_5\)</td><td>6</td><td>4</td></tr>
 </tbody>
 </table>
-
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('subj-eng-1')">Show Answer ▼</button>
 <div class="answer" id="subj-eng-1">

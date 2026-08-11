@@ -490,13 +490,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -530,10 +532,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -710,7 +716,6 @@ window.MathJax = {
 <div class="card-title">Example: Crop Yield Experiment in Haryana</div>
                         A researcher at CCS HAU wants to compare 4 wheat varieties ($V_1, V_2, V_3, V_4$) across 3 fertilizer levels ($F_1, F_2, F_3$). Without a research design, soil heterogeneity would distort yield measurements. By using a Randomized Block Design (RBD), the researcher blocks by field slope and isolates true variety-fertilizer interaction effects.
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.1 रिसर्च डिजाइन का परिचय (Introduction to Research Design)</h2>
@@ -740,7 +745,6 @@ window.MathJax = {
 <li>निष्कर्ष प्रस्तुत करें और रिपोर्ट लिखें।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.2 Primary & Secondary Data -->
@@ -771,7 +775,6 @@ window.MathJax = {
 <text fill="#DDD8CF" font-family="Source Serif 4" font-size="10" text-anchor="middle" x="460" y="135">Existing Records/Reports</text>
 </svg>
 <div class="figure-caption">Classification of data generation pathways into primary first-hand collection and secondary published repositories.</div>
-
 </div>
 <h3>Primary vs Secondary Data Comparison</h3>
 <table>
@@ -822,7 +825,6 @@ window.MathJax = {
 <h3>माध्यमिक डेटा (Secondary Data)</h3>
 <p><strong>Secondary data</strong> वह डेटा है जो पहले से प्रकाशित या अप्रकाशित रूप में उपलब्ध है (जैसे भारत की जनगणना, NSS रिपोर्ट, अस्पताल के रिकॉर्ड)।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.3 Questionnaire Construction -->
@@ -860,7 +862,6 @@ window.MathJax = {
 <text fill="#fff" font-family="Source Serif 4" font-size="9" text-anchor="middle" x="555" y="85">Finalize</text>
 </svg>
 <div class="figure-caption">Step-by-step questionnaire engineering workflow from objective definition to pilot pre-testing.</div>
-
 </div>
 <h3>What is a Questionnaire?</h3>
 <p>A <strong>questionnaire</strong> is a structured instrument consisting of a series of written items delivered to respondents to gather self-reported data. It is widely used in field surveys, health studies, and social research.</p>
@@ -932,7 +933,6 @@ window.MathJax = {
 <li><strong>Double-barreled Questions से बचें:</strong> एक ही वाक्य में दो अलग बातें न पूछें।</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.4 Data Organisation -->
@@ -1013,7 +1013,6 @@ window.MathJax = {
 <h3>5. आवृत्ति वितरण (Frequency Distribution)</h3>
 <p>एक <strong>frequency distribution</strong> तालिका यह दर्शाती है कि प्रत्येक श्रेणी में कितनी आवृत्तियाँ (frequencies) आती हैं।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.5 SPSS & R -->
@@ -1042,7 +1041,6 @@ window.MathJax = {
 <text fill="#fff" font-family="Source Serif 4" font-size="10" text-anchor="middle" x="465" y="90">Plots &amp; Tables</text>
 </svg>
 <div class="figure-caption">Standardized data analysis pipeline executed through GUI menus in SPSS or code scripts in R.</div>
-
 </div>
 <h3>Statistical Package for the Social Sciences (SPSS)</h3>
 <p><strong>SPSS</strong> is a widely used menu-driven software interface featuring two primary windows:</p>
@@ -1118,7 +1116,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
 </tbody>
 </table>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.6 NSS -->
@@ -1147,7 +1144,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
 <text fill="#E8B84B" font-family="Source Serif 4" font-size="10" text-anchor="middle" x="430" y="105">Survey Data</text>
 </svg>
 <div class="figure-caption">Sampling hierarchy of the National Sample Survey across rural villages and urban blocks.</div>
-
 </div>
 <h3>What is the National Sample Survey?</h3>
 <p>The <strong>National Sample Survey (NSS)</strong> was established in 1950 by Professor P.C. Mahalanobis to conduct nationwide large-scale socio-economic sample surveys. It is administered by the National Statistical Office (NSO) under the Ministry of Statistics and Programme Implementation (MoSPI), Government of India.</p>
@@ -1178,7 +1174,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
 <li><strong>Second-Stage Units (द्वितीय चरण की इकाइयां):</strong> चुने गए गांवों और ब्लॉक्स से परिवारों (households) का चयन किया जाता है।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.7 Solved Numerical Examples -->
@@ -1265,7 +1260,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
 </tbody>
 </table>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.7 हल किए गए बहु-पंक्ति संख्यात्मक उदाहरण (Solved Numerical Examples in Hinglish)</h2>
@@ -1284,7 +1278,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
     $$ \chi^2 = \sum \frac{(O - E)^2}{E} = \frac{(60-50)^2}{50} + \frac{(40-50)^2}{50} + \frac{(40-50)^2}{50} + \frac{(60-50)^2}{50} = 8.00 $$
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.8 COMPLETE EXERCISE BANK -->
@@ -1749,7 +1742,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
 </tbody>
 </table>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.10 Summary -->
@@ -1763,7 +1755,6 @@ cat("Mean =", mean_val, "SD =", sd_val)
 <li>Cochran, W.G. <em>Sampling Techniques</em>. Wiley.</li>
 <li>Government of India. <em>National Sample Survey Reports</em>. MoSPI.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

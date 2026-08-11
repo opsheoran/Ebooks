@@ -120,13 +120,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +162,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -307,7 +313,6 @@ window.MathJax = {
                     In all the magnanimity of thought<br/>
                     Resolves, and re-resolves: then dies the same."<br/>
                     -- <strong>J. Young</strong>
-
 </div>
 <p>Hello students! Just like ratio estimators, linear regression estimators also make use of auxiliary information for increasing precision. We have already seen that the ratio estimator provides a precise estimate of the population mean if regression is linear and the straight line passes through the origin. But what happens when the regression is linear and the line does not pass through the origin? In that case, it is much better to use estimators based on linear regression.</p>
 <p>In simple words, if our study variate (\(y\)) is approximately a constant plus a multiple of the auxiliary variate (\(x\)), it is more precise to estimate the population mean or total by fitting a linear regression. Such an estimator is called a <strong>regression estimator</strong>. We shall now discuss the main characteristics of such estimators and compare them with the mean per unit estimator and ratio estimator.</p>
@@ -326,7 +331,6 @@ window.MathJax = {
 <p>Hello students! Ratio estimators की तरह ही, linear regression estimators भी हमारे results को ज़्यादा accurate बनाने के लिए extra information (auxiliary variable) का use करते हैं। हमने देखा था कि अगर relationship linear हो और line origin (starting point) से pass करे, तो ratio estimator population mean का बहुत precise estimate देता है। लेकिन जब regression linear हो और line origin से pass नहीं करती, तो linear regression पर based estimators use करना बेहतर होता है।</p>
 <p>Simple words में समझें तो, अगर हमारा study variate (\(y\)) लगभग एक constant और auxiliary variate (\(x\)) के multiple के बराबर है, तो linear regression fit करने से population mean या total का ज़्यादा precise estimate मिलता है। ऐसे estimator को हम <strong>regression estimator</strong> कहते हैं। आइये अब हम इन estimators के main characteristics discuss करें और इसकी तुलना mean per unit और ratio estimators से करें।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- Section 7.2 -->
@@ -351,7 +355,6 @@ window.MathJax = {
 <p>In simple random sampling, without replacement (wor), the simple difference estimator \(\bar{y}_d = \bar{y} + (\bar{X} - \bar{x})\) is unbiased, and its sampling variance is given by:</p>
 <div class="derivation">
 <div class="formula-box">\[ V(\bar{y}_d) = \frac{1 - f}{n}(S_y^2 + S_x^2 - 2\rho S_y S_x) \]</div>
-
 </div>
 <p><strong>Proof:</strong></p>
 <p>First, we find the expected value to prove it is unbiased. By applying the expectation operator:</p>
@@ -474,7 +477,6 @@ window.MathJax = {
 <div class="formula-box">\[ b = \frac{\sum_{i=1}^n (y_i - \bar{y})(x_i - \bar{x})}{\sum_{i=1}^n (x_i - \bar{x})^2} \]
                 
 </div>
-
 </div>
 <p>Thus, linear regression estimators of the population mean \(\bar{Y}\) and population total \(Y\) are given by:</p>
 <div class="derivation">
@@ -588,7 +590,6 @@ window.MathJax = {
                 
 </div>
 <div class="formula-box">\[ (\rho S_y - R S_x)^2 &gt; 0 \]</div>
-
 </div>
 <p>Which is always true unless \(\rho S_y = R S_x\) (i.e. \(\beta = R\)). In this situation, both estimates have the same variance and this occurs only when the regression of \(y\) on \(x\) is a straight line through the origin.</p>
 <h3>Rules for Choice Among Alternatives</h3>
@@ -673,7 +674,6 @@ window.MathJax = {
 <div class="formula-box">\[ \bar{y}_{ls} = \sum_{h=1}^L W_h [\bar{y}_h + b_h(\bar{X}_h - \bar{x}_h)] \]
                 
 </div>
-
 </div>
 <p>where \(W_h, \bar{y}_h, \bar{x}_h, \bar{X}_h\) and \(b_h\) are the corresponding terms for the \(h\)-th stratum.</p>
 <h4>Theorem 7.5.1</h4>
@@ -812,7 +812,6 @@ window.MathJax = {
 <div class="formula-box">\[ \bar{y}_{lr} = \bar{y} + \sum_{i = 1}^k \beta_i(\bar{X}_i - \bar{x}_i) \]
                 
 </div>
-
 </div>
 <p>Des Raj (1965) proposed another difference estimator of the form:</p>
 <div class="derivation">
@@ -846,7 +845,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> b) \(\rho \neq 0\).</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. If the true regression line passes exactly through the origin (\(\beta = R\)), which estimator gives the same variance as the regression estimator? <br/> (यदि प्रतिगमन रेखा मूल बिंदु से होकर गुजरती है, तो कौन सा अनुमानक प्रतिगमन के समान प्रसरण प्रदान करता है?)</div>
@@ -870,7 +868,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> biased (पक्षपाती).</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. In stratified sampling, if the regression coefficients appear to be the SAME in all strata, we should prefer the ____________ regression estimator. <br/> (स्तरीकृत प्रतिचयन में, यदि प्रतिगमन गुणांक सभी स्तरों में समान हों, तो हमें ____________ प्रतिगमन अनुमानक का चयन करना चाहिए।)</div>
@@ -888,7 +885,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> True (सही).</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. The Separate Regression estimator is always better than the Combined Regression estimator, regardless of sample size or stratum slopes. <br/> (अलग प्रतिगमन अनुमानक हमेशा संयुक्त प्रतिगमन अनुमानक से बेहतर होता है।)</div>
@@ -908,7 +904,6 @@ window.MathJax = {
 <li>Yates, F. (1960). <em>Sampling Methods for Censuses and Surveys</em>. Charles Griffin &amp; Co.</li>
 <li>Des Raj (1968). <em>Sampling Theory</em>. McGraw-Hill.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
@@ -920,7 +915,6 @@ window.MathJax = {
 <li>Des Raj (1968). <em>Sampling Theory</em>. McGraw-Hill.</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>

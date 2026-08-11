@@ -1309,13 +1309,15 @@ svg.book-fig, .figure-box svg, canvas {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1349,10 +1351,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1652,8 +1658,7 @@ svg.book-fig, .figure-box svg, canvas {
 <p><i class="fas fa-lightbulb" style="color:var(--sky);margin-right:6px;"></i>
                 This textbook is carefully designed to build your empirical reasoning. Each unit integrates theoretical foundations with practical exercises, ensuring you can apply these methods accurately to real-world datasets.</p>
 </div>
-
-<div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
+</div>
 </section>
 <!-- ═══════════════════════════════ PREFACE ═══════════════════════════════ -->
 <section class="page-section" id="preface">
@@ -1683,7 +1688,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="sig-title">Department of Mathematics &amp; Statistics</div>
 <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- ═══════════════════════════════ SYLLABUS ══════════════════════════════ -->
@@ -1760,7 +1764,6 @@ svg.book-fig, .figure-box svg, canvas {
 <em>New Age International (2017)</em></div>
 </li>
 </ol>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- ═══════════════════════════════ FROM AUTHOR ═══════════════════════════ -->
@@ -1797,7 +1800,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="sig-title">Department of Mathematics &amp; Statistics</div>
 <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- FOOTER -->

@@ -120,13 +120,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +162,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -306,7 +312,6 @@ window.MathJax = {
 <h2><span class="section-num">6.1</span> Introduction</h2>
 <div class="quote">
                     "There is repetition everywhere, and nothing is found only once in the world." -- <strong>Goethe</strong>
-
 </div>
 <p>In many surveys, we often have information about an extra variable (called an auxiliary variable) that is closely related to the main variable we are studying. This extra information can help us make better sampling designs. We have already seen this in Stratified sampling (Chapter 3) and PPS sampling (Chapter 5). In those methods, we needed to know the auxiliary data for every single unit before even starting the survey.</p>
 <p>But what if we only know the total sum of the auxiliary variable for the whole population, and not for each unit separately? In that case, those previous methods won't work. However, we can still use this total sum during the estimation stage to get better results. This leads us to two important methods: the <strong>ratio method</strong> and the <strong>regression method</strong>. In this chapter, we will focus on the ratio method of estimation.</p>
@@ -319,7 +324,6 @@ window.MathJax = {
 <p>कई surveys में, एक auxiliary variate की जानकारी जो study variable के साथ highly correlated है, आसानी से उपलब्ध होती है और इसका उपयोग sampling design सुधारने के लिए किया जा सकता है। Stratified sampling और pps schemes बेहतर sampling designs के दो उदाहरण हैं, जिनमें auxiliary variate के data का उपयोग Chapters 3 और 5 में किया गया है। हालाँकि, इन दोनों schemes में यह माना जाता है कि sampling design बनाने से पहले individual sampling units पर auxiliary variate की जानकारी उपलब्ध है। यदि individual sampling units के लिए data उपलब्ध नहीं है, बल्कि केवल aggregate value उपलब्ध है, तो इन दोनों schemes का उपयोग नहीं किया जा सकता।</p>
 <p>ऐसी स्थिति में, parameters estimate करते समय auxiliary variate के aggregated data का उपयोग फिर भी किया जा सकता है, बशर्ते sampled units के लिए auxiliary data आसानी से प्राप्त किया जा सके। Estimation की ऐसी दो विधियों को <strong>ratio method of estimation</strong> और <strong>regression method of estimation</strong> कहा जाता है। इस chapter में, हम ratio method of estimation पर चर्चा करेंगे।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec6-2">
@@ -343,9 +347,7 @@ window.MathJax = {
                     $$ \widehat{Y}_R = \widehat{R}X = \frac{\bar{y}}{\bar{x}}X $$
                     $$ \bar{y}_R = \widehat{R}\bar{X} = \frac{\bar{y}}{\bar{x}}\bar{X} $$
                     <p>Here, \( \bar{y} \) and \( \bar{x} \) are the sample means we calculated from our survey.</p>
-
 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.2</span> Definitions and Notations (परिभाषाएं और संकेतन)</h2>
@@ -428,7 +430,6 @@ window.MathJax = {
                     <p>Finally, we divide by \( R \) and use the definitions of coefficients of variation (\( C_x = S_x/\bar{X} \) and \( C_y = S_y/\bar{Y} \)):</p>
                     $$ \frac{B(\widehat{R})}{R} \approx \frac{1 - f}{n} \left( \frac{S_x^2}{\bar{X}^2} - \rho \frac{S_x S_y}{R \bar{X}^2} \right) = \frac{1 - f}{n} (C_x^2 - \rho C_x C_y) $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.3</span> Bias of Ratio Estimators (Ratio Estimators का Bias)</h2>
@@ -551,7 +552,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ v(\widehat{R}) = \frac{1 - f}{n\bar{X}^2} [s_y^2 + \widehat{R}^2 s_x^2 - 2\widehat{R}r s_y s_x] \quad (6.4.7) $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.4</span> Approximate Variance of Ratio Estimator (अनुमानित Variance)</h2>
@@ -637,7 +637,6 @@ window.MathJax = {
                     $$ \text{R.P.} = \frac{V(\widehat{Y}) - V(\widehat{Y}_R)}{V(\widehat{Y}_R)} \times 100 \approx 32\% $$
                     <p>This means the ratio method improved accuracy by about 32%.</p>
 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.5</span> Comparison of Ratio Estimator with Mean per Unit (तुलना)</h2>
@@ -664,7 +663,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{Y}_R \pm z \cdot \sigma(\widehat{Y}_R) \quad (6.6.1) $$
                     <p>where \( z \) is a value from the normal distribution table (like 1.96 for 95% confidence).</p>
-
 </div>
 <p>Similarly, the range for the population ratio \( R \) is:</p>
 <div class="derivation">
@@ -674,7 +672,6 @@ window.MathJax = {
 <div class="derivation">
                     $$ \widehat{R} \pm \frac{t}{\sqrt{n - 1}} \left[ (1 - g)(c_y^2 + c_x^2) - 2rc_xc_y \right]^{1/2} \quad (6.6.4) $$
                 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.6</span> Confidence Limits (विश्वास सीमाएं)</h2>
@@ -726,7 +723,6 @@ window.MathJax = {
 <h3>6.7.3 Comparison (तुलना)</h3>
 <p>अगर अलग-अलग strata में \( R_m \) बहुत ज़्यादा vary करता है, तो <strong>separate ratio estimator</strong> बेहतर है। अन्यथा bias कम रखने के लिए <strong>combined estimator</strong> अच्छा रहता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec6-8">
@@ -743,7 +739,6 @@ window.MathJax = {
                 
                 
 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.8</span> Unbiased Ratio Estimator and its Variance (Unbiased Ratio Estimator)</h2>
@@ -760,7 +755,6 @@ window.MathJax = {
 <p>The Hartley-Ross unbiased estimator is:</p>
                     $$ \widehat{R}_1 = \bar{r} + \frac{n(N - 1)}{N(n - 1)} \frac{(\bar{y} - \bar{r}\bar{x})}{\bar{X}} \quad (6.9.1) $$
                     <p>where \( \bar{r} \) is the average of the ratios in your sample.</p>
-
 </div>
 <p>For large samples, the accuracy of this estimator is almost the same as the standard ratio estimator, but it has the advantage of being unbiased.</p>
 </div>
@@ -768,7 +762,6 @@ window.MathJax = {
 <h2><span class="section-num">6.9</span> Unbiased Ratio-type Estimator (हार्टले-रॉस अनुमानक)</h2>
 <p>Hartley और Ross (1954) ने ratios के average (\( \bar{r} \)) को bias के लिए correct करके एक unbiased estimator दिया। बड़े samples के लिए इसका variance सामान्य ratio estimator जैसा ही होता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec6-10">
@@ -788,7 +781,6 @@ window.MathJax = {
 <h2><span class="section-num">6.10</span> Product Estimator (Product Estimator)</h2>
 <p>अगर \( y \) और \( x \) के बीच correlation <strong>negative</strong> हो, तो ratio estimator काम नहीं आता। ऐसे में <strong>product estimator</strong> (\( \bar{y}_P = \bar{y}\bar{x}/\bar{X} \)) का उपयोग किया जाता है। यह तब ज़्यादा efficient है जब \( \rho \) काफी negative हो।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec6-11">
@@ -800,9 +792,7 @@ window.MathJax = {
 <p>The multivariate estimator is a weighted average of individual ratio estimators:</p>
                     $$ \widehat{Y}_{MR} = W_1 \widehat{Y}_{R1} + W_2 \widehat{Y}_{R2} + \dots + W_k \widehat{Y}_{Rk} \quad (6.11.1) $$
                     <p>where the weights \( W_i \) are chosen carefully to make the final result as precise as possible.</p>
-
 </div>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">6.11</span> Multivariate Ratio Estimator (Multivariate Ratio Estimator)</h2>
@@ -821,13 +811,11 @@ window.MathJax = {
 <li>Hartley, H. O., &amp; Ross, A. (1954). Unbiased ratio estimators. Nature.</li>
 <li>Olkin, I. (1958). Multivariate ratio estimation for finite populations. Biometrika.</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
 <p>(अंग्रेजी section देखें।)</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec6-12">
@@ -839,7 +827,6 @@ window.MathJax = {
 <li>Prove that the ratio estimator will be unbiased if the sample is selected with probability proportional to the sum of the auxiliary variable in the sample (\( \sum x_i \)).</li>
 <li>If the coefficient of variation of \( x \) is more than twice that of \( y \), prove that the ratio estimator is actually less precise than the simple mean per unit estimator.</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2>Exercise (Subjective) (अभ्यास)</h2>
@@ -849,7 +836,6 @@ window.MathJax = {
 <li>यदि \( x \) का \( CV \), \( y \) के \( CV \) से दोगुने से अधिक हो, तो सिद्ध करें कि ratio estimator कम सटीक (less precise) है।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- QUIZZES SECTION -->
@@ -868,7 +854,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> b) Highly positively correlated with \(y\)</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. When is the product estimator preferred over the ratio estimator? <br/> (अनुपात अनुमानक की तुलना में उत्पाद अनुमानक को कब प्राथमिकता दी जाती है?)</div>
@@ -892,7 +877,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> auxiliary (सहायक)</div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
@@ -905,7 +889,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> False (गलत)</div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>

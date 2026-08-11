@@ -1,11 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skewness and Kurtosis</title>
-    
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Skewness and Kurtosis</title>
+<script>
     MathJax = {
       tex: {
         inlineMath: [['\\(', '\\)'], ['$', '$']],
@@ -32,12 +32,12 @@ window.toggleLanguage = toggleLanguage;
         window.showTopic = showTopic;
 
 </script>
-    <script src="https://cdn.jsdelivr.net/npm/core-js@3.32.2/minified.min.js">function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
+<script src="https://cdn.jsdelivr.net/npm/core-js@3.32.2/minified.min.js">function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
 window.toggleLanguage = toggleLanguage;
 </script>
-        <!-- MathJax Config -->
-            <!-- MathJax Configuration -->
-    <script>
+<!-- MathJax Config -->
+<!-- MathJax Configuration -->
+<script>
 window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
@@ -49,13 +49,11 @@ window.MathJax = {
             }
         };
 </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/chart.js">function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
+<script async="" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js">function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
 window.toggleLanguage = toggleLanguage;
 </script>
-    
-    <style>
+<style>
 
         /* ============================================================
            DESIGN SYSTEM — Professional Textbook
@@ -1081,12 +1079,10 @@ svg.book-fig, .figure-box svg, canvas {
 }
 
     </style>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" href="favicon.png">
-
+<!-- Favicon -->
+<link href="favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<link href="favicon.png" rel="apple-touch-icon"/>
 
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
@@ -1094,7 +1090,8 @@ svg.book-fig, .figure-box svg, canvas {
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1128,10 +1125,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1200,412 +1201,379 @@ svg.book-fig, .figure-box svg, canvas {
 </script>
 </head>
 <body>
-    <div class="page">
-        <header class="site">
-            <h1 class="title">Chapter-4 <br> Skewness and Kurtosis</h1>
-            <p class="meta">Measures of the Shape of Distribution</p>
-        </header>
-
-        <div class="toc" role="navigation" aria-label="Table of contents">
-            <div class="toc-container">
-                <nav>
-                    <h2>Index</h2>
-                    <ol>
-                        <li><a href="#introduction">Introduction to Skewness</a></li>
-                        <li><a href="#skewness-types">Types of Skewness</a></li>
-                        <li><a href="#skewness-measures">Measures of Skewness</a></li>
-                        <li><a href="#kurtosis">Kurtosis</a></li>
-                        <li><a href="#interactive-calculator">Interactive Calculator</a></li>
-                        <li><a href="#exercises">Exercises</a></li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-
-        <main class="content">
-            <section id="introduction" class="section">
-                <div class="head">
-                    <div class="num">1</div>
-                    <div class="title-group">
-                        <h2 class="title">Introduction to Skewness</h2>
-                    </div>
-                </div>
-                <div class="body">
-                    <div class="definition-box">
-                        <div class="definition-title">Meaning of Skewness</div>
-                        <p><span class="index-marker">Skewness</span> means 'lack of symmetry'. We study skewness to get an idea about the shape of the curve that can be drawn with the given data. If in a distribution, Mean = Median = Mode, then that distribution is called a <span class="index-marker">symmetrical distribution</span>. If in a distribution, Mean ≠ Median ≠ Mode, then it is not a symmetrical distribution and is called a <span class="index-marker">skewed distribution</span>, and such a distribution can either be positively skewed or negatively skewed.</p>
-                    </div>
-
-                    <p>Understanding the shape of the distribution is very important in statistics because it provides us with valuable information about the pattern and behavior of the data. Skewness tells us on which side the data is concentrated and in which direction the outliers are.</p>
-
-                    <div class="example-box">
-                        <div class="example-title">Example of agricultural income in Haryana</div>
-                        <p>A survey of the monthly income of farmers in a district of Haryana was conducted. If the income of the majority of farmers is low but the income of some large farmers is very high, then this distribution will be positively skewed. This means that Mean > Median > Mode will hold. For example, if out of 100 farmers, the income of 70 farmers is between ₹15,000-₹25,000, the income of 20 farmers is between ₹25,000-₹35,000, and the income of 10 farmers is more than ₹50,000, then this distribution will be right-skewed.</p>
-                    </div>
-                </div>
-            </section>          
-            <section id="skewness-types" class="section">
-                <div class="head">
-                    <div class="num">2</div>
-                    <div class="title-group">
-                        <h2 class="title">Introduction to Skewness</h2>
-                    </div>
-                </div>
- 
-                <section class="subsection">
-                    <h3>Symmetrical Distribution</h3>
-                    <p>It is clear from the above diagrams that in a symmetrical distribution, the values of the mean, median, and mode coincide. The spread of frequencies is equal on both sides of the center point of the curve.</p>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Example: Height of students in Haryana</div>
-                        <p>The heights of students in a college in Haryana were measured. If the height of the majority of students is around the average and very few students are very tall or very short, then this distribution will be approximately symmetrical.</p>
-                        <div class="table-container">
-                            <table class="calculation-data">
-                                <thead>
-                                    <tr>
-                                        <th>Height (cm)</th>
-                                        <th>150-155</th>
-                                        <th>155-160</th>
-                                        <th>160-165</th>
-                                        <th>165-170</th>
-                                        <th>170-175</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Students</td>
-                                        <td>8</td>
-                                        <td>22</td>
-                                        <td>40</td>
-                                        <td>22</td>
-                                        <td>8</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p>In this example, the distribution is approximately symmetrical because the frequencies are almost equal on both sides of the center.</p>
-                    </div>
-                </section>
-                    
-                <section class="subsection">
-                    <h3>Positively Skewed Distribution</h3>
-                    <p>It is clear from the above diagrams that in a positively skewed distribution, the value of the mean is the maximum and the mode is the least, and the median is in between the two. In a positively skewed distribution, the frequencies are spread out over a greater range of values on the right-hand side as compared to the left-hand side.</p>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Example: Household income in Haryana</div>
-                        <p>A survey of the monthly income of households in a village in Haryana:</p>
-                        <div class="table-container">
-                            <table class="calculation-data">
-                                <thead>
-                                    <tr>
-                                        <th>Income (₹)</th>
-                                        <th>10,000-20,000</th>
-                                        <th>20,000-30,000</th>
-                                        <th>30,000-40,000</th>
-                                        <th>40,000-60,000</th>
-                                        <th>60,000-100,000</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Families</td>
-                                        <td>45</td>
-                                        <td>35</td>
-                                        <td>15</td>
-                                        <td>8</td>
-                                        <td>2</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p>This distribution is positively skewed because the majority of families have a low income, but the income of some families is very high, which stretches the distribution to the right side.</p>
-                    </div>
-                </section>
-                    
-                <section class="subsection">
-                    <h3>Negatively Skewed Distribution</h3>
-                    <p>It is clear from the above diagrams that in a negatively skewed distribution, the value of the mode is the maximum and the mean is the least. The median is in between the two. In a negatively skewed distribution, the frequencies are spread out over a greater range of values on the left-hand side as compared to the right-hand side.</p>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Example: Exam scores</div>
-                        <p>If an exam is very easy and the majority of students get high marks, but a few students perform poorly:</p>
-                        <div class="table-container">
-                            <table class="calculation-data">
-                                <thead>
-                                    <tr>
-                                        <th>Marks</th>
-                                        <th>0-20</th>
-                                        <th>20-40</th>
-                                        <th>40-60</th>
-                                        <th>60-80</th>
-                                        <th>80-100</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Students</td>
-                                        <td>3</td>
-                                        <td>5</td>
-                                        <td>12</td>
-                                        <td>35</td>
-                                        <td>45</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p>This distribution is negatively skewed because the majority of students have received high marks, but the low marks of some students create a tail on the left side of the distribution.</p>
-                    </div>
-                </section>
-            </section>
-                    <canvas id="skewnessCanvas" width="600" height="300"></canvas>
-             
-        <section id="skewness-measures" class="section">
-            <div class="head">
-                <div class="num">3</div>
-                <div class="title-group">
-                    <h2 class="title">Measures of Skewness</h2>
-                </div>
-            </div>
-            <div class="body">
-                <p>The important measures of skewness are:</p>
-                <ul>
-                    <li><span class="index-marker">Karl-Pearson's coefficient of skewness</span></li>
-                    <li><span class="index-marker">Bowley's coefficient of skewness</span></li>
-                </ul>
-                    
-                <section class="subsection">
-                    <h3>Karl-Pearson's Coefficient of Skewness</h3>
-                    
-                    <p>According to Karl-Pearson, the absolute measure of skewness = Mean - Mode. This measure is not suitable for a valid comparison of skewness in two or more distributions because the unit of measurement may be different for different series. To avoid this difficulty, the relative measure of skewness called Karl-Pearson's coefficient of skewness is used:</p>
-                    
-                    <div class="formula-box">
-                        <div class="formula-title">Formula for Karl-Pearson's Coefficient of Skewness</div>
-                        <div class="formula">
-                            <p>Karl-Pearson's Coefficient of Skewness = \(\frac{\text{Mean} - \text{Mode}}{\text{Standard Deviation}}\)</p>
-                        </div>
-                    </div>
-                    
-                    <p>When the mode is ill-defined, the coefficient can be determined by the following formula:</p>
-                    
-                    <div class="formula-box">
-                        <div class="formula-title">Alternative Formula (when Mode is ill-defined)</div>
-                        <div class="formula">
-                            <p>Karl-Pearson's Coefficient of Skewness = \(\frac{3(\text{Mean} - \text{Median})}{\text{Standard Deviation}}\)</p>
-                        </div>
-                    </div>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Example 1: Calculation of Karl-Pearson's Coefficient</div>
-                        <p>Data of monthly income of farmers in a district of Haryana:</p>
-                        <div class="table-container">
-                            <table class="calculation-data">
-                                <thead>
-                                    <tr>
-                                        <th>Income (in thousands of ₹)</th>
-                                        <th>10-15</th>
-                                        <th>15-20</th>
-                                        <th>20-25</th>
-                                        <th>25-30</th>
-                                        <th>30-35</th>
-                                        <th>35-40</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Number of Farmers</td>
-                                        <td>25</td>
-                                        <td>35</td>
-                                        <td>40</td>
-                                        <td>30</td>
-                                        <td>15</td>
-                                        <td>5</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p><strong>Solution:</strong></p>
-                        <p>Mean = ₹22,500<br>
-                        Median = ₹21,800<br>
+<div class="page">
+<header class="site">
+<h1 class="title">Chapter-4 <br/> Skewness and Kurtosis</h1>
+<p class="meta">Measures of the Shape of Distribution</p>
+</header>
+<div aria-label="Table of contents" class="toc" role="navigation">
+<div class="toc-container">
+<nav>
+<h2>Index</h2>
+<ol>
+<li><a href="#introduction">Introduction to Skewness</a></li>
+<li><a href="#skewness-types">Types of Skewness</a></li>
+<li><a href="#skewness-measures">Measures of Skewness</a></li>
+<li><a href="#kurtosis">Kurtosis</a></li>
+<li><a href="#interactive-calculator">Interactive Calculator</a></li>
+<li><a href="#exercises">Exercises</a></li>
+</ol>
+</nav>
+</div>
+</div>
+<main class="content">
+<section class="section" id="introduction">
+<div class="head">
+<div class="num">1</div>
+<div class="title-group">
+<h2 class="title">Introduction to Skewness</h2>
+</div>
+</div>
+<div class="body">
+<div class="definition-box">
+<div class="definition-title">Meaning of Skewness</div>
+<p><span class="index-marker">Skewness</span> means 'lack of symmetry'. We study skewness to get an idea about the shape of the curve that can be drawn with the given data. If in a distribution, Mean = Median = Mode, then that distribution is called a <span class="index-marker">symmetrical distribution</span>. If in a distribution, Mean ≠ Median ≠ Mode, then it is not a symmetrical distribution and is called a <span class="index-marker">skewed distribution</span>, and such a distribution can either be positively skewed or negatively skewed.</p>
+</div>
+<p>Understanding the shape of the distribution is very important in statistics because it provides us with valuable information about the pattern and behavior of the data. Skewness tells us on which side the data is concentrated and in which direction the outliers are.</p>
+<div class="example-box">
+<div class="example-title">Example of agricultural income in Haryana</div>
+<p>A survey of the monthly income of farmers in a district of Haryana was conducted. If the income of the majority of farmers is low but the income of some large farmers is very high, then this distribution will be positively skewed. This means that Mean &gt; Median &gt; Mode will hold. For example, if out of 100 farmers, the income of 70 farmers is between ₹15,000-₹25,000, the income of 20 farmers is between ₹25,000-₹35,000, and the income of 10 farmers is more than ₹50,000, then this distribution will be right-skewed.</p>
+</div>
+</div>
+</section>
+<section class="section" id="skewness-types">
+<div class="head">
+<div class="num">2</div>
+<div class="title-group">
+<h2 class="title">Introduction to Skewness</h2>
+</div>
+</div>
+<section class="subsection">
+<h3>Symmetrical Distribution</h3>
+<p>It is clear from the above diagrams that in a symmetrical distribution, the values of the mean, median, and mode coincide. The spread of frequencies is equal on both sides of the center point of the curve.</p>
+<div class="example-box">
+<div class="example-title">Example: Height of students in Haryana</div>
+<p>The heights of students in a college in Haryana were measured. If the height of the majority of students is around the average and very few students are very tall or very short, then this distribution will be approximately symmetrical.</p>
+<div class="table-container">
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Height (cm)</th>
+<th>150-155</th>
+<th>155-160</th>
+<th>160-165</th>
+<th>165-170</th>
+<th>170-175</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Students</td>
+<td>8</td>
+<td>22</td>
+<td>40</td>
+<td>22</td>
+<td>8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>In this example, the distribution is approximately symmetrical because the frequencies are almost equal on both sides of the center.</p>
+</div>
+</section>
+<section class="subsection">
+<h3>Positively Skewed Distribution</h3>
+<p>It is clear from the above diagrams that in a positively skewed distribution, the value of the mean is the maximum and the mode is the least, and the median is in between the two. In a positively skewed distribution, the frequencies are spread out over a greater range of values on the right-hand side as compared to the left-hand side.</p>
+<div class="example-box">
+<div class="example-title">Example: Household income in Haryana</div>
+<p>A survey of the monthly income of households in a village in Haryana:</p>
+<div class="table-container">
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Income (₹)</th>
+<th>10,000-20,000</th>
+<th>20,000-30,000</th>
+<th>30,000-40,000</th>
+<th>40,000-60,000</th>
+<th>60,000-100,000</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Families</td>
+<td>45</td>
+<td>35</td>
+<td>15</td>
+<td>8</td>
+<td>2</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This distribution is positively skewed because the majority of families have a low income, but the income of some families is very high, which stretches the distribution to the right side.</p>
+</div>
+</section>
+<section class="subsection">
+<h3>Negatively Skewed Distribution</h3>
+<p>It is clear from the above diagrams that in a negatively skewed distribution, the value of the mode is the maximum and the mean is the least. The median is in between the two. In a negatively skewed distribution, the frequencies are spread out over a greater range of values on the left-hand side as compared to the right-hand side.</p>
+<div class="example-box">
+<div class="example-title">Example: Exam scores</div>
+<p>If an exam is very easy and the majority of students get high marks, but a few students perform poorly:</p>
+<div class="table-container">
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Marks</th>
+<th>0-20</th>
+<th>20-40</th>
+<th>40-60</th>
+<th>60-80</th>
+<th>80-100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Students</td>
+<td>3</td>
+<td>5</td>
+<td>12</td>
+<td>35</td>
+<td>45</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>This distribution is negatively skewed because the majority of students have received high marks, but the low marks of some students create a tail on the left side of the distribution.</p>
+</div>
+</section>
+</section>
+<canvas height="300" id="skewnessCanvas" width="600"></canvas>
+<section class="section" id="skewness-measures">
+<div class="head">
+<div class="num">3</div>
+<div class="title-group">
+<h2 class="title">Measures of Skewness</h2>
+</div>
+</div>
+<div class="body">
+<p>The important measures of skewness are:</p>
+<ul>
+<li><span class="index-marker">Karl-Pearson's coefficient of skewness</span></li>
+<li><span class="index-marker">Bowley's coefficient of skewness</span></li>
+</ul>
+<section class="subsection">
+<h3>Karl-Pearson's Coefficient of Skewness</h3>
+<p>According to Karl-Pearson, the absolute measure of skewness = Mean - Mode. This measure is not suitable for a valid comparison of skewness in two or more distributions because the unit of measurement may be different for different series. To avoid this difficulty, the relative measure of skewness called Karl-Pearson's coefficient of skewness is used:</p>
+<div class="formula-box">
+<div class="formula-title">Formula for Karl-Pearson's Coefficient of Skewness</div>
+<div class="formula">
+<p>Karl-Pearson's Coefficient of Skewness = \(\frac{\text{Mean} - \text{Mode}}{\text{Standard Deviation}}\)</p>
+</div>
+</div>
+<p>When the mode is ill-defined, the coefficient can be determined by the following formula:</p>
+<div class="formula-box">
+<div class="formula-title">Alternative Formula (when Mode is ill-defined)</div>
+<div class="formula">
+<p>Karl-Pearson's Coefficient of Skewness = \(\frac{3(\text{Mean} - \text{Median})}{\text{Standard Deviation}}\)</p>
+</div>
+</div>
+<div class="example-box">
+<div class="example-title">Example 1: Calculation of Karl-Pearson's Coefficient</div>
+<p>Data of monthly income of farmers in a district of Haryana:</p>
+<div class="table-container">
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Income (in thousands of ₹)</th>
+<th>10-15</th>
+<th>15-20</th>
+<th>20-25</th>
+<th>25-30</th>
+<th>30-35</th>
+<th>35-40</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Number of Farmers</td>
+<td>25</td>
+<td>35</td>
+<td>40</td>
+<td>30</td>
+<td>15</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Solution:</strong></p>
+<p>Mean = ₹22,500<br/>
+                        Median = ₹21,800<br/>
                         Standard Deviation = ₹6,200</p>
-                        <p>Karl-Pearson's Sk = \(\frac{3(22,500 - 21,800)}{6,200}\) = \(\frac{3 \times 700}{6,200}\) = \(\frac{2,100}{6,200}\) = 0.34</p>
-                        <p>Since the coefficient is positive, the distribution is positively skewed.</p>
-                    </div>
-                </section>
-                    
-                <section class="subsection">
-                    <h3>Bowley's Coefficient of Skewness</h3>
-                    
-                    <p>In Karl-Pearson's method, the entire series is needed to measure skewness. Prof. Bowley suggested a formula based on the relative position of quartiles. In a symmetrical distribution, the quartiles are equidistant from the value of the median; that is,</p>
-                    <p>Median - Q₁ = Q₃ - Median</p>
-                    <p>But in a skewed distribution, the quartiles are not equidistant from the median. Therefore, Bowley suggested the following formula:</p>
-                    
-                    <div class="formula-box">
-                        <div class="formula-title">Formula for Bowley's Coefficient of Skewness</div>
-                        <div class="formula">
-                            <p>Bowley's Coefficient of Skewness (Sk) = \(\frac{Q_3 + Q_1 - 2\text{Median}}{Q_3 - Q_1}\)</p>
-                        </div>
-                    </div>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Example 2: Calculation of Bowley's Coefficient</div>
-                        <p>Distribution of marks of students of Haryana Agricultural University:</p>
-                        <div class="table-container">
-                            <table class="calculation-data">
-                                <thead>
-                                    <tr>
-                                        <th>Marks</th>
-                                        <th>0-20</th>
-                                        <th>20-40</th>
-                                        <th>40-60</th>
-                                        <th>60-80</th>
-                                        <th>80-100</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Students</td>
-                                        <td>5</td>
-                                        <td>15</td>
-                                        <td>30</td>
-                                        <td>35</td>
-                                        <td>15</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p><strong>Solution:</strong></p>
-                        <p>N = 100</p>
-                        <p>$Q_1$ position = N/4 = 25th item = 43.33 marks<br>
-                        $Q_3$ position = 3N/4 = 75th item = 72.86 marks<br>
+<p>Karl-Pearson's Sk = \(\frac{3(22,500 - 21,800)}{6,200}\) = \(\frac{3 \times 700}{6,200}\) = \(\frac{2,100}{6,200}\) = 0.34</p>
+<p>Since the coefficient is positive, the distribution is positively skewed.</p>
+</div>
+</section>
+<section class="subsection">
+<h3>Bowley's Coefficient of Skewness</h3>
+<p>In Karl-Pearson's method, the entire series is needed to measure skewness. Prof. Bowley suggested a formula based on the relative position of quartiles. In a symmetrical distribution, the quartiles are equidistant from the value of the median; that is,</p>
+<p>Median - Q₁ = Q₃ - Median</p>
+<p>But in a skewed distribution, the quartiles are not equidistant from the median. Therefore, Bowley suggested the following formula:</p>
+<div class="formula-box">
+<div class="formula-title">Formula for Bowley's Coefficient of Skewness</div>
+<div class="formula">
+<p>Bowley's Coefficient of Skewness (Sk) = \(\frac{Q_3 + Q_1 - 2\text{Median}}{Q_3 - Q_1}\)</p>
+</div>
+</div>
+<div class="example-box">
+<div class="example-title">Example 2: Calculation of Bowley's Coefficient</div>
+<p>Distribution of marks of students of Haryana Agricultural University:</p>
+<div class="table-container">
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Marks</th>
+<th>0-20</th>
+<th>20-40</th>
+<th>40-60</th>
+<th>60-80</th>
+<th>80-100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Students</td>
+<td>5</td>
+<td>15</td>
+<td>30</td>
+<td>35</td>
+<td>15</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Solution:</strong></p>
+<p>N = 100</p>
+<p>$Q_1$ position = N/4 = 25th item = 43.33 marks<br/>
+                        $Q_3$ position = 3N/4 = 75th item = 72.86 marks<br/>
                         Median position = N/2 = 50th item = 58 marks</p>
-                        <p>Bowley's Sk = \(\frac{72.86 + 43.33 - 2(58)}{72.86 - 43.33}\) = \(\frac{116.19 - 116}{29.53}\) = \(\frac{0.19}{29.53}\) = 0.006</p>
-                        <p>Since the coefficient is approximately zero, the distribution is approximately symmetrical.</p>
-                    </div>
-                </section>
-                    
-                <section class="subsection">
-                    <h3>Interpretation of Skewness</h3>
-                    
-                    <div class="definition-box">
-                        <div class="definition-title">Interpretation of Skewness Values</div>
-                        <ul>
-                            <li><strong>Sk = 0:</strong> The distribution is perfectly symmetrical</li>
-                            <li><strong>Sk > 0:</strong> The distribution is positively skewed (right-tailed)</li>
-                            <li><strong>Sk < 0:</strong> The distribution is negatively skewed (left-tailed)</li>
-                            <li><strong>|Sk| < 0.5:</strong> Approximately symmetrical</li>
-                            <li><strong>0.5 ≤ |Sk| < 1:</strong> Moderately skewed</li>
-                            <li><strong>|Sk| ≥ 1:</strong> Highly skewed</li>
-                        </ul>
-                    </div>
-                </section>
-            </div>
-        </section>
-            
-        <section id="kurtosis" class="section">
-            <div class="head">
-                <div class="num">4</div>
-                <div class="title-group">
-                    <h2 class="title">Kurtosis</h2>
-                </div>
-            </div>
-            <div class="body">
-                <div class="definition-box">
-                    <div class="definition-title">Meaning of Kurtosis</div>
-                    <p>The expression <span class="index-marker">Kurtosis</span> is used to describe the peakedness of a curve. The three measures - central tendency, dispersion, and skewness - describe the characteristics of frequency distributions. But these studies do not give us a clear picture of the characteristics of the distribution.</p>
-                </div>
-                
-                <p>As far as the measurement of shape is concerned, we have two characteristics - skewness, which refers to the asymmetry of the series, and kurtosis, which measures the peakedness of the normal curve. All frequency curves expose different degrees of flatness or peakedness. This characteristic of a frequency curve is termed as kurtosis. The measure of kurtosis denotes the shape of the top of the frequency curve.</p>
-                
-                <p>The measure of kurtosis tells us how much more peaked or more flat-topped the distribution is compared to the normal curve. The normal curve, which is symmetrical and bell-shaped, is designated as <span class="index-marker">Mesokurtic</span>. If the curve is relatively more narrow and peaked at the top, it is designated as <span class="index-marker">Leptokurtic</span>. If the frequency curve is more flat than the normal curve, it is designated as <span class="index-marker">Platykurtic</span>.</p>
-                
-              <h4>Distribution Kurtosis Comparison</h4>
-                     <canvas id="kurtosisCanvas" width="600" height="300"></canvas>
-                <section class="subsection">
-                    <h3>Measure of Kurtosis</h3>
-                    
-                    <p>The measure of kurtosis of a frequency distribution is based on moments and is denoted by β₂:</p>
-                    
-                    <div class="formula-box">
-                        <div class="formula-title">Formula for Kurtosis</div>
-                        <div class="formula">
-                            <p>β₂ = \(\frac{\mu_4}{\mu_2^2}\)</p>
-                            <p>Where μ₄ = fourth central moment, μ₂ = second central moment</p>
-                        </div>
-                    </div>
-                    
-                    <div class="definition-box">
-                        <div class="definition-title">Interpretation of Kurtosis</div>
-                        <ul>
-                            <li><strong>If β₂ = 3:</strong> The distribution is normal and the curve is mesokurtic</li>
-                            <li><strong>If β₂ > 3:</strong> The distribution is more peaked and the curve is leptokurtic</li>
-                            <li><strong>If β₂ < 3:</strong> The distribution is flat-topped and the curve is platykurtic</li>
-                        </ul>
-                    </div>
-                    
-                    <div class="example-box">
-                        <div class="example-title">Example: Kurtosis of crop yield in Haryana</div>
-                        <p>Analysis of per hectare yield of wheat in different districts of Haryana:</p>
-                        <div class="table-container">
-                            <table class="calculation-data">
-                                <thead>
-                                    <tr>
-                                        <th>Yield (Quintals/hectare)</th>
-                                        <th>Number of Districts</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>35-40</td>
-                                        <td>2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>40-45</td>
-                                        <td>5</td>
-                                    </tr>
-                                    <tr>
-                                        <td>45-50</td>
-                                        <td>8</td>
-                                    </tr>
-                                    <tr>
-                                        <td>50-55</td>
-                                        <td>12</td>
-                                    </tr>
-                                    <tr>
-                                        <td>55-60</td>
-                                        <td>8</td>
-                                    </tr>
-                                    <tr>
-                                        <td>60-65</td>
-                                        <td>3</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <p><strong>Solution:</strong></p>
-                        <p>On calculating the central moments:<br>
-                        μ₂ = 42.5<br>
+<p>Bowley's Sk = \(\frac{72.86 + 43.33 - 2(58)}{72.86 - 43.33}\) = \(\frac{116.19 - 116}{29.53}\) = \(\frac{0.19}{29.53}\) = 0.006</p>
+<p>Since the coefficient is approximately zero, the distribution is approximately symmetrical.</p>
+</div>
+</section>
+<section class="subsection">
+<h3>Interpretation of Skewness</h3>
+<div class="definition-box">
+<div class="definition-title">Interpretation of Skewness Values</div>
+<ul>
+<li><strong>Sk = 0:</strong> The distribution is perfectly symmetrical</li>
+<li><strong>Sk &gt; 0:</strong> The distribution is positively skewed (right-tailed)</li>
+<li><strong>Sk &lt; 0:</strong> The distribution is negatively skewed (left-tailed)</li>
+<li><strong>|Sk| &lt; 0.5:</strong> Approximately symmetrical</li>
+<li><strong>0.5 ≤ |Sk| &lt; 1:</strong> Moderately skewed</li>
+<li><strong>|Sk| ≥ 1:</strong> Highly skewed</li>
+</ul>
+</div>
+</section>
+</div>
+</section>
+<section class="section" id="kurtosis">
+<div class="head">
+<div class="num">4</div>
+<div class="title-group">
+<h2 class="title">Kurtosis</h2>
+</div>
+</div>
+<div class="body">
+<div class="definition-box">
+<div class="definition-title">Meaning of Kurtosis</div>
+<p>The expression <span class="index-marker">Kurtosis</span> is used to describe the peakedness of a curve. The three measures - central tendency, dispersion, and skewness - describe the characteristics of frequency distributions. But these studies do not give us a clear picture of the characteristics of the distribution.</p>
+</div>
+<p>As far as the measurement of shape is concerned, we have two characteristics - skewness, which refers to the asymmetry of the series, and kurtosis, which measures the peakedness of the normal curve. All frequency curves expose different degrees of flatness or peakedness. This characteristic of a frequency curve is termed as kurtosis. The measure of kurtosis denotes the shape of the top of the frequency curve.</p>
+<p>The measure of kurtosis tells us how much more peaked or more flat-topped the distribution is compared to the normal curve. The normal curve, which is symmetrical and bell-shaped, is designated as <span class="index-marker">Mesokurtic</span>. If the curve is relatively more narrow and peaked at the top, it is designated as <span class="index-marker">Leptokurtic</span>. If the frequency curve is more flat than the normal curve, it is designated as <span class="index-marker">Platykurtic</span>.</p>
+<h4>Distribution Kurtosis Comparison</h4>
+<canvas height="300" id="kurtosisCanvas" width="600"></canvas>
+<section class="subsection">
+<h3>Measure of Kurtosis</h3>
+<p>The measure of kurtosis of a frequency distribution is based on moments and is denoted by β₂:</p>
+<div class="formula-box">
+<div class="formula-title">Formula for Kurtosis</div>
+<div class="formula">
+<p>β₂ = \(\frac{\mu_4}{\mu_2^2}\)</p>
+<p>Where μ₄ = fourth central moment, μ₂ = second central moment</p>
+</div>
+</div>
+<div class="definition-box">
+<div class="definition-title">Interpretation of Kurtosis</div>
+<ul>
+<li><strong>If β₂ = 3:</strong> The distribution is normal and the curve is mesokurtic</li>
+<li><strong>If β₂ &gt; 3:</strong> The distribution is more peaked and the curve is leptokurtic</li>
+<li><strong>If β₂ &lt; 3:</strong> The distribution is flat-topped and the curve is platykurtic</li>
+</ul>
+</div>
+<div class="example-box">
+<div class="example-title">Example: Kurtosis of crop yield in Haryana</div>
+<p>Analysis of per hectare yield of wheat in different districts of Haryana:</p>
+<div class="table-container">
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Yield (Quintals/hectare)</th>
+<th>Number of Districts</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>35-40</td>
+<td>2</td>
+</tr>
+<tr>
+<td>40-45</td>
+<td>5</td>
+</tr>
+<tr>
+<td>45-50</td>
+<td>8</td>
+</tr>
+<tr>
+<td>50-55</td>
+<td>12</td>
+</tr>
+<tr>
+<td>55-60</td>
+<td>8</td>
+</tr>
+<tr>
+<td>60-65</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Solution:</strong></p>
+<p>On calculating the central moments:<br/>
+                        μ₂ = 42.5<br/>
                         μ₄ = 110,250</p>
-                        <p>β₂ = \(\frac{110,250}{(42.5)^2}\) = \(\frac{110,250}{1,806.25}\) = 61.04</p>
-                        <p>Since β₂ = 61.04 > 3, the distribution is leptokurtic, i.e., it is more peaked compared to the normal distribution.</p>
-                    </div>
-                </section>
-            </div>
-        </section>
-            
-            <section id="interactive-calculator" class="section">
-                <div class="head">
-                    <div class="num">5</div>
-                    <div class="title-group">
-                        <h2 class="title">Interactive Calculator</h2>
-                    </div>
-                </div>
-                <div class="body">
-                    <div class="exercises">
-                        <h3>Skewness and Kurtosis Calculator</h3>
-                        <p>Enter your data in the text area below (comma-separated values):</p>
-                        
-                        <div class="input-section">
-                            <textarea id="dataInput" class="data-input" placeholder="Example: 12, 15, 18, 20, 22, 25, 28, 30, 35, 40
+<p>β₂ = \(\frac{110,250}{(42.5)^2}\) = \(\frac{110,250}{1,806.25}\) = 61.04</p>
+<p>Since β₂ = 61.04 &gt; 3, the distribution is leptokurtic, i.e., it is more peaked compared to the normal distribution.</p>
+</div>
+</section>
+</div>
+</section>
+<section class="section" id="interactive-calculator">
+<div class="head">
+<div class="num">5</div>
+<div class="title-group">
+<h2 class="title">Interactive Calculator</h2>
+</div>
+</div>
+<div class="body">
+<div class="exercises">
+<h3>Skewness and Kurtosis Calculator</h3>
+<p>Enter your data in the text area below (comma-separated values):</p>
+<div class="input-section">
+<textarea class="data-input" id="dataInput" placeholder="Example: 12, 15, 18, 20, 22, 25, 28, 30, 35, 40
 Or for frequency data:
 Class,Frequency
 10-20,5
@@ -1613,534 +1581,443 @@ Class,Frequency
 30-40,15
 40-50,8
 50-60,3"></textarea>
+</div>
+<div class="controls" style="text-align: center; margin: 20px 0;">
+<button class="btn" onclick="calculateSkewnessKurtosis()">Calculate Skewness &amp; Kurtosis</button>
+<button class="btn secondary" onclick="generateVisualization()">Generate Visualization</button>
+<button class="btn secondary" onclick="clearData()">Clear Data</button>
+</div>
+<div class="answer-block" id="results" style="display: none;">
+<h4>Results:</h4>
+<div id="statisticsResults"></div>
+<div id="skewnessResults"></div>
+<div id="kurtosisResults"></div>
+<div id="interpretation"></div>
+</div>
+<div class="example-box">
+<p><strong>Visualization:</strong></p>
+<div class="chart-container">
+<canvas id="distributionChart"></canvas>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="section" id="exercises">
+<div class="head">
+<div class="num">6</div>
+<div class="title-group">
+<h2 class="title">Exercises</h2>
+</div>
+</div>
+<div class="body">
+<div class="exercises">
+<h3>Questions</h3>
+<div class="question standard-question">
+<span class="question-number">1.</span> What is <span class="index-marker">Skewness</span>? What are its main types? State the relationship between the mean, median, and mode for each type.
                         </div>
-                        
-                        <div class="controls" style="text-align: center; margin: 20px 0;">
-                            <button class="btn" onclick="calculateSkewnessKurtosis()">Calculate Skewness & Kurtosis</button>
-                            <button class="btn secondary" onclick="generateVisualization()">Generate Visualization</button>
-                            <button class="btn secondary" onclick="clearData()">Clear Data</button>
+<div class="question standard-question">
+<span class="question-number">2.</span> Compare <span class="index-marker">Karl-Pearson's coefficient of skewness</span> and <span class="index-marker">Bowley's coefficient of skewness</span>. Which method is more reliable and why?
                         </div>
-                        
-                        <div id="results" class="answer-block" style="display: none;">
-                            <h4>Results:</h4>
-                            <div id="statisticsResults"></div>
-                            <div id="skewnessResults"></div>
-                            <div id="kurtosisResults"></div>
-                            <div id="interpretation"></div>
-                        </div>
-                        
-                        <div class="example-box">
-                            <p><strong>Visualization:</strong></p>
-                            <div class="chart-container">
-                                <canvas id="distributionChart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="exercises" class="section">
-                <div class="head">
-                    <div class="num">6</div>
-                    <div class="title-group">
-                        <h2 class="title">Exercises</h2>
-                    </div>
-                </div>
-                <div class="body">
-                    <div class="exercises">
-                        <h3>Questions</h3>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">1.</span> What is <span class="index-marker">Skewness</span>? What are its main types? State the relationship between the mean, median, and mode for each type.
-                        </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">2.</span> Compare <span class="index-marker">Karl-Pearson's coefficient of skewness</span> and <span class="index-marker">Bowley's coefficient of skewness</span>. Which method is more reliable and why?
-                        </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">3.</span> Calculate Karl-Pearson's coefficient of skewness for the following data:
+<div class="question standard-question">
+<span class="question-number">3.</span> Calculate Karl-Pearson's coefficient of skewness for the following data:
                             <div class="table-container">
-                                <table class="calculation-data">
-                                    <thead>
-                                        <tr>
-                                            <th>Values</th>
-                                            <th>10</th>
-                                            <th>20</th>
-                                            <th>30</th>
-                                            <th>40</th>
-                                            <th>50</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Frequency</td>
-                                            <td>5</td>
-                                            <td>12</td>
-                                            <td>18</td>
-                                            <td>10</td>
-                                            <td>3</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Values</th>
+<th>10</th>
+<th>20</th>
+<th>30</th>
+<th>40</th>
+<th>50</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frequency</td>
+<td>5</td>
+<td>12</td>
+<td>18</td>
+<td>10</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="question standard-question">
+<span class="question-number">4.</span> What is <span class="index-marker">Kurtosis</span>? What are its three types? How are they identified based on the values of β₂?
                         </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">4.</span> What is <span class="index-marker">Kurtosis</span>? What are its three types? How are they identified based on the values of β₂?
-                        </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">5.</span> The distribution of farmers' income in a district of Haryana is as follows. Calculate Bowley's coefficient of skewness:
+<div class="question standard-question">
+<span class="question-number">5.</span> The distribution of farmers' income in a district of Haryana is as follows. Calculate Bowley's coefficient of skewness:
                             <div class="table-container">
-                                <table class="calculation-data">
-                                    <thead>
-                                        <tr>
-                                            <th>Income (in thousands of ₹)</th>
-                                            <th>15-25</th>
-                                            <th>25-35</th>
-                                            <th>35-45</th>
-                                            <th>45-55</th>
-                                            <th>55-65</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Farmers</td>
-                                            <td>20</td>
-                                            <td>35</td>
-                                            <td>25</td>
-                                            <td>15</td>
-                                            <td>5</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+<table class="calculation-data">
+<thead>
+<tr>
+<th>Income (in thousands of ₹)</th>
+<th>15-25</th>
+<th>25-35</th>
+<th>35-45</th>
+<th>45-55</th>
+<th>55-65</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Farmers</td>
+<td>20</td>
+<td>35</td>
+<td>25</td>
+<td>15</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="question standard-question">
+<span class="question-number">6.</span> What are the practical implications of skewness and kurtosis of a distribution? Give real-life examples.
                         </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">6.</span> What are the practical implications of skewness and kurtosis of a distribution? Give real-life examples.
+<div class="question standard-question">
+<span class="question-number">7.</span> In a distribution, Mean = 50, Median = 45, Mode = 40 and Standard Deviation = 10. Calculate Karl-Pearson's coefficient of skewness and state the nature of the distribution.
                         </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">7.</span> In a distribution, Mean = 50, Median = 45, Mode = 40 and Standard Deviation = 10. Calculate Karl-Pearson's coefficient of skewness and state the nature of the distribution.
-                        </div>
-                        
-                        <div class="question standard-question">
-                            <span class="question-number">8.</span> For the following data, calculate the skewness coefficient using both methods:
+<div class="question standard-question">
+<span class="question-number">8.</span> For the following data, calculate the skewness coefficient using both methods:
                             <p>12, 15, 18, 20, 20, 22, 25, 28, 30, 35</p>
-                        </div>
-                        
-                        <h3>Multiple Choice Questions</h3>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">1.</span> In a symmetrical distribution:
+</div>
+<h3>Multiple Choice Questions</h3>
+<div class="question mcq-question">
+<span class="question-number">1.</span> In a symmetrical distribution:
                             <div class="options">
-                                <div class="option">A) Mean > Median > Mode</div>
-                                <div class="option">B) Mode > Median > Mean</div>
-                                <div class="option">C) Mean = Median = Mode</div>
-                                <div class="option">D) None of these</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">2.</span> In a positively skewed distribution:
+<div class="option">A) Mean &gt; Median &gt; Mode</div>
+<div class="option">B) Mode &gt; Median &gt; Mean</div>
+<div class="option">C) Mean = Median = Mode</div>
+<div class="option">D) None of these</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">2.</span> In a positively skewed distribution:
                             <div class="options">
-                                <div class="option">A) Mean < Mode</div>
-                                <div class="option">B) Mean > Mode</div>
-                                <div class="option">C) Mean = Mode</div>
-                                <div class="option">D) Mode is undefined</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">3.</span> The alternative formula for Karl-Pearson's coefficient of skewness is:
+<div class="option">A) Mean &lt; Mode</div>
+<div class="option">B) Mean &gt; Mode</div>
+<div class="option">C) Mean = Mode</div>
+<div class="option">D) Mode is undefined</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">3.</span> The alternative formula for Karl-Pearson's coefficient of skewness is:
                             <div class="options">
-                                <div class="option">A) \(\frac{\text{Mean} - \text{Mode}}{\text{SD}}\)</div>
-                                <div class="option">B) \(\frac{3(\text{Mean} - \text{Median})}{\text{SD}}\)</div>
-                                <div class="option">C) \(\frac{\text{Mode} - \text{Mean}}{\text{SD}}\)</div>
-                                <div class="option">D) \(\frac{\text{Mean} + \text{Mode}}{\text{SD}}\)</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">4.</span> The formula for Bowley's coefficient of skewness is:
+<div class="option">A) \(\frac{\text{Mean} - \text{Mode}}{\text{SD}}\)</div>
+<div class="option">B) \(\frac{3(\text{Mean} - \text{Median})}{\text{SD}}\)</div>
+<div class="option">C) \(\frac{\text{Mode} - \text{Mean}}{\text{SD}}\)</div>
+<div class="option">D) \(\frac{\text{Mean} + \text{Mode}}{\text{SD}}\)</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">4.</span> The formula for Bowley's coefficient of skewness is:
                             <div class="options">
-                                <div class="option">A) \(\frac{Q_3 - Q_1}{Q_3 + Q_1}\)</div>
-                                <div class="option">B) \(\frac{Q_3 + Q_1 - 2M_d}{Q_3 - Q_1}\)</div>
-                                <div class="option">C) \(\frac{Q_3 - Q_1}{2}\)</div>
-                                <div class="option">D) \(\frac{Q_3 + Q_1}{2}\)</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">5.</span> The value of β₂ for a normal distribution is:
+<div class="option">A) \(\frac{Q_3 - Q_1}{Q_3 + Q_1}\)</div>
+<div class="option">B) \(\frac{Q_3 + Q_1 - 2M_d}{Q_3 - Q_1}\)</div>
+<div class="option">C) \(\frac{Q_3 - Q_1}{2}\)</div>
+<div class="option">D) \(\frac{Q_3 + Q_1}{2}\)</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">5.</span> The value of β₂ for a normal distribution is:
                             <div class="options">
-                                <div class="option">A) 0</div>
-                                <div class="option">B) 1</div>
-                                <div class="option">C) 3</div>
-                                <div class="option">D) 5</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">6.</span> In a leptokurtic distribution:
+<div class="option">A) 0</div>
+<div class="option">B) 1</div>
+<div class="option">C) 3</div>
+<div class="option">D) 5</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">6.</span> In a leptokurtic distribution:
                             <div class="options">
-                                <div class="option">A) β₂ < 3</div>
-                                <div class="option">B) β₂ = 3</div>
-                                <div class="option">C) β₂ > 3</div>
-                                <div class="option">D) β₂ = 0</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">7.</span> If in a distribution, most of the values are high but there are a few very low values, the distribution will be:
+<div class="option">A) β₂ &lt; 3</div>
+<div class="option">B) β₂ = 3</div>
+<div class="option">C) β₂ &gt; 3</div>
+<div class="option">D) β₂ = 0</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">7.</span> If in a distribution, most of the values are high but there are a few very low values, the distribution will be:
                             <div class="options">
-                                <div class="option">A) Positively skewed</div>
-                                <div class="option">B) Negatively skewed</div>
-                                <div class="option">C) Symmetrical</div>
-                                <div class="option">D) Normal</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">8.</span> Kurtosis measures the:
+<div class="option">A) Positively skewed</div>
+<div class="option">B) Negatively skewed</div>
+<div class="option">C) Symmetrical</div>
+<div class="option">D) Normal</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">8.</span> Kurtosis measures the:
                             <div class="options">
-                                <div class="option">A) Asymmetry of the distribution</div>
-                                <div class="option">B) Peakedness of the distribution</div>
-                                <div class="option">C) Central tendency</div>
-                                <div class="option">D) Dispersion</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">9.</span> A platykurtic curve is:
+<div class="option">A) Asymmetry of the distribution</div>
+<div class="option">B) Peakedness of the distribution</div>
+<div class="option">C) Central tendency</div>
+<div class="option">D) Dispersion</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">9.</span> A platykurtic curve is:
                             <div class="options">
-                                <div class="option">A) More peaked than the normal curve</div>
-                                <div class="option">B) Flatter than the normal curve</div>
-                                <div class="option">C) Similar to the normal curve</div>
-                                <div class="option">D) None of these</div>
-                            </div>
-                        </div>
-                        
-                        <div class="question mcq-question">
-                            <span class="question-number">10.</span> If Mean = 40, Median = 35, the distribution is:
+<div class="option">A) More peaked than the normal curve</div>
+<div class="option">B) Flatter than the normal curve</div>
+<div class="option">C) Similar to the normal curve</div>
+<div class="option">D) None of these</div>
+</div>
+</div>
+<div class="question mcq-question">
+<span class="question-number">10.</span> If Mean = 40, Median = 35, the distribution is:
                             <div class="options">
-                                <div class="option">A) Symmetrical</div>
-                                <div class="option">B) Positively skewed</div>
-                                <div class="option">C) Negatively skewed</div>
-                                <div class="option">D) Cannot be determined</div>
-                            </div>
+<div class="option">A) Symmetrical</div>
+<div class="option">B) Positively skewed</div>
+<div class="option">C) Negatively skewed</div>
+<div class="option">D) Cannot be determined</div>
+</div>
+</div>
+<h3>Fill in the Blanks</h3>
+<div class="question fill-question">
+<span class="question-number">1.</span> In a symmetrical distribution, Mean = ________ = Mode.
                         </div>
-                        
-                        <h3>Fill in the Blanks</h3>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">1.</span> In a symmetrical distribution, Mean = ________ = Mode.
+<div class="question fill-question">
+<span class="question-number">2.</span> In a positively skewed distribution, the value of the Mean is ________.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">2.</span> In a positively skewed distribution, the value of the Mean is ________.
+<div class="question fill-question">
+<span class="question-number">3.</span> Karl-Pearson's coefficient of skewness = \(\frac{\text{Mean} - \text{Mode}}{?}\)
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">3.</span> Karl-Pearson's coefficient of skewness = \(\frac{\text{Mean} - \text{Mode}}{?}\)
+<div class="question fill-question">
+<span class="question-number">4.</span> Bowley's method is based on ________.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">4.</span> Bowley's method is based on ________.
+<div class="question fill-question">
+<span class="question-number">5.</span> For a normal distribution, β₂ = ________.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">5.</span> For a normal distribution, β₂ = ________.
+<div class="question fill-question">
+<span class="question-number">6.</span> In a leptokurtic distribution, β₂ is ________ 3.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">6.</span> In a leptokurtic distribution, β₂ is ________ 3.
+<div class="question fill-question">
+<span class="question-number">7.</span> The measure of kurtosis denotes the shape of the ________ of the frequency curve.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">7.</span> The measure of kurtosis denotes the shape of the ________ of the frequency curve.
+<div class="question fill-question">
+<span class="question-number">8.</span> In a negatively skewed distribution, ________ &gt; Median &gt; Mean.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">8.</span> In a negatively skewed distribution, ________ > Median > Mean.
+<div class="question fill-question">
+<span class="question-number">9.</span> β₂ = \(\mu_4/(?)\)
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">9.</span> β₂ = \(\mu_4/(?)\)
+<div class="question fill-question">
+<span class="question-number">10.</span> A platykurtic curve is more ________ than the normal curve.
                         </div>
-                        
-                        <div class="question fill-question">
-                            <span class="question-number">10.</span> A platykurtic curve is more ________ than the normal curve.
+<h3>True or False</h3>
+<div class="question tf-question">
+<span class="question-number">1.</span> In a symmetrical distribution, skewness is zero.
                         </div>
-                        
-                        <h3>True or False</h3>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">1.</span> In a symmetrical distribution, skewness is zero.
+<div class="question tf-question">
+<span class="question-number">2.</span> Karl-Pearson's method is based on the entire series.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">2.</span> Karl-Pearson's method is based on the entire series.
+<div class="question tf-question">
+<span class="question-number">3.</span> Bowley's method is based only on quartiles.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">3.</span> Bowley's method is based only on quartiles.
+<div class="question tf-question">
+<span class="question-number">4.</span> Positive skewness means that the distribution is right-tailed.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">4.</span> Positive skewness means that the distribution is right-tailed.
+<div class="question tf-question">
+<span class="question-number">5.</span> Kurtosis measures the symmetry of the distribution.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">5.</span> Kurtosis measures the symmetry of the distribution.
+<div class="question tf-question">
+<span class="question-number">6.</span> A normal distribution is mesokurtic.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">6.</span> A normal distribution is mesokurtic.
+<div class="question tf-question">
+<span class="question-number">7.</span> If β₂ &lt; 3, the distribution is leptokurtic.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">7.</span> If β₂ < 3, the distribution is leptokurtic.
+<div class="question tf-question">
+<span class="question-number">8.</span> Income distributions are usually positively skewed.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">8.</span> Income distributions are usually positively skewed.
+<div class="question tf-question">
+<span class="question-number">9.</span> The coefficient of skewness is always between -1 and +1.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">9.</span> The coefficient of skewness is always between -1 and +1.
+<div class="question tf-question">
+<span class="question-number">10.</span> When the mode is ill-defined, Karl-Pearson's alternative formula is used.
                         </div>
-                        
-                        <div class="question tf-question">
-                            <span class="question-number">10.</span> When the mode is ill-defined, Karl-Pearson's alternative formula is used.
-                        </div>
-                        
-                        <h3>Answers</h3>
-                        
-                        <div class="answers-section">
-                            <h4>Answers to Descriptive Questions</h4>
-                            
-                            <div class="answer">
-                                <span class="answer-number">1.</span>
-                                <span class="answer-text"><strong>Skewness</strong> means 'lack of symmetry'. Its three main types are:<br>
-                                <strong>a) Symmetrical Distribution:</strong> Mean = Median = Mode<br>
-                                <strong>b) Positively Skewed:</strong> Mean > Median > Mode<br>
-                                <strong>c) Negatively Skewed:</strong> Mode > Median > Mean</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">2.</span>
-                                <span class="answer-text"><strong>Comparison:</strong><br>
-                                <strong>Karl-Pearson's Method:</strong> Based on the entire series, uses mean/mode/SD, affected by extreme values.<br>
-                                <strong>Bowley's Method:</strong> Based only on quartiles, less affected by extreme values, easier to calculate.<br>
+<h3>Answers</h3>
+<div class="answers-section">
+<h4>Answers to Descriptive Questions</h4>
+<div class="answer">
+<span class="answer-number">1.</span>
+<span class="answer-text"><strong>Skewness</strong> means 'lack of symmetry'. Its three main types are:<br/>
+<strong>a) Symmetrical Distribution:</strong> Mean = Median = Mode<br/>
+<strong>b) Positively Skewed:</strong> Mean &gt; Median &gt; Mode<br/>
+<strong>c) Negatively Skewed:</strong> Mode &gt; Median &gt; Mean</span>
+</div>
+<div class="answer">
+<span class="answer-number">2.</span>
+<span class="answer-text"><strong>Comparison:</strong><br/>
+<strong>Karl-Pearson's Method:</strong> Based on the entire series, uses mean/mode/SD, affected by extreme values.<br/>
+<strong>Bowley's Method:</strong> Based only on quartiles, less affected by extreme values, easier to calculate.<br/>
                                 Bowley's method is more reliable because it is less affected by extreme values.</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">3.</span>
-                                <span class="answer-text">Mean = (10×5 + 20×12 + 30×18 + 40×10 + 50×3)/48 = 28.33<br>
-                                Mode = 30 (highest frequency)<br>
-                                On calculating SD, it is 11.24<br>
-                                Karl-Pearson's Sk = (28.33 - 30)/11.24 = -0.149<br>
+</div>
+<div class="answer">
+<span class="answer-number">3.</span>
+<span class="answer-text">Mean = (10×5 + 20×12 + 30×18 + 40×10 + 50×3)/48 = 28.33<br/>
+                                Mode = 30 (highest frequency)<br/>
+                                On calculating SD, it is 11.24<br/>
+                                Karl-Pearson's Sk = (28.33 - 30)/11.24 = -0.149<br/>
                                 The distribution is slightly negatively skewed.</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">4.</span>
-                                <span class="answer-text"><strong>Kurtosis</strong> measures the peakedness of a curve. The three types are:<br>
-                                <strong>a) Mesokurtic:</strong> β₂ = 3 (Normal distribution)<br>
-                                <strong>b) Leptokurtic:</strong> β₂ > 3 (More peaked)<br>
-                                <strong>c) Platykurtic:</strong> β₂ < 3 (Flatter)</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">5.</span>
-                                <span class="answer-text">N = 100<br>
-                                Q₁ = 30.71 thousand rupees<br>
-                                Q₃ = 42.00 thousand rupees<br>
-                                Median = 35.71 thousand rupees<br>
-                                Bowley's Sk = (42 + 30.71 - 2×35.71)/(42 - 30.71) = 0.1<br>
+</div>
+<div class="answer">
+<span class="answer-number">4.</span>
+<span class="answer-text"><strong>Kurtosis</strong> measures the peakedness of a curve. The three types are:<br/>
+<strong>a) Mesokurtic:</strong> β₂ = 3 (Normal distribution)<br/>
+<strong>b) Leptokurtic:</strong> β₂ &gt; 3 (More peaked)<br/>
+<strong>c) Platykurtic:</strong> β₂ &lt; 3 (Flatter)</span>
+</div>
+<div class="answer">
+<span class="answer-number">5.</span>
+<span class="answer-text">N = 100<br/>
+                                Q₁ = 30.71 thousand rupees<br/>
+                                Q₃ = 42.00 thousand rupees<br/>
+                                Median = 35.71 thousand rupees<br/>
+                                Bowley's Sk = (42 + 30.71 - 2×35.71)/(42 - 30.71) = 0.1<br/>
                                 The distribution is slightly positively skewed.</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">7.</span>
-                                <span class="answer-text">Karl-Pearson's Sk = (Mean - Mode)/SD = (50 - 40)/10 = 1.0<br>
+</div>
+<div class="answer">
+<span class="answer-number">7.</span>
+<span class="answer-text">Karl-Pearson's Sk = (Mean - Mode)/SD = (50 - 40)/10 = 1.0<br/>
                                 The distribution is highly positively skewed.</span>
-                            </div>
-                            
-                            <h4>Answers to Multiple Choice Questions</h4>
-                            
-                            <div class="answer">
-                                <span class="answer-number">1.</span>
-                                <span class="answer-text">C) Mean = Median = Mode</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">2.</span>
-                                <span class="answer-text">B) Mean > Mode</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">3.</span>
-                                <span class="answer-text">B) \(\frac{3(\text{Mean} - \text{Median})}{\text{SD}}\)</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">4.</span>
-                                <span class="answer-text">B) \(\frac{Q_3 + Q_1 - 2M_d}{Q_3 - Q_1}\)</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">5.</span>
-                                <span class="answer-text">C) 3</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">6.</span>
-                                <span class="answer-text">C) β₂ > 3</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">7.</span>
-                                <span class="answer-text">B) Negatively skewed</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">8.</span>
-                                <span class="answer-text">B) Peakedness of the distribution</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">9.</span>
-                                <span class="answer-text">B) Flatter than the normal curve</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">10.</span>
-                                <span class="answer-text">B) Positively skewed</span>
-                            </div>
-                            
-                            <h4>Answers to Fill in the Blanks</h4>
-                            
-                            <div class="answer">
-                                <span class="answer-number">1.</span>
-                                <span class="answer-text">Median</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">2.</span>
-                                <span class="answer-text">maximum</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">3.</span>
-                                <span class="answer-text">Standard Deviation</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">4.</span>
-                                <span class="answer-text">quartiles</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">5.</span>
-                                <span class="answer-text">3</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">6.</span>
-                                <span class="answer-text">greater than</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">7.</span>
-                                <span class="answer-text">top</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">8.</span>
-                                <span class="answer-text">Mode</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">9.</span>
-                                <span class="answer-text">μ₂²</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">10.</span>
-                                <span class="answer-text">flat</span>
-                            </div>
-                            
-                            <h4>Answers to True or False</h4>
-                            
-                            <div class="answer">
-                                <span class="answer-number">1.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">2.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">3.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">4.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">5.</span>
-                                <span class="answer-text">False</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">6.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">7.</span>
-                                <span class="answer-text">False</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">8.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">9.</span>
-                                <span class="answer-text">False</span>
-                            </div>
-                            
-                            <div class="answer">
-                                <span class="answer-number">10.</span>
-                                <span class="answer-text">True</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-                <footer class="book-footer">
-        <p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br>
+</div>
+<h4>Answers to Multiple Choice Questions</h4>
+<div class="answer">
+<span class="answer-number">1.</span>
+<span class="answer-text">C) Mean = Median = Mode</span>
+</div>
+<div class="answer">
+<span class="answer-number">2.</span>
+<span class="answer-text">B) Mean &gt; Mode</span>
+</div>
+<div class="answer">
+<span class="answer-number">3.</span>
+<span class="answer-text">B) \(\frac{3(\text{Mean} - \text{Median})}{\text{SD}}\)</span>
+</div>
+<div class="answer">
+<span class="answer-number">4.</span>
+<span class="answer-text">B) \(\frac{Q_3 + Q_1 - 2M_d}{Q_3 - Q_1}\)</span>
+</div>
+<div class="answer">
+<span class="answer-number">5.</span>
+<span class="answer-text">C) 3</span>
+</div>
+<div class="answer">
+<span class="answer-number">6.</span>
+<span class="answer-text">C) β₂ &gt; 3</span>
+</div>
+<div class="answer">
+<span class="answer-number">7.</span>
+<span class="answer-text">B) Negatively skewed</span>
+</div>
+<div class="answer">
+<span class="answer-number">8.</span>
+<span class="answer-text">B) Peakedness of the distribution</span>
+</div>
+<div class="answer">
+<span class="answer-number">9.</span>
+<span class="answer-text">B) Flatter than the normal curve</span>
+</div>
+<div class="answer">
+<span class="answer-number">10.</span>
+<span class="answer-text">B) Positively skewed</span>
+</div>
+<h4>Answers to Fill in the Blanks</h4>
+<div class="answer">
+<span class="answer-number">1.</span>
+<span class="answer-text">Median</span>
+</div>
+<div class="answer">
+<span class="answer-number">2.</span>
+<span class="answer-text">maximum</span>
+</div>
+<div class="answer">
+<span class="answer-number">3.</span>
+<span class="answer-text">Standard Deviation</span>
+</div>
+<div class="answer">
+<span class="answer-number">4.</span>
+<span class="answer-text">quartiles</span>
+</div>
+<div class="answer">
+<span class="answer-number">5.</span>
+<span class="answer-text">3</span>
+</div>
+<div class="answer">
+<span class="answer-number">6.</span>
+<span class="answer-text">greater than</span>
+</div>
+<div class="answer">
+<span class="answer-number">7.</span>
+<span class="answer-text">top</span>
+</div>
+<div class="answer">
+<span class="answer-number">8.</span>
+<span class="answer-text">Mode</span>
+</div>
+<div class="answer">
+<span class="answer-number">9.</span>
+<span class="answer-text">μ₂²</span>
+</div>
+<div class="answer">
+<span class="answer-number">10.</span>
+<span class="answer-text">flat</span>
+</div>
+<h4>Answers to True or False</h4>
+<div class="answer">
+<span class="answer-number">1.</span>
+<span class="answer-text">True</span>
+</div>
+<div class="answer">
+<span class="answer-number">2.</span>
+<span class="answer-text">True</span>
+</div>
+<div class="answer">
+<span class="answer-number">3.</span>
+<span class="answer-text">True</span>
+</div>
+<div class="answer">
+<span class="answer-number">4.</span>
+<span class="answer-text">True</span>
+</div>
+<div class="answer">
+<span class="answer-number">5.</span>
+<span class="answer-text">False</span>
+</div>
+<div class="answer">
+<span class="answer-number">6.</span>
+<span class="answer-text">True</span>
+</div>
+<div class="answer">
+<span class="answer-number">7.</span>
+<span class="answer-text">False</span>
+</div>
+<div class="answer">
+<span class="answer-number">8.</span>
+<span class="answer-text">True</span>
+</div>
+<div class="answer">
+<span class="answer-number">9.</span>
+<span class="answer-text">False</span>
+</div>
+<div class="answer">
+<span class="answer-number">10.</span>
+<span class="answer-text">True</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<footer class="book-footer">
+<p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics,<br/>
         CCS Haryana Agricultural University, Hisar</p>
-    </footer>
-        </main>
-    </div>
-    
-
-
-
+</footer>
+</main>
+</div>
 <style>
 
         /* ============================================================
@@ -3075,6 +2952,5 @@ svg.book-fig, .figure-box svg, canvas {
 }
 
     </style>
-
 </body>
 </html>

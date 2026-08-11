@@ -359,13 +359,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -399,10 +401,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -690,7 +696,6 @@ window.MathJax = {
                         <p>Step 4: Verify sum $P + Q$:</p>
                         $$ P + Q = \begin{bmatrix} 3+0 &amp; 0-2 &amp; 5.5+0.5 \\ 0+2 &amp; 7+0 &amp; 1.5-2.5 \\ 5.5-0.5 &amp; 1.5+2.5 &amp; 0+0 \end{bmatrix} = \begin{bmatrix} 3 &amp; -2 &amp; 6 \\ 2 &amp; 7 &amp; -1 \\ 5 &amp; 4 &amp; 0 \end{bmatrix} = A $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.0 Basics of Matrix Algebra (Hinglish व्याख्या)</h2>
@@ -834,7 +839,6 @@ window.MathJax = {
                         $$ P + Q = \begin{bmatrix} 3+0 &amp; 0-2 &amp; 5.5+0.5 \\ 0+2 &amp; 7+0 &amp; 1.5-2.5 \\ 5.5-0.5 &amp; 1.5+2.5 &amp; 0+0 \end{bmatrix} = \begin{bmatrix} 3 &amp; -2 &amp; 6 \\ 2 &amp; 7 &amp; -1 \\ 5 &amp; 4 &amp; 0 \end{bmatrix} = A $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.1 Special Matrices -->
@@ -929,7 +933,6 @@ window.MathJax = {
                         $$ U^H U = \frac{1}{2} \begin{bmatrix} 2 &amp; 0 \\ 0 &amp; 2 \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 1 \end{bmatrix} = I $$
                         <p>Since $U^H U = I$, matrix $U$ is Unitary.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.1 Types of Special Matrices (Hinglish व्याख्या)</h2>
@@ -1021,7 +1024,6 @@ window.MathJax = {
                         <p>चूँकि $U^H U = I$, matrix $U$ is Unitary.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.2 Rank & Echelon Forms -->
@@ -1114,7 +1116,6 @@ window.MathJax = {
                         $$ \begin{bmatrix} 1 &amp; 2 &amp; 3 \\ 0 &amp; -1 &amp; -1 \\ 0 &amp; 0 &amp; 0 \end{bmatrix} $$
                         <p>Since rank $\rho(A) = 2 &lt; 3$, vectors are linearly dependent. Relation: $v_3 = v_1 + v_2$.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.2 Matrix Rank and Row Echelon Forms (Hinglish व्याख्या)</h2>
@@ -1204,7 +1205,6 @@ window.MathJax = {
                         <p>चूँकि rank $\rho(A) = 2 &lt; 3$, vectors are linearly dependent. Relation: $v_3 = v_1 + v_2$.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.3 Normal Form -->
@@ -1271,7 +1271,6 @@ window.MathJax = {
                         $$ A^{-1} = (P^{-1} Q^{-1})^{-1} = (Q^{-1})^{-1} (P^{-1})^{-1} = Q P $$
                         <p>Thus $A^{-1} = Q P$.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.3 Normal Form and PAQ Canonical Reduction (Hinglish व्याख्या)</h2>
@@ -1335,7 +1334,6 @@ window.MathJax = {
                         <p>इस प्रकार $A^{-1} = Q P$.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.4 Inverse -->
@@ -1406,7 +1404,6 @@ window.MathJax = {
                         <p>Inverse matrix is:</p>
                         $$ A^{-1} = \begin{bmatrix} -24 &amp; 18 &amp; 5 \\ 20 &amp; -15 &amp; -4 \\ -5 &amp; 4 &amp; 1 \end{bmatrix} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.4 Inverse of Matrix via Elementary Operations (Hinglish व्याख्या)</h2>
@@ -1474,7 +1471,6 @@ window.MathJax = {
                         $$ A^{-1} = \begin{bmatrix} -24 &amp; 18 &amp; 5 \\ 20 &amp; -15 &amp; -4 \\ -5 &amp; 4 &amp; 1 \end{bmatrix} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.5 Systems of Equations -->
@@ -1548,7 +1544,6 @@ window.MathJax = {
 <li>(iii) No Solution: $\lambda = 3$ and $\mu \neq 10$.</li>
 </ul>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.5 Systems of Linear Equations (Hinglish व्याख्या)</h2>
@@ -1619,7 +1614,6 @@ window.MathJax = {
 </ul>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.6 LU Decomposition -->
@@ -1684,7 +1678,6 @@ window.MathJax = {
 <p>Step 3: Inverse $A^{-1} = U^{-1} L^{-1}$:</p>
                         $$ A^{-1} = \begin{bmatrix} 1 &amp; -1 \\ 0 &amp; 0.5 \end{bmatrix} \begin{bmatrix} 1 &amp; 0 \\ -3 &amp; 1 \end{bmatrix} = \begin{bmatrix} 4 &amp; -1 \\ -1.5 &amp; 0.5 \end{bmatrix} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.6 LU Decomposition and Applications (Hinglish व्याख्या)</h2>
@@ -1747,8 +1740,6 @@ window.MathJax = {
                     </div>
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
-
 </section>
 <!-- 1.7 Solved Advanced Problems -->
 <section class="page-section" id="sec17">
@@ -1827,7 +1818,6 @@ window.MathJax = {
                         <p>Step 2: Count non-zero rows: $\text{rank}(A) = 3 = n$ (number of variables).</p>
 <p>Since $\text{rank}(A) = n$, system has only the trivial solution: $x = 0, y = 0, z = 0$.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.7 Solved Numerical Problems (Hinglish व्याख्या)</h2>
@@ -1904,7 +1894,6 @@ window.MathJax = {
 <p>चूँकि $\text{rank}(A) = n$, system has only the trivial solution: $x = 0, y = 0, z = 0$.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.8 EXERCISE BANK -->
@@ -2234,7 +2223,6 @@ window.MathJax = {
 </table>
 <button class="toggle-btn" onclick="toggleAnswer('match1_ans')">Show Answer ▼</button>
 <div class="answer" id="match1_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(C), 3-(A), 4-(D).</div>
-
 </div>
 <div class="question">
 <strong>Matching Set 2: Matrix Properties &amp; Inverse Definitions</strong>
@@ -2348,7 +2336,6 @@ window.MathJax = {
 <div class="question"><strong>Q10.</strong> Prove that the determinant of a non-singular symmetric matrix $A$ has a symmetric inverse $A^{-1}$.</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub10_ans')">Show Answer ▼</button>
 <div class="answer" id="sub10_ans"><strong>Answer Outline:</strong> Take transpose of inverse: $(A^{-1})^T = (A^T)^{-1}$. Since $A$ is symmetric ($A^T = A$), $(A^{-1})^T = A^{-1}$. Thus $A^{-1}$ is symmetric.</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 1.9 Summary -->
@@ -2362,7 +2349,6 @@ window.MathJax = {
 <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
 <li>Anton, Howard and Rorres, Chris. <em>Elementary Linear Algebra with Applications</em>. Wiley.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

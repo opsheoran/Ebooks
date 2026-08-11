@@ -1068,13 +1068,15 @@ svg.book-fig, .figure-box svg, canvas {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1108,10 +1110,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1255,7 +1261,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p>Hello students, welcome to the BSc First Year <strong>Statistics</strong> course. This subject has become an extremely important part of the modern scientific and business world. In today's digital era, where a vast amount of <strong>data</strong> is generated every day, the need for statistical knowledge and skills is greater than ever before.</p>
 <p>Through this course, you will learn what statistics is, what its scope is, what its advantages and limitations are, and how it is used in various fields. We will understand these concepts through examples from India and specifically Haryana, so you can see how statistics plays a crucial role in our daily lives and national development.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.1 परिचय</h2>
@@ -1278,7 +1283,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p>Following India's independence, the systematic development of statistics gained significant momentum. Professor P.C. Mahalanobis (1893-1972), widely regarded as the father of Indian statistics, founded the prestigious Indian Statistical Institute (ISI) in Kolkata in 1931. His profound contributions extended to playing a vital role in formulating India's Second Five-Year Plan and developing the concept of 'Mahalanobis distance', a fundamental tool in multivariate statistics. In 1950, the Government of India further solidified this commitment by establishing the National Sample Survey Organization (NSSO), which is responsible for conducting some of the nation's largest socio-economic surveys. Presently, India is home to numerous esteemed institutions dedicated to statistical education and research, including the ISI, IASRI (Indian Agricultural Statistics Research Institute), and various statistics departments within universities, all contributing significantly to the field.</p>
 <p>Within the state of Haryana, the State Statistics Department actively gathers data pertinent to agricultural production, industrial development, education, public health, and other critical sectors. This meticulously collected data is subsequently utilized by the state government for the formulation of various development plans and for a robust evaluation of their real-world impact.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h3>1.1.1 ऐतिहासिक विकास</h3>
@@ -1334,7 +1338,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p><strong>Descriptive Statistics:</strong> They calculate the average yield per hectare (5.2 tons) and standard deviation (0.8 tons) from this sample. They also represent the distribution of yield through a histogram.</p>
 <p><strong>Inferential Statistics:</strong> Based on this sample data, they calculate a 95% confidence interval and conclude that the average paddy yield in Haryana is between 5.1 and 5.3 tons per hectare. They also test whether this year's yield is higher than last year's.</p>
 </div>
-
 </div>
 </div>
 <div class="hinglish-content" style="display:none;">
@@ -1550,7 +1553,6 @@ svg.book-fig, .figure-box svg, canvas {
 </ol>
 <p>To balance water conservation and good yield, the government used decision analysis and decided to promote maize cultivation, especially in areas where water is scarce.</p>
 </div>
-
 </div>
 </div>
 <div class="hinglish-content" style="display:none;">
@@ -1657,7 +1659,6 @@ svg.book-fig, .figure-box svg, canvas {
 <li>Evidence-Based Policy: By analyzing the correlation between vaccination rates and infection rates, health officials prioritized vaccination drives. In Haryana, data analysis showed an 85% reduction in hospitalization rates after 70% vaccination coverage.</li>
 </ol>
 </div>
-
 </div>
 </div>
 <div class="hinglish-content" style="display:none;">
@@ -1716,7 +1717,6 @@ svg.book-fig, .figure-box svg, canvas {
 </li>
 </ol>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.5 Statistics की सीमाएँ</h2>
@@ -1887,7 +1887,6 @@ svg.book-fig, .figure-box svg, canvas {
 </li>
 </ul>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.6 Statistics के उपयोग के क्षेत्र</h2>
@@ -1966,7 +1965,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p>In further study, you will learn more about statistical concepts and methods in detail, and develop practical skills using various statistical software and tools such as R, Python, SPSS, and SAS. You will also study advanced topics such as multivariate analysis, time series forecasting, experimental design, and Bayesian statistics.</p>
 <p>We hope that this introduction inspires you for the exciting and important subject of statistics. Remember, to become a good statistician, not only an understanding of mathematical concepts is necessary, but also critical thinking, curiosity, and accurate communication skills are important. The study of statistics not only teaches you to analyze data, but also to understand and communicate the stories behind the data.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>1.7 निष्कर्ष</h2>
@@ -1997,7 +1995,6 @@ svg.book-fig, .figure-box svg, canvas {
 <strong>Q1.</strong> The word 'Statistics' is derived from the Latin word:
             <div class="mcq-options">
 <p>(a) Statista    (b) Status    (c) Statistik    (d) Stat</p>
-
 </div>
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button>

@@ -1072,7 +1072,8 @@ svg.book-fig, .figure-box svg, canvas {
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1106,10 +1107,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1302,7 +1307,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="note">
 <strong>Important Note:</strong> A random variable is not really a "variable" in the usual algebra sense. It is a <em>function</em>. The word "random" indicates that its value is determined by the outcome of a random (chance-based) experiment.
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <!-- DISCRETE AND CONTINUOUS -->
 <div class="topic-section" id="types">
@@ -1314,7 +1318,6 @@ svg.book-fig, .figure-box svg, canvas {
 <h4>Definition 3.2.1 — Discrete Random Variable</h4>
 <p>A random variable \(X\) is called <strong>discrete</strong> if it can take only a <em>countable</em> number of distinct values — either a finite set like \(\{ 0,1,2,3\}\) or a countably infinite set like \(\{ 0,1,2,3,\ldots\}\).</p>
 <p><strong>Simple test:</strong> Can you <em>list</em> all possible values of \(X\), even if the list is long? If yes — it is discrete.</p>
-
 </div>
 <div class="note">
 <h4>Examples of Discrete Random Variables:</h4>
@@ -1363,7 +1366,6 @@ svg.book-fig, .figure-box svg, canvas {
 </tbody>
 </table>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
 </div>
 <!-- PROBABILITY FUNCTIONS -->
 <div class="topic-section" id="functions">
@@ -1453,7 +1455,6 @@ svg.book-fig, .figure-box svg, canvas {
 <strong>Critical Point:</strong> \(f(x)\) is <strong>not</strong> the probability itself. It is the probability <em>density</em> — probability per unit length. Actual probability is the <strong>area</strong> under \(f(x)\), not its height. Also, \(f(x)\) can be greater than 1 at some points, and that is perfectly valid, as long as the total area equals 1.<br/><br/>
 <strong>Also Note:</strong> For a continuous random variable, since \(P(X = a) = \int_{a}^{a}f(x)\, dx = 0\), it does not matter whether we write \(&lt;\), \(\leq\), \(&gt;\), or \(\geq\) in probability:
 <div class="derivation">\[P(a &lt; X &lt; b) = P(a \leq X \leq b) = P(a \leq X &lt; b) = \int_{a}^{b}f(x)\, dx\]</div>
-
 </div>
 <div class="example">
 <h4>Example 3.3.5 — Verifying a PDF</h4>
@@ -1574,7 +1575,6 @@ x^{2} &amp; 0 \leq x \leq 1 \\
 <p><strong>Find</strong> \(P(1 &lt; X &lt; 2)\)<strong>:</strong></p>
 <div class="derivation">\[P(1 &lt; X &lt; 2) = F(2) - F(1) = (1 - e^{- 2}) - (1 - e^{- 1}) = e^{- 1} - e^{- 2}\]</div>
 <div class="derivation">\[\approx 0.3679 - 0.1353 = 0.2326\]</div>
-
 </div>
 <h3>3.4.4 Properties of the Distribution Function</h3>
 <p>These are very important for examinations. Learn them carefully.</p>
@@ -1720,7 +1720,6 @@ x^{2} &amp; 0 \leq x \leq 1 \\
 <div class="formula-box">\[f_{Y}(y) = \frac{1}{a}f_{X}\left( \frac{y - b}{a} \right)\]</div>
 <p>This is the general formula for a linear transformation of a continuous random variable.</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <!-- BIVARIATE -->
 <div class="topic-section" id="bivariate">
@@ -1744,7 +1743,6 @@ x^{2} &amp; 0 \leq x \leq 1 \\
 <p><strong>Conditions for a valid Joint PMF:</strong></p>
 <div class="formula-box">\[\text{(i)}\quad p(x,y) \geq 0\quad\text{for all }(x,y)\]
 \[\text{(ii)}\quad\sum_{x}^{}{\sum_{y}^{}p}(x,y) = 1\]</div>
-
 </div>
 <div class="example">
 <h4>Example 3.6.1 — Two Fair Dice</h4>
@@ -1925,9 +1923,7 @@ eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independen
 <tr><td>Independence</td><td>\(p(x,y) = p_{X}(x) \cdot p_{Y}(y)\)</td><td>\(f(x,y) = f_{X}(x) \cdot f_{Y}(y)\)</td></tr>
 </tbody>
 </table>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
 </div>
 <!-- EXERCISES -->
 <div class="topic-section" id="exercises">
@@ -1969,7 +1965,6 @@ eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independen
 <div class="question"><strong>Q11.</strong> A random variable \(X\) has the PMF: \(p(0)=0\), \(p(1)=k\), \(p(2)=2k\), \(p(3)=2k\), \(p(4)=3k\), \(p(5)=k^2\), \(p(6)=2k^2\), \(p(7)=7k^2 + k\). Find \(k\).</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub11')">Show Answer ▼</button>
 <div class="answer" id="sub11"><div class="derivation">\(\sum p(x) = 1 \implies 0 + k + 2k + 2k + 3k + k^2 + 2k^2 + 7k^2 + k = 1\)</div><div class="derivation">\(10k^2 + 9k - 1 = 0 \implies (10k - 1)(k + 1) = 0\)</div><div class="derivation">Since \(k \geq 0\), \(k = 1/10\).</div>
-
 </div>
 <div class="question"><strong>Q12.</strong> For the continuous random variable \(X\) with PDF \(f(x) = 3x^2\) for \(0 \leq x \leq 1\), find the CDF \(F(x)\).</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub12')">Show Answer ▼</button>
@@ -2036,9 +2031,7 @@ eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independen
 <h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
 <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the correct option and explanation.</p>
 <div class="question"><strong>Q1.</strong> A random variable is defined as:<div class="mcq-options"><p>(a) A variable that takes random values without any rule<br/>(b) A real-valued function defined on the sample space<br/>(c) Any number between 0 and 1<br/>(d) The probability of an event</p>
-
 </div>
-
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
 <div class="answer" id="mcq1"><strong>Answer:</strong> (b) A real-valued function defined on the sample space</div>
@@ -2227,7 +2220,6 @@ eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independen
 <div class="question"><strong>Q30.</strong> A function can be a valid PDF even if its value at some point is greater than __________.</div>
 <button class="toggle-btn" onclick="toggleAnswer('fib30')">Show Answer ▼</button>
 <div class="answer" id="fib30"><strong>Answer:</strong> 1</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- TRUE/FALSE -->
@@ -2235,7 +2227,6 @@ eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independen
 <div class="section-card">
 <h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
 <div class="question"><strong>Q1.</strong> A random variable must always take positive values only.  <em>[True / False]</em>
-
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
 <div class="answer" id="tf1"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong></div>
@@ -2326,7 +2317,6 @@ eq \frac{42}{441}\), \(X\) <strong>and</strong> \(Y\) <strong>are NOT independen
 <div class="question"><strong>Q30.</strong> The transformation \(Y = X^2\) of a continuous random variable \(X\) is always a continuous random variable.  <em>[True / False]</em></div>
 <button class="toggle-btn" onclick="toggleAnswer('tf30')">Show Answer ▼</button>
 <div class="answer" id="tf30"><strong style="color:var(--sage);font-size:1.05rem;">True</strong></div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>

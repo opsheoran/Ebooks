@@ -120,13 +120,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -160,10 +162,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -310,13 +316,11 @@ window.MathJax = {
 <h2><span class="section-num">3.1</span> Introduction</h2>
 <div class="quote">
                     "Sir, In your otherwise beautiful poem ("The Vision of Sin") there is a verse which reads 'Every moment dies a man, every moment one is born.' Obviously, this cannot be true and I suggest that in the next edition you have it read 'Every moment dies a man, every moment \( 1\frac{1}{16} \) is born.' Even this value is slightly in error but should be sufficiently accurate for poetry." (in a letter to Lord Tennyson) -- <strong>Charles Babbage</strong>
-
 </div>
 <p>Welcome class! Today we are discussing Stratified Random Sampling. Of all the methods of sampling, this procedure is the most commonly used in practical surveys. In stratified sampling, our entire population of \( N \) units is divided into \( k \) sub-groups or sub-populations, which we call <strong>strata</strong>. The \( i \)-th stratum has \( N_i \) units, where \( i = 1, 2, ..., k \).</p>
 <p>These strata are non-overlapping and together they comprise the entire population. This means:</p>
 <div class="derivation">
 <div class="formula-box">\[ N_1 + N_2 + ... + N_k = N \]</div>
-
 </div>
 <p>From each stratum, a sample is drawn independently. The sample size taken from the \( i \)-th stratum is \( n_i \), such that the total sample size \( n \) is:</p>
 <div class="derivation">
@@ -366,7 +370,6 @@ window.MathJax = {
 <li>In many practical situations, when it is difficult to stratify with respect to the characteristic under study, administrative convenience may be considered as the basis for stratification.</li>
 <li>If the limit of precision for certain sub-populations is given, it will be better to treat each sub-population as a separate stratum.</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">3.2</span> Principles of Stratification</h2>
@@ -378,7 +381,6 @@ window.MathJax = {
 <li>अगर हमें पहले से बताया गया है कि कुछ sub-populations के लिए एक specific precision limit चाहिए, तो बेहतर होगा कि उन sub-populations को हम अलग से एक stratum मान लें।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec3-3">
@@ -395,7 +397,6 @@ window.MathJax = {
 <li><strong>Better Cross-section:</strong> It ensures the selection of a better cross-section of the population than an unstratified approach.</li>
 <li><strong>Gain in Precision:</strong> By subdividing a heterogeneous population into homogeneous sub-populations, measurements vary less within each stratum, allowing us to get a more precise estimate with a relatively smaller sample.</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">3.3</span> Advantages of Stratification</h2>
@@ -410,7 +411,6 @@ window.MathJax = {
 <li><strong>Precision में Gain:</strong> एक heterogeneous (अलग-अलग प्रकार की) population को homogeneous (एक जैसी) sub-populations में बाँटने से, हर stratum के अंदर variance कम हो जाता है। इससे हम छोटे sample से भी ज़्यादा सटीक (precise) estimate निकाल सकते हैं।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec3-4">
@@ -434,7 +434,6 @@ window.MathJax = {
 <div style="padding: 5px 0;">\( \bar{y}_i = \frac{1}{n_i} \sum_{j=1}^{n_i} y_{ij} \) (Sample mean of the stratum)</div>
 <div style="padding: 5px 0;">\( S_i^2 = \frac{1}{N_i - 1} \sum_{j=1}^{N_i} (y_{ij} - \bar{Y}_i)^2 \) (Stratum variance)</div>
 <div style="padding: 5px 0;">\( s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \) (Sample variance of the stratum)</div>
-
 </div>
 </div>
 <div class="hinglish-content">
@@ -467,7 +466,6 @@ window.MathJax = {
 <div style="padding: 5px 0;">\( \bar{Y} = \frac{1}{N} \sum_{i=1}^{k} N_i \bar{Y}_i = \sum_{i=1}^{k} W_i \bar{Y}_i \]
                 
 </div>
-
 </div>
 <p>To estimate this, we construct an estimator denoted as \( \bar{y}_{st} \) (where 'st' stands for stratified). It is defined as:</p>
 <div class="derivation">
@@ -618,7 +616,6 @@ window.MathJax = {
 <div class="formula-box">\[ s_i^2 = \frac{1}{n_i - 1} \sum_{j=1}^{n_i} (y_{ij} - \bar{y}_i)^2 \]
                 
 </div>
-
 </div>
 <div class="theorem"><h4>Theorem 3.6</h4><p>With stratified random sampling (WOR), an unbiased estimator of the variance of \( \bar{y}_{st} \) (denoted as \( \widehat{V}(\bar{y}_{st}) \) or \( v(\bar{y}_{st}) \)) is given by:</p></div>
 <div class="derivation">
@@ -673,7 +670,6 @@ window.MathJax = {
 <div class="formula-box">\[ n_i = \frac{n}{k} \]
                 
 </div>
-
 </div>
 <h3>3.7.2 Proportional Allocation</h3>
 <p>Originally proposed by Bowley (1926). When only the sizes \( N_i \) are known, the sample is allocated proportional to the stratum size:</p>
@@ -770,11 +766,9 @@ window.MathJax = {
 <h2><span class="section-num">3.8</span> RELATIVE PRECISION OF STRATIFIED RANDOM SAMPLING WITH SIMPLE RANDOM SAMPLING</h2>
 <p>In this section, we compare the precision of the usual estimators under simple random sampling (without stratification) and stratified random sampling employing proportional and optimum allocations. The variances are denoted by \( V(\bar{y}_n)_{SRS} \), \( V(\bar{y}_{st})_{prop} \), and \( V(\bar{y}_{st})_{opt} \) respectively.</p>
 <div class="theorem"><h4>Theorem 3.8.1</h4><p> If finite population correction (f.p.c.) is ignored, show that:</p>
-
 </div>
 <div class="derivation">
 <div class="formula-box">\[ V(\bar{y}_{st})_{opt} \le V(\bar{y}_{st})_{prop} \le V(\bar{y}_n)_{SRS} \]</div>
-
 </div>
 <p><strong>Proof:</strong></p>
 <p>We know the formulas for these variances:</p>
@@ -858,7 +852,6 @@ window.MathJax = {
 <div class="formula-box">\[ \widehat{V}(\bar{y}_{n})_{SRS} = \frac{N-n}{nN} \left[ \sum_{i=1}^k W_i s_i^2 + \sum_{i=1}^k W_i (\bar{y}_i - \bar{y}_{st})^2 - \sum_{i=1}^k W_i (1-W_i) \frac{s_i^2}{n_i} \right] \]
                 
 </div>
-
 </div>
 <p>The estimate of the relative gain in precision due to stratification is obtained by:</p>
 <div class="derivation">
@@ -887,7 +880,6 @@ window.MathJax = {
 <div class="formula-box">\[ y_h = \frac{\bar{Y}_h + \bar{Y}_{h+1}}{2} \]
                 
 </div>
-
 </div>
 <p>This means the boundary should be the average of the means of the two strata it separates.</p>
 <p>However, since applying this is computationally heavy, approximate rules are used:</p>
@@ -921,7 +913,6 @@ window.MathJax = {
 <div class="formula-box">\[ \frac{V(\bar{y}_k)}{V(\bar{y}_\infty)} = \frac{k^2}{k^2 - 1} \]
                 
 </div>
-
 </div>
 <p>However, increasing the number of strata beyond a certain point is not profitable because the survey cost increases.</p>
 <p>The cost function is \( C = C_0 + k C_1 + n C_2 \) where \( C_1 \) is cost per stratum and \( C_2 \) is cost per unit. The optimum number of strata balances the reduction in variance with the increase in cost. Sethi (1963) suggested that an increase in \( k \) beyond 6 would seldom be profitable.</p>
@@ -941,7 +932,6 @@ window.MathJax = {
 <p>Sometimes the population is so heterogeneous that to achieve better representation, stratification is carried to the point that only \( n_i = 1 \) (one unit) is selected from each stratum. In such cases, the variance \( s_i^2 \) cannot be estimated because \( n_i - 1 = 0 \).</p>
 <p>To estimate the variance, strata are grouped in pairs whose means do not differ much. This is called the <strong>technique of collapsed strata</strong>.</p>
 <p>By grouping pairs, we get a combined variance estimate. However, this quantity will overestimate the true variance \( V(\bar{y}_{st}) \). The overestimation is small if the paired strata are similar in size and characteristics.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">3.12</span> METHOD OF COLLAPSED STRATA</h2>
@@ -949,7 +939,6 @@ window.MathJax = {
 <p>Variance estimate करने के लिए, हम उन strata के जोड़े (pairs) बना देते हैं जो एक दूसरे से मिलते-जुलते हैं। इसे <strong>Collapsed Strata</strong> method कहते हैं।</p>
 <p>इस जोड़े (pair) से जो variance निकलता है, वो असली variance से थोड़ा ज़्यादा (overestimate) होता है। लेकिन अगर हमने अच्छे से pair बनाए हैं तो ये difference बहुत कम होता है।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec3-13">
@@ -963,7 +952,6 @@ window.MathJax = {
 <div class="formula-box">\[ V(\bar{y}_{pw}) \approx \frac{1}{n} \sum W_i S_i^2 + \frac{1}{n^2} \sum (1 - W_i) S_i^2 \]
                 
 </div>
-
 </div>
 <p>The first term is the variance with proportional allocation, and the second term is a small adjustment due to post-stratification. Hence, for large samples, post-stratification is almost as precise as proportional stratified sampling.</p>
 </div>
@@ -981,7 +969,6 @@ window.MathJax = {
 <p>If there are two alternative criteria of stratification, we can opt for two-way stratification which yields \( k_1 \) rows and \( k_2 \) columns, making \( k_1 \times k_2 \) strata.</p>
 <p>If we want to estimate the variance, the minimum sample size must be \( 2 \times k_1 \times k_2 \). A problem arises when the available sample size \( n \) is less than the number of strata, yet we want proportional allocation for each criterion.</p>
 <p>Bryant, Hartley and Jessen (1960) provided a method called deep stratification or controlled selection. By arranging cells and selecting them such that no two cells belong to the same row or column, original selection probabilities are preserved while maintaining multi-way stratification.</p>
-
 </div>
 <div class="hinglish-content">
 <h2><span class="section-num">3.14</span> DEEP STRATIFICATION</h2>
@@ -989,7 +976,6 @@ window.MathJax = {
 <p>Variance निकालने के लिए हमें कम से कम हर cell में 2 observations चाहिए। पर problem तब आती है जब हमारा total sample size \( n \), total strata से भी कम हो।</p>
 <p>इसका solution Bryant, Hartley और Jessen ने दिया था जिसे <strong>Deep Stratification</strong> या Controlled Selection कहते हैं। इसमें हम mathematically cells को इस तरह select करते हैं कि दोनों criteria का proportional representation भी हो जाए, और sample size भी कम लगे।</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec-ref">
@@ -1003,7 +989,6 @@ window.MathJax = {
 <li>Neyman, J. (1934). On the two different aspects of the representative method. (The original paper on Neyman Allocation).</li>
 <li>Tschuprow, A. A. (1923). On the mathematical expectation of the moments... (Early work on minimum variance).</li>
 </ul>
-
 </div>
 <div class="hinglish-content">
 <h2>References (संदर्भ)</h2>
@@ -1016,7 +1001,6 @@ window.MathJax = {
 <li>Cochran, W. G. (1961). Comparison of methods for determining stratum boundaries. <em>Bull. Int. Statist. Inst.</em>, 38(2), 345-358.</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="sec3-15">
@@ -1033,7 +1017,6 @@ window.MathJax = {
 <li>Use the size groups 1-5 and 6-20 to estimate the total wheat acreage of a district. Also, calculate the standard error for your estimate.</li>
 <li>Compare the mathematical efficiency of Proportional and Optimum allocation for a sample of 3000 industrial factories grouped by their output size.</li>
 </ol>
-
 </div>
 <div class="hinglish-content">
 <h2>Exercise (Subjective) (अभ्यास - व्यक्तिपरक)</h2>
@@ -1048,7 +1031,6 @@ window.MathJax = {
 <li>तीन अलग-अलग सामुदायिक जिलों (community districts) को strata मानते हुए, इष्टतम परिस्थितियों में साक्षर (literate) व्यक्तियों के proportion का अनुमान लगाने के लिए 2000 व्यक्तियों के sample को गणितीय रूप से आवंटित (allocate) करें।</li>
 </ol>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <!-- QUIZZES -->
@@ -1068,7 +1050,6 @@ window.MathJax = {
 </ul>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show/Hide Answer</button>
 <div class="answer" id="mcq1"><strong>Correct Answer:</strong> c) Divide a heterogeneous population into homogeneous sub-populations to improve precision <br/> <em>Explanation:</em> By ensuring each stratum is internally homogeneous, the overall variance is drastically reduced because only the 'within-stratum' variance contributes to the sampling error.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. In stratified sampling, the estimator of the population mean \( \bar{y}_{st} \) is an unbiased estimator if: <br/> (स्तरीकृत प्रतिचयन में, जनसंख्या माध्य का अनुमानक \( \bar{y}_{st} \) एक निष्पक्ष अनुमानक है यदि:)</div>
@@ -1290,7 +1271,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('fib1')">Show/Hide Answer</button>
 <div class="answer" id="fib1"><strong>Answer:</strong> between (बीच), within (भीतर) <br/> <em>Explanation:</em> If all the diverse elements are perfectly separated into completely homogeneous groups, the internal 'within' variance drops to zero, yielding perfect precision.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. The overall population mean \( \bar{Y} \) is mathematically identical to the ____________ sum of the true stratum means \( \bar{Y}_h \). <br/> (समग्र जनसंख्या माध्य \( \bar{Y} \) गणितीय रूप से सत्य स्तर के माध्यों \( \bar{Y}_h \) के ____________ योग के समान है।)</div>
@@ -1398,7 +1378,6 @@ window.MathJax = {
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show/Hide Answer</button>
 <div class="answer" id="tf1"><strong>Answer:</strong> False (गलत) <br/> <em>Explanation:</em> Stratification only attacks statistical sampling variance. Non-sampling errors (lying, bad measuring equipment) operate entirely independently of the sampling design.</div>
-
 </div>
 <div class="question-box">
 <div class="question">2. In stratified sampling, the sum of the stratum weights \( \sum W_h \) mathematically always equals exactly 1. <br/> (स्तरीकृत प्रतिचयन में, स्तर भार \( \sum W_h \) का योग गणितीय रूप से हमेशा 1 के बराबर होता है।)</div>

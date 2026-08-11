@@ -1066,13 +1066,15 @@ svg.book-fig, .figure-box svg, canvas {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1106,10 +1108,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1279,9 +1285,7 @@ identify distributions, prove independence results, and establish limit
 theorems like the Central Limit Theorem.</p>
 <p>This unit develops all these ideas rigorously, with full proofs and
 many worked examples.</p>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
 </div>
 <div class="topic-section" id="expectation"><div class="section-card">
 <h2><span class="section-num">4.2</span> Mathematical Expectation</h2>
@@ -1297,7 +1301,6 @@ value</strong> or <strong>mean</strong>) of <span class="math inline">\(X\)</spa
 <div class="derivation">
 <span class="math display">\[\boxed{E(X) =
 \sum_{k}^{}\mspace{2mu}\mspace{2mu} x_{k}\ p_{k}}\]</span>
-
 </div>
 <p>provided the series converges absolutely, i.e., <span class="math inline">\(\sum_{k}^{}\mspace{2mu}\left| x_{k} \right|p_{k} &lt; \infty\)</span>.</p>
 <p>If <span class="math inline">\(\sum_{k}^{}\mspace{2mu}\left| x_{k}
@@ -1454,7 +1457,6 @@ of the interval.</p>
 \int_{0}^{1}\mspace{2mu} x^{2} \cdot 2x\ dx = 2\int_{0}^{1}\mspace{2mu}
 x^{3}\ dx = 2 \cdot \frac{x^{4}}{4}|_{0}^{1} = \frac{1}{2}\]</span>
 </div>
-
 </div>
 <div class="example">
 <h4>Example 4.2.6.</h4>
@@ -1619,9 +1621,7 @@ X^{2} \right) - 2E(X) + 3 = \frac{91}{6} - 2 \cdot \frac{7}{2} + 3 =
 <div class="derivation">
 <span class="math display">\[\boxed{E(aX + b) = a\ E(X) +
 b}\]</span>
-
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof (discrete case).</h4>
@@ -1742,8 +1742,8 @@ E\left( X_{1} \right)E\left( X_{2} \right)\cdots E\left( X_{n}
 </div>
 <div class="example">
 <h4>Example 4.3.3.</h4>
-<p><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent with <span class="math inline">\(E(X) = 4\)</span>, <span class="math inline">\(E(Y) = 3\)</span>, <span class="math inline">\(E\left( X^{2} \right) = 20\)</span>, <span class="math inline">\(E\left( Y^{2} \right) = 13\)</span>. Find:<br>
-(a) <span class="math inline">\(E(XY)\)</span>, (b) <span class="math inline">\(E(3X - 2Y + 5)\)</span>, (c) <span class="math inline">\(E\left( X^{2}Y \right)\)</span>, (d) <span class="math inline">\(E\lbrack(X + Y)^{2}\rbrack\)</span>.</br></p>
+<p><span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent with <span class="math inline">\(E(X) = 4\)</span>, <span class="math inline">\(E(Y) = 3\)</span>, <span class="math inline">\(E\left( X^{2} \right) = 20\)</span>, <span class="math inline">\(E\left( Y^{2} \right) = 13\)</span>. Find:<br/>
+(a) <span class="math inline">\(E(XY)\)</span>, (b) <span class="math inline">\(E(3X - 2Y + 5)\)</span>, (c) <span class="math inline">\(E\left( X^{2}Y \right)\)</span>, (d) <span class="math inline">\(E\lbrack(X + Y)^{2}\rbrack\)</span>.</p>
 <p><strong>Solution.</strong></p>
 <p>(a) <span class="math inline">\(E(XY) = 4 \times 3 = 12\)</span>.</p>
 <p>(b) <span class="math inline">\(E(3X - 2Y + 5) = 3(4) - 2(3) + 5 = 12
@@ -1764,7 +1764,6 @@ random variable <span class="math inline">\(X\)</span>, denoted <span class="mat
 <div class="derivation">
 <span class="math display">\[\boxed{\mu_{r}' = E\left( X^{r}
 \right)}\]</span>
-
 </div>
 <p>Explicitly:</p>
 <div class="derivation">
@@ -1821,7 +1820,6 @@ raw moments:</p>
 <span class="math display">\[\boxed{\mu_{2} = \mu_{2}' -
 (\mu_{1}')^{2}}\]</span>
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof.</h4>
@@ -1972,7 +1970,6 @@ moment:</p>
 <span class="math display">\[\boxed{\text{Var}(X) = \sigma^{2} = E\
 \left\lbrack (X - \mu)^{2} \right\rbrack = E(X^{2}) - \lbrack
 E(X)\rbrack^{2} = \mu_{2}' - (\mu_{1}')^{2}}\]</span>
-
 </div>
 <p>The <strong>standard deviation</strong> is <span class="math inline">\(\sigma = \sqrt{\text{Var}(X)}\)</span>.</p>
 <p>Variance measures the average squared deviation of <span class="math inline">\(X\)</span> from its mean. A large variance means
@@ -2023,7 +2020,6 @@ a^{2}\text{Var}(X)\)</span>.</p></li>
 <span class="math display">\[\boxed{\text{Var}(X \pm Y) =
 \text{Var}(X) + \text{Var}(Y)}\]</span>
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof (for</h4>
@@ -2205,7 +2201,6 @@ a distribution. The Pearson measures are:</p>
 \frac{\mu_{3}^{2}}{\mu_{2}^{3}},\ \gamma_{1} =
 \frac{\mu_{3}}{\mu_{2}^{\frac{3}{2}}} =
 \frac{\mu_{3}}{\sigma^{3}}\]</span>
-
 </div>
 <ol type="1">
 <li>
@@ -2255,7 +2250,6 @@ distribution).</p></li>
 2.5625/(1.25)^{2} = 2.5625/1.5625 = 1.64\)</span>. So <span class="math inline">\(\gamma_{2} = 1.64 - 3 = - 1.36\)</span>
 (platykurtic).</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <div class="topic-section" id="covariance"><div class="section-card">
 <h2><span class="section-num">4.7</span> Covariance</h2>
@@ -2268,9 +2262,7 @@ two random variables <span class="math inline">\(X\)</span> and <span class="mat
 <span class="math display">\[\boxed{\text{Cov}(X,Y) = E\ \left\lbrack
 \left( X - \mu_{X} \right)\left( Y - \mu_{Y} \right) \right\rbrack =
 E(XY) - E(X)E(Y)}\]</span>
-
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof of the second form:</h4>
@@ -2350,7 +2342,6 @@ coefficient</strong> between <span class="math inline">\(X\)</span> and
 <span class="math display">\[E\left( X\mid Y = y \right) =
 \sum_{x}^{}\mspace{2mu} x \cdot P\left( X = x\mid Y = y
 \right)\]</span>
-
 </div>
 <p>For continuous random variables with joint pdf <span class="math inline">\(f(x,y)\)</span>:</p>
 <div class="derivation">
@@ -2440,7 +2431,6 @@ x\sum_{y}^{}\mspace{2mu} P\left( X = x\mid Y = y \right)P(Y = y) =
 \sum_{x}^{}\mspace{2mu} x\sum_{y}^{}\mspace{2mu} P(X = x,Y = y) =
 \sum_{x}^{}\mspace{2mu} x\ P(X = x) = E(X)\]</span>
 </div>
-
 </div>
 <div class="example">
 <h4>Example 4.8.2.</h4>
@@ -2563,7 +2553,6 @@ function</strong> (MGF) of a random variable <span class="math inline">\(X\)</sp
 <div class="derivation">
 <span class="math display">\[\boxed{M_{X}(t) = E\ \left( e^{tX}
 \right)}\]</span>
-
 </div>
 <p>for all values of <span class="math inline">\(t\)</span> in some open interval <span class="math inline">\(( - h,h)\)</span> around <span class="math inline">\(t = 0\)</span>, <span class="math inline">\(h &gt; 0\)</span>.</p>
 <p>Explicitly:</p>
@@ -2618,7 +2607,6 @@ expectation is valid):</p>
 <span class="math display">\[M_{Y}(t) = e^{bt}\
 M_{X}(at)\]</span>
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof.</h4>
@@ -2880,7 +2868,6 @@ is:</p>
 <div class="derivation">
 <span class="math display">\[\boxed{K_{X}(t) = \ln{M_{X}(t)} = \ln
 E\left( e^{tX} \right)}\]</span>
-
 </div>
 <p>The <strong>cumulants</strong> <span class="math inline">\(\kappa_{r}\)</span> are defined by the Taylor
 expansion:</p>
@@ -2991,7 +2978,6 @@ excess kurtosis of the Poisson<span class="math inline">\((\lambda)\)</span> dis
 the Poisson becomes increasingly symmetric and mesokurtic, converging to
 normal.</p>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <div class="topic-section" id="pgf"><div class="section-card">
 <h2><span class="section-num">4.11</span> Probability Generating Function (PGF)</h2>
@@ -3006,7 +2992,6 @@ function</strong> is:</p>
 <span class="math display">\[\boxed{G_{X}(z) = E\left( z^{X} \right)
 = \sum_{k = 0}^{\infty}\mspace{2mu}\mspace{2mu} p_{k}z^{k} = p_{0} +
 p_{1}z + p_{2}z^{2} + \cdots}\]</span>
-
 </div>
 <p>for <span class="math inline">\(|z| \leq 1\)</span> (at minimum).</p>
 <p>The PGF is a <strong>power series whose coefficients are the
@@ -3025,7 +3010,6 @@ probabilities</strong> themselves. This is why it is called the
 <span class="math display">\[p_{k} = P(X = k) =
 \frac{G_{X}^{(k)}(0)}{k!}\]</span>
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof.</h4>
@@ -3189,7 +3173,6 @@ function</strong> (CF) of a random variable <span class="math inline">\(X\)</spa
 <span class="math display">\[\boxed{\phi_{X}(t) = E\ \left( e^{itX}
 \right) = E\left( \cos{tX} \right) + i\ E\left( \sin{tX} \right),\ t \in
 \mathbb{R}}\]</span>
-
 </div>
 <p>where <span class="math inline">\(i = \sqrt{- 1}\)</span> is the
 imaginary unit.</p>
@@ -3234,7 +3217,6 @@ E\left| e^{itX} \right| = E(1) = 1\)</span>.</p>
 <span class="math display">\[\phi_{Y}(t) = e^{ibt}\
 \phi_{X}(at)\]</span>
 </div>
-
 </div>
 <div class="proof-box">
 <h4>Proof.</h4>
@@ -3474,9 +3456,7 @@ sum)</strong></td>
 </tr>
 </tbody>
 </table>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
 </div>
 <div class="topic-section" id="additional"><div class="section-card">
 <h2><span class="section-num">4.14</span> Additional Worked Problems</h2>
@@ -3493,7 +3473,6 @@ E(4X^{2} - 4X + 1)\)</span></p>
 <div class="derivation">
 <span class="math display">\[= 4E\left( X^{2} \right) - 4E(X) + 1 =
 4(15) - 4(3) + 1 = 60 - 12 + 1 = 49\]</span>
-
 </div>
 <p>(c) <span class="math inline">\(\text{Var}(3 - 4X) = ( -
 4)^{2}\text{Var}(X) = 16 \times 6 = 96\)</span>.</p>
@@ -3574,7 +3553,6 @@ skewness.</p>
 \lambda \cdot \frac{r!}{\lambda^{r + 1}} =
 \frac{r!}{\lambda^{r}}\]</span>
 </div>
-
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <div class="topic-section" id="subjective">
@@ -3673,14 +3651,12 @@ skewness.</p>
 <div class="question"><strong>Q30.</strong> If <span class="math inline">\(G_X(z) = e^{2(z-1)}\)</span>, find <span class="math inline">\(P(X=0)\)</span>, <span class="math inline">\(E(X)\)</span>, and verify <span class="math inline">\(\text{Var}(X)\)</span> using PGF derivatives.</div>
 <button class="toggle-btn" onclick="toggleAnswer('subj30')">Show Answer ▼</button>
 <div class="answer" id="subj30"><p><strong>Solution:</strong><br/>PGF of Poisson(<span class="math inline">\(\lambda=2\)</span>). <span class="math inline">\(P(X=0) = e^{-2} \approx 0.1353\)</span>.<br/><span class="math inline">\(G'(z) = 2e^{2(z-1)} \Rightarrow E(X) = G'(1) = 2\)</span>.<br/><span class="math inline">\(G''(z) = 4e^{2(z-1)} \Rightarrow G''(1) = 4\)</span>.<br/><span class="math inline">\(\text{Var}(X) = G''(1) + G'(1) - [G'(1)]^2 = 4 + 2 - 4 = 2\)</span>. Verified.</p></div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </div>
 <div class="topic-section" id="mcq"><div class="section-card"><h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
 <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the correct option and explanation.</p>
 <div class="question"><strong>Q1.</strong> <span class="math inline">\(E(aX + b)
 =\)</span>
-
 </div>
 <div class="mcq-options"><p>(a) <span class="math inline">\(aE(X)\)</span> <br/>(b) <span class="math inline">\(bE(X)\)</span> <br/>(c) <span class="math inline">\(aE(X) + b\)</span> <br/>(d) <span class="math inline">\(a + bE(X)\)</span></p></div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
@@ -3856,7 +3832,6 @@ equal to:</div>
 <span class="math inline">\(e^{- |t|}\)</span> <br/>(c) <span class="math inline">\(\frac{1}{1 + t^{2}}\)</span> <br/>(d) <span class="math inline">\(e^{t}\)</span></p></div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq30')">Show Answer ▼</button>
 <div class="answer" id="mcq30"><p>(b)</p></div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div><div class="topic-section" id="fib"><div class="section-card"><h2><span class="section-num">✏️</span> Fill in the Blanks — 30 Questions</h2>
 <div class="question"><strong>Q1.</strong> The expected value of a constant <span class="math inline">\(c\)</span> is __________.
                 
@@ -3986,7 +3961,6 @@ __________.</div>
 <button class="toggle-btn" onclick="toggleAnswer('fib30')">Show Answer ▼</button>
 <div class="answer" id="fib30"><p><span class="math inline">\(E(X) \cdot
 E(Y)\)</span></p></div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div><div class="topic-section" id="tf"><div class="section-card"><h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
 <div class="question"><strong>Q1.</strong> <span class="math inline">\(E(X + Y) = E(X) +
 E(Y)\)</span> holds only when <span class="math inline">\(X\)</span> and
@@ -4115,11 +4089,8 @@ is 0.</div>
 <button class="toggle-btn" onclick="toggleAnswer('tf30')">Show Answer ▼</button>
 <div class="answer" id="tf30"><p><strong>True</strong> (<span class="math inline">\(\gamma_{2} =
 \beta_{2} - 3 = 3 - 3 = 0\)</span>)</p></div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div><div class="topic-section" id="formulas"><div class="section-card"><h2><span class="section-num">📐</span> Quick Formula Reference</h2>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
 </div>
 <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>
 </main>

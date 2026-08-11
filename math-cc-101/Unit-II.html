@@ -367,13 +367,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -407,10 +409,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -759,7 +765,6 @@ $$ x^{(2)} = \begin{bmatrix} 1 \\ -i \end{bmatrix} $$
                         $$ -\lambda^3 + 18\lambda^2 - 45\lambda = 0 \implies \lambda(\lambda^2 - 18\lambda + 45) = 0 \implies \lambda(\lambda-3)(\lambda-15) = 0 $$
                         <p>Eigenvalues are $\lambda_1 = 0, \lambda_2 = 3, \lambda_3 = 15$.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.1 Eigenvalues and Eigenvectors (Hinglish व्याख्या)</h2>
@@ -1069,7 +1074,6 @@ $$ \det(A) = 0 $$
 $$ \iff \prod_{i=1}^n \lambda_i = 0 $$
 $$ \iff \text{at least one eigenvalue } \lambda_i = 0 $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.2 Algebraic Properties of Eigenvalues (Hinglish व्याख्या)</h2>
@@ -1171,7 +1175,6 @@ $$ \iff \prod_{i=1}^n \lambda_i = 0 $$
 $$ \iff \text{at least one eigenvalue } \lambda_i = 0 $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.3 Cayley-Hamilton -->
@@ -1269,7 +1272,6 @@ $$ A^4 = 7(3A - 2I) - 6A $$
 $$ A^4 = 21A - 14I - 6A $$
 $$ A^4 = 15A - 14I $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.3 Cayley-Hamilton Theorem (Hinglish व्याख्या)</h2>
@@ -1364,7 +1366,6 @@ $$ A^4 = 21A - 14I - 6A $$
 $$ A^4 = 15A - 14I $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.4 Minimal Polynomial -->
@@ -1466,7 +1467,6 @@ $$ A^4 = 15A - 14I $$
 <p>Index of nilpotency is 3, so minimal polynomial is:</p>
                         $$ m(\lambda) = \lambda^3 $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.4 Minimal Polynomial (Hinglish व्याख्या)</h2>
@@ -1565,7 +1565,6 @@ $$ A^4 = 15A - 14I $$
                         $$ m(\lambda) = \lambda^3 $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.5 Matrix Diagonalization -->
@@ -1635,7 +1634,6 @@ $$ (P D^5) P^{-1} = \begin{bmatrix} 3125 &amp; 32 \\ 3125 &amp; -64 \end{bmatrix
 $$ = \begin{bmatrix} \frac{6250+32}{3} &amp; \frac{3125-32}{3} \\ \frac{6250-64}{3} &amp; \frac{3125+64}{3} \end{bmatrix} $$
 $$ = \begin{bmatrix} 2094 &amp; 1031 \\ 2062 &amp; 1063 \end{bmatrix} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.5 Matrix Diagonalization (Hinglish व्याख्या)</h2>
@@ -1702,7 +1700,6 @@ $$ = \begin{bmatrix} \frac{6250+32}{3} &amp; \frac{3125-32}{3} \\ \frac{6250-64}
 $$ = \begin{bmatrix} 2094 &amp; 1031 \\ 2062 &amp; 1063 \end{bmatrix} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.6 Quadratic Forms -->
@@ -1772,7 +1769,6 @@ $$ Q(y_1, y_2) = 3y_1^2 + y_2^2 $$
 <p><strong>Definiteness Classification:</strong></p>
 $$ \text{Classification: Positive Definite (since both } \lambda_1 &gt; 0, \lambda_2 &gt; 0) $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.6 Quadratic Forms (Hinglish व्याख्या)</h2>
@@ -1839,7 +1835,6 @@ $$ Q(y_1, y_2) = 3y_1^2 + y_2^2 $$
 $$ \text{Classification: Positive Definite (since both } \lambda_1 &gt; 0, \lambda_2 &gt; 0) $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.7 Solved Advanced Problems -->
@@ -1912,7 +1907,6 @@ $$ \text{Signature} = s - (r - s) = 1 - 2 = -1 $$
 <p><strong>Definiteness Classification:</strong></p>
 $$ \text{Classification: Indefinite (contains both positive and negative eigenvalues)} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>2.7 Solved Numerical Problems (Hinglish व्याख्या)</h2>
@@ -1982,7 +1976,6 @@ $$ \text{Signature} = s - (r - s) = 1 - 2 = -1 $$
 $$ \text{Classification: Indefinite (contains both positive and negative eigenvalues)} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.8 EXERCISE BANK -->
@@ -2312,7 +2305,6 @@ $$ \text{Classification: Indefinite (contains both positive and negative eigenva
 </table>
 <button class="toggle-btn" onclick="toggleAnswer('match201_ans')">Show Answer ▼</button>
 <div class="answer" id="match201_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(C), 3-(A), 4-(D).</div>
-
 </div>
 <div class="question">
 <strong>Matching Set 2: Multiplicities &amp; Diagonalization</strong>
@@ -2426,7 +2418,6 @@ $$ \text{Classification: Indefinite (contains both positive and negative eigenva
 <div class="question"><strong>Q10.</strong> Prove that eigenvalues of an Orthogonal matrix have unit modulus ($|\lambda| = 1$).</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub210_ans')">Show Answer ▼</button>
 <div class="answer" id="sub210_ans"><strong>Answer Outline:</strong> Let $Q x = \lambda x$. Take norm squared $\|Q x\|^2 = (Q x)^H (Q x) = x^H Q^T Q x = x^H I x = x^H x = \|x\|^2$. Also $\|Q x\|^2 = \|\lambda x\|^2 = |\lambda|^2 \|x\|^2$. Equating gives $|\lambda|^2 = 1 \implies |\lambda| = 1$.</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 2.9 Summary -->
@@ -2440,7 +2431,6 @@ $$ \text{Classification: Indefinite (contains both positive and negative eigenva
 <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
 <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">

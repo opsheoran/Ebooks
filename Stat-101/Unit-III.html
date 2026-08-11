@@ -1076,13 +1076,15 @@ svg.book-fig, .figure-box svg, canvas {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1116,10 +1118,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1457,7 +1463,6 @@ svg.book-fig, .figure-box svg, canvas {
 \[\text{Coefficient of Range} = \frac{L - S}{L + S}\]
 
 </div>
-
 </div>
 <div class="example">
 <h4>Example</h4>
@@ -1541,7 +1546,6 @@ svg.book-fig, .figure-box svg, canvas {
 \[\text{Q.D.} = \frac{Q_3 - Q_1}{2}\]
 
 </div>
-
 </div>
 <p class="english-content">
         The difference \((Q_3 - Q_1)\) is called the <strong>interquartile range</strong>. When we take half of it, we get the semi-interquartile range.
@@ -1720,7 +1724,6 @@ svg.book-fig, .figure-box svg, canvas {
 \[\text{Coefficient of Mean Deviation} = \frac{\text{Mean Deviation (M.D.)}}{\text{Mean or Median or Mode}}\]
 
 </div>
-
 </div>
 <h3 class="english-content">Computation of Mean Deviation - Individual Series</h3>
 <h3 class="hinglish-content" style="display: none;">Computation of Mean Deviation - Individual Series</h3>
@@ -2496,7 +2499,6 @@ svg.book-fig, .figure-box svg, canvas {
 \[\sigma = \sqrt{\frac{\sum (X - \bar{X})^2}{N}}\]
 
 </div>
-
 </div>
 <div class="example">
 <h4>Example</h4>
@@ -3063,7 +3065,6 @@ svg.book-fig, .figure-box svg, canvas {
           = \sigma^2 + (\bar{x} - A)^2 = \sigma^2 + d^2 \quad \text{where } d = \bar{x} - A \quad
           \]
           </div>
-
 </div>
 <p><strong>Key Implications:</strong></p>
 <ul>
@@ -3227,7 +3228,6 @@ svg.book-fig, .figure-box svg, canvas {
 
 
           </div>
-
 </div>
 </section>
 <section class="subsection" id="standardized-moments">
@@ -3749,7 +3749,6 @@ svg.book-fig, .figure-box svg, canvas {
 
 
   </div>
-
 </div>
 </div>
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></section>
@@ -3851,8 +3850,8 @@ svg.book-fig, .figure-box svg, canvas {
 <p class="hinglish-content" style="display: none;">
 <strong>Contextual Relevance:</strong> मान लीजिए Haryana में \(2n+1\) plots पर एक नए fodder crop की yield लगातार बढ़ती है extra input (जैसे fertilizer dose) से। यहाँ \(a\) base yield है और \(d\) हर बार की बढ़ोतरी है। ऐसा data scientists को variability और central tendency समझने में मदद करता है।
   </p>
-<p class="english-content"><strong>Solution:</strong><br>The given series is an A.P. with \( (2n+1) \) terms. The terms are \(a, a+d, a+2d, \ldots, a+2nd\). Each term has a frequency of 1. The mean of an A.P. series is the mean of its first and last term:</br></p>
-<p class="hinglish-content" style="display: none;"><strong>Solution:</strong><br>दी गई series एक A.P. है जिसमें \( (2n+1) \) terms हैं। Terms हैं \(a, a+d, a+2d, \ldots, a+2nd\)। हर term की frequency 1 है। A.P. का mean first और last term का average होता है:</br></p>
+<p class="english-content"><strong>Solution:</strong><br/>The given series is an A.P. with \( (2n+1) \) terms. The terms are \(a, a+d, a+2d, \ldots, a+2nd\). Each term has a frequency of 1. The mean of an A.P. series is the mean of its first and last term:</p>
+<p class="hinglish-content" style="display: none;"><strong>Solution:</strong><br/>दी गई series एक A.P. है जिसमें \( (2n+1) \) terms हैं। Terms हैं \(a, a+d, a+2d, \ldots, a+2nd\)। हर term की frequency 1 है। A.P. का mean first और last term का average होता है:</p>
 <div>
   
 
@@ -3957,12 +3956,12 @@ svg.book-fig, .figure-box svg, canvas {
 </div>
 <h3 class="english-content">Theorem: Variance of the Combined Series</h3>
 <h3 class="hinglish-content" style="display: none;">Theorem: Combined Series का Variance</h3>
-<p class="english-content"><strong>Statement of the Theorem:</strong><br>
+<p class="english-content"><strong>Statement of the Theorem:</strong><br/>
   If there are two series or groups of data, with sizes \(n_1\) and \(n_2\), means \(\bar{x}_1\) and \(\bar{x}_2\), and standard deviations \(\sigma_1\) and \(\sigma_2\) respectively, then the variance (\(\sigma^2\)) of the combined series of total size \(N = n_1 + n_2\) is given by:
-</br></p>
-<p class="hinglish-content" style="display: none;"><strong>Theorem का Statement:</strong><br>
+</p>
+<p class="hinglish-content" style="display: none;"><strong>Theorem का Statement:</strong><br/>
   अगर दो series या data groups हों जिनके sizes \(n_1\) और \(n_2\), means \(\bar{x}_1\) और \(\bar{x}_2\), और standard deviations \(\sigma_1\) और \(\sigma_2\) हों, तो combined series का variance (\(\sigma^2\)) total size \(N = n_1 + n_2\) के लिए इस प्रकार होगा:
-</br></p>
+</p>
 <div>
 
 
@@ -3982,18 +3981,18 @@ svg.book-fig, .figure-box svg, canvas {
 <li class="english-content">\(\bar{X} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}\) (the mean of the combined series)</li>
 <li class="hinglish-content" style="display: none;">\(\bar{X} = \frac{n_1 \bar{x}_1 + n_2 \bar{x}_2}{n_1 + n_2}\) (combined series का mean)</li>
 </ul>
-<p class="english-content"><strong>Proof Overview:</strong><br>
+<p class="english-content"><strong>Proof Overview:</strong><br/>
   The proof begins by defining the individual means and variances for each series. The mean of the combined series (\(\bar{X}\)) is then established as the weighted average of the individual means. The total variance of the combined series (\(\sigma^2\)) is derived from the sum of squared deviations of all observations from the combined mean. By expanding \( (x_i - \bar{X})^2 \) for each group using \( (x_i - \bar{x}_j + \bar{x}_j - \bar{X})^2 \), and knowing that the sum of deviations from a group's own mean is zero (\(\sum f_i (x_i - \bar{x}_j) = 0\)), the expression for \(\sigma^2\) can be simplified to the stated formula.
-</br></p>
-<p class="hinglish-content" style="display: none;"><strong>Proof Overview:</strong><br>
+</p>
+<p class="hinglish-content" style="display: none;"><strong>Proof Overview:</strong><br/>
   Proof में पहले हर series के individual means और variances define किए जाते हैं। Combined series का mean (\(\bar{X}\)) individual means का weighted average होता है। Combined series का total variance (\(\sigma^2\)) सभी observations के squared deviations का sum होता है। \( (x_i - \bar{X})^2 \) को expand करके और यह जानते हुए कि किसी group के mean से deviations का sum zero होता है (\(\sum f_i (x_i - \bar{x}_j) = 0\)), formula को simplify करके stated result मिलता है।
-</br></p>
-<p class="english-content"><strong>Simplified Formula and Generalization:</strong><br>
+</p>
+<p class="english-content"><strong>Simplified Formula and Generalization:</strong><br/>
   The formula can be further simplified to:
-</br></p>
-<p class="hinglish-content" style="display: none;"><strong>Simplified Formula और Generalization:</strong><br>
+</p>
+<p class="hinglish-content" style="display: none;"><strong>Simplified Formula और Generalization:</strong><br/>
   Formula को और simplify करके इस प्रकार लिखा जा सकता है:
-</br></p>
+</p>
 <div>
 
 
@@ -4025,8 +4024,8 @@ svg.book-fig, .figure-box svg, canvas {
 <h4 class="hinglish-content" style="display: none;">Example: दो Agricultural Regions का Data Combine करना</h4>
 <p class="english-content"><strong>Problem:</strong> The first sample of 100 farms in a specific region of Haryana shows an average wheat yield of 15 quintals/acre with a standard deviation of 3 quintals/acre. If a whole group of 250 farms, including these 100, has a combined average yield of 15.6 quintals/acre and a combined standard deviation of \( \sqrt{13.44} \) quintals/acre, find the standard deviation of the second group of farms (the remaining 150 farms).</p>
 <p class="hinglish-content" style="display: none;"><strong>Problem:</strong> Haryana के एक region में 100 farms का sample लिया गया है, जहाँ average wheat yield 15 quintals/acre और standard deviation 3 quintals/acre है। अगर पूरे 250 farms (इन 100 सहित) का combined average yield 15.6 quintals/acre और combined standard deviation \( \sqrt{13.44} \) quintals/acre है, तो दूसरे group (बाकी 150 farms) का standard deviation निकालें।</p>
-<p class="english-content"><strong>Solution:</strong><br>Let's denote the first group (100 farms) as Group 1 and the second group (the remaining 150 farms) as Group 2. The combined group is the total of 250 farms.</br></p>
-<p class="hinglish-content" style="display: none;"><strong>Solution:</strong><br>पहले group (100 farms) को Group 1 और दूसरे group (150 farms) को Group 2 मानते हैं। Combined group कुल 250 farms का है।</br></p>
+<p class="english-content"><strong>Solution:</strong><br/>Let's denote the first group (100 farms) as Group 1 and the second group (the remaining 150 farms) as Group 2. The combined group is the total of 250 farms.</p>
+<p class="hinglish-content" style="display: none;"><strong>Solution:</strong><br/>पहले group (100 farms) को Group 1 और दूसरे group (150 farms) को Group 2 मानते हैं। Combined group कुल 250 farms का है।</p>
 <p class="english-content">Given for Group 1:</p>
 <p class="hinglish-content" style="display: none;">Group 1 के लिए:</p>
 <ul>
@@ -4107,7 +4106,6 @@ svg.book-fig, .figure-box svg, canvas {
 
 
   </div>
-
 </div>
 <p class="english-content">Now, use the formula for the combined variance :</p>
 <p class="hinglish-content" style="display: none;">अब combined variance का formula use करें:</p>
@@ -4544,7 +4542,6 @@ C.V. = 100 \times \frac{\sigma}{\bar{x}} \quad
       </p>
 <div class="question"><strong>Q1.</strong> Which of the following is an absolute measure of dispersion?
         <div class="mcq-options"><p>(a) Coefficient of Variation    (b) Coefficient of Range    (c) Standard Deviation    (d) Coefficient of Q.D.</p>
-
 </div>
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq-eng-1')">Show Answer ▼</button>
@@ -4947,7 +4944,6 @@ C.V. = 100 \times \frac{\sigma}{\bar{x}} \quad
 <div class="question"><strong>Q30.</strong> If all observations are identical (e.g., 8, 8, 8, 8), the variance is _________.</div>
 <button class="toggle-btn" onclick="toggleAnswer('fib-eng-30')">Show Answer ▼</button>
 <div class="answer" id="fib-eng-30"><strong>Answer:</strong> zero</div>
-
 </div>
 <div class="hinglish-content" style="display: none;">
 <h2><span class="section-num">✏️</span> Fill in the Blanks (रिक्त स्थान भरें)</h2>
@@ -5138,7 +5134,6 @@ C.V. = 100 \times \frac{\sigma}{\bar{x}} \quad
 <div class="question"><strong>Q30.</strong> Standard deviation is based on all observations in the dataset.</div>
 <button class="toggle-btn" onclick="toggleAnswer('tf-eng-30')">Show Answer ▼</button>
 <div class="answer" id="tf-eng-30"><strong>Answer:</strong> True</div>
-
 </div>
 <div class="hinglish-content" style="display: none;">
 <h2><span class="section-num">✅</span> True / False (सही / गलत)</h2>
@@ -5492,7 +5487,6 @@ C.V. = 100 \times \frac{\sigma}{\bar{x}} \quad
 <p><strong>Solution:</strong> The coding method transforms original data \(x_i\) into smaller, manageable numbers \(u_i = \frac{x_i - A}{h}\), where \(A\) is the assumed mean and \(h\) is the class width. We calculate the variance of \(u_i\) as \(\sigma_u^2 = \frac{\sum f_i u_i^2}{N} - \left(\frac{\sum f_i u_i}{N}\right)^2\).
         <br/>The properties state that standard deviation is independent of change of origin (\(-A\)) but is directly affected by the scale factor (\(1/h\)). Thus, the variance of \(x\) is \(\sigma_x^2 = h^2 \sigma_u^2\). This mathematical property justifies scaling the final result back by \(h\) to obtain the true standard deviation \(\sigma_x = h \cdot \sigma_u\).</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display: none;">
 <h2><span class="section-num">📝</span> Subjective Questions (Detailed Solutions)</h2>

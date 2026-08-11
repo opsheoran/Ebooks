@@ -1066,13 +1066,15 @@ svg.book-fig, .figure-box svg, canvas {
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
 <link href="../calculator/calculator.css" rel="stylesheet"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -1106,10 +1108,14 @@ svg.book-fig, .figure-box svg, canvas {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -1267,10 +1273,8 @@ svg.book-fig, .figure-box svg, canvas {
 <li>Partition of sample space and the Total Probability Theorem</li>
 <li>Bayes' Theorem — statement, proof, and applications</li>
 </ul>
-
 </div>
 <div class="key-point"><strong>Key Insight:</strong> Bayes' Theorem and the Total Probability Theorem are not separate results — Bayes' Theorem uses the Total Probability Theorem in its denominator. Understanding their relationship is essential.</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <!-- CONDITIONAL PROBABILITY -->
 <div class="topic-section" id="conditional">
@@ -1313,7 +1317,6 @@ svg.book-fig, .figure-box svg, canvas {
 <li>\(P(A^c \mid B) = 1 - P(A \mid B)\)</li>
 <li>\(P(A_1 \cup A_2 \mid B) = P(A_1 \mid B) + P(A_2 \mid B) - P(A_1 \cap A_2 \mid B)\)</li>
 </ul></div>
-
 </div>
 <h3>2.2.4 Worked Examples</h3>
 <div class="example">
@@ -1378,7 +1381,6 @@ svg.book-fig, .figure-box svg, canvas {
 <p>Similarly, if \(P(A) &gt; 0\): \(\quad P(A \cap B) = P(A) \cdot P(B \mid A)\)</p>
 <div class="proof-box" style="margin-top:12px;"><h4>Proof</h4>
 <div class="derivation">\[P(A \mid B) = \frac{P(A \cap B)}{P(B)} \implies P(A \cap B) = P(B) \cdot P(A \mid B) \quad \square\]</div>
-
 </div></div>
 <div class="example">
 <h4>Example 2.3.1 — Drawing red balls without replacement</h4>
@@ -1436,7 +1438,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="formula-box">\[P(A \cup B) = P(A) + P(B) - P(A \cap B)\]
                 
 </div>
-
 </div>
 <div class="theorem"><h4>Theorem 2.4.2 — Addition Rule (Three Events)</h4>
 <div class="formula-box">\[P(A \cup B \cup C) = P(A)+P(B)+P(C) - P(A \cap B) - P(B \cap C) - P(A \cap C) + P(A \cap B \cap C)\]</div></div>
@@ -1472,7 +1473,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="derivation">\[P\!\left(\bigcup_{i=1}^{n} A_i\right) \leq P\!\left(\bigcup_{i=1}^{n-1} A_i\right) + P(A_n) \leq \sum_{i=1}^{n-1} P(A_i) + P(A_n) = \sum_{i=1}^{n} P(A_i) \quad \square\]</div>
 <p>For a countably infinite sequence: \(\displaystyle P\!\left(\bigcup_{i=1}^{\infty} A_i\right) \leq \sum_{i=1}^{\infty} P(A_i)\) — known as <strong>sub-additivity</strong>.</p>
 </div>
-
 </div>
 <h3>2.5.1 Bonferroni's Inequality (Lower Bound)</h3>
 <div class="theorem">
@@ -1520,7 +1520,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="derivation">\[P(A \cap B^c) = P(A) - P(A \cap B) = P(A) - P(A)P(B) = P(A)(1-P(B)) = P(A) \cdot P(B^c)\]</div>
 <p>So \(A\) and \(B^c\) are independent. Parts (b) and (c) follow similarly. \(\square\)</p>
 </div>
-
 </div>
 <h3>2.6.3 Independence vs. Mutual Exclusivity</h3>
 <div class="warning"><strong>⚠ Warning:</strong> These two concepts are frequently confused by students. They are almost <em>opposites</em> for events with positive probability.</div>
@@ -1595,7 +1594,6 @@ svg.book-fig, .figure-box svg, canvas {
 <li>\(B_1 \cup B_2 \cup \cdots \cup B_k = S\) — exhaustive.</li>
 <li>\(P(B_i) &gt; 0\) for all \(i\) — each element is possible.</li>
 </ul>
-
 </div>
 <p>For any event \(A\), the events \(A \cap B_1, A \cap B_2, \ldots, A \cap B_k\) are pairwise mutually exclusive with union \(A\). Therefore:</p>
 <div class="formula-box">\[P(A) = \sum_{i=1}^{k} P(A \cap B_i)\]</div>
@@ -1609,7 +1607,6 @@ svg.book-fig, .figure-box svg, canvas {
 <li>Disease status: \(\{D, D^c\}\)</li>
 </ul>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <!-- TOTAL PROBABILITY -->
 <div class="topic-section" id="total-prob">
@@ -1626,7 +1623,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="derivation">\[P(A) = \sum_{i=1}^{k} P(A \cap B_i)\]</div>
 <p>By the multiplication rule: \(P(A \cap B_i) = P(B_i) \cdot P(A \mid B_i)\). Substituting:</p>
 <div class="derivation">\[P(A) = \sum_{i=1}^{k} P(B_i) \cdot P(A \mid B_i) \quad \square\]</div>
-
 </div>
 <div class="key-point" style="margin-top:12px;"><strong>Interpretation:</strong> \(P(A)\) is the weighted average of \(P(A \mid B_i)\), weighted by the prior probabilities \(P(B_i)\). Think of the \(B_i\) as mutually exclusive "causes" or "scenarios".</div>
 </div>
@@ -1671,7 +1667,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="derivation">\[P(B_j \mid A) = \frac{P(B_j \cap A)}{P(A)} = \frac{P(B_j) \cdot P(A \mid B_j)}{\displaystyle\sum_{i=1}^{k} P(B_i) \cdot P(A \mid B_i)} \quad \square\]</div>
 <p>where the numerator uses the multiplication rule and the denominator uses the Total Probability Theorem.</p>
 </div>
-
 </div>
 <h3>2.9.3 Terminology</h3>
 <table>
@@ -1748,7 +1743,6 @@ svg.book-fig, .figure-box svg, canvas {
                 
 </div>
 <div class="derivation">\[P(A \mid B) = \frac{P(A) \cdot P(B \mid A)}{P(B)} = \frac{0.24}{0.42} = \frac{4}{7} \approx 0.571\]</div>
-
 </div>
 <div class="example">
 <h4>Example 2.10.2 — Conditional probability chain</h4>
@@ -1789,9 +1783,7 @@ svg.book-fig, .figure-box svg, canvas {
 <tr><td>Parallel system (\(n\) components): \(1-(1-r)^n\)</td><td>Parallel Reliability</td></tr>
 </tbody>
 </table>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
-
 </div>
 <!-- EXERCISES -->
 <div class="topic-section" id="exercises">
@@ -1827,7 +1819,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="question"><strong>Q9.</strong> Prove that if \(A\) and \(B\) are independent, then \(A^c\) and \(B^c\) are independent.</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub9')">Show Answer ▼</button>
 <div class="answer" id="sub9"><div class="derivation">\(P(A^c\cap B^c) = P((A\cup B)^c) = 1-P(A\cup B) = 1-P(A)-P(B)+P(A)P(B) = (1-P(A))(1-P(B)) = P(A^c)P(B^c)\). \(\square\)</div>
-
 </div>
 <div class="question"><strong>Q10.</strong> Explain pairwise independence and mutual independence. Construct Bernstein's example showing pairwise does not imply mutual independence.</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub10')">Show Answer ▼</button>
@@ -1899,9 +1890,7 @@ svg.book-fig, .figure-box svg, canvas {
 <h2><span class="section-num">❓</span> Multiple Choice Questions — 30 Questions</h2>
 <p style="color:var(--text-soft);font-family:'DM Sans',sans-serif;font-size:.9rem;margin-bottom:20px;">Click <em>Show Answer</em> to reveal the correct option and explanation.</p>
 <div class="question"><strong>Q1.</strong> \(P(A\mid B) = P(A)\) implies that \(A\) and \(B\) are:<div class="mcq-options"><p>(a) Mutually exclusive   (b) Exhaustive   (c) Independent   (d) Complementary</p>
-
 </div>
-
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('mcq1')">Show Answer ▼</button>
 <div class="answer" id="mcq1"><strong>Answer:</strong> (c) Independent — because \(P(A\mid B)=P(A)\) is the equivalent definition of independence.</div>
@@ -2089,14 +2078,12 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="question"><strong>Q30.</strong> A system of \(n\) independent components each with reliability \(r\) in parallel has reliability __________.</div>
 <button class="toggle-btn" onclick="toggleAnswer('fib30')">Show Answer ▼</button>
 <div class="answer" id="fib30"><strong>Answer:</strong> \(1-(1-r)^n\)</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <!-- TRUE/FALSE -->
 <div class="topic-section" id="tf">
 <div class="section-card">
 <h2><span class="section-num">✅</span> True / False — 30 Questions</h2>
 <div class="question"><strong>Q1.</strong> \(P(A\mid B)=P(B\mid A)\) for all events \(A, B\).  <em>[True / False]</em>
-
 </div>
 <button class="toggle-btn" onclick="toggleAnswer('tf1')">Show Answer ▼</button>
 <div class="answer" id="tf1"><strong style="color:var(--crimson);font-size:1.05rem;">False</strong> — They are equal only when \(P(A)=P(B)\).</div>
@@ -2187,7 +2174,6 @@ svg.book-fig, .figure-box svg, canvas {
 <div class="question"><strong>Q30.</strong> The 'prior' probability in Bayesian inference is updated to form the 'posterior' after observing new evidence.  <em>[True / False]</em></div>
 <button class="toggle-btn" onclick="toggleAnswer('tf30')">Show Answer ▼</button>
 <div class="answer" id="tf30"><strong style="color:var(--sage);font-size:1.05rem;">True</strong> — This is the fundamental purpose of Bayes' Theorem: prior + likelihood → posterior.</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div></div>
 <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>
 </main>

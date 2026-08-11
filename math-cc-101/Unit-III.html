@@ -367,13 +367,15 @@ window.MathJax = {
 <link href="favicon.ico" rel="icon" type="image/x-icon"/>
 <link href="favicon.ico" rel="shortcut icon" type="image/x-icon"/>
 <link href="favicon.png" rel="apple-touch-icon"/>
+
 <!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
     window.currentLang = window.currentLang || 'en';
 
     function showSection(id) {
         if (!id) return;
-        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+        const allSections = document.querySelectorAll('.page-section, .topic-section');
+        allSections.forEach(s => {
             if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
@@ -407,10 +409,14 @@ window.MathJax = {
     window.showTopic = showSection;
 
     function navigateSection(direction) {
-        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        const sections = Array.from(document.querySelectorAll('.topic-section, .page-section')).filter(s => s.id && s.id !== 'home');
         if (!sections.length) return;
 
-        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        let currentIndex = sections.findIndex(sec => {
+            const style = window.getComputedStyle(sec);
+            return sec.classList.contains('active') || (style.display !== 'none' && style.visibility !== 'hidden');
+        });
+
         if (currentIndex === -1) currentIndex = 0;
 
         let targetIndex = currentIndex + direction;
@@ -732,7 +738,6 @@ window.MathJax = {
                         <p><strong>Conclusion:</strong></p>
 <p>$W_1 \cap W_2$ is a subspace of $V(F)$.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.1 Vector Spaces and Subspaces (Hinglish व्याख्या)</h2>
@@ -1062,7 +1067,6 @@ window.MathJax = {
                         <p><strong>Conclusion:</strong></p>
                         $$ A = 3 E_{11} + 1 E_{12} + 4 E_{21} + 2 E_{22} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.2 Linear Combinations and Linear Span (Hinglish व्याख्या)</h2>
@@ -1211,7 +1215,6 @@ window.MathJax = {
                         $$ A = 3 E_{11} + 1 E_{12} + 4 E_{21} + 2 E_{22} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.3 Linear Independence and Dependence -->
@@ -1288,7 +1291,6 @@ window.MathJax = {
 <p><strong>Conclusion:</strong></p>
 <p>Vectors are <strong>linearly independent</strong>.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.3 Linear Independence and Dependence (Hinglish व्याख्या)</h2>
@@ -1362,7 +1364,6 @@ window.MathJax = {
 <p>Vectors are <strong>linearly independent</strong>.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.4 Basis and Dimension -->
@@ -1433,7 +1434,6 @@ angle$</h3>
 <p><strong>Solution:</strong></p>
 <p>General matrix $\begin{bmatrix} a &amp; b \\ b &amp; c \end{bmatrix} = a \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix} + b \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix} + c \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}$. Basis has 3 elements $\implies \dim(W) = 3$.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.4 Basis and Dimension (Hinglish व्याख्या)</h2>
@@ -1501,7 +1501,6 @@ angle$</h3>
 <p>General matrix $\begin{bmatrix} a &amp; b \\ b &amp; c \end{bmatrix} = a \begin{bmatrix} 1 &amp; 0 \\ 0 &amp; 0 \end{bmatrix} + b \begin{bmatrix} 0 &amp; 1 \\ 1 &amp; 0 \end{bmatrix} + c \begin{bmatrix} 0 &amp; 0 \\ 0 &amp; 1 \end{bmatrix}$. Basis has 3 elements $\implies \dim(W) = 3$.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.5 Sum and Direct Sum -->
@@ -1553,7 +1552,6 @@ angle$</h3>
 <p><strong>Solution:</strong></p>
 <p>$\dim(W_1 + W_2) \leq 4 \implies 3 + 2 - \dim(W_1 \cap W_2) \leq 4 \implies \dim(W_1 \cap W_2) \geq 1$. Also $\dim(W_1 \cap W_2) \leq \min(3, 2) = 2$. Possible values are 1 or 2.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.5 Sum and Direct Sum of Subspaces (Hinglish व्याख्या)</h2>
@@ -1602,7 +1600,6 @@ angle$</h3>
 <p>$\dim(W_1 + W_2) \leq 4 \implies 3 + 2 - \dim(W_1 \cap W_2) \leq 4 \implies \dim(W_1 \cap W_2) \geq 1$. Also $\dim(W_1 \cap W_2) \leq \min(3, 2) = 2$. Possible values are 1 or 2.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.6 Inner Product Spaces & Gram-Schmidt -->
@@ -1672,7 +1669,6 @@ angle$</h3>
                         $$ \langle u, v \rangle = 1(2) + (-2)(1) + 1(0) = 2 - 2 + 0 = 0 $$
                         <p>Since $\langle u, v \rangle = 0$, vectors are orthogonal.</p>
 </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.6 Inner Product Spaces &amp; Gram-Schmidt Process (Hinglish व्याख्या)</h2>
@@ -1739,7 +1735,6 @@ angle$</h3>
                         <p>चूँकि $\langle u, v \rangle = 0$, vectors are orthogonal.</p>
 </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.7 Solved Advanced Problems -->
@@ -1784,7 +1779,6 @@ angle$</h3>
 <p><strong>Solution:</strong></p>
                         $$ \|x\|^2 = \int_0^1 x^2 dx = \frac{1}{3} \implies \|x\| = \frac{1}{\sqrt{3}} $$
                     </div>
-
 </div>
 <div class="hinglish-content" style="display:none;">
 <h2>3.7 Solved Numerical Problems (Hinglish व्याख्या)</h2>
@@ -1826,7 +1820,6 @@ angle$</h3>
                         $$ \|x\|^2 = \int_0^1 x^2 dx = \frac{1}{3} \implies \|x\| = \frac{1}{\sqrt{3}} $$
                     </div>
 </div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.8 EXERCISE BANK -->
@@ -2156,7 +2149,6 @@ angle$</h3>
 </table>
 <button class="toggle-btn" onclick="toggleAnswer('match301_ans')">Show Answer ▼</button>
 <div class="answer" id="match301_ans"><strong>Answer Mapping:</strong> 1-(B), 2-(C), 3-(D), 4-(A).</div>
-
 </div>
 <div class="question">
 <strong>Matching Set 2: Vector Space Dimensions</strong>
@@ -2270,7 +2262,6 @@ angle$</h3>
 <div class="question"><strong>Q10.</strong> Prove that the set of all polynomials of degree at most $n$ forms a vector space of dimension $n+1$.</div>
 <button class="toggle-btn" onclick="toggleAnswer('sub310_ans')">Show Answer ▼</button>
 <div class="answer" id="sub310_ans"><strong>Answer Outline:</strong> Check 10 vector space axioms for addition and scalar multiplication of polynomials. Show $\{1, x, x^2, \dots, x^n\}$ is a basis (linearly independent and spans all $p(x) = \sum a_i x^i$). Count basis elements: $n+1$.</div>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <!-- 3.9 Summary -->
@@ -2284,7 +2275,6 @@ angle$</h3>
 <li>Axler, Sheldon. <em>Linear Algebra Done Right</em>. Springer.</li>
 <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
 </ul>
-
 <div class="section-card-nav"><button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button> <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button></div></div>
 </section>
 <footer class="book-footer">
