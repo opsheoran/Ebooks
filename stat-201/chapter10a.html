@@ -995,7 +995,29 @@ svg.book-fig, .figure-box svg, canvas {
         }
 
     </style>
-<script>window.currentLang = window.currentLang || 'en';</script>
+<script>window.currentLang = window.currentLang || 'en';/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
+        function navigateSection(direction) {
+            const sections = Array.from(document.querySelectorAll('section.page-section'));
+            if (!sections.length) return;
+
+            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
+            if (currentIndex === -1) currentIndex = 0;
+
+            let targetIndex = currentIndex + direction;
+
+            if (targetIndex >= 0 && targetIndex < sections.length) {
+                const targetSecId = sections[targetIndex].id;
+                if (typeof showSection === 'function') {
+                    showSection(targetSecId);
+                } else {
+                    sections.forEach(s => s.classList.remove('active'));
+                    sections[targetIndex].classList.add('active');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+    </script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">

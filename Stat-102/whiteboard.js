@@ -565,20 +565,17 @@
     });
 
 
-    // Docking Control Logic
+    // Docking Control Logic with Auto-Collapsing Sidebar
     function setDockMode(mode) {
-        const mainContent = document.querySelector('.main-content');
-        const isMobile = window.innerWidth <= 768;
-        
+        document.body.classList.remove('classroom-docked-left', 'classroom-docked-right');
         popup.classList.remove('docked-left', 'docked-right');
-        if (mainContent) mainContent.classList.remove('wb-docked-left', 'wb-docked-right');
 
-        if (mode === 'left' && !isMobile) {
+        if (mode === 'left') {
+            document.body.classList.add('classroom-docked-left');
             popup.classList.add('docked-left');
-            if (mainContent) mainContent.classList.add('wb-docked-left');
-        } else if (mode === 'right' && !isMobile) {
+        } else if (mode === 'right') {
+            document.body.classList.add('classroom-docked-right');
             popup.classList.add('docked-right');
-            if (mainContent) mainContent.classList.add('wb-docked-right');
         } else {
             popup.style.transform = 'none';
         }
@@ -594,9 +591,8 @@
     const origCloseHandler = document.getElementById('popup-close-btn');
     if (origCloseHandler) {
         origCloseHandler.addEventListener('click', () => {
-            const mainContent = document.querySelector('.main-content');
+            document.body.classList.remove('classroom-docked-left', 'classroom-docked-right');
             popup.classList.remove('docked-left', 'docked-right');
-            if (mainContent) mainContent.classList.remove('wb-docked-left', 'wb-docked-right');
         });
     }
 

@@ -492,7 +492,13 @@
                     </ul>
                     <div class="unit-card-footer"><span class="unit-btn">Open Unit IV <i class="fas fa-arrow-right"></i></span></div>
                 </a>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- ══════════════════════════════ PREFACE SECTION ══════════════════════════════ -->
@@ -513,7 +519,13 @@
                     <li><strong>Comprehensive Exercise Bank:</strong> Over 224 self-assessment questions divided into 20 MCQs, 20 Fill in the Blanks, 20 True/False, 6 Matching Sets, and 10 Subjective Questions per unit.</li>
                     <li><strong>Hinglish Toggle Support:</strong> Integrated language toggle for English and Hinglish explanations to support diverse learning needs.</li>
                 </ul>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- ══════════════════════════════ SYLLABUS SECTION ══════════════════════════════ -->
@@ -541,7 +553,13 @@
                     <li>Friedberg, S.H., Insel, A.J., and Spence, L.E. <em>Linear Algebra</em>. Pearson.</li>
                     <li>Hoffman, K., and Kunze, R. <em>Linear Algebra</em>. Prentice-Hall.</li>
                 </ul>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- ══════════════════════════════ FROM THE AUTHOR SECTION ══════════════════════════════ -->
@@ -562,7 +580,13 @@
                 <p><strong>Dr. Manju Singh Tonk</strong> is Professor of Mathematics in the Department of Mathematics and Statistics at CCS Haryana Agricultural University, Hisar. With extensive academic experience in university teaching and mathematical research, Dr. Tonk specializes in Linear Algebra, Applied Mathematics, and Matrix Theory.</p>
 
                 <p>This digital course manual has been designed to provide students with a rigorous, textbook-aligned learning platform featuring complete step-by-step hand calculations, display equations, interactive tools, and comprehensive exercise banks for university examinations.</p>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <footer class="book-footer">
@@ -626,6 +650,28 @@
             });
         });
 
-        </script>
+        /* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
+        function navigateSection(direction) {
+            const sections = Array.from(document.querySelectorAll('section.page-section'));
+            if (!sections.length) return;
+
+            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
+            if (currentIndex === -1) currentIndex = 0;
+
+            let targetIndex = currentIndex + direction;
+
+            if (targetIndex >= 0 && targetIndex < sections.length) {
+                const targetSecId = sections[targetIndex].id;
+                if (typeof showSection === 'function') {
+                    showSection(targetSecId);
+                } else {
+                    sections.forEach(s => s.classList.remove('active'));
+                    sections[targetIndex].classList.add('active');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+    </script>
 </body>
 </html>

@@ -898,7 +898,13 @@
                 <p>
                     Developed for students at CCS Haryana Agricultural University, Hisar, this e-book combines theoretical proofs with step-by-step practical derivations and interactive numerical problems.
                 </p>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- PREFACE SECTION -->
@@ -907,7 +913,13 @@
                 <h2><i class="fas fa-scroll" style="color:var(--gold);"></i> Preface</h2>
                 <p>This web-book "Theory of Sample Surveys" is designed as a comprehensive resource for students and practitioners of statistics. It covers the fundamental principles and advanced techniques of sampling, from simple random designs to complex multi-stage surveys.</p>
                 <p>The goal is to provide a rigorous mathematical treatment of sampling theory while maintaining a clear, intuitive understanding of the underlying concepts.</p>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- SYLLABUS SECTION -->
@@ -930,7 +942,13 @@
                         <tr><td>9</td><td>Multi-Stage</td><td>Hierarchical sampling designs.</td></tr>
                     </tbody>
                 </table>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- AUTHOR SECTION -->
@@ -947,7 +965,13 @@
             <div class="section-card">
                 <h2><i class="fas fa-user-tie" style="color:var(--crimson);"></i> About the Author</h2>
                 <p><strong>Prof. O.P. Sheoran</strong> is a Professor in the Department of Mathematics & Statistics at CCS Haryana Agricultural University, Hisar. He has decades of experience in teaching and research in the field of Statistics.</p>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         
@@ -1004,6 +1028,28 @@
 
         </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
-    <script src="../calculator/calculator.js?v=1.0"></script>
+    <script src="../calculator/calculator.js?v=1.0">/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
+        function navigateSection(direction) {
+            const sections = Array.from(document.querySelectorAll('section.page-section'));
+            if (!sections.length) return;
+
+            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
+            if (currentIndex === -1) currentIndex = 0;
+
+            let targetIndex = currentIndex + direction;
+
+            if (targetIndex >= 0 && targetIndex < sections.length) {
+                const targetSecId = sections[targetIndex].id;
+                if (typeof showSection === 'function') {
+                    showSection(targetSecId);
+                } else {
+                    sections.forEach(s => s.classList.remove('active'));
+                    sections[targetIndex].classList.add('active');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+    </script>
 </body>
 </html>

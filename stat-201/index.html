@@ -1606,7 +1606,13 @@ svg.book-fig, .figure-box svg, canvas {
                 <p>
                     Designed specifically for students at CCS Haryana Agricultural University, Hisar, this e-book combines rigorous theoretical proofs with step-by-step practical calculations, interactive SVG charts, and comprehensive self-assessment modules.
                 </p>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- ═══════════════════════════════ PREFACE ═══════════════════════════════ -->
@@ -1648,7 +1654,13 @@ svg.book-fig, .figure-box svg, canvas {
                     <div class="sig-title">Department of Mathematics &amp; Statistics</div>
                     <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
                 </div>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- ═══════════════════════════════ SYLLABUS ═══════════════════════════════ -->
@@ -1728,7 +1740,13 @@ svg.book-fig, .figure-box svg, canvas {
                         <em>New Age International (2017)</em></div>
                     </li>
                 </ol>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
         <!-- ═══════════════════════════════ AUTHOR ═══════════════════════════════ -->
@@ -1770,7 +1788,13 @@ svg.book-fig, .figure-box svg, canvas {
                     <div class="sig-title">Department of Mathematics &amp; Statistics</div>
                     <div class="sig-title">CCS Haryana Agricultural University, Hisar</div>
                 </div>
-            </div>
+            
+                <div class="section-card-nav">
+                    <button class="sec-nav-btn prev-btn" onclick="navigateSection(-1)"><i class="fas fa-chevron-left"></i> ◄ Previous Section</button>
+                    <button class="sec-nav-btn next-btn" onclick="navigateSection(1)">Next Section ► <i class="fas fa-chevron-right"></i></button>
+                </div>
+
+                </div>
         </section>
 
     <footer class="book-footer"><p>Design and developed by <strong>Prof. O.P. Sheoran</strong>, Department of Mathematics and Statistics, CCS Haryana Agricultural University, Hisar</p></footer>
@@ -1832,6 +1856,28 @@ svg.book-fig, .figure-box svg, canvas {
 
         </script>
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
-    <script src="../calculator/calculator.js?v=1.0"></script>
+    <script src="../calculator/calculator.js?v=1.0">/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
+        function navigateSection(direction) {
+            const sections = Array.from(document.querySelectorAll('section.page-section'));
+            if (!sections.length) return;
+
+            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
+            if (currentIndex === -1) currentIndex = 0;
+
+            let targetIndex = currentIndex + direction;
+
+            if (targetIndex >= 0 && targetIndex < sections.length) {
+                const targetSecId = sections[targetIndex].id;
+                if (typeof showSection === 'function') {
+                    showSection(targetSecId);
+                } else {
+                    sections.forEach(s => s.classList.remove('active'));
+                    sections[targetIndex].classList.add('active');
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+    </script>
 </body>
 </html>
