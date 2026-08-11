@@ -109,7 +109,7 @@
     // 2. Elements & State
     const popup = document.getElementById('whiteboard-popup');
     const canvas = document.getElementById('popup-canvas');
-    const ctx = canvas.getContext('2d', { alpha: true }); // No desynchronized to fix black bg bug
+    const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true }); // No desynchronized to fix black bg bug
     const container = document.getElementById('popup-canvas-wrap');
     const dragHandle = document.getElementById('popup-drag-handle');
     const textOverlay = document.getElementById('text-input-overlay');
@@ -265,33 +265,39 @@
 
     canvas.addEventListener('pointermove', (e) => {
         if (!isDrawing) return;
-        const pos = getPos(e);
 
         if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'highlighter') {
-            points.push({x: pos.x, y: pos.y});
+            // Process all coalesced hardware events for 120Hz/240Hz zero-latency digital pen ink
+            const events = (e.getCoalescedEvents && typeof e.getCoalescedEvents === 'function') 
+                           ? e.getCoalescedEvents() 
+                           : [e];
             
-            if (points.length >= 3) {
-                const lastTwo = points.slice(-2);
-                const controlPoint = lastTwo[0];
-                const endPoint = {
-                    x: (lastTwo[0].x + lastTwo[1].x) / 2,
-                    y: (lastTwo[0].y + lastTwo[1].y) / 2,
-                };
+            for (let i = 0; i < events.length; i++) {
+                const pos = getPos(events[i]);
+                points.push({x: pos.x, y: pos.y});
                 
-                ctx.beginPath();
-                ctx.moveTo(lastX, lastY);
-                ctx.quadraticCurveTo(controlPoint.x, controlPoint.y, endPoint.x, endPoint.y);
-                ctx.stroke();
-                
-                lastX = endPoint.x;
-                lastY = endPoint.y;
-            } else {
-                ctx.beginPath();
-                ctx.moveTo(lastX, lastY);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.stroke();
-                lastX = pos.x;
-                lastY = pos.y;
+                if (points.length >= 3) {
+                    const len = points.length;
+                    const p1 = points[len - 2];
+                    const p2 = points[len - 1];
+                    const midX = (p1.x + p2.x) / 2;
+                    const midY = (p1.y + p2.y) / 2;
+                    
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.quadraticCurveTo(p1.x, p1.y, midX, midY);
+                    ctx.stroke();
+                    
+                    lastX = midX;
+                    lastY = midY;
+                } else {
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
+                    ctx.lineTo(pos.x, pos.y);
+                    ctx.stroke();
+                    lastX = pos.x;
+                    lastY = pos.y;
+                }
             }
         } else {
             ctx.putImageData(savedImageData, 0, 0); 
