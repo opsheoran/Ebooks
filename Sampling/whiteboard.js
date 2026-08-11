@@ -71,7 +71,7 @@
     // 2. Elements & State
     const popup = document.getElementById('whiteboard-popup');
     const canvas = document.getElementById('popup-canvas');
-    const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true }); // No desynchronized to fix black bg bug
+    const ctx = canvas.getContext('2d', { alpha: true }); // No desynchronized to fix black bg bug
     const scrollContainer = document.getElementById('popup-canvas-scroll');
     const wrapContainer = document.getElementById('popup-canvas-wrap');
     const dragHandle = document.getElementById('popup-drag-handle');
