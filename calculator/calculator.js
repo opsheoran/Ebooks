@@ -329,6 +329,12 @@
     window.toggleCalculator = toggleCalculator;
     window.openCalculator = toggleCalculator;
 
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#calc-mode-btn, .calc-mode-toggle')) {
+            toggleCalculator();
+        }
+    });
+
     function makeDraggable() {
         const header = document.getElementById('calc-header');
         if (!header) return;
