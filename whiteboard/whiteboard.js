@@ -15,7 +15,12 @@
     const popupHTML = `
         <div id="whiteboard-popup" class="whiteboard-popup">
             <div class="popup-header" id="popup-drag-handle">
-                <h3><i class="fas fa-file-signature"></i> Teacher's Pro Canvas</h3>
+                <h3><i class="fas fa-file-signature"></i> Teacher's Canvas</h3>
+                <div style="display: flex; gap: 6px; align-items: center; margin-left: auto; margin-right: 12px;">
+                    <button class="dock-btn" id="dock-left-btn" title="Dock Left (Read text on Right)"><i class="fas fa-columns"></i> Dock Left</button>
+                    <button class="dock-btn" id="dock-right-btn" title="Dock Right (Read text on Left)"><i class="fas fa-columns"></i> Dock Right</button>
+                    <button class="dock-btn" id="dock-float-btn" title="Free Float"><i class="fas fa-window-restore"></i> Float</button>
+                </div>
                 <button class="popup-close" id="popup-close-btn"><i class="fas fa-times"></i></button>
             </div>
 
@@ -736,5 +741,41 @@
             resizeCanvas(); 
         }
     });
+
+
+    // Docking Control Logic
+    function setDockMode(mode) {
+        const mainContent = document.querySelector('.main-content');
+        const isMobile = window.innerWidth <= 768;
+        
+        popup.classList.remove('docked-left', 'docked-right');
+        if (mainContent) mainContent.classList.remove('wb-docked-left', 'wb-docked-right');
+
+        if (mode === 'left' && !isMobile) {
+            popup.classList.add('docked-left');
+            if (mainContent) mainContent.classList.add('wb-docked-left');
+        } else if (mode === 'right' && !isMobile) {
+            popup.classList.add('docked-right');
+            if (mainContent) mainContent.classList.add('wb-docked-right');
+        } else {
+            popup.style.transform = 'none';
+        }
+        setTimeout(resizeCanvas, 350);
+    }
+
+    document.addEventListener('click', (e) => {
+        if (e.target.closest('#dock-left-btn')) setDockMode('left');
+        if (e.target.closest('#dock-right-btn')) setDockMode('right');
+        if (e.target.closest('#dock-float-btn')) setDockMode('float');
+    });
+
+    const origCloseHandler = document.getElementById('popup-close-btn');
+    if (origCloseHandler) {
+        origCloseHandler.addEventListener('click', () => {
+            const mainContent = document.querySelector('.main-content');
+            popup.classList.remove('docked-left', 'docked-right');
+            if (mainContent) mainContent.classList.remove('wb-docked-left', 'wb-docked-right');
+        });
+    }
 
 })();
