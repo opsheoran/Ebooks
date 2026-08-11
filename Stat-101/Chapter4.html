@@ -113,44 +113,122 @@ window.toggleLanguage = toggleLanguage;
 }
 
     </style>
-<script>window.currentLang = window.currentLang || 'en';function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
 
+
+<!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
-function navigateSection(direction) {
-    const sections = Array.from(document.querySelectorAll('section.page-section'));
-    if (!sections.length) return;
+    window.currentLang = window.currentLang || 'en';
 
-    let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
-    if (currentIndex === -1) currentIndex = 0;
-
-    let targetIndex = currentIndex + direction;
-
-    if (targetIndex >= 0 && targetIndex < sections.length) {
-        const targetSecId = sections[targetIndex].id;
-        if (typeof showSection === 'function') {
-            showSection(targetSecId);
-        } else if (typeof window.showSection === 'function') {
-            window.showSection(targetSecId);
-        } else {
-            sections.forEach(s => {
+    function showSection(id) {
+        if (!id) return;
+        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+            if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
-            });
-            sections[targetIndex].classList.add('active');
-            sections[targetIndex].style.display = 'block';
+            }
+        });
+
+        const target = document.getElementById(id);
+        if (target) {
+            target.classList.add('active');
+            target.style.display = 'block';
         }
+
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-link[onclick*="${id}"], .nav-link[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (window.innerWidth <= 768) {
+            const sb = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sb) sb.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        if (window.MathJax && MathJax.typesetPromise && target) {
+            MathJax.typesetPromise([target]).catch(function(err){});
+        }
     }
-}
-window.navigateSection = navigateSection;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
+    window.showSection = showSection;
+    window.showTopic = showSection;
+
+    function navigateSection(direction) {
+        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        if (!sections.length) return;
+
+        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        if (currentIndex === -1) currentIndex = 0;
+
+        let targetIndex = currentIndex + direction;
+
+        if (targetIndex >= 0 && targetIndex < sections.length) {
+            const targetSecId = sections[targetIndex].id;
+            showSection(targetSecId);
+        }
+    }
+    window.navigateSection = navigateSection;
+
+    function toggleAnswer(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.classList.contains('show') || el.style.display === 'block') {
+            el.classList.remove('show');
+            el.style.display = 'none';
+        } else {
+            el.classList.add('show');
+            el.style.display = 'block';
+        }
+    }
+    window.toggleAnswer = toggleAnswer;
+    window.toggleAnswers = toggleAnswer;
+    window.toggleSetAnswers = toggleAnswer;
+
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        let overlay = document.getElementById('sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'sidebar-overlay';
+            overlay.className = 'sidebar-overlay';
+            overlay.onclick = toggleSidebar;
+            document.body.appendChild(overlay);
+        }
+        if (sb) {
+            sb.classList.toggle('open');
+            if (sb.classList.contains('open')) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+    }
+    window.toggleSidebar = toggleSidebar;
+
+    function toggleLanguage() {
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+        
+        if (window.currentLang === 'en') {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'hi';
+        } else {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'en';
+        }
+    }
+    window.toggleLanguage = toggleLanguage;
 </script>
 </head>
 <body>
@@ -2969,241 +3047,7 @@ window.toggleLanguage = toggleLanguage;
     </footer>
     </div>
 
-    <script>
-        function toggleAnswers() {
-            var answerContainer = document.getElementById('objective-answers-container');
-            var showBtn = document.getElementById('show-answers-btn');
-            var hideBtn = document.getElementById('hide-answers-btn');
+    
 
-            if (answerContainer.style.display === 'none' || answerContainer.style.display === '') {
-                answerContainer.style.display = 'block';
-                showBtn.style.display = 'none';
-                hideBtn.style.display = 'inline-block';
-            } else {
-                answerContainer.style.display = 'none';
-                showBtn.style.display = 'inline-block';
-                hideBtn.style.display = 'none';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const CHAPTER_CONTEXT = "Chapter 4: Measures of Dispersion. Covers range, quartile deviation, mean deviation, standard deviation, variance, coefficient of variation, properties of standard deviation, and moments.";
-
-            async function solveProblem(button, questionId) {
-                const userQuota = await checkQuota();
-                if (!userQuota.allowed) {
-                    alert(`You have reached your daily limit of ${userQuota.total} solutions.`);
-                    return;
-                }
-
-                const questionElement = button.parentElement;
-                const solutionDiv = document.getElementById(`solution-${questionId}`);
-                let questionText = "";
-                if(questionId === "custom") {
-                    questionText = document.getElementById('custom-question').value.trim();
-                    if(!questionText) return;
-                } else {
-                    questionText = getQuestionText(questionElement);
-                }
-                
-                solutionDiv.style.display = "block";
-                solutionDiv.innerHTML = '<p class="loading">Generating solution, please wait...</p>';
-                button.disabled = true;
-                button.innerText = "Solving...";
-
-                const formData = new URLSearchParams();
-                formData.append('problemText', questionText);
-                formData.append('chapterContext', CHAPTER_CONTEXT);
-
-                try {
-                    const response = await fetch('/web_book/api/solve', {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    const result = await response.json();
-                    if (!response.ok) throw new Error(result.error || 'An unknown server error occurred.');
-                    
-                    displaySolution(solutionDiv, questionId, result.solution);
-                    saveSolutionToCache(questionId, result.solution);
-                    
-                    button.innerText = "Solved";
-                    button.disabled = true;
-
-                } catch (error) {
-                    solutionDiv.innerHTML = `<p class="error">Failed to get solution: ${error.message}</p>`;
-                    button.disabled = false;
-                    button.innerText = "Get Solution";
-                }
-            }
-
-            function getQuestionText(parentElement) {
-                const clone = parentElement.cloneNode(true);
-                clone.querySelector('button')?.remove();
-                clone.querySelector('.solution')?.remove();
-                return clone.innerHTML.trim();
-            }
-
-            function displaySolution(solutionDiv, questionId, solutionText) {
-                solutionDiv.innerHTML = solutionText;
-                const controlsContainer = document.createElement('div');
-                controlsContainer.style.marginTop = '15px';
-                
-                const hideBtn = document.createElement('button');
-                hideBtn.innerText = 'Hide Solution';
-                hideBtn.className = 'hide-btn';
-                hideBtn.onclick = () => { solutionDiv.style.display = 'none'; };
-                
-                const downloadBtn = document.createElement('button');
-                downloadBtn.innerText = 'Download as Word';
-                downloadBtn.className = 'toggle-btn';
-                downloadBtn.style.marginLeft = '10px';
-                downloadBtn.onclick = () => downloadAsWord(solutionText);
-                
-                controlsContainer.append(hideBtn, downloadBtn);
-                solutionDiv.appendChild(controlsContainer);
-                
-                if (window.MathJax) {
-                    MathJax.typesetPromise([solutionDiv]).catch(err => console.error('MathJax error:', err));
-                }
-            }
-
-            async function downloadAsWord(solutionHtml) {
-                const formData = new URLSearchParams();
-                formData.append('solutionHtml', solutionHtml);
-                try {
-                    const response = await fetch('/web_book/api/download', {
-                        method: 'POST',
-                        body: formData
-                    });
-                    if (!response.ok) throw new Error('Failed to create document on server.');
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.style.display = 'none';
-                    a.href = url;
-                    a.download = 'solution.docx';
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    a.remove();
-                } catch (error) {
-                    alert(`Could not download file: ${error.message}`);
-                }
-            }
-
-            function saveSolutionToCache(questionId, solutionHtml) {
-                localStorage.setItem(`solution-cache-${questionId}`, solutionHtml);
-            }
-
-            async function checkQuota() {
-                try {
-                    const response = await fetch('/web_book/api/quota');
-                    const quota = await response.json();
-                    return { allowed: quota.remaining > 0 || String(quota.remaining).toLowerCase() === 'unlimited', ...quota };
-                } catch {
-                    return { allowed: false, remaining: 0, total: 0 };
-                }
-            }
-            
-            function initializePage() {
-                document.querySelectorAll('.get-solution-btn').forEach(button => {
-                    const questionId = button.dataset.questionId;
-                    if (!questionId || questionId === "custom") return;
-
-                    const cachedSolution = localStorage.getItem(`solution-cache-${questionId}`);
-                    const solutionDiv = document.getElementById(`solution-${questionId}`);
-
-                    if (cachedSolution) {
-                        button.innerText = "Show Solution";
-                        button.onclick = (event) => {
-                            event.preventDefault();
-                            solutionDiv.style.display = 'block';
-                            displaySolution(solutionDiv, questionId, cachedSolution);
-                        };
-                    } else {
-                        button.addEventListener('click', (event) => {
-                            event.preventDefault();
-                            solveProblem(event.currentTarget, questionId);
-                        });
-                    }
-                });
-
-                const customSolveBtn = document.getElementById('custom-solve-btn');
-                if (customSolveBtn) {
-                    const questionId = customSolveBtn.dataset.questionId;
-                    customSolveBtn.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        solveProblem(event.currentTarget, questionId);
-                    });
-                }
-            }
-            
-            initializePage();
-        });
-    function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
-<script>
-function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            let overlay = document.getElementById('sidebar-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'sidebar-overlay';
-                overlay.className = 'sidebar-overlay';
-                overlay.onclick = toggleSidebar;
-                document.body.appendChild(overlay);
-            }
-            if (sb) {
-                sb.classList.toggle('open');
-                if (sb.classList.contains('open')) {
-                    overlay.classList.add('active');
-                } else {
-                    overlay.classList.remove('active');
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        const sb = document.getElementById('sidebar');
-                        const overlay = document.getElementById('sidebar-overlay');
-                        if (sb && sb.classList.contains('open')) {
-                            sb.classList.remove('open');
-                            if (overlay) overlay.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
-        function navigateSection(direction) {
-            const sections = Array.from(document.querySelectorAll('section.page-section'));
-            if (!sections.length) return;
-
-            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
-            if (currentIndex === -1) currentIndex = 0;
-
-            let targetIndex = currentIndex + direction;
-
-            if (targetIndex >= 0 && targetIndex < sections.length) {
-                const targetSecId = sections[targetIndex].id;
-                if (typeof showSection === 'function') {
-                    showSection(targetSecId);
-                } else {
-                    sections.forEach(s => s.classList.remove('active'));
-                    sections[targetIndex].classList.add('active');
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-    function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
 </body>
 </html>

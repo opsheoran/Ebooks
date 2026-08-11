@@ -140,52 +140,122 @@ window.toggleLanguage = toggleLanguage;
 }
 
     </style>
-<script>window.currentLang = window.currentLang || 'en';function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
 
+
+<!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
-function navigateSection(direction) {
-    const sections = Array.from(document.querySelectorAll('section.page-section'));
-    if (!sections.length) return;
+    window.currentLang = window.currentLang || 'en';
 
-    let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
-    if (currentIndex === -1) currentIndex = 0;
-
-    let targetIndex = currentIndex + direction;
-
-    if (targetIndex >= 0 && targetIndex < sections.length) {
-        const targetSecId = sections[targetIndex].id;
-        if (typeof showSection === 'function') {
-            showSection(targetSecId);
-        } else if (typeof window.showSection === 'function') {
-            window.showSection(targetSecId);
-        } else {
-            sections.forEach(s => {
+    function showSection(id) {
+        if (!id) return;
+        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+            if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
-            });
-            sections[targetIndex].classList.add('active');
-            sections[targetIndex].style.display = 'block';
+            }
+        });
+
+        const target = document.getElementById(id);
+        if (target) {
+            target.classList.add('active');
+            target.style.display = 'block';
         }
+
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-link[onclick*="${id}"], .nav-link[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (window.innerWidth <= 768) {
+            const sb = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sb) sb.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        if (window.MathJax && MathJax.typesetPromise && target) {
+            MathJax.typesetPromise([target]).catch(function(err){});
+        }
     }
-}
-window.navigateSection = navigateSection;
-function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
+    window.showSection = showSection;
+    window.showTopic = showSection;
+
+    function navigateSection(direction) {
+        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        if (!sections.length) return;
+
+        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        if (currentIndex === -1) currentIndex = 0;
+
+        let targetIndex = currentIndex + direction;
+
+        if (targetIndex >= 0 && targetIndex < sections.length) {
+            const targetSecId = sections[targetIndex].id;
+            showSection(targetSecId);
+        }
+    }
+    window.navigateSection = navigateSection;
+
+    function toggleAnswer(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.classList.contains('show') || el.style.display === 'block') {
+            el.classList.remove('show');
+            el.style.display = 'none';
+        } else {
+            el.classList.add('show');
+            el.style.display = 'block';
+        }
+    }
+    window.toggleAnswer = toggleAnswer;
+    window.toggleAnswers = toggleAnswer;
+    window.toggleSetAnswers = toggleAnswer;
+
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        let overlay = document.getElementById('sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'sidebar-overlay';
+            overlay.className = 'sidebar-overlay';
+            overlay.onclick = toggleSidebar;
+            document.body.appendChild(overlay);
+        }
+        if (sb) {
+            sb.classList.toggle('open');
+            if (sb.classList.contains('open')) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+    }
+    window.toggleSidebar = toggleSidebar;
+
+    function toggleLanguage() {
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+        
+        if (window.currentLang === 'en') {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'hi';
+        } else {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'en';
+        }
+    }
+    window.toggleLanguage = toggleLanguage;
 </script>
 </head>
 <body>
@@ -728,39 +798,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="simpleBarChart"></canvas>
             </div>
-            <script>
-              const ctx_simpleBar = document.getElementById('simpleBarChart').getContext('2d');
-              new Chart(ctx_simpleBar, {
-                type: 'bar',
-                data: {
-                  labels: ['1990', '1991', '1992', '1993', '1994', '1995'],
-                  datasets: [{
-                    label: 'Production (quintals)',
-                    data: [380, 450, 480, 525, 550, 580],
-                    backgroundColor: 'skyblue',
-                    borderColor: 'grey',
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Farm Production Over Years' }
-                  },
-                  scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Production (quintals)' }},
-                    x: { title: { display: true, text: 'Year' }}
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -789,44 +827,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="multipleBarChart2"></canvas>
             </div>
-            <script>
-              const ctx_multiBar = document.getElementById('multipleBarChart2').getContext('2d');
-              new Chart(ctx_multiBar, {
-                type: 'bar',
-                data: {
-                  labels: ['1990-91', '1995-96', '2000-01'],
-                  datasets: [
-                    {
-                      label: 'Area (thousand acres)',
-                      data: [2866, 3233, 3420],
-                      backgroundColor: 'skyblue',
-                    },
-                    {
-                      label: 'Production (thousand bales)',
-                      data: [1588, 2229, 1937],
-                      backgroundColor: 'orange',
-                    }
-                  ]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Cotton: Area vs. Production in Punjab' }
-                  },
-                  scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Values' }},
-                    x: { title: { display: true, text: 'Year' }}
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -856,44 +857,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="componentBarChart"></canvas>
             </div>
-            <script>
-              const ctx_compBar = document.getElementById('componentBarChart').getContext('2d');
-              new Chart(ctx_compBar, {
-                type: 'bar',
-                data: {
-                  labels: ['Gurgaon', 'Faridabad', 'Panipat', 'Rohtak'],
-                  datasets: [
-                    {
-                      label: 'Male',
-                      data: [16, 18, 15, 13],
-                      backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                    },
-                    {
-                      label: 'Female',
-                      data: [14, 17, 13, 12],
-                      backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                    }
-                  ]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Population by District and Gender (in Lakhs)' }
-                  },
-                  scales: {
-                    y: { stacked: true, beginAtZero: true, title: { display: true, text: 'Population (Lakhs)' }},
-                    x: { stacked: true, title: { display: true, text: 'District' }}
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -949,53 +913,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="subdividedRectanglesChart"></canvas>
             </div>
-            <script>
-              const ctx_subRect = document.getElementById('subdividedRectanglesChart').getContext('2d');
-              const farmA_data = [17.6, 23.5, 11.8, 23.5, 5.9, 11.8, 5.9];
-              const farmB_data = [22.2, 27.8, 11.1, 16.7, 5.6, 11.1, 5.6];
-              new Chart(ctx_subRect, {
-                type: 'bar',
-                data: {
-                  labels: ['Farm A (Total 85)', 'Farm B (Total 180)'],
-                  datasets: [
-                    { label: 'Seeds', data: [farmA_data[0], farmB_data[0]], backgroundColor: '#FF6384' },
-                    { label: 'Fertilizers', data: [farmA_data[1], farmB_data[1]], backgroundColor: '#36A2EB' },
-                    { label: 'Pesticides', data: [farmA_data[2], farmB_data[2]], backgroundColor: '#FFCE56' },
-                    { label: 'Labor', data: [farmA_data[3], farmB_data[3]], backgroundColor: '#4BC0C0' },
-                    { label: 'Water', data: [farmA_data[4], farmB_data[4]], backgroundColor: '#9966FF' },
-                    { label: 'Machinery', data: [farmA_data[5], farmB_data[5]], backgroundColor: '#FF9F40' },
-                    { label: 'Miscellaneous', data: [farmA_data[6], farmB_data[6]], backgroundColor: '#C9CBCF' }
-                  ]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Percentage Expenditure of Two Farms' },
-                    tooltip: {
-                      callbacks: {
-                        label: function(context) {
-                          let label = context.dataset.label || '';
-                          if (label) { label += ': '; }
-                          if (context.parsed.y !== null) { label += context.parsed.y.toFixed(1) + '%';}
-                          return label;
-                        }
-                      }
-                    }
-                  },
-                  scales: {
-                    x: { stacked: true },
-                    y: { stacked: true, max: 100, title: { display: true, text: 'Percentage of Total Expenditure' } }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1026,37 +944,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="pictogramSubstituteChart"></canvas>
             </div>
-            <script>
-              const ctx_pictogram = document.getElementById('pictogramSubstituteChart').getContext('2d');
-              new Chart(ctx_pictogram, {
-                type: 'bar',
-                data: {
-                  labels: ['2010', '2015', '2020', '2025'],
-                  datasets: [{
-                    label: 'Number of Workers (each 👨‍🌾 = 500 workers)',
-                    data: [1600, 2100, 2800, 3500],
-                    backgroundColor: '#28a745',
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Number of Farm Workers' }
-                  },
-                  scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Number of Workers' }},
-                    x: { title: { display: true, text: 'Year' }}
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1109,33 +997,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="pieDiagramChart"></canvas>
             </div>
-            <script>
-              const ctx_pie = document.getElementById('pieDiagramChart').getContext('2d');
-              new Chart(ctx_pie, {
-                type: 'pie',
-                data: {
-                  labels: ['Seeds (51.4°)', 'Fertilizers (72.0°)', 'Labor (102.9°)', 'Machinery (61.7°)', 'Irrigation (41.1°)', 'Miscellaneous (30.9°)'],
-                  datasets: [{
-                    label: 'Farm Expenditure',
-                    data: [50, 70, 100, 60, 40, 30],
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'],
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: "Farm Expenses Distribution" }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1164,74 +1026,7 @@ window.toggleLanguage = toggleLanguage;
           <div class="chart-container">
             <canvas id="profitLossChart"></canvas>
           </div>
-          <script>
-            const ctx_profitLoss = document.getElementById('profitLossChart').getContext('2d');
-            new Chart(ctx_profitLoss, {
-              type: 'bar',
-              data: {
-                labels: ['2010', '2020'],
-                datasets: [
-                  {
-                    label: 'Materials',
-                    data: [45, 60],
-                    backgroundColor: '#FF6384',
-                  },
-                  {
-                    label: 'Labor',
-                    data: [20, 25],
-                    backgroundColor: '#36A2EB',
-                  },
-                  {
-                    label: 'Transport',
-                    data: [10, 15],
-                    backgroundColor: '#FFCE56',
-                  },
-                  {
-                    label: 'Proceeds',
-                    data: [15, -5], // Show profit or loss
-                    type: 'bar',
-                    backgroundColor: context => {
-                      return context.dataIndex === 0 ? '#4BC0C0' : '#FF9F40'; // Different colors for profit/loss
-                    },
-                    stack: 'bottom',
-                  }
-                ]
-              },
-              options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    stacked: true,
-                    beginAtZero: true,
-                    title: { display: true, text: 'Rupees' }
-                  },
-                  x: {
-                    title: { display: true, text: 'Year' }
-                  }
-                },
-                plugins: {
-                  title: { display: true, text: 'Profit and Loss on Wheat Production' },
-                  tooltip: {
-                    callbacks: {
-                      label: function(context) {
-                        let label = `${context.dataset.label || ''}: `;
-                        label += `${Math.abs(context.raw)} Rs`;
-                        label += context.raw < 0 ? ' (Loss)' : ' (Profit)';
-                        return label;
-                      }
-                    }
-                  }
-                }
-              }
-            });
-          function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+          
         </div>
       </section>
 
@@ -1293,52 +1088,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="wheatYieldChart"></canvas>
             </div>
-            <script>
-              const ctx_wheatYield = document.getElementById('wheatYieldChart').getContext('2d');
-              new Chart(ctx_wheatYield, {
-                type: 'line',
-                data: {
-                  labels: ['2013', '2014', '2015', '2016', '2017', '2018', '2019', '2020'],
-                  datasets: [{
-                    label: 'Wheat Yield (q/ha)',
-                    data: [30, 32, 35, 33, 38, 40, 42, 45],
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      title: {
-                        display: true,
-                        text: 'Wheat Yield (quintals per hectare)'
-                      }
-                    },
-                    x: {
-                      title: {
-                        display: true,
-                        text: 'Year'
-                      }
-                    }
-                  },
-                  plugins: {
-                    title: {
-                      display: true,
-                      text: 'Wheat Yield Over Years'
-                    }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1380,60 +1130,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container" style="height: 400px;">
               <canvas id="wheatYieldHistogram"></canvas>
             </div>
-            <script>
-              const ctx_histogram = document.getElementById('wheatYieldHistogram').getContext('2d');
-              new Chart(ctx_histogram, {
-                type: 'bar',
-                data: {
-                  labels: ['19.5-25.5', '25.5-30.5', '30.5-35.5', '35.5-45.5', '45.5-60.5'],
-                  datasets: [{
-                    label: 'Frequency Density',
-                    data: [2.5, 5.6, 8.4, 3.5, 1.33],
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      title: {
-                        display: true,
-                        text: 'Frequency Density'
-                      }
-                    },
-                    x: {
-                      title: {
-                        display: true,
-                        text: 'Wheat Yield (quintals per hectare)'
-                      }
-                    }
-                  },
-                  plugins: {
-                    title: {
-                      display: true,
-                      text: 'Distribution of Wheat Yields'
-                    },
-                    tooltip: {
-                      callbacks: {
-                        label: function(context) {
-                          return `Frequency Density: ${context.parsed.y}`;
-                        }
-                      }
-                    }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
           <p>This histogram provides a visual representation of the wheat yield distribution across different farms. The height of each bar represents the frequency density, accounting for the unequal class intervals. This visualization helps in understanding the overall pattern of wheat yields, identifying the most common yield ranges, and spotting any unusual distributions in the data.</p>
         </div>
@@ -1461,52 +1158,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container" style="height: 400px;">
               <canvas id="cornYieldPolygon"></canvas>
             </div>
-            <script>
-              const ctx_polygon = document.getElementById('cornYieldPolygon').getContext('2d');
-              new Chart(ctx_polygon, {
-                type: 'line',
-                data: {
-                  labels: ['90', '110', '130', '150', '170', '190', '210'],
-                  datasets: [{
-                    label: 'Frequency',data: [0, 10, 25, 40, 20, 5, 0],
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0,
-                    fill: false
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      title: {
-                        display: true,
-                        text: 'Number of Farms'
-                      }
-                    },
-                    x: {
-                      title: {
-                        display: true,
-                        text: 'Corn Yield (bushels per acre)'
-                      }
-                    }
-                  },
-                  plugins: {
-                    title: {
-                      display: true,
-                      text: 'Frequency Polygon of Corn Yields'
-                    }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1525,53 +1177,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container" style="height: 400px;">
               <canvas id="soybeanYieldCurve"></canvas>
             </div>
-            <script>
-              const ctx_curve = document.getElementById('soybeanYieldCurve').getContext('2d');
-              new Chart(ctx_curve, {
-                type: 'line',
-                data: {
-                  labels: ['30', '35', '40', '45', '50', '55', '60', '65', '70'],
-                  datasets: [{
-                    label: 'Frequency',
-                    data: [5, 15, 30, 50, 70, 50, 30, 15, 5],
-                    borderColor: 'rgb(255, 99, 132)',
-                    tension: 0.4,
-                    fill: false
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      title: {
-                        display: true,
-                        text: 'Frequency'
-                      }
-                    },
-                    x: {
-                      title: {
-                        display: true,
-                        text: 'Soybean Yield (bushels per acre)'
-                      }
-                    }
-                  },
-                  plugins: {
-                    title: {
-                      display: true,
-                      text: 'Frequency Curve of Soybean Yields'
-                    }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1606,68 +1212,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container" style="height: 400px;">
               <canvas id="combinedChart"></canvas>
             </div>
-            <script>
-              const ctx_combined = document.getElementById('combinedChart').getContext('2d');
-
-              const labels_combined = ['32.5', '37.5', '42.5', '47.5', '52.5', '57.5', '62.5'];
-              const data_combined = [5, 12, 20, 25, 18, 10, 4];
-
-              const poly_labels = ['27.5', ...labels_combined, '67.5'];
-              const poly_data = [0, ...data_combined, 0];
-
-              new Chart(ctx_combined, {
-                data: {
-                  labels: poly_labels,
-                  datasets: [
-                    {
-                      type: 'bar',
-                      label: 'Histogram',
-                      data: [null, ...data_combined, null],
-                      backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                      borderColor: 'rgba(54, 162, 235, 1)',
-                      borderWidth: 1,
-                      barPercentage: 1.0,
-                      categoryPercentage: 1.0
-                    },
-                    {
-                      type: 'line',
-                      label: 'Frequency Polygon',
-                      data: poly_data,
-                      borderColor: 'red',
-                      backgroundColor: 'red',
-                      fill: false,
-                      tension: 0
-                    },
-                    {
-                      type: 'line',
-                      label: 'Frequency Curve',
-                      data: poly_data,
-                      borderColor: 'purple',
-                      backgroundColor: 'purple',
-                      fill: false,
-                      tension: 0.4
-                    }
-                  ]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Combined Chart for Wheat Yield Distribution' }
-                  },
-                  scales: {
-                    y: { beginAtZero: true, title: { display: true, text: 'Number of Farms' }},
-                    x: { title: { display: true, text: 'Wheat Yield (quintals per hectare)' }}
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
 
           <p>This combined representation allows for a comprehensive analysis of the wheat yield distribution:</p>
@@ -1701,44 +1246,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container" style="height: 400px;">
               <canvas id="ogiveChart"></canvas>
             </div>
-            <script>
-              const ctx_ogive = document.getElementById('ogiveChart').getContext('2d');
-              new Chart(ctx_ogive, {
-                type: 'line',
-                data: {
-                  labels: ['25', '30', '35', '40', '45', '50', '55', '60'],
-                  datasets: [{
-                    label: 'Cumulative Frequency',
-                    data: [0, 5, 17, 37, 62, 80, 90, 94],
-                    borderColor: 'blue',
-                    fill: false,
-                    stepped: false
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Ogive for Cumulative Wheat Yield Distribution' }
-                  },
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      title: { display: true, text: 'Cumulative Number of Farms' }
-                    },
-                    x: {
-                      title: { display: true, text: 'Wheat Yield (quintals per hectare)' }
-                    }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </div>
       </section>
@@ -1757,45 +1265,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container" style="height: 400px;">
               <canvas id="ogiveDiscreteChart"></canvas>
             </div>
-            <script>
-              const ctx_ogiveDiscrete = document.getElementById('ogiveDiscreteChart').getContext('2d');
-              new Chart(ctx_ogiveDiscrete, {
-                type: 'line',
-                data: {
-                  labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
-                  datasets: [{
-                    label: 'Cumulative Frequency',
-                    data: [3, 7, 13, 20, 30, 36, 41, 44, 48, 49],
-                    borderColor: 'green',
-                    stepped: 'after',
-                    fill: false,
-                    tension: 0
-                  }]
-                },
-                options: {
-                  responsive: true,
-                  maintainAspectRatio: false,
-                  plugins: {
-                    title: { display: true, text: 'Ogive for Number of Farm Assistants (Discrete Variable)' }
-                  },
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      title: { display: true, text: 'Cumulative Number of Farms' }
-                    },
-                    x: {
-                      title: { display: true, text: 'Number of Farm Assistants' }
-                    }
-                  }
-                }
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
           <p>This Ogive for discrete data shows clear steps, representing the cumulative increase at each specific number of farm assistants. The horizontal segments between steps indicate no change in cumulative frequency for non-existent values between the discrete points.</p>
         </div>
@@ -1828,74 +1298,7 @@ window.toggleLanguage = toggleLanguage;
             <div class="chart-container">
               <canvas id="ogiveChart_1"></canvas>
             </div>
-              <script>
-                // Use a unique variable name like ctx_ogive_1
-                const ctx_ogive_1 = document.getElementById('ogiveChart_1').getContext('2d');
-
-                const classBoundaries = [60, 80, 100, 120, 140, 160, 180, 200];
-                const frequencies = [15, 25, 35, 45, 30, 20, 10];
-
-                // This data calculation logic is excellent and works perfectly
-                let lessCumFreq = [0];
-                frequencies.reduce((a, b, i) => lessCumFreq[i+1] = a + b, 0);
-
-                let moreCumFreq = [];
-                const total = frequencies.reduce((a, b) => a + b, 0);
-                frequencies.reduce((a, b, i) => {
-                  moreCumFreq[i] = a;
-                  return a - b;
-                }, total);
-                moreCumFreq.push(0);
-
-                // Use the new, unique variable name here
-                new Chart(ctx_ogive_1, {
-                  type: 'line',
-                  data: {
-                    labels: classBoundaries,
-                    datasets: [
-                      {
-                        label: 'Less than Ogive',
-                        data: lessCumFreq,
-                        borderColor: 'blue',
-                        fill: false,
-                        tension: 0
-                      },
-                      {
-                        label: 'More than Ogive',
-                        data: moreCumFreq,
-                        borderColor: 'green',
-                        fill: false,
-                        tension: 0
-                      }
-                    ]
-                  },
-                  options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                      title: {
-                        display: true,
-                        text: 'Less Than & More Than Ogives for Apple Weight Distribution'
-                      }
-                    },
-                    scales: {
-                      x: {
-                        title: { display: true, text: 'Apple Weight (grams)' }
-                      },
-                      y: {
-                        beginAtZero: true,
-                        title: { display: true, text: 'Cumulative Number of Apples' }
-                      }
-                    }
-                  }
-                });
-              function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+              
             </div>
 
               <p>Interpreting the Ogives:</p>
@@ -1936,54 +1339,7 @@ window.toggleLanguage = toggleLanguage;
               <canvas id="uShapeCurve"></canvas>
             </div>
           </div>
-            <script>
-              // Common setup for all charts (labels, options)
-              const labels = ['1', '2', '3', '4', '5', '6', '7'];
-              const options = {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { x: { display: false }, y: { display: false } }
-              };
-
-              // Symmetrical Curve
-              const ctx_sym = document.getElementById('symmetricalCurve').getContext('2d');
-              new Chart(ctx_sym, {
-                type: 'line',
-                data: { labels, datasets: [{ data: [1, 4, 8, 10, 8, 4, 1], borderColor: 'blue', tension: 0.4 }] },
-                ...options
-              });
-
-              // Skewed Curve
-              const ctx_skew = document.getElementById('skewedCurve').getContext('2d');
-              new Chart(ctx_skew, {
-                type: 'line',
-                data: { labels, datasets: [{ data: [10, 8, 6, 4, 3, 2, 1], borderColor: 'green', tension: 0.4 }] },
-                ...options
-              });
-
-              // J-Shaped Curve
-              const ctx_j = document.getElementById('jShapeCurve').getContext('2d');
-              new Chart(ctx_j, {
-                type: 'line',
-                data: { labels, datasets: [{ data: [3, 2, 1, 3, 5, 8, 11], borderColor: 'red', tension: 0.4 }] },
-                ...options
-              });
-
-              // U-Shaped Curve
-              const ctx_u = document.getElementById('uShapeCurve').getContext('2d');
-              new Chart(ctx_u, {
-                type: 'line',
-                data: { labels, datasets: [{ data: [20, 15, 5, 2, 5, 15, 20], borderColor: 'purple', tension: 0.4 }] },
-                ...options
-              });
-            function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+            
           </div>
         </section>
              
@@ -2027,62 +1383,7 @@ window.toggleLanguage = toggleLanguage;
               <div class="chart-container" style="height: 400px;">
                 <canvas id="ratioChart"></canvas>
               </div>
-                <script>
-                  const ctx_ratio = document.getElementById('ratioChart').getContext('2d');
-                  new Chart(ctx_ratio, {
-                    type: 'line',
-                    data: {
-                      labels: ['2010', '2012', '2014', '2016', '2018', '2020'],
-                      datasets: [
-                        {
-                          label: 'Wheat Yield',
-                          data: [30, 32, 35, 38, 42, 45],
-                          borderColor: 'gold',
-                          fill: false
-                        },
-                        {
-                          label: 'Corn Yield',
-                          data: [50, 55, 62, 70, 80, 90],
-                          borderColor: 'green',
-                          fill: false
-                        }
-                      ]
-                    },
-                    options: {
-                      responsive: true,
-                      maintainAspectRatio: false,
-                      scales: {
-                        x: {
-                          type: 'linear',
-                          position: 'bottom',
-                          title: {
-                            display: true,
-                            text: 'Year'
-                          }
-                        },
-                        y: {
-                          type: 'logarithmic',
-                          title: {
-                            display: true,
-                            text: 'Yield (q/ha) - Log Scale'
-                          }
-                        }
-                      },
-                      plugins: {
-                        title: {
-                          display: true,
-                          text: 'Ratio Chart: Wheat vs Corn Yield Growth'
-                        }
-                      }
-                    }
-                  });
-                function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+                
               </div>
 
               <p>Interpreting the Ratio Chart:</p>
@@ -2894,70 +2195,6 @@ function toggleLanguage() { const btnText = document.getElementById("lang-toggle
 window.toggleLanguage = toggleLanguage;
 </script>
 
-<script>
-function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            let overlay = document.getElementById('sidebar-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'sidebar-overlay';
-                overlay.className = 'sidebar-overlay';
-                overlay.onclick = toggleSidebar;
-                document.body.appendChild(overlay);
-            }
-            if (sb) {
-                sb.classList.toggle('open');
-                if (sb.classList.contains('open')) {
-                    overlay.classList.add('active');
-                } else {
-                    overlay.classList.remove('active');
-                }
-            }
-        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        const sb = document.getElementById('sidebar');
-                        const overlay = document.getElementById('sidebar-overlay');
-                        if (sb && sb.classList.contains('open')) {
-                            sb.classList.remove('open');
-                            if (overlay) overlay.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
-        function navigateSection(direction) {
-            const sections = Array.from(document.querySelectorAll('section.page-section'));
-            if (!sections.length) return;
-
-            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
-            if (currentIndex === -1) currentIndex = 0;
-
-            let targetIndex = currentIndex + direction;
-
-            if (targetIndex >= 0 && targetIndex < sections.length) {
-                const targetSecId = sections[targetIndex].id;
-                if (typeof showSection === 'function') {
-                    showSection(targetSecId);
-                } else {
-                    sections.forEach(s => s.classList.remove('active'));
-                    sections[targetIndex].classList.add('active');
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-    function toggleAnswer(id) { const el = document.getElementById(id); if(!el) return; if(el.style.display === "block") { el.style.display = "none"; } else { el.style.display = "block"; } }
-window.toggleAnswer = toggleAnswer;
-window.toggleAnswers = toggleAnswer;
-window.toggleSetAnswers = toggleAnswer;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
 </body>
 </html>

@@ -38,7 +38,7 @@ window.toggleLanguage = toggleLanguage;
         <!-- MathJax Config -->
             <!-- MathJax Configuration -->
     <script>
-        window.MathJax = {
+window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
@@ -48,12 +48,8 @@ window.toggleLanguage = toggleLanguage;
                 skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
             }
         };
-    function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
 </script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js">function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
 window.toggleLanguage = toggleLanguage;
@@ -1085,44 +1081,122 @@ svg.book-fig, .figure-box svg, canvas {
 }
 
     </style>
-<script>window.currentLang = window.currentLang || 'en';function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
 
+
+<!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
-function navigateSection(direction) {
-    const sections = Array.from(document.querySelectorAll('section.page-section'));
-    if (!sections.length) return;
+    window.currentLang = window.currentLang || 'en';
 
-    let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
-    if (currentIndex === -1) currentIndex = 0;
-
-    let targetIndex = currentIndex + direction;
-
-    if (targetIndex >= 0 && targetIndex < sections.length) {
-        const targetSecId = sections[targetIndex].id;
-        if (typeof showSection === 'function') {
-            showSection(targetSecId);
-        } else if (typeof window.showSection === 'function') {
-            window.showSection(targetSecId);
-        } else {
-            sections.forEach(s => {
+    function showSection(id) {
+        if (!id) return;
+        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+            if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
-            });
-            sections[targetIndex].classList.add('active');
-            sections[targetIndex].style.display = 'block';
+            }
+        });
+
+        const target = document.getElementById(id);
+        if (target) {
+            target.classList.add('active');
+            target.style.display = 'block';
         }
+
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-link[onclick*="${id}"], .nav-link[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (window.innerWidth <= 768) {
+            const sb = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sb) sb.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        if (window.MathJax && MathJax.typesetPromise && target) {
+            MathJax.typesetPromise([target]).catch(function(err){});
+        }
     }
-}
-window.navigateSection = navigateSection;
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
+    window.showSection = showSection;
+    window.showTopic = showSection;
+
+    function navigateSection(direction) {
+        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        if (!sections.length) return;
+
+        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        if (currentIndex === -1) currentIndex = 0;
+
+        let targetIndex = currentIndex + direction;
+
+        if (targetIndex >= 0 && targetIndex < sections.length) {
+            const targetSecId = sections[targetIndex].id;
+            showSection(targetSecId);
+        }
+    }
+    window.navigateSection = navigateSection;
+
+    function toggleAnswer(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.classList.contains('show') || el.style.display === 'block') {
+            el.classList.remove('show');
+            el.style.display = 'none';
+        } else {
+            el.classList.add('show');
+            el.style.display = 'block';
+        }
+    }
+    window.toggleAnswer = toggleAnswer;
+    window.toggleAnswers = toggleAnswer;
+    window.toggleSetAnswers = toggleAnswer;
+
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        let overlay = document.getElementById('sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'sidebar-overlay';
+            overlay.className = 'sidebar-overlay';
+            overlay.onclick = toggleSidebar;
+            document.body.appendChild(overlay);
+        }
+        if (sb) {
+            sb.classList.toggle('open');
+            if (sb.classList.contains('open')) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+    }
+    window.toggleSidebar = toggleSidebar;
+
+    function toggleLanguage() {
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+        
+        if (window.currentLang === 'en') {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'hi';
+        } else {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'en';
+        }
+    }
+    window.toggleLanguage = toggleLanguage;
 </script>
 </head>
 <body>
@@ -2064,1119 +2138,8 @@ Class,Frequency
         </main>
     </div>
     
-<script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("DOM loaded, drawing graphs...");
-        
-        // Draw the skewness and kurtosis graphs
-        drawSkewnessGraph();
-        drawKurtosisGraph();
-    });
 
-    // Draw skewness graph
-    function drawSkewnessGraph() {
-        console.log("Drawing skewness graph...");
-        const canvas = document.getElementById('skewnessCanvas');
-        if (!canvas) {
-            console.error("Skewness canvas not found!");
-            return;
-        }
-        
-        const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        console.log(`Canvas dimensions: ${width}x${height}`);
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, width, height);
-        
-        // Draw background grid
-        drawGrid(ctx, width, height);
-        
-        // Draw axes
-        drawAxes(ctx, width, height, "Value", "Frequency");
-        
-        // Draw title
-        drawTitle(ctx, width, "Distribution Shapes: Skewness");
-        
-        // Define distribution types
-        const distributions = [
-            { type: 'symmetrical', color: '#2980b9', name: 'Normal (Symmetrical)' },
-            { type: 'positive', color: '#e74c3c', name: 'Positively Skewed' },
-            { type: 'negative', color: '#27ae60', name: 'Negatively Skewed' }
-        ];
-        
-        // Draw each distribution curve
-        distributions.forEach(dist => {
-            drawSkewnessCurve(ctx, width, height, dist);
-        });
-        
-        // Draw markers for central tendency measures
-        drawCentralTendencyMarkers(ctx, width, height);
-        
-        // Draw legend
-        drawLegend(ctx, distributions);
-        
-        console.log("Skewness graph drawing complete");
-    }
 
-    // Draw kurtosis graph
-    function drawKurtosisGraph() {
-        console.log("Drawing kurtosis graph...");
-        const canvas = document.getElementById('kurtosisCanvas');
-        if (!canvas) {
-            console.error("Kurtosis canvas not found!");
-            return;
-        }
-        
-        const ctx = canvas.getContext('2d');
-        const width = canvas.width;
-        const height = canvas.height;
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, width, height);
-        
-        // Draw background grid
-        drawGrid(ctx, width, height);
-        
-        // Draw axes
-        drawAxes(ctx, width, height, "Value", "Frequency");
-        
-        // Draw title
-        drawTitle(ctx, width, "Distribution Shapes: Kurtosis");
-        
-        // Define kurtosis types
-        const kurtosisTypes = [
-            { type: 'mesokurtic', color: '#2980b9', name: 'Mesokurtic (β₂=3)' },
-            { type: 'leptokurtic', color: '#e74c3c', name: 'Leptokurtic (β₂>3)' },
-            { type: 'platykurtic', color: '#27ae60', name: 'Platykurtic (β₂<3)' }
-        ];
-        
-        // Draw each kurtosis curve
-        kurtosisTypes.forEach(kurt => {
-            drawKurtosisCurve(ctx, width, height, kurt);
-        });
-        
-        // Draw legend
-        drawLegend(ctx, kurtosisTypes);
-        
-        console.log("Kurtosis graph drawing complete");
-    }
-
-    // Helper function to draw grid
-    function drawGrid(ctx, width, height) {
-        ctx.strokeStyle = '#f0f0f0';
-        ctx.lineWidth = 0.5;
-        
-        // Vertical lines
-        for (let x = 0; x < width; x += 50) {
-            ctx.beginPath();
-            ctx.moveTo(x, 0);
-            ctx.lineTo(x, height);
-            ctx.stroke();
-        }
-        
-        // Horizontal lines
-        for (let y = 0; y < height; y += 50) {
-            ctx.beginPath();
-            ctx.moveTo(0, y);
-            ctx.lineTo(width, y);
-            ctx.stroke();
-        }
-    }
-
-    // Helper function to draw axes
-    function drawAxes(ctx, width, height, xLabel, yLabel) {
-        const xAxis = height - 60;
-        const yAxis = 70;
-        
-        // X-axis
-        ctx.strokeStyle = '#666';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(yAxis, xAxis);
-        ctx.lineTo(width - 40, xAxis);
-        ctx.stroke();
-        
-        // Y-axis
-        ctx.beginPath();
-        ctx.moveTo(yAxis, 30);
-        ctx.lineTo(yAxis, xAxis);
-        ctx.stroke();
-        
-        // Axis labels
-        ctx.fillStyle = '#333';
-        ctx.font = 'bold 14px Arial';
-        
-        // X-axis label
-        ctx.textAlign = 'center';
-        ctx.fillText(xLabel, width/2, xAxis + 30);
-        
-        // Y-axis label
-        ctx.save();
-        ctx.translate(25, height/2 - 30);
-        ctx.rotate(-Math.PI/2);
-        ctx.textAlign = 'center';
-        ctx.fillText(yLabel, 0, 0);
-        ctx.restore();
-        
-        // Add some tick marks
-        ctx.strokeStyle = '#999';
-        ctx.lineWidth = 1;
-        
-        // X-axis ticks
-        for (let x = yAxis + 50; x < width - 40; x += 50) {
-            ctx.beginPath();
-            ctx.moveTo(x, xAxis);
-            ctx.lineTo(x, xAxis + 5);
-            ctx.stroke();
-        }
-        
-        // Y-axis ticks
-        for (let y = xAxis - 50; y > 30; y -= 50) {
-            ctx.beginPath();
-            ctx.moveTo(yAxis - 5, y);
-            ctx.lineTo(yAxis, y);
-            ctx.stroke();
-        }
-    }
-
-    // Helper function to draw title
-    function drawTitle(ctx, width, title) {
-        ctx.fillStyle = '#000';
-        ctx.font = 'bold 16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText(title, width/2, 30);
-    }
-
-    // Draw skewness curve
-    function drawSkewnessCurve(ctx, width, height, dist) {
-        const xAxis = height - 60;
-        const yAxis = 70;
-        const graphWidth = width - yAxis - 40;
-        const graphHeight = xAxis - 60;
-        const centerX = yAxis + graphWidth/2;
-        
-        ctx.strokeStyle = dist.color;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        
-        for (let x = 0; x < graphWidth; x++) {
-            let y;
-            const normalizedX = (x - graphWidth/2) / (graphWidth/5);
-            
-            if (dist.type === 'symmetrical') {
-                y = Math.exp(-normalizedX * normalizedX / 2);
-            } else if (dist.type === 'positive') {
-                y = Math.exp(-Math.pow(normalizedX + 1, 2) / 2) * (1 + 0.4 * normalizedX);
-            } else if (dist.type === 'negative') {
-                y = Math.exp(-Math.pow(normalizedX - 1, 2) / 2) * (1 - 0.4 * normalizedX);
-            }
-            
-            // Scale y to fit graph height
-            y = xAxis - (y * graphHeight);
-            
-            if (x === 0) {
-                ctx.moveTo(yAxis + x, y);
-            } else {
-                ctx.lineTo(yAxis + x, y);
-            }
-        }
-        
-        ctx.stroke();
-    }
-
-    // Draw kurtosis curve
-    function drawKurtosisCurve(ctx, width, height, kurt) {
-        const xAxis = height - 60;
-        const yAxis = 70;
-        const graphWidth = width - yAxis - 40;
-        const graphHeight = xAxis - 60;
-        
-        ctx.strokeStyle = kurt.color;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        
-        for (let x = 0; x < graphWidth; x++) {
-            let y;
-            const normalizedX = (x - graphWidth/2) / (graphWidth/5);
-            
-            if (kurt.type === 'mesokurtic') {
-                y = Math.exp(-normalizedX * normalizedX / 2);
-            } else if (kurt.type === 'leptokurtic') {
-                y = Math.exp(-normalizedX * normalizedX / 1);
-            } else if (kurt.type === 'platykurtic') {
-                y = Math.exp(-normalizedX * normalizedX / 3);
-            }
-            
-            // Scale y to fit graph height
-            y = xAxis - (y * graphHeight);
-            
-            if (x === 0) {
-                ctx.moveTo(yAxis + x, y);
-            } else {
-                ctx.lineTo(yAxis + x, y);
-            }
-        }
-        
-        ctx.stroke();
-    }
-
-    // Draw markers for central tendency measures (mean, median, mode)
-    function drawCentralTendencyMarkers(ctx, width, height) {
-        const xAxis = height - 60; // Moved down a bit
-        const yAxis = 70; // Moved right a bit
-        const graphWidth = width - yAxis - 40;
-        const centerX = yAxis + graphWidth/2;
-        
-        // For symmetrical (all measures at center)
-        ctx.fillStyle = '#2980b9';
-        ctx.beginPath();
-        ctx.arc(centerX, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.font = 'bold 12px Arial';
-        ctx.fillText("Mean, Median, Mode", centerX - 70, xAxis + 25);
-        
-        // For positive skew
-        ctx.fillStyle = '#e74c3c';
-        // Mode (left of center)
-        const posMode = centerX - 100;
-        ctx.beginPath();
-        ctx.arc(posMode, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillText("Mode", posMode - 15, xAxis + 15);
-        
-        // Median (middle)
-        const posMedian = centerX - 50;
-        ctx.beginPath();
-        ctx.arc(posMedian, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillText("Median", posMedian - 20, xAxis + 15);
-        
-        // Mean (right)
-        const posMean = centerX;
-        ctx.beginPath();
-        ctx.arc(posMean, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillText("Mean", posMean - 15, xAxis + 15);
-        
-        // For negative skew (reverse of positive)
-        ctx.fillStyle = '#27ae60';
-        // Mode (right of center)
-        const negMode = centerX + 100;
-        ctx.beginPath();
-        ctx.arc(negMode, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillText("Mode", negMode - 15, xAxis + 15);
-        
-        // Median (middle)
-        const negMedian = centerX + 50;
-        ctx.beginPath();
-        ctx.arc(negMedian, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillText("Median", negMedian - 20, xAxis + 15);
-        
-        // Mean (left)
-        const negMean = centerX;
-        ctx.beginPath();
-        ctx.arc(negMean, xAxis, 6, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.fillText("Mean", negMean - 15, xAxis + 15);
-    }
-
-    // Draw legend - MODIFIED to position in top right corner
-    function drawLegend(ctx, items) {
-        const width = ctx.canvas.width;
-        const height = ctx.canvas.height;
-        
-        // Position legend in top right corner
-        const legendWidth = 200;
-        const legendX = width - legendWidth - 20; // 20px from right edge
-        const legendY = 50; // 50px from top
-        
-        // Calculate legend box height
-        const lineHeight = 25;
-        const padding = 20;
-        const legendHeight = (items.length * lineHeight) + padding;
-        
-        // Draw a background for the legend
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-        ctx.fillRect(legendX, legendY, legendWidth, legendHeight);
-        ctx.strokeStyle = '#ddd';
-        ctx.strokeRect(legendX, legendY, legendWidth, legendHeight);
-        
-        // Legend title
-        ctx.font = 'bold 14px Arial';
-        ctx.fillStyle = '#333';
-        ctx.textAlign = 'left';
-        ctx.fillText('Types:', legendX + 10, legendY + 20);
-        
-        let currentY = legendY + 40; // Start items below title
-        
-        items.forEach(item => {
-            // Draw line sample
-            ctx.strokeStyle = item.color;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(legendX + 15, currentY - 5);
-            ctx.lineTo(legendX + 45, currentY - 5);
-            ctx.stroke();
-            
-            // Draw label
-            ctx.fillStyle = item.color;
-            ctx.font = '13px Arial';
-            ctx.textAlign = 'left';
-            ctx.fillText(item.name, legendX + 55, currentY);
-            currentY += lineHeight;
-        });
-    }
-
-    // Statistical functions
-    function mean(data) {
-        return data.reduce((sum, val) => sum + val, 0) / data.length;
-    }
-
-    function median(data) {
-        const sorted = [...data].sort((a, b) => a - b);
-        const n = sorted.length;
-        return n % 2 === 0 ? (sorted[n/2 - 1] + sorted[n/2]) / 2 : sorted[Math.floor(n/2)];
-    }
-
-    function mode(data) {
-        const freq = {};
-        data.forEach(val => freq[val] = (freq[val] || 0) + 1);
-        const maxFreq = Math.max(...Object.values(freq));
-        const modes = Object.keys(freq).filter(key => freq[key] === maxFreq);
-        return modes.length === data.length ? null : parseFloat(modes[0]);
-    }
-
-    function standardDeviation(data) {
-        const avg = mean(data);
-        const squared = data.map(val => Math.pow(val - avg, 2));
-        return Math.sqrt(mean(squared));
-    }
-
-    function quartiles(data) {
-        const sorted = [...data].sort((a, b) => a - b);
-        const n = sorted.length;
-        
-        const q1Index = Math.floor(n * 0.25);
-        const q3Index = Math.floor(n * 0.75);
-        
-        return {
-            q1: sorted[q1Index],
-            q3: sorted[q3Index]
-        };
-    }
-
-    function karlPearsonSkewness(data) {
-        const avg = mean(data);
-        const med = median(data);
-        const sd = standardDeviation(data);
-        
-        // Using alternative formula: 3(Mean - Median)/SD
-        return sd === 0 ? 0 : (3 * (avg - med)) / sd;
-    }
-
-    function bowleySkewness(data) {
-        const med = median(data);
-        const {q1, q3} = quartiles(data);
-        
-        const denominator = q3 - q1;
-        return denominator === 0 ? 0 : (q3 + q1 - 2 * med) / denominator;
-    }
-
-    function moment(data, order, central = true) {
-        const avg = central ? mean(data) : 0;
-        return mean(data.map(val => Math.pow(val - avg, order)));
-    }
-
-    function kurtosis(data) {
-        const m2 = moment(data, 2);
-        const m4 = moment(data, 4);
-        
-        return m2 === 0 ? 0 : m4 / (m2 * m2);
-    }
-
-    // Parse input data
-    function parseData(input) {
-        const lines = input.trim().split('\n');
-        
-        // Check if it's frequency data
-        if (lines.length > 1 && lines[0].toLowerCase().includes('class')) {
-            // Frequency data format
-            const data = [];
-            for (let i = 1; i < lines.length; i++) {
-                const parts = lines[i].split(',');
-                if (parts.length >= 2) {
-                    let classValue, frequency;
-                    
-                    if (parts[0].includes('-')) {
-                        // Class interval like "10-20"
-                        const range = parts[0].split('-');
-                        classValue = (parseFloat(range[0]) + parseFloat(range[1])) / 2;
-                    } else {
-                        classValue = parseFloat(parts[0]);
-                    }
-                    
-                    frequency = parseInt(parts[1]);
-                    
-                    if (!isNaN(classValue) && !isNaN(frequency)) {
-                        for (let j = 0; j < frequency; j++) {
-                            data.push(classValue);
-                        }
-                    }
-                }
-            }
-            return data;
-        } else {
-            // Simple comma-separated values
-            return input.split(',').map(val => parseFloat(val.trim())).filter(val => !isNaN(val));
-        }
-    }
-
-    // Calculate skewness and kurtosis with step-by-step explanation
-    function calculateSkewnessKurtosis() {
-        const input = document.getElementById('dataInput').value;
-        const resultsDiv = document.getElementById('results');
-        
-        // Create calculation steps div safely
-        let stepsDiv = document.getElementById('calculationSteps');
-        if (!stepsDiv) {
-            stepsDiv = document.createElement('div');
-            stepsDiv.id = 'calculationSteps';
-            stepsDiv.className = 'card mt-4';
-            
-            // Find a suitable parent element to append to
-            const parentElement = document.querySelector('.exercises') || document.querySelector('.body');
-            if (parentElement) {
-                parentElement.appendChild(stepsDiv);
-            } else {
-                // If we can't find a parent, add it after the results div
-                if (resultsDiv && resultsDiv.parentNode) {
-                    resultsDiv.parentNode.insertBefore(stepsDiv, resultsDiv.nextSibling);
-                }
-            }
-        }
-        
-        if (!input.trim()) {
-            alert('Please enter data!');
-            return;
-        }
-        
-        try {
-            const data = parseData(input);
-            
-            if (data.length < 3) {
-                alert('At least 3 values are required!');
-                return;
-            }
-            
-            // Calculate basic statistics
-            const avg = mean(data);
-            const med = median(data);
-            const mod = mode(data);
-            const sd = standardDeviation(data);
-            const kpSkew = karlPearsonSkewness(data);
-            const bowSkew = bowleySkewness(data);
-            const kurt = kurtosis(data);
-            
-            // Display results
-            document.getElementById('statisticsResults').innerHTML = `
-                <h5>Basic Statistics:</h5>
-                <p><strong>Mean:</strong> ${avg.toFixed(3)}</p>
-                <p><strong>Median:</strong> ${med.toFixed(3)}</p>
-                <p><strong>Mode:</strong> ${mod ? mod.toFixed(3) : 'Not unique'}</p>
-                <p><strong>Standard Deviation:</strong> ${sd.toFixed(3)}</p>
-            `;
-            
-            document.getElementById('skewnessResults').innerHTML = `
-                <h5>Skewness:</h5>
-                <p><strong>Karl-Pearson's Coefficient:</strong> ${kpSkew.toFixed(3)}</p>
-                <p><strong>Bowley's Coefficient:</strong> ${bowSkew.toFixed(3)}</p>
-            `;
-            
-            document.getElementById('kurtosisResults').innerHTML = `
-                <h5>Kurtosis:</h5>
-                <p><strong>β₂:</strong> ${kurt.toFixed(3)}</p>
-            `;
-            
-            // Interpretation
-            let skewInterpretation = '';
-            if (Math.abs(kpSkew) < 0.5) {
-                skewInterpretation = 'The distribution is approximately symmetrical';
-            } else if (kpSkew > 0.5) {
-                skewInterpretation = 'The distribution is positively skewed (right-tailed)';
-            } else {
-                skewInterpretation = 'The distribution is negatively skewed (left-tailed)';
-            }
-            
-            let kurtInterpretation = '';
-            if (Math.abs(kurt - 3) < 0.5) {
-                kurtInterpretation = 'The distribution is mesokurtic (normal peakedness)';
-            } else if (kurt > 3) {
-                kurtInterpretation = 'The distribution is leptokurtic (more peaked)';
-            } else {
-                kurtInterpretation = 'The distribution is platykurtic (flatter)';
-            }
-            
-            document.getElementById('interpretation').innerHTML = `
-                <h5>Interpretation:</h5>
-                <p><strong>Skewness:</strong> ${skewInterpretation}</p>
-                <p><strong>Kurtosis:</strong> ${kurtInterpretation}</p>
-            `;
-            
-            // Generate step-by-step explanation
-            const stepByStepHTML = generateStepByStepCalculations(data);
-            
-            // Display step-by-step calculations
-            if (stepsDiv) {
-                stepsDiv.innerHTML = `
-                    <div class="card-header">
-                        <h5>Step-by-Step Calculations</h5>
-                    </div>
-                    <div class="card-body">
-                        ${stepByStepHTML}
-                    </div>
-                `;
-                stepsDiv.style.display = 'block';
-            }
-            
-            resultsDiv.style.display = 'block';
-            
-        } catch (error) {
-            alert('Error in data parsing: ' + error.message);
-        }
-    }
-
-    // Generate step-by-step calculations with formulas and explanations
-    function generateStepByStepCalculations(data) {
-        const sorted = [...data].sort((a, b) => a - b);
-        const n = data.length;
-        
-        // Mean calculation steps
-        const sum = data.reduce((a, b) => a + b, 0);
-        const avg = sum / n;
-        
-        // Median calculation steps
-        let med;
-        let medianSteps;
-        if (n % 2 === 0) {
-            // Even number of elements
-            const pos1 = n/2 - 1;
-            const pos2 = n/2;
-            med = (sorted[pos1] + sorted[pos2]) / 2;
-            medianSteps = `
-                <p>Since the number of observations (n = ${n}) is even, we take the average of the middle two values:</p>
-                <p>Position of middle values: n/2 = ${n}/2 = ${n/2}</p>
-                <p>Values at positions ${pos1+1} and ${pos2+1}: ${sorted[pos1]} and ${sorted[pos2]}</p>
-                <p>Median = (${sorted[pos1]} + ${sorted[pos2]}) / 2 = ${med.toFixed(3)}</p>
-            `;
-        } else {
-            // Odd number of elements
-            const pos = Math.floor(n/2);
-            med = sorted[pos];
-            medianSteps = `
-                <p>Since the number of observations (n = ${n}) is odd, we take the middle value:</p>
-                <p>Position of middle value: (n+1)/2 = (${n}+1)/2 = ${(n+1)/2}</p>
-                <p>Value at position ${pos+1}: ${med}</p>
-                <p>Median = ${med}</p>
-            `;
-        }
-        
-        // Mode calculation steps
-        const freqMap = {};
-        data.forEach(val => {
-            freqMap[val] = (freqMap[val] || 0) + 1;
-        });
-        
-        let modeTable = '<table class="table table-sm"><thead><tr><th>Value</th><th>Frequency</th></tr></thead><tbody>';
-        for (const [val, freq] of Object.entries(freqMap)) {
-            modeTable += `<tr><td>${val}</td><td>${freq}</td></tr>`;
-        }
-        modeTable += '</tbody></table>';
-        
-        const maxFreq = Math.max(...Object.values(freqMap));
-        const modes = Object.keys(freqMap).filter(key => freqMap[key] === maxFreq);
-        const mod = modes.length === n ? null : modes.map(m => parseFloat(m));
-        
-        // Standard deviation steps
-        const deviations = data.map(val => val - avg);
-        const squaredDeviations = deviations.map(d => d * d);
-        const sumSquaredDev = squaredDeviations.reduce((a, b) => a + b, 0);
-        const variance = sumSquaredDev / n;
-        const sd = Math.sqrt(variance);
-        
-        // Create a small sample of the calculation for display
-        const sampleSize = Math.min(5, n);
-        let deviationTable = `
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>Value (x<sub>i</sub>)</th>
-                        <th>Deviation (x<sub>i</sub> - x̄)</th>
-                        <th>Squared Deviation (x<sub>i</sub> - x̄)<sup>2</sup></th>
-                    </tr>
-                </thead>
-                <tbody>
-        `;
-        
-        for (let i = 0; i < sampleSize; i++) {
-            deviationTable += `
-                <tr>
-                    <td>${data[i]}</td>
-                    <td>${deviations[i].toFixed(3)}</td>
-                    <td>${squaredDeviations[i].toFixed(3)}</td>
-                </tr>
-            `;
-        }
-        
-        if (n > sampleSize) {
-            deviationTable += `<tr><td colspan="3">... (${n-sampleSize} more rows)</td></tr>`;
-        }
-        
-        deviationTable += `
-                <tr>
-                    <td><strong>Sum</strong></td>
-                    <td></td>
-                    <td><strong>${sumSquaredDev.toFixed(3)}</strong></td>
-                </tr>
-            </tbody>
-            </table>
-        `;
-        
-        // Skewness calculations
-        const kpSkew = karlPearsonSkewness(data);
-        const {q1, q3} = quartiles(data);
-        const bowSkew = bowleySkewness(data);
-        
-        // Kurtosis calculations
-        const m2 = moment(data, 2);
-        const m4 = moment(data, 4);
-        const kurt = m4 / (m2 * m2);
-        
-        // Combine all steps
-        return `
-            <div class="accordion" id="calculationAccordion">
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingMean">
-                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMean" aria-expanded="true" aria-controls="collapseMean">
-                            Mean Calculation
-                        </button>
-                    </h2>
-                    <div id="collapseMean" class="accordion-collapse collapse show" aria-labelledby="headingMean" data-bs-parent="#calculationAccordion">
-                        <div class="accordion-body">
-                            <div class="formula-box">
-                                <p><strong>Formula:</strong> Mean (x̄) = ∑x<sub>i</sub> / n</p>
-                            </div>
-                            <p><strong>Step 1:</strong> Sum all the values: ∑x<sub>i</sub> = ${sum.toFixed(3)}</p>
-                            <p><strong>Step 2:</strong> Divide by the number of observations (n = ${n}):</p>
-                            <p>x̄ = ${sum.toFixed(3)} / ${n} = ${avg.toFixed(3)}</p>
-                            <p><strong>Interpretation:</strong> The mean represents the average value of the dataset.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingMedian">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMedian" aria-expanded="false" aria-controls="collapseMedian">
-                            Median Calculation
-                        </button>
-                    </h2>
-                    <div id="collapseMedian" class="accordion-collapse collapse" aria-labelledby="headingMedian" data-bs-parent="#calculationAccordion">
-                        <div class="accordion-body">
-                            <div class="formula-box">
-                                <p><strong>Method:</strong> Arrange values in ascending order and find the middle value</p>
-                            </div>
-                            <p><strong>Step 1:</strong> Sort the data in ascending order:</p>
-                            <p>${sorted.slice(0, 10).join(', ')}${n > 10 ? ', ...' : ''}</p>
-                            <p><strong>Step 2:</strong> Find the middle value:</p>
-                            ${medianSteps}
-                            <p><strong>Interpretation:</strong> The median is the value that separates the higher half from the lower half of the dataset.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingMode">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMode" aria-expanded="false" aria-controls="collapseMode">
-                            Mode Calculation
-                        </button>
-                    </h2>
-                    <div id="collapseMode" class="accordion-collapse collapse" aria-labelledby="headingMode" data-bs-parent="#calculationAccordion">
-                        <div class="accordion-body">
-                            <div class="formula-box">
-                                <p><strong>Method:</strong> Find the value(s) that occur most frequently</p>
-                            </div>
-                            <p><strong>Step 1:</strong> Count the frequency of each value:</p>
-                            ${modeTable}
-                            <p><strong>Step 2:</strong> Find the value(s) with the highest frequency:</p>
-                            <p>Highest frequency: ${maxFreq}</p>
-                            <p>Mode: ${mod ? mod.join(', ') : 'No unique mode (all values appear with the same frequency)'}</p>
-                            <p><strong>Interpretation:</strong> The mode represents the most common value(s) in the dataset.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingSD">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSD" aria-expanded="false" aria-controls="collapseSD">
-                            Standard Deviation Calculation
-                        </button>
-                    </h2>
-                    <div id="collapseSD" class="accordion-collapse collapse" aria-labelledby="headingSD" data-bs-parent="#calculationAccordion">
-                        <div class="accordion-body">
-                            <div class="formula-box">
-                                <p><strong>Formula:</strong> Standard Deviation (σ) = √[∑(x<sub>i</sub> - x̄)<sup>2</sup> / n]</p>
-                            </div>
-                            <p><strong>Step 1:</strong> Calculate the mean (x̄): ${avg.toFixed(3)}</p>
-                            <p><strong>Step 2:</strong> Calculate the deviations from the mean and square them:</p>
-                            ${deviationTable}
-                            <p><strong>Step 3:</strong> Calculate the variance (average of squared deviations):</p>
-                            <p>Variance = ∑(x<sub>i</sub> - x̄)<sup>2</sup> / n = ${sumSquaredDev.toFixed(3)} / ${n} = ${variance.toFixed(3)}</p>
-                            <p><strong>Step 4:</strong> Calculate the standard deviation (square root of variance):</p>
-                            <p>Standard Deviation = √${variance.toFixed(3)} = ${sd.toFixed(3)}</p>
-                            <p><strong>Interpretation:</strong> The standard deviation measures the amount of variation or dispersion in the dataset.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingSkewness">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkewness" aria-expanded="false" aria-controls="collapseSkewness">
-                            Skewness Calculation
-                        </button>
-                    </h2>
-                    <div id="collapseSkewness" class="accordion-collapse collapse" aria-labelledby="headingSkewness" data-bs-parent="#calculationAccordion">
-                        <div class="accordion-body">
-                            <div class="formula-box">
-                                <p><strong>Karl Pearson's Formula:</strong> Skewness = 3(Mean - Median) / Standard Deviation</p>
-                            </div>
-                            <p><strong>Step 1:</strong> Calculate Mean (${avg.toFixed(3)}), Median (${med.toFixed(3)}), and Standard Deviation (${sd.toFixed(3)})</p>
-                            <p><strong>Step 2:</strong> Apply Karl Pearson's formula:</p>
-                            <p>Skewness = 3(${avg.toFixed(3)} - ${med.toFixed(3)}) / ${sd.toFixed(3)} = 3(${(avg-med).toFixed(3)}) / ${sd.toFixed(3)} = ${kpSkew.toFixed(3)}</p>
-                            <p><strong>Interpretation:</strong></p>
-                            <ul>
-                                <li>If skewness > 0: Positively skewed (right-tailed)</li>
-                                <li>If skewness < 0: Negatively skewed (left-tailed)</li>
-                                <li>If skewness = 0: Symmetrical</li>
-                            </ul>
-                            <p>In this case, the distribution is ${kpSkew > 0.5 ? 'positively skewed' : (kpSkew < -0.5 ? 'negatively skewed' : 'approximately symmetrical')}.</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="accordion-item">
-                    <h2 class="accordion-header" id="headingKurtosis">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKurtosis" aria-expanded="false" aria-controls="collapseKurtosis">
-                            Kurtosis Calculation
-                        </button>
-                    </h2>
-                    <div id="collapseKurtosis" class="accordion-collapse collapse" aria-labelledby="headingKurtosis" data-bs-parent="#calculationAccordion">
-                        <div class="accordion-body">
-                            <div class="formula-box">
-                                <p><strong>Formula:</strong> β₂ = μ₄ / (μ₂)²</p>
-                                <p>where μ₂ is the second central moment and μ₄ is the fourth central moment</p>
-                            </div>
-                            <p><strong>Step 1:</strong> Calculate the second central moment (μ₂):</p>
-                            <p>μ₂ = ∑(x<sub>i</sub> - x̄)² / n = ${m2.toFixed(3)}</p>
-                            <p><strong>Step 2:</strong> Calculate the fourth central moment (μ₄):</p>
-                            <p>μ₄ = ∑(x<sub>i</sub> - x̄)⁴ / n = ${m4.toFixed(3)}</p>
-                            <p><strong>Step 3:</strong> Calculate kurtosis:</p>
-                            <p>β₂ = ${m4.toFixed(3)} / (${m2.toFixed(3)})² = ${m4.toFixed(3)} / ${(m2*m2).toFixed(3)} = ${kurt.toFixed(3)}</p>
-                            <p><strong>Interpretation:</strong></p>
-                            <ul>
-                                <li>If β₂ = 3: Mesokurtic (normal distribution)</li>
-                                <li>If β₂ > 3: Leptokurtic (more peaked than normal)</li>
-                                <li>If β₂ < 3: Platykurtic (flatter than normal)</li>
-                            </ul>
-                            <p>In this case, the distribution is ${Math.abs(kurt-3) < 0.5 ? 'mesokurtic' : (kurt > 3 ? 'leptokurtic' : 'platykurtic')}.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // Generate visualization
-    function generateVisualization() {
-        const input = document.getElementById('dataInput').value;
-        
-        if (!input.trim()) {
-            alert('Please enter data!');
-            return;
-        }
-        
-        try {
-            const data = parseData(input);
-            
-            if (data.length < 3) {
-                alert('At least 3 values are required!');
-                return;
-            }
-            
-            // Create histogram
-            const canvas = document.getElementById('distributionChart');
-            if (!canvas) {
-                alert('Chart canvas not found!');
-                return;
-            }
-            
-            const ctx = canvas.getContext('2d');
-            
-            // Clear existing chart
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Create bins for histogram
-            const min = Math.min(...data);
-            const max = Math.max(...data);
-            const binCount = Math.min(10, Math.ceil(Math.sqrt(data.length)));
-            const binWidth = (max - min) / binCount;
-            
-            const bins = new Array(binCount).fill(0);
-            const binLabels = [];
-            
-            // Fill bins
-            data.forEach(val => {
-                const binIndex = Math.min(Math.floor((val - min) / binWidth), binCount - 1);
-                bins[binIndex]++;
-            });
-            
-            // Create bin labels
-            for (let i = 0; i < binCount; i++) {
-                binLabels.push(`${(min + i * binWidth).toFixed(1)}-${(min + (i + 1) * binWidth).toFixed(1)}`);
-            }
-            
-            // Check if Chart.js is available
-            if (typeof Chart !== 'undefined') {
-                // Create Chart.js chart
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: binLabels,
-                        datasets: [{
-                            label: 'Frequency',
-                            data: bins,
-                            backgroundColor: 'rgba(41, 128, 185, 0.7)',
-                            borderColor: 'rgba(41, 128, 185, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                title: {
-                                    display: true,
-                                    text: 'Frequency'
-                                }
-                            },
-                            x: {
-                                title: {
-                                    display: true,
-                                    text: 'Value Range'
-                                }
-                            }
-                        },
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Data Distribution Histogram'
-                            },
-                            legend: {
-                                display: false
-                            }
-                        }
-                    }
-                });
-            } else {
-                // Fall back to basic canvas drawing if Chart.js is not available
-                drawBasicHistogram(ctx, canvas.width, canvas.height, bins, binLabels, min, max);
-            }
-            
-        } catch (error) {
-            alert('Error in visualization generation: ' + error.message);
-        }
-    }
-
-    // Basic histogram drawing without Chart.js
-    function drawBasicHistogram(ctx, width, height, bins, binLabels, min, max) {
-        const padding = 50;
-        const chartWidth = width - 2 * padding;
-        const chartHeight = height - 2 * padding;
-        const barWidth = chartWidth / bins.length;
-        
-        // Clear canvas
-        ctx.clearRect(0, 0, width, height);
-        
-        // Draw axes
-        ctx.beginPath();
-        ctx.moveTo(padding, padding);
-        ctx.lineTo(padding, height - padding);
-        ctx.lineTo(width - padding, height - padding);
-        ctx.strokeStyle = '#333';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-        
-        // Find max bin value
-        const maxBin = Math.max(...bins);
-        
-        // Draw bars
-        for (let i = 0; i < bins.length; i++) {
-            const barHeight = (bins[i] / maxBin) * chartHeight;
-            const x = padding + i * barWidth;
-            const y = height - padding - barHeight;
-            
-            // Draw bar
-            ctx.fillStyle = 'rgba(41, 128, 185, 0.7)';
-            ctx.fillRect(x, y, barWidth - 5, barHeight);
-            
-            // Draw label
-            ctx.fillStyle = '#333';
-            ctx.font = '10px Arial';
-            ctx.textAlign = 'center';
-            ctx.fillText(binLabels[i], x + barWidth/2, height - padding + 15);
-        }
-        
-        // Y-axis labels
-        ctx.textAlign = 'right';
-        ctx.textBaseline = 'middle';
-        for (let i = 0; i <= 5; i++) {
-            const value = Math.round(maxBin * i / 5);
-            const y = height - padding - (i / 5) * chartHeight;
-            ctx.fillText(value.toString(), padding - 5, y);
-        }
-        
-        // Title
-        ctx.fillStyle = '#333';
-        ctx.font = 'bold 16px Arial';
-        ctx.textAlign = 'center';
-        ctx.fillText('Data Distribution Histogram', width / 2, padding / 2);
-    }
-
-    // Clear data
-    function clearData() {
-        document.getElementById('dataInput').value = '';
-        document.getElementById('results').style.display = 'none';
-        
-        // Clear calculation steps if present
-        const stepsDiv = document.getElementById('calculationSteps');
-        if (stepsDiv) {
-            stepsDiv.style.display = 'none';
-        }
-        
-        // Clear chart
-        const canvas = document.getElementById('distributionChart');
-        if (canvas) {
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    }
-
-    // Add CSS for formula boxes
-    document.addEventListener('DOMContentLoaded', function() {
-        const style = document.createElement('style');
-        style.textContent = `
-            .formula-box {
-                background-color: #f8f9fa;
-                border-left: 4px solid #2980b9;
-                padding: 10px;
-                margin-bottom: 15px;
-                border-radius: 0 4px 4px 0;
-            }
-            
-            .formula-box p {
-                margin: 0;
-            }
-            
-            canvas {
-                border: 1px solid #ddd;
-                background-color: #fff;
-                max-width: 100%;
-                height: auto;
-                display: block;
-                margin: 0 auto;
-            }
-        `;
-        document.head.appendChild(style);
-    });
-
-    // Force redraw of graphs when window is fully loaded
-    window.onload = function() {
-        console.log("Window fully loaded - forcing redraw of graphs");
-        
-        // Small delay to ensure everything is rendered
-        setTimeout(function() {
-            // Check if canvases exist
-            const skewnessCanvas = document.getElementById('skewnessCanvas');
-            const kurtosisCanvas = document.getElementById('kurtosisCanvas');
-            
-            console.log("Found skewness canvas:", !!skewnessCanvas);
-            console.log("Found kurtosis canvas:", !!kurtosisCanvas);
-            
-            // Redraw graphs
-            if (typeof drawSkewnessGraph === 'function') drawSkewnessGraph();
-            if (typeof drawKurtosisGraph === 'function') drawKurtosisGraph();
-        }, 1000);
-    };
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
-<script>
-    // Function to toggle answers visibility
-    function toggleAnswers() {
-        const answersSection = document.querySelector('.answers-section');
-        if (answersSection) {
-            if (answersSection.style.display === 'none') {
-                answersSection.style.display = 'block';
-                document.getElementById('toggleAnswersBtn').textContent = 'Hide Answers';
-            } else {
-                answersSection.style.display = 'none';
-                document.getElementById('toggleAnswersBtn').textContent = 'Show Answers';
-            }
-        }
-    }
-    
-    // Initialize when DOM is loaded
-    document.addEventListener('DOMContentLoaded', function() {
-        // Apply styles to footer
-        const footer = document.querySelector('footer.site');
-        if (footer) {
-            footer.style.background = 'linear-gradient(90deg, #004085, #0056b3)';
-            footer.style.color = 'white';
-            footer.style.padding = '20px';
-            footer.style.textAlign = 'center';
-            footer.style.marginTop = '50px';
-            footer.style.borderRadius = '0 0 10px 10px';
-        }
-        
-        // Add toggle button for answers
-        const exercisesSection = document.querySelector('#exercises .body');
-        if (exercisesSection) {
-            const answersSection = document.querySelector('.answers-section');
-            if (answersSection) {
-                // Create and insert toggle button
-                const toggleBtn = document.createElement('button');
-                toggleBtn.id = 'toggleAnswersBtn';
-                toggleBtn.className = 'btn';
-                toggleBtn.textContent = 'Show Answers';
-                toggleBtn.onclick = toggleAnswers;
-                
-                // Insert before answers section
-                answersSection.parentNode.insertBefore(toggleBtn, answersSection);
-                
-                // Initially hide answers
-                answersSection.style.display = 'none';
-            }
-        }
-    });
-function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
 
 <style>
 
@@ -4112,66 +3075,6 @@ svg.book-fig, .figure-box svg, canvas {
 }
 
     </style>
-<script>
-function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            let overlay = document.getElementById('sidebar-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'sidebar-overlay';
-                overlay.className = 'sidebar-overlay';
-                overlay.onclick = toggleSidebar;
-                document.body.appendChild(overlay);
-            }
-            if (sb) {
-                sb.classList.toggle('open');
-                if (sb.classList.contains('open')) {
-                    overlay.classList.add('active');
-                } else {
-                    overlay.classList.remove('active');
-                }
-            }
-        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        const sb = document.getElementById('sidebar');
-                        const overlay = document.getElementById('sidebar-overlay');
-                        if (sb && sb.classList.contains('open')) {
-                            sb.classList.remove('open');
-                            if (overlay) overlay.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-/* ── FEATURE B: SECTION CARD PREV / NEXT NAVIGATION CONTROLLER ── */
-        function navigateSection(direction) {
-            const sections = Array.from(document.querySelectorAll('section.page-section'));
-            if (!sections.length) return;
-
-            let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
-            if (currentIndex === -1) currentIndex = 0;
-
-            let targetIndex = currentIndex + direction;
-
-            if (targetIndex >= 0 && targetIndex < sections.length) {
-                const targetSecId = sections[targetIndex].id;
-                if (typeof showSection === 'function') {
-                    showSection(targetSecId);
-                } else {
-                    sections.forEach(s => s.classList.remove('active'));
-                    sections[targetIndex].classList.add('active');
-                }
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-    function toggleLanguage() { const btnText = document.getElementById("lang-toggle-text"); const engContents = document.querySelectorAll(".english-content"); const hinContents = document.querySelectorAll(".hinglish-content"); if (window.currentLang === "en") { if (btnText) btnText.innerHTML = "Switch Language (English)"; engContents.forEach(el => el.style.display = "none"); hinContents.forEach(el => el.style.display = "block"); window.currentLang = "hi"; } else { if (btnText) btnText.innerHTML = "Switch Language (Hinglish)"; hinContents.forEach(el => el.style.display = "none"); engContents.forEach(el => el.style.display = "block"); window.currentLang = "en"; } }
-window.toggleLanguage = toggleLanguage;
-</script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 
     <!-- MathJax Configuration -->
     <script>
-        window.MathJax = {
+window.MathJax = {
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
                 displayMath: [['$$', '$$'], ['\\[', '\\]']],
@@ -17,7 +17,7 @@
                 skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
             }
         };
-    </script>
+</script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <!-- Font Awesome -->
@@ -366,40 +366,122 @@
     <!-- Shared Whiteboard & Calculator Assets -->
     <link rel="stylesheet" href="../whiteboard/whiteboard.css">
     <link rel="stylesheet" href="../calculator/calculator.css?v=1.0">
-<script>window.currentLang = window.currentLang || 'en';</script>
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
 
+
+<!-- UNIFIED GLOBAL EBOOK CONTROLLER -->
 <script>
-function navigateSection(direction) {
-    const sections = Array.from(document.querySelectorAll('section.page-section'));
-    if (!sections.length) return;
+    window.currentLang = window.currentLang || 'en';
 
-    let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
-    if (currentIndex === -1) currentIndex = 0;
-
-    let targetIndex = currentIndex + direction;
-
-    if (targetIndex >= 0 && targetIndex < sections.length) {
-        const targetSecId = sections[targetIndex].id;
-        if (typeof showSection === 'function') {
-            showSection(targetSecId);
-        } else if (typeof window.showSection === 'function') {
-            window.showSection(targetSecId);
-        } else {
-            sections.forEach(s => {
+    function showSection(id) {
+        if (!id) return;
+        document.querySelectorAll('.page-section, .topic-section').forEach(s => {
+            if (s.id) {
                 s.classList.remove('active');
                 s.style.display = 'none';
-            });
-            sections[targetIndex].classList.add('active');
-            sections[targetIndex].style.display = 'block';
+            }
+        });
+
+        const target = document.getElementById(id);
+        if (target) {
+            target.classList.add('active');
+            target.style.display = 'block';
         }
+
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.nav-link[onclick*="${id}"], .nav-link[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (window.innerWidth <= 768) {
+            const sb = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            if (sb) sb.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+        }
+
+        if (window.MathJax && MathJax.typesetPromise && target) {
+            MathJax.typesetPromise([target]).catch(function(err){});
+        }
     }
-}
-window.navigateSection = navigateSection;
+    window.showSection = showSection;
+    window.showTopic = showSection;
+
+    function navigateSection(direction) {
+        const sections = Array.from(document.querySelectorAll('section.page-section, section.topic-section'));
+        if (!sections.length) return;
+
+        let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
+        if (currentIndex === -1) currentIndex = 0;
+
+        let targetIndex = currentIndex + direction;
+
+        if (targetIndex >= 0 && targetIndex < sections.length) {
+            const targetSecId = sections[targetIndex].id;
+            showSection(targetSecId);
+        }
+    }
+    window.navigateSection = navigateSection;
+
+    function toggleAnswer(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.classList.contains('show') || el.style.display === 'block') {
+            el.classList.remove('show');
+            el.style.display = 'none';
+        } else {
+            el.classList.add('show');
+            el.style.display = 'block';
+        }
+    }
+    window.toggleAnswer = toggleAnswer;
+    window.toggleAnswers = toggleAnswer;
+    window.toggleSetAnswers = toggleAnswer;
+
+    function toggleSidebar() {
+        const sb = document.getElementById('sidebar');
+        let overlay = document.getElementById('sidebar-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'sidebar-overlay';
+            overlay.className = 'sidebar-overlay';
+            overlay.onclick = toggleSidebar;
+            document.body.appendChild(overlay);
+        }
+        if (sb) {
+            sb.classList.toggle('open');
+            if (sb.classList.contains('open')) {
+                overlay.classList.add('active');
+            } else {
+                overlay.classList.remove('active');
+            }
+        }
+    }
+    window.toggleSidebar = toggleSidebar;
+
+    function toggleLanguage() {
+        const btnText = document.getElementById('lang-toggle-text');
+        const engContents = document.querySelectorAll('.english-content');
+        const hinContents = document.querySelectorAll('.hinglish-content');
+        
+        if (window.currentLang === 'en') {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (English)';
+            engContents.forEach(el => el.style.display = 'none');
+            hinContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'hi';
+        } else {
+            if (btnText) btnText.innerHTML = '<i class="fas fa-language"></i> Switch Language (Hinglish)';
+            hinContents.forEach(el => el.style.display = 'none');
+            engContents.forEach(el => el.style.display = 'block');
+            window.currentLang = 'en';
+        }
+    }
+    window.toggleLanguage = toggleLanguage;
 </script>
 </head>
 <body>
@@ -2500,103 +2582,7 @@ angle$</h3>
         </footer>
     </main>
 
-    <script>
-        function showSection(id) {
-            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
-            const target = document.getElementById(id);
-            if (target) {
-                target.classList.add('active');
-            }
-        window.showSection = showSection;
-        window.showTopic = showSection;
-        function showTopic(id) { showSection(id); }
-        window.showTopic = showTopic;
-        window.showTopic = showSection;
-
-
-            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-            try {
-                if (window.event && window.event.target) {
-                    const link = window.event.target.closest('.nav-link');
-                    if (link) link.classList.add('active');
-                }
-            } catch (e) {}
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (window.innerWidth <= 768) {
-                const sb = document.getElementById('sidebar');
-                if (sb) sb.classList.remove('open');
-            }
-        }
-        function toggleAnswer(id) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (el.classList.contains('show') || el.style.display === 'block') {
-                el.classList.remove('show');
-                el.style.display = 'none';
-            } else {
-                el.classList.add('show');
-                el.style.display = 'block';
-            }
-        }
-        function toggleSidebar() {
-            const sb = document.getElementById('sidebar');
-            let overlay = document.getElementById('sidebar-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = 'sidebar-overlay';
-                overlay.className = 'sidebar-overlay';
-                overlay.onclick = toggleSidebar;
-                document.body.appendChild(overlay);
-            }
-            if (sb) {
-                sb.classList.toggle('open');
-                if (sb.classList.contains('open')) {
-                    overlay.classList.add('active');
-                } else {
-                    overlay.classList.remove('active');
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.sidebar .nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        const sb = document.getElementById('sidebar');
-                        const overlay = document.getElementById('sidebar-overlay');
-                        if (sb && sb.classList.contains('open')) {
-                            sb.classList.remove('open');
-                            if (overlay) overlay.classList.remove('active');
-                        }
-                    }
-                });
-            });
-        });
-
-window.currentLang = window.currentLang || 'en';
-        function toggleLanguage() {
-            const btnText = document.getElementById('lang-toggle-text');
-            const engContents = document.querySelectorAll('.english-content');
-            const hinContents = document.querySelectorAll('.hinglish-content');
-            
-            if (window.currentLang === 'en') {
-                if (btnText) btnText.innerHTML = 'Switch Language (English)';
-                engContents.forEach(el => el.style.display = 'none');
-                hinContents.forEach(el => el.style.display = 'block');
-                window.currentLang = 'hi';
-            } else {
-                if (btnText) btnText.innerHTML = 'Switch Language (Hinglish)';
-                hinContents.forEach(el => el.style.display = 'none');
-                engContents.forEach(el => el.style.display = 'block');
-                window.currentLang = 'en';
-            }
-        }
-        window.toggleLanguage = toggleLanguage;
-
-
-    </script>
+    
     <script src="../whiteboard/whiteboard.js?v=2.0"></script>
     
     <script src="../calculator/calculator.js"></script>
