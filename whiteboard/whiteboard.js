@@ -310,94 +310,100 @@
         } else {
             const pos = getPos(e);
             ctx.putImageData(savedImageData, 0, 0); 
-            ctx.save();
-            ctx.scale(dpr, dpr);
-            applyBrush(true);
-            ctx.beginPath();
-            if (currentTool === 'line') {
-                ctx.moveTo(startX, startY);
-                ctx.lineTo(pos.x, pos.y);
-            } else if (currentTool === 'arrow') {
-                ctx.moveTo(startX, startY);
-                ctx.lineTo(pos.x, pos.y);
-                let angle = Math.atan2(pos.y - startY, pos.x - startX);
-                let headlen = currentSize * 5;
-                if (headlen < 15) headlen = 15;
-                ctx.lineTo(pos.x - headlen * Math.cos(angle - Math.PI / 6), pos.y - headlen * Math.sin(angle - Math.PI / 6));
-                ctx.moveTo(pos.x, pos.y);
-                ctx.lineTo(pos.x - headlen * Math.cos(angle + Math.PI / 6), pos.y - headlen * Math.sin(angle + Math.PI / 6));
-            } else if (currentTool === 'rect') {
-                ctx.rect(startX, startY, pos.x - startX, pos.y - startY);
-            } else if (currentTool === 'square') {
-                let side = Math.min(Math.abs(pos.x - startX), Math.abs(pos.y - startY));
-                let dirX = (pos.x > startX) ? 1 : -1;
-                let dirY = (pos.y > startY) ? 1 : -1;
-                ctx.rect(startX, startY, side * dirX, side * dirY);
-            } else if (currentTool === 'circle') {
-                let radius = Math.sqrt(Math.pow(pos.x - startX, 2) + Math.pow(pos.y - startY, 2));
-                ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
-            } else if (currentTool === 'ellipse') {
-                let rx = Math.abs(pos.x - startX) / 2;
-                let ry = Math.abs(pos.y - startY) / 2;
-                let cx = startX + (pos.x - startX) / 2;
-                let cy = startY + (pos.y - startY) / 2;
-                ctx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
-            } else if (currentTool === 'tri-iso') {
-                ctx.moveTo(startX + (pos.x - startX) / 2, startY);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.lineTo(startX, pos.y);
-                ctx.closePath();
-            } else if (currentTool === 'tri-right') {
-                ctx.moveTo(startX, startY);
-                ctx.lineTo(startX, pos.y);
-                ctx.lineTo(pos.x, pos.y);
-                ctx.closePath();
-            } else if (currentTool === 'tri-equi') {
-                let side = pos.x - startX;
-                let height = side * Math.sqrt(3) / 2;
-                let dir = (pos.y > startY) ? 1 : -1;
-                ctx.moveTo(startX + side / 2, startY);
-                ctx.lineTo(pos.x, startY + height * dir);
-                ctx.lineTo(startX, startY + height * dir);
-                ctx.closePath();
-            } else if (currentTool === 'axes') {
-                let dx = Math.abs(pos.x - startX);
-                let dy = Math.abs(pos.y - startY);
-                let headlen = currentSize * 4;
-                if (headlen < 12) headlen = 12;
-                
-                // Y axis
-                ctx.moveTo(startX, startY + dy);
-                ctx.lineTo(startX, startY - dy);
-                // Top Arrow
-                ctx.lineTo(startX - headlen*0.4, startY - dy + headlen);
-                ctx.moveTo(startX, startY - dy);
-                ctx.lineTo(startX + headlen*0.4, startY - dy + headlen);
-                
-                // X axis
-                ctx.moveTo(startX - dx, startY);
-                ctx.lineTo(startX + dx, startY);
-                // Right Arrow
-                ctx.lineTo(startX + dx - headlen, startY - headlen*0.4);
-                ctx.moveTo(startX + dx, startY);
-                ctx.lineTo(startX + dx - headlen, startY + headlen*0.4);
-            }
-            ctx.stroke();
-            ctx.restore();
+            drawShape(currentTool, startX, startY, pos.x, pos.y);
         }
     });
+
+    function drawShape(tool, sX, sY, eX, eY) {
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        applyBrush(true);
+        ctx.beginPath();
+        if (tool === 'line') {
+            ctx.moveTo(sX, sY);
+            ctx.lineTo(eX, eY);
+        } else if (tool === 'arrow') {
+            ctx.moveTo(sX, sY);
+            ctx.lineTo(eX, eY);
+            let angle = Math.atan2(eY - sY, eX - sX);
+            let headlen = Math.max(15, currentSize * 5);
+            ctx.lineTo(eX - headlen * Math.cos(angle - Math.PI / 6), eY - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.moveTo(eX, eY);
+            ctx.lineTo(eX - headlen * Math.cos(angle + Math.PI / 6), eY - headlen * Math.sin(angle + Math.PI / 6));
+        } else if (tool === 'rect') {
+            ctx.rect(sX, sY, eX - sX, eY - sY);
+        } else if (tool === 'square') {
+            let side = Math.min(Math.abs(eX - sX), Math.abs(eY - sY));
+            let dirX = (eX > sX) ? 1 : -1;
+            let dirY = (eY > sY) ? 1 : -1;
+            ctx.rect(sX, sY, side * dirX, side * dirY);
+        } else if (tool === 'circle') {
+            let radius = Math.sqrt(Math.pow(eX - sX, 2) + Math.pow(eY - sY, 2));
+            ctx.arc(sX, sY, radius, 0, 2 * Math.PI);
+        } else if (tool === 'ellipse') {
+            let rx = Math.abs(eX - sX) / 2;
+            let ry = Math.abs(eY - sY) / 2;
+            let cx = sX + (eX - sX) / 2;
+            let cy = sY + (eY - sY) / 2;
+            ctx.ellipse(cx, cy, rx, ry, 0, 0, 2 * Math.PI);
+        } else if (tool === 'tri-iso') {
+            ctx.moveTo(sX + (eX - sX) / 2, sY);
+            ctx.lineTo(eX, eY);
+            ctx.lineTo(sX, eY);
+            ctx.closePath();
+        } else if (tool === 'tri-right') {
+            ctx.moveTo(sX, sY);
+            ctx.lineTo(sX, eY);
+            ctx.lineTo(eX, eY);
+            ctx.closePath();
+        } else if (tool === 'tri-equi') {
+            let side = eX - sX;
+            let height = side * Math.sqrt(3) / 2;
+            let dir = (eY > sY) ? 1 : -1;
+            ctx.moveTo(sX + side / 2, sY);
+            ctx.lineTo(eX, sY + height * dir);
+            ctx.lineTo(sX, sY + height * dir);
+            ctx.closePath();
+        } else if (tool === 'axes') {
+            let dx = Math.abs(eX - sX);
+            let dy = Math.abs(eY - sY);
+            let headlen = Math.max(12, currentSize * 4);
+            
+            // Y axis
+            ctx.moveTo(sX, sY + dy);
+            ctx.lineTo(sX, sY - dy);
+            // Top Arrow
+            ctx.lineTo(sX - headlen*0.4, sY - dy + headlen);
+            ctx.moveTo(sX, sY - dy);
+            ctx.lineTo(sX + headlen*0.4, sY - dy + headlen);
+            
+            // X axis
+            ctx.moveTo(sX - dx, sY);
+            ctx.lineTo(sX + dx, sY);
+            // Right Arrow
+            ctx.lineTo(sX + dx - headlen, sY - headlen*0.4);
+            ctx.moveTo(sX + dx, sY);
+            ctx.lineTo(sX + dx - headlen, sY + headlen*0.4);
+        }
+        ctx.stroke();
+        ctx.restore();
+    }
 
     canvas.addEventListener('pointerup', (e) => {
         if (!isDrawing) return;
         isDrawing = false;
         canvas.releasePointerCapture(e.pointerId);
 
+        const pos = getPos(e);
         if (currentTool === 'pen' || currentTool === 'eraser' || currentTool === 'highlighter') {
-            const pos = getPos(e);
             ctx.beginPath();
             ctx.moveTo(lastX, lastY);
             ctx.lineTo(pos.x, pos.y);
             ctx.stroke();
+        } else {
+            // PERMANENTLY DRAW SHAPE ON POINTER UP
+            ctx.putImageData(savedImageData, 0, 0);
+            drawShape(currentTool, startX, startY, pos.x, pos.y);
         }
 
         if (canvas.dataset.revertTool) {
