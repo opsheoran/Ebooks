@@ -1063,29 +1063,35 @@ svg.book-fig, .figure-box svg, canvas {
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <link rel="apple-touch-icon" href="favicon.png">
+
 <script>
-window.navigateSection = function(direction) {
+function navigateSection(direction) {
     const sections = Array.from(document.querySelectorAll('section.page-section'));
     if (!sections.length) return;
 
-    let currentIndex = sections.findIndex(sec => sec.classList.contains('active'));
+    let currentIndex = sections.findIndex(sec => sec.classList.contains('active') || sec.style.display === 'block');
     if (currentIndex === -1) currentIndex = 0;
 
     let targetIndex = currentIndex + direction;
 
     if (targetIndex >= 0 && targetIndex < sections.length) {
         const targetSecId = sections[targetIndex].id;
-        if (typeof window.showSection === 'function') {
-            window.showSection(targetSecId);
-        } else if (typeof showSection === 'function') {
+        if (typeof showSection === 'function') {
             showSection(targetSecId);
+        } else if (typeof window.showSection === 'function') {
+            window.showSection(targetSecId);
         } else {
-            sections.forEach(s => s.classList.remove('active'));
+            sections.forEach(s => {
+                s.classList.remove('active');
+                s.style.display = 'none';
+            });
             sections[targetIndex].classList.add('active');
+            sections[targetIndex].style.display = 'block';
         }
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-};
+}
+window.navigateSection = navigateSection;
 </script>
 </head>
 <body>
